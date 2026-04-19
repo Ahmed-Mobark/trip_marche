@@ -85,8 +85,25 @@ class GetScheduleUseCase {
 ## 2. Data (`data/`)
 
 - **Models** — extend or map to domain entities. Include `fromJson` / `toJson`.
-- **Data sources** — abstract + impl. Remote sources use `ApiBaseHelper`; local sources use `Storage` or Hive boxes.
-- **Repository impl** — implements the domain contract. Mix in `RepositoryHelper` to wrap calls with `handleEither`.
+- **Data sources** — place under `data/datasources/` (name it **`datasources`**, not `data_sources`). Abstract + impl; remote sources use `ApiBaseHelper`; local sources use `Storage` or Hive boxes.
+- **Repository impl** — `data/repositories/<feature>_repository_impl.dart` implements `domain/repositories/<feature>_repository.dart`. Mix in `RepositoryHelper` to wrap calls with `handleEither`.
+
+### Reference: `auth` feature tree
+
+```
+lib/features/auth/
+├── auth_inj.dart
+├── data/
+│   ├── datasources/auth_remote_data_source.dart
+│   ├── models/
+│   └── repositories/auth_repository_impl.dart
+├── domain/
+│   └── repositories/auth_repository.dart
+└── presentation/
+    ├── cubit/
+    ├── view/
+    └── widgets/
+```
 
 ```dart
 class ScheduleRepositoryImpl with RepositoryHelper implements ScheduleRepository {

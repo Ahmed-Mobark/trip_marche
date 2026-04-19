@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:trip_marche/core/navigation/app_navigator.dart';
-import 'package:trip_marche/features/auth/data/repositories/auth_repository.dart';
+import 'package:trip_marche/features/auth/domain/repositories/auth_repository.dart';
 import 'package:trip_marche/features/auth/presentation/cubit/forgot_password/forgot_password_state.dart';
 import 'package:trip_marche/features/auth/presentation/cubit/verify_number/verify_number_cubit.dart';
 import 'package:trip_marche/features/auth/presentation/view/verify_number_view.dart';

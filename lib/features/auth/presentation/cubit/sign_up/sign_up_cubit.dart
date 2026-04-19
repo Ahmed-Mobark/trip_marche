@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:trip_marche/core/navigation/app_navigator.dart';
 import 'package:trip_marche/features/auth/data/models/register_request.dart';
-import 'package:trip_marche/features/auth/data/repositories/auth_repository.dart';
+import 'package:trip_marche/features/auth/domain/repositories/auth_repository.dart';
 import 'package:trip_marche/features/auth/presentation/cubit/sign_up/sign_up_state.dart';
 import 'package:trip_marche/features/auth/presentation/view/verify_number_view.dart';
 
