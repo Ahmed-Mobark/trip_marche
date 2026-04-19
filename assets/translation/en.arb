@@ -285,5 +285,13 @@
   "bookingTripSafetyDesertTitle": "Desert Safety",
   "bookingTripSafetyHealthTitle": "Health & Medical",
   "bookingTripSafetyEmergencyTitle": "Emergency Contacts",
-  "bookingTripSafetyGeneralTipsTitle": "General Safety Tips"
+  "bookingTripSafetyGeneralTipsTitle": "General Safety Tips",
+
+  "authResetPasswordTitle": "Reset Password",
+  "authResetPasswordSubtitle": "Enter your new password below",
+  "authNewPasswordLabel": "New Password",
+  "authNewPasswordHint": "Enter new password",
+  "authConfirmNewPasswordLabel": "Confirm New Password",
+  "authConfirmNewPasswordHint": "Confirm new password",
+  "authResetPasswordButton": "Reset Password"
 }

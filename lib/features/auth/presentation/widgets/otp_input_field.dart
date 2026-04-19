@@ -12,10 +12,10 @@ class OtpInputField extends StatefulWidget {
   /// Number of OTP digits. Defaults to 4.
   final int length;
 
-  /// Size of each individual box. Defaults to 64.
+  /// Size of each individual box. Defaults to 52.
   final double boxSize;
 
-  /// Spacing between boxes. Defaults to 16.
+  /// Spacing between boxes. Defaults to 12.
   final double spacing;
 
   /// Called with the full OTP string when all digits are entered.
@@ -27,8 +27,8 @@ class OtpInputField extends StatefulWidget {
   const OtpInputField({
     super.key,
     this.length = 4,
-    this.boxSize = 64,
-    this.spacing = 16,
+    this.boxSize = 48,
+    this.spacing = 8,
     this.onCompleted,
     this.onChanged,
   });
@@ -44,8 +44,7 @@ class _OtpInputFieldState extends State<OtpInputField> {
   @override
   void initState() {
     super.initState();
-    _controllers =
-        List.generate(widget.length, (_) => TextEditingController());
+    _controllers = List.generate(widget.length, (_) => TextEditingController());
     _focusNodes = List.generate(widget.length, (_) => FocusNode());
   }
 
@@ -60,8 +59,7 @@ class _OtpInputFieldState extends State<OtpInputField> {
     super.dispose();
   }
 
-  String get _currentOtp =>
-      _controllers.map((c) => c.text).join();
+  String get _currentOtp => _controllers.map((c) => c.text).join();
 
   void _handleChanged(String value, int index) {
     if (value.isNotEmpty && index < widget.length - 1) {
@@ -84,20 +82,12 @@ class _OtpInputFieldState extends State<OtpInputField> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: List.generate(widget.length, (index) {
-        return Container(
-          width: widget.boxSize,
+        final child = Container(
+          margin: EdgeInsets.symmetric(horizontal: widget.spacing / 2),
           height: widget.boxSize,
-          margin:
-              EdgeInsets.only(right: index < widget.length - 1 ? widget.spacing : 0),
           decoration: BoxDecoration(
             color: AppColors.inputBg,
             borderRadius: BorderRadius.circular(12),
-            border: Border.all(
-              color: _focusNodes[index].hasFocus
-                  ? AppColors.primary
-                  : Colors.transparent,
-              width: 1,
-            ),
           ),
           child: Center(
             child: TextField(
@@ -111,9 +101,7 @@ class _OtpInputFieldState extends State<OtpInputField> {
                 fontWeight: FontWeight.w700,
                 color: AppColors.darkText,
               ),
-              inputFormatters: [
-                FilteringTextInputFormatter.digitsOnly,
-              ],
+              inputFormatters: [FilteringTextInputFormatter.digitsOnly],
               decoration: const InputDecoration(
                 counterText: '',
                 border: InputBorder.none,
@@ -123,6 +111,8 @@ class _OtpInputFieldState extends State<OtpInputField> {
             ),
           ),
         );
+
+        return Expanded(child: child);
       }),
     );
   }

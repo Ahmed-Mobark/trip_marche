@@ -840,4 +840,25 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get bookingTripSafetyGeneralTipsTitle => 'نصائح سلامة عامة';
+
+  @override
+  String get authResetPasswordTitle => 'إعادة تعيين كلمة المرور';
+
+  @override
+  String get authResetPasswordSubtitle => 'أدخل كلمة المرور الجديدة أدناه';
+
+  @override
+  String get authNewPasswordLabel => 'كلمة المرور الجديدة';
+
+  @override
+  String get authNewPasswordHint => 'أدخل كلمة المرور الجديدة';
+
+  @override
+  String get authConfirmNewPasswordLabel => 'تأكيد كلمة المرور الجديدة';
+
+  @override
+  String get authConfirmNewPasswordHint => 'أكد كلمة المرور الجديدة';
+
+  @override
+  String get authResetPasswordButton => 'إعادة تعيين كلمة المرور';
 }

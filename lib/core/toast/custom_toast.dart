@@ -1,12 +1,8 @@
 import 'package:trip_marche/core/config/app_colors.dart';
-import 'package:trip_marche/core/config/app_lotties.dart';
 import 'package:trip_marche/core/config/styles/styles.dart';
 import 'package:trip_marche/core/toast/app_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
-import 'package:lottie/lottie.dart';
-import 'package:trip_marche/core/widgets/circle_container.dart';
 
 class CustomToast extends StatefulWidget {
   final AnimationController? controller;
@@ -26,7 +22,7 @@ class CustomToast extends StatefulWidget {
     required this.message,
     required this.type,
     required this.isInFront,
-    this.onTap, 
+    this.onTap,
     this.onClose,
     this.description,
     this.descriptionStyle,
@@ -41,20 +37,17 @@ class CustomToast extends StatefulWidget {
 }
 
 class _CustomToastState extends State<CustomToast> {
-
   Color getColor() => switch (widget.type) {
     ToastType.success => Colors.green,
     ToastType.warning => AppColors.yellow,
     ToastType.error => AppColors.red,
-  };  
+  };
 
-
-  Widget getLottie() => switch (widget.type) {
-    ToastType.success => LottieBuilder.asset(AppLotties.success, repeat: false,),
-    ToastType.warning => LottieBuilder.asset(AppLotties.error, repeat: false),
-    ToastType.error => LottieBuilder.asset(AppLotties.error, repeat: false),
-  };  
-
+  IconData getIconData() => switch (widget.type) {
+    ToastType.success => Icons.check_circle_rounded,
+    ToastType.warning => Icons.warning_rounded,
+    ToastType.error => Icons.error_rounded,
+  };
 
   @override
   Widget build(BuildContext context) {
@@ -64,10 +57,17 @@ class _CustomToastState extends State<CustomToast> {
         return Material(
           color: Colors.transparent,
           child: SlideTransition(
-            position: Tween<Offset>(
-              begin: const Offset(0.0, 1.0),
-              end: const Offset(0.0, 0.0),
-            ).animate(CurvedAnimation(parent: widget.controller!, curve: widget.curve ?? Curves.elasticOut, reverseCurve: widget.curve ?? Curves.elasticOut),),
+            position:
+                Tween<Offset>(
+                  begin: const Offset(0.0, 1.0),
+                  end: const Offset(0.0, 0.0),
+                ).animate(
+                  CurvedAnimation(
+                    parent: widget.controller!,
+                    curve: widget.curve ?? Curves.elasticOut,
+                    reverseCurve: widget.curve ?? Curves.elasticOut,
+                  ),
+                ),
             child: Container(
               width: MediaQuery.sizeOf(context).width,
               padding: EdgeInsetsDirectional.only(start: 3.w),
@@ -80,17 +80,22 @@ class _CustomToastState extends State<CustomToast> {
                 padding: EdgeInsets.all(10.r),
                 decoration: BoxDecoration(
                   color: Theme.of(context).primaryColor,
-                  gradient: LinearGradient(colors: [Theme.of(context).cardColor, getColor(),]),
+                  gradient: LinearGradient(
+                    colors: [Theme.of(context).cardColor, getColor()],
+                  ),
                   borderRadius: BorderRadius.circular(12.r),
                 ),
                 child: Row(
                   children: [
-                    CircleContainer(
-                      size: 35,
-                      noAlignment: true,
+                    Container(
+                      width: 35,
+                      height: 35,
                       margin: EdgeInsetsDirectional.only(end: 15.w),
-                      color: Theme.of(context).colorScheme.onSurface,
-                      child: getLottie()
+                      decoration: BoxDecoration(
+                        color: Colors.red.withValues(alpha: 0.2),
+                        shape: BoxShape.circle,
+                      ),
+                      child: Icon(getIconData(), color: Colors.red, size: 22),
                     ),
                     // getIcon(),
                     Expanded(
@@ -98,18 +103,31 @@ class _CustomToastState extends State<CustomToast> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         spacing: 5.h,
                         children: [
-                          Text(widget.message, style: widget.messageStyle?? TextStyles.textViewBold14),
-                          if(widget.description != null) Text(widget.description!, style: widget.descriptionStyle?? TextStyles.textViewRegular14.copyWith(color: Theme.of(context).hintColor),),
+                          Text(
+                            widget.message,
+                            style:
+                                widget.messageStyle ??
+                                TextStyles.textViewBold14,
+                          ),
+                          if (widget.description != null)
+                            Text(
+                              widget.description!,
+                              style:
+                                  widget.descriptionStyle ??
+                                  TextStyles.textViewRegular14.copyWith(
+                                    color: Theme.of(context).hintColor,
+                                  ),
+                            ),
                         ],
                       ),
                     ),
                   ],
-                )   
+                ),
               ),
             ),
           ),
         );
-      }
+      },
     );
   }
 }

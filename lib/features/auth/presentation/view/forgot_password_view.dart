@@ -10,7 +10,9 @@ import 'package:trip_marche/core/injection/injection_container.dart';
 import 'package:trip_marche/core/navigation/app_navigator.dart';
 import 'package:trip_marche/core/config/app_icons.dart';
 import 'package:trip_marche/features/auth/presentation/cubit/forgot_password/forgot_password_cubit.dart';
+import 'package:trip_marche/features/auth/presentation/cubit/forgot_password/forgot_password_state.dart';
 import 'package:trip_marche/features/auth/presentation/widgets/auth_header.dart';
+import 'package:trip_marche/core/toast/app_toast.dart';
 
 class ForgotPasswordView extends StatelessWidget {
   const ForgotPasswordView({super.key});
@@ -23,7 +25,18 @@ class ForgotPasswordView extends StatelessWidget {
         builder: (context) {
           return Scaffold(
             backgroundColor: AppColors.background,
-            body: AuthHeader(
+            body: BlocListener<ForgotPasswordCubit, ForgotPasswordState>(
+              listenWhen: (p, n) => p.status != n.status,
+              listener: (context, state) {
+                if (state.status == ForgotPasswordStatus.failure) {
+                  appToast(
+                    context: context,
+                    type: ToastType.error,
+                    message: state.errorMessage ?? 'Something went wrong',
+                  );
+                }
+              },
+              child: AuthHeader(
               showIllustration: false,
               compactTopBar: true,
               onBack: () => sl<AppNavigator>().pop(),
@@ -66,17 +79,34 @@ class ForgotPasswordView extends StatelessWidget {
                     ),
                     const SizedBox(height: 44),
 
-                    AppButton(
-                      text: context.tr.authSendCodeButton,
-                      radius: 999,
-                      heigh: 54,
-                      onTap: () {
-                        context.read<ForgotPasswordCubit>().submit();
+                    BlocBuilder<ForgotPasswordCubit, ForgotPasswordState>(
+                      buildWhen: (p, n) => p.status != n.status,
+                      builder: (context, state) {
+                        final isLoading = state.status == ForgotPasswordStatus.loading;
+                        return AppButton(
+                          text: isLoading ? null : context.tr.authSendCodeButton,
+                          radius: 999,
+                          heigh: 54,
+                          onTap: isLoading ? null : () {
+                            context.read<ForgotPasswordCubit>().submit();
+                          },
+                          child: isLoading
+                              ? const SizedBox(
+                                  width: 24,
+                                  height: 24,
+                                  child: CircularProgressIndicator(
+                                    color: Colors.white,
+                                    strokeWidth: 2.5,
+                                  ),
+                                )
+                              : null,
+                        );
                       },
                     ),
                   ],
                 ),
               ),
+            ),
             ),
           );
         },

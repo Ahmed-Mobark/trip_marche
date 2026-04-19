@@ -285,5 +285,13 @@
   "bookingTripSafetyDesertTitle": "سلامة الصحراء",
   "bookingTripSafetyHealthTitle": "الصحة والرعاية الطبية",
   "bookingTripSafetyEmergencyTitle": "جهات الاتصال في الطوارئ",
-  "bookingTripSafetyGeneralTipsTitle": "نصائح سلامة عامة"
+  "bookingTripSafetyGeneralTipsTitle": "نصائح سلامة عامة",
+
+  "authResetPasswordTitle": "إعادة تعيين كلمة المرور",
+  "authResetPasswordSubtitle": "أدخل كلمة المرور الجديدة أدناه",
+  "authNewPasswordLabel": "كلمة المرور الجديدة",
+  "authNewPasswordHint": "أدخل كلمة المرور الجديدة",
+  "authConfirmNewPasswordLabel": "تأكيد كلمة المرور الجديدة",
+  "authConfirmNewPasswordHint": "أكد كلمة المرور الجديدة",
+  "authResetPasswordButton": "إعادة تعيين كلمة المرور"
 }

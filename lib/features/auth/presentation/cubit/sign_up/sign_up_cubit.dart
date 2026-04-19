@@ -2,13 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:trip_marche/core/navigation/app_navigator.dart';
+import 'package:trip_marche/features/auth/data/models/register_request.dart';
+import 'package:trip_marche/features/auth/data/repositories/auth_repository.dart';
 import 'package:trip_marche/features/auth/presentation/cubit/sign_up/sign_up_state.dart';
 import 'package:trip_marche/features/auth/presentation/view/verify_number_view.dart';
 
 class SignUpCubit extends Cubit<SignUpState> {
-  SignUpCubit(this._navigator) : super(const SignUpState());
+  SignUpCubit(this._navigator, this._authRepository) : super(const SignUpState());
 
   final AppNavigator _navigator;
+  final AuthRepository _authRepository;
 
   final fullNameController = TextEditingController();
   final emailController = TextEditingController();
@@ -33,8 +36,38 @@ class SignUpCubit extends Cubit<SignUpState> {
     emit(state.copyWith(dialCode: dialCode));
   }
 
-  void submitSignUp() {
-    _navigator.push(screen: const VerifyNumberView());
+  Future<void> submitSignUp() async {
+    emit(state.copyWith(status: SignUpStatus.loading));
+
+    final request = RegisterRequest(
+      name: fullNameController.text.trim(),
+      email: emailController.text.trim(),
+      password: passwordController.text,
+      phoneNumber: phoneController.text.trim(),
+      countryCode: state.dialCode,
+    );
+
+    final result = await _authRepository.register(request);
+
+    result.fold(
+      (failure) {
+        emit(state.copyWith(
+          status: SignUpStatus.failure,
+          errorMessage: failure.message,
+          validationErrors: failure.errors,
+        ));
+      },
+      (data) {
+        final message = data['message'] as String?;
+        emit(state.copyWith(
+          status: SignUpStatus.success,
+          successMessage: message,
+        ));
+        _navigator.push(
+          screen: VerifyNumberView(email: emailController.text.trim()),
+        );
+      },
+    );
   }
 
   @override
@@ -47,4 +80,3 @@ class SignUpCubit extends Cubit<SignUpState> {
     return super.close();
   }
 }
-

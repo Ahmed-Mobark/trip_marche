@@ -3,7 +3,9 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:trip_marche/core/theme/app_colors.dart';
 import 'package:trip_marche/core/injection/injection_container.dart';
 import 'package:trip_marche/core/navigation/app_navigator.dart';
+import 'package:trip_marche/core/storage/data/storage.dart';
 import 'package:trip_marche/features/auth/presentation/view/login_view.dart';
+import 'package:trip_marche/features/nav_bar/presentation/view/main_nav_view.dart';
 
 class SplashView extends StatefulWidget {
   const SplashView({super.key});
@@ -28,10 +30,15 @@ class _SplashViewState extends State<SplashView> {
       }
     });
 
-    // Navigate to login after 2.5 seconds
+    // Navigate after 2.5 seconds
     Future.delayed(const Duration(milliseconds: 2500), () {
       if (mounted) {
-        sl<AppNavigator>().pushReplacement(screen: const LoginView());
+        final isLoggedIn = sl<Storage>().isAuthorized();
+        if (isLoggedIn) {
+          sl<AppNavigator>().pushReplacement(screen: const MainNavView());
+        } else {
+          sl<AppNavigator>().pushReplacement(screen: const LoginView());
+        }
       }
     });
   }

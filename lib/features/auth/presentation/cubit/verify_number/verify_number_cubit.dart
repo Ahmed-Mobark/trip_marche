@@ -3,14 +3,36 @@ import 'dart:async';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:trip_marche/core/navigation/app_navigator.dart';
+import 'package:trip_marche/core/storage/data/storage.dart';
+import 'package:trip_marche/features/auth/data/models/verify_email_request.dart';
+import 'package:trip_marche/features/auth/data/repositories/auth_repository.dart';
 import 'package:trip_marche/features/auth/presentation/cubit/verify_number/verify_number_state.dart';
+import 'package:trip_marche/features/auth/presentation/view/reset_password_view.dart';
 import 'package:trip_marche/features/nav_bar/presentation/view/main_nav_view.dart';
 
+enum VerifyType { emailVerification, passwordReset }
+
 class VerifyNumberCubit extends Cubit<VerifyNumberState> {
-  VerifyNumberCubit(this._navigator) : super(const VerifyNumberState());
+  VerifyNumberCubit(
+    this._navigator,
+    this._authRepository,
+    this._storage, {
+    required this.email,
+    required this.verifyType,
+  }) : super(const VerifyNumberState());
 
   final AppNavigator _navigator;
+  final AuthRepository _authRepository;
+  final Storage _storage;
+  final String email;
+  final VerifyType verifyType;
   Timer? _timer;
+
+  String _otpCode = '';
+
+  void setOtpCode(String code) {
+    _otpCode = code;
+  }
 
   void startTimer() {
     _timer?.cancel();
@@ -26,13 +48,85 @@ class VerifyNumberCubit extends Cubit<VerifyNumberState> {
     });
   }
 
-  void resend() {
+  String get _resendType => verifyType == VerifyType.passwordReset
+      ? 'password_reset'
+      : 'email_verification';
+
+  Future<void> resend() async {
     if (!state.canResend) return;
-    startTimer();
+
+    final result = await _authRepository.sendOtp(
+      email: email,
+      type: _resendType,
+    );
+
+    result.fold(
+      (failure) {
+        emit(state.copyWith(
+          status: VerifyStatus.failure,
+          errorMessage: failure.message,
+        ));
+      },
+      (_) => startTimer(),
+    );
   }
 
-  void verify() {
-    _navigator.pushAndRemoveUntil(screen: const MainNavView());
+  Future<void> verify() async {
+    if (_otpCode.length < 6) return;
+
+    emit(state.copyWith(status: VerifyStatus.loading));
+
+    if (verifyType == VerifyType.emailVerification) {
+      await _verifyEmail();
+    } else {
+      await _verifyOtp();
+    }
+  }
+
+  Future<void> _verifyEmail() async {
+    final request = VerifyEmailRequest(email: email, code: _otpCode);
+    final result = await _authRepository.verifyEmail(request);
+
+    result.fold(
+      (failure) {
+        emit(state.copyWith(
+          status: VerifyStatus.failure,
+          errorMessage: failure.message,
+          validationErrors: failure.errors,
+        ));
+      },
+      (data) async {
+        final token = data['data']?['token'] as String?;
+        if (token != null) {
+          await _storage.storeToken(token: token);
+        }
+        emit(state.copyWith(status: VerifyStatus.success));
+        _navigator.pushAndRemoveUntil(screen: const MainNavView());
+      },
+    );
+  }
+
+  Future<void> _verifyOtp() async {
+    final result = await _authRepository.verifyOtp(
+      email: email,
+      code: _otpCode,
+    );
+
+    result.fold(
+      (failure) {
+        emit(state.copyWith(
+          status: VerifyStatus.failure,
+          errorMessage: failure.message,
+          validationErrors: failure.errors,
+        ));
+      },
+      (_) {
+        emit(state.copyWith(status: VerifyStatus.success));
+        _navigator.push(
+          screen: ResetPasswordView(email: email, code: _otpCode),
+        );
+      },
+    );
   }
 
   @override
@@ -41,4 +135,3 @@ class VerifyNumberCubit extends Cubit<VerifyNumberState> {
     return super.close();
   }
 }
-

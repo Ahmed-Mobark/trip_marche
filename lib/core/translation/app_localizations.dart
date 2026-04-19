@@ -1669,6 +1669,48 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'General Safety Tips'**
   String get bookingTripSafetyGeneralTipsTitle;
+
+  /// No description provided for @authResetPasswordTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Reset Password'**
+  String get authResetPasswordTitle;
+
+  /// No description provided for @authResetPasswordSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter your new password below'**
+  String get authResetPasswordSubtitle;
+
+  /// No description provided for @authNewPasswordLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'New Password'**
+  String get authNewPasswordLabel;
+
+  /// No description provided for @authNewPasswordHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter new password'**
+  String get authNewPasswordHint;
+
+  /// No description provided for @authConfirmNewPasswordLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm New Password'**
+  String get authConfirmNewPasswordLabel;
+
+  /// No description provided for @authConfirmNewPasswordHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm new password'**
+  String get authConfirmNewPasswordHint;
+
+  /// No description provided for @authResetPasswordButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Reset Password'**
+  String get authResetPasswordButton;
 }
 
 class _AppLocalizationsDelegate

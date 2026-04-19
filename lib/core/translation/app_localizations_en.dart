@@ -846,4 +846,25 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get bookingTripSafetyGeneralTipsTitle => 'General Safety Tips';
+
+  @override
+  String get authResetPasswordTitle => 'Reset Password';
+
+  @override
+  String get authResetPasswordSubtitle => 'Enter your new password below';
+
+  @override
+  String get authNewPasswordLabel => 'New Password';
+
+  @override
+  String get authNewPasswordHint => 'Enter new password';
+
+  @override
+  String get authConfirmNewPasswordLabel => 'Confirm New Password';
+
+  @override
+  String get authConfirmNewPasswordHint => 'Confirm new password';
+
+  @override
+  String get authResetPasswordButton => 'Reset Password';
 }

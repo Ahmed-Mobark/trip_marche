@@ -15,6 +15,7 @@ import 'package:trip_marche/features/auth/presentation/widgets/auth_phone_number
 import 'package:trip_marche/features/auth/presentation/widgets/divider_with_text.dart';
 import 'package:trip_marche/core/extensions/localization.dart';
 import 'package:trip_marche/core/config/app_icons.dart';
+import 'package:trip_marche/core/toast/app_toast.dart';
 
 class SignUpView extends StatelessWidget {
   const SignUpView({super.key});
@@ -27,7 +28,28 @@ class SignUpView extends StatelessWidget {
         builder: (context) {
           return Scaffold(
             backgroundColor: AppColors.background,
-            body: AuthHeader(
+            body: BlocListener<SignUpCubit, SignUpState>(
+              listenWhen: (p, n) => p.status != n.status,
+              listener: (context, state) {
+                if (state.status == SignUpStatus.failure) {
+                  final desc = state.validationErrorsDescription;
+                  final msg = state.errorMessage ?? 'Something went wrong';
+                  appToast(
+                    context: context,
+                    type: ToastType.error,
+                    message: msg,
+                    description: desc != msg ? desc : null,
+                  );
+                }
+                if (state.status == SignUpStatus.success) {
+                  appToast(
+                    context: context,
+                    type: ToastType.success,
+                    message: state.successMessage ?? 'Registration successful',
+                  );
+                }
+              },
+              child: AuthHeader(
               child: SingleChildScrollView(
                 padding: const EdgeInsets.symmetric(
                   horizontal: 20,
@@ -138,10 +160,26 @@ class SignUpView extends StatelessWidget {
                     const SizedBox(height: 22),
 
                     // Sign Up button
-                    AppButton(
-                      text: context.tr.authSignUpButton,
-                      onTap: () {
-                        context.read<SignUpCubit>().submitSignUp();
+                    BlocBuilder<SignUpCubit, SignUpState>(
+                      buildWhen: (p, n) => p.status != n.status,
+                      builder: (context, state) {
+                        final isLoading = state.status == SignUpStatus.loading;
+                        return AppButton(
+                          text: isLoading ? null : context.tr.authSignUpButton,
+                          onTap: isLoading ? null : () {
+                            context.read<SignUpCubit>().submitSignUp();
+                          },
+                          child: isLoading
+                              ? const SizedBox(
+                                  width: 24,
+                                  height: 24,
+                                  child: CircularProgressIndicator(
+                                    color: Colors.white,
+                                    strokeWidth: 2.5,
+                                  ),
+                                )
+                              : null,
+                        );
                       },
                     ),
                     const SizedBox(height: 16),
@@ -185,6 +223,7 @@ class SignUpView extends StatelessWidget {
                   ],
                 ),
               ),
+            ),
             ),
           );
         },

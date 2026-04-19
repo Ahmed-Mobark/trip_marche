@@ -15,6 +15,10 @@ import 'package:trip_marche/features/settings/presentation/view/customer_service
 import 'package:trip_marche/features/settings/presentation/view/faqs_view.dart';
 import 'package:trip_marche/features/settings/presentation/view/terms_view.dart';
 import 'package:trip_marche/core/extensions/localization.dart';
+import 'package:trip_marche/core/storage/data/storage.dart';
+import 'package:trip_marche/core/toast/app_toast.dart';
+import 'package:trip_marche/features/auth/data/repositories/auth_repository.dart';
+import 'package:trip_marche/features/auth/presentation/view/login_view.dart';
 
 class ProfileView extends StatelessWidget {
   const ProfileView({super.key});
@@ -260,6 +264,7 @@ class ProfileView extends StatelessWidget {
           TextButton(
             onPressed: () {
               Navigator.pop(context);
+              _performLogout(context);
             },
             child: Text(
               'Log Out',
@@ -268,6 +273,24 @@ class ProfileView extends StatelessWidget {
           ),
         ],
       ),
+    );
+  }
+
+  Future<void> _performLogout(BuildContext context) async {
+    final result = await sl<AuthRepository>().logout();
+
+    result.fold(
+      (failure) {
+        appToast(
+          context: context,
+          type: ToastType.error,
+          message: failure.message,
+        );
+      },
+      (_) async {
+        await sl<Storage>().deleteToken();
+        sl<AppNavigator>().pushAndRemoveUntil(screen: const LoginView());
+      },
     );
   }
 }
