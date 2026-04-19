@@ -149,6 +149,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get authSignUpTitle => 'Create Your Account';
 
   @override
+  String get authSignUpSubtitle => 'Sign Up To Get Started';
+
+  @override
   String get authFullNameLabel => 'Full Name';
 
   @override

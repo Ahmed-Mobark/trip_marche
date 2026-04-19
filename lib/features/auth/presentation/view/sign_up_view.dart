@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:trip_marche/core/theme/app_text_styles.dart';
 import 'package:trip_marche/core/theme/app_colors.dart';
 import 'package:trip_marche/core/widgets/app_button.dart';
@@ -9,8 +10,11 @@ import 'package:trip_marche/core/injection/injection_container.dart';
 import 'package:trip_marche/features/auth/presentation/cubit/sign_up/sign_up_cubit.dart';
 import 'package:trip_marche/features/auth/presentation/cubit/sign_up/sign_up_state.dart';
 import 'package:trip_marche/features/auth/presentation/widgets/auth_link_text.dart';
+import 'package:trip_marche/features/auth/presentation/widgets/auth_header.dart';
+import 'package:trip_marche/features/auth/presentation/widgets/auth_phone_number_field.dart';
 import 'package:trip_marche/features/auth/presentation/widgets/divider_with_text.dart';
 import 'package:trip_marche/core/extensions/localization.dart';
+import 'package:trip_marche/core/config/app_icons.dart';
 
 class SignUpView extends StatelessWidget {
   const SignUpView({super.key});
@@ -23,148 +27,161 @@ class SignUpView extends StatelessWidget {
         builder: (context) {
           return Scaffold(
             backgroundColor: AppColors.background,
-            body: SafeArea(
+            body: AuthHeader(
               child: SingleChildScrollView(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 20,
+                  vertical: 20,
+                ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-              // Back arrow
-              GestureDetector(
-                onTap: () => Navigator.pop(context),
-                child: Container(
-                  width: 40,
-                  height: 40,
-                  decoration: BoxDecoration(
-                    color: AppColors.inputBg,
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  child: const Icon(
-                    Icons.arrow_back_ios_new,
-                    size: 18,
-                    color: AppColors.darkText,
-                  ),
-                ),
-              ),
-              const SizedBox(height: 24),
-
-              Text(context.tr.authSignUpTitle, style: AppTextStyles.heading2()),
-              const SizedBox(height: 24),
-
-              // Full Name
-              AppTextField(
-                label: context.tr.authFullNameLabel,
-                hint: context.tr.authFullNameHint,
-                controller: context.read<SignUpCubit>().fullNameController,
-                keyboardType: TextInputType.name,
-              ),
-              const SizedBox(height: 16),
-
-              // Email
-              AppTextField(
-                label: context.tr.authEmailLabel,
-                hint: context.tr.authEmailHint,
-                controller: context.read<SignUpCubit>().emailController,
-                keyboardType: TextInputType.emailAddress,
-              ),
-              const SizedBox(height: 16),
-
-              // Phone Number
-              AppTextField(
-                label: context.tr.authPhoneLabel,
-                hint: context.tr.authPhoneHint,
-                controller: context.read<SignUpCubit>().phoneController,
-                keyboardType: TextInputType.phone,
-              ),
-              const SizedBox(height: 16),
-
-              // Password
-              BlocBuilder<SignUpCubit, SignUpState>(
-                buildWhen: (p, n) => p.obscurePassword != n.obscurePassword,
-                builder: (context, state) {
-                  return AppTextField(
-                    label: context.tr.authPasswordLabel,
-                    hint: context.tr.authPasswordHint,
-                    controller: context.read<SignUpCubit>().passwordController,
-                    obscureText: state.obscurePassword,
-                    suffixIcon: IconButton(
-                      icon: Icon(
-                        state.obscurePassword
-                            ? Icons.visibility_off_outlined
-                            : Icons.visibility_outlined,
-                        color: AppColors.greyText,
-                        size: 20,
-                      ),
-                      onPressed: context.read<SignUpCubit>().toggleObscurePassword,
+                    Text(
+                      context.tr.authSignUpSubtitle,
+                      style: AppTextStyles.heading2(),
                     ),
-                  );
-                },
-              ),
-              const SizedBox(height: 16),
+                    const SizedBox(height: 18),
 
-              // Confirm Password
-              BlocBuilder<SignUpCubit, SignUpState>(
-                buildWhen: (p, n) =>
-                    p.obscureConfirmPassword != n.obscureConfirmPassword,
-                builder: (context, state) {
-                  return AppTextField(
-                    label: context.tr.authConfirmPasswordLabel,
-                    hint: context.tr.authConfirmPasswordHint,
-                    controller:
-                        context.read<SignUpCubit>().confirmPasswordController,
-                    obscureText: state.obscureConfirmPassword,
-                    suffixIcon: IconButton(
-                      icon: Icon(
-                        state.obscureConfirmPassword
-                            ? Icons.visibility_off_outlined
-                            : Icons.visibility_outlined,
-                        color: AppColors.greyText,
-                        size: 20,
+                    _FieldTitle(text: context.tr.authFullNameLabel),
+                    const SizedBox(height: 8),
+                    AppTextField(
+                      hint: context.tr.authFullNameHint,
+                      controller: context.read<SignUpCubit>().fullNameController,
+                      keyboardType: TextInputType.name,
+                      prefixWidget: const Padding(
+                        padding: EdgeInsets.all(12),
+                        child: Icon(
+                          Icons.person_outline,
+                          size: 22,
+                          color: AppColors.greyText,
+                        ),
                       ),
-                      onPressed:
-                          context.read<SignUpCubit>().toggleObscureConfirmPassword,
                     ),
-                  );
-                },
-              ),
-              const SizedBox(height: 28),
+                    const SizedBox(height: 16),
 
-              // Sign Up button
-              AppButton(
-                text: context.tr.authSignUpButton,
-                onTap: () {
-                  context.read<SignUpCubit>().submitSignUp();
-                },
-              ),
-              const SizedBox(height: 24),
+                    _FieldTitle(text: context.tr.authEmailLabel),
+                    const SizedBox(height: 8),
+                    AppTextField(
+                      hint: context.tr.authEmailHint,
+                      controller: context.read<SignUpCubit>().emailController,
+                      keyboardType: TextInputType.emailAddress,
+                      prefixWidget: Padding(
+                        padding: const EdgeInsets.all(12),
+                        child: SvgPicture.asset(
+                          AppIcons.icSms,
+                          width: 20,
+                          height: 20,
+                          colorFilter: const ColorFilter.mode(
+                            AppColors.greyText,
+                            BlendMode.srcIn,
+                          ),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 16),
 
-              // Or Sign Up with divider
-              DividerWithText(text: context.tr.authOrSignUpWith),
-              const SizedBox(height: 20),
+                    _FieldTitle(text: context.tr.authPasswordLabel),
+                    const SizedBox(height: 8),
+                    BlocBuilder<SignUpCubit, SignUpState>(
+                      buildWhen: (p, n) =>
+                          p.obscurePassword != n.obscurePassword,
+                      builder: (context, state) {
+                        return AppTextField(
+                          hint: context.tr.authPasswordHint,
+                          controller: context
+                              .read<SignUpCubit>()
+                              .passwordController,
+                          obscureText: state.obscurePassword,
+                          prefixWidget: Padding(
+                            padding: const EdgeInsets.all(12),
+                            child: SvgPicture.asset(
+                              AppIcons.icLock,
+                              width: 20,
+                              height: 20,
+                              colorFilter: const ColorFilter.mode(
+                                AppColors.greyText,
+                                BlendMode.srcIn,
+                              ),
+                            ),
+                          ),
+                          suffixIcon: IconButton(
+                            icon: Icon(
+                              state.obscurePassword
+                                  ? Icons.visibility_off_outlined
+                                  : Icons.visibility_outlined,
+                              color: AppColors.greyText,
+                              size: 20,
+                            ),
+                            onPressed: context
+                                .read<SignUpCubit>()
+                                .toggleObscurePassword,
+                          ),
+                        );
+                      },
+                    ),
+                    const SizedBox(height: 16),
 
-              // Social login buttons
-              SocialLoginButton(
-                icon: const Icon(Icons.g_mobiledata_outlined, size: 24),
-                text: context.tr.authSocialGoogle,
-                onPressed: () {},
-              ),
+                    _FieldTitle(text: context.tr.authPhoneLabel),
+                    const SizedBox(height: 8),
+                    BlocBuilder<SignUpCubit, SignUpState>(
+                      buildWhen: (p, n) => p.dialCode != n.dialCode,
+                      builder: (context, state) {
+                        return AuthPhoneNumberField(
+                          controller: context.read<SignUpCubit>().phoneController,
+                          hint: context.tr.authPhoneHint,
+                          selectedDialCode: state.dialCode,
+                          onDialCodeChanged:
+                              context.read<SignUpCubit>().setDialCode,
+                        );
+                      },
+                    ),
+                    const SizedBox(height: 22),
 
-              const SizedBox(height: 12),
-              SocialLoginButton(
-                icon: const Icon(Icons.apple, size: 24),
-                text: context.tr.authSocialApple,
-                onPressed: () {},
-              ),
-              const SizedBox(height: 24),
+                    // Sign Up button
+                    AppButton(
+                      text: context.tr.authSignUpButton,
+                      onTap: () {
+                        context.read<SignUpCubit>().submitSignUp();
+                      },
+                    ),
+                    const SizedBox(height: 16),
 
-              // Already have an account
-              AuthLinkText(
-                leadingText: context.tr.authHaveAccountPrompt,
-                actionText: context.tr.authLoginAction,
-                onTap: () => Navigator.pop(context),
-              ),
-              const SizedBox(height: 24),
+                    // Already have an account
+                    Center(
+                      child: AuthLinkText(
+                        leadingText: context.tr.authHaveAccountPrompt,
+                        actionText: context.tr.authLoginAction,
+                        onTap: () => Navigator.pop(context),
+                      ),
+                    ),
+                    const SizedBox(height: 14),
+
+                    // Or Login with divider (design)
+                    DividerWithText(text: context.tr.authOrLoginWith),
+                    const SizedBox(height: 12),
+
+                    // Social login buttons
+                    SocialLoginButton(
+                      icon: SvgPicture.asset(
+                        AppIcons.icGoogle,
+                        width: 20,
+                        height: 20,
+                      ),
+                      text: context.tr.authContinueWithGoogle,
+                      onPressed: () {},
+                    ),
+
+                    const SizedBox(height: 12),
+                    SocialLoginButton(
+                      icon: SvgPicture.asset(
+                        AppIcons.icApple,
+                        width: 20,
+                        height: 20,
+                      ),
+                      text: context.tr.authContinueWithApple,
+                      onPressed: () {},
+                    ),
+                    const SizedBox(height: 16),
                   ],
                 ),
               ),
@@ -172,6 +189,20 @@ class SignUpView extends StatelessWidget {
           );
         },
       ),
+    );
+  }
+}
+
+class _FieldTitle extends StatelessWidget {
+  const _FieldTitle({required this.text});
+
+  final String text;
+
+  @override
+  Widget build(BuildContext context) {
+    return Text(
+      text,
+      style: AppTextStyles.subtitle(color: AppColors.darkText),
     );
   }
 }

@@ -28,6 +28,11 @@ class SignUpCubit extends Cubit<SignUpState> {
     );
   }
 
+  void setDialCode(String dialCode) {
+    if (dialCode == state.dialCode) return;
+    emit(state.copyWith(dialCode: dialCode));
+  }
+
   void submitSignUp() {
     _navigator.push(screen: const VerifyNumberView());
   }

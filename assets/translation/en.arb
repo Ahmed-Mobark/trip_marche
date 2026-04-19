@@ -47,6 +47,7 @@
   "authJoinAsTripPartner": "Join as a trip partner",
 
   "authSignUpTitle": "Create Your Account",
+  "authSignUpSubtitle": "Sign Up To Get Started",
   "authFullNameLabel": "Full Name",
   "authFullNameHint": "Enter your full name",
   "authPhoneLabel": "Phone Number",

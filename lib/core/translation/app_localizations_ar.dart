@@ -146,6 +146,9 @@ class AppLocalizationsAr extends AppLocalizations {
   String get authSignUpTitle => 'أنشئ حسابك';
 
   @override
+  String get authSignUpSubtitle => 'سجّل لإنشاء حسابك والبدء';
+
+  @override
   String get authFullNameLabel => 'الاسم الكامل';
 
   @override

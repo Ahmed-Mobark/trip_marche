@@ -362,6 +362,12 @@ abstract class AppLocalizations {
   /// **'Create Your Account'**
   String get authSignUpTitle;
 
+  /// No description provided for @authSignUpSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Sign Up To Get Started'**
+  String get authSignUpSubtitle;
+
   /// No description provided for @authFullNameLabel.
   ///
   /// In en, this message translates to:

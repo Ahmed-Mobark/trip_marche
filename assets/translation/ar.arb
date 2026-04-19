@@ -47,6 +47,7 @@
   "authJoinAsTripPartner": "انضم كشريك رحلات",
 
   "authSignUpTitle": "أنشئ حسابك",
+  "authSignUpSubtitle": "سجّل لإنشاء حسابك والبدء",
   "authFullNameLabel": "الاسم الكامل",
   "authFullNameHint": "أدخل اسمك الكامل",
   "authPhoneLabel": "رقم الهاتف",
