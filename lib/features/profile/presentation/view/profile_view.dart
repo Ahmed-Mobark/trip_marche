@@ -17,7 +17,7 @@ import 'package:trip_marche/features/settings/presentation/view/terms_view.dart'
 import 'package:trip_marche/core/extensions/localization.dart';
 import 'package:trip_marche/core/storage/data/storage.dart';
 import 'package:trip_marche/core/toast/app_toast.dart';
-import 'package:trip_marche/features/auth/data/repositories/auth_repository.dart';
+import 'package:trip_marche/features/auth/domain/repositories/auth_repository.dart';
 import 'package:trip_marche/features/auth/presentation/view/login_view.dart';
 
 class ProfileView extends StatelessWidget {

@@ -9,7 +9,7 @@ import 'package:trip_marche/core/widgets/app_button.dart';
 import 'package:trip_marche/features/auth/presentation/widgets/otp_input_field.dart';
 import 'package:trip_marche/core/extensions/localization.dart';
 import 'package:trip_marche/core/injection/injection_container.dart';
-import 'package:trip_marche/features/auth/data/repositories/auth_repository.dart';
+import 'package:trip_marche/features/auth/domain/repositories/auth_repository.dart';
 import 'package:trip_marche/core/storage/data/storage.dart';
 import 'package:trip_marche/features/auth/presentation/cubit/verify_number/verify_number_cubit.dart';
 import 'package:trip_marche/features/auth/presentation/cubit/verify_number/verify_number_state.dart';

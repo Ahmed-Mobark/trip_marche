@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:trip_marche/core/navigation/app_navigator.dart';
 import 'package:trip_marche/core/storage/data/storage.dart';
 import 'package:trip_marche/features/auth/data/models/login_request.dart';
-import 'package:trip_marche/features/auth/data/repositories/auth_repository.dart';
+import 'package:trip_marche/features/auth/domain/repositories/auth_repository.dart';
 import 'package:trip_marche/features/auth/presentation/cubit/login/login_state.dart';
 import 'package:trip_marche/features/auth/presentation/view/forgot_password_view.dart';
 import 'package:trip_marche/features/auth/presentation/view/sign_up_view.dart';

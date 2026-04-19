@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:trip_marche/core/navigation/app_navigator.dart';
 import 'package:trip_marche/features/auth/data/models/reset_password_request.dart';
-import 'package:trip_marche/features/auth/data/repositories/auth_repository.dart';
+import 'package:trip_marche/features/auth/domain/repositories/auth_repository.dart';
 import 'package:trip_marche/features/auth/presentation/cubit/reset_password/reset_password_state.dart';
 import 'package:trip_marche/features/auth/presentation/view/login_view.dart';
 

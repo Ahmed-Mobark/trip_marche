@@ -115,7 +115,7 @@ class _CustomToastState extends State<CustomToast> {
                               style:
                                   widget.descriptionStyle ??
                                   TextStyles.textViewRegular14.copyWith(
-                                    color: Theme.of(context).hintColor,
+                                    color: AppColors.darkText,
                                   ),
                             ),
                         ],
