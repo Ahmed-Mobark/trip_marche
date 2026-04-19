@@ -3,8 +3,18 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:trip_marche/core/theme/app_colors.dart';
 import 'package:trip_marche/core/theme/app_text_styles.dart';
+import 'package:trip_marche/core/injection/injection_container.dart';
+import 'package:trip_marche/core/navigation/app_navigator.dart';
 import 'package:trip_marche/features/profile/presentation/widgets/menu_item.dart';
 import 'package:trip_marche/features/profile/presentation/widgets/profile_avatar.dart';
+import 'package:trip_marche/features/profile/presentation/view/personal_info_view.dart';
+import 'package:trip_marche/features/profile/presentation/view/my_reviews_view.dart';
+import 'package:trip_marche/features/profile/presentation/view/my_followings_view.dart';
+import 'package:trip_marche/features/settings/presentation/view/settings_view.dart';
+import 'package:trip_marche/features/settings/presentation/view/customer_service_view.dart';
+import 'package:trip_marche/features/settings/presentation/view/faqs_view.dart';
+import 'package:trip_marche/features/settings/presentation/view/terms_view.dart';
+import 'package:trip_marche/core/extensions/localization.dart';
 
 class ProfileView extends StatelessWidget {
   const ProfileView({super.key});
@@ -52,34 +62,34 @@ class ProfileView extends StatelessWidget {
               const SizedBox(height: 24),
 
               // Account Section
-              _buildSectionHeader('Account'),
+              _buildSectionHeader(context.tr.profileTitleAccount),
               ProfileMenuItem(
                 icon: Iconsax.user,
-                title: 'Personal Info',
+                title: context.tr.profilePersonalInfo,
                 onTap: () {
-                  Navigator.pushNamed(context, '/personal-info');
+                  sl<AppNavigator>().push(screen: const PersonalInfoView());
                 },
               ),
               _buildDivider(),
               ProfileMenuItem(
                 icon: Iconsax.card,
-                title: 'Payment Method',
+                title: context.tr.profilePaymentMethod,
                 onTap: () {},
               ),
               _buildDivider(),
               ProfileMenuItem(
                 icon: Iconsax.star,
-                title: 'My Reviews',
+                title: context.tr.profileMyReviews,
                 onTap: () {
-                  Navigator.pushNamed(context, '/my-reviews');
+                  sl<AppNavigator>().push(screen: const MyReviewsView());
                 },
               ),
               _buildDivider(),
               ProfileMenuItem(
                 icon: Iconsax.building,
-                title: 'Following Companies',
+                title: context.tr.profileFollowingCompanies,
                 onTap: () {
-                  Navigator.pushNamed(context, '/my-followings');
+                  sl<AppNavigator>().push(screen: const MyFollowingsView());
                 },
               ),
               const SizedBox(height: 16),
@@ -87,36 +97,36 @@ class ProfileView extends StatelessWidget {
               // Settings
               ProfileMenuItem(
                 icon: Iconsax.setting_2,
-                title: 'Settings',
+                title: context.tr.profileSettings,
                 onTap: () {
-                  Navigator.pushNamed(context, '/settings');
+                  sl<AppNavigator>().push(screen: const SettingsView());
                 },
               ),
               const SizedBox(height: 16),
 
               // Support Section
-              _buildSectionHeader('Support'),
+              _buildSectionHeader(context.tr.profileTitleSupport),
               ProfileMenuItem(
                 icon: Iconsax.headphone,
-                title: 'Customer Service',
+                title: context.tr.profileCustomerService,
                 onTap: () {
-                  Navigator.pushNamed(context, '/customer-service');
+                  sl<AppNavigator>().push(screen: const CustomerServiceView());
                 },
               ),
               _buildDivider(),
               ProfileMenuItem(
                 icon: Iconsax.message_question,
-                title: 'FAQs',
+                title: context.tr.profileFaqs,
                 onTap: () {
-                  Navigator.pushNamed(context, '/faqs');
+                  sl<AppNavigator>().push(screen: const FaqsView());
                 },
               ),
               _buildDivider(),
               ProfileMenuItem(
                 icon: Iconsax.document_text,
-                title: 'Terms and conditions',
+                title: context.tr.profileTermsAndConditions,
                 onTap: () {
-                  Navigator.pushNamed(context, '/terms');
+                  sl<AppNavigator>().push(screen: const TermsView());
                 },
               ),
               const SizedBox(height: 16),
@@ -124,7 +134,7 @@ class ProfileView extends StatelessWidget {
               // Delete Account
               ProfileMenuItem(
                 icon: Iconsax.trash,
-                title: 'Delete Account',
+                title: context.tr.profileDeleteAccount,
                 titleColor: AppColors.error,
                 iconColor: AppColors.error,
                 showChevron: false,

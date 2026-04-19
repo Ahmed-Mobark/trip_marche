@@ -3,7 +3,12 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:trip_marche/core/theme/app_colors.dart';
 import 'package:trip_marche/core/theme/app_text_styles.dart';
+import 'package:trip_marche/core/injection/injection_container.dart';
+import 'package:trip_marche/core/navigation/app_navigator.dart';
 import 'package:trip_marche/features/settings/presentation/widgets/settings_row.dart';
+import 'package:trip_marche/features/settings/presentation/view/notification_settings_view.dart';
+import 'package:trip_marche/features/settings/presentation/view/language_view.dart';
+import 'package:trip_marche/core/extensions/localization.dart';
 
 class SettingsView extends StatefulWidget {
   const SettingsView({super.key});
@@ -27,7 +32,7 @@ class _SettingsViewState extends State<SettingsView> {
           onPressed: () => Navigator.pop(context),
         ),
         title: Text(
-          'Setting',
+          context.tr.settingsTitle,
           style: AppTextStyles.subtitle(),
         ),
         centerTitle: true,
@@ -39,14 +44,16 @@ class _SettingsViewState extends State<SettingsView> {
             // Notification Setting
             SettingsRow(
               icon: Iconsax.notification,
-              title: 'Notification Setting',
+              title: context.tr.settingsNotificationSetting,
               trailing: const Icon(
                 Iconsax.arrow_right_3,
                 size: 18,
                 color: AppColors.greyText,
               ),
               onTap: () {
-                Navigator.pushNamed(context, '/notification-settings');
+                sl<AppNavigator>().push(
+                  screen: const NotificationSettingsView(),
+                );
               },
             ),
             const Divider(height: 1, color: AppColors.border),
@@ -54,12 +61,12 @@ class _SettingsViewState extends State<SettingsView> {
             // Language
             SettingsRow(
               icon: Iconsax.language_square,
-              title: 'Language',
+              title: context.tr.settingsLanguage,
               trailing: Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Text(
-                    'English',
+                    context.tr.settingsEnglish,
                     style: GoogleFonts.inter(
                       fontSize: 14,
                       fontWeight: FontWeight.w400,
@@ -75,7 +82,7 @@ class _SettingsViewState extends State<SettingsView> {
                 ],
               ),
               onTap: () {
-                Navigator.pushNamed(context, '/language');
+                sl<AppNavigator>().push(screen: const LanguageView());
               },
             ),
             const Divider(height: 1, color: AppColors.border),
@@ -83,7 +90,7 @@ class _SettingsViewState extends State<SettingsView> {
             // Dark Mode
             SettingsRow(
               icon: Iconsax.moon,
-              title: 'Dark Mode',
+              title: context.tr.settingsDarkMode,
               trailing: Switch(
                 value: _isDarkMode,
                 onChanged: (value) {
@@ -101,7 +108,7 @@ class _SettingsViewState extends State<SettingsView> {
 
             // App Version
             Text(
-              'App Version 1.0.0',
+              context.tr.settingsAppVersion('1.0.0'),
               style: GoogleFonts.inter(
                 fontSize: 12,
                 fontWeight: FontWeight.w400,

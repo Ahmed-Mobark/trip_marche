@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:trip_marche/core/theme/app_colors.dart';
 import 'package:trip_marche/core/theme/app_text_styles.dart';
-import 'package:trip_marche/features/profile/presentation/widgets/company_card.dart';
+import 'package:trip_marche/core/injection/injection_container.dart';
+import 'package:trip_marche/core/navigation/app_navigator.dart';
+import 'package:trip_marche/features/company_profile/presentation/view/company_profile_view.dart';
+import 'package:trip_marche/core/extensions/localization.dart';
+import 'package:trip_marche/core/config/app_images.dart';
+import 'package:trip_marche/features/profile/presentation/widgets/followings_empty_state.dart';
+import 'package:trip_marche/features/profile/presentation/widgets/followings_list.dart';
 
 class MyFollowingsView extends StatefulWidget {
   const MyFollowingsView({super.key});
@@ -16,19 +21,19 @@ class _MyFollowingsViewState extends State<MyFollowingsView> {
   final List<Map<String, dynamic>> _companies = [
     {
       'name': 'Travel Egypt Co.',
-      'logo': 'assets/images/company_placeholder.png',
+      'logo': AppImages.companyPlaceholder,
       'tripCount': 24,
       'isFollowing': true,
     },
     {
       'name': 'Nile Adventures',
-      'logo': 'assets/images/company_placeholder.png',
+      'logo': AppImages.companyPlaceholder,
       'tripCount': 18,
       'isFollowing': true,
     },
     {
       'name': 'Desert Safari Tours',
-      'logo': 'assets/images/company_placeholder.png',
+      'logo': AppImages.companyPlaceholder,
       'tripCount': 12,
       'isFollowing': true,
     },
@@ -46,67 +51,27 @@ class _MyFollowingsViewState extends State<MyFollowingsView> {
           onPressed: () => Navigator.pop(context),
         ),
         title: Text(
-          'My Followings',
+          context.tr.followingsTitle,
           style: AppTextStyles.subtitle(),
         ),
         centerTitle: true,
       ),
       body: _companies.isEmpty
-          ? _buildEmptyState()
-          : ListView.separated(
-              padding: const EdgeInsets.all(20),
-              itemCount: _companies.length,
-              separatorBuilder: (context, index) =>
-                  const SizedBox(height: 12),
-              itemBuilder: (context, index) {
-                final company = _companies[index];
-                return CompanyCard(
-                  name: company['name'] as String,
-                  logo: company['logo'] as String,
-                  tripCount: company['tripCount'] as int,
-                  isFollowing: company['isFollowing'] as bool,
-                  onTap: () {
-                    Navigator.pushNamed(context, '/company-profile');
-                  },
-                  onFollowTap: () {
-                    setState(() {
-                      _companies[index]['isFollowing'] =
-                          !(company['isFollowing'] as bool);
-                    });
-                  },
+          ? const FollowingsEmptyState()
+          : FollowingsList(
+              companies: _companies,
+              onCompanyTap: (index) {
+                sl<AppNavigator>().push(
+                  screen: const CompanyProfileView(),
                 );
               },
+              onFollowToggle: (index) {
+                setState(() {
+                  _companies[index]['isFollowing'] =
+                      !(_companies[index]['isFollowing'] as bool);
+                });
+              },
             ),
-    );
-  }
-
-  Widget _buildEmptyState() {
-    return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Icon(
-            Iconsax.building,
-            size: 64,
-            color: AppColors.greyText.withValues(alpha: 0.4),
-          ),
-          const SizedBox(height: 16),
-          Text(
-            'No followings yet',
-            style: AppTextStyles.subtitle(color: AppColors.greyText),
-          ),
-          const SizedBox(height: 8),
-          Text(
-            'Start following companies to see\ntheir trips here.',
-            textAlign: TextAlign.center,
-            style: GoogleFonts.inter(
-              fontSize: 14,
-              fontWeight: FontWeight.w400,
-              color: AppColors.greyText,
-            ),
-          ),
-        ],
-      ),
     );
   }
 }

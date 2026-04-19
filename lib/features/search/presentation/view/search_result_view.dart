@@ -4,6 +4,7 @@ import 'package:trip_marche/core/theme/app_colors.dart';
 import 'package:trip_marche/core/theme/app_text_styles.dart';
 import 'package:trip_marche/core/data/dummy_data.dart';
 import 'package:trip_marche/core/widgets/trip_card.dart';
+import 'package:trip_marche/core/extensions/localization.dart';
 
 class SearchResultView extends StatelessWidget {
   const SearchResultView({super.key});
@@ -27,7 +28,7 @@ class SearchResultView extends StatelessWidget {
           icon: const Icon(Iconsax.arrow_left, color: AppColors.darkText),
           onPressed: () => Navigator.pop(context),
         ),
-        title: _buildSearchBar(),
+        title: _buildSearchBar(context),
         actions: [
           IconButton(
             onPressed: () {},
@@ -50,7 +51,7 @@ class SearchResultView extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
             child: Text(
-              '${allTrips.length} trips found',
+              context.tr.searchTripsFound(allTrips.length.toString()),
               style: AppTextStyles.bodyMedium(color: AppColors.greyText),
             ),
           ),
@@ -74,7 +75,7 @@ class SearchResultView extends StatelessWidget {
     );
   }
 
-  Widget _buildSearchBar() {
+  Widget _buildSearchBar(BuildContext context) {
     return Container(
       height: 42,
       decoration: BoxDecoration(
@@ -89,7 +90,7 @@ class SearchResultView extends StatelessWidget {
           const SizedBox(width: 8),
           Expanded(
             child: Text(
-              'Sharm El Sheikh',
+              context.tr.searchQueryExample,
               style: AppTextStyles.bodyMedium(color: AppColors.darkText),
             ),
           ),

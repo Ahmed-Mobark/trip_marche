@@ -1,0 +1,21 @@
+---
+description: Centralize assets (icons/images) and enforce design tokens
+globs: lib/**/*.dart
+alwaysApply: false
+---
+
+# Assets & Design Tokens
+
+## Assets (single source of truth)
+
+- Never hardcode asset paths like `'assets/icons/ic_lock.svg'` in UI code.
+- Use:
+  - `package:trip_marche/core/config/app_icons.dart` → `AppIcons.*`
+  - `package:trip_marche/core/config/app_images.dart` → `AppImages.*`
+- If a new asset is added, add a constant to the appropriate class and reference that constant everywhere.
+
+## Colors & Typography
+
+- Prefer `AppColors.*` and `AppTextStyles.*` over inline styles.
+- If a color/style is used in multiple places, promote it to a token instead of duplicating values.
+

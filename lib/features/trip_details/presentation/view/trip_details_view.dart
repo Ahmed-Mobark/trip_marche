@@ -5,6 +5,7 @@ import 'package:readmore/readmore.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:trip_marche/core/theme/app_colors.dart';
 import 'package:trip_marche/core/theme/app_text_styles.dart';
+import 'package:trip_marche/core/extensions/localization.dart';
 import 'package:trip_marche/features/trip_details/presentation/widgets/circle_icon_button.dart';
 import 'package:trip_marche/features/trip_details/presentation/widgets/trip_detail_item.dart';
 import 'package:trip_marche/features/trip_details/presentation/widgets/itinerary_day.dart';
@@ -116,7 +117,7 @@ class _TripDetailsViewState extends State<TripDetailsView> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Text('Dahab Trip', style: AppTextStyles.heading3()),
+        Text(context.tr.tripDetailsTitle, style: AppTextStyles.heading3()),
         Row(
           children: [
             const Icon(Iconsax.star1, color: AppColors.starYellow, size: 18),
@@ -157,8 +158,8 @@ class _TripDetailsViewState extends State<TripDetailsView> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text('Travel Egypt Co.', style: AppTextStyles.bodyMedium()),
-              Text('Adventure Travel Agency', style: AppTextStyles.bodySmall()),
+              Text(context.tr.tripDetailsCompanyName, style: AppTextStyles.bodyMedium()),
+              Text(context.tr.tripDetailsCompanyTagline, style: AppTextStyles.bodySmall()),
             ],
           ),
         ),
@@ -172,7 +173,7 @@ class _TripDetailsViewState extends State<TripDetailsView> {
             padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 6),
           ),
           child: Text(
-            'Follow',
+            context.tr.tripDetailsFollow,
             style: AppTextStyles.bodyMedium(color: AppColors.primary),
           ),
         ),
@@ -181,23 +182,23 @@ class _TripDetailsViewState extends State<TripDetailsView> {
   }
 
   Widget _buildTripDetailsRow() {
-    return const Row(
+    return Row(
       mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: [
         TripDetailItem(
           icon: Iconsax.calendar,
-          value: '7 Days',
-          label: 'Duration',
+          value: context.tr.tripDetailsDurationValue,
+          label: context.tr.tripDetailsDurationLabel,
         ),
         TripDetailItem(
           icon: Iconsax.people,
-          value: '20 Person',
-          label: 'Group Size',
+          value: context.tr.tripDetailsGroupSizeValue,
+          label: context.tr.tripDetailsGroupSizeLabel,
         ),
         TripDetailItem(
           icon: Iconsax.user_octagon,
-          value: 'Mixed',
-          label: 'Type',
+          value: context.tr.tripDetailsTypeValue,
+          label: context.tr.tripDetailsTypeLabel,
         ),
       ],
     );
@@ -216,7 +217,7 @@ class _TripDetailsViewState extends State<TripDetailsView> {
           ),
         ),
         Text(
-          '/Person',
+          context.tr.tripDetailsPerPerson,
           style: AppTextStyles.bodyMedium(color: AppColors.greyText),
         ),
         const SizedBox(width: 12),
@@ -238,19 +239,16 @@ class _TripDetailsViewState extends State<TripDetailsView> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          'Description',
+          context.tr.tripDetailsDescriptionTitle,
           style: AppTextStyles.subtitle(color: AppColors.darkText),
         ),
         const SizedBox(height: 8),
         ReadMoreText(
-          'Experience the magic of Dahab, a beautiful coastal city on the southeast coast of the Sinai Peninsula in Egypt. '
-          'This 7-day trip includes snorkeling in the Blue Hole, desert safaris, camel rides, and visits to ancient Bedouin villages. '
-          'Enjoy the stunning coral reefs, crystal-clear waters, and breathtaking mountain landscapes. '
-          'Our experienced guides will ensure you have an unforgettable adventure with comfortable accommodations and delicious local cuisine.',
+          context.tr.tripDetailsDescriptionBody,
           trimLines: 3,
           trimMode: TrimMode.Line,
-          trimCollapsedText: ' Read More',
-          trimExpandedText: ' Show Less',
+          trimCollapsedText: context.tr.tripDetailsReadMore,
+          trimExpandedText: context.tr.tripDetailsShowLess,
           style: AppTextStyles.body(color: AppColors.secondaryText),
           moreStyle: AppTextStyles.bodyMedium(color: AppColors.primary),
           lessStyle: AppTextStyles.bodyMedium(color: AppColors.primary),
@@ -262,38 +260,32 @@ class _TripDetailsViewState extends State<TripDetailsView> {
   Widget _buildTripItinerary() {
     final days = [
       {
-        'title': 'Day 1 - Arrival & Check-in',
-        'desc':
-            'Arrive at Dahab, transfer to hotel, welcome dinner and orientation meeting with the group.',
+        'title': context.tr.tripDetailsDay1Title,
+        'desc': context.tr.tripDetailsDay1Desc,
       },
       {
-        'title': 'Day 2 - Blue Hole Snorkeling',
-        'desc':
-            'Full day snorkeling at the famous Blue Hole. Lunch at a beachside restaurant. Evening free time.',
+        'title': context.tr.tripDetailsDay2Title,
+        'desc': context.tr.tripDetailsDay2Desc,
       },
       {
-        'title': 'Day 3 - Desert Safari',
-        'desc':
-            'Jeep safari through the Sinai desert. Visit Bedouin village. Stargazing dinner in the desert.',
+        'title': context.tr.tripDetailsDay3Title,
+        'desc': context.tr.tripDetailsDay3Desc,
       },
       {
-        'title': 'Day 4 - Free Day & Activities',
-        'desc':
-            'Choose from optional activities: diving, camel rides, or explore the local markets.',
+        'title': context.tr.tripDetailsDay4Title,
+        'desc': context.tr.tripDetailsDay4Desc,
       },
       {
-        'title': 'Day 5 - Mount Sinai Hike',
-        'desc':
-            'Early morning hike to Mount Sinai for sunrise. Visit St. Catherine\'s Monastery.',
+        'title': context.tr.tripDetailsDay5Title,
+        'desc': context.tr.tripDetailsDay5Desc,
       },
       {
-        'title': 'Day 6 - Water Sports',
-        'desc':
-            'Windsurfing and kitesurfing lessons. Farewell dinner at a seaside restaurant.',
+        'title': context.tr.tripDetailsDay6Title,
+        'desc': context.tr.tripDetailsDay6Desc,
       },
       {
-        'title': 'Day 7 - Departure',
-        'desc': 'Breakfast at hotel. Check-out and transfer to airport.',
+        'title': context.tr.tripDetailsDay7Title,
+        'desc': context.tr.tripDetailsDay7Desc,
       },
     ];
 
@@ -301,7 +293,7 @@ class _TripDetailsViewState extends State<TripDetailsView> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          'Trip Itinerary',
+          context.tr.tripDetailsItineraryTitle,
           style: AppTextStyles.subtitle(color: AppColors.darkText),
         ),
         const SizedBox(height: 12),
@@ -320,18 +312,18 @@ class _TripDetailsViewState extends State<TripDetailsView> {
 
   Widget _buildTripIncludes() {
     final includes = [
-      {'icon': Iconsax.building_4, 'label': 'Hotel'},
-      {'icon': Iconsax.bus, 'label': 'Transportation'},
-      {'icon': Iconsax.coffee, 'label': 'Meals'},
-      {'icon': Iconsax.activity, 'label': 'Activities'},
-      {'icon': Iconsax.user, 'label': 'Tour Guide'},
+      {'icon': Iconsax.building_4, 'label': context.tr.tripDetailsIncludesHotel},
+      {'icon': Iconsax.bus, 'label': context.tr.tripDetailsIncludesTransportation},
+      {'icon': Iconsax.coffee, 'label': context.tr.tripDetailsIncludesMeals},
+      {'icon': Iconsax.activity, 'label': context.tr.tripDetailsIncludesActivities},
+      {'icon': Iconsax.user, 'label': context.tr.tripDetailsIncludesTourGuide},
     ];
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          'Trip Includes',
+          context.tr.tripDetailsIncludesTitle,
           style: AppTextStyles.subtitle(color: AppColors.darkText),
         ),
         const SizedBox(height: 12),
@@ -378,7 +370,7 @@ class _TripDetailsViewState extends State<TripDetailsView> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          'Trip Images',
+          context.tr.tripDetailsImagesTitle,
           style: AppTextStyles.subtitle(color: AppColors.darkText),
         ),
         const SizedBox(height: 12),
@@ -420,7 +412,7 @@ class _TripDetailsViewState extends State<TripDetailsView> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          'Reviews',
+          context.tr.tripDetailsReviewsTitle,
           style: AppTextStyles.subtitle(color: AppColors.darkText),
         ),
         const SizedBox(height: 16),
@@ -448,7 +440,10 @@ class _TripDetailsViewState extends State<TripDetailsView> {
                   }),
                 ),
                 const SizedBox(height: 4),
-                Text('112 Reviews', style: AppTextStyles.bodySmall()),
+                Text(
+                  context.tr.tripDetailsReviewsCount('112'),
+                  style: AppTextStyles.bodySmall(),
+                ),
               ],
             ),
             const SizedBox(width: 24),
@@ -467,7 +462,7 @@ class _TripDetailsViewState extends State<TripDetailsView> {
           ],
         ),
         const SizedBox(height: 20),
-        const ReviewItemDisplay(
+        ReviewItemDisplay(
           name: 'Ahmed Hassan',
           rating: 5,
           date: 'Dec 2025',
@@ -475,7 +470,7 @@ class _TripDetailsViewState extends State<TripDetailsView> {
               'Amazing trip! The Blue Hole snorkeling was a once-in-a-lifetime experience. Great organization.',
         ),
         const SizedBox(height: 12),
-        const ReviewItemDisplay(
+        ReviewItemDisplay(
           name: 'Sara Mohamed',
           rating: 5,
           date: 'Nov 2025',
@@ -519,19 +514,19 @@ class _TripDetailsViewState extends State<TripDetailsView> {
   Widget _buildRelatedTrips() {
     final trips = [
       {
-        'name': 'Sharm El Sheikh',
+        'name': context.tr.tripDetailsRelatedNameSharm,
         'price': '\$499',
         'rating': '4.7',
         'days': '5 Days',
       },
       {
-        'name': 'Hurghada Trip',
+        'name': context.tr.tripDetailsRelatedNameHurghada,
         'price': '\$599',
         'rating': '4.8',
         'days': '6 Days',
       },
       {
-        'name': 'Luxor & Aswan',
+        'name': context.tr.tripDetailsRelatedNameLuxorAswan,
         'price': '\$799',
         'rating': '4.9',
         'days': '4 Days',
@@ -542,7 +537,7 @@ class _TripDetailsViewState extends State<TripDetailsView> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          'Related Trips',
+          context.tr.tripDetailsRelatedTripsTitle,
           style: AppTextStyles.subtitle(color: AppColors.darkText),
         ),
         const SizedBox(height: 12),
@@ -660,9 +655,9 @@ class _TripDetailsViewState extends State<TripDetailsView> {
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text('Total Price', style: AppTextStyles.caption()),
+                Text(context.tr.tripDetailsTotalPrice, style: AppTextStyles.caption()),
                 Text(
-                  '\$699/Person',
+                  context.tr.tripDetailsPricePerPersonShort('\$699'),
                   style: GoogleFonts.inter(
                     fontSize: 22,
                     fontWeight: FontWeight.w700,
@@ -682,7 +677,7 @@ class _TripDetailsViewState extends State<TripDetailsView> {
                     borderRadius: BorderRadius.circular(12),
                   ),
                   child: Center(
-                    child: Text('Book Now', style: AppTextStyles.button()),
+                    child: Text(context.tr.tripDetailsBookNow, style: AppTextStyles.button()),
                   ),
                 ),
               ),

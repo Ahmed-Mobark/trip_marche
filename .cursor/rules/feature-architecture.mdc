@@ -1,0 +1,136 @@
+---
+description: Clean Architecture layers for feature modules
+globs: lib/features/**/*.dart
+alwaysApply: false
+---
+
+# Feature Architecture (Clean Architecture)
+
+Every feature under `lib/features/<name>/` must follow three layers:
+
+## The Correct Request Cycle (End-to-End)
+
+When you “call an API request” in this project, the flow must always be:
+
+- **View (`presentation/view`)**
+  - Collects user input and triggers a cubit method only.
+  - Shows UI states (loading/error/success) from the cubit.
+- **Cubit (`presentation/cubit`)**
+  - Orchestrates UI state and calls a **use case**.
+  - Never parses JSON, never talks to `ApiBaseHelper` directly.
+- **Use case (`domain/usecases`)**
+  - Single action with `call(params)`; calls **repository contract**.
+- **Repository contract (`domain/repositories`)**
+  - Returns `Future<Either<Failure, T>>`.
+- **Repository impl (`data/repositories`)**
+  - Uses `RepositoryHelper.handleEither` and calls a data source.
+- **Remote data source (`data/datasources`)**
+  - The ONLY place that calls `ApiBaseHelper` (`get/post/put/...`).
+  - Converts raw response → model(s).
+- **Model (`data/models`)**
+  - `fromJson` + `toEntity()` (or mapping) into domain entities.
+
+### Visual flow
+
+`View → Cubit → UseCase → Repo(Contract) → RepoImpl → RemoteDataSource → ApiBaseHelper → HTTP`
+
+and response back:
+
+`HTTP → ApiBaseHelper → RemoteDataSource(Model) → RepoImpl(Either) → UseCase → Cubit(State) → View(UI)`
+
+## Recommended Implementation Order (How to Build Any New Request)
+
+To keep the codebase consistent and prevent “UI-driven networking”, implement requests in this order:
+
+1. **Endpoint constant**
+   - Add to `lib/core/config/app_end_points.dart` (e.g. `AppEndpoints.authRegister`).
+2. **Domain first (contract-driven)**
+   - Add **entity** (response shape in your app).
+   - Add **repository contract** method signature.
+   - Add **use case** + `Params` (input for the request).
+3. **Data layer**
+   - Add **model** (API JSON parsing) + `toEntity()`.
+   - Add **remote data source** (calls `ApiBaseHelper` and returns the model).
+   - Add **repository impl** (wrap with `handleEither`, map model → entity).
+4. **DI wiring**
+   - Register datasource → repo → usecase → cubit in `<feature>_inj.dart`.
+5. **Presentation**
+   - Cubit method calls the use case, emits loading/error/success.
+   - View listens for state and renders UX (spinner, snackbar, navigation).
+
+### Note about “starting with data then domain”
+
+You *can* start in `data/` when you already have a finalized API response, but it’s **not the preferred approach**:
+
+- Starting with **domain** forces you to define the app’s contract first (what the UI needs), then map API details into it.
+- Starting with **data** often leaks API shape upward (views/cubits become coupled to backend JSON).
+
+For this repo, the standard is **Domain → Data → Presentation** (with endpoints/DI as glue).
+
+## 1. Domain (`domain/`)
+
+- **Entities** — pure Dart classes, no Flutter/framework imports. Use `Equatable`.
+- **Repository contracts** — abstract classes defining the API surface. Return `Future<Either<Failure, T>>`.
+- **Use cases** — single-responsibility classes with a `call()` method. Inject the repository via constructor.
+
+```dart
+class GetScheduleUseCase {
+  final ScheduleRepository _repo;
+  const GetScheduleUseCase(this._repo);
+
+  Future<Either<Failure, List<ScheduleEntity>>> call() => _repo.getSchedule();
+}
+```
+
+## 2. Data (`data/`)
+
+- **Models** — extend or map to domain entities. Include `fromJson` / `toJson`.
+- **Data sources** — abstract + impl. Remote sources use `ApiBaseHelper`; local sources use `Storage` or Hive boxes.
+- **Repository impl** — implements the domain contract. Mix in `RepositoryHelper` to wrap calls with `handleEither`.
+
+```dart
+class ScheduleRepositoryImpl with RepositoryHelper implements ScheduleRepository {
+  final ScheduleRemoteDataSource _remote;
+  const ScheduleRepositoryImpl(this._remote);
+
+  @override
+  Future<Either<Failure, List<ScheduleEntity>>> getSchedule() =>
+    handleEither(() async {
+      final models = await _remote.fetchSchedule();
+      return models.map((m) => m.toEntity()).toList();
+    });
+}
+```
+
+## 3. Presentation (`presentation/`)
+
+- **Cubit / State** — extends `Cubit<FeatureState>`. States use `Equatable`. Inject use cases, not repositories.
+- **Views** — `*_view.dart` files. Wrap with `BlocProvider` at the screen level.
+- **Widgets** — extracted private/feature widgets for readability.
+
+## DI Registration
+
+- Create `<feature>_inj.dart` at feature root (e.g. `lib/features/schedule/schedule_inj.dart`).
+- Register data source, repository, use case, and cubit in that file.
+- Call the init function from `lib/core/injection/injection_container.dart` → `init()`.
+
+```dart
+Future<void> initScheduleInjection(GetIt sl) async {
+  sl.registerLazySingleton<ScheduleRemoteDataSource>(
+    () => ScheduleRemoteDataSourceImpl(sl()),
+  );
+  sl.registerLazySingleton<ScheduleRepository>(
+    () => ScheduleRepositoryImpl(sl()),
+  );
+  sl.registerLazySingleton(() => GetScheduleUseCase(sl()));
+  sl.registerFactory(() => ScheduleCubit(sl()));
+}
+```
+
+## Rules
+
+- Domain must **never** import from data or presentation.
+- Data may import domain but **never** presentation.
+- Presentation may import domain (entities, use cases) but **never** data directly.
+- One use case = one public method (`call`). Do not bundle multiple actions.
+- Feature folders must not import from other features. Share through `core/`.

@@ -114,7 +114,7 @@ class _WriteReviewViewState extends State<WriteReviewView> {
                         size: 40,
                         color: index < _selectedRating
                             ? const Color(0xFFFFD43B)
-                            : AppColors.greyText.withOpacity(0.4),
+                            : AppColors.greyText.withValues(alpha: 0.4),
                       ),
                     ),
                   );

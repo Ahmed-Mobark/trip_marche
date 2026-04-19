@@ -1,48 +1,35 @@
 import 'package:flutter/material.dart';
-import 'package:trip_marche/core/theme/app_colors.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:trip_marche/core/theme/app_text_styles.dart';
+import 'package:trip_marche/core/theme/app_colors.dart';
 import 'package:trip_marche/core/widgets/app_button.dart';
 import 'package:trip_marche/core/widgets/app_text_field.dart';
 import 'package:trip_marche/core/widgets/social_login_button.dart';
+import 'package:trip_marche/core/injection/injection_container.dart';
+import 'package:trip_marche/features/auth/presentation/cubit/sign_up/sign_up_cubit.dart';
+import 'package:trip_marche/features/auth/presentation/cubit/sign_up/sign_up_state.dart';
 import 'package:trip_marche/features/auth/presentation/widgets/auth_link_text.dart';
 import 'package:trip_marche/features/auth/presentation/widgets/divider_with_text.dart';
+import 'package:trip_marche/core/extensions/localization.dart';
 
-class SignUpView extends StatefulWidget {
+class SignUpView extends StatelessWidget {
   const SignUpView({super.key});
 
   @override
-  State<SignUpView> createState() => _SignUpViewState();
-}
-
-class _SignUpViewState extends State<SignUpView> {
-  final _fullNameController = TextEditingController();
-  final _emailController = TextEditingController();
-  final _phoneController = TextEditingController();
-  final _passwordController = TextEditingController();
-  final _confirmPasswordController = TextEditingController();
-  bool _obscurePassword = true;
-  bool _obscureConfirmPassword = true;
-
-  @override
-  void dispose() {
-    _fullNameController.dispose();
-    _emailController.dispose();
-    _phoneController.dispose();
-    _passwordController.dispose();
-    _confirmPasswordController.dispose();
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: AppColors.background,
-      body: SafeArea(
-        child: SingleChildScrollView(
-          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
+    return BlocProvider(
+      create: (_) => sl<SignUpCubit>(),
+      child: Builder(
+        builder: (context) {
+          return Scaffold(
+            backgroundColor: AppColors.background,
+            body: SafeArea(
+              child: SingleChildScrollView(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
               // Back arrow
               GestureDetector(
                 onTap: () => Navigator.pop(context),
@@ -62,120 +49,128 @@ class _SignUpViewState extends State<SignUpView> {
               ),
               const SizedBox(height: 24),
 
-              Text('Create Your Account', style: AppTextStyles.heading2()),
+              Text(context.tr.authSignUpTitle, style: AppTextStyles.heading2()),
               const SizedBox(height: 24),
 
               // Full Name
               AppTextField(
-                label: 'Full Name',
-                hint: 'Enter your full name',
-                controller: _fullNameController,
+                label: context.tr.authFullNameLabel,
+                hint: context.tr.authFullNameHint,
+                controller: context.read<SignUpCubit>().fullNameController,
                 keyboardType: TextInputType.name,
               ),
               const SizedBox(height: 16),
 
               // Email
               AppTextField(
-                label: 'Email',
-                hint: 'Enter your email',
-                controller: _emailController,
+                label: context.tr.authEmailLabel,
+                hint: context.tr.authEmailHint,
+                controller: context.read<SignUpCubit>().emailController,
                 keyboardType: TextInputType.emailAddress,
               ),
               const SizedBox(height: 16),
 
               // Phone Number
               AppTextField(
-                label: 'Phone Number',
-                hint: 'Enter your phone number',
-                controller: _phoneController,
+                label: context.tr.authPhoneLabel,
+                hint: context.tr.authPhoneHint,
+                controller: context.read<SignUpCubit>().phoneController,
                 keyboardType: TextInputType.phone,
               ),
               const SizedBox(height: 16),
 
               // Password
-              AppTextField(
-                label: 'Password',
-                hint: 'Enter your password',
-                controller: _passwordController,
-                obscureText: _obscurePassword,
-                suffixIcon: IconButton(
-                  icon: Icon(
-                    _obscurePassword
-                        ? Icons.visibility_off_outlined
-                        : Icons.visibility_outlined,
-                    color: AppColors.greyText,
-                    size: 20,
-                  ),
-                  onPressed: () {
-                    setState(() {
-                      _obscurePassword = !_obscurePassword;
-                    });
-                  },
-                ),
+              BlocBuilder<SignUpCubit, SignUpState>(
+                buildWhen: (p, n) => p.obscurePassword != n.obscurePassword,
+                builder: (context, state) {
+                  return AppTextField(
+                    label: context.tr.authPasswordLabel,
+                    hint: context.tr.authPasswordHint,
+                    controller: context.read<SignUpCubit>().passwordController,
+                    obscureText: state.obscurePassword,
+                    suffixIcon: IconButton(
+                      icon: Icon(
+                        state.obscurePassword
+                            ? Icons.visibility_off_outlined
+                            : Icons.visibility_outlined,
+                        color: AppColors.greyText,
+                        size: 20,
+                      ),
+                      onPressed: context.read<SignUpCubit>().toggleObscurePassword,
+                    ),
+                  );
+                },
               ),
               const SizedBox(height: 16),
 
               // Confirm Password
-              AppTextField(
-                label: 'Confirm Password',
-                hint: 'Confirm your password',
-                controller: _confirmPasswordController,
-                obscureText: _obscureConfirmPassword,
-                suffixIcon: IconButton(
-                  icon: Icon(
-                    _obscureConfirmPassword
-                        ? Icons.visibility_off_outlined
-                        : Icons.visibility_outlined,
-                    color: AppColors.greyText,
-                    size: 20,
-                  ),
-                  onPressed: () {
-                    setState(() {
-                      _obscureConfirmPassword = !_obscureConfirmPassword;
-                    });
-                  },
-                ),
+              BlocBuilder<SignUpCubit, SignUpState>(
+                buildWhen: (p, n) =>
+                    p.obscureConfirmPassword != n.obscureConfirmPassword,
+                builder: (context, state) {
+                  return AppTextField(
+                    label: context.tr.authConfirmPasswordLabel,
+                    hint: context.tr.authConfirmPasswordHint,
+                    controller:
+                        context.read<SignUpCubit>().confirmPasswordController,
+                    obscureText: state.obscureConfirmPassword,
+                    suffixIcon: IconButton(
+                      icon: Icon(
+                        state.obscureConfirmPassword
+                            ? Icons.visibility_off_outlined
+                            : Icons.visibility_outlined,
+                        color: AppColors.greyText,
+                        size: 20,
+                      ),
+                      onPressed:
+                          context.read<SignUpCubit>().toggleObscureConfirmPassword,
+                    ),
+                  );
+                },
               ),
               const SizedBox(height: 28),
 
               // Sign Up button
               AppButton(
-                text: 'Sign Up',
-                onPressed: () {
-                  Navigator.pushNamed(context, '/verify');
+                text: context.tr.authSignUpButton,
+                onTap: () {
+                  context.read<SignUpCubit>().submitSignUp();
                 },
               ),
               const SizedBox(height: 24),
 
               // Or Sign Up with divider
-              const DividerWithText(text: 'Or Sign Up with'),
+              DividerWithText(text: context.tr.authOrSignUpWith),
               const SizedBox(height: 20),
 
               // Social login buttons
               SocialLoginButton(
                 icon: const Icon(Icons.g_mobiledata_outlined, size: 24),
-                text: 'Google',
+                text: context.tr.authSocialGoogle,
                 onPressed: () {},
               ),
 
               const SizedBox(height: 12),
               SocialLoginButton(
                 icon: const Icon(Icons.apple, size: 24),
-                text: 'Apple',
+                text: context.tr.authSocialApple,
                 onPressed: () {},
               ),
               const SizedBox(height: 24),
 
               // Already have an account
               AuthLinkText(
-                leadingText: 'Already have an account? ',
-                actionText: 'Login',
+                leadingText: context.tr.authHaveAccountPrompt,
+                actionText: context.tr.authLoginAction,
                 onTap: () => Navigator.pop(context),
               ),
               const SizedBox(height: 24),
-            ],
-          ),
-        ),
+                  ],
+                ),
+              ),
+            ),
+          );
+        },
       ),
     );
   }

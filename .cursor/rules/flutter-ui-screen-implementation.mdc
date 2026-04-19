@@ -1,0 +1,62 @@
+---
+description: Flutter UI screen and widget implementation conventions
+globs: lib/features/**/presentation/**/*.dart,lib/core/widgets/**/*.dart
+alwaysApply: false
+---
+
+# Flutter UI Screens & Widgets
+
+## Screen Structure
+
+- Every screen is a `*View` class (e.g. `ExpenseView`) inside `features/<name>/presentation/view/`.
+- Wrap with `Scaffold`. Use `SafeArea` where needed (not inside tab shells that already provide it).
+- For scrollable content, use `SingleChildScrollView` or `CustomScrollView` — never let content overflow.
+- Provide the feature Cubit via `BlocProvider` at the screen entry point, not globally.
+- Keep `view/` files focused on rendering, layout composition, and connecting UI callbacks to cubit methods.
+- Do not keep controllers, form keys, mutable flags, validation logic, or submit/navigation decision logic inside a `*_view.dart` file.
+
+## Layout & Sizing
+
+- Use `flutter_screenutil`: `.w` for widths, `.h` for heights, `.r` for radii, `.sp` for font sizes.
+- Design size is **393 × 852** — all `.w`/`.h` values are relative to this.
+- Prefer responsive units for layout spacing and sizing (`.w/.h/.r/.sp`), but keep `const` where it improves performance and the value is a stable design token (e.g. standard padding, divider thickness).
+
+## Design Tokens
+
+- **Colors:** Always use `AppColors.*` — never inline `Color(0xFF...)`.
+- **Typography:** Use `AppTextStyles.*` (`heading1`, `body`, `button`, `caption`, etc.). Fine-tune with `.copyWith(fontSize: X.sp)`.
+- **Shared widgets:** Check `lib/core/widgets/` first (buttons, text fields, shimmer, dialogs, empty states, cached images).
+
+## Strings & Localisation
+
+- All user-facing strings via `context.tr.*`.
+- Add keys to both ARB files: `assets/translation/en.arb` and `assets/translation/ar.arb`.
+
+## Navigation
+
+- Forward: `sl<AppNavigator>().push(screen: ...)` / `.pushReplacement(...)` / `.pushAndRemoveUntil(...)`.
+- Back/close: `Navigator.pop(context)` — only for local dismiss actions.
+- Available animations: `NavAnimation.fade` (default), `.slide`, `.scale`, `.cupertino`.
+
+## RTL Support
+
+- Use `EdgeInsetsDirectional` / `AlignmentDirectional` / `BorderRadiusDirectional` instead of fixed LTR variants.
+- Use `TextDirection`-aware icons (e.g. `arrow_back_ios_new_rounded` auto-flips).
+- Test layouts in both Arabic (RTL) and English (LTR).
+
+## Widget Extraction
+
+- Follow SRP/SOLID in the presentation layer: `view/` files should focus on screen composition, state wiring, and navigation only.
+- For feature UI, extract non-trivial sections into `features/<name>/presentation/widgets/` instead of keeping many helper widgets/classes inside the `*_view.dart` file.
+- Use tiny private widgets inside a view only for very small one-off fragments; once a widget has meaningful layout/styling logic, reusable parameters, or may be shared by another screen in the feature, move it to the `widgets/` folder.
+- If a widget is reused across multiple features, move it to `lib/core/widgets/`.
+- Prefer extracted widgets as their own files (e.g. `my_reviews_list.dart`) over large `_buildX()` helper methods in the view.
+
+## UX Consistency
+
+- Buttons: fully rounded (`BorderRadius.circular(999.r)`), height `50–58.h`.
+- Cards: rounded corners `12–16.r`, light border or subtle shadow.
+- Spacing: consistent `16.w` horizontal padding, `12–24.h` vertical gaps.
+- Loading states: use `Shimmer` widgets from `core/widgets/`, not bare `CircularProgressIndicator`.
+- Empty states: use `AppEmptyScreen` with illustration + message.
+- Error states: show user-friendly message from `Failure.message`, not raw exceptions.

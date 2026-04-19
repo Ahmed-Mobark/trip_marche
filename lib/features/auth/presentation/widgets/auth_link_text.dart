@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:trip_marche/core/theme/app_colors.dart';
+import 'package:trip_marche/core/config/app_colors.dart';
 import 'package:trip_marche/core/theme/app_text_styles.dart';
 
 /// A centred RichText link used for auth navigation, e.g.

@@ -3,6 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:trip_marche/core/theme/app_colors.dart';
 import 'package:trip_marche/core/theme/app_text_styles.dart';
+import 'package:trip_marche/core/extensions/localization.dart';
 
 class ContactInfoView extends StatefulWidget {
   const ContactInfoView({super.key});
@@ -40,7 +41,10 @@ class _ContactInfoViewState extends State<ContactInfoView> {
           icon: const Icon(Iconsax.arrow_left, color: AppColors.darkText),
           onPressed: () => Navigator.pop(context),
         ),
-        title: Text('Contact Info', style: AppTextStyles.subtitle(color: AppColors.darkText)),
+        title: Text(
+          context.tr.bookingContactInfoTitle,
+          style: AppTextStyles.bodyMedium(color: AppColors.darkText),
+        ),
         centerTitle: true,
       ),
       body: SingleChildScrollView(
@@ -51,46 +55,46 @@ class _ContactInfoViewState extends State<ContactInfoView> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               _buildTextField(
-                label: 'Full Name',
-                hint: 'Enter your full name',
+                label: context.tr.bookingContactFullNameLabel,
+                hint: context.tr.bookingContactFullNameHint,
                 controller: _fullNameController,
                 icon: Iconsax.user,
                 keyboardType: TextInputType.name,
               ),
               const SizedBox(height: 20),
               _buildTextField(
-                label: 'Phone Number',
-                hint: '+20 123 456 7890',
+                label: context.tr.bookingContactPhoneLabel,
+                hint: context.tr.bookingContactPhoneHint,
                 controller: _phoneController,
                 icon: Iconsax.call,
                 keyboardType: TextInputType.phone,
               ),
               const SizedBox(height: 20),
               _buildTextField(
-                label: 'Email',
-                hint: 'email@example.com',
+                label: context.tr.bookingContactEmailLabel,
+                hint: context.tr.bookingContactEmailHint,
                 controller: _emailController,
                 icon: Iconsax.sms,
                 keyboardType: TextInputType.emailAddress,
               ),
               const SizedBox(height: 20),
               _buildTextField(
-                label: 'Emergency Contact',
-                hint: 'Emergency contact number',
+                label: context.tr.bookingContactEmergencyLabel,
+                hint: context.tr.bookingContactEmergencyHint,
                 controller: _emergencyContactController,
                 icon: Iconsax.call_calling,
                 keyboardType: TextInputType.phone,
               ),
               const SizedBox(height: 20),
               _buildTextField(
-                label: 'ID/Passport Number',
-                hint: 'Enter your ID or Passport number',
+                label: context.tr.bookingContactIdPassportLabel,
+                hint: context.tr.bookingContactIdPassportHint,
                 controller: _idPassportController,
                 icon: Iconsax.card,
                 keyboardType: TextInputType.text,
               ),
               const SizedBox(height: 40),
-              _buildContinueButton(),
+              _buildContinueButton(context),
               const SizedBox(height: 20),
             ],
           ),
@@ -109,7 +113,7 @@ class _ContactInfoViewState extends State<ContactInfoView> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(label, style: AppTextStyles.label()),
+        Text(label, style: AppTextStyles.bodyMedium()),
         const SizedBox(height: 8),
         TextFormField(
           controller: controller,
@@ -121,7 +125,7 @@ class _ContactInfoViewState extends State<ContactInfoView> {
           ),
           validator: (value) {
             if (value == null || value.isEmpty) {
-              return 'This field is required';
+              return context.tr.errorFieldRequired;
             }
             return null;
           },
@@ -130,7 +134,7 @@ class _ContactInfoViewState extends State<ContactInfoView> {
             hintStyle: GoogleFonts.inter(fontSize: 14, color: AppColors.greyText),
             prefixIcon: Icon(icon, color: AppColors.greyText, size: 20),
             filled: true,
-            fillColor: AppColors.lightBg,
+            fillColor: AppColors.inputBg,
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(12),
               borderSide: BorderSide(color: AppColors.border),
@@ -154,7 +158,7 @@ class _ContactInfoViewState extends State<ContactInfoView> {
     );
   }
 
-  Widget _buildContinueButton() {
+  Widget _buildContinueButton(BuildContext context) {
     return GestureDetector(
       onTap: () {
         if (_formKey.currentState!.validate()) {
@@ -165,11 +169,11 @@ class _ContactInfoViewState extends State<ContactInfoView> {
         width: double.infinity,
         height: 56,
         decoration: BoxDecoration(
-          gradient: AppColors.primaryGradient,
+          gradient: LinearGradient(colors: [AppColors.primary, AppColors.primary]),
           borderRadius: BorderRadius.circular(12),
         ),
         child: Center(
-          child: Text('Continue', style: AppTextStyles.button()),
+          child: Text(context.tr.bookingContinue, style: AppTextStyles.button()),
         ),
       ),
     );

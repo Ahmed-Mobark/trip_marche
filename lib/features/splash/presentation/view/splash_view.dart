@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:trip_marche/core/theme/app_colors.dart';
+import 'package:trip_marche/core/injection/injection_container.dart';
+import 'package:trip_marche/core/navigation/app_navigator.dart';
+import 'package:trip_marche/features/auth/presentation/view/login_view.dart';
 
 class SplashView extends StatefulWidget {
   const SplashView({super.key});
@@ -28,7 +31,7 @@ class _SplashViewState extends State<SplashView> {
     // Navigate to login after 2.5 seconds
     Future.delayed(const Duration(milliseconds: 2500), () {
       if (mounted) {
-        Navigator.pushReplacementNamed(context, '/login');
+        sl<AppNavigator>().pushReplacement(screen: const LoginView());
       }
     });
   }

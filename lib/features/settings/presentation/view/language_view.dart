@@ -3,6 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:trip_marche/core/theme/app_colors.dart';
 import 'package:trip_marche/core/theme/app_text_styles.dart';
+import 'package:trip_marche/core/extensions/localization.dart';
 
 class LanguageView extends StatefulWidget {
   const LanguageView({super.key});
@@ -26,7 +27,7 @@ class _LanguageViewState extends State<LanguageView> {
           onPressed: () => Navigator.pop(context),
         ),
         title: Text(
-          'Language',
+          context.tr.settingsLanguage,
           style: AppTextStyles.subtitle(),
         ),
         centerTitle: true,
@@ -35,9 +36,9 @@ class _LanguageViewState extends State<LanguageView> {
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
         child: Column(
           children: [
-            _buildLanguageOption('English'),
+            _buildLanguageOption(context.tr.settingsEnglish),
             const Divider(height: 1, color: AppColors.border),
-            _buildLanguageOption('Arabic'),
+            _buildLanguageOption(context.tr.settingsArabic),
           ],
         ),
       ),

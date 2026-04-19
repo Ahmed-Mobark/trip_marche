@@ -1,0 +1,1658 @@
+import 'dart:async';
+
+import 'package:flutter/foundation.dart';
+import 'package:flutter/widgets.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:intl/intl.dart' as intl;
+
+import 'app_localizations_ar.dart';
+import 'app_localizations_en.dart';
+
+// ignore_for_file: type=lint
+
+/// Callers can lookup localized strings with an instance of AppLocalizations
+/// returned by `AppLocalizations.of(context)`.
+///
+/// Applications need to include `AppLocalizations.delegate()` in their app's
+/// `localizationDelegates` list, and the locales they support in the app's
+/// `supportedLocales` list. For example:
+///
+/// ```dart
+/// import 'translation/app_localizations.dart';
+///
+/// return MaterialApp(
+///   localizationsDelegates: AppLocalizations.localizationsDelegates,
+///   supportedLocales: AppLocalizations.supportedLocales,
+///   home: MyApplicationHome(),
+/// );
+/// ```
+///
+/// ## Update pubspec.yaml
+///
+/// Please make sure to update your pubspec.yaml to include the following
+/// packages:
+///
+/// ```yaml
+/// dependencies:
+///   # Internationalization support.
+///   flutter_localizations:
+///     sdk: flutter
+///   intl: any # Use the pinned version from flutter_localizations
+///
+///   # Rest of dependencies
+/// ```
+///
+/// ## iOS Applications
+///
+/// iOS applications define key application metadata, including supported
+/// locales, in an Info.plist file that is built into the application bundle.
+/// To configure the locales supported by your app, you’ll need to edit this
+/// file.
+///
+/// First, open your project’s ios/Runner.xcworkspace Xcode workspace file.
+/// Then, in the Project Navigator, open the Info.plist file under the Runner
+/// project’s Runner folder.
+///
+/// Next, select the Information Property List item, select Add Item from the
+/// Editor menu, then select Localizations from the pop-up menu.
+///
+/// Select and expand the newly-created Localizations item then, for each
+/// locale your application supports, add a new item and select the locale
+/// you wish to add from the pop-up menu in the Value field. This list should
+/// be consistent with the languages listed in the AppLocalizations.supportedLocales
+/// property.
+abstract class AppLocalizations {
+  AppLocalizations(String locale)
+    : localeName = intl.Intl.canonicalizedLocale(locale.toString());
+
+  final String localeName;
+
+  static AppLocalizations? of(BuildContext context) {
+    return Localizations.of<AppLocalizations>(context, AppLocalizations);
+  }
+
+  static const LocalizationsDelegate<AppLocalizations> delegate =
+      _AppLocalizationsDelegate();
+
+  /// A list of this localizations delegate along with the default localizations
+  /// delegates.
+  ///
+  /// Returns a list of localizations delegates containing this delegate along with
+  /// GlobalMaterialLocalizations.delegate, GlobalCupertinoLocalizations.delegate,
+  /// and GlobalWidgetsLocalizations.delegate.
+  ///
+  /// Additional delegates can be added by appending to this list in
+  /// MaterialApp. This list does not have to be used at all if a custom list
+  /// of delegates is preferred or required.
+  static const List<LocalizationsDelegate<dynamic>> localizationsDelegates =
+      <LocalizationsDelegate<dynamic>>[
+        delegate,
+        GlobalMaterialLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+      ];
+
+  /// A list of this localizations delegate's supported locales.
+  static const List<Locale> supportedLocales = <Locale>[
+    Locale('ar'),
+    Locale('en'),
+  ];
+
+  /// No description provided for @errorFieldRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'This field is required'**
+  String get errorFieldRequired;
+
+  /// No description provided for @errorInvalidName.
+  ///
+  /// In en, this message translates to:
+  /// **'Invalid name format'**
+  String get errorInvalidName;
+
+  /// No description provided for @errorInvalidUrl.
+  ///
+  /// In en, this message translates to:
+  /// **'Invalid URL'**
+  String get errorInvalidUrl;
+
+  /// No description provided for @errorInvalidPhoneNumber.
+  ///
+  /// In en, this message translates to:
+  /// **'Invalid phone number'**
+  String get errorInvalidPhoneNumber;
+
+  /// No description provided for @errorInvalidEmail.
+  ///
+  /// In en, this message translates to:
+  /// **'Invalid email address'**
+  String get errorInvalidEmail;
+
+  /// No description provided for @errorInvalidPassword.
+  ///
+  /// In en, this message translates to:
+  /// **'Password must be at least 8 characters long with uppercase, lowercase, and special characters'**
+  String get errorInvalidPassword;
+
+  /// No description provided for @errorPasswordMismatch.
+  ///
+  /// In en, this message translates to:
+  /// **'Passwords do not match'**
+  String get errorPasswordMismatch;
+
+  /// No description provided for @errorInvalidNumber.
+  ///
+  /// In en, this message translates to:
+  /// **'Invalid number'**
+  String get errorInvalidNumber;
+
+  /// No description provided for @errorInvalidIban.
+  ///
+  /// In en, this message translates to:
+  /// **'Invalid IBAN format'**
+  String get errorInvalidIban;
+
+  /// No description provided for @errorInvalidMobileNumber.
+  ///
+  /// In en, this message translates to:
+  /// **'Invalid mobile number'**
+  String get errorInvalidMobileNumber;
+
+  /// No description provided for @errorInvalidStcPayId.
+  ///
+  /// In en, this message translates to:
+  /// **'Invalid STC Pay ID'**
+  String get errorInvalidStcPayId;
+
+  /// No description provided for @errorInvalidNationalId.
+  ///
+  /// In en, this message translates to:
+  /// **'Invalid National ID'**
+  String get errorInvalidNationalId;
+
+  /// No description provided for @errorInvalidPassport.
+  ///
+  /// In en, this message translates to:
+  /// **'Invalid passport number'**
+  String get errorInvalidPassport;
+
+  /// No description provided for @sorryMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'We are sorry'**
+  String get sorryMessage;
+
+  /// No description provided for @nothingFound.
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing Found'**
+  String get nothingFound;
+
+  /// No description provided for @errorPhoneValidation.
+  ///
+  /// In en, this message translates to:
+  /// **'The phone number must start with {start} and be {length} digits long.'**
+  String errorPhoneValidation(Object length, Object start);
+
+  /// No description provided for @errorExperienceRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'You must add at least one experience.'**
+  String get errorExperienceRequired;
+
+  /// No description provided for @errorIdDocumentRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'You must upload an ID document to verify your identity.'**
+  String get errorIdDocumentRequired;
+
+  /// No description provided for @errorPhotoRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'You must upload a photo with a white background'**
+  String get errorPhotoRequired;
+
+  /// No description provided for @updateAvailableTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Update Available'**
+  String get updateAvailableTitle;
+
+  /// No description provided for @updateMandatoryMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'A new version of the app is available. Please update to continue using the app.'**
+  String get updateMandatoryMessage;
+
+  /// No description provided for @updateOptionalMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'A new version of the app is available. We recommend updating for the best experience.'**
+  String get updateOptionalMessage;
+
+  /// No description provided for @updateNow.
+  ///
+  /// In en, this message translates to:
+  /// **'Update Now'**
+  String get updateNow;
+
+  /// No description provided for @skip.
+  ///
+  /// In en, this message translates to:
+  /// **'Skip'**
+  String get skip;
+
+  /// No description provided for @chooseImage.
+  ///
+  /// In en, this message translates to:
+  /// **'Upload Choose Image'**
+  String get chooseImage;
+
+  /// No description provided for @takePicture.
+  ///
+  /// In en, this message translates to:
+  /// **'Upload Take Picture'**
+  String get takePicture;
+
+  /// No description provided for @chooseFromFiles.
+  ///
+  /// In en, this message translates to:
+  /// **'Upload Choose From Files'**
+  String get chooseFromFiles;
+
+  /// No description provided for @updatePleaseUpdateToContinue.
+  ///
+  /// In en, this message translates to:
+  /// **'Please update the app to continue.'**
+  String get updatePleaseUpdateToContinue;
+
+  /// No description provided for @updateNewVersionAvailableShort.
+  ///
+  /// In en, this message translates to:
+  /// **'A new version is available.'**
+  String get updateNewVersionAvailableShort;
+
+  /// No description provided for @authLoginTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Login To Your Account'**
+  String get authLoginTitle;
+
+  /// No description provided for @authEmailLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Email'**
+  String get authEmailLabel;
+
+  /// No description provided for @authEmailHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter your email'**
+  String get authEmailHint;
+
+  /// No description provided for @authPasswordLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Password'**
+  String get authPasswordLabel;
+
+  /// No description provided for @authPasswordHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter your password'**
+  String get authPasswordHint;
+
+  /// No description provided for @authForgotPassword.
+  ///
+  /// In en, this message translates to:
+  /// **'Forget Your Password?'**
+  String get authForgotPassword;
+
+  /// No description provided for @authLoginButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Login'**
+  String get authLoginButton;
+
+  /// No description provided for @authNoAccountPrompt.
+  ///
+  /// In en, this message translates to:
+  /// **'Don\'t have an account? '**
+  String get authNoAccountPrompt;
+
+  /// No description provided for @authCreateOne.
+  ///
+  /// In en, this message translates to:
+  /// **'Create One'**
+  String get authCreateOne;
+
+  /// No description provided for @authOrLoginWith.
+  ///
+  /// In en, this message translates to:
+  /// **'Or Login with'**
+  String get authOrLoginWith;
+
+  /// No description provided for @authContinueWithGoogle.
+  ///
+  /// In en, this message translates to:
+  /// **'Continue with Google'**
+  String get authContinueWithGoogle;
+
+  /// No description provided for @authContinueWithApple.
+  ///
+  /// In en, this message translates to:
+  /// **'Continue with Apple'**
+  String get authContinueWithApple;
+
+  /// No description provided for @authTravelAgencyPrompt.
+  ///
+  /// In en, this message translates to:
+  /// **'Travel Agency? '**
+  String get authTravelAgencyPrompt;
+
+  /// No description provided for @authJoinAsTripPartner.
+  ///
+  /// In en, this message translates to:
+  /// **'Join as a trip partner'**
+  String get authJoinAsTripPartner;
+
+  /// No description provided for @authSignUpTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Create Your Account'**
+  String get authSignUpTitle;
+
+  /// No description provided for @authFullNameLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Full Name'**
+  String get authFullNameLabel;
+
+  /// No description provided for @authFullNameHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter your full name'**
+  String get authFullNameHint;
+
+  /// No description provided for @authPhoneLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Phone Number'**
+  String get authPhoneLabel;
+
+  /// No description provided for @authPhoneHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter your phone number'**
+  String get authPhoneHint;
+
+  /// No description provided for @authConfirmPasswordLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm Password'**
+  String get authConfirmPasswordLabel;
+
+  /// No description provided for @authConfirmPasswordHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm your password'**
+  String get authConfirmPasswordHint;
+
+  /// No description provided for @authSignUpButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Sign Up'**
+  String get authSignUpButton;
+
+  /// No description provided for @authOrSignUpWith.
+  ///
+  /// In en, this message translates to:
+  /// **'Or Sign Up with'**
+  String get authOrSignUpWith;
+
+  /// No description provided for @authSocialGoogle.
+  ///
+  /// In en, this message translates to:
+  /// **'Google'**
+  String get authSocialGoogle;
+
+  /// No description provided for @authSocialApple.
+  ///
+  /// In en, this message translates to:
+  /// **'Apple'**
+  String get authSocialApple;
+
+  /// No description provided for @authHaveAccountPrompt.
+  ///
+  /// In en, this message translates to:
+  /// **'Already have an account? '**
+  String get authHaveAccountPrompt;
+
+  /// No description provided for @authLoginAction.
+  ///
+  /// In en, this message translates to:
+  /// **'Login'**
+  String get authLoginAction;
+
+  /// No description provided for @authForgotPasswordTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Forget Password'**
+  String get authForgotPasswordTitle;
+
+  /// No description provided for @authForgotPasswordDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter your email address below and we will send you a link to reset your password.'**
+  String get authForgotPasswordDescription;
+
+  /// No description provided for @authSendButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Send'**
+  String get authSendButton;
+
+  /// No description provided for @authVerifyTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Verify Your Number'**
+  String get authVerifyTitle;
+
+  /// No description provided for @authVerifyDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'We have sent you an OTP code to your registered number. Please enter the code below.'**
+  String get authVerifyDescription;
+
+  /// No description provided for @authVerifyButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Verify'**
+  String get authVerifyButton;
+
+  /// No description provided for @authResendCode.
+  ///
+  /// In en, this message translates to:
+  /// **'Resend Code'**
+  String get authResendCode;
+
+  /// No description provided for @wishlistTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Wishlist'**
+  String get wishlistTitle;
+
+  /// No description provided for @wishlistEmptyTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'No trips saved yet'**
+  String get wishlistEmptyTitle;
+
+  /// No description provided for @wishlistEmptyDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Tap the heart icon on any trip to\nsave it to your wishlist.'**
+  String get wishlistEmptyDescription;
+
+  /// No description provided for @settingsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Settings'**
+  String get settingsTitle;
+
+  /// No description provided for @settingsNotificationSetting.
+  ///
+  /// In en, this message translates to:
+  /// **'Notification Setting'**
+  String get settingsNotificationSetting;
+
+  /// No description provided for @settingsLanguage.
+  ///
+  /// In en, this message translates to:
+  /// **'Language'**
+  String get settingsLanguage;
+
+  /// No description provided for @settingsEnglish.
+  ///
+  /// In en, this message translates to:
+  /// **'English'**
+  String get settingsEnglish;
+
+  /// No description provided for @settingsArabic.
+  ///
+  /// In en, this message translates to:
+  /// **'Arabic'**
+  String get settingsArabic;
+
+  /// No description provided for @settingsDarkMode.
+  ///
+  /// In en, this message translates to:
+  /// **'Dark Mode'**
+  String get settingsDarkMode;
+
+  /// No description provided for @settingsAppVersion.
+  ///
+  /// In en, this message translates to:
+  /// **'App Version {version}'**
+  String settingsAppVersion(Object version);
+
+  /// No description provided for @notificationSettingsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Notification Setting'**
+  String get notificationSettingsTitle;
+
+  /// No description provided for @notificationSettingsPush.
+  ///
+  /// In en, this message translates to:
+  /// **'Push Notifications'**
+  String get notificationSettingsPush;
+
+  /// No description provided for @notificationSettingsEmail.
+  ///
+  /// In en, this message translates to:
+  /// **'Email Notifications'**
+  String get notificationSettingsEmail;
+
+  /// No description provided for @notificationSettingsTripUpdates.
+  ///
+  /// In en, this message translates to:
+  /// **'Trip Updates'**
+  String get notificationSettingsTripUpdates;
+
+  /// No description provided for @notificationSettingsPromotions.
+  ///
+  /// In en, this message translates to:
+  /// **'Promotions'**
+  String get notificationSettingsPromotions;
+
+  /// No description provided for @notificationSettingsPriceAlerts.
+  ///
+  /// In en, this message translates to:
+  /// **'Price Alerts'**
+  String get notificationSettingsPriceAlerts;
+
+  /// No description provided for @profileTitleAccount.
+  ///
+  /// In en, this message translates to:
+  /// **'Account'**
+  String get profileTitleAccount;
+
+  /// No description provided for @profileTitleSupport.
+  ///
+  /// In en, this message translates to:
+  /// **'Support'**
+  String get profileTitleSupport;
+
+  /// No description provided for @profilePersonalInfo.
+  ///
+  /// In en, this message translates to:
+  /// **'Personal Info'**
+  String get profilePersonalInfo;
+
+  /// No description provided for @profilePaymentMethod.
+  ///
+  /// In en, this message translates to:
+  /// **'Payment Method'**
+  String get profilePaymentMethod;
+
+  /// No description provided for @profileMyReviews.
+  ///
+  /// In en, this message translates to:
+  /// **'My Reviews'**
+  String get profileMyReviews;
+
+  /// No description provided for @profileFollowingCompanies.
+  ///
+  /// In en, this message translates to:
+  /// **'Following Companies'**
+  String get profileFollowingCompanies;
+
+  /// No description provided for @profileSettings.
+  ///
+  /// In en, this message translates to:
+  /// **'Settings'**
+  String get profileSettings;
+
+  /// No description provided for @profileCustomerService.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Service'**
+  String get profileCustomerService;
+
+  /// No description provided for @profileFaqs.
+  ///
+  /// In en, this message translates to:
+  /// **'FAQs'**
+  String get profileFaqs;
+
+  /// No description provided for @profileTermsAndConditions.
+  ///
+  /// In en, this message translates to:
+  /// **'Terms and conditions'**
+  String get profileTermsAndConditions;
+
+  /// No description provided for @profileDeleteAccount.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete Account'**
+  String get profileDeleteAccount;
+
+  /// No description provided for @profileLogout.
+  ///
+  /// In en, this message translates to:
+  /// **'Log Out'**
+  String get profileLogout;
+
+  /// No description provided for @followingsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'My Followings'**
+  String get followingsTitle;
+
+  /// No description provided for @followingsEmptyTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'No followings yet'**
+  String get followingsEmptyTitle;
+
+  /// No description provided for @followingsEmptyDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Start following companies to see\ntheir trips here.'**
+  String get followingsEmptyDescription;
+
+  /// No description provided for @myTripsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'My Trips'**
+  String get myTripsTitle;
+
+  /// No description provided for @myTripsTabUpcoming.
+  ///
+  /// In en, this message translates to:
+  /// **'Upcoming'**
+  String get myTripsTabUpcoming;
+
+  /// No description provided for @myTripsTabPast.
+  ///
+  /// In en, this message translates to:
+  /// **'Past'**
+  String get myTripsTabPast;
+
+  /// No description provided for @myTripsEmptyTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'No trips yet'**
+  String get myTripsEmptyTitle;
+
+  /// No description provided for @myTripsEmptyDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Start exploring and book your\nfirst adventure!'**
+  String get myTripsEmptyDescription;
+
+  /// No description provided for @myTripsExploreTrips.
+  ///
+  /// In en, this message translates to:
+  /// **'Explore Trips'**
+  String get myTripsExploreTrips;
+
+  /// No description provided for @navHome.
+  ///
+  /// In en, this message translates to:
+  /// **'Home'**
+  String get navHome;
+
+  /// No description provided for @navTrips.
+  ///
+  /// In en, this message translates to:
+  /// **'Trips'**
+  String get navTrips;
+
+  /// No description provided for @navWishlist.
+  ///
+  /// In en, this message translates to:
+  /// **'Wishlist'**
+  String get navWishlist;
+
+  /// No description provided for @navAccount.
+  ///
+  /// In en, this message translates to:
+  /// **'Account'**
+  String get navAccount;
+
+  /// No description provided for @bookingContactInfoTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Contact Info'**
+  String get bookingContactInfoTitle;
+
+  /// No description provided for @bookingContactFullNameLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Full Name'**
+  String get bookingContactFullNameLabel;
+
+  /// No description provided for @bookingContactFullNameHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter your full name'**
+  String get bookingContactFullNameHint;
+
+  /// No description provided for @bookingContactPhoneLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Phone Number'**
+  String get bookingContactPhoneLabel;
+
+  /// No description provided for @bookingContactPhoneHint.
+  ///
+  /// In en, this message translates to:
+  /// **'+20 123 456 7890'**
+  String get bookingContactPhoneHint;
+
+  /// No description provided for @bookingContactEmailLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Email'**
+  String get bookingContactEmailLabel;
+
+  /// No description provided for @bookingContactEmailHint.
+  ///
+  /// In en, this message translates to:
+  /// **'email@example.com'**
+  String get bookingContactEmailHint;
+
+  /// No description provided for @bookingContactEmergencyLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Emergency Contact'**
+  String get bookingContactEmergencyLabel;
+
+  /// No description provided for @bookingContactEmergencyHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Emergency contact number'**
+  String get bookingContactEmergencyHint;
+
+  /// No description provided for @bookingContactIdPassportLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'ID/Passport Number'**
+  String get bookingContactIdPassportLabel;
+
+  /// No description provided for @bookingContactIdPassportHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter your ID or Passport number'**
+  String get bookingContactIdPassportHint;
+
+  /// No description provided for @bookingContinue.
+  ///
+  /// In en, this message translates to:
+  /// **'Continue'**
+  String get bookingContinue;
+
+  /// No description provided for @bookingAddNewCardTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Add New Card'**
+  String get bookingAddNewCardTitle;
+
+  /// No description provided for @bookingCardNumberLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Card Number'**
+  String get bookingCardNumberLabel;
+
+  /// No description provided for @bookingCardNumberHint.
+  ///
+  /// In en, this message translates to:
+  /// **'0000 0000 0000 0000'**
+  String get bookingCardNumberHint;
+
+  /// No description provided for @bookingCardholderNameLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Cardholder Name'**
+  String get bookingCardholderNameLabel;
+
+  /// No description provided for @bookingCardholderNameHint.
+  ///
+  /// In en, this message translates to:
+  /// **'John Doe'**
+  String get bookingCardholderNameHint;
+
+  /// No description provided for @bookingExpiryDateLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Expiry Date'**
+  String get bookingExpiryDateLabel;
+
+  /// No description provided for @bookingExpiryDateHint.
+  ///
+  /// In en, this message translates to:
+  /// **'MM/YY'**
+  String get bookingExpiryDateHint;
+
+  /// No description provided for @bookingCvvLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'CVV'**
+  String get bookingCvvLabel;
+
+  /// No description provided for @bookingCvvHint.
+  ///
+  /// In en, this message translates to:
+  /// **'***'**
+  String get bookingCvvHint;
+
+  /// No description provided for @bookingSaveCard.
+  ///
+  /// In en, this message translates to:
+  /// **'Save Card'**
+  String get bookingSaveCard;
+
+  /// No description provided for @bookingCardholderNamePlaceholder.
+  ///
+  /// In en, this message translates to:
+  /// **'CARDHOLDER NAME'**
+  String get bookingCardholderNamePlaceholder;
+
+  /// No description provided for @bookingPaymentMethodTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Payment Method'**
+  String get bookingPaymentMethodTitle;
+
+  /// No description provided for @bookingPaymentOptionCreditCard.
+  ///
+  /// In en, this message translates to:
+  /// **'Credit Card'**
+  String get bookingPaymentOptionCreditCard;
+
+  /// No description provided for @bookingPaymentOptionCreditCardSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Pay with Visa, Mastercard'**
+  String get bookingPaymentOptionCreditCardSubtitle;
+
+  /// No description provided for @bookingPaymentOptionPaypal.
+  ///
+  /// In en, this message translates to:
+  /// **'PayPal'**
+  String get bookingPaymentOptionPaypal;
+
+  /// No description provided for @bookingPaymentOptionPaypalSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Pay with your PayPal account'**
+  String get bookingPaymentOptionPaypalSubtitle;
+
+  /// No description provided for @bookingPaymentOptionApplePay.
+  ///
+  /// In en, this message translates to:
+  /// **'Apple Pay'**
+  String get bookingPaymentOptionApplePay;
+
+  /// No description provided for @bookingPaymentOptionApplePaySubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Pay with Apple Pay'**
+  String get bookingPaymentOptionApplePaySubtitle;
+
+  /// No description provided for @bookingSavedCards.
+  ///
+  /// In en, this message translates to:
+  /// **'Saved Cards'**
+  String get bookingSavedCards;
+
+  /// No description provided for @bookingAddNewCard.
+  ///
+  /// In en, this message translates to:
+  /// **'Add New Card'**
+  String get bookingAddNewCard;
+
+  /// No description provided for @bookingPayNow.
+  ///
+  /// In en, this message translates to:
+  /// **'Pay Now - {amount}'**
+  String bookingPayNow(Object amount);
+
+  /// No description provided for @bookingCardExpires.
+  ///
+  /// In en, this message translates to:
+  /// **'Expires {expiry}'**
+  String bookingCardExpires(Object expiry);
+
+  /// No description provided for @profilePersonalInfoTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Personal Info'**
+  String get profilePersonalInfoTitle;
+
+  /// No description provided for @profileGender.
+  ///
+  /// In en, this message translates to:
+  /// **'Gender'**
+  String get profileGender;
+
+  /// No description provided for @profileGenderMale.
+  ///
+  /// In en, this message translates to:
+  /// **'Male'**
+  String get profileGenderMale;
+
+  /// No description provided for @profileGenderFemale.
+  ///
+  /// In en, this message translates to:
+  /// **'Female'**
+  String get profileGenderFemale;
+
+  /// No description provided for @profileDateOfBirth.
+  ///
+  /// In en, this message translates to:
+  /// **'Date of Birth'**
+  String get profileDateOfBirth;
+
+  /// No description provided for @profileSaveChanges.
+  ///
+  /// In en, this message translates to:
+  /// **'Save Changes'**
+  String get profileSaveChanges;
+
+  /// No description provided for @companyProfileCompanyName.
+  ///
+  /// In en, this message translates to:
+  /// **'Travel Egypt Co.'**
+  String get companyProfileCompanyName;
+
+  /// No description provided for @companyProfileReviewsCountShort.
+  ///
+  /// In en, this message translates to:
+  /// **'({count} reviews)'**
+  String companyProfileReviewsCountShort(Object count);
+
+  /// No description provided for @companyProfileFollowing.
+  ///
+  /// In en, this message translates to:
+  /// **'Following'**
+  String get companyProfileFollowing;
+
+  /// No description provided for @companyProfileFollow.
+  ///
+  /// In en, this message translates to:
+  /// **'Follow'**
+  String get companyProfileFollow;
+
+  /// No description provided for @companyProfileStatsTrips.
+  ///
+  /// In en, this message translates to:
+  /// **'Trips'**
+  String get companyProfileStatsTrips;
+
+  /// No description provided for @companyProfileStatsReviews.
+  ///
+  /// In en, this message translates to:
+  /// **'Reviews'**
+  String get companyProfileStatsReviews;
+
+  /// No description provided for @companyProfileStatsFollowers.
+  ///
+  /// In en, this message translates to:
+  /// **'Followers'**
+  String get companyProfileStatsFollowers;
+
+  /// No description provided for @companyProfileAbout.
+  ///
+  /// In en, this message translates to:
+  /// **'About'**
+  String get companyProfileAbout;
+
+  /// No description provided for @companyProfileAboutDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Travel Egypt Co. is a leading travel company specializing in Egyptian tours and adventures. We offer unique experiences across Egypt, from the ancient pyramids to the beautiful Red Sea resorts.'**
+  String get companyProfileAboutDescription;
+
+  /// No description provided for @companyProfileTrips.
+  ///
+  /// In en, this message translates to:
+  /// **'Trips'**
+  String get companyProfileTrips;
+
+  /// No description provided for @companyProfileReviews.
+  ///
+  /// In en, this message translates to:
+  /// **'Reviews'**
+  String get companyProfileReviews;
+
+  /// No description provided for @companyProfileSeeAll.
+  ///
+  /// In en, this message translates to:
+  /// **'See All'**
+  String get companyProfileSeeAll;
+
+  /// No description provided for @companyProfileTripName.
+  ///
+  /// In en, this message translates to:
+  /// **'Trip Name'**
+  String get companyProfileTripName;
+
+  /// No description provided for @companyProfileReviewAuthor.
+  ///
+  /// In en, this message translates to:
+  /// **'John Doe'**
+  String get companyProfileReviewAuthor;
+
+  /// No description provided for @companyProfileReviewDate.
+  ///
+  /// In en, this message translates to:
+  /// **'2 days ago'**
+  String get companyProfileReviewDate;
+
+  /// No description provided for @companyProfileReviewComment.
+  ///
+  /// In en, this message translates to:
+  /// **'Great experience! The trip was well organized and the guide was very knowledgeable.'**
+  String get companyProfileReviewComment;
+
+  /// No description provided for @filterTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Filter'**
+  String get filterTitle;
+
+  /// No description provided for @filterReset.
+  ///
+  /// In en, this message translates to:
+  /// **'Reset'**
+  String get filterReset;
+
+  /// No description provided for @filterDuration.
+  ///
+  /// In en, this message translates to:
+  /// **'Duration'**
+  String get filterDuration;
+
+  /// No description provided for @filterTripType.
+  ///
+  /// In en, this message translates to:
+  /// **'Trip Type'**
+  String get filterTripType;
+
+  /// No description provided for @filterRating.
+  ///
+  /// In en, this message translates to:
+  /// **'Rating'**
+  String get filterRating;
+
+  /// No description provided for @filterDepartureCity.
+  ///
+  /// In en, this message translates to:
+  /// **'Departure City'**
+  String get filterDepartureCity;
+
+  /// No description provided for @filterSelectCity.
+  ///
+  /// In en, this message translates to:
+  /// **'Select city'**
+  String get filterSelectCity;
+
+  /// No description provided for @filterApply.
+  ///
+  /// In en, this message translates to:
+  /// **'Apply'**
+  String get filterApply;
+
+  /// No description provided for @destinationTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Destination'**
+  String get destinationTitle;
+
+  /// No description provided for @destinationSearchHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Search destinations...'**
+  String get destinationSearchHint;
+
+  /// No description provided for @destinationRecentSearches.
+  ///
+  /// In en, this message translates to:
+  /// **'Recent Searches'**
+  String get destinationRecentSearches;
+
+  /// No description provided for @destinationClearAll.
+  ///
+  /// In en, this message translates to:
+  /// **'Clear all'**
+  String get destinationClearAll;
+
+  /// No description provided for @destinationPopularDestinations.
+  ///
+  /// In en, this message translates to:
+  /// **'Popular Destinations'**
+  String get destinationPopularDestinations;
+
+  /// No description provided for @searchTripsFound.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} trips found'**
+  String searchTripsFound(Object count);
+
+  /// No description provided for @searchQueryExample.
+  ///
+  /// In en, this message translates to:
+  /// **'Sharm El Sheikh'**
+  String get searchQueryExample;
+
+  /// No description provided for @tripDetailsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Dahab Trip'**
+  String get tripDetailsTitle;
+
+  /// No description provided for @tripDetailsCompanyName.
+  ///
+  /// In en, this message translates to:
+  /// **'Travel Egypt Co.'**
+  String get tripDetailsCompanyName;
+
+  /// No description provided for @tripDetailsCompanyTagline.
+  ///
+  /// In en, this message translates to:
+  /// **'Adventure Travel Agency'**
+  String get tripDetailsCompanyTagline;
+
+  /// No description provided for @tripDetailsFollow.
+  ///
+  /// In en, this message translates to:
+  /// **'Follow'**
+  String get tripDetailsFollow;
+
+  /// No description provided for @tripDetailsDurationValue.
+  ///
+  /// In en, this message translates to:
+  /// **'7 Days'**
+  String get tripDetailsDurationValue;
+
+  /// No description provided for @tripDetailsDurationLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Duration'**
+  String get tripDetailsDurationLabel;
+
+  /// No description provided for @tripDetailsGroupSizeValue.
+  ///
+  /// In en, this message translates to:
+  /// **'20 Person'**
+  String get tripDetailsGroupSizeValue;
+
+  /// No description provided for @tripDetailsGroupSizeLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Group Size'**
+  String get tripDetailsGroupSizeLabel;
+
+  /// No description provided for @tripDetailsTypeValue.
+  ///
+  /// In en, this message translates to:
+  /// **'Mixed'**
+  String get tripDetailsTypeValue;
+
+  /// No description provided for @tripDetailsTypeLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Type'**
+  String get tripDetailsTypeLabel;
+
+  /// No description provided for @tripDetailsPerPerson.
+  ///
+  /// In en, this message translates to:
+  /// **'/Person'**
+  String get tripDetailsPerPerson;
+
+  /// No description provided for @tripDetailsDescriptionTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Description'**
+  String get tripDetailsDescriptionTitle;
+
+  /// No description provided for @tripDetailsReadMore.
+  ///
+  /// In en, this message translates to:
+  /// **' Read More'**
+  String get tripDetailsReadMore;
+
+  /// No description provided for @tripDetailsShowLess.
+  ///
+  /// In en, this message translates to:
+  /// **' Show Less'**
+  String get tripDetailsShowLess;
+
+  /// No description provided for @tripDetailsDescriptionBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Experience the magic of Dahab, a beautiful coastal city on the southeast coast of the Sinai Peninsula in Egypt. This 7-day trip includes snorkeling in the Blue Hole, desert safaris, camel rides, and visits to ancient Bedouin villages. Enjoy the stunning coral reefs, crystal-clear waters, and breathtaking mountain landscapes. Our experienced guides will ensure you have an unforgettable adventure with comfortable accommodations and delicious local cuisine.'**
+  String get tripDetailsDescriptionBody;
+
+  /// No description provided for @tripDetailsItineraryTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Trip Itinerary'**
+  String get tripDetailsItineraryTitle;
+
+  /// No description provided for @tripDetailsIncludesTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Trip Includes'**
+  String get tripDetailsIncludesTitle;
+
+  /// No description provided for @tripDetailsIncludesHotel.
+  ///
+  /// In en, this message translates to:
+  /// **'Hotel'**
+  String get tripDetailsIncludesHotel;
+
+  /// No description provided for @tripDetailsIncludesTransportation.
+  ///
+  /// In en, this message translates to:
+  /// **'Transportation'**
+  String get tripDetailsIncludesTransportation;
+
+  /// No description provided for @tripDetailsIncludesMeals.
+  ///
+  /// In en, this message translates to:
+  /// **'Meals'**
+  String get tripDetailsIncludesMeals;
+
+  /// No description provided for @tripDetailsIncludesActivities.
+  ///
+  /// In en, this message translates to:
+  /// **'Activities'**
+  String get tripDetailsIncludesActivities;
+
+  /// No description provided for @tripDetailsIncludesTourGuide.
+  ///
+  /// In en, this message translates to:
+  /// **'Tour Guide'**
+  String get tripDetailsIncludesTourGuide;
+
+  /// No description provided for @tripDetailsImagesTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Trip Images'**
+  String get tripDetailsImagesTitle;
+
+  /// No description provided for @tripDetailsReviewsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Reviews'**
+  String get tripDetailsReviewsTitle;
+
+  /// No description provided for @tripDetailsReviewsCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} Reviews'**
+  String tripDetailsReviewsCount(Object count);
+
+  /// No description provided for @tripDetailsRelatedTripsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Related Trips'**
+  String get tripDetailsRelatedTripsTitle;
+
+  /// No description provided for @tripDetailsTotalPrice.
+  ///
+  /// In en, this message translates to:
+  /// **'Total Price'**
+  String get tripDetailsTotalPrice;
+
+  /// No description provided for @tripDetailsBookNow.
+  ///
+  /// In en, this message translates to:
+  /// **'Book Now'**
+  String get tripDetailsBookNow;
+
+  /// No description provided for @tripDetailsPricePerPersonShort.
+  ///
+  /// In en, this message translates to:
+  /// **'{price}/Person'**
+  String tripDetailsPricePerPersonShort(Object price);
+
+  /// No description provided for @tripDetailsDay1Title.
+  ///
+  /// In en, this message translates to:
+  /// **'Day 1 - Arrival & Check-in'**
+  String get tripDetailsDay1Title;
+
+  /// No description provided for @tripDetailsDay1Desc.
+  ///
+  /// In en, this message translates to:
+  /// **'Arrive at Dahab, transfer to hotel, welcome dinner and orientation meeting with the group.'**
+  String get tripDetailsDay1Desc;
+
+  /// No description provided for @tripDetailsDay2Title.
+  ///
+  /// In en, this message translates to:
+  /// **'Day 2 - Blue Hole Snorkeling'**
+  String get tripDetailsDay2Title;
+
+  /// No description provided for @tripDetailsDay2Desc.
+  ///
+  /// In en, this message translates to:
+  /// **'Full day snorkeling at the famous Blue Hole. Lunch at a beachside restaurant. Evening free time.'**
+  String get tripDetailsDay2Desc;
+
+  /// No description provided for @tripDetailsDay3Title.
+  ///
+  /// In en, this message translates to:
+  /// **'Day 3 - Desert Safari'**
+  String get tripDetailsDay3Title;
+
+  /// No description provided for @tripDetailsDay3Desc.
+  ///
+  /// In en, this message translates to:
+  /// **'Jeep safari through the Sinai desert. Visit Bedouin village. Stargazing dinner in the desert.'**
+  String get tripDetailsDay3Desc;
+
+  /// No description provided for @tripDetailsDay4Title.
+  ///
+  /// In en, this message translates to:
+  /// **'Day 4 - Free Day & Activities'**
+  String get tripDetailsDay4Title;
+
+  /// No description provided for @tripDetailsDay4Desc.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose from optional activities: diving, camel rides, or explore the local markets.'**
+  String get tripDetailsDay4Desc;
+
+  /// No description provided for @tripDetailsDay5Title.
+  ///
+  /// In en, this message translates to:
+  /// **'Day 5 - Mount Sinai Hike'**
+  String get tripDetailsDay5Title;
+
+  /// No description provided for @tripDetailsDay5Desc.
+  ///
+  /// In en, this message translates to:
+  /// **'Early morning hike to Mount Sinai for sunrise. Visit St. Catherine\'s Monastery.'**
+  String get tripDetailsDay5Desc;
+
+  /// No description provided for @tripDetailsDay6Title.
+  ///
+  /// In en, this message translates to:
+  /// **'Day 6 - Water Sports'**
+  String get tripDetailsDay6Title;
+
+  /// No description provided for @tripDetailsDay6Desc.
+  ///
+  /// In en, this message translates to:
+  /// **'Windsurfing and kitesurfing lessons. Farewell dinner at a seaside restaurant.'**
+  String get tripDetailsDay6Desc;
+
+  /// No description provided for @tripDetailsDay7Title.
+  ///
+  /// In en, this message translates to:
+  /// **'Day 7 - Departure'**
+  String get tripDetailsDay7Title;
+
+  /// No description provided for @tripDetailsDay7Desc.
+  ///
+  /// In en, this message translates to:
+  /// **'Breakfast at hotel. Check-out and transfer to airport.'**
+  String get tripDetailsDay7Desc;
+
+  /// No description provided for @tripDetailsRelatedNameSharm.
+  ///
+  /// In en, this message translates to:
+  /// **'Sharm El Sheikh'**
+  String get tripDetailsRelatedNameSharm;
+
+  /// No description provided for @tripDetailsRelatedNameHurghada.
+  ///
+  /// In en, this message translates to:
+  /// **'Hurghada Trip'**
+  String get tripDetailsRelatedNameHurghada;
+
+  /// No description provided for @tripDetailsRelatedNameLuxorAswan.
+  ///
+  /// In en, this message translates to:
+  /// **'Luxor & Aswan'**
+  String get tripDetailsRelatedNameLuxorAswan;
+
+  /// No description provided for @bookingTripTermsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Terms & Conditions'**
+  String get bookingTripTermsTitle;
+
+  /// No description provided for @bookingTripTermsHeader.
+  ///
+  /// In en, this message translates to:
+  /// **'Trip Terms & Conditions'**
+  String get bookingTripTermsHeader;
+
+  /// No description provided for @bookingTripTermsLastUpdated.
+  ///
+  /// In en, this message translates to:
+  /// **'Last updated: {date}'**
+  String bookingTripTermsLastUpdated(Object date);
+
+  /// No description provided for @bookingTripTermsSection1Title.
+  ///
+  /// In en, this message translates to:
+  /// **'1. Booking & Payment'**
+  String get bookingTripTermsSection1Title;
+
+  /// No description provided for @bookingTripTermsSection1Body.
+  ///
+  /// In en, this message translates to:
+  /// **'By booking a trip through Trip Marche, you agree to the following terms. A deposit of 30% is required at the time of booking to secure your place. The remaining balance must be paid at least 14 days before the trip departure date. Failure to pay the remaining balance by the due date may result in cancellation of your booking. All payments are processed securely through our payment partners.'**
+  String get bookingTripTermsSection1Body;
+
+  /// No description provided for @bookingTripTermsSection2Title.
+  ///
+  /// In en, this message translates to:
+  /// **'2. Eligibility'**
+  String get bookingTripTermsSection2Title;
+
+  /// No description provided for @bookingTripTermsSection2Body.
+  ///
+  /// In en, this message translates to:
+  /// **'Participants must be at least 18 years of age to book independently. Travelers under 18 must be accompanied by a parent or legal guardian. Certain activities may have additional age or health requirements. It is the responsibility of the traveler to ensure they meet all eligibility criteria and have the necessary travel documents.'**
+  String get bookingTripTermsSection2Body;
+
+  /// No description provided for @bookingTripTermsSection3Title.
+  ///
+  /// In en, this message translates to:
+  /// **'3. Trip Modifications'**
+  String get bookingTripTermsSection3Title;
+
+  /// No description provided for @bookingTripTermsSection3Body.
+  ///
+  /// In en, this message translates to:
+  /// **'Trip Marche reserves the right to modify the trip itinerary due to weather conditions, safety concerns, or other unforeseen circumstances. We will make every effort to provide equivalent alternatives. In the event of significant changes, travelers will be notified as soon as possible and may be offered a partial refund or credit.'**
+  String get bookingTripTermsSection3Body;
+
+  /// No description provided for @bookingTripTermsSection4Title.
+  ///
+  /// In en, this message translates to:
+  /// **'4. Traveler Responsibilities'**
+  String get bookingTripTermsSection4Title;
+
+  /// No description provided for @bookingTripTermsSection4Body.
+  ///
+  /// In en, this message translates to:
+  /// **'Travelers are responsible for ensuring they have valid travel documents, appropriate travel insurance, and any required vaccinations. Travelers must follow the instructions of trip guides and respect local laws and customs. Trip Marche is not liable for any consequences resulting from a traveler\'s failure to comply with entry requirements.'**
+  String get bookingTripTermsSection4Body;
+
+  /// No description provided for @bookingTripTermsSection5Title.
+  ///
+  /// In en, this message translates to:
+  /// **'5. Liability'**
+  String get bookingTripTermsSection5Title;
+
+  /// No description provided for @bookingTripTermsSection5Body.
+  ///
+  /// In en, this message translates to:
+  /// **'Trip Marche acts as an organizer and intermediary. While we take every precaution to ensure safety, we are not liable for any loss, injury, or damage arising from activities during the trip, acts of nature, or the actions of third-party service providers. Travelers participate in all activities at their own risk. We strongly recommend purchasing comprehensive travel insurance.'**
+  String get bookingTripTermsSection5Body;
+
+  /// No description provided for @bookingTripTermsSection6Title.
+  ///
+  /// In en, this message translates to:
+  /// **'6. Privacy'**
+  String get bookingTripTermsSection6Title;
+
+  /// No description provided for @bookingTripTermsSection6Body.
+  ///
+  /// In en, this message translates to:
+  /// **'Personal information collected during the booking process is used solely for trip organization and communication purposes. We do not share your information with third parties except as necessary to fulfill your booking. For more details, please refer to our Privacy Policy.'**
+  String get bookingTripTermsSection6Body;
+
+  /// No description provided for @bookingTripTermsSection7Title.
+  ///
+  /// In en, this message translates to:
+  /// **'7. Dispute Resolution'**
+  String get bookingTripTermsSection7Title;
+
+  /// No description provided for @bookingTripTermsSection7Body.
+  ///
+  /// In en, this message translates to:
+  /// **'Any disputes arising from these terms shall be resolved through amicable negotiation. If a resolution cannot be reached, disputes shall be submitted to the competent courts. These terms are governed by the laws of the Arab Republic of Egypt.'**
+  String get bookingTripTermsSection7Body;
+
+  /// No description provided for @bookingTripInstructionsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Trip Instructions'**
+  String get bookingTripInstructionsTitle;
+
+  /// No description provided for @bookingTripInstructionsHeader.
+  ///
+  /// In en, this message translates to:
+  /// **'Before You Go'**
+  String get bookingTripInstructionsHeader;
+
+  /// No description provided for @bookingTripInstructionsIntro.
+  ///
+  /// In en, this message translates to:
+  /// **'Please read the following instructions carefully to ensure a smooth and enjoyable trip experience. Proper preparation will help you make the most of your Dahab adventure.'**
+  String get bookingTripInstructionsIntro;
+
+  /// No description provided for @bookingTripInstructionsWhatToPack.
+  ///
+  /// In en, this message translates to:
+  /// **'What to Pack'**
+  String get bookingTripInstructionsWhatToPack;
+
+  /// No description provided for @bookingTripInstructionsMeetingPointTime.
+  ///
+  /// In en, this message translates to:
+  /// **'Meeting Point & Time'**
+  String get bookingTripInstructionsMeetingPointTime;
+
+  /// No description provided for @bookingTripInstructionsDocumentsToBring.
+  ///
+  /// In en, this message translates to:
+  /// **'Documents to Bring'**
+  String get bookingTripInstructionsDocumentsToBring;
+
+  /// No description provided for @bookingTripInstructionsImportantReminders.
+  ///
+  /// In en, this message translates to:
+  /// **'Important Reminders'**
+  String get bookingTripInstructionsImportantReminders;
+
+  /// No description provided for @bookingTripSafetyTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Trip Safety'**
+  String get bookingTripSafetyTitle;
+
+  /// No description provided for @bookingTripSafetyBanner.
+  ///
+  /// In en, this message translates to:
+  /// **'Your safety is our top priority. Please read the following guidelines carefully.'**
+  String get bookingTripSafetyBanner;
+
+  /// No description provided for @bookingTripSafetyHeader.
+  ///
+  /// In en, this message translates to:
+  /// **'Safety Procedures'**
+  String get bookingTripSafetyHeader;
+
+  /// No description provided for @bookingTripSafetyIntro.
+  ///
+  /// In en, this message translates to:
+  /// **'At Trip Marche, we are committed to ensuring the safety and well-being of all our travelers. Our trips are designed with comprehensive safety measures and all our guides are trained in first aid and emergency procedures.'**
+  String get bookingTripSafetyIntro;
+
+  /// No description provided for @bookingTripSafetyWaterTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Water Activities Safety'**
+  String get bookingTripSafetyWaterTitle;
+
+  /// No description provided for @bookingTripSafetyDesertTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Desert Safety'**
+  String get bookingTripSafetyDesertTitle;
+
+  /// No description provided for @bookingTripSafetyHealthTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Health & Medical'**
+  String get bookingTripSafetyHealthTitle;
+
+  /// No description provided for @bookingTripSafetyEmergencyTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Emergency Contacts'**
+  String get bookingTripSafetyEmergencyTitle;
+
+  /// No description provided for @bookingTripSafetyGeneralTipsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'General Safety Tips'**
+  String get bookingTripSafetyGeneralTipsTitle;
+}
+
+class _AppLocalizationsDelegate
+    extends LocalizationsDelegate<AppLocalizations> {
+  const _AppLocalizationsDelegate();
+
+  @override
+  Future<AppLocalizations> load(Locale locale) {
+    return SynchronousFuture<AppLocalizations>(lookupAppLocalizations(locale));
+  }
+
+  @override
+  bool isSupported(Locale locale) =>
+      <String>['ar', 'en'].contains(locale.languageCode);
+
+  @override
+  bool shouldReload(_AppLocalizationsDelegate old) => false;
+}
+
+AppLocalizations lookupAppLocalizations(Locale locale) {
+  // Lookup logic when only language code is specified.
+  switch (locale.languageCode) {
+    case 'ar':
+      return AppLocalizationsAr();
+    case 'en':
+      return AppLocalizationsEn();
+  }
+
+  throw FlutterError(
+    'AppLocalizations.delegate failed to load unsupported locale "$locale". This is likely '
+    'an issue with the localizations generation tool. Please file an issue '
+    'on GitHub with a reproducible sample app and the gen-l10n configuration '
+    'that was used.',
+  );
+}

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:trip_marche/core/theme/app_colors.dart';
+import 'package:trip_marche/core/config/app_images.dart';
 
 class ProfileAvatar extends StatelessWidget {
   final double radius;
@@ -28,7 +29,7 @@ class ProfileAvatar extends StatelessWidget {
           radius: radius,
           backgroundColor: AppColors.lightBg,
           backgroundImage: backgroundImage ??
-              const AssetImage('assets/images/avatar_placeholder.png'),
+              const AssetImage(AppImages.avatarPlaceholder),
         ),
         Positioned(
           bottom: 0,

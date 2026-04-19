@@ -5,6 +5,7 @@ import 'package:trip_marche/core/theme/app_text_styles.dart';
 import 'package:trip_marche/core/data/dummy_data.dart';
 import 'package:trip_marche/features/search/presentation/widgets/destination_grid_item.dart';
 import 'package:trip_marche/features/search/presentation/widgets/recent_search_chip.dart';
+import 'package:trip_marche/core/extensions/localization.dart';
 
 class DestinationView extends StatelessWidget {
   const DestinationView({super.key});
@@ -21,7 +22,7 @@ class DestinationView extends StatelessWidget {
           onPressed: () => Navigator.pop(context),
         ),
         centerTitle: true,
-        title: Text('Destination', style: AppTextStyles.heading3()),
+        title: Text(context.tr.destinationTitle, style: AppTextStyles.heading3()),
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -47,7 +48,7 @@ class DestinationView extends StatelessWidget {
                     Expanded(
                       child: TextField(
                         decoration: InputDecoration(
-                          hintText: 'Search destinations...',
+                          hintText: context.tr.destinationSearchHint,
                           hintStyle: AppTextStyles.bodyMedium(
                               color: AppColors.greyText),
                           border: InputBorder.none,
@@ -70,11 +71,11 @@ class DestinationView extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text('Recent Searches', style: AppTextStyles.subtitle()),
+                  Text(context.tr.destinationRecentSearches, style: AppTextStyles.subtitle()),
                   GestureDetector(
                     onTap: () {},
                     child: Text(
-                      'Clear all',
+                      context.tr.destinationClearAll,
                       style:
                           AppTextStyles.bodySmall(color: AppColors.primary),
                     ),
@@ -102,7 +103,7 @@ class DestinationView extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16),
               child:
-                  Text('Popular Destinations', style: AppTextStyles.heading3()),
+                  Text(context.tr.destinationPopularDestinations, style: AppTextStyles.heading3()),
             ),
             const SizedBox(height: 12),
             Padding(

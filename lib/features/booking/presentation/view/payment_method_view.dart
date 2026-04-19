@@ -3,6 +3,7 @@ import 'package:iconsax/iconsax.dart';
 import 'package:trip_marche/core/theme/app_colors.dart';
 import 'package:trip_marche/core/theme/app_text_styles.dart';
 import 'package:trip_marche/features/booking/presentation/widgets/payment_option_tile.dart';
+import 'package:trip_marche/core/extensions/localization.dart';
 
 class PaymentMethodView extends StatefulWidget {
   const PaymentMethodView({super.key});
@@ -39,7 +40,10 @@ class _PaymentMethodViewState extends State<PaymentMethodView> {
           icon: const Icon(Iconsax.arrow_left, color: AppColors.darkText),
           onPressed: () => Navigator.pop(context),
         ),
-        title: Text('Payment Method', style: AppTextStyles.subtitle(color: AppColors.darkText)),
+        title: Text(
+          context.tr.bookingPaymentMethodTitle,
+          style: AppTextStyles.bodyMedium(color: AppColors.darkText),
+        ),
         centerTitle: true,
       ),
       body: SingleChildScrollView(
@@ -51,8 +55,8 @@ class _PaymentMethodViewState extends State<PaymentMethodView> {
               value: 'credit_card',
               groupValue: _selectedMethod,
               icon: Iconsax.card,
-              title: 'Credit Card',
-              subtitle: 'Pay with Visa, Mastercard',
+              title: context.tr.bookingPaymentOptionCreditCard,
+              subtitle: context.tr.bookingPaymentOptionCreditCardSubtitle,
               onChanged: (v) => setState(() => _selectedMethod = v!),
             ),
             const SizedBox(height: 10),
@@ -60,8 +64,8 @@ class _PaymentMethodViewState extends State<PaymentMethodView> {
               value: 'paypal',
               groupValue: _selectedMethod,
               icon: Iconsax.wallet_3,
-              title: 'PayPal',
-              subtitle: 'Pay with your PayPal account',
+              title: context.tr.bookingPaymentOptionPaypal,
+              subtitle: context.tr.bookingPaymentOptionPaypalSubtitle,
               onChanged: (v) => setState(() => _selectedMethod = v!),
             ),
             const SizedBox(height: 10),
@@ -69,13 +73,16 @@ class _PaymentMethodViewState extends State<PaymentMethodView> {
               value: 'apple_pay',
               groupValue: _selectedMethod,
               icon: Iconsax.mobile,
-              title: 'Apple Pay',
-              subtitle: 'Pay with Apple Pay',
+              title: context.tr.bookingPaymentOptionApplePay,
+              subtitle: context.tr.bookingPaymentOptionApplePaySubtitle,
               onChanged: (v) => setState(() => _selectedMethod = v!),
             ),
             if (_selectedMethod == 'credit_card') ...[
               const SizedBox(height: 24),
-              Text('Saved Cards', style: AppTextStyles.subtitle(color: AppColors.darkText)),
+              Text(
+                context.tr.bookingSavedCards,
+                style: AppTextStyles.bodyMedium(color: AppColors.darkText),
+              ),
               const SizedBox(height: 12),
               ..._buildSavedCards(),
               const SizedBox(height: 12),
@@ -100,8 +107,8 @@ class _PaymentMethodViewState extends State<PaymentMethodView> {
           margin: const EdgeInsets.only(bottom: 10),
           padding: const EdgeInsets.all(16),
           decoration: BoxDecoration(
-            gradient: isSelected ? AppColors.primaryGradient : null,
-            color: isSelected ? null : AppColors.lightBg,
+            gradient: isSelected ? LinearGradient(colors: [AppColors.primary, AppColors.primary]) : null,
+            color: isSelected ? null : AppColors.inputBg,
             borderRadius: BorderRadius.circular(14),
             border: isSelected ? null : Border.all(color: AppColors.border),
           ),
@@ -124,8 +131,8 @@ class _PaymentMethodViewState extends State<PaymentMethodView> {
                       ),
                     ),
                     Text(
-                      'Expires ${card['expiry']}',
-                      style: AppTextStyles.bodySmall(
+                      context.tr.bookingCardExpires(card['expiry'] ?? ''),
+                      style: AppTextStyles.bodyMedium(
                         color: isSelected ? Colors.white70 : AppColors.greyText,
                       ),
                     ),
@@ -177,7 +184,10 @@ class _PaymentMethodViewState extends State<PaymentMethodView> {
           children: [
             Icon(Iconsax.add_circle, color: AppColors.primary, size: 22),
             const SizedBox(width: 8),
-            Text('Add New Card', style: AppTextStyles.bodyMedium(color: AppColors.primary)),
+            Text(
+              context.tr.bookingAddNewCard,
+              style: AppTextStyles.bodyMedium(color: AppColors.primary),
+            ),
           ],
         ),
       ),
@@ -191,11 +201,14 @@ class _PaymentMethodViewState extends State<PaymentMethodView> {
         width: double.infinity,
         height: 56,
         decoration: BoxDecoration(
-          gradient: AppColors.primaryGradient,
+          gradient: LinearGradient(colors: [AppColors.primary, AppColors.primary]),
           borderRadius: BorderRadius.circular(12),
         ),
         child: Center(
-          child: Text('Pay Now - \$779', style: AppTextStyles.button()),
+          child: Text(
+            context.tr.bookingPayNow('\$779'),
+            style: AppTextStyles.button(),
+          ),
         ),
       ),
     );

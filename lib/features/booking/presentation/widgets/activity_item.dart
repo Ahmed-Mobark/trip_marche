@@ -27,7 +27,9 @@ class ActivityItem extends StatelessWidget {
       child: Container(
         padding: const EdgeInsets.all(14),
         decoration: BoxDecoration(
-          color: isSelected ? AppColors.primary.withOpacity(0.05) : AppColors.lightBg,
+          color: isSelected
+              ? AppColors.primary.withValues(alpha: 0.05)
+              : AppColors.lightBg,
           borderRadius: BorderRadius.circular(12),
           border: Border.all(
             color: isSelected ? AppColors.primary : AppColors.border,
@@ -40,8 +42,8 @@ class ActivityItem extends StatelessWidget {
               height: 48,
               decoration: BoxDecoration(
                 color: isSelected
-                    ? AppColors.primary.withOpacity(0.1)
-                    : AppColors.border.withOpacity(0.5),
+                        ? AppColors.primary.withValues(alpha: 0.1)
+                        : AppColors.border.withValues(alpha: 0.5),
                 borderRadius: BorderRadius.circular(10),
               ),
               child: Icon(

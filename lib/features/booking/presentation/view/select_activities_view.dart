@@ -10,14 +10,13 @@ class _Activity {
   final String description;
   final double price;
   final IconData icon;
-  bool isSelected;
+  bool isSelected = false;
 
   _Activity({
     required this.name,
     required this.description,
     required this.price,
     required this.icon,
-    this.isSelected = false,
   });
 }
 
@@ -138,7 +137,7 @@ class _SelectActivitiesViewState extends State<SelectActivitiesView> {
         color: AppColors.background,
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.06),
+            color: Colors.black.withValues(alpha: 0.06),
             blurRadius: 10,
             offset: const Offset(0, -4),
           ),

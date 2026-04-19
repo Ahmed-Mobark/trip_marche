@@ -6,6 +6,7 @@ import 'package:trip_marche/features/home/presentation/view/home_view.dart';
 import 'package:trip_marche/features/my_trips/presentation/view/my_trips_view.dart';
 import 'package:trip_marche/features/wishlist/presentation/view/wishlist_view.dart';
 import 'package:trip_marche/features/profile/presentation/view/profile_view.dart';
+import 'package:trip_marche/core/extensions/localization.dart';
 
 class MainNavView extends StatefulWidget {
   const MainNavView({super.key});
@@ -59,26 +60,26 @@ class _MainNavViewState extends State<MainNavView> {
             fontSize: 14,
             fontWeight: FontWeight.w500,
           ),
-          items: const [
+          items: [
             BottomNavigationBarItem(
-              icon: Icon(Iconsax.home),
-              activeIcon: Icon(Iconsax.home_15),
-              label: 'Home',
+              icon: const Icon(Iconsax.home),
+              activeIcon: const Icon(Iconsax.home_15),
+              label: context.tr.navHome,
             ),
             BottomNavigationBarItem(
-              icon: Icon(Iconsax.map),
-              activeIcon: Icon(Iconsax.map5),
-              label: 'Trips',
+              icon: const Icon(Iconsax.map),
+              activeIcon: const Icon(Iconsax.map5),
+              label: context.tr.navTrips,
             ),
             BottomNavigationBarItem(
-              icon: Icon(Iconsax.heart),
-              activeIcon: Icon(Iconsax.heart5),
-              label: 'Wishlist',
+              icon: const Icon(Iconsax.heart),
+              activeIcon: const Icon(Iconsax.heart5),
+              label: context.tr.navWishlist,
             ),
             BottomNavigationBarItem(
-              icon: Icon(Iconsax.user),
-              activeIcon: Icon(Iconsax.user),
-              label: 'Account',
+              icon: const Icon(Iconsax.user),
+              activeIcon: const Icon(Iconsax.user),
+              label: context.tr.navAccount,
             ),
           ],
         ),

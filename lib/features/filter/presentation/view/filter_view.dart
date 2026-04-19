@@ -5,6 +5,7 @@ import 'package:trip_marche/core/theme/app_colors.dart';
 import 'package:trip_marche/core/theme/app_text_styles.dart';
 import 'package:trip_marche/features/filter/presentation/widgets/price_range_slider.dart';
 import 'package:trip_marche/features/filter/presentation/widgets/filter_chip_option.dart';
+import 'package:trip_marche/core/extensions/localization.dart';
 
 class FilterView extends StatefulWidget {
   const FilterView({super.key});
@@ -62,7 +63,7 @@ class _FilterViewState extends State<FilterView> {
           onPressed: () => Navigator.pop(context),
         ),
         title: Text(
-          'Filter',
+          context.tr.filterTitle,
           style: AppTextStyles.subtitle(),
         ),
         centerTitle: true,
@@ -70,7 +71,7 @@ class _FilterViewState extends State<FilterView> {
           TextButton(
             onPressed: _resetFilters,
             child: Text(
-              'Reset',
+              context.tr.filterReset,
               style: GoogleFonts.inter(
                 fontSize: 14,
                 fontWeight: FontWeight.w500,
@@ -105,7 +106,7 @@ class _FilterViewState extends State<FilterView> {
 
                   // Duration
                   Text(
-                    'Duration',
+                    context.tr.filterDuration,
                     style: AppTextStyles.subtitle(),
                   ),
                   const SizedBox(height: 12),
@@ -130,7 +131,7 @@ class _FilterViewState extends State<FilterView> {
 
                   // Trip Type
                   Text(
-                    'Trip Type',
+                    context.tr.filterTripType,
                     style: AppTextStyles.subtitle(),
                   ),
                   const SizedBox(height: 12),
@@ -159,7 +160,7 @@ class _FilterViewState extends State<FilterView> {
 
                   // Rating Filter
                   Text(
-                    'Rating',
+                    context.tr.filterRating,
                     style: AppTextStyles.subtitle(),
                   ),
                   const SizedBox(height: 12),
@@ -191,7 +192,7 @@ class _FilterViewState extends State<FilterView> {
 
                   // Departure City
                   Text(
-                    'Departure City',
+                    context.tr.filterDepartureCity,
                     style: AppTextStyles.subtitle(),
                   ),
                   const SizedBox(height: 8),
@@ -208,7 +209,7 @@ class _FilterViewState extends State<FilterView> {
                             ? null
                             : _selectedCity,
                         hint: Text(
-                          'Select city',
+                          context.tr.filterSelectCity,
                           style: GoogleFonts.inter(
                             fontSize: 14,
                             fontWeight: FontWeight.w400,
@@ -273,7 +274,7 @@ class _FilterViewState extends State<FilterView> {
                     ),
                   ),
                   child: Text(
-                    'Apply',
+                    context.tr.filterApply,
                     style: AppTextStyles.button(),
                   ),
                 ),

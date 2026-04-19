@@ -4,6 +4,7 @@ import 'package:iconsax/iconsax.dart';
 import 'package:trip_marche/core/theme/app_colors.dart';
 import 'package:trip_marche/core/theme/app_text_styles.dart';
 import 'package:trip_marche/features/profile/presentation/widgets/profile_avatar.dart';
+import 'package:trip_marche/core/extensions/localization.dart';
 
 class PersonalInfoView extends StatefulWidget {
   const PersonalInfoView({super.key});
@@ -14,10 +15,9 @@ class PersonalInfoView extends StatefulWidget {
 
 class _PersonalInfoViewState extends State<PersonalInfoView> {
   final _fullNameController = TextEditingController(text: 'Abdallah Ibrahim');
-  final _emailController =
-      TextEditingController(text: 'abdallah@gmail.com');
+  final _emailController = TextEditingController(text: 'abdallah@gmail.com');
   final _phoneController = TextEditingController(text: '+20 123 456 7890');
-  String _selectedGender = 'Male';
+  String _selectedGender = 'male';
   DateTime _dateOfBirth = DateTime(1995, 6, 15);
 
   @override
@@ -40,7 +40,7 @@ class _PersonalInfoViewState extends State<PersonalInfoView> {
           onPressed: () => Navigator.pop(context),
         ),
         title: Text(
-          'Personal Info',
+          context.tr.profilePersonalInfoTitle,
           style: AppTextStyles.subtitle(),
         ),
         centerTitle: true,
@@ -65,14 +65,14 @@ class _PersonalInfoViewState extends State<PersonalInfoView> {
 
             // Full Name
             _buildField(
-              label: 'Full Name',
+              label: context.tr.authFullNameLabel,
               controller: _fullNameController,
             ),
             const SizedBox(height: 20),
 
             // Email
             _buildField(
-              label: 'Email',
+              label: context.tr.authEmailLabel,
               controller: _emailController,
               keyboardType: TextInputType.emailAddress,
             ),
@@ -80,7 +80,7 @@ class _PersonalInfoViewState extends State<PersonalInfoView> {
 
             // Phone
             _buildField(
-              label: 'Phone',
+              label: context.tr.bookingContactPhoneLabel,
               controller: _phoneController,
               keyboardType: TextInputType.phone,
             ),
@@ -91,7 +91,7 @@ class _PersonalInfoViewState extends State<PersonalInfoView> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Gender',
+                  context.tr.profileGender,
                   style: AppTextStyles.label(),
                 ),
                 const SizedBox(height: 8),
@@ -117,14 +117,16 @@ class _PersonalInfoViewState extends State<PersonalInfoView> {
                         fontWeight: FontWeight.w500,
                         color: AppColors.darkText,
                       ),
-                      items: ['Male', 'Female']
-                          .map(
-                            (gender) => DropdownMenuItem(
-                              value: gender,
-                              child: Text(gender),
-                            ),
-                          )
-                          .toList(),
+                      items: [
+                        DropdownMenuItem(
+                          value: 'male',
+                          child: Text(context.tr.profileGenderMale),
+                        ),
+                        DropdownMenuItem(
+                          value: 'female',
+                          child: Text(context.tr.profileGenderFemale),
+                        ),
+                      ],
                       onChanged: (value) {
                         if (value != null) {
                           setState(() {
@@ -144,7 +146,7 @@ class _PersonalInfoViewState extends State<PersonalInfoView> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Date of Birth',
+                  context.tr.profileDateOfBirth,
                   style: AppTextStyles.label(),
                 ),
                 const SizedBox(height: 8),
@@ -227,7 +229,7 @@ class _PersonalInfoViewState extends State<PersonalInfoView> {
                     ),
                   ),
                   child: Text(
-                    'Save Changes',
+                    context.tr.profileSaveChanges,
                     style: AppTextStyles.button(),
                   ),
                 ),

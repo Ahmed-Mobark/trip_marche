@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:trip_marche/core/theme/app_colors.dart';
 import 'package:trip_marche/core/theme/app_text_styles.dart';
+import 'package:trip_marche/core/extensions/localization.dart';
 
 class TripSafetyView extends StatelessWidget {
   const TripSafetyView({super.key});
@@ -17,7 +18,10 @@ class TripSafetyView extends StatelessWidget {
           icon: const Icon(Iconsax.arrow_left, color: AppColors.darkText),
           onPressed: () => Navigator.pop(context),
         ),
-        title: Text('Trip Safety', style: AppTextStyles.subtitle(color: AppColors.darkText)),
+        title: Text(
+          context.tr.bookingTripSafetyTitle,
+          style: AppTextStyles.subtitle(color: AppColors.darkText),
+        ),
         centerTitle: true,
       ),
       body: SingleChildScrollView(
@@ -29,9 +33,9 @@ class TripSafetyView extends StatelessWidget {
               width: double.infinity,
               padding: const EdgeInsets.all(16),
               decoration: BoxDecoration(
-                color: AppColors.error.withOpacity(0.08),
+                color: AppColors.error.withValues(alpha: 0.08),
                 borderRadius: BorderRadius.circular(12),
-                border: Border.all(color: AppColors.error.withOpacity(0.2)),
+                border: Border.all(color: AppColors.error.withValues(alpha: 0.2)),
               ),
               child: Row(
                 children: [
@@ -39,7 +43,7 @@ class TripSafetyView extends StatelessWidget {
                   const SizedBox(width: 10),
                   Expanded(
                     child: Text(
-                      'Your safety is our top priority. Please read the following guidelines carefully.',
+                      context.tr.bookingTripSafetyBanner,
                       style: AppTextStyles.bodySmall(color: AppColors.secondaryText),
                     ),
                   ),
@@ -47,16 +51,15 @@ class TripSafetyView extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 24),
-            Text('Safety Procedures', style: AppTextStyles.heading3()),
+            Text(context.tr.bookingTripSafetyHeader, style: AppTextStyles.heading3()),
             const SizedBox(height: 12),
             Text(
-              'At Trip Marche, we are committed to ensuring the safety and well-being of all our travelers. '
-              'Our trips are designed with comprehensive safety measures and all our guides are trained in first aid and emergency procedures.',
+              context.tr.bookingTripSafetyIntro,
               style: AppTextStyles.body(),
             ),
             const SizedBox(height: 24),
             _buildSafetySection(
-              title: 'Water Activities Safety',
+              title: context.tr.bookingTripSafetyWaterTitle,
               content:
                   'All water activities are supervised by certified instructors and lifeguards. Life jackets are mandatory for all boat trips and snorkeling excursions. '
                   'Participants must follow the buddy system at all times during water activities. '
@@ -64,7 +67,7 @@ class TripSafetyView extends StatelessWidget {
             ),
             const SizedBox(height: 16),
             _buildSafetySection(
-              title: 'Desert Safety',
+              title: context.tr.bookingTripSafetyDesertTitle,
               content:
                   'Desert excursions are conducted with experienced local guides who know the terrain. All vehicles are equipped with GPS, '
                   'first aid kits, and sufficient water supply. Travelers must carry at least 2 liters of water per person. '
@@ -72,7 +75,7 @@ class TripSafetyView extends StatelessWidget {
             ),
             const SizedBox(height: 16),
             _buildSafetySection(
-              title: 'Health & Medical',
+              title: context.tr.bookingTripSafetyHealthTitle,
               content:
                   'A first aid kit is available at all times during the trip. Our guides are trained in basic first aid and CPR. '
                   'The nearest hospital is approximately 20 minutes from the hotel. Travel insurance with medical evacuation coverage is strongly recommended. '
@@ -80,7 +83,7 @@ class TripSafetyView extends StatelessWidget {
             ),
             const SizedBox(height: 16),
             _buildSafetySection(
-              title: 'Emergency Contacts',
+              title: context.tr.bookingTripSafetyEmergencyTitle,
               content:
                   'Trip Coordinator: +20 100 123 4567 (available 24/7)\n'
                   'Local Emergency Services: 123\n'
@@ -91,7 +94,7 @@ class TripSafetyView extends StatelessWidget {
             ),
             const SizedBox(height: 16),
             _buildSafetySection(
-              title: 'General Safety Tips',
+              title: context.tr.bookingTripSafetyGeneralTipsTitle,
               content:
                   'Always stay with the group during organized activities. Do not wander off alone, especially at night. '
                   'Keep your personal belongings secure and use the hotel safe for valuables. '

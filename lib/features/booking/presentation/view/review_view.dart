@@ -41,7 +41,7 @@ class _ReviewViewState extends State<ReviewView> {
           icon: const Icon(Iconsax.arrow_left, color: AppColors.darkText),
           onPressed: () => Navigator.pop(context),
         ),
-        title: Text('Review', style: AppTextStyles.subtitle(color: AppColors.darkText)),
+        title: Text('Review', style: AppTextStyles.bodyMedium(color: AppColors.darkText)),
         centerTitle: true,
       ),
       body: SingleChildScrollView(
@@ -54,9 +54,9 @@ class _ReviewViewState extends State<ReviewView> {
               subtitle: '7 Days | Jan 15 - Jan 21, 2026',
               ratingRow: Row(
                 children: [
-                  const Icon(Iconsax.star1, color: AppColors.starYellow, size: 14),
+                  const Icon(Iconsax.star1, color: AppColors.primary, size: 14),
                   const SizedBox(width: 4),
-                  Text('4.9 (112)', style: AppTextStyles.bodySmall()),
+                  Text('4.9 (112)', style: AppTextStyles.bodyMedium()),
                 ],
               ),
             ),

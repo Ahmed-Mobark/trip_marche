@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:trip_marche/core/theme/app_colors.dart';
+import 'package:trip_marche/core/config/app_icons.dart';
+import 'package:trip_marche/core/config/app_images.dart';
 
 class AuthHeader extends StatelessWidget {
   final Widget child;
@@ -15,19 +17,19 @@ class AuthHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      decoration: const BoxDecoration(gradient: AppColors.primaryGradient),
+      decoration: const BoxDecoration(gradient: LinearGradient(colors: [AppColors.primary, AppColors.primary])),
       child: Column(
         children: [
           SizedBox(height: MediaQuery.of(context).padding.top),
           // Logo — exported SVG from Figma
-          if (showIllustration) Image.asset('assets/icons/llo.png', width: 160),
+          if (showIllustration) Image.asset(AppIcons.lloPng, width: 160),
           // Illustration area — exported PNG from Figma
           SizedBox(height: 12),
           if (showIllustration)
             SizedBox(
               height: 140,
               child: Image.asset(
-                'assets/images/login_illustration.png',
+                AppImages.loginIllustration,
                 fit: BoxFit.contain,
               ),
             )

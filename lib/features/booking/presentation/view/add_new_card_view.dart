@@ -5,6 +5,7 @@ import 'package:iconsax/iconsax.dart';
 import 'package:trip_marche/core/theme/app_colors.dart';
 import 'package:trip_marche/core/theme/app_text_styles.dart';
 import 'package:trip_marche/features/booking/presentation/widgets/card_preview.dart';
+import 'package:trip_marche/core/extensions/localization.dart';
 
 class AddNewCardView extends StatefulWidget {
   const AddNewCardView({super.key});
@@ -29,12 +30,14 @@ class _AddNewCardViewState extends State<AddNewCardView> {
 
   String get _displayName {
     return _cardholderNameController.text.isEmpty
-        ? 'CARDHOLDER NAME'
+        ? context.tr.bookingCardholderNamePlaceholder
         : _cardholderNameController.text.toUpperCase();
   }
 
   String get _displayExpiry {
-    return _expiryController.text.isEmpty ? 'MM/YY' : _expiryController.text;
+    return _expiryController.text.isEmpty
+        ? context.tr.bookingExpiryDateHint
+        : _expiryController.text;
   }
 
   @override
@@ -57,7 +60,10 @@ class _AddNewCardViewState extends State<AddNewCardView> {
           icon: const Icon(Iconsax.arrow_left, color: AppColors.darkText),
           onPressed: () => Navigator.pop(context),
         ),
-        title: Text('Add New Card', style: AppTextStyles.subtitle(color: AppColors.darkText)),
+        title: Text(
+          context.tr.bookingAddNewCardTitle,
+          style: AppTextStyles.bodyMedium(color: AppColors.darkText),
+        ),
         centerTitle: true,
       ),
       body: SingleChildScrollView(
@@ -74,8 +80,8 @@ class _AddNewCardViewState extends State<AddNewCardView> {
               ),
               const SizedBox(height: 32),
               _buildField(
-                label: 'Card Number',
-                hint: '0000 0000 0000 0000',
+                label: context.tr.bookingCardNumberLabel,
+                hint: context.tr.bookingCardNumberHint,
                 controller: _cardNumberController,
                 keyboardType: TextInputType.number,
                 inputFormatters: [
@@ -87,8 +93,8 @@ class _AddNewCardViewState extends State<AddNewCardView> {
               ),
               const SizedBox(height: 20),
               _buildField(
-                label: 'Cardholder Name',
-                hint: 'John Doe',
+                label: context.tr.bookingCardholderNameLabel,
+                hint: context.tr.bookingCardholderNameHint,
                 controller: _cardholderNameController,
                 keyboardType: TextInputType.name,
                 icon: Iconsax.user,
@@ -98,8 +104,8 @@ class _AddNewCardViewState extends State<AddNewCardView> {
                 children: [
                   Expanded(
                     child: _buildField(
-                      label: 'Expiry Date',
-                      hint: 'MM/YY',
+                      label: context.tr.bookingExpiryDateLabel,
+                      hint: context.tr.bookingExpiryDateHint,
                       controller: _expiryController,
                       keyboardType: TextInputType.number,
                       inputFormatters: [
@@ -113,8 +119,8 @@ class _AddNewCardViewState extends State<AddNewCardView> {
                   const SizedBox(width: 16),
                   Expanded(
                     child: _buildField(
-                      label: 'CVV',
-                      hint: '***',
+                      label: context.tr.bookingCvvLabel,
+                      hint: context.tr.bookingCvvHint,
                       controller: _cvvController,
                       keyboardType: TextInputType.number,
                       obscure: true,
@@ -149,7 +155,7 @@ class _AddNewCardViewState extends State<AddNewCardView> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(label, style: AppTextStyles.label()),
+        Text(label, style: AppTextStyles.bodyMedium()),
         const SizedBox(height: 8),
         TextFormField(
           controller: controller,
@@ -163,7 +169,7 @@ class _AddNewCardViewState extends State<AddNewCardView> {
             color: AppColors.darkText,
           ),
           validator: (value) {
-            if (value == null || value.isEmpty) return 'Required';
+            if (value == null || value.isEmpty) return context.tr.errorFieldRequired;
             return null;
           },
           decoration: InputDecoration(
@@ -171,7 +177,7 @@ class _AddNewCardViewState extends State<AddNewCardView> {
             hintStyle: GoogleFonts.inter(fontSize: 14, color: AppColors.greyText),
             prefixIcon: Icon(icon, color: AppColors.greyText, size: 20),
             filled: true,
-            fillColor: AppColors.lightBg,
+            fillColor: AppColors.inputBg,
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(12),
               borderSide: BorderSide(color: AppColors.border),
@@ -206,11 +212,11 @@ class _AddNewCardViewState extends State<AddNewCardView> {
         width: double.infinity,
         height: 56,
         decoration: BoxDecoration(
-          gradient: AppColors.primaryGradient,
+          gradient: LinearGradient(colors: [AppColors.primary, AppColors.primary]),
           borderRadius: BorderRadius.circular(12),
         ),
         child: Center(
-          child: Text('Save Card', style: AppTextStyles.button()),
+          child: Text(context.tr.bookingSaveCard, style: AppTextStyles.button()),
         ),
       ),
     );

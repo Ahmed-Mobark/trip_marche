@@ -5,6 +5,7 @@ import 'package:trip_marche/core/theme/app_colors.dart';
 import 'package:trip_marche/core/theme/app_text_styles.dart';
 import 'package:trip_marche/core/data/dummy_data.dart';
 import 'package:trip_marche/features/my_trips/presentation/widgets/my_trip_card.dart';
+import 'package:trip_marche/core/extensions/localization.dart';
 
 class MyTripsView extends StatelessWidget {
   const MyTripsView({super.key});
@@ -19,7 +20,7 @@ class MyTripsView extends StatelessWidget {
           backgroundColor: AppColors.background,
           elevation: 0,
           centerTitle: true,
-          title: Text('My Trips', style: AppTextStyles.heading3()),
+          title: Text(context.tr.myTripsTitle, style: AppTextStyles.heading3()),
           automaticallyImplyLeading: false,
           bottom: TabBar(
             labelColor: AppColors.primary,
@@ -34,25 +35,25 @@ class MyTripsView extends StatelessWidget {
               fontSize: 15,
               fontWeight: FontWeight.w500,
             ),
-            tabs: const [
-              Tab(text: 'Upcoming'),
-              Tab(text: 'Past'),
+            tabs: [
+              Tab(text: context.tr.myTripsTabUpcoming),
+              Tab(text: context.tr.myTripsTabPast),
             ],
           ),
         ),
         body: TabBarView(
           children: [
-            _buildTripList(DummyData.upcomingTrips),
-            _buildTripList(DummyData.pastTrips),
+            _buildTripList(context, DummyData.upcomingTrips),
+            _buildTripList(context, DummyData.pastTrips),
           ],
         ),
       ),
     );
   }
 
-  Widget _buildTripList(List<TripItem> trips) {
+  Widget _buildTripList(BuildContext context, List<TripItem> trips) {
     if (trips.isEmpty) {
-      return _buildEmptyState();
+      return _buildEmptyState(context);
     }
     return ListView.builder(
       padding: const EdgeInsets.all(16),
@@ -63,7 +64,7 @@ class MyTripsView extends StatelessWidget {
     );
   }
 
-  Widget _buildEmptyState() {
+  Widget _buildEmptyState(BuildContext context) {
     return Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -83,12 +84,12 @@ class MyTripsView extends StatelessWidget {
           ),
           const SizedBox(height: 16),
           Text(
-            'No trips yet',
+            context.tr.myTripsEmptyTitle,
             style: AppTextStyles.heading3(color: AppColors.secondaryText),
           ),
           const SizedBox(height: 8),
           Text(
-            'Start exploring and book your\nfirst adventure!',
+            context.tr.myTripsEmptyDescription,
             style: AppTextStyles.bodyMedium(color: AppColors.greyText),
             textAlign: TextAlign.center,
           ),
@@ -103,7 +104,7 @@ class MyTripsView extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 14),
             ),
             child: Text(
-              'Explore Trips',
+              context.tr.myTripsExploreTrips,
               style: AppTextStyles.button(color: AppColors.white),
             ),
           ),

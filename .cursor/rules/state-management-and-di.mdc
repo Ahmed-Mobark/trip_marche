@@ -1,0 +1,112 @@
+---
+description: State management (BLoC/Cubit) and dependency injection (GetIt) patterns
+globs: lib/**/*cubit*.dart,lib/**/*_inj.dart,lib/core/injection/**/*.dart,lib/features/**/presentation/view/**/*.dart
+alwaysApply: false
+---
+
+# State Management & Dependency Injection
+
+## Cubit over Bloc
+
+- Prefer **Cubit** for new features — simpler, less boilerplate.
+- Use full **Bloc** only when you need explicit event-driven traceability (e.g. complex auth flows with many distinct events).
+
+## Feature Injection Modules (`*_inj.dart`)
+
+- Each feature should expose a single init function at feature root:
+  - `lib/features/<feature>/<feature>_inj.dart`
+  - Example: `lib/features/auth/auth_inj.dart`
+- This init function registers the feature’s **data sources → repositories → use cases → cubits**.
+- `lib/core/injection/injection_container.dart` is the only place that calls these init functions.
+
+Example:
+
+```dart
+Future<void> initAuthInjection(GetIt sl) async {
+  // data sources / repos / use cases ...
+  sl.registerFactory<LoginCubit>(() => LoginCubit(sl<AppNavigator>()));
+}
+```
+
+## Cubit Conventions
+
+```dart
+class ExpenseCubit extends Cubit<ExpenseState> {
+  final GetExpensesUseCase _getExpenses;
+  ExpenseCubit(this._getExpenses) : super(const ExpenseState());
+
+  Future<void> loadExpenses() async {
+    emit(state.copyWith(status: RequestStatus.loading));
+    final result = await _getExpenses();
+    result.fold(
+      (failure) => emit(state.copyWith(status: RequestStatus.failure, error: failure.message)),
+      (data) => emit(state.copyWith(status: RequestStatus.success, expenses: data)),
+    );
+  }
+}
+```
+
+- State classes extend `Equatable` and use `copyWith`.
+- Use a `RequestStatus` enum (`initial`, `loading`, `success`, `failure`) instead of separate state subclasses.
+- Keep cubits **thin**: business logic lives in use cases, not cubits.
+- For requests, emit **loading → result** and keep the View responsible for UX rendering (button loading, snackbars, navigation).
+
+## Providing Cubits
+
+- Wrap the **screen** (not the app) with `BlocProvider`:
+
+```dart
+BlocProvider(
+  create: (_) => sl<ExpenseCubit>()..loadExpenses(),
+  child: const ExpenseView(),
+)
+```
+
+- For cubits needed across multiple screens (e.g. `LocaleCubit`), provide them in `MyApp` or `MainNavView`.
+
+## GetIt (`sl`)
+
+- The global service locator is `sl` from `lib/core/injection/injection_container.dart`.
+- **Registration types:**
+  - `registerLazySingleton` — data sources, repositories, use cases, services, `AppNavigator`.
+  - `registerFactory` — cubits (new instance per `BlocProvider`).
+  - `registerSingleton` — Hive boxes, objects that must exist immediately.
+- **Init order** matters — register dependencies before dependents. Storage first, then network, then features.
+- Each feature has its own `*_inj.dart` file. Call it from `init()` in `injection_container.dart`.
+
+## Rules
+
+- Never call `sl()` inside widget `build()`. Resolve in `BlocProvider.create` or pass via constructor.
+- Never register the same type twice without a named qualifier.
+- Cubits must be `registerFactory` so each provider gets a fresh instance.
+- Singletons (data sources, repos) must be `registerLazySingleton`.
+- `*_view.dart` files are UI-only. Do not keep `TextEditingController`, `FocusNode`, `GlobalKey<FormState>`, validation methods, submit handlers, or mutable screen state inside views.
+- Put screen interaction logic and owned controller/form state in `presentation/cubit/` and expose them to the UI through a Cubit + State pair.
+- Views should consume cubits with `BlocProvider`, `BlocBuilder`, `BlocListener`, or `BlocConsumer`, and trigger behavior by calling cubit methods only.
+
+### Avoid `ProviderNotFound` in Views
+
+- If a view uses `context.read/watch` for the cubit, ensure the `BuildContext` is **under** the `BlocProvider`.
+- Safe patterns:
+  - Wrap the subtree with a `Builder(builder: (context) => ...)`, or
+  - Split the screen into `BlocProvider(child: _Body())` where `_Body` reads the cubit.
+- Preferred DI + Provider pattern:
+
+```dart
+return BlocProvider(
+  create: (_) => sl<LoginCubit>(),
+  child: Builder(
+    builder: (context) {
+      // context.read<LoginCubit>() is safe here
+      return const LoginBody();
+    },
+  ),
+);
+```
+
+### DI wiring checklist for new requests
+
+- **Remote data source**: `registerLazySingleton<FeatureRemoteDataSource>(() => FeatureRemoteDataSourceImpl(sl<ApiBaseHelper>()))`
+- **Repository**: `registerLazySingleton<FeatureRepository>(() => FeatureRepositoryImpl(sl<FeatureRemoteDataSource>()))`
+- **Use case**: `registerLazySingleton(() => SomeUseCase(sl<FeatureRepository>()))`
+- **Cubit**: `registerFactory(() => FeatureCubit(sl<SomeUseCase>()))`

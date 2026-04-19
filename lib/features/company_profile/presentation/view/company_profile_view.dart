@@ -5,6 +5,7 @@ import 'package:trip_marche/core/theme/app_colors.dart';
 import 'package:trip_marche/core/theme/app_text_styles.dart';
 import 'package:trip_marche/features/company_profile/presentation/widgets/company_stat_item.dart';
 import 'package:trip_marche/features/company_profile/presentation/widgets/company_review_item.dart';
+import 'package:trip_marche/core/extensions/localization.dart';
 
 class CompanyProfileView extends StatefulWidget {
   const CompanyProfileView({super.key});
@@ -83,7 +84,7 @@ class _CompanyProfileViewState extends State<CompanyProfileView> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              'Travel Egypt Co.',
+                              context.tr.companyProfileCompanyName,
                               style: AppTextStyles.heading3(),
                             ),
                             const SizedBox(height: 4),
@@ -98,7 +99,7 @@ class _CompanyProfileViewState extends State<CompanyProfileView> {
                                 Text('4.8', style: AppTextStyles.bodyMedium()),
                                 const SizedBox(width: 4),
                                 Text(
-                                  '(120 reviews)',
+                                  context.tr.companyProfileReviewsCountShort('120'),
                                   style: GoogleFonts.inter(
                                     fontSize: 12,
                                     fontWeight: FontWeight.w400,
@@ -138,7 +139,9 @@ class _CompanyProfileViewState extends State<CompanyProfileView> {
                         ),
                       ),
                       child: Text(
-                        _isFollowing ? 'Following' : 'Follow',
+                        _isFollowing
+                            ? context.tr.companyProfileFollowing
+                            : context.tr.companyProfileFollow,
                         style: GoogleFonts.inter(
                           fontSize: 14,
                           fontWeight: FontWeight.w600,
@@ -155,20 +158,29 @@ class _CompanyProfileViewState extends State<CompanyProfileView> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                      const CompanyStatItem(value: '24', label: 'Trips'),
+                      CompanyStatItem(
+                        value: '24',
+                        label: context.tr.companyProfileStatsTrips,
+                      ),
                       Container(width: 1, height: 40, color: AppColors.border),
-                      const CompanyStatItem(value: '120', label: 'Reviews'),
+                      CompanyStatItem(
+                        value: '120',
+                        label: context.tr.companyProfileStatsReviews,
+                      ),
                       Container(width: 1, height: 40, color: AppColors.border),
-                      const CompanyStatItem(value: '1.2K', label: 'Followers'),
+                      CompanyStatItem(
+                        value: '1.2K',
+                        label: context.tr.companyProfileStatsFollowers,
+                      ),
                     ],
                   ),
                   const SizedBox(height: 24),
 
                   // About Section
-                  Text('About', style: AppTextStyles.subtitle()),
+                  Text(context.tr.companyProfileAbout, style: AppTextStyles.subtitle()),
                   const SizedBox(height: 8),
                   Text(
-                    'Travel Egypt Co. is a leading travel company specializing in Egyptian tours and adventures. We offer unique experiences across Egypt, from the ancient pyramids to the beautiful Red Sea resorts.',
+                    context.tr.companyProfileAboutDescription,
                     style: GoogleFonts.inter(
                       fontSize: 14,
                       fontWeight: FontWeight.w400,
@@ -182,11 +194,11 @@ class _CompanyProfileViewState extends State<CompanyProfileView> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text('Trips', style: AppTextStyles.subtitle()),
+                      Text(context.tr.companyProfileTrips, style: AppTextStyles.subtitle()),
                       TextButton(
                         onPressed: () {},
                         child: Text(
-                          'See All',
+                          context.tr.companyProfileSeeAll,
                           style: GoogleFonts.inter(
                             fontSize: 14,
                             fontWeight: FontWeight.w500,
@@ -230,11 +242,11 @@ class _CompanyProfileViewState extends State<CompanyProfileView> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text('Reviews', style: AppTextStyles.subtitle()),
+                      Text(context.tr.companyProfileReviews, style: AppTextStyles.subtitle()),
                       TextButton(
                         onPressed: () {},
                         child: Text(
-                          'See All',
+                          context.tr.companyProfileSeeAll,
                           style: GoogleFonts.inter(
                             fontSize: 14,
                             fontWeight: FontWeight.w500,
@@ -247,12 +259,11 @@ class _CompanyProfileViewState extends State<CompanyProfileView> {
                   const SizedBox(height: 8),
                   ...List.generate(
                     3,
-                    (index) => const CompanyReviewItem(
-                      name: 'John Doe',
+                    (index) => CompanyReviewItem(
+                      name: context.tr.companyProfileReviewAuthor,
                       rating: 4,
-                      date: '2 days ago',
-                      comment:
-                          'Great experience! The trip was well organized and the guide was very knowledgeable.',
+                      date: context.tr.companyProfileReviewDate,
+                      comment: context.tr.companyProfileReviewComment,
                     ),
                   ),
                   const SizedBox(height: 32),
@@ -300,7 +311,7 @@ class _CompanyProfileViewState extends State<CompanyProfileView> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'Trip Name',
+                    context.tr.companyProfileTripName,
                     style: GoogleFonts.inter(
                       fontSize: 13,
                       fontWeight: FontWeight.w600,

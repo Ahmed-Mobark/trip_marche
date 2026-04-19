@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:trip_marche/core/theme/app_colors.dart';
+import 'package:trip_marche/core/config/app_colors.dart';
 import 'package:trip_marche/core/theme/app_text_styles.dart';
 
 /// A horizontal divider with centred text, e.g. "Or Login with".
@@ -35,7 +35,7 @@ class DividerWithText extends StatelessWidget {
           padding: EdgeInsets.symmetric(horizontal: horizontalPadding),
           child: Text(
             text,
-            style: textStyle ?? AppTextStyles.bodySmall(),
+            style: textStyle ?? AppTextStyles.bodyMedium(),
           ),
         ),
         Expanded(

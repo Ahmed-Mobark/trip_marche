@@ -3,6 +3,7 @@ import 'package:iconsax/iconsax.dart';
 import 'package:trip_marche/core/theme/app_colors.dart';
 import 'package:trip_marche/core/theme/app_text_styles.dart';
 import 'package:trip_marche/features/booking/presentation/widgets/instruction_section.dart';
+import 'package:trip_marche/core/extensions/localization.dart';
 
 class TripInstructionsView extends StatelessWidget {
   const TripInstructionsView({super.key});
@@ -18,7 +19,10 @@ class TripInstructionsView extends StatelessWidget {
           icon: const Icon(Iconsax.arrow_left, color: AppColors.darkText),
           onPressed: () => Navigator.pop(context),
         ),
-        title: Text('Trip Instructions', style: AppTextStyles.subtitle(color: AppColors.darkText)),
+        title: Text(
+          context.tr.bookingTripInstructionsTitle,
+          style: AppTextStyles.subtitle(color: AppColors.darkText),
+        ),
         centerTitle: true,
       ),
       body: SingleChildScrollView(
@@ -26,11 +30,10 @@ class TripInstructionsView extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('Before You Go', style: AppTextStyles.heading3()),
+            Text(context.tr.bookingTripInstructionsHeader, style: AppTextStyles.heading3()),
             const SizedBox(height: 12),
             Text(
-              'Please read the following instructions carefully to ensure a smooth and enjoyable trip experience. '
-              'Proper preparation will help you make the most of your Dahab adventure.',
+              context.tr.bookingTripInstructionsIntro,
               style: AppTextStyles.body(),
             ),
             const SizedBox(height: 24),

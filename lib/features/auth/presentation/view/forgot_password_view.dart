@@ -1,35 +1,31 @@
 import 'package:flutter/material.dart';
-import 'package:trip_marche/core/theme/app_colors.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:trip_marche/core/theme/app_text_styles.dart';
+import 'package:trip_marche/core/theme/app_colors.dart';
 import 'package:trip_marche/core/widgets/app_button.dart';
 import 'package:trip_marche/core/widgets/app_text_field.dart';
+import 'package:trip_marche/core/extensions/localization.dart';
+import 'package:trip_marche/core/injection/injection_container.dart';
+import 'package:trip_marche/features/auth/presentation/cubit/forgot_password/forgot_password_cubit.dart';
 
-class ForgotPasswordView extends StatefulWidget {
+class ForgotPasswordView extends StatelessWidget {
   const ForgotPasswordView({super.key});
 
   @override
-  State<ForgotPasswordView> createState() => _ForgotPasswordViewState();
-}
-
-class _ForgotPasswordViewState extends State<ForgotPasswordView> {
-  final _emailController = TextEditingController();
-
-  @override
-  void dispose() {
-    _emailController.dispose();
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: AppColors.background,
-      body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
+    return BlocProvider(
+      create: (_) => sl<ForgotPasswordCubit>(),
+      child: Builder(
+        builder: (context) {
+          return Scaffold(
+            backgroundColor: AppColors.background,
+            body: SafeArea(
+              child: Padding(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
               // Back arrow
               GestureDetector(
                 onTap: () => Navigator.pop(context),
@@ -50,36 +46,39 @@ class _ForgotPasswordViewState extends State<ForgotPasswordView> {
               const SizedBox(height: 24),
 
               Text(
-                'Forget Password',
+                context.tr.authForgotPasswordTitle,
                 style: AppTextStyles.heading2(),
               ),
               const SizedBox(height: 12),
 
               Text(
-                'Enter your email address below and we will send you a link to reset your password.',
+                context.tr.authForgotPasswordDescription,
                 style: AppTextStyles.body(color: AppColors.greyText),
               ),
               const SizedBox(height: 32),
 
               // Email field
               AppTextField(
-                label: 'Email',
-                hint: 'Enter your email',
-                controller: _emailController,
+                label: context.tr.authEmailLabel,
+                hint: context.tr.authEmailHint,
+                controller: context.read<ForgotPasswordCubit>().emailController,
                 keyboardType: TextInputType.emailAddress,
               ),
               const SizedBox(height: 32),
 
               // Send button
               AppButton(
-                text: 'Send',
-                onPressed: () {
-                  Navigator.pushNamed(context, '/verify');
+                text: context.tr.authSendButton,
+                onTap: () {
+                  context.read<ForgotPasswordCubit>().submit();
                 },
               ),
-            ],
-          ),
-        ),
+                  ],
+                ),
+              ),
+            ),
+          );
+        },
       ),
     );
   }

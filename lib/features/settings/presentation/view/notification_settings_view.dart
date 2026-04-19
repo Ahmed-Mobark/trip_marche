@@ -3,6 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:trip_marche/core/theme/app_colors.dart';
 import 'package:trip_marche/core/theme/app_text_styles.dart';
+import 'package:trip_marche/core/extensions/localization.dart';
 
 class NotificationSettingsView extends StatefulWidget {
   const NotificationSettingsView({super.key});
@@ -31,7 +32,7 @@ class _NotificationSettingsViewState extends State<NotificationSettingsView> {
           onPressed: () => Navigator.pop(context),
         ),
         title: Text(
-          'Notification Setting',
+          context.tr.notificationSettingsTitle,
           style: AppTextStyles.subtitle(),
         ),
         centerTitle: true,
@@ -41,31 +42,31 @@ class _NotificationSettingsViewState extends State<NotificationSettingsView> {
         child: Column(
           children: [
             _buildToggleRow(
-              title: 'Push Notifications',
+              title: context.tr.notificationSettingsPush,
               value: _pushNotifications,
               onChanged: (val) => setState(() => _pushNotifications = val),
             ),
             const Divider(height: 1, color: AppColors.border),
             _buildToggleRow(
-              title: 'Email Notifications',
+              title: context.tr.notificationSettingsEmail,
               value: _emailNotifications,
               onChanged: (val) => setState(() => _emailNotifications = val),
             ),
             const Divider(height: 1, color: AppColors.border),
             _buildToggleRow(
-              title: 'Trip Updates',
+              title: context.tr.notificationSettingsTripUpdates,
               value: _tripUpdates,
               onChanged: (val) => setState(() => _tripUpdates = val),
             ),
             const Divider(height: 1, color: AppColors.border),
             _buildToggleRow(
-              title: 'Promotions',
+              title: context.tr.notificationSettingsPromotions,
               value: _promotions,
               onChanged: (val) => setState(() => _promotions = val),
             ),
             const Divider(height: 1, color: AppColors.border),
             _buildToggleRow(
-              title: 'Price Alerts',
+              title: context.tr.notificationSettingsPriceAlerts,
               value: _priceAlerts,
               onChanged: (val) => setState(() => _priceAlerts = val),
             ),
@@ -96,7 +97,7 @@ class _NotificationSettingsViewState extends State<NotificationSettingsView> {
           Switch(
             value: value,
             onChanged: onChanged,
-            activeColor: AppColors.primary,
+            activeThumbColor: AppColors.primary,
           ),
         ],
       ),

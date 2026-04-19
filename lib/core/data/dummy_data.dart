@@ -1,30 +1,118 @@
-class TripItem {
+import 'package:flutter/material.dart';
+
+class QuickActionItem {
+  final String title;
+  final IconData icon;
+  final Color iconColor;
+
+  const QuickActionItem({
+    required this.title,
+    required this.icon,
+    required this.iconColor,
+  });
+}
+
+class AwaitingItem {
+  final String title;
+  final String from;
+  final String status;
+  final String time;
+
+  const AwaitingItem({
+    required this.title,
+    required this.from,
+    required this.status,
+    required this.time,
+  });
+}
+
+class ActivityItem {
+  final String title;
+  final String subtitle;
+  final String time;
+  final IconData icon;
+  final Color iconBgColor;
+
+  const ActivityItem({
+    required this.title,
+    required this.subtitle,
+    required this.time,
+    required this.icon,
+    required this.iconBgColor,
+  });
+}
+
+class MessageItem {
+  final String name;
+  final String avatarUrl;
+  final String lastMessage;
+  final String time;
+  final int unreadCount;
+  final bool isOnline;
+
+  const MessageItem({
+    required this.name,
+    required this.avatarUrl,
+    required this.lastMessage,
+    required this.time,
+    this.unreadCount = 0,
+    this.isOnline = false,
+  });
+}
+
+class NewsItem {
+  final String title;
+  final String body;
+  final String imageUrl;
+  final String source;
+  final String date;
+
+  const NewsItem({
+    required this.title,
+    required this.body,
+    required this.imageUrl,
+    required this.source,
+    required this.date,
+  });
+}
+
+class CalendarEvent {
   final String id;
   final String title;
-  final String imageUrl;
-  final double rating;
-  final int reviewCount;
-  final String location;
-  final String dateRange;
-  final double price;
-  final double? oldPrice;
-  final bool isFavorite;
-  final String? badge;
-  final String? status;
+  final String titleAr;
+  final String titleFr;
+  final DateTime date;
+  final String time;
+  final Color color;
+  final String type;
 
-  const TripItem({
+  const CalendarEvent({
     required this.id,
     required this.title,
-    required this.imageUrl,
-    required this.rating,
-    required this.reviewCount,
-    required this.location,
-    required this.dateRange,
-    required this.price,
-    this.oldPrice,
-    this.isFavorite = false,
-    this.badge,
-    this.status,
+    required this.titleAr,
+    required this.titleFr,
+    required this.date,
+    required this.time,
+    required this.color,
+    required this.type,
+  });
+}
+
+class ExpenseItem {
+  final String title;
+  final String category;
+  final String date;
+  final double amount;
+  final String paidBy;
+  final IconData icon;
+
+  const ExpenseItem({
+    required this.title,
+    required this.category,
+    required this.date,
+    required this.amount,
+    required this.paidBy,
+    required this.icon,
   });
 }
 
@@ -40,89 +128,239 @@ class DestinationItem {
   });
 }
 
-class DummyData {
-  DummyData._();
+class TripItem {
+  final String title;
+  final String location;
+  final String imageUrl;
+  final double price;
+  final double rating;
+  final String dateRange;
+  final String? status;
+
+  const TripItem({
+    required this.title,
+    required this.location,
+    required this.imageUrl,
+    required this.price,
+    required this.rating,
+    this.dateRange = '',
+    this.status,
+  });
+}
+
+abstract class DummyData {
+  static const List<QuickActionItem> quickActions = [
+    QuickActionItem(
+      title: 'Schedule',
+      icon: Icons.calendar_month_outlined,
+      iconColor: Color(0xFF5B7FFF),
+    ),
+    QuickActionItem(
+      title: 'Messages',
+      icon: Icons.chat_bubble_outline,
+      iconColor: Color(0xFF645A9E),
+    ),
+    QuickActionItem(
+      title: 'Expense',
+      icon: Icons.receipt_long_outlined,
+      iconColor: Color(0xFFC93E27),
+    ),
+    QuickActionItem(
+      title: 'News',
+      icon: Icons.newspaper_outlined,
+      iconColor: Color(0xFF1976D2),
+    ),
+    QuickActionItem(
+      title: 'Profile',
+      icon: Icons.person_outline,
+      iconColor: Color(0xFF1FC16B),
+    ),
+    QuickActionItem(
+      title: 'Settings',
+      icon: Icons.settings_outlined,
+      iconColor: Color(0xFF555555),
+    ),
+  ];
+
+  static const List<AwaitingItem> awaitingItems = [
+    AwaitingItem(
+      title: 'Change pickup time?',
+      from: 'Alex',
+      status: 'Pending',
+      time: '2h ago',
+    ),
+    AwaitingItem(
+      title: 'Approve school trip',
+      from: 'School Admin',
+      status: 'Action',
+      time: 'Yesterday',
+    ),
+  ];
+
+  static const List<ActivityItem> recentActivity = [
+    ActivityItem(
+      title: 'Expense added',
+      subtitle: 'Groceries • \$62.75',
+      time: 'Today',
+      icon: Icons.shopping_bag_outlined,
+      iconBgColor: Color(0xFFFEDB65),
+    ),
+    ActivityItem(
+      title: 'New message',
+      subtitle: 'Pickup time confirmed',
+      time: 'Yesterday',
+      icon: Icons.chat_bubble_outline,
+      iconBgColor: Color(0xFF5B7FFF),
+    ),
+    ActivityItem(
+      title: 'Schedule updated',
+      subtitle: 'Doctor appointment added',
+      time: '2 days',
+      icon: Icons.calendar_month_outlined,
+      iconBgColor: Color(0xFFD00416),
+    ),
+  ];
+
+  static const List<MessageItem> messages = [
+    MessageItem(
+      name: 'Alex',
+      avatarUrl: 'https://i.pravatar.cc/150?img=3',
+      lastMessage: 'See you at 3:30 PM.',
+      time: '10:38 AM',
+      unreadCount: 0,
+      isOnline: true,
+    ),
+    MessageItem(
+      name: 'School Admin',
+      avatarUrl: 'https://i.pravatar.cc/150?img=5',
+      lastMessage: 'Please confirm the trip form.',
+      time: 'Yesterday',
+      unreadCount: 2,
+      isOnline: false,
+    ),
+  ];
+
+  static const List<NewsItem> newsFeed = [
+    NewsItem(
+      title: 'New school term dates announced',
+      body: 'The education ministry published the updated calendar for the new term.',
+      imageUrl: 'https://picsum.photos/seed/news1/800/400',
+      source: 'Local News',
+      date: 'Apr 12',
+    ),
+    NewsItem(
+      title: 'Family support resources',
+      body: 'A curated list of resources for co-parenting and family coordination.',
+      imageUrl: 'https://picsum.photos/seed/news2/800/400',
+      source: 'Community',
+      date: 'Apr 09',
+    ),
+  ];
+
+  static const List<ExpenseItem> expenses = [
+    ExpenseItem(
+      title: 'School Fees',
+      category: 'Education',
+      date: 'Apr 02',
+      amount: 150.00,
+      paidBy: 'Parent A',
+      icon: Icons.school_outlined,
+    ),
+    ExpenseItem(
+      title: 'Doctor Visit',
+      category: 'Healthcare',
+      date: 'Apr 06',
+      amount: 85.50,
+      paidBy: 'Parent B',
+      icon: Icons.local_hospital_outlined,
+    ),
+    ExpenseItem(
+      title: 'Sports Class',
+      category: 'Activities',
+      date: 'Apr 10',
+      amount: 45.00,
+      paidBy: 'Parent A',
+      icon: Icons.sports_soccer,
+    ),
+    ExpenseItem(
+      title: 'Groceries',
+      category: 'Essentials',
+      date: 'Apr 12',
+      amount: 62.75,
+      paidBy: 'Parent B',
+      icon: Icons.shopping_bag_outlined,
+    ),
+  ];
+
+  // ---------------------------------------------------------------------------
+  // Trips / Destinations (used by feature UIs)
+  // ---------------------------------------------------------------------------
+  static const List<String> specialCategories = ['Popular', 'Beach', 'Safari'];
 
   static const List<DestinationItem> trendingDestinations = [
-    DestinationItem(name: 'Sharm El Sheikh', imageUrl: 'https://picsum.photos/200/200?random=10', rank: 1),
-    DestinationItem(name: 'Hurghada', imageUrl: 'https://picsum.photos/200/200?random=11', rank: 2),
-    DestinationItem(name: 'Luxor', imageUrl: 'https://picsum.photos/200/200?random=12', rank: 3),
-    DestinationItem(name: 'Aswan', imageUrl: 'https://picsum.photos/200/200?random=13', rank: 4),
-    DestinationItem(name: 'Dahab', imageUrl: 'https://picsum.photos/200/200?random=14', rank: 5),
-    DestinationItem(name: 'Marsa Alam', imageUrl: 'https://picsum.photos/200/200?random=15', rank: 6),
-  ];
-
-  static const List<TripItem> popularTrips = [
-    TripItem(id: '1', title: 'Sharm El Sheikh Adventure', imageUrl: 'https://picsum.photos/400/300?random=1', rating: 4.8, reviewCount: 245, location: 'From Cairo', dateRange: 'Jun 15 - Jun 20', price: 699),
-    TripItem(id: '2', title: 'Hurghada Beach Resort', imageUrl: 'https://picsum.photos/400/300?random=2', rating: 4.6, reviewCount: 189, location: 'From Cairo', dateRange: 'Jul 1 - Jul 5', price: 549),
-    TripItem(id: '3', title: 'Luxor Temple Tour', imageUrl: 'https://picsum.photos/400/300?random=3', rating: 4.9, reviewCount: 320, location: 'From Cairo', dateRange: 'Jun 22 - Jun 25', price: 399),
-    TripItem(id: '4', title: 'Dahab Diving Trip', imageUrl: 'https://picsum.photos/400/300?random=4', rating: 4.7, reviewCount: 156, location: 'From Cairo', dateRange: 'Aug 10 - Aug 14', price: 459),
-  ];
-
-  static const List<TripItem> sponsoredTrips = [
-    TripItem(id: '5', title: 'Royal Nile Cruise', imageUrl: 'https://picsum.photos/400/300?random=5', rating: 4.9, reviewCount: 412, location: 'From Luxor', dateRange: 'Jul 10 - Jul 15', price: 899, badge: 'Sponsored'),
-    TripItem(id: '6', title: 'Siwa Oasis Escape', imageUrl: 'https://picsum.photos/400/300?random=6', rating: 4.5, reviewCount: 98, location: 'From Cairo', dateRange: 'Aug 1 - Aug 4', price: 349, badge: 'Sponsored'),
-    TripItem(id: '7', title: 'Alexandria City Tour', imageUrl: 'https://picsum.photos/400/300?random=7', rating: 4.4, reviewCount: 201, location: 'From Cairo', dateRange: 'Jun 28 - Jun 30', price: 249, badge: 'Sponsored'),
-  ];
-
-  static const List<TripItem> domesticTrips = [
-    TripItem(id: '8', title: 'Ain Sokhna Weekend', imageUrl: 'https://picsum.photos/400/300?random=8', rating: 4.3, reviewCount: 167, location: 'From Cairo', dateRange: 'Jun 18 - Jun 19', price: 199),
-    TripItem(id: '9', title: 'Fayoum Safari', imageUrl: 'https://picsum.photos/400/300?random=9', rating: 4.6, reviewCount: 134, location: 'From Cairo', dateRange: 'Jul 5 - Jul 7', price: 279),
-    TripItem(id: '10', title: 'North Coast Getaway', imageUrl: 'https://picsum.photos/400/300?random=16', rating: 4.7, reviewCount: 289, location: 'From Cairo', dateRange: 'Jul 15 - Jul 19', price: 599),
-  ];
-
-  static const List<TripItem> internationalTrips = [
-    TripItem(id: '11', title: 'Istanbul Explorer', imageUrl: 'https://picsum.photos/400/300?random=17', rating: 4.8, reviewCount: 356, location: 'From Cairo', dateRange: 'Aug 5 - Aug 10', price: 1299),
-    TripItem(id: '12', title: 'Dubai City Break', imageUrl: 'https://picsum.photos/400/300?random=18', rating: 4.7, reviewCount: 278, location: 'From Cairo', dateRange: 'Sep 1 - Sep 5', price: 1499),
-    TripItem(id: '13', title: 'Maldives Paradise', imageUrl: 'https://picsum.photos/400/300?random=19', rating: 4.9, reviewCount: 445, location: 'From Cairo', dateRange: 'Oct 10 - Oct 17', price: 2199),
-  ];
-
-  static const List<TripItem> recommendedTrips = [
-    TripItem(id: '14', title: 'Petra & Wadi Rum', imageUrl: 'https://picsum.photos/400/300?random=20', rating: 4.8, reviewCount: 198, location: 'From Cairo', dateRange: 'Sep 15 - Sep 20', price: 999),
-    TripItem(id: '15', title: 'Santorini Dream', imageUrl: 'https://picsum.photos/400/300?random=21', rating: 4.9, reviewCount: 367, location: 'From Cairo', dateRange: 'Aug 20 - Aug 25', price: 1799),
-    TripItem(id: '16', title: 'Cappadocia Balloon', imageUrl: 'https://picsum.photos/400/300?random=22', rating: 4.7, reviewCount: 234, location: 'From Cairo', dateRange: 'Sep 8 - Sep 12', price: 1099),
-  ];
-
-  static const List<TripItem> specialTrips = [
-    TripItem(id: '17', title: 'Luxury Nile Cruise - 7 Nights', imageUrl: 'https://picsum.photos/400/300?random=23', rating: 4.9, reviewCount: 512, location: 'From Luxor', dateRange: 'Jul 1 - Jul 8', price: 1299, oldPrice: 1529, badge: 'Top Rated'),
-    TripItem(id: '18', title: 'Wellness Retreat Gouna', imageUrl: 'https://picsum.photos/400/300?random=24', rating: 4.8, reviewCount: 178, location: 'From Cairo', dateRange: 'Aug 15 - Aug 20', price: 899, oldPrice: 1059, badge: 'Best Seller'),
-    TripItem(id: '19', title: 'Desert Safari Adventure', imageUrl: 'https://picsum.photos/400/300?random=25', rating: 4.6, reviewCount: 245, location: 'From Cairo', dateRange: 'Sep 5 - Sep 8', price: 499, oldPrice: 599, badge: 'Popular'),
-    TripItem(id: '20', title: 'Red Sea Diving Package', imageUrl: 'https://picsum.photos/400/300?random=26', rating: 4.7, reviewCount: 301, location: 'From Cairo', dateRange: 'Oct 1 - Oct 5', price: 749, oldPrice: 899, badge: 'Limited'),
-  ];
-
-  static const List<TripItem> wishlistTrips = [
-    TripItem(id: '1', title: 'Sharm El Sheikh Adventure', imageUrl: 'https://picsum.photos/400/300?random=1', rating: 4.8, reviewCount: 245, location: 'From Cairo', dateRange: 'Jun 15 - Jun 20', price: 699, isFavorite: true),
-    TripItem(id: '5', title: 'Royal Nile Cruise', imageUrl: 'https://picsum.photos/400/300?random=5', rating: 4.9, reviewCount: 412, location: 'From Luxor', dateRange: 'Jul 10 - Jul 15', price: 899, isFavorite: true),
-    TripItem(id: '13', title: 'Maldives Paradise', imageUrl: 'https://picsum.photos/400/300?random=19', rating: 4.9, reviewCount: 445, location: 'From Cairo', dateRange: 'Oct 10 - Oct 17', price: 2199, isFavorite: true),
-    TripItem(id: '15', title: 'Santorini Dream', imageUrl: 'https://picsum.photos/400/300?random=21', rating: 4.9, reviewCount: 367, location: 'From Cairo', dateRange: 'Aug 20 - Aug 25', price: 1799, isFavorite: true),
-  ];
-
-  static const List<TripItem> upcomingTrips = [
-    TripItem(id: '1', title: 'Sharm El Sheikh Adventure', imageUrl: 'https://picsum.photos/400/300?random=1', rating: 4.8, reviewCount: 245, location: 'From Cairo', dateRange: 'Jun 15 - Jun 20', price: 699, status: 'Confirmed'),
-    TripItem(id: '11', title: 'Istanbul Explorer', imageUrl: 'https://picsum.photos/400/300?random=17', rating: 4.8, reviewCount: 356, location: 'From Cairo', dateRange: 'Aug 5 - Aug 10', price: 1299, status: 'Confirmed'),
-  ];
-
-  static const List<TripItem> pastTrips = [
-    TripItem(id: '3', title: 'Luxor Temple Tour', imageUrl: 'https://picsum.photos/400/300?random=3', rating: 4.9, reviewCount: 320, location: 'From Cairo', dateRange: 'Mar 22 - Mar 25', price: 399, status: 'Completed'),
-    TripItem(id: '8', title: 'Ain Sokhna Weekend', imageUrl: 'https://picsum.photos/400/300?random=8', rating: 4.3, reviewCount: 167, location: 'From Cairo', dateRange: 'Feb 18 - Feb 19', price: 199, status: 'Completed'),
-    TripItem(id: '6', title: 'Siwa Oasis Escape', imageUrl: 'https://picsum.photos/400/300?random=6', rating: 4.5, reviewCount: 98, location: 'From Cairo', dateRange: 'Jan 1 - Jan 4', price: 349, status: 'Cancelled'),
+    DestinationItem(
+      name: 'Dahab',
+      imageUrl: 'https://images.unsplash.com/photo-1544986581-efac024faf62?auto=format&fit=crop&w=800&q=60',
+      rank: 1,
+    ),
+    DestinationItem(
+      name: 'Aswan',
+      imageUrl: 'https://images.unsplash.com/photo-1545537619-3d5b7f6c3b05?auto=format&fit=crop&w=800&q=60',
+      rank: 2,
+    ),
+    DestinationItem(
+      name: 'Siwa',
+      imageUrl: 'https://images.unsplash.com/photo-1524492449090-7a93e1c82117?auto=format&fit=crop&w=800&q=60',
+      rank: 3,
+    ),
   ];
 
   static const List<String> recentSearches = [
+    'Dahab',
     'Sharm El Sheikh',
-    'Hurghada',
-    'Nile Cruise',
-    'Dubai',
-    'Istanbul',
+    'Cairo',
   ];
 
-  static const List<String> specialCategories = [
-    'Popular',
-    'Day Trip',
-    'Wellness',
-    'Cruise',
-    'Food',
-    'Nature',
-    'Sport',
+  static const List<TripItem> popularTrips = [
+    TripItem(
+      title: 'Dahab Adventure',
+      location: 'South Sinai, Egypt',
+      imageUrl: 'https://images.unsplash.com/photo-1526779259212-939e64788e3c?auto=format&fit=crop&w=800&q=60',
+      price: 199,
+      rating: 4.6,
+      dateRange: '12 - 15 May',
+      status: 'Upcoming',
+    ),
+    TripItem(
+      title: 'Luxor Day Tour',
+      location: 'Luxor, Egypt',
+      imageUrl: 'https://images.unsplash.com/photo-1585144860130-8d2c5d2d99f5?auto=format&fit=crop&w=800&q=60',
+      price: 149,
+      rating: 4.4,
+      dateRange: '20 May',
+      status: 'Upcoming',
+    ),
+  ];
+
+  static const List<TripItem> sponsoredTrips = popularTrips;
+  static const List<TripItem> domesticTrips = popularTrips;
+  static const List<TripItem> internationalTrips = popularTrips;
+  static const List<TripItem> recommendedTrips = popularTrips;
+
+  static const List<TripItem> specialTrips = popularTrips;
+
+  static const List<TripItem> upcomingTrips = popularTrips;
+
+  static const List<TripItem> pastTrips = [
+    TripItem(
+      title: 'Cairo City Break',
+      location: 'Cairo, Egypt',
+      imageUrl: 'https://images.unsplash.com/photo-1524492412937-4961a7d0aeb8?auto=format&fit=crop&w=800&q=60',
+      price: 99,
+      rating: 4.2,
+      dateRange: '10 - 12 Mar',
+      status: 'Completed',
+    ),
   ];
 }
+
