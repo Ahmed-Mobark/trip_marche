@@ -443,7 +443,7 @@ abstract class AppLocalizations {
   /// No description provided for @authForgotPasswordTitle.
   ///
   /// In en, this message translates to:
-  /// **'Forget Password'**
+  /// **'Forget Your Password'**
   String get authForgotPasswordTitle;
 
   /// No description provided for @authForgotPasswordDescription.
@@ -452,11 +452,23 @@ abstract class AppLocalizations {
   /// **'Enter your email address below and we will send you a link to reset your password.'**
   String get authForgotPasswordDescription;
 
+  /// No description provided for @authForgotPasswordSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Forgot it? Let’s fix it.'**
+  String get authForgotPasswordSubtitle;
+
   /// No description provided for @authSendButton.
   ///
   /// In en, this message translates to:
   /// **'Send'**
   String get authSendButton;
+
+  /// No description provided for @authSendCodeButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Send Code'**
+  String get authSendCodeButton;
 
   /// No description provided for @authVerifyTitle.
   ///
@@ -476,11 +488,41 @@ abstract class AppLocalizations {
   /// **'Verify'**
   String get authVerifyButton;
 
+  /// No description provided for @authBack.
+  ///
+  /// In en, this message translates to:
+  /// **'Back'**
+  String get authBack;
+
   /// No description provided for @authResendCode.
   ///
   /// In en, this message translates to:
   /// **'Resend Code'**
   String get authResendCode;
+
+  /// No description provided for @authVerifyEmailTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Verify your email'**
+  String get authVerifyEmailTitle;
+
+  /// No description provided for @authVerifyEmailSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'We send you 6- digit code to verify your number'**
+  String get authVerifyEmailSubtitle;
+
+  /// No description provided for @authVerificationCodeNotReceived.
+  ///
+  /// In en, this message translates to:
+  /// **'Verification code not received?'**
+  String get authVerificationCodeNotReceived;
+
+  /// No description provided for @authResendNow.
+  ///
+  /// In en, this message translates to:
+  /// **'Resend Now'**
+  String get authResendNow;
 
   /// No description provided for @wishlistTitle.
   ///

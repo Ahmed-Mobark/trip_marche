@@ -1,39 +1,76 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:trip_marche/core/theme/app_colors.dart';
 import 'package:trip_marche/core/config/app_icons.dart';
-import 'package:trip_marche/core/config/app_images.dart';
 
 class AuthHeader extends StatelessWidget {
   final Widget child;
   final bool showIllustration;
+  final String? illustration;
+
+  /// When [showIllustration] is false: show a compact purple bar with back (left) + logo (right).
+  final bool compactTopBar;
+
+  /// Back action for [compactTopBar]. Defaults to [Navigator.maybePop].
+  final VoidCallback? onBack;
 
   const AuthHeader({
     super.key,
     this.showIllustration = true,
     required this.child,
+    this.illustration,
+    this.compactTopBar = false,
+    this.onBack,
   });
 
   @override
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      decoration: const BoxDecoration(gradient: LinearGradient(colors: [AppColors.primary, AppColors.primary])),
+      decoration: const BoxDecoration(
+        gradient: LinearGradient(
+          colors: [AppColors.primary, AppColors.primary],
+        ),
+      ),
       child: Column(
         children: [
           SizedBox(height: MediaQuery.of(context).padding.top),
-          // Logo — exported SVG from Figma
-          if (showIllustration) Image.asset(AppIcons.lloPng, width: 160),
-          // Illustration area — exported PNG from Figma
-          SizedBox(height: 12),
-          if (showIllustration)
+          if (showIllustration) ...[
+            Image.asset(AppIcons.lloPng, width: 160),
+            const SizedBox(height: 12),
             SizedBox(
               height: 140,
-              child: Image.asset(
-                AppImages.loginIllustration,
-                fit: BoxFit.contain,
+              child: illustration != null
+                  ? AppIcons.icon(icon: illustration!, size: 150.w)
+                  : AppIcons.icon(icon: AppIcons.authIllustration, size: 150.w),
+            ),
+          ] else if (compactTopBar) ...[
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 20.w),
+              child: Row(
+                children: [
+                  IconButton(
+                    padding: EdgeInsets.zero,
+                    constraints: const BoxConstraints(minWidth: 44, minHeight: 44),
+                    onPressed:
+                        onBack ?? () => Navigator.maybePop(context),
+                    icon: const Icon(
+                      Icons.arrow_back_ios_new,
+                      color: Colors.white,
+                      size: 18,
+                    ),
+                  ),
+                  const Spacer(),
+                  Image.asset(
+                    AppIcons.lloPng,
+                    height: 28,
+                    fit: BoxFit.contain,
+                  ),
+                ],
               ),
-            )
-          else
+            ),
+            SizedBox(height: 12.h),
+          ] else
             const SizedBox(height: 30),
           // White content area with Figma curve
           Expanded(

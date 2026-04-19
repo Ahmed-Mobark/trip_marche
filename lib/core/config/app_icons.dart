@@ -32,6 +32,8 @@ class AppIcons {
   static const String languageIcon = '${_path}language_icon.png';
   static const String googleIcon = '${_path}google_icon.svg';
   static const String appleIcon = '${_path}apple_icon.svg';
+  static const String verifyIcon = '${_path}verify_number.svg';
+  static const String authIllustration = '${_path}auth_illustration.svg';
 
 
   // Method to render SVG as a widget

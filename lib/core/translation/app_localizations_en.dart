@@ -188,14 +188,20 @@ class AppLocalizationsEn extends AppLocalizations {
   String get authLoginAction => 'Login';
 
   @override
-  String get authForgotPasswordTitle => 'Forget Password';
+  String get authForgotPasswordTitle => 'Forget Your Password';
 
   @override
   String get authForgotPasswordDescription =>
       'Enter your email address below and we will send you a link to reset your password.';
 
   @override
+  String get authForgotPasswordSubtitle => 'Forgot it? Let’s fix it.';
+
+  @override
   String get authSendButton => 'Send';
+
+  @override
+  String get authSendCodeButton => 'Send Code';
 
   @override
   String get authVerifyTitle => 'Verify Your Number';
@@ -208,7 +214,24 @@ class AppLocalizationsEn extends AppLocalizations {
   String get authVerifyButton => 'Verify';
 
   @override
+  String get authBack => 'Back';
+
+  @override
   String get authResendCode => 'Resend Code';
+
+  @override
+  String get authVerifyEmailTitle => 'Verify your email';
+
+  @override
+  String get authVerifyEmailSubtitle =>
+      'We send you 6- digit code to verify your number';
+
+  @override
+  String get authVerificationCodeNotReceived =>
+      'Verification code not received?';
+
+  @override
+  String get authResendNow => 'Resend Now';
 
   @override
   String get wishlistTitle => 'Wishlist';

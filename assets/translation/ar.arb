@@ -61,14 +61,21 @@
   "authHaveAccountPrompt": "لديك حساب بالفعل؟ ",
   "authLoginAction": "تسجيل الدخول",
 
-  "authForgotPasswordTitle": "نسيت كلمة المرور",
+  "authForgotPasswordTitle": "نسيت كلمة مرورك؟",
   "authForgotPasswordDescription": "أدخل بريدك الإلكتروني أدناه وسنرسل لك رابطًا لإعادة تعيين كلمة المرور.",
+  "authForgotPasswordSubtitle": "نسيتها؟ دعنا نصلح ذلك.",
   "authSendButton": "إرسال",
+  "authSendCodeButton": "إرسال الرمز",
 
   "authVerifyTitle": "تحقق من رقمك",
   "authVerifyDescription": "لقد أرسلنا لك رمز تحقق إلى رقمك المسجل. يرجى إدخال الرمز أدناه.",
   "authVerifyButton": "تحقق",
+  "authBack": "رجوع",
   "authResendCode": "إعادة إرسال الرمز",
+  "authVerifyEmailTitle": "تحقق من بريدك الإلكتروني",
+  "authVerifyEmailSubtitle": "أرسلنا لك رمزًا من 6 أرقام للتحقق من رقمك",
+  "authVerificationCodeNotReceived": "لم تستلم رمز التحقق؟",
+  "authResendNow": "أعد الإرسال الآن",
 
   "wishlistTitle": "المفضلة",
   "wishlistEmptyTitle": "لا توجد رحلات محفوظة بعد",

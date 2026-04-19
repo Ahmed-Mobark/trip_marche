@@ -185,14 +185,20 @@ class AppLocalizationsAr extends AppLocalizations {
   String get authLoginAction => 'تسجيل الدخول';
 
   @override
-  String get authForgotPasswordTitle => 'نسيت كلمة المرور';
+  String get authForgotPasswordTitle => 'نسيت كلمة مرورك؟';
 
   @override
   String get authForgotPasswordDescription =>
       'أدخل بريدك الإلكتروني أدناه وسنرسل لك رابطًا لإعادة تعيين كلمة المرور.';
 
   @override
+  String get authForgotPasswordSubtitle => 'نسيتها؟ دعنا نصلح ذلك.';
+
+  @override
   String get authSendButton => 'إرسال';
+
+  @override
+  String get authSendCodeButton => 'إرسال الرمز';
 
   @override
   String get authVerifyTitle => 'تحقق من رقمك';
@@ -205,7 +211,23 @@ class AppLocalizationsAr extends AppLocalizations {
   String get authVerifyButton => 'تحقق';
 
   @override
+  String get authBack => 'رجوع';
+
+  @override
   String get authResendCode => 'إعادة إرسال الرمز';
+
+  @override
+  String get authVerifyEmailTitle => 'تحقق من بريدك الإلكتروني';
+
+  @override
+  String get authVerifyEmailSubtitle =>
+      'أرسلنا لك رمزًا من 6 أرقام للتحقق من رقمك';
+
+  @override
+  String get authVerificationCodeNotReceived => 'لم تستلم رمز التحقق؟';
+
+  @override
+  String get authResendNow => 'أعد الإرسال الآن';
 
   @override
   String get wishlistTitle => 'المفضلة';
