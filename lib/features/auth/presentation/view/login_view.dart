@@ -8,6 +8,7 @@ import 'package:trip_marche/core/injection/injection_container.dart';
 import 'package:trip_marche/core/widgets/social_login_button.dart';
 import 'package:trip_marche/core/widgets/app_text_field.dart';
 import 'package:trip_marche/features/auth/presentation/widgets/auth_header.dart';
+import 'package:trip_marche/features/auth/presentation/widgets/divider_with_text.dart';
 import 'package:trip_marche/core/extensions/localization.dart';
 import 'package:trip_marche/features/auth/presentation/cubit/login/login_cubit.dart';
 import 'package:trip_marche/features/auth/presentation/cubit/login/login_state.dart';
@@ -40,11 +41,11 @@ class LoginView extends StatelessWidget {
                   color: AppColors.darkText,
                 ),
               ),
-              const SizedBox(height: 24),
+              const SizedBox(height: 20),
 
-              // Email field
+              _FieldTitle(text: context.tr.authEmailLabel),
+              const SizedBox(height: 8),
               AppTextField(
-                label: context.tr.authEmailLabel,
                 hint: context.tr.authEmailHint,
                 controller: context.read<LoginCubit>().emailController,
                 prefixWidget: Padding(
@@ -61,14 +62,14 @@ class LoginView extends StatelessWidget {
                 ),
                 keyboardType: TextInputType.emailAddress,
               ),
-              const SizedBox(height: 16),
+              const SizedBox(height: 18),
 
-              // Password field
+              _FieldTitle(text: context.tr.authPasswordLabel),
+              const SizedBox(height: 8),
               BlocBuilder<LoginCubit, LoginState>(
                 buildWhen: (p, n) => p.obscurePassword != n.obscurePassword,
                 builder: (context, state) {
                   return AppTextField(
-                    label: context.tr.authPasswordLabel,
                     hint: context.tr.authPasswordHint,
                     controller: context.read<LoginCubit>().passwordController,
                     prefixWidget: Padding(
@@ -102,7 +103,7 @@ class LoginView extends StatelessWidget {
                   );
                 },
               ),
-              const SizedBox(height: 8),
+              const SizedBox(height: 10),
 
               // Forget Password
               Align(
@@ -119,7 +120,7 @@ class LoginView extends StatelessWidget {
                   ),
                 ),
               ),
-              const SizedBox(height: 24),
+              const SizedBox(height: 22),
 
               // Login button
               SizedBox(
@@ -172,37 +173,11 @@ class LoginView extends StatelessWidget {
                   ),
                 ),
               ),
-              const SizedBox(height: 24),
+              const SizedBox(height: 18),
 
               // Divider: "Or Login with"
-              Row(
-                children: [
-                  Expanded(
-                    child: Container(
-                      height: 1,
-                      color: const Color(0xFF9A9A9A).withValues(alpha: 0.4),
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 12),
-                    child: Text(
-                      context.tr.authOrLoginWith,
-                      style: GoogleFonts.inter(
-                        fontSize: AppFonts.bodyMedium,
-                        fontWeight: FontWeight.w500,
-                        color: const Color(0xFF9A9A9A),
-                      ),
-                    ),
-                  ),
-                  Expanded(
-                    child: Container(
-                      height: 1,
-                      color: const Color(0xFF9A9A9A).withValues(alpha: 0.4),
-                    ),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 20),
+              DividerWithText(text: context.tr.authOrLoginWith),
+              const SizedBox(height: 14),
 
               // Continue with Google
               SocialLoginButton(
@@ -226,7 +201,7 @@ class LoginView extends StatelessWidget {
                 text: context.tr.authContinueWithApple,
                 onPressed: () {},
               ),
-              const SizedBox(height: 24),
+              const SizedBox(height: 18),
 
               // Travel Agency
               Center(
@@ -257,6 +232,24 @@ class LoginView extends StatelessWidget {
             ),
           );
         },
+      ),
+    );
+  }
+}
+
+class _FieldTitle extends StatelessWidget {
+  const _FieldTitle({required this.text});
+
+  final String text;
+
+  @override
+  Widget build(BuildContext context) {
+    return Text(
+      text,
+      style: GoogleFonts.inter(
+        fontSize: AppFonts.bodyLarge,
+        fontWeight: FontWeight.w700,
+        color: AppColors.darkText,
       ),
     );
   }
