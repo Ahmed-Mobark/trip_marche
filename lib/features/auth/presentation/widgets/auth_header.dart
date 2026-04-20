@@ -35,25 +35,24 @@ class AuthHeader extends StatelessWidget {
       child: Column(
         children: [
           SizedBox(height: MediaQuery.of(context).padding.top),
-          if (showIllustration) ...[
-            Image.asset(AppIcons.lloPng, width: 160),
-            const SizedBox(height: 12),
-            SizedBox(
-              height: 140,
-              child: illustration != null
-                  ? AppIcons.icon(icon: illustration!, size: 150.w)
-                  : AppIcons.icon(icon: AppIcons.authIllustration, size: 150.w),
-            ),
-          ] else if (compactTopBar) ...[
+
+          if (showIllustration)
+            Padding(
+              padding: EdgeInsets.only(bottom: 33.h, top: 3.h),
+              child: Image.asset(AppIcons.lloPng, width: 120),
+            )
+          else if (compactTopBar) ...[
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 20.w),
               child: Row(
                 children: [
                   IconButton(
                     padding: EdgeInsets.zero,
-                    constraints: const BoxConstraints(minWidth: 44, minHeight: 44),
-                    onPressed:
-                        onBack ?? () => Navigator.maybePop(context),
+                    constraints: const BoxConstraints(
+                      minWidth: 44,
+                      minHeight: 44,
+                    ),
+                    onPressed: onBack ?? () => Navigator.maybePop(context),
                     icon: const Icon(
                       Icons.arrow_back_ios_new,
                       color: Colors.white,
@@ -61,26 +60,43 @@ class AuthHeader extends StatelessWidget {
                     ),
                   ),
                   const Spacer(),
-                  Image.asset(
-                    AppIcons.lloPng,
-                    height: 28,
-                    fit: BoxFit.contain,
-                  ),
+                  Image.asset(AppIcons.lloPng, height: 28, fit: BoxFit.contain),
                 ],
               ),
             ),
             SizedBox(height: 12.h),
           ] else
-            const SizedBox(height: 30),
+            const SizedBox(height: 4000),
           // White content area with Figma curve
           Expanded(
             child: Stack(
+              clipBehavior: Clip.none,
               children: [
                 ClipPath(
                   clipper: _AuthCurveClipper(),
                   child: Container(width: double.infinity, color: Colors.white),
                 ),
-                Padding(padding: const EdgeInsets.only(top: 90), child: child),
+                if (showIllustration)
+                  Positioned(
+                    top: -33.h,
+                    left: 0,
+                    right: 0,
+                    child: Center(
+                      child: SizedBox(
+                        height: 120.h,
+                        child: illustration != null
+                            ? AppIcons.icon(icon: illustration!, size: 130.w)
+                            : AppIcons.icon(
+                                icon: AppIcons.authIllustration,
+                                size: 120.w,
+                              ),
+                      ),
+                    ),
+                  ),
+                Padding(
+                  padding: EdgeInsets.only(top: showIllustration ? 95.h : 80),
+                  child: child,
+                ),
               ],
             ),
           ),
