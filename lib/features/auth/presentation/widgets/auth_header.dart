@@ -8,6 +8,10 @@ class AuthHeader extends StatelessWidget {
   final bool showIllustration;
   final String? illustration;
 
+  /// When true, the entire header + content scroll together.
+  /// Use this for screens where you want the header to scroll with the body.
+  final bool scrollable;
+
   /// When [showIllustration] is false: show a compact purple bar with back (left) + logo (right).
   final bool compactTopBar;
 
@@ -19,9 +23,60 @@ class AuthHeader extends StatelessWidget {
     this.showIllustration = true,
     required this.child,
     this.illustration,
+    this.scrollable = false,
     this.compactTopBar = false,
     this.onBack,
   });
+
+  Widget _buildTop(BuildContext context) {
+    if (showIllustration) {
+      return Column(
+        children: [
+          Image.asset(AppIcons.lloPng, width: 160),
+          const SizedBox(height: 12),
+          SizedBox(
+            height: 140,
+            child: illustration != null
+                ? AppIcons.icon(icon: illustration!, size: 150.w)
+                : AppIcons.icon(icon: AppIcons.authIllustration, size: 150.w),
+          ),
+        ],
+      );
+    }
+
+    if (compactTopBar) {
+      return Column(
+        children: [
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 20.w),
+            child: Row(
+              children: [
+                IconButton(
+                  padding: EdgeInsets.zero,
+                  constraints: const BoxConstraints(minWidth: 44, minHeight: 44),
+                  onPressed: onBack ?? () => Navigator.maybePop(context),
+                  icon: const Icon(
+                    Icons.arrow_back_ios_new,
+                    color: Colors.white,
+                    size: 18,
+                  ),
+                ),
+                const Spacer(),
+                Image.asset(
+                  AppIcons.lloPng,
+                  height: 28,
+                  fit: BoxFit.contain,
+                ),
+              ],
+            ),
+          ),
+          SizedBox(height: 12.h),
+        ],
+      );
+    }
+
+    return const SizedBox(height: 30);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -32,60 +87,50 @@ class AuthHeader extends StatelessWidget {
           colors: [AppColors.primary, AppColors.primary],
         ),
       ),
-      child: Column(
-        children: [
-          SizedBox(height: MediaQuery.of(context).padding.top),
-          if (showIllustration) ...[
-            Image.asset(AppIcons.lloPng, width: 160),
-            const SizedBox(height: 12),
-            SizedBox(
-              height: 140,
-              child: illustration != null
-                  ? AppIcons.icon(icon: illustration!, size: 150.w)
-                  : AppIcons.icon(icon: AppIcons.authIllustration, size: 150.w),
-            ),
-          ] else if (compactTopBar) ...[
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 20.w),
-              child: Row(
+      child: scrollable
+          ? SingleChildScrollView(
+              child: Column(
                 children: [
-                  IconButton(
-                    padding: EdgeInsets.zero,
-                    constraints: const BoxConstraints(minWidth: 44, minHeight: 44),
-                    onPressed:
-                        onBack ?? () => Navigator.maybePop(context),
-                    icon: const Icon(
-                      Icons.arrow_back_ios_new,
+                  SizedBox(height: MediaQuery.of(context).padding.top),
+                  _buildTop(context),
+                  ClipPath(
+                    clipper: _AuthCurveClipper(),
+                    child: Container(
+                      width: double.infinity,
                       color: Colors.white,
-                      size: 18,
+                      child: Padding(
+                        padding: const EdgeInsets.only(top: 90),
+                        child: child,
+                      ),
                     ),
-                  ),
-                  const Spacer(),
-                  Image.asset(
-                    AppIcons.lloPng,
-                    height: 28,
-                    fit: BoxFit.contain,
                   ),
                 ],
               ),
-            ),
-            SizedBox(height: 12.h),
-          ] else
-            const SizedBox(height: 30),
-          // White content area with Figma curve
-          Expanded(
-            child: Stack(
+            )
+          : Column(
               children: [
-                ClipPath(
-                  clipper: _AuthCurveClipper(),
-                  child: Container(width: double.infinity, color: Colors.white),
+                SizedBox(height: MediaQuery.of(context).padding.top),
+                _buildTop(context),
+                // White content area with Figma curve
+                Expanded(
+                  child: Stack(
+                    children: [
+                      ClipPath(
+                        clipper: _AuthCurveClipper(),
+                        child: Container(
+                          width: double.infinity,
+                          color: Colors.white,
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 90),
+                        child: child,
+                      ),
+                    ],
+                  ),
                 ),
-                Padding(padding: const EdgeInsets.only(top: 90), child: child),
               ],
             ),
-          ),
-        ],
-      ),
     );
   }
 }

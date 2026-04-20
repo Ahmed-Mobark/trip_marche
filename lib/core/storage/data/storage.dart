@@ -1,9 +1,9 @@
 
 abstract class Storage {
   // User Storage
-  // Future<void> storeUserData({required UserModel user});
-  // UserModel? getUserData();
-  // Future<void> deleteUserData();
+  Future<void> storeUser({required Map<String, dynamic> userJson});
+  Map<String, dynamic>? getUserJson();
+  Future<void> deleteUser();
 
   // Token Storage
   Future<void> storeToken({required String token});

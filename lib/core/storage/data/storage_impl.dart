@@ -1,12 +1,13 @@
 import 'package:trip_marche/core/storage/data/storage.dart';
 import 'package:hive/hive.dart';
+import 'dart:convert';
 
 class StorageImpl implements Storage {
   final Box<String> stringBox;
   final Box<bool> boolBox;
   // final Box<UserModel> userBox;
 
-  // static const String _user = "user";
+  static const String _user = "user";
   static const String _token = "token";
   static const String _language = "language";
   static const String _onboarding = "onboarding";
@@ -14,14 +15,23 @@ class StorageImpl implements Storage {
   StorageImpl({required this.stringBox, required this.boolBox});
 
   //* user storage
-  // @override
-  // Future<void> storeUserData({required UserModel user}) async {await userBox.put(_user, user);}
+  @override
+  Future<void> storeUser({required Map<String, dynamic> userJson}) async {
+    await stringBox.put(_user, jsonEncode(userJson));
+  }
 
-  // @override
-  // UserModel? getUserData() => userBox.get(_user);
+  @override
+  Map<String, dynamic>? getUserJson() {
+    final raw = stringBox.get(_user);
+    if (raw == null || raw.isEmpty) return null;
+    final decoded = jsonDecode(raw);
+    return decoded is Map<String, dynamic> ? decoded : null;
+  }
 
-  // @override
-  // Future<void> deleteUserData() async {await userBox.delete(_user);}
+  @override
+  Future<void> deleteUser() async {
+    await stringBox.delete(_user);
+  }
 
   //* token storage
   @override

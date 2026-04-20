@@ -41,14 +41,15 @@ class LoginView extends StatelessWidget {
                 }
               },
               child: AuthHeader(
-              child: SingleChildScrollView(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 20,
-                  vertical: 20,
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
+                scrollable: true,
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 20,
+                    vertical: 20,
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
                     // Title
                     Text(
                       context.tr.authLoginTitle,
@@ -265,9 +266,9 @@ class LoginView extends StatelessWidget {
                     ),
                     const SizedBox(height: 16),
                   ],
+                  ),
                 ),
               ),
-            ),
             ),
           );
         },

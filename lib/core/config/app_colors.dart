@@ -23,7 +23,7 @@ abstract class AppColors {
   static const Color disableColorDark = Color(0xFF556E73);
 
   static const Color red = Color(0xFFD00416);
-  static const Color yellow = Color(0xFFDFB400);
+  static const Color yellow = Color(0xFFFFD43B);
   static const Color green = Color(0xFF1FC16B);
 
   static const Color transparent = Colors.transparent;
@@ -56,7 +56,7 @@ abstract class AppColors {
   static const Color error = red;
   static const Color success = green;
   static const Color warning = yellow;
-  static const Color starYellow = yellow;
+  static const Color starYellow = Color(0xFFFBB532);
 
   // Social buttons
   static const Color google = Color(0xFFDB4437);

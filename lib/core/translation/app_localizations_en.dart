@@ -234,7 +234,71 @@ class AppLocalizationsEn extends AppLocalizations {
   String get authResendNow => 'Resend Now';
 
   @override
+  String get homeAppTitle => 'TripMarche';
+
+  @override
+  String get homeSearchHint => 'Sharm El Sheikh';
+
+  @override
+  String get homeLocationText => 'Egypt, Cairo, New Cairo';
+
+  @override
+  String get homeTrendingDestinations => 'Trending Destinations';
+
+  @override
+  String get homePopularTrips => 'Popular Trips';
+
+  @override
+  String get homeSponsoredTrips => 'Sponsored Trips';
+
+  @override
+  String get homeDomesticTripsInEgypt => 'Domestic Trips In Egypt';
+
+  @override
+  String get homeInternationalTripsFromEgypt =>
+      'International Trips From Egypt';
+
+  @override
+  String get homeRecommendedForYou => 'Recommended For You';
+
+  @override
+  String get homeSpecialTrips => 'Special Trips';
+
+  @override
+  String get homeTopRated => 'Top Rated';
+
+  @override
+  String get homeFromCairoAlexandria => 'From Cairo & Alexandria';
+
+  @override
+  String get homeNewInTripMarche => 'New in TripMarche';
+
+  @override
+  String get homePerPerson => 'Person';
+
+  @override
+  String get homeSeeAll => 'See all';
+
+  @override
   String get wishlistTitle => 'Wishlist';
+
+  @override
+  String get wishlistSearchHint => 'Search for a trip';
+
+  @override
+  String get wishlistSortBy => 'Sort By';
+
+  @override
+  String get wishlistFilters => 'Filters';
+
+  @override
+  String get wishlistNewInTripMarche => 'New in TripMarche';
+
+  @override
+  String get wishlistRecommended => 'Recommended';
+
+  @override
+  String get wishlistBestPrice => 'Best Price';
 
   @override
   String get wishlistEmptyTitle => 'No trips saved yet';
@@ -321,6 +385,30 @@ class AppLocalizationsEn extends AppLocalizations {
   String get profileLogout => 'Log Out';
 
   @override
+  String profileTripsBooked(Object count) {
+    return '$count Trips booked';
+  }
+
+  @override
+  String get profileDeleteAccountTitle => 'Delete Account';
+
+  @override
+  String get profileDeleteAccountMessage =>
+      'Are you sure you want to delete your account? This action cannot be undone.';
+
+  @override
+  String get profileLogoutConfirmTitle => 'Log Out';
+
+  @override
+  String get profileLogoutConfirmMessage => 'Are you sure you want to log out?';
+
+  @override
+  String get commonCancel => 'Cancel';
+
+  @override
+  String get commonDelete => 'Delete';
+
+  @override
   String get followingsTitle => 'My Followings';
 
   @override
@@ -338,6 +426,45 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get myTripsTabPast => 'Past';
+
+  @override
+  String get myTripsSearchHint => 'Search for a trip';
+
+  @override
+  String get myTripsTabActive => 'Active';
+
+  @override
+  String get myTripsTabPastNew => 'Past';
+
+  @override
+  String get myTripsTabCanceled => 'Canceled';
+
+  @override
+  String get myTripsStatusActive => 'Active';
+
+  @override
+  String get myTripsStatusPast => 'Past';
+
+  @override
+  String get myTripsStatusCanceled => 'Canceled';
+
+  @override
+  String get myTripsBookAgain => 'Book Again';
+
+  @override
+  String get myTripsFromPrefix => 'From';
+
+  @override
+  String get myTripsViewDetails => 'View Details';
+
+  @override
+  String get myTripsViewReceipt => 'View Receipt';
+
+  @override
+  String get myTripsBookingDetails => 'Booking Details';
+
+  @override
+  String get myTripsDownloadPdf => 'Download pdf';
 
   @override
   String get myTripsEmptyTitle => 'No trips yet';

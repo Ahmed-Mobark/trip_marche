@@ -524,11 +524,137 @@ abstract class AppLocalizations {
   /// **'Resend Now'**
   String get authResendNow;
 
+  /// No description provided for @homeAppTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'TripMarche'**
+  String get homeAppTitle;
+
+  /// No description provided for @homeSearchHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Sharm El Sheikh'**
+  String get homeSearchHint;
+
+  /// No description provided for @homeLocationText.
+  ///
+  /// In en, this message translates to:
+  /// **'Egypt, Cairo, New Cairo'**
+  String get homeLocationText;
+
+  /// No description provided for @homeTrendingDestinations.
+  ///
+  /// In en, this message translates to:
+  /// **'Trending Destinations'**
+  String get homeTrendingDestinations;
+
+  /// No description provided for @homePopularTrips.
+  ///
+  /// In en, this message translates to:
+  /// **'Popular Trips'**
+  String get homePopularTrips;
+
+  /// No description provided for @homeSponsoredTrips.
+  ///
+  /// In en, this message translates to:
+  /// **'Sponsored Trips'**
+  String get homeSponsoredTrips;
+
+  /// No description provided for @homeDomesticTripsInEgypt.
+  ///
+  /// In en, this message translates to:
+  /// **'Domestic Trips In Egypt'**
+  String get homeDomesticTripsInEgypt;
+
+  /// No description provided for @homeInternationalTripsFromEgypt.
+  ///
+  /// In en, this message translates to:
+  /// **'International Trips From Egypt'**
+  String get homeInternationalTripsFromEgypt;
+
+  /// No description provided for @homeRecommendedForYou.
+  ///
+  /// In en, this message translates to:
+  /// **'Recommended For You'**
+  String get homeRecommendedForYou;
+
+  /// No description provided for @homeSpecialTrips.
+  ///
+  /// In en, this message translates to:
+  /// **'Special Trips'**
+  String get homeSpecialTrips;
+
+  /// No description provided for @homeTopRated.
+  ///
+  /// In en, this message translates to:
+  /// **'Top Rated'**
+  String get homeTopRated;
+
+  /// No description provided for @homeFromCairoAlexandria.
+  ///
+  /// In en, this message translates to:
+  /// **'From Cairo & Alexandria'**
+  String get homeFromCairoAlexandria;
+
+  /// No description provided for @homeNewInTripMarche.
+  ///
+  /// In en, this message translates to:
+  /// **'New in TripMarche'**
+  String get homeNewInTripMarche;
+
+  /// No description provided for @homePerPerson.
+  ///
+  /// In en, this message translates to:
+  /// **'Person'**
+  String get homePerPerson;
+
+  /// No description provided for @homeSeeAll.
+  ///
+  /// In en, this message translates to:
+  /// **'See all'**
+  String get homeSeeAll;
+
   /// No description provided for @wishlistTitle.
   ///
   /// In en, this message translates to:
   /// **'Wishlist'**
   String get wishlistTitle;
+
+  /// No description provided for @wishlistSearchHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Search for a trip'**
+  String get wishlistSearchHint;
+
+  /// No description provided for @wishlistSortBy.
+  ///
+  /// In en, this message translates to:
+  /// **'Sort By'**
+  String get wishlistSortBy;
+
+  /// No description provided for @wishlistFilters.
+  ///
+  /// In en, this message translates to:
+  /// **'Filters'**
+  String get wishlistFilters;
+
+  /// No description provided for @wishlistNewInTripMarche.
+  ///
+  /// In en, this message translates to:
+  /// **'New in TripMarche'**
+  String get wishlistNewInTripMarche;
+
+  /// No description provided for @wishlistRecommended.
+  ///
+  /// In en, this message translates to:
+  /// **'Recommended'**
+  String get wishlistRecommended;
+
+  /// No description provided for @wishlistBestPrice.
+  ///
+  /// In en, this message translates to:
+  /// **'Best Price'**
+  String get wishlistBestPrice;
 
   /// No description provided for @wishlistEmptyTitle.
   ///
@@ -692,6 +818,48 @@ abstract class AppLocalizations {
   /// **'Log Out'**
   String get profileLogout;
 
+  /// No description provided for @profileTripsBooked.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} Trips booked'**
+  String profileTripsBooked(Object count);
+
+  /// No description provided for @profileDeleteAccountTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete Account'**
+  String get profileDeleteAccountTitle;
+
+  /// No description provided for @profileDeleteAccountMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Are you sure you want to delete your account? This action cannot be undone.'**
+  String get profileDeleteAccountMessage;
+
+  /// No description provided for @profileLogoutConfirmTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Log Out'**
+  String get profileLogoutConfirmTitle;
+
+  /// No description provided for @profileLogoutConfirmMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Are you sure you want to log out?'**
+  String get profileLogoutConfirmMessage;
+
+  /// No description provided for @commonCancel.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel'**
+  String get commonCancel;
+
+  /// No description provided for @commonDelete.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete'**
+  String get commonDelete;
+
   /// No description provided for @followingsTitle.
   ///
   /// In en, this message translates to:
@@ -727,6 +895,84 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Past'**
   String get myTripsTabPast;
+
+  /// No description provided for @myTripsSearchHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Search for a trip'**
+  String get myTripsSearchHint;
+
+  /// No description provided for @myTripsTabActive.
+  ///
+  /// In en, this message translates to:
+  /// **'Active'**
+  String get myTripsTabActive;
+
+  /// No description provided for @myTripsTabPastNew.
+  ///
+  /// In en, this message translates to:
+  /// **'Past'**
+  String get myTripsTabPastNew;
+
+  /// No description provided for @myTripsTabCanceled.
+  ///
+  /// In en, this message translates to:
+  /// **'Canceled'**
+  String get myTripsTabCanceled;
+
+  /// No description provided for @myTripsStatusActive.
+  ///
+  /// In en, this message translates to:
+  /// **'Active'**
+  String get myTripsStatusActive;
+
+  /// No description provided for @myTripsStatusPast.
+  ///
+  /// In en, this message translates to:
+  /// **'Past'**
+  String get myTripsStatusPast;
+
+  /// No description provided for @myTripsStatusCanceled.
+  ///
+  /// In en, this message translates to:
+  /// **'Canceled'**
+  String get myTripsStatusCanceled;
+
+  /// No description provided for @myTripsBookAgain.
+  ///
+  /// In en, this message translates to:
+  /// **'Book Again'**
+  String get myTripsBookAgain;
+
+  /// No description provided for @myTripsFromPrefix.
+  ///
+  /// In en, this message translates to:
+  /// **'From'**
+  String get myTripsFromPrefix;
+
+  /// No description provided for @myTripsViewDetails.
+  ///
+  /// In en, this message translates to:
+  /// **'View Details'**
+  String get myTripsViewDetails;
+
+  /// No description provided for @myTripsViewReceipt.
+  ///
+  /// In en, this message translates to:
+  /// **'View Receipt'**
+  String get myTripsViewReceipt;
+
+  /// No description provided for @myTripsBookingDetails.
+  ///
+  /// In en, this message translates to:
+  /// **'Booking Details'**
+  String get myTripsBookingDetails;
+
+  /// No description provided for @myTripsDownloadPdf.
+  ///
+  /// In en, this message translates to:
+  /// **'Download pdf'**
+  String get myTripsDownloadPdf;
 
   /// No description provided for @myTripsEmptyTitle.
   ///

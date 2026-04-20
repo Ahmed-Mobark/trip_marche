@@ -50,6 +50,7 @@ class SignUpState extends Equatable {
       validationErrors: validationErrors,
     );
   }
+  
 
   @override
   List<Object?> get props => [

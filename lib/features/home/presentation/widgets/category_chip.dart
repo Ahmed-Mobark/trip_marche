@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:trip_marche/core/theme/app_colors.dart';
 import 'package:trip_marche/core/theme/app_text_styles.dart';
 
@@ -17,7 +18,7 @@ class CategoryChip extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(right: 8),
+      padding: EdgeInsets.symmetric(horizontal: 4.w),
       child: GestureDetector(
         onTap: onTap,
         child: Container(
@@ -29,11 +30,13 @@ class CategoryChip extends StatelessWidget {
               color: isSelected ? AppColors.primary : AppColors.border,
             ),
           ),
-          child: Text(
-            label,
-            style: AppTextStyles.bodySmall(
-              color: isSelected ? AppColors.white : AppColors.greyText,
-            ).copyWith(fontWeight: FontWeight.w600),
+          child: Center(
+            child: Text(
+              label,
+              style: AppTextStyles.bodySmall(
+                color: isSelected ? AppColors.white : AppColors.greyText,
+              ).copyWith(fontWeight: FontWeight.w600),
+            ),
           ),
         ),
       ),

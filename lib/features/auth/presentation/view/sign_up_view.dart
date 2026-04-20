@@ -50,180 +50,203 @@ class SignUpView extends StatelessWidget {
                 }
               },
               child: AuthHeader(
-              child: SingleChildScrollView(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 20,
-                  vertical: 20,
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      context.tr.authSignUpSubtitle,
-                      style: AppTextStyles.heading2(),
-                    ),
-                    const SizedBox(height: 18),
-
-                    _FieldTitle(text: context.tr.authFullNameLabel),
-                    const SizedBox(height: 8),
-                    AppTextField(
-                      hint: context.tr.authFullNameHint,
-                      controller: context.read<SignUpCubit>().fullNameController,
-                      keyboardType: TextInputType.name,
-                      prefixWidget: const Padding(
-                        padding: EdgeInsets.all(12),
-                        child: Icon(
-                          Icons.person_outline,
-                          size: 22,
-                          color: AppColors.greyText,
-                        ),
+                scrollable: true,
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 20,
+                    vertical: 20,
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        context.tr.authSignUpSubtitle,
+                        style: AppTextStyles.heading2(),
                       ),
-                    ),
-                    const SizedBox(height: 16),
+                      const SizedBox(height: 18),
 
-                    _FieldTitle(text: context.tr.authEmailLabel),
-                    const SizedBox(height: 8),
-                    AppTextField(
-                      hint: context.tr.authEmailHint,
-                      controller: context.read<SignUpCubit>().emailController,
-                      keyboardType: TextInputType.emailAddress,
-                      prefixWidget: Padding(
-                        padding: const EdgeInsets.all(12),
-                        child: SvgPicture.asset(
-                          AppIcons.icSms,
-                          width: 20,
-                          height: 20,
-                          colorFilter: const ColorFilter.mode(
-                            AppColors.greyText,
-                            BlendMode.srcIn,
+                      _FieldTitle(text: context.tr.authFullNameLabel),
+                      const SizedBox(height: 8),
+                      AppTextField(
+                        validator: (value) =>
+                            context.read<SignUpCubit>().validateName(value),
+                        hint: context.tr.authFullNameHint,
+                        controller: context
+                            .read<SignUpCubit>()
+                            .fullNameController,
+                        keyboardType: TextInputType.name,
+                        prefixWidget: const Padding(
+                          padding: EdgeInsets.all(12),
+                          child: Icon(
+                            Icons.person_outline,
+                            size: 22,
+                            color: AppColors.greyText,
                           ),
                         ),
                       ),
-                    ),
-                    const SizedBox(height: 16),
+                      const SizedBox(height: 16),
 
-                    _FieldTitle(text: context.tr.authPasswordLabel),
-                    const SizedBox(height: 8),
-                    BlocBuilder<SignUpCubit, SignUpState>(
-                      buildWhen: (p, n) =>
-                          p.obscurePassword != n.obscurePassword,
-                      builder: (context, state) {
-                        return AppTextField(
-                          hint: context.tr.authPasswordHint,
-                          controller: context
-                              .read<SignUpCubit>()
-                              .passwordController,
-                          obscureText: state.obscurePassword,
-                          prefixWidget: Padding(
-                            padding: const EdgeInsets.all(12),
-                            child: SvgPicture.asset(
-                              AppIcons.icLock,
-                              width: 20,
-                              height: 20,
-                              colorFilter: const ColorFilter.mode(
-                                AppColors.greyText,
-                                BlendMode.srcIn,
+                      _FieldTitle(text: context.tr.authEmailLabel),
+                      const SizedBox(height: 8),
+                      AppTextField(
+                        validator: (value) =>
+                            context.read<SignUpCubit>().validateEmail(value),
+                        hint: context.tr.authEmailHint,
+                        controller: context.read<SignUpCubit>().emailController,
+                        keyboardType: TextInputType.emailAddress,
+                        prefixWidget: Padding(
+                          padding: const EdgeInsets.all(12),
+                          child: SvgPicture.asset(
+                            AppIcons.icSms,
+                            width: 20,
+                            height: 20,
+                            colorFilter: const ColorFilter.mode(
+                              AppColors.greyText,
+                              BlendMode.srcIn,
+                            ),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(height: 16),
+
+                      _FieldTitle(text: context.tr.authPasswordLabel),
+                      const SizedBox(height: 8),
+                      BlocBuilder<SignUpCubit, SignUpState>(
+                        buildWhen: (p, n) =>
+                            p.obscurePassword != n.obscurePassword,
+                        builder: (context, state) {
+                          return AppTextField(
+                            validator: (value) => context
+                                .read<SignUpCubit>()
+                                .validatePassword(value),
+                            errorMaxLines: 2,
+
+                            hint: context.tr.authPasswordHint,
+                            controller: context
+                                .read<SignUpCubit>()
+                                .passwordController,
+                            obscureText: state.obscurePassword,
+                            prefixWidget: Padding(
+                              padding: const EdgeInsets.all(12),
+                              child: SvgPicture.asset(
+                                AppIcons.icLock,
+                                width: 20,
+                                height: 20,
+                                colorFilter: const ColorFilter.mode(
+                                  AppColors.greyText,
+                                  BlendMode.srcIn,
+                                ),
                               ),
                             ),
-                          ),
-                          suffixIcon: IconButton(
-                            icon: Icon(
-                              state.obscurePassword
-                                  ? Icons.visibility_off_outlined
-                                  : Icons.visibility_outlined,
-                              color: AppColors.greyText,
-                              size: 20,
+                            suffixIcon: IconButton(
+                              icon: Icon(
+                                state.obscurePassword
+                                    ? Icons.visibility_off_outlined
+                                    : Icons.visibility_outlined,
+                                color: AppColors.greyText,
+                                size: 20,
+                              ),
+                              onPressed: context
+                                  .read<SignUpCubit>()
+                                  .toggleObscurePassword,
                             ),
-                            onPressed: context
+                          );
+                        },
+                      ),
+                      const SizedBox(height: 16),
+
+                      _FieldTitle(text: context.tr.authPhoneLabel),
+                      const SizedBox(height: 8),
+                      BlocBuilder<SignUpCubit, SignUpState>(
+                        buildWhen: (p, n) => p.dialCode != n.dialCode,
+                        builder: (context, state) {
+                          return AuthPhoneNumberField(
+                            validator: (value) => context
                                 .read<SignUpCubit>()
-                                .toggleObscurePassword,
-                          ),
-                        );
-                      },
-                    ),
-                    const SizedBox(height: 16),
-
-                    _FieldTitle(text: context.tr.authPhoneLabel),
-                    const SizedBox(height: 8),
-                    BlocBuilder<SignUpCubit, SignUpState>(
-                      buildWhen: (p, n) => p.dialCode != n.dialCode,
-                      builder: (context, state) {
-                        return AuthPhoneNumberField(
-                          controller: context.read<SignUpCubit>().phoneController,
-                          hint: context.tr.authPhoneHint,
-                          selectedDialCode: state.dialCode,
-                          onDialCodeChanged:
-                              context.read<SignUpCubit>().setDialCode,
-                        );
-                      },
-                    ),
-                    const SizedBox(height: 22),
-
-                    // Sign Up button
-                    BlocBuilder<SignUpCubit, SignUpState>(
-                      buildWhen: (p, n) => p.status != n.status,
-                      builder: (context, state) {
-                        final isLoading = state.status == SignUpStatus.loading;
-                        return AppButton(
-                          text: isLoading ? null : context.tr.authSignUpButton,
-                          onTap: isLoading ? null : () {
-                            context.read<SignUpCubit>().submitSignUp();
-                          },
-                          child: isLoading
-                              ? const SizedBox(
-                                  width: 24,
-                                  height: 24,
-                                  child: CircularProgressIndicator(
-                                    color: Colors.white,
-                                    strokeWidth: 2.5,
-                                  ),
-                                )
-                              : null,
-                        );
-                      },
-                    ),
-                    const SizedBox(height: 16),
-
-                    // Already have an account
-                    Center(
-                      child: AuthLinkText(
-                        leadingText: context.tr.authHaveAccountPrompt,
-                        actionText: context.tr.authLoginAction,
-                        onTap: () => Navigator.pop(context),
+                                .validatePhone(value),
+                            controller: context
+                                .read<SignUpCubit>()
+                                .phoneController,
+                            hint: context.tr.authPhoneHint,
+                            selectedDialCode: state.dialCode,
+                            onDialCodeChanged: context
+                                .read<SignUpCubit>()
+                                .setDialCode,
+                          );
+                        },
                       ),
-                    ),
-                    const SizedBox(height: 14),
+                      const SizedBox(height: 22),
 
-                    // Or Login with divider (design)
-                    DividerWithText(text: context.tr.authOrLoginWith),
-                    const SizedBox(height: 12),
-
-                    // Social login buttons
-                    SocialLoginButton(
-                      icon: SvgPicture.asset(
-                        AppIcons.icGoogle,
-                        width: 20,
-                        height: 20,
+                      // Sign Up button
+                      BlocBuilder<SignUpCubit, SignUpState>(
+                        buildWhen: (p, n) => p.status != n.status,
+                        builder: (context, state) {
+                          final isLoading =
+                              state.status == SignUpStatus.loading;
+                          return AppButton(
+                            text: isLoading
+                                ? null
+                                : context.tr.authSignUpButton,
+                            onTap: isLoading
+                                ? null
+                                : () {
+                                    context.read<SignUpCubit>().submitSignUp();
+                                  },
+                            child: isLoading
+                                ? const SizedBox(
+                                    width: 24,
+                                    height: 24,
+                                    child: CircularProgressIndicator(
+                                      color: Colors.white,
+                                      strokeWidth: 2.5,
+                                    ),
+                                  )
+                                : null,
+                          );
+                        },
                       ),
-                      text: context.tr.authContinueWithGoogle,
-                      onPressed: () {},
-                    ),
+                      const SizedBox(height: 16),
 
-                    const SizedBox(height: 12),
-                    SocialLoginButton(
-                      icon: SvgPicture.asset(
-                        AppIcons.icApple,
-                        width: 20,
-                        height: 20,
+                      // Already have an account
+                      Center(
+                        child: AuthLinkText(
+                          leadingText: context.tr.authHaveAccountPrompt,
+                          actionText: context.tr.authLoginAction,
+                          onTap: () => Navigator.pop(context),
+                        ),
                       ),
-                      text: context.tr.authContinueWithApple,
-                      onPressed: () {},
-                    ),
-                    const SizedBox(height: 16),
-                  ],
+                      const SizedBox(height: 14),
+
+                      // Or Login with divider (design)
+                      DividerWithText(text: context.tr.authOrLoginWith),
+                      const SizedBox(height: 12),
+
+                      // Social login buttons
+                      SocialLoginButton(
+                        icon: SvgPicture.asset(
+                          AppIcons.icGoogle,
+                          width: 20,
+                          height: 20,
+                        ),
+                        text: context.tr.authContinueWithGoogle,
+                        onPressed: () {},
+                      ),
+
+                      const SizedBox(height: 12),
+                      SocialLoginButton(
+                        icon: SvgPicture.asset(
+                          AppIcons.icApple,
+                          width: 20,
+                          height: 20,
+                        ),
+                        text: context.tr.authContinueWithApple,
+                        onPressed: () {},
+                      ),
+                      const SizedBox(height: 16),
+                    ],
+                  ),
                 ),
               ),
-            ),
             ),
           );
         },
@@ -239,9 +262,6 @@ class _FieldTitle extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Text(
-      text,
-      style: AppTextStyles.subtitle(color: AppColors.darkText),
-    );
+    return Text(text, style: AppTextStyles.subtitle(color: AppColors.darkText));
   }
 }

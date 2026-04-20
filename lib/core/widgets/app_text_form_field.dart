@@ -37,6 +37,7 @@ class AppTextFormField extends StatelessWidget {
   final Color? borderColor;
   final Color? focusedBorderColor;
   final Color? errorBorderColor;
+  final int? errorMaxLines;
 
   const AppTextFormField({
     super.key,
@@ -72,6 +73,7 @@ class AppTextFormField extends StatelessWidget {
     this.borderColor,
     this.focusedBorderColor,
     this.errorBorderColor,
+    this.errorMaxLines,
   });
 
   @override
@@ -149,6 +151,7 @@ class AppTextFormField extends StatelessWidget {
         ),
         errorBorder: buildBorder(errorBorderColor ?? Colors.red),
         focusedErrorBorder: buildBorder(errorBorderColor ?? Colors.red),
+        errorMaxLines: errorMaxLines,
       ),
     );
   }

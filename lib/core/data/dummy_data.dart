@@ -232,7 +232,7 @@ abstract class DummyData {
     ),
     MessageItem(
       name: 'School Admin',
-      avatarUrl: 'https://i.pravatar.cc/150?img=5',
+      avatarUrl: 'https://i.pravatar.cc/150?img=3',
       lastMessage: 'Please confirm the trip form.',
       time: 'Yesterday',
       unreadCount: 2,
@@ -305,12 +305,12 @@ abstract class DummyData {
     ),
     DestinationItem(
       name: 'Aswan',
-      imageUrl: 'https://images.unsplash.com/photo-1545537619-3d5b7f6c3b05?auto=format&fit=crop&w=800&q=60',
+      imageUrl: 'https://images.unsplash.com/photo-1544986581-efac024faf62?auto=format&fit=crop&w=800&q=60',
       rank: 2,
     ),
     DestinationItem(
       name: 'Siwa',
-      imageUrl: 'https://images.unsplash.com/photo-1524492449090-7a93e1c82117?auto=format&fit=crop&w=800&q=60',
+      imageUrl: 'https://images.unsplash.com/photo-1544986581-efac024faf62?auto=format&fit=crop&w=800&q=60',
       rank: 3,
     ),
   ];
@@ -334,7 +334,16 @@ abstract class DummyData {
     TripItem(
       title: 'Luxor Day Tour',
       location: 'Luxor, Egypt',
-      imageUrl: 'https://images.unsplash.com/photo-1585144860130-8d2c5d2d99f5?auto=format&fit=crop&w=800&q=60',
+      imageUrl: 'https://images.unsplash.com/photo-1526779259212-939e64788e3c?auto=format&fit=crop&w=800&q=60',
+      price: 149,
+      rating: 4.4,
+      dateRange: '20 May',
+      status: 'Upcoming',
+    ),
+      TripItem(
+      title: 'Cairo City Break',
+      location: 'Cairo, Egypt',
+      imageUrl: 'https://images.unsplash.com/photo-1526779259212-939e64788e3c?auto=format&fit=crop&w=800&q=60',
       price: 149,
       rating: 4.4,
       dateRange: '20 May',
@@ -355,7 +364,7 @@ abstract class DummyData {
     TripItem(
       title: 'Cairo City Break',
       location: 'Cairo, Egypt',
-      imageUrl: 'https://images.unsplash.com/photo-1524492412937-4961a7d0aeb8?auto=format&fit=crop&w=800&q=60',
+      imageUrl: 'https://images.unsplash.com/photo-1526779259212-939e64788e3c?auto=format&fit=crop&w=800&q=60',
       price: 99,
       rating: 4.2,
       dateRange: '10 - 12 Mar',

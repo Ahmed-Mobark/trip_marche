@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:trip_marche/core/config/app_icons.dart';
 import 'package:trip_marche/core/theme/app_colors.dart';
 import 'package:trip_marche/core/injection/injection_container.dart';
 import 'package:trip_marche/core/navigation/app_navigator.dart';
@@ -57,25 +58,7 @@ class _SplashViewState extends State<SplashView> {
             curve: Curves.easeIn,
             child: Column(
               mainAxisSize: MainAxisSize.min,
-              children: [
-                Text(
-                  'TripMarche',
-                  style: GoogleFonts.inter(
-                    fontSize: 36,
-                    fontWeight: FontWeight.w700,
-                    color: Colors.white,
-                  ),
-                ),
-                const SizedBox(height: 12),
-                Container(
-                  width: 40,
-                  height: 4,
-                  decoration: BoxDecoration(
-                    color: AppColors.accent,
-                    borderRadius: BorderRadius.circular(2),
-                  ),
-                ),
-              ],
+              children: [Image.asset(AppIcons.lloPng, width: 200.w)],
             ),
           ),
         ),

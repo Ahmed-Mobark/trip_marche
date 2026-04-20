@@ -3,15 +3,16 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:trip_marche/core/theme/app_colors.dart';
 import 'package:trip_marche/core/theme/app_text_styles.dart';
 import 'package:trip_marche/core/data/dummy_data.dart';
-import 'package:trip_marche/core/widgets/section_header.dart';
-import 'package:trip_marche/core/widgets/trip_card.dart';
 import 'package:trip_marche/core/injection/injection_container.dart';
 import 'package:trip_marche/core/navigation/app_navigator.dart';
-import 'package:trip_marche/features/home/presentation/widgets/location_top_bar.dart';
-import 'package:trip_marche/features/home/presentation/widgets/home_search_bar.dart';
-import 'package:trip_marche/features/home/presentation/widgets/trending_destination_item.dart';
+import 'package:trip_marche/core/extensions/localization.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:trip_marche/features/home/presentation/widgets/home_header.dart';
+import 'package:trip_marche/features/home/presentation/widgets/trending_destination_card.dart';
+import 'package:trip_marche/features/home/presentation/widgets/popular_trip_grid_card.dart';
 import 'package:trip_marche/features/home/presentation/widgets/promo_banner_item.dart';
 import 'package:trip_marche/features/home/presentation/widgets/category_chip.dart';
+import 'package:trip_marche/features/home/presentation/widgets/special_trip_wide_card.dart';
 import 'package:trip_marche/features/trip_details/presentation/view/trip_details_view.dart';
 
 class HomeView extends StatefulWidget {
@@ -22,246 +23,395 @@ class HomeView extends StatefulWidget {
 }
 
 class _HomeViewState extends State<HomeView> {
-  int _promoCurrentIndex = 0;
-  String _selectedSpecialCategory = 'Popular';
+  String _selectedSpecialCategory = DummyData.specialCategories.first;
+
+  static const List<Map<String, String>> _promoItems = [
+    {
+      'title': 'Get 15% Off!',
+      'subtitle': 'On all summer trips this week only',
+    },
+    {
+      'title': 'Early Bird Deal',
+      'subtitle': 'Book 30 days ahead and save 20%',
+    },
+    {
+      'title': 'Group Discount',
+      'subtitle': 'Travel with 4+ friends, get 10% off',
+    },
+    {
+      'title': 'Weekend Special',
+      'subtitle': 'Domestic trips starting at \$99',
+    },
+  ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.background,
-      body: SafeArea(
-        child: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              // a) Top bar
-              const LocationTopBar(locationName: 'Sharm El Sheikh'),
-              const SizedBox(height: 12),
-
-              // b) Search bar
-              const HomeSearchBar(),
-              const SizedBox(height: 20),
-
-              // c) Trending Destinations
-              _buildTrendingDestinations(),
-              const SizedBox(height: 20),
-
-              // d) Popular Trips
-              const SectionHeader(title: 'Popular Trips'),
-              _buildHorizontalTripList(DummyData.popularTrips),
-              const SizedBox(height: 20),
-
-              // e) Promo Banner
-              _buildPromoBanner(),
-              const SizedBox(height: 20),
-
-              // f) Sponsored Trips
-              const SectionHeader(title: 'Sponsored Trips'),
-              _buildHorizontalTripList(DummyData.sponsoredTrips),
-              const SizedBox(height: 20),
-
-              // g) Domestic Trips In Egypt
-              const SectionHeader(title: 'Domestic Trips In Egypt'),
-              _buildHorizontalTripList(DummyData.domesticTrips),
-              const SizedBox(height: 20),
-
-              // h) International Trips From Egypt
-              const SectionHeader(title: 'International Trips From Egypt'),
-              _buildHorizontalTripList(DummyData.internationalTrips),
-              const SizedBox(height: 20),
-
-              // i) Recommended For You
-              const SectionHeader(title: 'Recommended For You'),
-              _buildHorizontalTripList(DummyData.recommendedTrips),
-              const SizedBox(height: 20),
-
-              // j) Special Trips with category chips
-              _buildSpecialTripsSection(),
-              const SizedBox(height: 32),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-
-  // ──────────────────────────────────────────
-  // c) Trending Destinations
-  // ──────────────────────────────────────────
-  Widget _buildTrendingDestinations() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16),
-          child: Text('Trending Destinations', style: AppTextStyles.heading3()),
-        ),
-        const SizedBox(height: 12),
-        SizedBox(
-          height: 100,
-          child: ListView.builder(
-            scrollDirection: Axis.horizontal,
-            padding: const EdgeInsets.symmetric(horizontal: 16),
-            itemCount: DummyData.trendingDestinations.length,
-            itemBuilder: (context, index) {
-              final dest = DummyData.trendingDestinations[index];
-              return TrendingDestinationItem(
-                name: dest.name,
-                imageUrl: dest.imageUrl,
-                rank: dest.rank,
-              );
-            },
-          ),
-        ),
-      ],
-    );
-  }
-
-  // ──────────────────────────────────────────
-  // Horizontal trip list (reused for sections d, f, g, h, i)
-  // ──────────────────────────────────────────
-  Widget _buildHorizontalTripList(List<TripItem> trips) {
-    return SizedBox(
-      height: 230,
-      child: ListView.builder(
-        scrollDirection: Axis.horizontal,
-        padding: const EdgeInsets.symmetric(horizontal: 16),
-        itemCount: trips.length,
-        itemBuilder: (context, index) {
-          return TripCard(
-            trip: trips[index],
-            onTap: () => sl<AppNavigator>().push(
-              screen: const TripDetailsView(),
+      backgroundColor: AppColors.scaffoldColorLight,
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            HomeHeader(
+              searchHint: context.tr.homeSearchHint,
+              locationText: context.tr.homeLocationText,
+              onNotificationsTap: () {},
             ),
-          );
-        },
+            Container(
+              width: double.infinity,
+              padding: EdgeInsetsDirectional.only(
+                start: 16.w,
+                end: 16.w,
+                top: 18.h,
+                bottom: 24.h,
+              ),
+              decoration: BoxDecoration(
+                color: AppColors.scaffoldColorLight,
+                borderRadius: BorderRadius.vertical(top: Radius.circular(18.r)),
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    context.tr.homeTrendingDestinations,
+                    style: AppTextStyles.heading3(color: AppColors.darkText),
+                  ),
+                  SizedBox(height: 12.h),
+                  SizedBox(
+                    height: 110.h,
+                    child: ListView.builder(
+                      scrollDirection: Axis.horizontal,
+                      itemCount: DummyData.trendingDestinations.length,
+                      itemBuilder: (context, index) {
+                        final dest = DummyData.trendingDestinations[index];
+                        return TrendingDestinationCard(
+                          name: dest.name,
+                          imageUrl: dest.imageUrl,
+                          rank: dest.rank,
+                        );
+                      },
+                    ),
+                  ),
+                  SizedBox(height: 22.h),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        context.tr.homePopularTrips,
+                        style: AppTextStyles.heading3(
+                          color: AppColors.darkText,
+                        ),
+                      ),
+                      GestureDetector(
+                        onTap: () {},
+                        child: Text(
+                          context.tr.homeSeeAll,
+                          style: AppTextStyles.bodySmall(
+                            color: AppColors.primaryDark,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 14.h),
+                  SizedBox(
+                    height: 340.h,
+                    child: ListView.separated(
+                      scrollDirection: Axis.horizontal,
+                      itemCount: DummyData.popularTrips.length,
+                      separatorBuilder: (_, __) => SizedBox(width: 14.w),
+                      itemBuilder: (context, index) {
+                        final trip = DummyData.popularTrips[index];
+                        return SizedBox(
+                          width: 190.w,
+                          child: PopularTripGridCard(
+                            trip: trip,
+                            onTap: () => sl<AppNavigator>().push(
+                              screen: const TripDetailsView(),
+                            ),
+                          ),
+                        );
+                      },
+                    ),
+                  ),
+
+                  SizedBox(height: 18.h),
+                  _PromoBanner(promoItems: _promoItems),
+
+                  SizedBox(height: 22.h),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        context.tr.homeSponsoredTrips,
+                        style: AppTextStyles.heading3(color: AppColors.darkText),
+                      ),
+                      GestureDetector(
+                        onTap: () {},
+                        child: Text(
+                          context.tr.homeSeeAll,
+                          style: AppTextStyles.bodySmall(
+                            color: AppColors.primaryDark,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 14.h),
+                  SizedBox(
+                    height: 340.h,
+                    child: ListView.separated(
+                      scrollDirection: Axis.horizontal,
+                      itemCount: DummyData.sponsoredTrips.length,
+                      separatorBuilder: (_, __) => SizedBox(width: 14.w),
+                      itemBuilder: (context, index) {
+                        final trip = DummyData.sponsoredTrips[index];
+                        return SizedBox(
+                          width: 190.w,
+                          child: PopularTripGridCard(
+                            trip: trip,
+                            onTap: () => sl<AppNavigator>().push(
+                              screen: const TripDetailsView(),
+                            ),
+                          ),
+                        );
+                      },
+                    ),
+                  ),
+
+                  SizedBox(height: 22.h),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        context.tr.homeDomesticTripsInEgypt,
+                        style: AppTextStyles.heading3(color: AppColors.darkText),
+                      ),
+                      GestureDetector(
+                        onTap: () {},
+                        child: Text(
+                          context.tr.homeSeeAll,
+                          style: AppTextStyles.bodySmall(
+                            color: AppColors.primaryDark,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 14.h),
+                  SizedBox(
+                    height: 340.h,
+                    child: ListView.separated(
+                      scrollDirection: Axis.horizontal,
+                      itemCount: DummyData.domesticTrips.length,
+                      separatorBuilder: (_, __) => SizedBox(width: 14.w),
+                      itemBuilder: (context, index) {
+                        final trip = DummyData.domesticTrips[index];
+                        return SizedBox(
+                          width: 190.w,
+                          child: PopularTripGridCard(
+                            trip: trip,
+                            onTap: () => sl<AppNavigator>().push(
+                              screen: const TripDetailsView(),
+                            ),
+                          ),
+                        );
+                      },
+                    ),
+                  ),
+
+                  SizedBox(height: 22.h),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        context.tr.homeInternationalTripsFromEgypt,
+                        style: AppTextStyles.heading3(color: AppColors.darkText),
+                      ),
+                      GestureDetector(
+                        onTap: () {},
+                        child: Text(
+                          context.tr.homeSeeAll,
+                          style: AppTextStyles.bodySmall(
+                            color: AppColors.primaryDark,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 14.h),
+                  SizedBox(
+                    height: 340.h,
+                    child: ListView.separated(
+                      scrollDirection: Axis.horizontal,
+                      itemCount: DummyData.internationalTrips.length,
+                      separatorBuilder: (_, __) => SizedBox(width: 14.w),
+                      itemBuilder: (context, index) {
+                        final trip = DummyData.internationalTrips[index];
+                        return SizedBox(
+                          width: 190.w,
+                          child: PopularTripGridCard(
+                            trip: trip,
+                            onTap: () => sl<AppNavigator>().push(
+                              screen: const TripDetailsView(),
+                            ),
+                          ),
+                        );
+                      },
+                    ),
+                  ),
+
+                  SizedBox(height: 22.h),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        context.tr.homeRecommendedForYou,
+                        style: AppTextStyles.heading3(color: AppColors.darkText),
+                      ),
+                      GestureDetector(
+                        onTap: () {},
+                        child: Text(
+                          context.tr.homeSeeAll,
+                          style: AppTextStyles.bodySmall(
+                            color: AppColors.primaryDark,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 14.h),
+                  SizedBox(
+                    height: 340.h,
+                    child: ListView.separated(
+                      scrollDirection: Axis.horizontal,
+                      itemCount: DummyData.recommendedTrips.length,
+                      separatorBuilder: (_, __) => SizedBox(width: 14.w),
+                      itemBuilder: (context, index) {
+                        final trip = DummyData.recommendedTrips[index];
+                        return SizedBox(
+                          width: 190.w,
+                          child: PopularTripGridCard(
+                            trip: trip,
+                            onTap: () => sl<AppNavigator>().push(
+                              screen: const TripDetailsView(),
+                            ),
+                          ),
+                        );
+                      },
+                    ),
+                  ),
+
+                  SizedBox(height: 22.h),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        context.tr.homeSpecialTrips,
+                        style: AppTextStyles.heading3(color: AppColors.darkText),
+                      ),
+                      GestureDetector(
+                        onTap: () {},
+                        child: Text(
+                          context.tr.homeSeeAll,
+                          style: AppTextStyles.bodySmall(
+                            color: AppColors.primaryDark,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 12.h),
+                  SizedBox(
+                    height: 40.h,
+                    child: ListView.builder(
+                      scrollDirection: Axis.horizontal,
+                      itemCount: DummyData.specialCategories.length,
+                      itemBuilder: (context, index) {
+                        final cat = DummyData.specialCategories[index];
+                        final isSelected = cat == _selectedSpecialCategory;
+                        return CategoryChip(
+                          label: cat,
+                          isSelected: isSelected,
+                          onTap: () => setState(() {
+                            _selectedSpecialCategory = cat;
+                          }),
+                        );
+                      },
+                    ),
+                  ),
+                  SizedBox(height: 14.h),
+                  SpecialTripWideCard(
+                    trip: DummyData.specialTrips.first,
+                    onTap: () => sl<AppNavigator>().push(
+                      screen: const TripDetailsView(),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
+}
 
-  // ──────────────────────────────────────────
-  // e) Promo Banner Carousel
-  // ──────────────────────────────────────────
-  Widget _buildPromoBanner() {
-    final promoItems = [
-      {
-        'title': 'Get 15% Off!',
-        'subtitle': 'On all summer trips this week only',
-      },
-      {
-        'title': 'Early Bird Deal',
-        'subtitle': 'Book 30 days ahead and save 20%',
-      },
-      {
-        'title': 'Group Discount',
-        'subtitle': 'Travel with 4+ friends, get 10% off',
-      },
-      {
-        'title': 'Weekend Special',
-        'subtitle': 'Domestic trips starting at \$99',
-      },
-    ];
+class _PromoBanner extends StatefulWidget {
+  const _PromoBanner({required this.promoItems});
 
+  final List<Map<String, String>> promoItems;
+
+  @override
+  State<_PromoBanner> createState() => _PromoBannerState();
+}
+
+class _PromoBannerState extends State<_PromoBanner> {
+  int _currentIndex = 0;
+
+  @override
+  Widget build(BuildContext context) {
     return Column(
       children: [
         CarouselSlider.builder(
-          itemCount: promoItems.length,
+          itemCount: widget.promoItems.length,
           itemBuilder: (context, index, _) {
-            final promo = promoItems[index];
+            final promo = widget.promoItems[index];
             return PromoBannerItem(
               title: promo['title']!,
               subtitle: promo['subtitle']!,
               currentIndex: index,
-              totalCount: promoItems.length,
+              totalCount: widget.promoItems.length,
+              onBookNowTap: () {},
             );
           },
           options: CarouselOptions(
-            height: 160,
-            viewportFraction: 0.9,
-            enlargeCenterPage: true,
+            height: 140.h,
+            viewportFraction: 1,
+            enlargeCenterPage: false,
             autoPlay: true,
             autoPlayInterval: const Duration(seconds: 4),
             onPageChanged: (index, _) {
-              setState(() {
-                _promoCurrentIndex = index;
-              });
+              setState(() => _currentIndex = index);
             },
           ),
         ),
-        const SizedBox(height: 10),
+        SizedBox(height: 10.h),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: List.generate(
-            promoItems.length,
-            (index) => Container(
-              width: _promoCurrentIndex == index ? 20 : 6,
-              height: 6,
-              margin: const EdgeInsets.symmetric(horizontal: 3),
+            widget.promoItems.length,
+            (i) => AnimatedContainer(
+              duration: const Duration(milliseconds: 250),
+              width: _currentIndex == i ? 18.w : 6.w,
+              height: 6.w,
+              margin: EdgeInsets.symmetric(horizontal: 3.w),
               decoration: BoxDecoration(
-                color: _promoCurrentIndex == index
-                    ? AppColors.primary
-                    : AppColors.border,
-                borderRadius: BorderRadius.circular(3),
+                color: _currentIndex == i ? AppColors.primary : AppColors.border,
+                borderRadius: BorderRadius.circular(999),
               ),
             ),
           ),
         ),
-      ],
-    );
-  }
-
-  // ──────────────────────────────────────────
-  // j) Special Trips with category chips + vertical list
-  // ──────────────────────────────────────────
-  Widget _buildSpecialTripsSection() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        const SectionHeader(title: 'Special Trips', actionText: null),
-        const SizedBox(height: 4),
-
-        // Category chips
-        SizedBox(
-          height: 38,
-          child: ListView.builder(
-            scrollDirection: Axis.horizontal,
-            padding: const EdgeInsets.symmetric(horizontal: 16),
-            itemCount: DummyData.specialCategories.length,
-            itemBuilder: (context, index) {
-              final cat = DummyData.specialCategories[index];
-              final isSelected = cat == _selectedSpecialCategory;
-              return CategoryChip(
-                label: cat,
-                isSelected: isSelected,
-                onTap: () {
-                  setState(() {
-                    _selectedSpecialCategory = cat;
-                  });
-                },
-              );
-            },
-          ),
-        ),
-        const SizedBox(height: 16),
-
-        // "Top Rated" label
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16),
-          child: Text(
-            'Top Rated',
-            style: AppTextStyles.subtitle(color: AppColors.primary),
-          ),
-        ),
-        const SizedBox(height: 8),
-
-        // Vertical list of wide special trip cards
-        ...DummyData.specialTrips
-            .map((trip) => TripCardWide(
-                  trip: trip,
-                  onTap: () => sl<AppNavigator>().push(
-                    screen: const TripDetailsView(),
-                  ),
-                )),
       ],
     );
   }
