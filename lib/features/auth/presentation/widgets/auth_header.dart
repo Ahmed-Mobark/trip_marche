@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:trip_marche/core/theme/app_colors.dart';
 import 'package:trip_marche/core/config/app_icons.dart';
+import 'package:trip_marche/core/theme/app_colors.dart';
 
 class AuthHeader extends StatelessWidget {
   final Widget child;
@@ -12,7 +12,8 @@ class AuthHeader extends StatelessWidget {
   /// Use this for screens where you want the header to scroll with the body.
   final bool scrollable;
 
-  /// When [showIllustration] is false: show a compact purple bar with back (left) + logo (right).
+  /// When [showIllustration] is false: show a compact purple bar with back (left)
+  /// + logo (right).
   final bool compactTopBar;
 
   /// Back action for [compactTopBar]. Defaults to [Navigator.maybePop].
