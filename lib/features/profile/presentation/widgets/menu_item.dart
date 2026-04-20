@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:iconsax/iconsax.dart';
-import 'package:trip_marche/core/theme/app_colors.dart';
+import 'package:trip_marche/core/config/app_colors.dart';
+import 'package:trip_marche/core/config/styles/styles.dart';
 
 class ProfileMenuItem extends StatelessWidget {
   final IconData icon;
@@ -28,30 +29,28 @@ class ProfileMenuItem extends StatelessWidget {
     return InkWell(
       onTap: onTap,
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 14),
+        padding: EdgeInsetsDirectional.symmetric(horizontal: 18.w, vertical: 14.h),
         child: Row(
           children: [
             Icon(
               icon,
-              size: 22,
+              size: 22.sp,
               color: iconColor ?? AppColors.secondaryText,
             ),
-            const SizedBox(width: 14),
+            SizedBox(width: 14.w),
             Expanded(
               child: Text(
                 title,
-                style: GoogleFonts.inter(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w400,
+                style: AppTextStyles.bodyMedium(
                   color: titleColor ?? AppColors.darkText,
-                ),
+                ).copyWith(fontWeight: FontWeight.w500),
               ),
             ),
             if (trailing != null) trailing!,
             if (showChevron)
-              const Icon(
+              Icon(
                 Iconsax.arrow_right_3,
-                size: 18,
+                size: 18.sp,
                 color: AppColors.greyText,
               ),
           ],

@@ -10,6 +10,7 @@ class AppTextField extends StatelessWidget {
   final Widget? prefixWidget;
   final Widget? suffixIcon;
   final String? Function(String?)? validator;
+  final int? errorMaxLines;
 
   const AppTextField({
     super.key,
@@ -21,6 +22,7 @@ class AppTextField extends StatelessWidget {
     this.prefixWidget,
     this.suffixIcon,
     this.validator,
+    this.errorMaxLines = 3,
   });
 
   @override
@@ -34,7 +36,7 @@ class AppTextField extends StatelessWidget {
       validator: validator,
       prefixWidget: prefixWidget,
       suffixWidget: suffixIcon,
+      errorMaxLines: errorMaxLines,
     );
   }
 }
-

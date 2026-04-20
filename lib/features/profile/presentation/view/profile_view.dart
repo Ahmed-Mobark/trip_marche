@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:iconsax/iconsax.dart';
-import 'package:trip_marche/core/theme/app_colors.dart';
-import 'package:trip_marche/core/theme/app_text_styles.dart';
+import 'package:trip_marche/core/config/app_colors.dart';
+import 'package:trip_marche/core/config/styles/styles.dart';
 import 'package:trip_marche/core/injection/injection_container.dart';
 import 'package:trip_marche/core/navigation/app_navigator.dart';
 import 'package:trip_marche/features/profile/presentation/widgets/menu_item.dart';
@@ -25,185 +25,188 @@ class ProfileView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final headerHeight = 170.h;
+    final sheetRadius = 32.r;
+    final userJson = sl<Storage>().getUserJson();
+    final name = (userJson?['name'] as String?)?.trim();
+    final email = (userJson?['email'] as String?)?.trim();
+    final tripsBooked = 14;
+
     return Scaffold(
-      backgroundColor: AppColors.background,
-      body: SafeArea(
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              const SizedBox(height: 24),
-              // Avatar
-              ProfileAvatar(
-                radius: 40,
-                editIcon: Iconsax.edit_2,
-                editButtonSize: 28,
-                editIconSize: 14,
-                onEditTap: () {},
+      backgroundColor: AppColors.primary,
+      body: Stack(
+        children: [
+          Positioned.fill(
+            child: Container(
+              decoration: const BoxDecoration(
+                gradient: AppColors.primaryGradient,
               ),
-              const SizedBox(height: 12),
-              Text(
-                'Abdallah Ibrahim',
-                style: AppTextStyles.heading3(),
-              ),
-              const SizedBox(height: 4),
-              Text(
-                'abdallah@gmail.com',
-                style: GoogleFonts.inter(
-                  fontSize: 14,
-                  fontWeight: FontWeight.w400,
-                  color: AppColors.greyText,
+            ),
+          ),
+          PositionedDirectional(
+            top: 0,
+            start: 0,
+            end: 0,
+            child: SafeArea(
+              bottom: false,
+              child: Padding(
+                padding: EdgeInsetsDirectional.only(
+                  start: 18.w,
+                  end: 18.w,
+                  top: 16.h,
                 ),
-              ),
-              const SizedBox(height: 4),
-              Text(
-                '14 Trips booked',
-                style: GoogleFonts.inter(
-                  fontSize: 14,
-                  fontWeight: FontWeight.w400,
-                  color: AppColors.secondaryText,
-                ),
-              ),
-              const SizedBox(height: 24),
-
-              // Account Section
-              _buildSectionHeader(context.tr.profileTitleAccount),
-              ProfileMenuItem(
-                icon: Iconsax.user,
-                title: context.tr.profilePersonalInfo,
-                onTap: () {
-                  sl<AppNavigator>().push(screen: const PersonalInfoView());
-                },
-              ),
-              _buildDivider(),
-              ProfileMenuItem(
-                icon: Iconsax.card,
-                title: context.tr.profilePaymentMethod,
-                onTap: () {},
-              ),
-              _buildDivider(),
-              ProfileMenuItem(
-                icon: Iconsax.star,
-                title: context.tr.profileMyReviews,
-                onTap: () {
-                  sl<AppNavigator>().push(screen: const MyReviewsView());
-                },
-              ),
-              _buildDivider(),
-              ProfileMenuItem(
-                icon: Iconsax.building,
-                title: context.tr.profileFollowingCompanies,
-                onTap: () {
-                  sl<AppNavigator>().push(screen: const MyFollowingsView());
-                },
-              ),
-              const SizedBox(height: 16),
-
-              // Settings
-              ProfileMenuItem(
-                icon: Iconsax.setting_2,
-                title: context.tr.profileSettings,
-                onTap: () {
-                  sl<AppNavigator>().push(screen: const SettingsView());
-                },
-              ),
-              const SizedBox(height: 16),
-
-              // Support Section
-              _buildSectionHeader(context.tr.profileTitleSupport),
-              ProfileMenuItem(
-                icon: Iconsax.headphone,
-                title: context.tr.profileCustomerService,
-                onTap: () {
-                  sl<AppNavigator>().push(screen: const CustomerServiceView());
-                },
-              ),
-              _buildDivider(),
-              ProfileMenuItem(
-                icon: Iconsax.message_question,
-                title: context.tr.profileFaqs,
-                onTap: () {
-                  sl<AppNavigator>().push(screen: const FaqsView());
-                },
-              ),
-              _buildDivider(),
-              ProfileMenuItem(
-                icon: Iconsax.document_text,
-                title: context.tr.profileTermsAndConditions,
-                onTap: () {
-                  sl<AppNavigator>().push(screen: const TermsView());
-                },
-              ),
-              const SizedBox(height: 16),
-
-              // Delete Account
-              ProfileMenuItem(
-                icon: Iconsax.trash,
-                title: context.tr.profileDeleteAccount,
-                titleColor: AppColors.error,
-                iconColor: AppColors.error,
-                showChevron: false,
-                onTap: () {
-                  _showDeleteAccountDialog(context);
-                },
-              ),
-              const SizedBox(height: 24),
-
-              // Log Out Button
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20),
-                child: SizedBox(
-                  width: double.infinity,
-                  height: 52,
-                  child: OutlinedButton(
-                    onPressed: () {
-                      _showLogoutDialog(context);
-                    },
-                    style: OutlinedButton.styleFrom(
-                      side: const BorderSide(color: AppColors.error),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12),
+                child: Row(
+                  children: [
+                    ProfileAvatar(
+                      radius: 36.r,
+                      editIcon: Iconsax.camera,
+                      editButtonSize: 26.r,
+                      editIconSize: 14.sp,
+                      onEditTap: () {},
+                    ),
+                    SizedBox(width: 14.w),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            (name == null || name.isEmpty) ? '—' : name,
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: AppTextStyles.heading3(
+                              color: Colors.white,
+                            ).copyWith(fontWeight: FontWeight.w800),
+                          ),
+                          SizedBox(height: 4.h),
+                          Text(
+                            (email == null || email.isEmpty) ? '—' : email,
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: AppTextStyles.bodyMedium(
+                              color: Colors.white.withValues(alpha: 0.85),
+                            ),
+                          ),
+                          SizedBox(height: 6.h),
+                          Text(
+                            context.tr.profileTripsBooked(tripsBooked),
+                            style: AppTextStyles.bodyMedium(
+                              color: AppColors.yellow,
+                            ).copyWith(fontWeight: FontWeight.w700),
+                          ),
+                        ],
                       ),
                     ),
-                    child: Text(
-                      'Log Out',
-                      style: GoogleFonts.inter(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w600,
-                        color: AppColors.error,
-                      ),
-                    ),
-                  ),
+                  ],
                 ),
               ),
-              const SizedBox(height: 32),
-            ],
+            ),
           ),
-        ),
-      ),
-    );
-  }
-
-  Widget _buildSectionHeader(String title) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
-      child: Align(
-        alignment: Alignment.centerLeft,
-        child: Text(
-          title,
-          style: GoogleFonts.inter(
-            fontSize: 16,
-            fontWeight: FontWeight.w500,
-            color: AppColors.greyText,
+          Positioned.fill(
+            top: headerHeight,
+            child: Container(
+              decoration: BoxDecoration(
+                color: AppColors.scaffoldColorLight,
+                borderRadius: BorderRadius.vertical(
+                  top: Radius.circular(sheetRadius),
+                ),
+              ),
+              child: SingleChildScrollView(
+                padding: EdgeInsetsDirectional.only(
+                  start: 18.w,
+                  end: 18.w,
+                  top: 18.h,
+                  bottom: 24.h,
+                ),
+                child: Column(
+                  children: [
+                    _SectionCard(
+                      title: context.tr.profileTitleAccount,
+                      children: [
+                        ProfileMenuItem(
+                          icon: Iconsax.user,
+                          title: context.tr.profilePersonalInfo,
+                          onTap: () => sl<AppNavigator>().push(
+                            screen: const PersonalInfoView(),
+                          ),
+                        ),
+                        _CardDivider(),
+                        ProfileMenuItem(
+                          icon: Iconsax.card,
+                          title: context.tr.profilePaymentMethod,
+                          onTap: () {},
+                        ),
+                        _CardDivider(),
+                        ProfileMenuItem(
+                          icon: Iconsax.star,
+                          title: context.tr.profileMyReviews,
+                          onTap: () => sl<AppNavigator>().push(
+                            screen: const MyReviewsView(),
+                          ),
+                        ),
+                        _CardDivider(),
+                        ProfileMenuItem(
+                          icon: Iconsax.building,
+                          title: context.tr.profileFollowingCompanies,
+                          onTap: () => sl<AppNavigator>().push(
+                            screen: const MyFollowingsView(),
+                          ),
+                        ),
+                        _CardDivider(),
+                        ProfileMenuItem(
+                          icon: Iconsax.setting_2,
+                          title: context.tr.profileSettings,
+                          onTap: () => sl<AppNavigator>().push(
+                            screen: const SettingsView(),
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: 16.h),
+                    _SectionCard(
+                      title: context.tr.profileTitleSupport,
+                      children: [
+                        ProfileMenuItem(
+                          icon: Iconsax.headphone,
+                          title: context.tr.profileCustomerService,
+                          onTap: () => sl<AppNavigator>().push(
+                            screen: const CustomerServiceView(),
+                          ),
+                        ),
+                        _CardDivider(),
+                        ProfileMenuItem(
+                          icon: Iconsax.message_question,
+                          title: context.tr.profileFaqs,
+                          onTap: () =>
+                              sl<AppNavigator>().push(screen: const FaqsView()),
+                        ),
+                        _CardDivider(),
+                        ProfileMenuItem(
+                          icon: Iconsax.document_text,
+                          title: context.tr.profileTermsAndConditions,
+                          onTap: () => sl<AppNavigator>().push(
+                            screen: const TermsView(),
+                          ),
+                        ),
+                        _CardDivider(),
+                        ProfileMenuItem(
+                          icon: Iconsax.trash,
+                          title: context.tr.profileDeleteAccount,
+                          titleColor: AppColors.error,
+                          iconColor: AppColors.error,
+                          showChevron: false,
+                          onTap: () => _showDeleteAccountDialog(context),
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: 18.h),
+                    _LogoutButton(onTap: () => _showLogoutDialog(context)),
+                  ],
+                ),
+              ),
+            ),
           ),
-        ),
+        ],
       ),
-    );
-  }
-
-  Widget _buildDivider() {
-    return const Padding(
-      padding: EdgeInsets.symmetric(horizontal: 20),
-      child: Divider(height: 1, color: AppColors.border),
     );
   }
 
@@ -212,19 +215,19 @@ class ProfileView extends StatelessWidget {
       context: context,
       builder: (context) => AlertDialog(
         title: Text(
-          'Delete Account',
-          style: AppTextStyles.subtitle(),
+          context.tr.profileDeleteAccountTitle,
+          style: AppTextStyles.subtitle(color: AppColors.darkText),
         ),
         content: Text(
-          'Are you sure you want to delete your account? This action cannot be undone.',
-          style: AppTextStyles.body(),
+          context.tr.profileDeleteAccountMessage,
+          style: AppTextStyles.body(color: AppColors.greyText),
         ),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
             child: Text(
-              'Cancel',
-              style: GoogleFonts.inter(color: AppColors.greyText),
+              context.tr.commonCancel,
+              style: AppTextStyles.bodyMedium(color: AppColors.greyText),
             ),
           ),
           TextButton(
@@ -232,8 +235,8 @@ class ProfileView extends StatelessWidget {
               Navigator.pop(context);
             },
             child: Text(
-              'Delete',
-              style: GoogleFonts.inter(color: AppColors.error),
+              context.tr.commonDelete,
+              style: AppTextStyles.bodyMedium(color: AppColors.error),
             ),
           ),
         ],
@@ -246,19 +249,19 @@ class ProfileView extends StatelessWidget {
       context: context,
       builder: (context) => AlertDialog(
         title: Text(
-          'Log Out',
-          style: AppTextStyles.subtitle(),
+          context.tr.profileLogoutConfirmTitle,
+          style: AppTextStyles.subtitle(color: AppColors.darkText),
         ),
         content: Text(
-          'Are you sure you want to log out?',
-          style: AppTextStyles.body(),
+          context.tr.profileLogoutConfirmMessage,
+          style: AppTextStyles.body(color: AppColors.greyText),
         ),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
             child: Text(
-              'Cancel',
-              style: GoogleFonts.inter(color: AppColors.greyText),
+              context.tr.commonCancel,
+              style: AppTextStyles.bodyMedium(color: AppColors.greyText),
             ),
           ),
           TextButton(
@@ -267,8 +270,8 @@ class ProfileView extends StatelessWidget {
               _performLogout(context);
             },
             child: Text(
-              'Log Out',
-              style: GoogleFonts.inter(color: AppColors.error),
+              context.tr.profileLogout,
+              style: AppTextStyles.bodyMedium(color: AppColors.error),
             ),
           ),
         ],
@@ -289,8 +292,102 @@ class ProfileView extends StatelessWidget {
       },
       (_) async {
         await sl<Storage>().deleteToken();
+        await sl<Storage>().deleteUser();
         sl<AppNavigator>().pushAndRemoveUntil(screen: const LoginView());
       },
+    );
+  }
+}
+
+class _SectionCard extends StatelessWidget {
+  const _SectionCard({required this.title, required this.children});
+
+  final String title;
+  final List<Widget> children;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(18.r),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withValues(alpha: 0.04),
+            blurRadius: 18,
+            offset: const Offset(0, 10),
+          ),
+        ],
+      ),
+      child: Column(
+        children: [
+          Padding(
+            padding: EdgeInsetsDirectional.only(
+              start: 18.w,
+              end: 18.w,
+              top: 16.h,
+              bottom: 8.h,
+            ),
+            child: Align(
+              alignment: AlignmentDirectional.centerStart,
+              child: Text(
+                title,
+                style: AppTextStyles.bodyMedium(
+                  color: AppColors.greyText,
+                ).copyWith(fontWeight: FontWeight.w600),
+              ),
+            ),
+          ),
+          ...children,
+        ],
+      ),
+    );
+  }
+}
+
+class _CardDivider extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: EdgeInsetsDirectional.only(start: 18.w, end: 18.w),
+      child: Divider(height: 1.h, color: AppColors.border),
+    );
+  }
+}
+
+class _LogoutButton extends StatelessWidget {
+  const _LogoutButton({required this.onTap});
+
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      width: double.infinity,
+      height: 54.h,
+      child: OutlinedButton(
+        onPressed: onTap,
+        style: OutlinedButton.styleFrom(
+          backgroundColor: Colors.white,
+          side: BorderSide(color: AppColors.border),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(14.r),
+          ),
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(Iconsax.logout_1, size: 18.sp, color: AppColors.error),
+            SizedBox(width: 10.w),
+            Text(
+              context.tr.profileLogout,
+              style: AppTextStyles.bodyMedium(
+                color: AppColors.error,
+              ).copyWith(fontWeight: FontWeight.w700),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }

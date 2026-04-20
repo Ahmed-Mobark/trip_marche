@@ -230,7 +230,70 @@ class AppLocalizationsAr extends AppLocalizations {
   String get authResendNow => 'أعد الإرسال الآن';
 
   @override
+  String get homeAppTitle => 'TripMarche';
+
+  @override
+  String get homeSearchHint => 'شرم الشيخ';
+
+  @override
+  String get homeLocationText => 'مصر، القاهرة، القاهرة الجديدة';
+
+  @override
+  String get homeTrendingDestinations => 'الوجهات الرائجة';
+
+  @override
+  String get homePopularTrips => 'الرحلات الشائعة';
+
+  @override
+  String get homeSponsoredTrips => 'الرحلات الممولة';
+
+  @override
+  String get homeDomesticTripsInEgypt => 'رحلات داخلية في مصر';
+
+  @override
+  String get homeInternationalTripsFromEgypt => 'رحلات دولية من مصر';
+
+  @override
+  String get homeRecommendedForYou => 'موصى بها لك';
+
+  @override
+  String get homeSpecialTrips => 'رحلات مميزة';
+
+  @override
+  String get homeTopRated => 'الأعلى تقييماً';
+
+  @override
+  String get homeFromCairoAlexandria => 'من القاهرة والإسكندرية';
+
+  @override
+  String get homeNewInTripMarche => 'جديد في TripMarche';
+
+  @override
+  String get homePerPerson => 'للفرد';
+
+  @override
+  String get homeSeeAll => 'عرض الكل';
+
+  @override
   String get wishlistTitle => 'المفضلة';
+
+  @override
+  String get wishlistSearchHint => 'ابحث عن رحلة';
+
+  @override
+  String get wishlistSortBy => 'ترتيب حسب';
+
+  @override
+  String get wishlistFilters => 'تصفية';
+
+  @override
+  String get wishlistNewInTripMarche => 'جديد في TripMarche';
+
+  @override
+  String get wishlistRecommended => 'موصى به';
+
+  @override
+  String get wishlistBestPrice => 'أفضل سعر';
 
   @override
   String get wishlistEmptyTitle => 'لا توجد رحلات محفوظة بعد';
@@ -317,6 +380,31 @@ class AppLocalizationsAr extends AppLocalizations {
   String get profileLogout => 'تسجيل الخروج';
 
   @override
+  String profileTripsBooked(Object count) {
+    return 'تم حجز $count رحلة';
+  }
+
+  @override
+  String get profileDeleteAccountTitle => 'حذف الحساب';
+
+  @override
+  String get profileDeleteAccountMessage =>
+      'هل أنت متأكد أنك تريد حذف حسابك؟ لا يمكن التراجع عن هذا الإجراء.';
+
+  @override
+  String get profileLogoutConfirmTitle => 'تسجيل الخروج';
+
+  @override
+  String get profileLogoutConfirmMessage =>
+      'هل أنت متأكد أنك تريد تسجيل الخروج؟';
+
+  @override
+  String get commonCancel => 'إلغاء';
+
+  @override
+  String get commonDelete => 'حذف';
+
+  @override
   String get followingsTitle => 'الشركات التي أتابعها';
 
   @override
@@ -334,6 +422,45 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get myTripsTabPast => 'السابقة';
+
+  @override
+  String get myTripsSearchHint => 'ابحث عن رحلة';
+
+  @override
+  String get myTripsTabActive => 'نشطة';
+
+  @override
+  String get myTripsTabPastNew => 'السابقة';
+
+  @override
+  String get myTripsTabCanceled => 'ملغاة';
+
+  @override
+  String get myTripsStatusActive => 'نشطة';
+
+  @override
+  String get myTripsStatusPast => 'سابقة';
+
+  @override
+  String get myTripsStatusCanceled => 'ملغاة';
+
+  @override
+  String get myTripsBookAgain => 'احجز مرة أخرى';
+
+  @override
+  String get myTripsFromPrefix => 'من';
+
+  @override
+  String get myTripsViewDetails => 'عرض التفاصيل';
+
+  @override
+  String get myTripsViewReceipt => 'عرض الإيصال';
+
+  @override
+  String get myTripsBookingDetails => 'تفاصيل الحجز';
+
+  @override
+  String get myTripsDownloadPdf => 'تحميل pdf';
 
   @override
   String get myTripsEmptyTitle => 'لا توجد رحلات بعد';

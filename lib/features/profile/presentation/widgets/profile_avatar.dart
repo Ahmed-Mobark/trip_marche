@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
-import 'package:trip_marche/core/theme/app_colors.dart';
+import 'package:trip_marche/core/config/app_colors.dart';
 import 'package:trip_marche/core/config/app_images.dart';
 
 class ProfileAvatar extends StatelessWidget {
   final double radius;
+  final double borderRadius;
   final ImageProvider? backgroundImage;
   final IconData editIcon;
   final double editButtonSize;
@@ -14,6 +15,7 @@ class ProfileAvatar extends StatelessWidget {
   const ProfileAvatar({
     super.key,
     this.radius = 40,
+    this.borderRadius = 16,
     this.backgroundImage,
     this.editIcon = Iconsax.edit_2,
     this.editButtonSize = 28,
@@ -23,17 +25,28 @@ class ProfileAvatar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final size = radius * 2;
     return Stack(
       children: [
-        CircleAvatar(
-          radius: radius,
-          backgroundColor: AppColors.lightBg,
-          backgroundImage: backgroundImage ??
-              const AssetImage(AppImages.avatarPlaceholder),
+        ClipRRect(
+          borderRadius: BorderRadius.circular(borderRadius),
+          child: Container(
+            width: size,
+            height: size,
+            decoration: BoxDecoration(
+              color: AppColors.lightBg,
+              image: DecorationImage(
+                image:
+                    backgroundImage ??
+                    const AssetImage(AppImages.avatarPlaceholder),
+                fit: BoxFit.cover,
+              ),
+            ),
+          ),
         ),
-        Positioned(
+        PositionedDirectional(
           bottom: 0,
-          right: 0,
+          end: 0,
           child: GestureDetector(
             onTap: onEditTap,
             child: Container(
@@ -43,11 +56,7 @@ class ProfileAvatar extends StatelessWidget {
                 color: AppColors.primary,
                 shape: BoxShape.circle,
               ),
-              child: Icon(
-                editIcon,
-                color: Colors.white,
-                size: editIconSize,
-              ),
+              child: Icon(editIcon, color: Colors.white, size: editIconSize),
             ),
           ),
         ),

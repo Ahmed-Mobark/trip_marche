@@ -52,7 +52,14 @@ class LoginCubit extends Cubit<LoginState> {
         ));
       },
       (data) async {
-        final token = data['data']?['token'] as String?;
+        final user = data['data'];
+        if (user is Map<String, dynamic>) {
+          await _storage.storeUser(userJson: user);
+        }
+
+        final token = (user is Map<String, dynamic>)
+            ? user['token'] as String?
+            : data['data']?['token'] as String?;
         if (token != null) {
           await _storage.storeToken(token: token);
         }

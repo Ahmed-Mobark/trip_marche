@@ -1,14 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:trip_marche/core/theme/app_colors.dart';
 import 'package:trip_marche/core/config/app_icons.dart';
+import 'package:trip_marche/core/theme/app_colors.dart';
 
 class AuthHeader extends StatelessWidget {
   final Widget child;
   final bool showIllustration;
   final String? illustration;
 
-  /// When [showIllustration] is false: show a compact purple bar with back (left) + logo (right).
+  /// When true, the entire header + content scroll together.
+  /// Use this for screens where you want the header to scroll with the body.
+  final bool scrollable;
+
+  /// When [showIllustration] is false: show a compact purple bar with back (left)
+  /// + logo (right).
   final bool compactTopBar;
 
   /// Back action for [compactTopBar]. Defaults to [Navigator.maybePop].
@@ -19,9 +24,60 @@ class AuthHeader extends StatelessWidget {
     this.showIllustration = true,
     required this.child,
     this.illustration,
+    this.scrollable = false,
     this.compactTopBar = false,
     this.onBack,
   });
+
+  Widget _buildTop(BuildContext context) {
+    if (showIllustration) {
+      return Column(
+        children: [
+          Image.asset(AppIcons.lloPng, width: 160),
+          const SizedBox(height: 12),
+          SizedBox(
+            height: 140,
+            child: illustration != null
+                ? AppIcons.icon(icon: illustration!, size: 150.w)
+                : AppIcons.icon(icon: AppIcons.authIllustration, size: 150.w),
+          ),
+        ],
+      );
+    }
+
+    if (compactTopBar) {
+      return Column(
+        children: [
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 20.w),
+            child: Row(
+              children: [
+                IconButton(
+                  padding: EdgeInsets.zero,
+                  constraints: const BoxConstraints(minWidth: 44, minHeight: 44),
+                  onPressed: onBack ?? () => Navigator.maybePop(context),
+                  icon: const Icon(
+                    Icons.arrow_back_ios_new,
+                    color: Colors.white,
+                    size: 18,
+                  ),
+                ),
+                const Spacer(),
+                Image.asset(
+                  AppIcons.lloPng,
+                  height: 28,
+                  fit: BoxFit.contain,
+                ),
+              ],
+            ),
+          ),
+          SizedBox(height: 12.h),
+        ],
+      );
+    }
+
+    return const SizedBox(height: 30);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -32,76 +88,50 @@ class AuthHeader extends StatelessWidget {
           colors: [AppColors.primary, AppColors.primary],
         ),
       ),
-      child: Column(
-        children: [
-          SizedBox(height: MediaQuery.of(context).padding.top),
-
-          if (showIllustration)
-            Padding(
-              padding: EdgeInsets.only(bottom: 33.h, top: 3.h),
-              child: Image.asset(AppIcons.lloPng, width: 120),
-            )
-          else if (compactTopBar) ...[
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 20.w),
-              child: Row(
+      child: scrollable
+          ? SingleChildScrollView(
+              child: Column(
                 children: [
-                  IconButton(
-                    padding: EdgeInsets.zero,
-                    constraints: const BoxConstraints(
-                      minWidth: 44,
-                      minHeight: 44,
-                    ),
-                    onPressed: onBack ?? () => Navigator.maybePop(context),
-                    icon: const Icon(
-                      Icons.arrow_back_ios_new,
+                  SizedBox(height: MediaQuery.of(context).padding.top),
+                  _buildTop(context),
+                  ClipPath(
+                    clipper: _AuthCurveClipper(),
+                    child: Container(
+                      width: double.infinity,
                       color: Colors.white,
-                      size: 18,
-                    ),
-                  ),
-                  const Spacer(),
-                  Image.asset(AppIcons.lloPng, height: 28, fit: BoxFit.contain),
-                ],
-              ),
-            ),
-            SizedBox(height: 12.h),
-          ] else
-            const SizedBox(height: 4000),
-          // White content area with Figma curve
-          Expanded(
-            child: Stack(
-              clipBehavior: Clip.none,
-              children: [
-                ClipPath(
-                  clipper: _AuthCurveClipper(),
-                  child: Container(width: double.infinity, color: Colors.white),
-                ),
-                if (showIllustration)
-                  Positioned(
-                    top: -33.h,
-                    left: 0,
-                    right: 0,
-                    child: Center(
-                      child: SizedBox(
-                        height: 120.h,
-                        child: illustration != null
-                            ? AppIcons.icon(icon: illustration!, size: 130.w)
-                            : AppIcons.icon(
-                                icon: AppIcons.authIllustration,
-                                size: 120.w,
-                              ),
+                      child: Padding(
+                        padding: const EdgeInsets.only(top: 90),
+                        child: child,
                       ),
                     ),
                   ),
-                Padding(
-                  padding: EdgeInsets.only(top: showIllustration ? 95.h : 80),
-                  child: child,
+                ],
+              ),
+            )
+          : Column(
+              children: [
+                SizedBox(height: MediaQuery.of(context).padding.top),
+                _buildTop(context),
+                // White content area with Figma curve
+                Expanded(
+                  child: Stack(
+                    children: [
+                      ClipPath(
+                        clipper: _AuthCurveClipper(),
+                        child: Container(
+                          width: double.infinity,
+                          color: Colors.white,
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 90),
+                        child: child,
+                      ),
+                    ],
+                  ),
                 ),
               ],
             ),
-          ),
-        ],
-      ),
     );
   }
 }

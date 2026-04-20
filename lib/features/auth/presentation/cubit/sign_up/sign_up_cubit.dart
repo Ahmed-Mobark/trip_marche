@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:trip_marche/core/navigation/app_navigator.dart';
+import 'package:trip_marche/core/utils/validator.dart';
 import 'package:trip_marche/features/auth/data/models/register_request.dart';
 import 'package:trip_marche/features/auth/domain/repositories/auth_repository.dart';
 import 'package:trip_marche/features/auth/presentation/cubit/sign_up/sign_up_state.dart';
@@ -18,6 +19,19 @@ class SignUpCubit extends Cubit<SignUpState> {
   final phoneController = TextEditingController();
   final passwordController = TextEditingController();
   final confirmPasswordController = TextEditingController();
+
+  String? validateName(String? value) => Validator.name(value);
+
+  String? validateEmail(String? value) => Validator.email(value);
+
+  String? validatePhone(String? value) => Validator.numbers(value);
+
+  String? validatePassword(String? value) => Validator.password(value);
+
+  String? validateConfirmPassword(String? value) {
+    return Validator.confirmPassword(value, passwordController.text);
+  }
+
 
   void toggleObscurePassword() {
     emit(state.copyWith(obscurePassword: !state.obscurePassword));
