@@ -5,6 +5,9 @@ import 'package:trip_marche/core/config/app_colors.dart';
 import 'package:trip_marche/core/config/styles/styles.dart';
 import 'package:trip_marche/core/data/dummy_data.dart';
 import 'package:trip_marche/core/extensions/localization.dart';
+import 'package:trip_marche/core/injection/injection_container.dart';
+import 'package:trip_marche/core/navigation/app_navigator.dart';
+import 'package:trip_marche/features/wishlist/presentation/view/wishlist_filter_view.dart';
 import 'package:trip_marche/features/wishlist/presentation/widgets/wishlist_trip_card.dart';
 
 class WishlistView extends StatelessWidget {
@@ -115,6 +118,7 @@ class WishlistView extends StatelessWidget {
                 child: _PillButton(
                   label: context.tr.wishlistSortBy,
                   icon: Iconsax.arrow_down_1,
+                  onTap: () {},
                 ),
               ),
               SizedBox(width: 12.w),
@@ -122,6 +126,7 @@ class WishlistView extends StatelessWidget {
                 child: _PillButton(
                   label: context.tr.wishlistFilters,
                   icon: Iconsax.setting_4,
+                  onTap: () => sl<AppNavigator>().push(screen: const WishlistFilterView()),
                 ),
               ),
             ],
@@ -182,31 +187,39 @@ class _SearchField extends StatelessWidget {
 }
 
 class _PillButton extends StatelessWidget {
-  const _PillButton({required this.label, required this.icon});
+  const _PillButton({required this.label, required this.icon, this.onTap});
 
   final String label;
   final IconData icon;
+  final VoidCallback? onTap;
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 46.h,
-      decoration: BoxDecoration(
-        color: Colors.white,
+    return Material(
+      color: Colors.transparent,
+      child: InkWell(
+        onTap: onTap,
         borderRadius: BorderRadius.circular(999.r),
-        border: Border.all(color: AppColors.border),
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Icon(icon, size: 18.sp, color: AppColors.greyText),
-          SizedBox(width: 8.w),
-          Text(
-            label,
-            style: AppTextStyles.bodyMedium(color: AppColors.darkText)
-                .copyWith(fontWeight: FontWeight.w600),
+        child: Container(
+          height: 46.h,
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(999.r),
+            border: Border.all(color: AppColors.border),
           ),
-        ],
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(icon, size: 18.sp, color: AppColors.greyText),
+              SizedBox(width: 8.w),
+              Text(
+                label,
+                style: AppTextStyles.bodyMedium(color: AppColors.darkText)
+                    .copyWith(fontWeight: FontWeight.w600),
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }

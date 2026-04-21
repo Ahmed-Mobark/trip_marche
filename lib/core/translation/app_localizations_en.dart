@@ -308,6 +308,144 @@ class AppLocalizationsEn extends AppLocalizations {
       'Tap the heart icon on any trip to\nsave it to your wishlist.';
 
   @override
+  String get wishlistFiltersTitle => 'Filters';
+
+  @override
+  String get wishlistFiltersClearAll => 'Clear all';
+
+  @override
+  String get wishlistFiltersDestination => 'Destination';
+
+  @override
+  String get wishlistFiltersSelectDestination => 'Select';
+
+  @override
+  String get wishlistFiltersPriceRange => 'Price Range';
+
+  @override
+  String get wishlistFiltersTripType => 'Trip Type';
+
+  @override
+  String get wishlistFiltersDomestic => 'Domestic';
+
+  @override
+  String get wishlistFiltersInternational => 'International';
+
+  @override
+  String get wishlistFiltersDepartureCountry => 'Departure Country';
+
+  @override
+  String get wishlistFiltersDepartureCity => 'Departure City';
+
+  @override
+  String get wishlistFiltersSelectCountry => 'Select';
+
+  @override
+  String get wishlistFiltersSelectCity => 'Select';
+
+  @override
+  String get wishlistFiltersTripMonth => 'Trip Month';
+
+  @override
+  String get wishlistFiltersSelectMonth => 'Select';
+
+  @override
+  String get wishlistFiltersActions => 'Actions';
+
+  @override
+  String get wishlistFiltersSelectAction => 'Select';
+
+  @override
+  String get wishlistFiltersTravelAgency => 'Travel Agency';
+
+  @override
+  String get wishlistFiltersAgencyNameHint => 'Travel agency name';
+
+  @override
+  String get wishlistFiltersAgencyRating => 'Travel Agency Rating';
+
+  @override
+  String get wishlistFiltersOtherCountries => 'Other Countries';
+
+  @override
+  String get wishlistFiltersOtherCities => 'Other Cities';
+
+  @override
+  String get wishlistFiltersSelectCountries => 'Select';
+
+  @override
+  String get wishlistFiltersSelectCities => 'Select';
+
+  @override
+  String get wishlistFiltersNumberOfCities => 'Number of Cities';
+
+  @override
+  String get wishlistFiltersNumberOfCountries => 'Number of Countries';
+
+  @override
+  String get wishlistFiltersDuration => 'Duration';
+
+  @override
+  String get wishlistFiltersDurationUpTo3 => 'Up to 3 Days';
+
+  @override
+  String get wishlistFiltersDurationUpTo7 => 'Up to 7 Days';
+
+  @override
+  String get wishlistFiltersDuration7Plus => '+7 Days';
+
+  @override
+  String get wishlistFiltersGroupSize => 'Group Size';
+
+  @override
+  String get wishlistFiltersGroupSizeSmall => 'Up to 10';
+
+  @override
+  String get wishlistFiltersGroupSizeUpTo20 => 'Up to 20';
+
+  @override
+  String get wishlistFiltersGroupSize20Plus => '20+';
+
+  @override
+  String get wishlistFiltersTripSeason => 'Trip Season';
+
+  @override
+  String get wishlistFiltersSeasonSpring => 'Spring';
+
+  @override
+  String get wishlistFiltersSeasonHajj => 'Hajj';
+
+  @override
+  String get wishlistFiltersSeasonNewYear => 'New Year';
+
+  @override
+  String get wishlistFiltersTripFeatures => 'Trip Features';
+
+  @override
+  String get wishlistFiltersFeatureIncludeFlight => 'Include flight';
+
+  @override
+  String get wishlistFiltersFeatureIncludeHotel => 'Include hotel';
+
+  @override
+  String get wishlistFiltersFeatureFreeMeal => 'Free meal';
+
+  @override
+  String get wishlistFiltersFeatureVisaOnArrival => 'Visa on arrival';
+
+  @override
+  String get wishlistFiltersTripRating => 'Trip Rating';
+
+  @override
+  String get wishlistFiltersDiscountCode => 'Trip applies discount code';
+
+  @override
+  String get wishlistFiltersFreeCancellation => 'Free cancellation';
+
+  @override
+  String get wishlistFiltersSeeResults => 'See +500 Results';
+
+  @override
   String get settingsTitle => 'Settings';
 
   @override
@@ -717,6 +855,45 @@ class AppLocalizationsEn extends AppLocalizations {
   String get tripDetailsTitle => 'Dahab Trip';
 
   @override
+  String get tripDetailsHeroCountryTag => 'Indonesia';
+
+  @override
+  String get tripDetailsHeroByCompany => 'By Travel Company';
+
+  @override
+  String get tripDetailsHeroFromLocation => 'From Cairo & Alexandria';
+
+  @override
+  String get tripDetailsHeroDateRange => '27 Nov → 4 Dec';
+
+  @override
+  String tripDetailsGalleryMoreCount(Object count) {
+    return '+$count';
+  }
+
+  @override
+  String get tripDetailsOverviewTitle => 'Trip Overview';
+
+  @override
+  String get tripDetailsOverviewBody =>
+      'Experience the breathtaking beauty of the Swiss Alps on this 7-day adventure. Visit iconic destinations, enjoy scenic train rides, and immerse yourself in Swiss culture. Perfect for nature lovers and photography enthusiasts.';
+
+  @override
+  String get tripDetailsStatCitiesLabel => 'Number of Cities';
+
+  @override
+  String get tripDetailsStatCitiesValue => '7 Cities';
+
+  @override
+  String get tripDetailsPriceLabel => 'Price';
+
+  @override
+  String get tripDetailsPerPersonSmall => 'per person';
+
+  @override
+  String get tripDetailsBookingPriceDisplay => '\$1000.00';
+
+  @override
   String get tripDetailsCompanyName => 'Travel Egypt Co.';
 
   @override
@@ -732,13 +909,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String get tripDetailsDurationLabel => 'Duration';
 
   @override
-  String get tripDetailsGroupSizeValue => '20 Person';
+  String get tripDetailsGroupSizeValue => '20-25';
 
   @override
   String get tripDetailsGroupSizeLabel => 'Group Size';
 
   @override
-  String get tripDetailsTypeValue => 'Mixed';
+  String get tripDetailsTypeValue => 'International';
 
   @override
   String get tripDetailsTypeLabel => 'Type';
@@ -862,6 +1039,189 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get tripDetailsRelatedNameLuxorAswan => 'Luxor & Aswan';
+
+  @override
+  String get tripDetailsHeroRatingLine => '4.5 (120 reviews)';
+
+  @override
+  String get tripDetailsHeroLocationShort => 'Dahab, Egypt';
+
+  @override
+  String get tripDetailsHeroDaysBadge => '7 Days';
+
+  @override
+  String get tripDetailsOut => 'Out';
+
+  @override
+  String get tripDetailsIn => 'In';
+
+  @override
+  String get tripDetailsOutSummaryLine1 => '21 May, Friday';
+
+  @override
+  String get tripDetailsOutSummaryLine2 => 'Cairo International Airport (CAI)';
+
+  @override
+  String get tripDetailsInSummaryLine1 => '27 May, Thursday';
+
+  @override
+  String get tripDetailsInSummaryLine2 => 'Dahab, South Sinai';
+
+  @override
+  String get tripDetailsTripDescriptionTitle => 'Trip description';
+
+  @override
+  String get tripDetailsAmenitiesTitle => 'Amenities';
+
+  @override
+  String get tripDetailsAmenityHotelStars => 'Hotel 4 stars';
+
+  @override
+  String get tripDetailsAmenityFoodBar => 'Food bar';
+
+  @override
+  String get tripDetailsAmenityBusTrip => 'Bus trip';
+
+  @override
+  String get tripDetailsAmenityTourGuide => 'Tour guide';
+
+  @override
+  String get tripDetailsAccommodationTitle => 'Accommodation';
+
+  @override
+  String get tripDetailsHotelName => 'Le Meridien Dahab Resort';
+
+  @override
+  String get tripDetailsHotelRatingStars => '5.0';
+
+  @override
+  String get tripDetailsHotelAddress => 'Blue Hole Road, Dahab, Egypt';
+
+  @override
+  String get tripDetailsCheckInOut => 'Check-in 2:00 PM · Check-out 11:00 AM';
+
+  @override
+  String get tripDetailsViewMap => 'View map';
+
+  @override
+  String get tripDetailsViewFullItinerary => 'View full itinerary';
+
+  @override
+  String get tripDetailsFlightDetailsTitle => 'Flight details';
+
+  @override
+  String get tripDetailsTransportationTitle => 'Transportation';
+
+  @override
+  String get tripDetailsFlightLegSummary => 'CAI → SSH · EgyptAir · 1h 10m';
+
+  @override
+  String get tripDetailsTrainLegSummary => 'Return · Cairo · 8h 30m';
+
+  @override
+  String get tripDetailsDestinationsTitle => 'Destinations';
+
+  @override
+  String get tripDetailsDestinationDahab => 'Dahab';
+
+  @override
+  String get tripDetailsDestinationNuweiba => 'Nuweiba';
+
+  @override
+  String get tripDetailsIncludesExcludesTitle => 'Trip includes & excludes';
+
+  @override
+  String get tripDetailsExcludesTitle => 'Excludes';
+
+  @override
+  String get tripDetailsExcludeVisa => 'Visa fees';
+
+  @override
+  String get tripDetailsExcludeAlcohol => 'Alcoholic beverages';
+
+  @override
+  String get tripDetailsSeeAllPhotos => 'See all photos';
+
+  @override
+  String get tripDetailsActivityPlansTitle => 'Activity plans';
+
+  @override
+  String get tripDetailsActivitySnorkel => 'Blue Hole snorkeling';
+
+  @override
+  String get tripDetailsActivitySnorkelPrice => 'EGP 500';
+
+  @override
+  String get tripDetailsActivitySafari => 'Desert safari';
+
+  @override
+  String get tripDetailsActivitySafariPrice => 'EGP 350';
+
+  @override
+  String get tripDetailsActivityDiving => 'Intro diving session';
+
+  @override
+  String get tripDetailsActivityDivingPrice => 'EGP 800';
+
+  @override
+  String get tripDetailsAdd => 'Add';
+
+  @override
+  String get tripDetailsAdded => 'Added';
+
+  @override
+  String get tripDetailsViewAllActivities => 'View all activities';
+
+  @override
+  String get tripDetailsPolicyCancellation => 'Cancellation policy';
+
+  @override
+  String get tripDetailsPolicyInsurance => 'Travel insurance';
+
+  @override
+  String get tripDetailsPolicyTerms => 'Terms and conditions';
+
+  @override
+  String get tripDetailsPolicyFaqs => 'Frequently asked questions';
+
+  @override
+  String get tripDetailsSeeAllReviews => 'See all';
+
+  @override
+  String get tripDetailsOrganizerTitle => 'Organizer';
+
+  @override
+  String get tripDetailsOrganizerSubtitle => 'Trusted partner on Trip Marche';
+
+  @override
+  String get tripDetailsStartingFrom => 'Starting from';
+
+  @override
+  String get tripDetailsBookingFromPrice => 'EGP 5,000';
+
+  @override
+  String get tripDetailsItineraryLoc1 => 'Beijing';
+
+  @override
+  String get tripDetailsItineraryActs1 =>
+      '• Check-in at hotel\n• City orientation walk\n• Welcome dinner';
+
+  @override
+  String get tripDetailsItineraryLoc2 => 'Hangzhou';
+
+  @override
+  String get tripDetailsItineraryActs2 =>
+      '• West Lake cruise\n• Tea plantation visit\n• Evening free time';
+
+  @override
+  String get tripDetailsReviewSampleName => 'Ahmed Hassan';
+
+  @override
+  String get tripDetailsReviewSampleDate => 'Dec 2025';
+
+  @override
+  String get tripDetailsReviewSampleBody =>
+      'Amazing trip! Great organization and friendly guides. The snorkeling day was unforgettable.';
 
   @override
   String get bookingTripTermsTitle => 'Terms & Conditions';
