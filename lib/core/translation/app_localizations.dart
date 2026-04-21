@@ -668,6 +668,282 @@ abstract class AppLocalizations {
   /// **'Tap the heart icon on any trip to\nsave it to your wishlist.'**
   String get wishlistEmptyDescription;
 
+  /// No description provided for @wishlistFiltersTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Filters'**
+  String get wishlistFiltersTitle;
+
+  /// No description provided for @wishlistFiltersClearAll.
+  ///
+  /// In en, this message translates to:
+  /// **'Clear all'**
+  String get wishlistFiltersClearAll;
+
+  /// No description provided for @wishlistFiltersDestination.
+  ///
+  /// In en, this message translates to:
+  /// **'Destination'**
+  String get wishlistFiltersDestination;
+
+  /// No description provided for @wishlistFiltersSelectDestination.
+  ///
+  /// In en, this message translates to:
+  /// **'Select'**
+  String get wishlistFiltersSelectDestination;
+
+  /// No description provided for @wishlistFiltersPriceRange.
+  ///
+  /// In en, this message translates to:
+  /// **'Price Range'**
+  String get wishlistFiltersPriceRange;
+
+  /// No description provided for @wishlistFiltersTripType.
+  ///
+  /// In en, this message translates to:
+  /// **'Trip Type'**
+  String get wishlistFiltersTripType;
+
+  /// No description provided for @wishlistFiltersDomestic.
+  ///
+  /// In en, this message translates to:
+  /// **'Domestic'**
+  String get wishlistFiltersDomestic;
+
+  /// No description provided for @wishlistFiltersInternational.
+  ///
+  /// In en, this message translates to:
+  /// **'International'**
+  String get wishlistFiltersInternational;
+
+  /// No description provided for @wishlistFiltersDepartureCountry.
+  ///
+  /// In en, this message translates to:
+  /// **'Departure Country'**
+  String get wishlistFiltersDepartureCountry;
+
+  /// No description provided for @wishlistFiltersDepartureCity.
+  ///
+  /// In en, this message translates to:
+  /// **'Departure City'**
+  String get wishlistFiltersDepartureCity;
+
+  /// No description provided for @wishlistFiltersSelectCountry.
+  ///
+  /// In en, this message translates to:
+  /// **'Select'**
+  String get wishlistFiltersSelectCountry;
+
+  /// No description provided for @wishlistFiltersSelectCity.
+  ///
+  /// In en, this message translates to:
+  /// **'Select'**
+  String get wishlistFiltersSelectCity;
+
+  /// No description provided for @wishlistFiltersTripMonth.
+  ///
+  /// In en, this message translates to:
+  /// **'Trip Month'**
+  String get wishlistFiltersTripMonth;
+
+  /// No description provided for @wishlistFiltersSelectMonth.
+  ///
+  /// In en, this message translates to:
+  /// **'Select'**
+  String get wishlistFiltersSelectMonth;
+
+  /// No description provided for @wishlistFiltersActions.
+  ///
+  /// In en, this message translates to:
+  /// **'Actions'**
+  String get wishlistFiltersActions;
+
+  /// No description provided for @wishlistFiltersSelectAction.
+  ///
+  /// In en, this message translates to:
+  /// **'Select'**
+  String get wishlistFiltersSelectAction;
+
+  /// No description provided for @wishlistFiltersTravelAgency.
+  ///
+  /// In en, this message translates to:
+  /// **'Travel Agency'**
+  String get wishlistFiltersTravelAgency;
+
+  /// No description provided for @wishlistFiltersAgencyNameHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Travel agency name'**
+  String get wishlistFiltersAgencyNameHint;
+
+  /// No description provided for @wishlistFiltersAgencyRating.
+  ///
+  /// In en, this message translates to:
+  /// **'Travel Agency Rating'**
+  String get wishlistFiltersAgencyRating;
+
+  /// No description provided for @wishlistFiltersOtherCountries.
+  ///
+  /// In en, this message translates to:
+  /// **'Other Countries'**
+  String get wishlistFiltersOtherCountries;
+
+  /// No description provided for @wishlistFiltersOtherCities.
+  ///
+  /// In en, this message translates to:
+  /// **'Other Cities'**
+  String get wishlistFiltersOtherCities;
+
+  /// No description provided for @wishlistFiltersSelectCountries.
+  ///
+  /// In en, this message translates to:
+  /// **'Select'**
+  String get wishlistFiltersSelectCountries;
+
+  /// No description provided for @wishlistFiltersSelectCities.
+  ///
+  /// In en, this message translates to:
+  /// **'Select'**
+  String get wishlistFiltersSelectCities;
+
+  /// No description provided for @wishlistFiltersNumberOfCities.
+  ///
+  /// In en, this message translates to:
+  /// **'Number of Cities'**
+  String get wishlistFiltersNumberOfCities;
+
+  /// No description provided for @wishlistFiltersNumberOfCountries.
+  ///
+  /// In en, this message translates to:
+  /// **'Number of Countries'**
+  String get wishlistFiltersNumberOfCountries;
+
+  /// No description provided for @wishlistFiltersDuration.
+  ///
+  /// In en, this message translates to:
+  /// **'Duration'**
+  String get wishlistFiltersDuration;
+
+  /// No description provided for @wishlistFiltersDurationUpTo3.
+  ///
+  /// In en, this message translates to:
+  /// **'Up to 3 Days'**
+  String get wishlistFiltersDurationUpTo3;
+
+  /// No description provided for @wishlistFiltersDurationUpTo7.
+  ///
+  /// In en, this message translates to:
+  /// **'Up to 7 Days'**
+  String get wishlistFiltersDurationUpTo7;
+
+  /// No description provided for @wishlistFiltersDuration7Plus.
+  ///
+  /// In en, this message translates to:
+  /// **'+7 Days'**
+  String get wishlistFiltersDuration7Plus;
+
+  /// No description provided for @wishlistFiltersGroupSize.
+  ///
+  /// In en, this message translates to:
+  /// **'Group Size'**
+  String get wishlistFiltersGroupSize;
+
+  /// No description provided for @wishlistFiltersGroupSizeSmall.
+  ///
+  /// In en, this message translates to:
+  /// **'Up to 10'**
+  String get wishlistFiltersGroupSizeSmall;
+
+  /// No description provided for @wishlistFiltersGroupSizeUpTo20.
+  ///
+  /// In en, this message translates to:
+  /// **'Up to 20'**
+  String get wishlistFiltersGroupSizeUpTo20;
+
+  /// No description provided for @wishlistFiltersGroupSize20Plus.
+  ///
+  /// In en, this message translates to:
+  /// **'20+'**
+  String get wishlistFiltersGroupSize20Plus;
+
+  /// No description provided for @wishlistFiltersTripSeason.
+  ///
+  /// In en, this message translates to:
+  /// **'Trip Season'**
+  String get wishlistFiltersTripSeason;
+
+  /// No description provided for @wishlistFiltersSeasonSpring.
+  ///
+  /// In en, this message translates to:
+  /// **'Spring'**
+  String get wishlistFiltersSeasonSpring;
+
+  /// No description provided for @wishlistFiltersSeasonHajj.
+  ///
+  /// In en, this message translates to:
+  /// **'Hajj'**
+  String get wishlistFiltersSeasonHajj;
+
+  /// No description provided for @wishlistFiltersSeasonNewYear.
+  ///
+  /// In en, this message translates to:
+  /// **'New Year'**
+  String get wishlistFiltersSeasonNewYear;
+
+  /// No description provided for @wishlistFiltersTripFeatures.
+  ///
+  /// In en, this message translates to:
+  /// **'Trip Features'**
+  String get wishlistFiltersTripFeatures;
+
+  /// No description provided for @wishlistFiltersFeatureIncludeFlight.
+  ///
+  /// In en, this message translates to:
+  /// **'Include flight'**
+  String get wishlistFiltersFeatureIncludeFlight;
+
+  /// No description provided for @wishlistFiltersFeatureIncludeHotel.
+  ///
+  /// In en, this message translates to:
+  /// **'Include hotel'**
+  String get wishlistFiltersFeatureIncludeHotel;
+
+  /// No description provided for @wishlistFiltersFeatureFreeMeal.
+  ///
+  /// In en, this message translates to:
+  /// **'Free meal'**
+  String get wishlistFiltersFeatureFreeMeal;
+
+  /// No description provided for @wishlistFiltersFeatureVisaOnArrival.
+  ///
+  /// In en, this message translates to:
+  /// **'Visa on arrival'**
+  String get wishlistFiltersFeatureVisaOnArrival;
+
+  /// No description provided for @wishlistFiltersTripRating.
+  ///
+  /// In en, this message translates to:
+  /// **'Trip Rating'**
+  String get wishlistFiltersTripRating;
+
+  /// No description provided for @wishlistFiltersDiscountCode.
+  ///
+  /// In en, this message translates to:
+  /// **'Trip applies discount code'**
+  String get wishlistFiltersDiscountCode;
+
+  /// No description provided for @wishlistFiltersFreeCancellation.
+  ///
+  /// In en, this message translates to:
+  /// **'Free cancellation'**
+  String get wishlistFiltersFreeCancellation;
+
+  /// No description provided for @wishlistFiltersSeeResults.
+  ///
+  /// In en, this message translates to:
+  /// **'See +500 Results'**
+  String get wishlistFiltersSeeResults;
+
   /// No description provided for @settingsTitle.
   ///
   /// In en, this message translates to:
@@ -1448,6 +1724,78 @@ abstract class AppLocalizations {
   /// **'Dahab Trip'**
   String get tripDetailsTitle;
 
+  /// No description provided for @tripDetailsHeroCountryTag.
+  ///
+  /// In en, this message translates to:
+  /// **'Indonesia'**
+  String get tripDetailsHeroCountryTag;
+
+  /// No description provided for @tripDetailsHeroByCompany.
+  ///
+  /// In en, this message translates to:
+  /// **'By Travel Company'**
+  String get tripDetailsHeroByCompany;
+
+  /// No description provided for @tripDetailsHeroFromLocation.
+  ///
+  /// In en, this message translates to:
+  /// **'From Cairo & Alexandria'**
+  String get tripDetailsHeroFromLocation;
+
+  /// No description provided for @tripDetailsHeroDateRange.
+  ///
+  /// In en, this message translates to:
+  /// **'27 Nov → 4 Dec'**
+  String get tripDetailsHeroDateRange;
+
+  /// No description provided for @tripDetailsGalleryMoreCount.
+  ///
+  /// In en, this message translates to:
+  /// **'+{count}'**
+  String tripDetailsGalleryMoreCount(Object count);
+
+  /// No description provided for @tripDetailsOverviewTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Trip Overview'**
+  String get tripDetailsOverviewTitle;
+
+  /// No description provided for @tripDetailsOverviewBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Experience the breathtaking beauty of the Swiss Alps on this 7-day adventure. Visit iconic destinations, enjoy scenic train rides, and immerse yourself in Swiss culture. Perfect for nature lovers and photography enthusiasts.'**
+  String get tripDetailsOverviewBody;
+
+  /// No description provided for @tripDetailsStatCitiesLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Number of Cities'**
+  String get tripDetailsStatCitiesLabel;
+
+  /// No description provided for @tripDetailsStatCitiesValue.
+  ///
+  /// In en, this message translates to:
+  /// **'7 Cities'**
+  String get tripDetailsStatCitiesValue;
+
+  /// No description provided for @tripDetailsPriceLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Price'**
+  String get tripDetailsPriceLabel;
+
+  /// No description provided for @tripDetailsPerPersonSmall.
+  ///
+  /// In en, this message translates to:
+  /// **'per person'**
+  String get tripDetailsPerPersonSmall;
+
+  /// No description provided for @tripDetailsBookingPriceDisplay.
+  ///
+  /// In en, this message translates to:
+  /// **'\$1000.00'**
+  String get tripDetailsBookingPriceDisplay;
+
   /// No description provided for @tripDetailsCompanyName.
   ///
   /// In en, this message translates to:
@@ -1481,7 +1829,7 @@ abstract class AppLocalizations {
   /// No description provided for @tripDetailsGroupSizeValue.
   ///
   /// In en, this message translates to:
-  /// **'20 Person'**
+  /// **'20-25'**
   String get tripDetailsGroupSizeValue;
 
   /// No description provided for @tripDetailsGroupSizeLabel.
@@ -1493,7 +1841,7 @@ abstract class AppLocalizations {
   /// No description provided for @tripDetailsTypeValue.
   ///
   /// In en, this message translates to:
-  /// **'Mixed'**
+  /// **'International'**
   String get tripDetailsTypeValue;
 
   /// No description provided for @tripDetailsTypeLabel.
@@ -1717,6 +2065,366 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Luxor & Aswan'**
   String get tripDetailsRelatedNameLuxorAswan;
+
+  /// No description provided for @tripDetailsHeroRatingLine.
+  ///
+  /// In en, this message translates to:
+  /// **'4.5 (120 reviews)'**
+  String get tripDetailsHeroRatingLine;
+
+  /// No description provided for @tripDetailsHeroLocationShort.
+  ///
+  /// In en, this message translates to:
+  /// **'Dahab, Egypt'**
+  String get tripDetailsHeroLocationShort;
+
+  /// No description provided for @tripDetailsHeroDaysBadge.
+  ///
+  /// In en, this message translates to:
+  /// **'7 Days'**
+  String get tripDetailsHeroDaysBadge;
+
+  /// No description provided for @tripDetailsOut.
+  ///
+  /// In en, this message translates to:
+  /// **'Out'**
+  String get tripDetailsOut;
+
+  /// No description provided for @tripDetailsIn.
+  ///
+  /// In en, this message translates to:
+  /// **'In'**
+  String get tripDetailsIn;
+
+  /// No description provided for @tripDetailsOutSummaryLine1.
+  ///
+  /// In en, this message translates to:
+  /// **'21 May, Friday'**
+  String get tripDetailsOutSummaryLine1;
+
+  /// No description provided for @tripDetailsOutSummaryLine2.
+  ///
+  /// In en, this message translates to:
+  /// **'Cairo International Airport (CAI)'**
+  String get tripDetailsOutSummaryLine2;
+
+  /// No description provided for @tripDetailsInSummaryLine1.
+  ///
+  /// In en, this message translates to:
+  /// **'27 May, Thursday'**
+  String get tripDetailsInSummaryLine1;
+
+  /// No description provided for @tripDetailsInSummaryLine2.
+  ///
+  /// In en, this message translates to:
+  /// **'Dahab, South Sinai'**
+  String get tripDetailsInSummaryLine2;
+
+  /// No description provided for @tripDetailsTripDescriptionTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Trip description'**
+  String get tripDetailsTripDescriptionTitle;
+
+  /// No description provided for @tripDetailsAmenitiesTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Amenities'**
+  String get tripDetailsAmenitiesTitle;
+
+  /// No description provided for @tripDetailsAmenityHotelStars.
+  ///
+  /// In en, this message translates to:
+  /// **'Hotel 4 stars'**
+  String get tripDetailsAmenityHotelStars;
+
+  /// No description provided for @tripDetailsAmenityFoodBar.
+  ///
+  /// In en, this message translates to:
+  /// **'Food bar'**
+  String get tripDetailsAmenityFoodBar;
+
+  /// No description provided for @tripDetailsAmenityBusTrip.
+  ///
+  /// In en, this message translates to:
+  /// **'Bus trip'**
+  String get tripDetailsAmenityBusTrip;
+
+  /// No description provided for @tripDetailsAmenityTourGuide.
+  ///
+  /// In en, this message translates to:
+  /// **'Tour guide'**
+  String get tripDetailsAmenityTourGuide;
+
+  /// No description provided for @tripDetailsAccommodationTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Accommodation'**
+  String get tripDetailsAccommodationTitle;
+
+  /// No description provided for @tripDetailsHotelName.
+  ///
+  /// In en, this message translates to:
+  /// **'Le Meridien Dahab Resort'**
+  String get tripDetailsHotelName;
+
+  /// No description provided for @tripDetailsHotelRatingStars.
+  ///
+  /// In en, this message translates to:
+  /// **'5.0'**
+  String get tripDetailsHotelRatingStars;
+
+  /// No description provided for @tripDetailsHotelAddress.
+  ///
+  /// In en, this message translates to:
+  /// **'Blue Hole Road, Dahab, Egypt'**
+  String get tripDetailsHotelAddress;
+
+  /// No description provided for @tripDetailsCheckInOut.
+  ///
+  /// In en, this message translates to:
+  /// **'Check-in 2:00 PM · Check-out 11:00 AM'**
+  String get tripDetailsCheckInOut;
+
+  /// No description provided for @tripDetailsViewMap.
+  ///
+  /// In en, this message translates to:
+  /// **'View map'**
+  String get tripDetailsViewMap;
+
+  /// No description provided for @tripDetailsViewFullItinerary.
+  ///
+  /// In en, this message translates to:
+  /// **'View full itinerary'**
+  String get tripDetailsViewFullItinerary;
+
+  /// No description provided for @tripDetailsFlightDetailsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Flight details'**
+  String get tripDetailsFlightDetailsTitle;
+
+  /// No description provided for @tripDetailsTransportationTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Transportation'**
+  String get tripDetailsTransportationTitle;
+
+  /// No description provided for @tripDetailsFlightLegSummary.
+  ///
+  /// In en, this message translates to:
+  /// **'CAI → SSH · EgyptAir · 1h 10m'**
+  String get tripDetailsFlightLegSummary;
+
+  /// No description provided for @tripDetailsTrainLegSummary.
+  ///
+  /// In en, this message translates to:
+  /// **'Return · Cairo · 8h 30m'**
+  String get tripDetailsTrainLegSummary;
+
+  /// No description provided for @tripDetailsDestinationsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Destinations'**
+  String get tripDetailsDestinationsTitle;
+
+  /// No description provided for @tripDetailsDestinationDahab.
+  ///
+  /// In en, this message translates to:
+  /// **'Dahab'**
+  String get tripDetailsDestinationDahab;
+
+  /// No description provided for @tripDetailsDestinationNuweiba.
+  ///
+  /// In en, this message translates to:
+  /// **'Nuweiba'**
+  String get tripDetailsDestinationNuweiba;
+
+  /// No description provided for @tripDetailsIncludesExcludesTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Trip includes & excludes'**
+  String get tripDetailsIncludesExcludesTitle;
+
+  /// No description provided for @tripDetailsExcludesTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Excludes'**
+  String get tripDetailsExcludesTitle;
+
+  /// No description provided for @tripDetailsExcludeVisa.
+  ///
+  /// In en, this message translates to:
+  /// **'Visa fees'**
+  String get tripDetailsExcludeVisa;
+
+  /// No description provided for @tripDetailsExcludeAlcohol.
+  ///
+  /// In en, this message translates to:
+  /// **'Alcoholic beverages'**
+  String get tripDetailsExcludeAlcohol;
+
+  /// No description provided for @tripDetailsSeeAllPhotos.
+  ///
+  /// In en, this message translates to:
+  /// **'See all photos'**
+  String get tripDetailsSeeAllPhotos;
+
+  /// No description provided for @tripDetailsActivityPlansTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Activity plans'**
+  String get tripDetailsActivityPlansTitle;
+
+  /// No description provided for @tripDetailsActivitySnorkel.
+  ///
+  /// In en, this message translates to:
+  /// **'Blue Hole snorkeling'**
+  String get tripDetailsActivitySnorkel;
+
+  /// No description provided for @tripDetailsActivitySnorkelPrice.
+  ///
+  /// In en, this message translates to:
+  /// **'EGP 500'**
+  String get tripDetailsActivitySnorkelPrice;
+
+  /// No description provided for @tripDetailsActivitySafari.
+  ///
+  /// In en, this message translates to:
+  /// **'Desert safari'**
+  String get tripDetailsActivitySafari;
+
+  /// No description provided for @tripDetailsActivitySafariPrice.
+  ///
+  /// In en, this message translates to:
+  /// **'EGP 350'**
+  String get tripDetailsActivitySafariPrice;
+
+  /// No description provided for @tripDetailsActivityDiving.
+  ///
+  /// In en, this message translates to:
+  /// **'Intro diving session'**
+  String get tripDetailsActivityDiving;
+
+  /// No description provided for @tripDetailsActivityDivingPrice.
+  ///
+  /// In en, this message translates to:
+  /// **'EGP 800'**
+  String get tripDetailsActivityDivingPrice;
+
+  /// No description provided for @tripDetailsAdd.
+  ///
+  /// In en, this message translates to:
+  /// **'Add'**
+  String get tripDetailsAdd;
+
+  /// No description provided for @tripDetailsAdded.
+  ///
+  /// In en, this message translates to:
+  /// **'Added'**
+  String get tripDetailsAdded;
+
+  /// No description provided for @tripDetailsViewAllActivities.
+  ///
+  /// In en, this message translates to:
+  /// **'View all activities'**
+  String get tripDetailsViewAllActivities;
+
+  /// No description provided for @tripDetailsPolicyCancellation.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancellation policy'**
+  String get tripDetailsPolicyCancellation;
+
+  /// No description provided for @tripDetailsPolicyInsurance.
+  ///
+  /// In en, this message translates to:
+  /// **'Travel insurance'**
+  String get tripDetailsPolicyInsurance;
+
+  /// No description provided for @tripDetailsPolicyTerms.
+  ///
+  /// In en, this message translates to:
+  /// **'Terms and conditions'**
+  String get tripDetailsPolicyTerms;
+
+  /// No description provided for @tripDetailsPolicyFaqs.
+  ///
+  /// In en, this message translates to:
+  /// **'Frequently asked questions'**
+  String get tripDetailsPolicyFaqs;
+
+  /// No description provided for @tripDetailsSeeAllReviews.
+  ///
+  /// In en, this message translates to:
+  /// **'See all'**
+  String get tripDetailsSeeAllReviews;
+
+  /// No description provided for @tripDetailsOrganizerTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Organizer'**
+  String get tripDetailsOrganizerTitle;
+
+  /// No description provided for @tripDetailsOrganizerSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Trusted partner on Trip Marche'**
+  String get tripDetailsOrganizerSubtitle;
+
+  /// No description provided for @tripDetailsStartingFrom.
+  ///
+  /// In en, this message translates to:
+  /// **'Starting from'**
+  String get tripDetailsStartingFrom;
+
+  /// No description provided for @tripDetailsBookingFromPrice.
+  ///
+  /// In en, this message translates to:
+  /// **'EGP 5,000'**
+  String get tripDetailsBookingFromPrice;
+
+  /// No description provided for @tripDetailsItineraryLoc1.
+  ///
+  /// In en, this message translates to:
+  /// **'Beijing'**
+  String get tripDetailsItineraryLoc1;
+
+  /// No description provided for @tripDetailsItineraryActs1.
+  ///
+  /// In en, this message translates to:
+  /// **'• Check-in at hotel\n• City orientation walk\n• Welcome dinner'**
+  String get tripDetailsItineraryActs1;
+
+  /// No description provided for @tripDetailsItineraryLoc2.
+  ///
+  /// In en, this message translates to:
+  /// **'Hangzhou'**
+  String get tripDetailsItineraryLoc2;
+
+  /// No description provided for @tripDetailsItineraryActs2.
+  ///
+  /// In en, this message translates to:
+  /// **'• West Lake cruise\n• Tea plantation visit\n• Evening free time'**
+  String get tripDetailsItineraryActs2;
+
+  /// No description provided for @tripDetailsReviewSampleName.
+  ///
+  /// In en, this message translates to:
+  /// **'Ahmed Hassan'**
+  String get tripDetailsReviewSampleName;
+
+  /// No description provided for @tripDetailsReviewSampleDate.
+  ///
+  /// In en, this message translates to:
+  /// **'Dec 2025'**
+  String get tripDetailsReviewSampleDate;
+
+  /// No description provided for @tripDetailsReviewSampleBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Amazing trip! Great organization and friendly guides. The snorkeling day was unforgettable.'**
+  String get tripDetailsReviewSampleBody;
 
   /// No description provided for @bookingTripTermsTitle.
   ///

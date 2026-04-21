@@ -303,6 +303,144 @@ class AppLocalizationsAr extends AppLocalizations {
       'اضغط على أيقونة القلب في أي رحلة\nلحفظها في المفضلة.';
 
   @override
+  String get wishlistFiltersTitle => 'التصفية';
+
+  @override
+  String get wishlistFiltersClearAll => 'مسح الكل';
+
+  @override
+  String get wishlistFiltersDestination => 'الوجهة';
+
+  @override
+  String get wishlistFiltersSelectDestination => 'اختر';
+
+  @override
+  String get wishlistFiltersPriceRange => 'نطاق السعر';
+
+  @override
+  String get wishlistFiltersTripType => 'نوع الرحلة';
+
+  @override
+  String get wishlistFiltersDomestic => 'محلي';
+
+  @override
+  String get wishlistFiltersInternational => 'دولي';
+
+  @override
+  String get wishlistFiltersDepartureCountry => 'بلد المغادرة';
+
+  @override
+  String get wishlistFiltersDepartureCity => 'مدينة المغادرة';
+
+  @override
+  String get wishlistFiltersSelectCountry => 'اختر';
+
+  @override
+  String get wishlistFiltersSelectCity => 'اختر';
+
+  @override
+  String get wishlistFiltersTripMonth => 'شهر الرحلة';
+
+  @override
+  String get wishlistFiltersSelectMonth => 'اختر';
+
+  @override
+  String get wishlistFiltersActions => 'الأنشطة';
+
+  @override
+  String get wishlistFiltersSelectAction => 'اختر';
+
+  @override
+  String get wishlistFiltersTravelAgency => 'وكالة السفر';
+
+  @override
+  String get wishlistFiltersAgencyNameHint => 'اسم وكالة السفر';
+
+  @override
+  String get wishlistFiltersAgencyRating => 'تقييم وكالة السفر';
+
+  @override
+  String get wishlistFiltersOtherCountries => 'دول أخرى';
+
+  @override
+  String get wishlistFiltersOtherCities => 'مدن أخرى';
+
+  @override
+  String get wishlistFiltersSelectCountries => 'اختر';
+
+  @override
+  String get wishlistFiltersSelectCities => 'اختر';
+
+  @override
+  String get wishlistFiltersNumberOfCities => 'عدد المدن';
+
+  @override
+  String get wishlistFiltersNumberOfCountries => 'عدد الدول';
+
+  @override
+  String get wishlistFiltersDuration => 'المدة';
+
+  @override
+  String get wishlistFiltersDurationUpTo3 => 'حتى 3 أيام';
+
+  @override
+  String get wishlistFiltersDurationUpTo7 => 'حتى 7 أيام';
+
+  @override
+  String get wishlistFiltersDuration7Plus => '+7 أيام';
+
+  @override
+  String get wishlistFiltersGroupSize => 'حجم المجموعة';
+
+  @override
+  String get wishlistFiltersGroupSizeSmall => 'حتى 10';
+
+  @override
+  String get wishlistFiltersGroupSizeUpTo20 => 'حتى 20';
+
+  @override
+  String get wishlistFiltersGroupSize20Plus => '+20';
+
+  @override
+  String get wishlistFiltersTripSeason => 'موسم الرحلة';
+
+  @override
+  String get wishlistFiltersSeasonSpring => 'الربيع';
+
+  @override
+  String get wishlistFiltersSeasonHajj => 'الحج';
+
+  @override
+  String get wishlistFiltersSeasonNewYear => 'رأس السنة';
+
+  @override
+  String get wishlistFiltersTripFeatures => 'مميزات الرحلة';
+
+  @override
+  String get wishlistFiltersFeatureIncludeFlight => 'يشمل الطيران';
+
+  @override
+  String get wishlistFiltersFeatureIncludeHotel => 'يشمل الفندق';
+
+  @override
+  String get wishlistFiltersFeatureFreeMeal => 'وجبة مجانية';
+
+  @override
+  String get wishlistFiltersFeatureVisaOnArrival => 'تأشيرة عند الوصول';
+
+  @override
+  String get wishlistFiltersTripRating => 'تقييم الرحلة';
+
+  @override
+  String get wishlistFiltersDiscountCode => 'الرحلة تطبق كود خصم';
+
+  @override
+  String get wishlistFiltersFreeCancellation => 'إلغاء مجاني';
+
+  @override
+  String get wishlistFiltersSeeResults => 'عرض +500 نتيجة';
+
+  @override
   String get settingsTitle => 'الإعدادات';
 
   @override
@@ -711,6 +849,45 @@ class AppLocalizationsAr extends AppLocalizations {
   String get tripDetailsTitle => 'رحلة دهب';
 
   @override
+  String get tripDetailsHeroCountryTag => 'إندونيسيا';
+
+  @override
+  String get tripDetailsHeroByCompany => 'بواسطة شركة السفر';
+
+  @override
+  String get tripDetailsHeroFromLocation => 'من القاهرة والإسكندرية';
+
+  @override
+  String get tripDetailsHeroDateRange => '27 نوفمبر ← 4 ديسمبر';
+
+  @override
+  String tripDetailsGalleryMoreCount(Object count) {
+    return '+$count';
+  }
+
+  @override
+  String get tripDetailsOverviewTitle => 'نظرة عامة على الرحلة';
+
+  @override
+  String get tripDetailsOverviewBody =>
+      'استمتع بجمال جبال الألب السويسرية الخلاب في هذه المغامرة لمدة 7 أيام. زر وجهات شهيرة، استمتع برحلات قطار ساحرة، وانغمس في الثقافة السويسرية. مثالي لعشاق الطبيعة وعشاق التصوير.';
+
+  @override
+  String get tripDetailsStatCitiesLabel => 'عدد المدن';
+
+  @override
+  String get tripDetailsStatCitiesValue => '7 مدن';
+
+  @override
+  String get tripDetailsPriceLabel => 'السعر';
+
+  @override
+  String get tripDetailsPerPersonSmall => 'للفرد';
+
+  @override
+  String get tripDetailsBookingPriceDisplay => '\$1000.00';
+
+  @override
   String get tripDetailsCompanyName => 'Travel Egypt Co.';
 
   @override
@@ -726,13 +903,13 @@ class AppLocalizationsAr extends AppLocalizations {
   String get tripDetailsDurationLabel => 'المدة';
 
   @override
-  String get tripDetailsGroupSizeValue => '20 شخص';
+  String get tripDetailsGroupSizeValue => '20-25';
 
   @override
   String get tripDetailsGroupSizeLabel => 'حجم المجموعة';
 
   @override
-  String get tripDetailsTypeValue => 'مختلط';
+  String get tripDetailsTypeValue => 'دولي';
 
   @override
   String get tripDetailsTypeLabel => 'النوع';
@@ -856,6 +1033,190 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get tripDetailsRelatedNameLuxorAswan => 'الأقصر وأسوان';
+
+  @override
+  String get tripDetailsHeroRatingLine => '4.5 (120 تقييم)';
+
+  @override
+  String get tripDetailsHeroLocationShort => 'دهب، مصر';
+
+  @override
+  String get tripDetailsHeroDaysBadge => '7 أيام';
+
+  @override
+  String get tripDetailsOut => 'ذهاب';
+
+  @override
+  String get tripDetailsIn => 'عودة';
+
+  @override
+  String get tripDetailsOutSummaryLine1 => '21 مايو، الجمعة';
+
+  @override
+  String get tripDetailsOutSummaryLine2 => 'مطار القاهرة الدولي (CAI)';
+
+  @override
+  String get tripDetailsInSummaryLine1 => '27 مايو، الخميس';
+
+  @override
+  String get tripDetailsInSummaryLine2 => 'دهب، جنوب سيناء';
+
+  @override
+  String get tripDetailsTripDescriptionTitle => 'وصف الرحلة';
+
+  @override
+  String get tripDetailsAmenitiesTitle => 'وسائل الراحة';
+
+  @override
+  String get tripDetailsAmenityHotelStars => 'فندق 4 نجوم';
+
+  @override
+  String get tripDetailsAmenityFoodBar => 'بار طعام';
+
+  @override
+  String get tripDetailsAmenityBusTrip => 'رحلة بالحافلة';
+
+  @override
+  String get tripDetailsAmenityTourGuide => 'مرشد سياحي';
+
+  @override
+  String get tripDetailsAccommodationTitle => 'الإقامة';
+
+  @override
+  String get tripDetailsHotelName => 'لو ميريديان دهب ريزورت';
+
+  @override
+  String get tripDetailsHotelRatingStars => '5.0';
+
+  @override
+  String get tripDetailsHotelAddress => 'طريق البلو هول، دهب، مصر';
+
+  @override
+  String get tripDetailsCheckInOut =>
+      'تسجيل الوصول 2:00 مساءً · المغادرة 11:00 صباحًا';
+
+  @override
+  String get tripDetailsViewMap => 'عرض الخريطة';
+
+  @override
+  String get tripDetailsViewFullItinerary => 'عرض البرنامج كاملًا';
+
+  @override
+  String get tripDetailsFlightDetailsTitle => 'تفاصيل الطيران';
+
+  @override
+  String get tripDetailsTransportationTitle => 'المواصلات';
+
+  @override
+  String get tripDetailsFlightLegSummary => 'CAI → SSH · مصر للطيران · 1س 10د';
+
+  @override
+  String get tripDetailsTrainLegSummary => 'عودة · القاهرة · 8س 30د';
+
+  @override
+  String get tripDetailsDestinationsTitle => 'الوجهات';
+
+  @override
+  String get tripDetailsDestinationDahab => 'دهب';
+
+  @override
+  String get tripDetailsDestinationNuweiba => 'نويبع';
+
+  @override
+  String get tripDetailsIncludesExcludesTitle => 'يشمل ولا يشمل';
+
+  @override
+  String get tripDetailsExcludesTitle => 'لا يشمل';
+
+  @override
+  String get tripDetailsExcludeVisa => 'رسوم التأشيرة';
+
+  @override
+  String get tripDetailsExcludeAlcohol => 'المشروبات الكحولية';
+
+  @override
+  String get tripDetailsSeeAllPhotos => 'عرض كل الصور';
+
+  @override
+  String get tripDetailsActivityPlansTitle => 'الأنشطة الاختيارية';
+
+  @override
+  String get tripDetailsActivitySnorkel => 'سنوركلينج البلو هول';
+
+  @override
+  String get tripDetailsActivitySnorkelPrice => '500 جنيه';
+
+  @override
+  String get tripDetailsActivitySafari => 'سفاري الصحراء';
+
+  @override
+  String get tripDetailsActivitySafariPrice => '350 جنيه';
+
+  @override
+  String get tripDetailsActivityDiving => 'جلسة غوص تعريفي';
+
+  @override
+  String get tripDetailsActivityDivingPrice => '800 جنيه';
+
+  @override
+  String get tripDetailsAdd => 'إضافة';
+
+  @override
+  String get tripDetailsAdded => 'مضاف';
+
+  @override
+  String get tripDetailsViewAllActivities => 'عرض كل الأنشطة';
+
+  @override
+  String get tripDetailsPolicyCancellation => 'سياسة الإلغاء';
+
+  @override
+  String get tripDetailsPolicyInsurance => 'تأمين السفر';
+
+  @override
+  String get tripDetailsPolicyTerms => 'الشروط والأحكام';
+
+  @override
+  String get tripDetailsPolicyFaqs => 'الأسئلة الشائعة';
+
+  @override
+  String get tripDetailsSeeAllReviews => 'عرض الكل';
+
+  @override
+  String get tripDetailsOrganizerTitle => 'المنظم';
+
+  @override
+  String get tripDetailsOrganizerSubtitle => 'شريك موثوق على Trip Marche';
+
+  @override
+  String get tripDetailsStartingFrom => 'يبدأ من';
+
+  @override
+  String get tripDetailsBookingFromPrice => '5,000 جنيه';
+
+  @override
+  String get tripDetailsItineraryLoc1 => 'بكين';
+
+  @override
+  String get tripDetailsItineraryActs1 =>
+      '• تسجيل الوصول بالفندق\n• جولة تعريفية بالمدينة\n• عشاء ترحيبي';
+
+  @override
+  String get tripDetailsItineraryLoc2 => 'هانغتشو';
+
+  @override
+  String get tripDetailsItineraryActs2 =>
+      '• جولة بحيرة الغرب\n• زيارة مزارع الشاي\n• مساء حر';
+
+  @override
+  String get tripDetailsReviewSampleName => 'أحمد حسن';
+
+  @override
+  String get tripDetailsReviewSampleDate => 'ديسمبر 2025';
+
+  @override
+  String get tripDetailsReviewSampleBody =>
+      'رحلة رائعة! تنظيم ممتاز ومرشدون لطفاء. يوم السنوركلينج لا يُنسى.';
 
   @override
   String get bookingTripTermsTitle => 'الشروط والأحكام';

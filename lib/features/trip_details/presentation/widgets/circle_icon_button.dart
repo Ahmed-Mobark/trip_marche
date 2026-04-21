@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class CircleIconButton extends StatelessWidget {
   final IconData icon;
@@ -17,13 +18,13 @@ class CircleIconButton extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        width: 40,
-        height: 40,
+        width: 40.r,
+        height: 40.r,
         decoration: BoxDecoration(
           color: Colors.black.withValues(alpha: 0.3),
           shape: BoxShape.circle,
         ),
-        child: Icon(icon, color: iconColor ?? Colors.white, size: 20),
+        child: Icon(icon, color: iconColor ?? Colors.white, size: 20.sp),
       ),
     );
   }
