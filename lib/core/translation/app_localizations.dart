@@ -1766,6 +1766,330 @@ abstract class AppLocalizations {
   /// **'Experience the breathtaking beauty of the Swiss Alps on this 7-day adventure. Visit iconic destinations, enjoy scenic train rides, and immerse yourself in Swiss culture. Perfect for nature lovers and photography enthusiasts.'**
   String get tripDetailsOverviewBody;
 
+  /// No description provided for @tripDetailsWhatsIncludedTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'What\'s Included'**
+  String get tripDetailsWhatsIncludedTitle;
+
+  /// No description provided for @tripDetailsIncludedFlightTickets.
+  ///
+  /// In en, this message translates to:
+  /// **'Flight Tickets'**
+  String get tripDetailsIncludedFlightTickets;
+
+  /// No description provided for @tripDetailsIncludedHotelStay.
+  ///
+  /// In en, this message translates to:
+  /// **'Hotel Stay'**
+  String get tripDetailsIncludedHotelStay;
+
+  /// No description provided for @tripDetailsIncludedBreakfast.
+  ///
+  /// In en, this message translates to:
+  /// **'Breakfast'**
+  String get tripDetailsIncludedBreakfast;
+
+  /// No description provided for @tripDetailsIncludedAirportTransfer.
+  ///
+  /// In en, this message translates to:
+  /// **'Airport Transfer'**
+  String get tripDetailsIncludedAirportTransfer;
+
+  /// No description provided for @tripDetailsDepartureDetailsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Departure Details'**
+  String get tripDetailsDepartureDetailsTitle;
+
+  /// No description provided for @tripDetailsMeetingLocationLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Meeting Location'**
+  String get tripDetailsMeetingLocationLabel;
+
+  /// No description provided for @tripDetailsMeetingLocationValue.
+  ///
+  /// In en, this message translates to:
+  /// **'18 El Tesen Road, New Cairo, Egypt'**
+  String get tripDetailsMeetingLocationValue;
+
+  /// No description provided for @tripDetailsReturnLocationLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Return Location'**
+  String get tripDetailsReturnLocationLabel;
+
+  /// No description provided for @tripDetailsReturnLocationValue.
+  ///
+  /// In en, this message translates to:
+  /// **'54 Ramses, Downtown, Egypt'**
+  String get tripDetailsReturnLocationValue;
+
+  /// No description provided for @tripDetailsMeetingTimeLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Meeting Time'**
+  String get tripDetailsMeetingTimeLabel;
+
+  /// No description provided for @tripDetailsMeetingTimeValue.
+  ///
+  /// In en, this message translates to:
+  /// **'5:00 PM'**
+  String get tripDetailsMeetingTimeValue;
+
+  /// No description provided for @tripDetailsReturnTimeLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Return Time'**
+  String get tripDetailsReturnTimeLabel;
+
+  /// No description provided for @tripDetailsReturnTimeValue.
+  ///
+  /// In en, this message translates to:
+  /// **'9:30 PM'**
+  String get tripDetailsReturnTimeValue;
+
+  /// No description provided for @tripDetailsProgramTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Trip Program'**
+  String get tripDetailsProgramTitle;
+
+  /// No description provided for @tripDetailsProgramMealsLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Meals'**
+  String get tripDetailsProgramMealsLabel;
+
+  /// No description provided for @tripDetailsProgramDay1.
+  ///
+  /// In en, this message translates to:
+  /// **'Day 1'**
+  String get tripDetailsProgramDay1;
+
+  /// No description provided for @tripDetailsProgramDay2.
+  ///
+  /// In en, this message translates to:
+  /// **'Day 2'**
+  String get tripDetailsProgramDay2;
+
+  /// No description provided for @tripDetailsProgramCity1.
+  ///
+  /// In en, this message translates to:
+  /// **'Beijing'**
+  String get tripDetailsProgramCity1;
+
+  /// No description provided for @tripDetailsProgramCity2.
+  ///
+  /// In en, this message translates to:
+  /// **'Hangzhou'**
+  String get tripDetailsProgramCity2;
+
+  /// No description provided for @tripDetailsProgramDay1Item1.
+  ///
+  /// In en, this message translates to:
+  /// **'Arrival at Changdu Airport'**
+  String get tripDetailsProgramDay1Item1;
+
+  /// No description provided for @tripDetailsProgramDay1Item2.
+  ///
+  /// In en, this message translates to:
+  /// **'Domestic flight to Beijing'**
+  String get tripDetailsProgramDay1Item2;
+
+  /// No description provided for @tripDetailsProgramDay1Item3.
+  ///
+  /// In en, this message translates to:
+  /// **'Hotel check-in'**
+  String get tripDetailsProgramDay1Item3;
+
+  /// No description provided for @tripDetailsProgramDay1Item4.
+  ///
+  /// In en, this message translates to:
+  /// **'Free tour in Wangfujing Street'**
+  String get tripDetailsProgramDay1Item4;
+
+  /// No description provided for @tripDetailsProgramDay2Item1.
+  ///
+  /// In en, this message translates to:
+  /// **'City tour in Hangzhou'**
+  String get tripDetailsProgramDay2Item1;
+
+  /// No description provided for @tripDetailsProgramDay2Item2.
+  ///
+  /// In en, this message translates to:
+  /// **'Hotel check-in and evening tour'**
+  String get tripDetailsProgramDay2Item2;
+
+  /// No description provided for @tripDetailsProgramDay2Item3.
+  ///
+  /// In en, this message translates to:
+  /// **'Visit West Lake by Cruise'**
+  String get tripDetailsProgramDay2Item3;
+
+  /// No description provided for @tripDetailsProgramSeeAll.
+  ///
+  /// In en, this message translates to:
+  /// **'See All Program'**
+  String get tripDetailsProgramSeeAll;
+
+  /// No description provided for @tripDetailsAirlineLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Airline'**
+  String get tripDetailsAirlineLabel;
+
+  /// No description provided for @tripDetailsAirlineName.
+  ///
+  /// In en, this message translates to:
+  /// **'Egyptair'**
+  String get tripDetailsAirlineName;
+
+  /// No description provided for @tripDetailsFlightLeg1FromCity.
+  ///
+  /// In en, this message translates to:
+  /// **'Cairo'**
+  String get tripDetailsFlightLeg1FromCity;
+
+  /// No description provided for @tripDetailsFlightLeg1FromTime.
+  ///
+  /// In en, this message translates to:
+  /// **'5:00 AM'**
+  String get tripDetailsFlightLeg1FromTime;
+
+  /// No description provided for @tripDetailsFlightLeg1ToCity.
+  ///
+  /// In en, this message translates to:
+  /// **'Paris'**
+  String get tripDetailsFlightLeg1ToCity;
+
+  /// No description provided for @tripDetailsFlightLeg1ToTime.
+  ///
+  /// In en, this message translates to:
+  /// **'7:20 AM'**
+  String get tripDetailsFlightLeg1ToTime;
+
+  /// No description provided for @tripDetailsFlightLeg1Date.
+  ///
+  /// In en, this message translates to:
+  /// **'28 April'**
+  String get tripDetailsFlightLeg1Date;
+
+  /// No description provided for @tripDetailsFlightLeg2FromCity.
+  ///
+  /// In en, this message translates to:
+  /// **'Paris'**
+  String get tripDetailsFlightLeg2FromCity;
+
+  /// No description provided for @tripDetailsFlightLeg2FromTime.
+  ///
+  /// In en, this message translates to:
+  /// **'8:00 AM'**
+  String get tripDetailsFlightLeg2FromTime;
+
+  /// No description provided for @tripDetailsFlightLeg2ToCity.
+  ///
+  /// In en, this message translates to:
+  /// **'Cairo'**
+  String get tripDetailsFlightLeg2ToCity;
+
+  /// No description provided for @tripDetailsFlightLeg2ToTime.
+  ///
+  /// In en, this message translates to:
+  /// **'5:20 AM'**
+  String get tripDetailsFlightLeg2ToTime;
+
+  /// No description provided for @tripDetailsFlightLeg2Date.
+  ///
+  /// In en, this message translates to:
+  /// **'4 May'**
+  String get tripDetailsFlightLeg2Date;
+
+  /// No description provided for @tripDetailsTransportLeg1FromCity.
+  ///
+  /// In en, this message translates to:
+  /// **'Cairo'**
+  String get tripDetailsTransportLeg1FromCity;
+
+  /// No description provided for @tripDetailsTransportLeg1FromTime.
+  ///
+  /// In en, this message translates to:
+  /// **'8:00 AM'**
+  String get tripDetailsTransportLeg1FromTime;
+
+  /// No description provided for @tripDetailsTransportLeg1ToCity.
+  ///
+  /// In en, this message translates to:
+  /// **'Paris'**
+  String get tripDetailsTransportLeg1ToCity;
+
+  /// No description provided for @tripDetailsTransportLeg1ToTime.
+  ///
+  /// In en, this message translates to:
+  /// **'5:20 AM'**
+  String get tripDetailsTransportLeg1ToTime;
+
+  /// No description provided for @tripDetailsTransportLeg1CenterLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Bus'**
+  String get tripDetailsTransportLeg1CenterLabel;
+
+  /// No description provided for @tripDetailsTransportLeg1Date.
+  ///
+  /// In en, this message translates to:
+  /// **'29 May'**
+  String get tripDetailsTransportLeg1Date;
+
+  /// No description provided for @tripDetailsTransportLeg2FromCity.
+  ///
+  /// In en, this message translates to:
+  /// **'Cairo'**
+  String get tripDetailsTransportLeg2FromCity;
+
+  /// No description provided for @tripDetailsTransportLeg2FromTime.
+  ///
+  /// In en, this message translates to:
+  /// **'8:00 AM'**
+  String get tripDetailsTransportLeg2FromTime;
+
+  /// No description provided for @tripDetailsTransportLeg2ToCity.
+  ///
+  /// In en, this message translates to:
+  /// **'Paris'**
+  String get tripDetailsTransportLeg2ToCity;
+
+  /// No description provided for @tripDetailsTransportLeg2ToTime.
+  ///
+  /// In en, this message translates to:
+  /// **'5:20 AM'**
+  String get tripDetailsTransportLeg2ToTime;
+
+  /// No description provided for @tripDetailsTransportLeg2CenterLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Boat'**
+  String get tripDetailsTransportLeg2CenterLabel;
+
+  /// No description provided for @tripDetailsTransportLeg2Date.
+  ///
+  /// In en, this message translates to:
+  /// **'29 May'**
+  String get tripDetailsTransportLeg2Date;
+
+  /// No description provided for @tripDetailsDestinationHurghada.
+  ///
+  /// In en, this message translates to:
+  /// **'Hurghada'**
+  String get tripDetailsDestinationHurghada;
+
+  /// No description provided for @tripDetailsDestinationParis.
+  ///
+  /// In en, this message translates to:
+  /// **'Paris'**
+  String get tripDetailsDestinationParis;
+
   /// No description provided for @tripDetailsStatCitiesLabel.
   ///
   /// In en, this message translates to:

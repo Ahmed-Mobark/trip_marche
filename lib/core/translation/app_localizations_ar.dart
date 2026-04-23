@@ -873,6 +873,170 @@ class AppLocalizationsAr extends AppLocalizations {
       'استمتع بجمال جبال الألب السويسرية الخلاب في هذه المغامرة لمدة 7 أيام. زر وجهات شهيرة، استمتع برحلات قطار ساحرة، وانغمس في الثقافة السويسرية. مثالي لعشاق الطبيعة وعشاق التصوير.';
 
   @override
+  String get tripDetailsWhatsIncludedTitle => 'ما الذي يتضمنه العرض';
+
+  @override
+  String get tripDetailsIncludedFlightTickets => 'تذاكر طيران';
+
+  @override
+  String get tripDetailsIncludedHotelStay => 'إقامة فندقية';
+
+  @override
+  String get tripDetailsIncludedBreakfast => 'إفطار';
+
+  @override
+  String get tripDetailsIncludedAirportTransfer => 'تنقل من/إلى المطار';
+
+  @override
+  String get tripDetailsDepartureDetailsTitle => 'تفاصيل المغادرة';
+
+  @override
+  String get tripDetailsMeetingLocationLabel => 'مكان التجمع';
+
+  @override
+  String get tripDetailsMeetingLocationValue =>
+      '18 طريق التسعين، القاهرة الجديدة، مصر';
+
+  @override
+  String get tripDetailsReturnLocationLabel => 'مكان العودة';
+
+  @override
+  String get tripDetailsReturnLocationValue => '54 رمسيس، وسط البلد، مصر';
+
+  @override
+  String get tripDetailsMeetingTimeLabel => 'وقت التجمع';
+
+  @override
+  String get tripDetailsMeetingTimeValue => '5:00 م';
+
+  @override
+  String get tripDetailsReturnTimeLabel => 'وقت العودة';
+
+  @override
+  String get tripDetailsReturnTimeValue => '9:30 م';
+
+  @override
+  String get tripDetailsProgramTitle => 'برنامج الرحلة';
+
+  @override
+  String get tripDetailsProgramMealsLabel => 'الوجبات';
+
+  @override
+  String get tripDetailsProgramDay1 => 'اليوم 1';
+
+  @override
+  String get tripDetailsProgramDay2 => 'اليوم 2';
+
+  @override
+  String get tripDetailsProgramCity1 => 'بكين';
+
+  @override
+  String get tripDetailsProgramCity2 => 'هانغتشو';
+
+  @override
+  String get tripDetailsProgramDay1Item1 => 'الوصول إلى مطار تشنغدو';
+
+  @override
+  String get tripDetailsProgramDay1Item2 => 'رحلة طيران داخلية إلى بكين';
+
+  @override
+  String get tripDetailsProgramDay1Item3 => 'تسجيل الوصول إلى الفندق';
+
+  @override
+  String get tripDetailsProgramDay1Item4 => 'جولة حرة في شارع وانغفوجينغ';
+
+  @override
+  String get tripDetailsProgramDay2Item1 => 'جولة في مدينة هانغتشو';
+
+  @override
+  String get tripDetailsProgramDay2Item2 =>
+      'تسجيل الوصول إلى الفندق وجولة مسائية';
+
+  @override
+  String get tripDetailsProgramDay2Item3 => 'زيارة بحيرة الغرب برحلة بحرية';
+
+  @override
+  String get tripDetailsProgramSeeAll => 'عرض البرنامج كاملًا';
+
+  @override
+  String get tripDetailsAirlineLabel => 'شركة الطيران';
+
+  @override
+  String get tripDetailsAirlineName => 'مصر للطيران';
+
+  @override
+  String get tripDetailsFlightLeg1FromCity => 'القاهرة';
+
+  @override
+  String get tripDetailsFlightLeg1FromTime => '5:00 ص';
+
+  @override
+  String get tripDetailsFlightLeg1ToCity => 'باريس';
+
+  @override
+  String get tripDetailsFlightLeg1ToTime => '7:20 ص';
+
+  @override
+  String get tripDetailsFlightLeg1Date => '28 أبريل';
+
+  @override
+  String get tripDetailsFlightLeg2FromCity => 'باريس';
+
+  @override
+  String get tripDetailsFlightLeg2FromTime => '8:00 ص';
+
+  @override
+  String get tripDetailsFlightLeg2ToCity => 'القاهرة';
+
+  @override
+  String get tripDetailsFlightLeg2ToTime => '5:20 ص';
+
+  @override
+  String get tripDetailsFlightLeg2Date => '4 مايو';
+
+  @override
+  String get tripDetailsTransportLeg1FromCity => 'القاهرة';
+
+  @override
+  String get tripDetailsTransportLeg1FromTime => '8:00 ص';
+
+  @override
+  String get tripDetailsTransportLeg1ToCity => 'باريس';
+
+  @override
+  String get tripDetailsTransportLeg1ToTime => '5:20 ص';
+
+  @override
+  String get tripDetailsTransportLeg1CenterLabel => 'حافلة';
+
+  @override
+  String get tripDetailsTransportLeg1Date => '29 مايو';
+
+  @override
+  String get tripDetailsTransportLeg2FromCity => 'القاهرة';
+
+  @override
+  String get tripDetailsTransportLeg2FromTime => '8:00 ص';
+
+  @override
+  String get tripDetailsTransportLeg2ToCity => 'باريس';
+
+  @override
+  String get tripDetailsTransportLeg2ToTime => '5:20 ص';
+
+  @override
+  String get tripDetailsTransportLeg2CenterLabel => 'قارب';
+
+  @override
+  String get tripDetailsTransportLeg2Date => '29 مايو';
+
+  @override
+  String get tripDetailsDestinationHurghada => 'الغردقة';
+
+  @override
+  String get tripDetailsDestinationParis => 'باريس';
+
+  @override
   String get tripDetailsStatCitiesLabel => 'عدد المدن';
 
   @override

@@ -879,6 +879,169 @@ class AppLocalizationsEn extends AppLocalizations {
       'Experience the breathtaking beauty of the Swiss Alps on this 7-day adventure. Visit iconic destinations, enjoy scenic train rides, and immerse yourself in Swiss culture. Perfect for nature lovers and photography enthusiasts.';
 
   @override
+  String get tripDetailsWhatsIncludedTitle => 'What\'s Included';
+
+  @override
+  String get tripDetailsIncludedFlightTickets => 'Flight Tickets';
+
+  @override
+  String get tripDetailsIncludedHotelStay => 'Hotel Stay';
+
+  @override
+  String get tripDetailsIncludedBreakfast => 'Breakfast';
+
+  @override
+  String get tripDetailsIncludedAirportTransfer => 'Airport Transfer';
+
+  @override
+  String get tripDetailsDepartureDetailsTitle => 'Departure Details';
+
+  @override
+  String get tripDetailsMeetingLocationLabel => 'Meeting Location';
+
+  @override
+  String get tripDetailsMeetingLocationValue =>
+      '18 El Tesen Road, New Cairo, Egypt';
+
+  @override
+  String get tripDetailsReturnLocationLabel => 'Return Location';
+
+  @override
+  String get tripDetailsReturnLocationValue => '54 Ramses, Downtown, Egypt';
+
+  @override
+  String get tripDetailsMeetingTimeLabel => 'Meeting Time';
+
+  @override
+  String get tripDetailsMeetingTimeValue => '5:00 PM';
+
+  @override
+  String get tripDetailsReturnTimeLabel => 'Return Time';
+
+  @override
+  String get tripDetailsReturnTimeValue => '9:30 PM';
+
+  @override
+  String get tripDetailsProgramTitle => 'Trip Program';
+
+  @override
+  String get tripDetailsProgramMealsLabel => 'Meals';
+
+  @override
+  String get tripDetailsProgramDay1 => 'Day 1';
+
+  @override
+  String get tripDetailsProgramDay2 => 'Day 2';
+
+  @override
+  String get tripDetailsProgramCity1 => 'Beijing';
+
+  @override
+  String get tripDetailsProgramCity2 => 'Hangzhou';
+
+  @override
+  String get tripDetailsProgramDay1Item1 => 'Arrival at Changdu Airport';
+
+  @override
+  String get tripDetailsProgramDay1Item2 => 'Domestic flight to Beijing';
+
+  @override
+  String get tripDetailsProgramDay1Item3 => 'Hotel check-in';
+
+  @override
+  String get tripDetailsProgramDay1Item4 => 'Free tour in Wangfujing Street';
+
+  @override
+  String get tripDetailsProgramDay2Item1 => 'City tour in Hangzhou';
+
+  @override
+  String get tripDetailsProgramDay2Item2 => 'Hotel check-in and evening tour';
+
+  @override
+  String get tripDetailsProgramDay2Item3 => 'Visit West Lake by Cruise';
+
+  @override
+  String get tripDetailsProgramSeeAll => 'See All Program';
+
+  @override
+  String get tripDetailsAirlineLabel => 'Airline';
+
+  @override
+  String get tripDetailsAirlineName => 'Egyptair';
+
+  @override
+  String get tripDetailsFlightLeg1FromCity => 'Cairo';
+
+  @override
+  String get tripDetailsFlightLeg1FromTime => '5:00 AM';
+
+  @override
+  String get tripDetailsFlightLeg1ToCity => 'Paris';
+
+  @override
+  String get tripDetailsFlightLeg1ToTime => '7:20 AM';
+
+  @override
+  String get tripDetailsFlightLeg1Date => '28 April';
+
+  @override
+  String get tripDetailsFlightLeg2FromCity => 'Paris';
+
+  @override
+  String get tripDetailsFlightLeg2FromTime => '8:00 AM';
+
+  @override
+  String get tripDetailsFlightLeg2ToCity => 'Cairo';
+
+  @override
+  String get tripDetailsFlightLeg2ToTime => '5:20 AM';
+
+  @override
+  String get tripDetailsFlightLeg2Date => '4 May';
+
+  @override
+  String get tripDetailsTransportLeg1FromCity => 'Cairo';
+
+  @override
+  String get tripDetailsTransportLeg1FromTime => '8:00 AM';
+
+  @override
+  String get tripDetailsTransportLeg1ToCity => 'Paris';
+
+  @override
+  String get tripDetailsTransportLeg1ToTime => '5:20 AM';
+
+  @override
+  String get tripDetailsTransportLeg1CenterLabel => 'Bus';
+
+  @override
+  String get tripDetailsTransportLeg1Date => '29 May';
+
+  @override
+  String get tripDetailsTransportLeg2FromCity => 'Cairo';
+
+  @override
+  String get tripDetailsTransportLeg2FromTime => '8:00 AM';
+
+  @override
+  String get tripDetailsTransportLeg2ToCity => 'Paris';
+
+  @override
+  String get tripDetailsTransportLeg2ToTime => '5:20 AM';
+
+  @override
+  String get tripDetailsTransportLeg2CenterLabel => 'Boat';
+
+  @override
+  String get tripDetailsTransportLeg2Date => '29 May';
+
+  @override
+  String get tripDetailsDestinationHurghada => 'Hurghada';
+
+  @override
+  String get tripDetailsDestinationParis => 'Paris';
+
+  @override
   String get tripDetailsStatCitiesLabel => 'Number of Cities';
 
   @override
