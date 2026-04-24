@@ -16,7 +16,7 @@ class WishlistView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final trips = DummyData.popularTrips;
-    final headerHeight = 96.h;
+    final headerHeight = 120.h;
     final sheetRadius = 32.r;
 
     return Scaffold(
@@ -25,7 +25,9 @@ class WishlistView extends StatelessWidget {
         children: [
           Positioned.fill(
             child: Container(
-              decoration: const BoxDecoration(gradient: AppColors.primaryGradient),
+              decoration: const BoxDecoration(
+                gradient: AppColors.primaryGradient,
+              ),
             ),
           ),
           PositionedDirectional(
@@ -63,8 +65,9 @@ class WishlistView extends StatelessWidget {
                   top: Radius.circular(sheetRadius),
                 ),
               ),
-              child:
-                  trips.isEmpty ? _buildEmptyState(context) : _buildList(context, trips),
+              child: trips.isEmpty
+                  ? _buildEmptyState(context)
+                  : _buildList(context, trips),
             ),
           ),
         ],
@@ -126,7 +129,9 @@ class WishlistView extends StatelessWidget {
                 child: _PillButton(
                   label: context.tr.wishlistFilters,
                   icon: Iconsax.setting_4,
-                  onTap: () => sl<AppNavigator>().push(screen: const WishlistFilterView()),
+                  onTap: () => sl<AppNavigator>().push(
+                    screen: const WishlistFilterView(),
+                  ),
                 ),
               ),
             ],
@@ -214,8 +219,9 @@ class _PillButton extends StatelessWidget {
               SizedBox(width: 8.w),
               Text(
                 label,
-                style: AppTextStyles.bodyMedium(color: AppColors.darkText)
-                    .copyWith(fontWeight: FontWeight.w600),
+                style: AppTextStyles.bodyMedium(
+                  color: AppColors.darkText,
+                ).copyWith(fontWeight: FontWeight.w600),
               ),
             ],
           ),

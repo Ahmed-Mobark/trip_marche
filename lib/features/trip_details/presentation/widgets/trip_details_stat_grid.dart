@@ -2,12 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:trip_marche/core/theme/app_colors.dart';
 import 'package:trip_marche/core/theme/app_text_styles.dart';
+import 'package:trip_marche/features/trip_details/presentation/widgets/trip_details_info_card.dart';
 
 class TripDetailsStatGrid extends StatelessWidget {
-  const TripDetailsStatGrid({
-    super.key,
-    required this.cells,
-  });
+  const TripDetailsStatGrid({super.key, required this.cells});
 
   final List<TripDetailsStatCellData> cells;
 
@@ -44,20 +42,9 @@ class TripDetailsStatCell extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return TripDetailsInfoCard(
       padding: EdgeInsetsDirectional.all(14.r),
-      decoration: BoxDecoration(
-        color: AppColors.white,
-        borderRadius: BorderRadius.circular(16.r),
-        border: Border.all(color: AppColors.border),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withValues(alpha: 0.04),
-            blurRadius: 12.r,
-            offset: Offset(0, 4.h),
-          ),
-        ],
-      ),
+      borderRadius: 16.r,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -68,12 +55,15 @@ class TripDetailsStatCell extends StatelessWidget {
             style: AppTextStyles.caption(color: AppColors.greyText),
           ),
           SizedBox(height: 4.h),
-          Text(
-            data.value,
-            style: AppTextStyles.bodyMedium(color: AppColors.darkText)
-                .copyWith(fontWeight: FontWeight.w700),
-            maxLines: 2,
-            overflow: TextOverflow.ellipsis,
+          Flexible(
+            child: Text(
+              data.value,
+              style: AppTextStyles.bodyMedium(
+                color: AppColors.darkText,
+              ).copyWith(fontWeight: FontWeight.w700),
+              maxLines: 2,
+              overflow: TextOverflow.ellipsis,
+            ),
           ),
         ],
       ),

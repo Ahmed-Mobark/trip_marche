@@ -455,6 +455,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get settingsLanguage => 'Language';
 
   @override
+  String get settingsCurrency => 'Currency';
+
+  @override
   String get settingsEnglish => 'English';
 
   @override
@@ -470,6 +473,35 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get notificationSettingsTitle => 'Notification Setting';
+
+  @override
+  String get notificationSettingsIntro =>
+      'Manage your notification preferences to stay updated on new trips, offers, and booking updates.';
+
+  @override
+  String get notificationSettingsBookingUpdatesTitle => 'Booking Updates';
+
+  @override
+  String get notificationSettingsBookingUpdatesSubtitle =>
+      'Receive real-time updates about trip confirmations, cancellations, and changes to your bookings.';
+
+  @override
+  String get notificationSettingsToursTitle => 'Tours';
+
+  @override
+  String get notificationSettingsToursSubtitle =>
+      'Get notified when new trips or tours are added that match your interests.';
+
+  @override
+  String get notificationSettingsReviewsTitle => 'Reviews';
+
+  @override
+  String get notificationSettingsReviewsSubtitle =>
+      'Be alerted when someone responds to your review or when you\'re invited to review a trip you’ve taken.';
+
+  @override
+  String get notificationSettingsPromotionsSubtitle =>
+      'Get access to special discounts, limited-time offers, and seasonal promotions.';
 
   @override
   String get notificationSettingsPush => 'Push Notifications';
@@ -500,6 +532,18 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get profileMyReviews => 'My Reviews';
+
+  @override
+  String get profileAddReview => 'Add Review';
+
+  @override
+  String get profileReviewLabel => 'Review';
+
+  @override
+  String get profileProductRatingLabel => 'Product Rating';
+
+  @override
+  String get profileMyReviewsRoute => 'Cairo → Dahab';
 
   @override
   String get profileFollowingCompanies => 'Following Companies';
@@ -548,6 +592,14 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get followingsTitle => 'My Followings';
+
+  @override
+  String followingsCountTitle(Object count) {
+    return '$count Following';
+  }
+
+  @override
+  String get followingsUnfollow => 'Unfollow';
 
   @override
   String get followingsEmptyTitle => 'No followings yet';
@@ -738,6 +790,30 @@ class AppLocalizationsEn extends AppLocalizations {
   String get profilePersonalInfoTitle => 'Personal Info';
 
   @override
+  String get profileFullNameLabel => 'Full Name';
+
+  @override
+  String get profileEmailLabel => 'Email';
+
+  @override
+  String get profilePhoneNumberLabel => 'Phone Number';
+
+  @override
+  String get profilePasswordLabel => 'Password';
+
+  @override
+  String get profileCountryLabel => 'Country';
+
+  @override
+  String get profileCityLabel => 'City';
+
+  @override
+  String get profileEditAction => 'Edit';
+
+  @override
+  String get profileChangePasswordAction => 'Change Password';
+
+  @override
   String get profileGender => 'Gender';
 
   @override
@@ -877,6 +953,169 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get tripDetailsOverviewBody =>
       'Experience the breathtaking beauty of the Swiss Alps on this 7-day adventure. Visit iconic destinations, enjoy scenic train rides, and immerse yourself in Swiss culture. Perfect for nature lovers and photography enthusiasts.';
+
+  @override
+  String get tripDetailsWhatsIncludedTitle => 'What\'s Included';
+
+  @override
+  String get tripDetailsIncludedFlightTickets => 'Flight Tickets';
+
+  @override
+  String get tripDetailsIncludedHotelStay => 'Hotel Stay';
+
+  @override
+  String get tripDetailsIncludedBreakfast => 'Breakfast';
+
+  @override
+  String get tripDetailsIncludedAirportTransfer => 'Airport Transfer';
+
+  @override
+  String get tripDetailsDepartureDetailsTitle => 'Departure Details';
+
+  @override
+  String get tripDetailsMeetingLocationLabel => 'Meeting Location';
+
+  @override
+  String get tripDetailsMeetingLocationValue =>
+      '18 El Tesen Road, New Cairo, Egypt';
+
+  @override
+  String get tripDetailsReturnLocationLabel => 'Return Location';
+
+  @override
+  String get tripDetailsReturnLocationValue => '54 Ramses, Downtown, Egypt';
+
+  @override
+  String get tripDetailsMeetingTimeLabel => 'Meeting Time';
+
+  @override
+  String get tripDetailsMeetingTimeValue => '5:00 PM';
+
+  @override
+  String get tripDetailsReturnTimeLabel => 'Return Time';
+
+  @override
+  String get tripDetailsReturnTimeValue => '9:30 PM';
+
+  @override
+  String get tripDetailsProgramTitle => 'Trip Program';
+
+  @override
+  String get tripDetailsProgramMealsLabel => 'Meals';
+
+  @override
+  String get tripDetailsProgramDay1 => 'Day 1';
+
+  @override
+  String get tripDetailsProgramDay2 => 'Day 2';
+
+  @override
+  String get tripDetailsProgramCity1 => 'Beijing';
+
+  @override
+  String get tripDetailsProgramCity2 => 'Hangzhou';
+
+  @override
+  String get tripDetailsProgramDay1Item1 => 'Arrival at Changdu Airport';
+
+  @override
+  String get tripDetailsProgramDay1Item2 => 'Domestic flight to Beijing';
+
+  @override
+  String get tripDetailsProgramDay1Item3 => 'Hotel check-in';
+
+  @override
+  String get tripDetailsProgramDay1Item4 => 'Free tour in Wangfujing Street';
+
+  @override
+  String get tripDetailsProgramDay2Item1 => 'City tour in Hangzhou';
+
+  @override
+  String get tripDetailsProgramDay2Item2 => 'Hotel check-in and evening tour';
+
+  @override
+  String get tripDetailsProgramDay2Item3 => 'Visit West Lake by Cruise';
+
+  @override
+  String get tripDetailsProgramSeeAll => 'See All Program';
+
+  @override
+  String get tripDetailsAirlineLabel => 'Airline';
+
+  @override
+  String get tripDetailsAirlineName => 'Egyptair';
+
+  @override
+  String get tripDetailsFlightLeg1FromCity => 'Cairo';
+
+  @override
+  String get tripDetailsFlightLeg1FromTime => '5:00 AM';
+
+  @override
+  String get tripDetailsFlightLeg1ToCity => 'Paris';
+
+  @override
+  String get tripDetailsFlightLeg1ToTime => '7:20 AM';
+
+  @override
+  String get tripDetailsFlightLeg1Date => '28 April';
+
+  @override
+  String get tripDetailsFlightLeg2FromCity => 'Paris';
+
+  @override
+  String get tripDetailsFlightLeg2FromTime => '8:00 AM';
+
+  @override
+  String get tripDetailsFlightLeg2ToCity => 'Cairo';
+
+  @override
+  String get tripDetailsFlightLeg2ToTime => '5:20 AM';
+
+  @override
+  String get tripDetailsFlightLeg2Date => '4 May';
+
+  @override
+  String get tripDetailsTransportLeg1FromCity => 'Cairo';
+
+  @override
+  String get tripDetailsTransportLeg1FromTime => '8:00 AM';
+
+  @override
+  String get tripDetailsTransportLeg1ToCity => 'Paris';
+
+  @override
+  String get tripDetailsTransportLeg1ToTime => '5:20 AM';
+
+  @override
+  String get tripDetailsTransportLeg1CenterLabel => 'Bus';
+
+  @override
+  String get tripDetailsTransportLeg1Date => '29 May';
+
+  @override
+  String get tripDetailsTransportLeg2FromCity => 'Cairo';
+
+  @override
+  String get tripDetailsTransportLeg2FromTime => '8:00 AM';
+
+  @override
+  String get tripDetailsTransportLeg2ToCity => 'Paris';
+
+  @override
+  String get tripDetailsTransportLeg2ToTime => '5:20 AM';
+
+  @override
+  String get tripDetailsTransportLeg2CenterLabel => 'Boat';
+
+  @override
+  String get tripDetailsTransportLeg2Date => '29 May';
+
+  @override
+  String get tripDetailsDestinationHurghada => 'Hurghada';
+
+  @override
+  String get tripDetailsDestinationParis => 'Paris';
 
   @override
   String get tripDetailsStatCitiesLabel => 'Number of Cities';
@@ -1089,10 +1328,16 @@ class AppLocalizationsEn extends AppLocalizations {
   String get tripDetailsAccommodationTitle => 'Accommodation';
 
   @override
+  String get tripDetailsAccommodationHotelNameLabel => 'Hotel Name';
+
+  @override
   String get tripDetailsHotelName => 'Le Meridien Dahab Resort';
 
   @override
   String get tripDetailsHotelRatingStars => '5.0';
+
+  @override
+  String get tripDetailsAccommodationHotelLocationLabel => 'Hotel Location';
 
   @override
   String get tripDetailsHotelAddress => 'Blue Hole Road, Dahab, Egypt';
@@ -1102,6 +1347,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get tripDetailsViewMap => 'View map';
+
+  @override
+  String get tripDetailsSeeAllAccommodation => 'See All Accommodation';
 
   @override
   String get tripDetailsViewFullItinerary => 'View full itinerary';
@@ -1126,6 +1374,58 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get tripDetailsDestinationNuweiba => 'Nuweiba';
+
+  @override
+  String get tripDetailsDestinationDetailsTitle => 'Destination Details';
+
+  @override
+  String get tripDetailsDestinationVisaLabel => 'Visa';
+
+  @override
+  String get tripDetailsDestinationVisaValue => 'Visa required';
+
+  @override
+  String get tripDetailsDestinationRequiredVaccinesLabel => 'Required Vaccines';
+
+  @override
+  String get tripDetailsDestinationRequiredVaccinesValue => '+201026329736';
+
+  @override
+  String get tripDetailsDestinationTimeLabel => 'Time';
+
+  @override
+  String get tripDetailsDestinationTimeValue => 'GMT+1';
+
+  @override
+  String get tripDetailsDestinationLanguageLabel => 'Language';
+
+  @override
+  String get tripDetailsDestinationLanguageValue => 'English';
+
+  @override
+  String get tripDetailsDestinationCurrencyLabel => 'Currency';
+
+  @override
+  String get tripDetailsDestinationCurrencyValue => 'Euro (EUR)';
+
+  @override
+  String get tripDetailsDestinationTemperatureLabel => 'Temperature';
+
+  @override
+  String get tripDetailsDestinationTemperatureValue => '25°C';
+
+  @override
+  String get tripDetailsDestinationPublicTransportationLabel =>
+      'Public Transportation';
+
+  @override
+  String get tripDetailsDestinationPublicTransportationValue => 'Bus';
+
+  @override
+  String get tripDetailsDestinationTaxiAppsLabel => 'Taxi Apps';
+
+  @override
+  String get tripDetailsDestinationTaxiAppsValue => 'Uber, InDrive';
 
   @override
   String get tripDetailsIncludesExcludesTitle => 'Trip includes & excludes';
@@ -1171,6 +1471,45 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get tripDetailsViewAllActivities => 'View all activities';
+
+  @override
+  String get tripDetailsActivityRateTitle => 'Activity Rate';
+
+  @override
+  String get tripDetailsActivityRateLuxury => 'level of luxury';
+
+  @override
+  String get tripDetailsActivityRateShopping => 'Shopping';
+
+  @override
+  String get tripDetailsActivityRateNightOutings => 'Night outings';
+
+  @override
+  String get tripDetailsSeeAllActivities => 'See All Activities';
+
+  @override
+  String get tripDetailsVisaDetailsTitle => 'Visa Details';
+
+  @override
+  String get tripDetailsTripInstructionsTitle => 'Trip Instructions';
+
+  @override
+  String get tripDetailsSafetyProceduresTitle => 'Safety Procedures';
+
+  @override
+  String get tripDetailsCompanySectionTitle => 'Company';
+
+  @override
+  String get tripDetailsViewAll => 'View All';
+
+  @override
+  String get tripDetailsReviewCountry => 'Spain';
+
+  @override
+  String get tripDetailsCompanyRatingValue => '4.9';
+
+  @override
+  String get tripDetailsCompanyRatingCount => '112';
 
   @override
   String get tripDetailsPolicyCancellation => 'Cancellation policy';

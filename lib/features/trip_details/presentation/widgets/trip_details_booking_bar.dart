@@ -9,6 +9,8 @@ class TripDetailsBookingBar extends StatelessWidget {
     super.key,
     required this.priceLabel,
     required this.priceText,
+    this.secondaryLabel,
+    this.secondaryBadgeText,
     this.perPersonLine,
     required this.bookNowText,
     required this.onBookNow,
@@ -16,6 +18,8 @@ class TripDetailsBookingBar extends StatelessWidget {
 
   final String priceLabel;
   final String priceText;
+  final String? secondaryLabel;
+  final String? secondaryBadgeText;
   final String? perPersonLine;
   final String bookNowText;
   final VoidCallback onBookNow;
@@ -39,36 +43,70 @@ class TripDetailsBookingBar extends StatelessWidget {
           ),
         ],
       ),
-      child: Row(
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
         children: [
-          Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.start,
+          Row(
             children: [
-              Text(
-                priceLabel,
-                style: AppTextStyles.caption(color: AppColors.greyText),
+              Expanded(
+                child: Text(
+                  priceLabel,
+                  style: AppTextStyles.bodySmall(color: AppColors.darkText),
+                ),
               ),
               Text(
                 priceText,
-                style: AppTextStyles.heading3(color: AppColors.darkText),
+                style: AppTextStyles.heading3(color: AppColors.darkText)
+                    .copyWith(fontWeight: FontWeight.w800),
               ),
-              if (perPersonLine != null)
-                Text(
-                  perPersonLine!,
-                  style: AppTextStyles.caption(color: AppColors.greyText),
-                ),
             ],
           ),
-          SizedBox(width: 20.w),
-          Expanded(
-            child: AppButton(
-              heigh: 52.h,
-              radius: 14.r,
-              color: AppColors.primary,
-              onTap: onBookNow,
-              text: bookNowText,
+          if (secondaryLabel != null || secondaryBadgeText != null) ...[
+            SizedBox(height: 8.h),
+            Row(
+              children: [
+                Expanded(
+                  child: Text(
+                    secondaryLabel ?? '',
+                    style: AppTextStyles.bodySmall(color: AppColors.darkText),
+                  ),
+                ),
+                if (secondaryBadgeText != null)
+                  Container(
+                    padding: EdgeInsetsDirectional.symmetric(
+                      horizontal: 10.w,
+                      vertical: 4.h,
+                    ),
+                    decoration: BoxDecoration(
+                      color: AppColors.warning,
+                      borderRadius: BorderRadius.circular(999.r),
+                    ),
+                    child: Text(
+                      secondaryBadgeText!,
+                      style: AppTextStyles.caption(color: AppColors.white)
+                          .copyWith(fontWeight: FontWeight.w700),
+                    ),
+                  ),
+              ],
             ),
+          ],
+          if (perPersonLine != null) ...[
+            SizedBox(height: 6.h),
+            Align(
+              alignment: AlignmentDirectional.centerStart,
+              child: Text(
+                perPersonLine!,
+                style: AppTextStyles.caption(color: AppColors.greyText),
+              ),
+            ),
+          ],
+          SizedBox(height: 14.h),
+          AppButton(
+            heigh: 54.h,
+            radius: 999.r,
+            color: AppColors.primary,
+            onTap: onBookNow,
+            text: bookNowText,
           ),
         ],
       ),

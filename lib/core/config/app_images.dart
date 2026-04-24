@@ -1,24 +1,26 @@
 class AppImages {
-  static const String _path = 'assets/images/';
+  static const String _iconsPath = 'assets/icons/';
 
   // Image paths
-  static const String loginIllustration = '${_path}login_illustration.png';
+  /// Note: this repo currently doesn't include `assets/images/` files.
+  /// Keep these constants pointing to bundled assets to prevent runtime crashes.
+  static const String _fallbackPng = '${_iconsPath}app_icon_bg.png';
 
-  /// The repo currently only contains `login_illustration.png`.
-  /// These aliases keep older screens from referencing missing assets.
-  static const String avatarPlaceholder = loginIllustration;
-  static const String companyPlaceholder = loginIllustration;
-  static const String tripPlaceholder = loginIllustration;
+  static const String loginIllustration = _fallbackPng;
 
-  static const String logo = "${_path}logo.jpg";
-  static const String logoApp = "${_path}logoapp.png";
-  static const String logoSmall = "${_path}logo_small.png";
-  static const String splashLogo = "${_path}splash.png";
-  static const String onBoarding = "${_path}on_boarding.jpg";
-  static const String onboarding1 = "${_path}onboarding_1.png";
-  static const String onboarding2 = "${_path}onboarding_2.png";
-  static const String onboarding3 = "${_path}onboarding_3.png";
-  static const String onboarding4 = "${_path}onboarding_4.png";
+  static const String avatarPlaceholder = _fallbackPng;
+  static const String companyPlaceholder = _fallbackPng;
+  static const String tripPlaceholder = _fallbackPng;
+
+  static const String logo = _fallbackPng;
+  static const String logoApp = _fallbackPng;
+  static const String logoSmall = _fallbackPng;
+  static const String splashLogo = _fallbackPng;
+  static const String onBoarding = _fallbackPng;
+  static const String onboarding1 = _fallbackPng;
+  static const String onboarding2 = _fallbackPng;
+  static const String onboarding3 = _fallbackPng;
+  static const String onboarding4 = _fallbackPng;
 
 }
 

@@ -9,6 +9,7 @@ import 'package:trip_marche/core/widgets/app_cached_network_image.dart';
 import 'package:trip_marche/features/trip_details/presentation/cubit/trip_details_cubit.dart';
 import 'package:trip_marche/features/trip_details/presentation/cubit/trip_details_state.dart';
 import 'package:trip_marche/features/trip_details/presentation/widgets/review_item_display.dart';
+import 'package:trip_marche/features/trip_details/presentation/widgets/trip_details_info_card.dart';
 
 const _kGalleryImageUrls = <String>[
   'https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=400',
@@ -32,7 +33,7 @@ class TripDetailsScrollSections extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const _OutInSummary(),
+        // const _OutInSummary(),
         SizedBox(height: gap),
         _SectionTitle(text: context.tr.tripDetailsTripDescriptionTitle),
         SizedBox(height: 8.h),
@@ -134,10 +135,7 @@ class _SectionTitle extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Text(
-      text,
-      style: AppTextStyles.subtitle(color: AppColors.darkText),
-    );
+    return Text(text, style: AppTextStyles.subtitle(color: AppColors.darkText));
   }
 }
 
@@ -166,83 +164,12 @@ class _SectionRow extends StatelessWidget {
           onPressed: onAction,
           child: Text(
             actionText,
-            style: AppTextStyles.bodyMedium(color: AppColors.primary)
-                .copyWith(fontWeight: FontWeight.w600),
+            style: AppTextStyles.bodyMedium(
+              color: AppColors.primary,
+            ).copyWith(fontWeight: FontWeight.w600),
           ),
         ),
       ],
-    );
-  }
-}
-
-class _OutInSummary extends StatelessWidget {
-  const _OutInSummary();
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Expanded(child: _OutInColumn(title: context.tr.tripDetailsOut, line1: context.tr.tripDetailsOutSummaryLine1, line2: context.tr.tripDetailsOutSummaryLine2, icon: Iconsax.airplane)),
-        SizedBox(width: 12.w),
-        Expanded(child: _OutInColumn(title: context.tr.tripDetailsIn, line1: context.tr.tripDetailsInSummaryLine1, line2: context.tr.tripDetailsInSummaryLine2, icon: Iconsax.bus)),
-      ],
-    );
-  }
-}
-
-class _OutInColumn extends StatelessWidget {
-  const _OutInColumn({
-    required this.title,
-    required this.line1,
-    required this.line2,
-    required this.icon,
-  });
-
-  final String title;
-  final String line1;
-  final String line2;
-  final IconData icon;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsetsDirectional.all(14.r),
-      decoration: BoxDecoration(
-        color: AppColors.white,
-        borderRadius: BorderRadius.circular(16.r),
-        border: Border.all(color: AppColors.border),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            title,
-            style: AppTextStyles.bodyMedium(color: AppColors.primary)
-                .copyWith(fontWeight: FontWeight.w700),
-          ),
-          SizedBox(height: 8.h),
-          Text(
-            line1,
-            style: AppTextStyles.bodyMedium(color: AppColors.darkText)
-                .copyWith(fontWeight: FontWeight.w700),
-          ),
-          SizedBox(height: 6.h),
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Icon(icon, size: 16.sp, color: AppColors.greyText),
-              SizedBox(width: 6.w),
-              Expanded(
-                child: Text(
-                  line2,
-                  style: AppTextStyles.bodySmall(color: AppColors.greyText),
-                ),
-              ),
-            ],
-          ),
-        ],
-      ),
     );
   }
 }
@@ -290,20 +217,8 @@ class _AccommodationCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return TripDetailsInfoCard(
       padding: EdgeInsetsDirectional.all(16.r),
-      decoration: BoxDecoration(
-        color: AppColors.white,
-        borderRadius: BorderRadius.circular(16.r),
-        border: Border.all(color: AppColors.border),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withValues(alpha: 0.04),
-            blurRadius: 12.r,
-            offset: Offset(0, 4.h),
-          ),
-        ],
-      ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -316,17 +231,24 @@ class _AccommodationCard extends StatelessWidget {
                   children: [
                     Text(
                       context.tr.tripDetailsHotelName,
-                      style: AppTextStyles.bodyMedium(color: AppColors.darkText)
-                          .copyWith(fontWeight: FontWeight.w700),
+                      style: AppTextStyles.bodyMedium(
+                        color: AppColors.darkText,
+                      ).copyWith(fontWeight: FontWeight.w700),
                     ),
                     SizedBox(height: 4.h),
                     Row(
                       children: [
-                        Icon(Iconsax.star1, color: AppColors.starYellow, size: 14.sp),
+                        Icon(
+                          Iconsax.star1,
+                          color: AppColors.starYellow,
+                          size: 14.sp,
+                        ),
                         SizedBox(width: 4.w),
                         Text(
                           context.tr.tripDetailsHotelRatingStars,
-                          style: AppTextStyles.caption(color: AppColors.darkText),
+                          style: AppTextStyles.caption(
+                            color: AppColors.darkText,
+                          ),
                         ),
                       ],
                     ),
@@ -351,7 +273,11 @@ class _AccommodationCard extends StatelessWidget {
                   onTap: () {},
                   child: Padding(
                     padding: EdgeInsets.all(10.r),
-                    child: Icon(Iconsax.location, color: AppColors.success, size: 20.sp),
+                    child: Icon(
+                      Iconsax.location,
+                      color: AppColors.success,
+                      size: 20.sp,
+                    ),
                   ),
                 ),
               ),
@@ -383,7 +309,8 @@ class _ItineraryDayCard extends StatelessWidget {
           color: AppColors.lightBg,
           borderRadius: BorderRadius.circular(14.r),
           child: InkWell(
-            onTap: () => context.read<TripDetailsCubit>().toggleExpandedDay(dayIndex),
+            onTap: () =>
+                context.read<TripDetailsCubit>().toggleExpandedDay(dayIndex),
             borderRadius: BorderRadius.circular(14.r),
             child: Container(
               width: double.infinity,
@@ -400,8 +327,9 @@ class _ItineraryDayCard extends StatelessWidget {
                       Expanded(
                         child: Text(
                           location,
-                          style: AppTextStyles.bodyMedium(color: AppColors.darkText)
-                              .copyWith(fontWeight: FontWeight.w700),
+                          style: AppTextStyles.bodyMedium(
+                            color: AppColors.darkText,
+                          ).copyWith(fontWeight: FontWeight.w700),
                         ),
                       ),
                       TextButton(
@@ -413,8 +341,9 @@ class _ItineraryDayCard extends StatelessWidget {
                         ),
                         child: Text(
                           context.tr.tripDetailsViewMap,
-                          style: AppTextStyles.caption(color: AppColors.primary)
-                              .copyWith(fontWeight: FontWeight.w600),
+                          style: AppTextStyles.caption(
+                            color: AppColors.primary,
+                          ).copyWith(fontWeight: FontWeight.w600),
                         ),
                       ),
                     ],
@@ -423,7 +352,9 @@ class _ItineraryDayCard extends StatelessWidget {
                     SizedBox(height: 10.h),
                     Text(
                       activities,
-                      style: AppTextStyles.bodySmall(color: AppColors.secondaryText),
+                      style: AppTextStyles.bodySmall(
+                        color: AppColors.secondaryText,
+                      ),
                     ),
                   ] else
                     Padding(
@@ -452,14 +383,9 @@ class _TransportLegCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: double.infinity,
-      padding: EdgeInsetsDirectional.all(14.r),
-      decoration: BoxDecoration(
-        color: AppColors.white,
-        borderRadius: BorderRadius.circular(14.r),
-        border: Border.all(color: AppColors.border),
-      ),
+    return TripDetailsInfoCard(
+      borderRadius: 14.r,
+      withShadow: false,
       child: Row(
         children: [
           Icon(icon, color: AppColors.primary, size: 22.sp),
@@ -481,7 +407,10 @@ class _DestinationsRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final labels = [context.tr.tripDetailsDestinationDahab, context.tr.tripDetailsDestinationNuweiba];
+    final labels = [
+      context.tr.tripDetailsDestinationDahab,
+      context.tr.tripDetailsDestinationNuweiba,
+    ];
     return SizedBox(
       height: 120.h,
       child: ListView.separated(
@@ -507,8 +436,9 @@ class _DestinationsRow extends StatelessWidget {
                   child: Text(
                     labels[i],
                     textAlign: TextAlign.center,
-                    style: AppTextStyles.bodySmall(color: Colors.white)
-                        .copyWith(fontWeight: FontWeight.w600),
+                    style: AppTextStyles.bodySmall(
+                      color: Colors.white,
+                    ).copyWith(fontWeight: FontWeight.w600),
                   ),
                 ),
               ],
@@ -544,8 +474,9 @@ class _IncludesExcludes extends StatelessWidget {
             children: [
               Text(
                 context.tr.tripDetailsIncludesTitle,
-                style: AppTextStyles.bodyMedium(color: AppColors.darkText)
-                    .copyWith(fontWeight: FontWeight.w700),
+                style: AppTextStyles.bodyMedium(
+                  color: AppColors.darkText,
+                ).copyWith(fontWeight: FontWeight.w700),
               ),
               SizedBox(height: 10.h),
               ...inc.map(
@@ -554,9 +485,20 @@ class _IncludesExcludes extends StatelessWidget {
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Icon(Iconsax.tick_circle, color: AppColors.primary, size: 18.sp),
+                      Icon(
+                        Iconsax.tick_circle,
+                        color: AppColors.primary,
+                        size: 18.sp,
+                      ),
                       SizedBox(width: 8.w),
-                      Expanded(child: Text(t, style: AppTextStyles.bodySmall(color: AppColors.darkText))),
+                      Expanded(
+                        child: Text(
+                          t,
+                          style: AppTextStyles.bodySmall(
+                            color: AppColors.darkText,
+                          ),
+                        ),
+                      ),
                     ],
                   ),
                 ),
@@ -571,8 +513,9 @@ class _IncludesExcludes extends StatelessWidget {
             children: [
               Text(
                 context.tr.tripDetailsExcludesTitle,
-                style: AppTextStyles.bodyMedium(color: AppColors.darkText)
-                    .copyWith(fontWeight: FontWeight.w700),
+                style: AppTextStyles.bodyMedium(
+                  color: AppColors.darkText,
+                ).copyWith(fontWeight: FontWeight.w700),
               ),
               SizedBox(height: 10.h),
               ...exc.map(
@@ -581,9 +524,20 @@ class _IncludesExcludes extends StatelessWidget {
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Icon(Iconsax.close_circle, color: AppColors.error, size: 18.sp),
+                      Icon(
+                        Iconsax.close_circle,
+                        color: AppColors.error,
+                        size: 18.sp,
+                      ),
                       SizedBox(width: 8.w),
-                      Expanded(child: Text(t, style: AppTextStyles.bodySmall(color: AppColors.darkText))),
+                      Expanded(
+                        child: Text(
+                          t,
+                          style: AppTextStyles.bodySmall(
+                            color: AppColors.darkText,
+                          ),
+                        ),
+                      ),
                     ],
                   ),
                 ),
@@ -628,9 +582,21 @@ class _ActivityRows extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final rows = [
-      ('snorkel', context.tr.tripDetailsActivitySnorkel, context.tr.tripDetailsActivitySnorkelPrice),
-      ('safari', context.tr.tripDetailsActivitySafari, context.tr.tripDetailsActivitySafariPrice),
-      ('dive', context.tr.tripDetailsActivityDiving, context.tr.tripDetailsActivityDivingPrice),
+      (
+        'snorkel',
+        context.tr.tripDetailsActivitySnorkel,
+        context.tr.tripDetailsActivitySnorkelPrice,
+      ),
+      (
+        'safari',
+        context.tr.tripDetailsActivitySafari,
+        context.tr.tripDetailsActivitySafariPrice,
+      ),
+      (
+        'dive',
+        context.tr.tripDetailsActivityDiving,
+        context.tr.tripDetailsActivityDivingPrice,
+      ),
     ];
     return Column(
       children: rows
@@ -640,42 +606,59 @@ class _ActivityRows extends StatelessWidget {
               child: BlocBuilder<TripDetailsCubit, TripDetailsState>(
                 builder: (context, state) {
                   final added = state.addedActivityIds.contains(r.$1);
-                  return Container(
-                    padding: EdgeInsetsDirectional.symmetric(horizontal: 12.w, vertical: 12.h),
-                    decoration: BoxDecoration(
-                      color: AppColors.white,
-                      borderRadius: BorderRadius.circular(12.r),
-                      border: Border.all(color: AppColors.border),
+                  return TripDetailsInfoCard(
+                    withShadow: false,
+                    borderRadius: 12.r,
+                    padding: EdgeInsetsDirectional.symmetric(
+                      horizontal: 12.w,
+                      vertical: 12.h,
                     ),
                     child: Row(
                       children: [
-                        Icon(Iconsax.activity, color: AppColors.primary, size: 20.sp),
+                        Icon(
+                          Iconsax.activity,
+                          color: AppColors.primary,
+                          size: 20.sp,
+                        ),
                         SizedBox(width: 10.w),
                         Expanded(
                           child: Text(
                             r.$2,
-                            style: AppTextStyles.bodyMedium(color: AppColors.darkText),
+                            style: AppTextStyles.bodyMedium(
+                              color: AppColors.darkText,
+                            ),
                           ),
                         ),
                         Text(
                           r.$3,
-                          style: AppTextStyles.caption(color: AppColors.darkText)
-                              .copyWith(fontWeight: FontWeight.w600),
+                          style: AppTextStyles.caption(
+                            color: AppColors.darkText,
+                          ).copyWith(fontWeight: FontWeight.w600),
                         ),
                         SizedBox(width: 10.w),
                         TextButton(
-                          onPressed: () => context.read<TripDetailsCubit>().toggleActivity(r.$1),
+                          onPressed: () => context
+                              .read<TripDetailsCubit>()
+                              .toggleActivity(r.$1),
                           style: TextButton.styleFrom(
-                            backgroundColor:
-                                added ? AppColors.lightBg : AppColors.primary,
-                            padding: EdgeInsetsDirectional.symmetric(horizontal: 12.w, vertical: 6.h),
+                            backgroundColor: added
+                                ? AppColors.lightBg
+                                : AppColors.primary,
+                            padding: EdgeInsetsDirectional.symmetric(
+                              horizontal: 12.w,
+                              vertical: 6.h,
+                            ),
                             minimumSize: Size.zero,
                             tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                           ),
                           child: Text(
-                            added ? context.tr.tripDetailsAdded : context.tr.tripDetailsAdd,
+                            added
+                                ? context.tr.tripDetailsAdded
+                                : context.tr.tripDetailsAdd,
                             style: AppTextStyles.caption(
-                              color: added ? AppColors.greyText : AppColors.white,
+                              color: added
+                                  ? AppColors.greyText
+                                  : AppColors.white,
                             ).copyWith(fontWeight: FontWeight.w700),
                           ),
                         ),
@@ -718,10 +701,16 @@ class _PolicyList extends StatelessWidget {
                       Expanded(
                         child: Text(
                           e.$2,
-                          style: AppTextStyles.bodyMedium(color: AppColors.darkText),
+                          style: AppTextStyles.bodyMedium(
+                            color: AppColors.darkText,
+                          ),
                         ),
                       ),
-                      Icon(Iconsax.arrow_right_3, size: 16.sp, color: AppColors.greyText),
+                      Icon(
+                        Iconsax.arrow_right_3,
+                        size: 16.sp,
+                        color: AppColors.greyText,
+                      ),
                     ],
                   ),
                 ),
@@ -738,13 +727,9 @@ class _OrganizerCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsetsDirectional.all(14.r),
-      decoration: BoxDecoration(
-        color: AppColors.white,
-        borderRadius: BorderRadius.circular(14.r),
-        border: Border.all(color: AppColors.border),
-      ),
+    return TripDetailsInfoCard(
+      borderRadius: 14.r,
+      withShadow: false,
       child: Row(
         children: [
           Container(
@@ -755,7 +740,11 @@ class _OrganizerCard extends StatelessWidget {
               borderRadius: BorderRadius.circular(10.r),
               border: Border.all(color: AppColors.border),
             ),
-            child: Icon(Iconsax.building, color: AppColors.primary, size: 22.sp),
+            child: Icon(
+              Iconsax.building,
+              color: AppColors.primary,
+              size: 22.sp,
+            ),
           ),
           SizedBox(width: 12.w),
           Expanded(
@@ -764,8 +753,9 @@ class _OrganizerCard extends StatelessWidget {
               children: [
                 Text(
                   context.tr.tripDetailsCompanyName,
-                  style: AppTextStyles.bodyMedium(color: AppColors.darkText)
-                      .copyWith(fontWeight: FontWeight.w700),
+                  style: AppTextStyles.bodyMedium(
+                    color: AppColors.darkText,
+                  ).copyWith(fontWeight: FontWeight.w700),
                 ),
                 Text(
                   context.tr.tripDetailsOrganizerSubtitle,
@@ -778,13 +768,19 @@ class _OrganizerCard extends StatelessWidget {
             onPressed: () {},
             style: OutlinedButton.styleFrom(
               side: const BorderSide(color: AppColors.primary),
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(999.r)),
-              padding: EdgeInsetsDirectional.symmetric(horizontal: 14.w, vertical: 8.h),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(999.r),
+              ),
+              padding: EdgeInsetsDirectional.symmetric(
+                horizontal: 14.w,
+                vertical: 8.h,
+              ),
             ),
             child: Text(
               context.tr.tripDetailsFollow,
-              style: AppTextStyles.caption(color: AppColors.primary)
-                  .copyWith(fontWeight: FontWeight.w600),
+              style: AppTextStyles.caption(
+                color: AppColors.primary,
+              ).copyWith(fontWeight: FontWeight.w600),
             ),
           ),
         ],

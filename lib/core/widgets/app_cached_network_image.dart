@@ -28,9 +28,18 @@ class AppCachedNetworkImage extends StatelessWidget {
         : CachedNetworkImage(
             imageUrl: imageUrl!,
             fit: fit,
-            errorWidget: (context, url, error) => Image.asset(AppImages.logo),
+            width: width,
+            height: height,
+            errorWidget: (context, url, error) =>
+                Image.asset(AppImages.logo, fit: fit, height: height, width: width),
             progressIndicatorBuilder: (context, url, downloadProgress) =>
-                AppShimmer(child: Container(color: AppColors.primary)),
+                AppShimmer(
+                  child: Container(
+                    width: width,
+                    height: height,
+                    color: AppColors.primary,
+                  ),
+                ),
             placeholderFadeInDuration: const Duration(milliseconds: 300),
             fadeOutDuration: const Duration(milliseconds: 300),
             fadeInDuration: const Duration(milliseconds: 300),

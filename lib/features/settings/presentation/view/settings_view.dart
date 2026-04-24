@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:trip_marche/core/theme/app_colors.dart';
 import 'package:trip_marche/core/theme/app_text_styles.dart';
@@ -9,6 +8,7 @@ import 'package:trip_marche/features/settings/presentation/widgets/settings_row.
 import 'package:trip_marche/features/settings/presentation/view/notification_settings_view.dart';
 import 'package:trip_marche/features/settings/presentation/view/language_view.dart';
 import 'package:trip_marche/core/extensions/localization.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class SettingsView extends StatefulWidget {
   const SettingsView({super.key});
@@ -28,17 +28,20 @@ class _SettingsViewState extends State<SettingsView> {
         backgroundColor: AppColors.background,
         elevation: 0,
         leading: IconButton(
-          icon: const Icon(Iconsax.arrow_left, color: AppColors.darkText),
+          icon: const Icon(
+            Icons.arrow_back_ios_new_rounded,
+            color: AppColors.darkText,
+          ),
           onPressed: () => Navigator.pop(context),
         ),
         title: Text(
           context.tr.settingsTitle,
-          style: AppTextStyles.subtitle(),
+          style: AppTextStyles.subtitle(color: AppColors.darkText),
         ),
         centerTitle: true,
       ),
       body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
+        padding: EdgeInsetsDirectional.only(start: 20.w, end: 20.w, top: 6.h),
         child: Column(
           children: [
             // Notification Setting
@@ -56,36 +59,35 @@ class _SettingsViewState extends State<SettingsView> {
                 );
               },
             ),
-            const Divider(height: 1, color: AppColors.border),
+            _DividerLine(),
 
             // Language
             SettingsRow(
-              icon: Iconsax.language_square,
+              icon: Iconsax.global,
               title: context.tr.settingsLanguage,
-              trailing: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Text(
-                    context.tr.settingsEnglish,
-                    style: GoogleFonts.inter(
-                      fontSize: 14,
-                      fontWeight: FontWeight.w400,
-                      color: AppColors.greyText,
-                    ),
-                  ),
-                  const SizedBox(width: 8),
-                  const Icon(
-                    Iconsax.arrow_right_3,
-                    size: 18,
-                    color: AppColors.greyText,
-                  ),
-                ],
+              trailing: const Icon(
+                Iconsax.arrow_right_3,
+                size: 18,
+                color: AppColors.greyText,
               ),
               onTap: () {
                 sl<AppNavigator>().push(screen: const LanguageView());
               },
             ),
-            const Divider(height: 1, color: AppColors.border),
+            _DividerLine(),
+
+            // Currency
+            SettingsRow(
+              icon: Iconsax.dollar_circle,
+              title: context.tr.settingsCurrency,
+              trailing: const Icon(
+                Iconsax.arrow_right_3,
+                size: 18,
+                color: AppColors.greyText,
+              ),
+              onTap: () {},
+            ),
+            _DividerLine(),
 
             // Dark Mode
             SettingsRow(
@@ -98,27 +100,24 @@ class _SettingsViewState extends State<SettingsView> {
                     _isDarkMode = value;
                   });
                 },
-                activeThumbColor: AppColors.primary,
+                activeTrackColor: AppColors.primary,
+                inactiveTrackColor: AppColors.border,
+                thumbColor: WidgetStateProperty.resolveWith<Color>(
+                  (states) => AppColors.white,
+                ),
               ),
               onTap: null,
             ),
-            const Divider(height: 1, color: AppColors.border),
-
-            const Spacer(),
-
-            // App Version
-            Text(
-              context.tr.settingsAppVersion('1.0.0'),
-              style: GoogleFonts.inter(
-                fontSize: 12,
-                fontWeight: FontWeight.w400,
-                color: AppColors.greyText,
-              ),
-            ),
-            const SizedBox(height: 24),
           ],
         ),
       ),
     );
+  }
+}
+
+class _DividerLine extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Container(height: 1.h, color: AppColors.border);
   }
 }

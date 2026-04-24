@@ -7,8 +7,10 @@ import 'package:trip_marche/core/theme/app_colors.dart';
 import 'package:trip_marche/features/trip_details/presentation/cubit/trip_details_cubit.dart';
 import 'package:trip_marche/features/trip_details/presentation/widgets/trip_details_booking_bar.dart';
 import 'package:trip_marche/features/trip_details/presentation/widgets/trip_details_hero_header.dart';
-import 'package:trip_marche/features/trip_details/presentation/widgets/trip_details_scroll_sections.dart';
 import 'package:trip_marche/features/trip_details/presentation/widgets/trip_details_stat_grid.dart';
+import 'package:trip_marche/features/trip_details/presentation/widgets/trip_details_post_stats_sections.dart';
+import 'package:trip_marche/features/trip_details/presentation/widgets/trip_details_program_section.dart';
+import 'package:trip_marche/features/trip_details/presentation/widgets/trip_details_travel_sections.dart';
 
 class TripDetailsView extends StatelessWidget {
   const TripDetailsView({super.key});
@@ -54,11 +56,7 @@ class _TripDetailsBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final horizontalPadding = 16.w;
-
-    /// Match hero bottom radius so the sheet reads as one continuous curve (see [TripDetailsHeroHeader]).
-    final sheetRadius = 44.r;
-
+    final horizontalPadding = 20.w;
     return Scaffold(
       backgroundColor: AppColors.scaffoldBg,
       body: Stack(
@@ -75,15 +73,15 @@ class _TripDetailsBody extends StatelessWidget {
                     padding: EdgeInsetsDirectional.only(
                       start: horizontalPadding,
                       end: horizontalPadding,
-                      top: 20.h,
                       bottom: 120.h,
                     ),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         _buildStatGrid(context),
-                        SizedBox(height: 16.h),
-                        const TripDetailsScrollSections(),
+                        const TripDetailsPostStatsSections(),
+                        const TripDetailsProgramSection(),
+                        const TripDetailsTravelSections(),
                       ],
                     ),
                   ),
@@ -98,6 +96,8 @@ class _TripDetailsBody extends StatelessWidget {
             child: TripDetailsBookingBar(
               priceLabel: context.tr.tripDetailsStartingFrom,
               priceText: context.tr.tripDetailsBookingFromPrice,
+              secondaryLabel: 'Pay When Arrive',
+              secondaryBadgeText: '+400\$',
               bookNowText: context.tr.tripDetailsBookNow,
               onBookNow: () {},
             ),
