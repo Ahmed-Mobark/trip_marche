@@ -96,6 +96,8 @@ class _TripDetailsBody extends StatelessWidget {
             child: TripDetailsBookingBar(
               priceLabel: context.tr.tripDetailsStartingFrom,
               priceText: context.tr.tripDetailsBookingFromPrice,
+              secondaryLabel: 'Pay When Arrive',
+              secondaryBadgeText: '+400\$',
               bookNowText: context.tr.tripDetailsBookNow,
               onBookNow: () {},
             ),

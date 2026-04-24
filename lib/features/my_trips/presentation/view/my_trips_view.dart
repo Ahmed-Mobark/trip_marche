@@ -19,7 +19,7 @@ class _MyTripsViewState extends State<MyTripsView> {
 
   @override
   Widget build(BuildContext context) {
-    final headerHeight = 96.h;
+    final headerHeight = 120.h;
     final sheetRadius = 32.r;
 
     final trips = switch (_selectedTab) {
@@ -85,7 +85,7 @@ class _MyTripsViewState extends State<MyTripsView> {
               padding: EdgeInsetsDirectional.only(
                 start: 16.w,
                 end: 16.w,
-                top: 16.h,
+                top: 22.h,
                 bottom: 16.h,
               ),
               decoration: BoxDecoration(

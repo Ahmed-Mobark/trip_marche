@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:iconsax/iconsax.dart';
 import 'package:trip_marche/core/theme/app_colors.dart';
 import 'package:trip_marche/core/theme/app_text_styles.dart';
 import 'package:trip_marche/core/extensions/localization.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class NotificationSettingsView extends StatefulWidget {
   const NotificationSettingsView({super.key});
@@ -14,11 +13,10 @@ class NotificationSettingsView extends StatefulWidget {
 }
 
 class _NotificationSettingsViewState extends State<NotificationSettingsView> {
-  bool _pushNotifications = true;
-  bool _emailNotifications = true;
-  bool _tripUpdates = true;
-  bool _promotions = false;
-  bool _priceAlerts = true;
+  bool _bookingUpdates = true;
+  bool _tours = true;
+  bool _reviews = true;
+  bool _promotions = true;
 
   @override
   Widget build(BuildContext context) {
@@ -28,79 +26,121 @@ class _NotificationSettingsViewState extends State<NotificationSettingsView> {
         backgroundColor: AppColors.background,
         elevation: 0,
         leading: IconButton(
-          icon: const Icon(Iconsax.arrow_left, color: AppColors.darkText),
+          icon: const Icon(
+            Icons.arrow_back_ios_new_rounded,
+            color: AppColors.darkText,
+          ),
           onPressed: () => Navigator.pop(context),
         ),
         title: Text(
           context.tr.notificationSettingsTitle,
-          style: AppTextStyles.subtitle(),
+          style: AppTextStyles.subtitle(color: AppColors.darkText),
         ),
         centerTitle: true,
       ),
       body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
+        padding: EdgeInsetsDirectional.only(start: 20.w, end: 20.w, top: 10.h),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            _buildToggleRow(
-              title: context.tr.notificationSettingsPush,
-              value: _pushNotifications,
-              onChanged: (val) => setState(() => _pushNotifications = val),
+            Padding(
+              padding: EdgeInsetsDirectional.only(top: 6.h, bottom: 18.h),
+              child: Text(
+                context.tr.notificationSettingsIntro,
+                style: AppTextStyles.bodySmall(color: AppColors.greyText),
+              ),
             ),
-            const Divider(height: 1, color: AppColors.border),
-            _buildToggleRow(
-              title: context.tr.notificationSettingsEmail,
-              value: _emailNotifications,
-              onChanged: (val) => setState(() => _emailNotifications = val),
+            _ToggleTile(
+              title: context.tr.notificationSettingsBookingUpdatesTitle,
+              subtitle: context.tr.notificationSettingsBookingUpdatesSubtitle,
+              value: _bookingUpdates,
+              onChanged: (v) => setState(() => _bookingUpdates = v),
             ),
-            const Divider(height: 1, color: AppColors.border),
-            _buildToggleRow(
-              title: context.tr.notificationSettingsTripUpdates,
-              value: _tripUpdates,
-              onChanged: (val) => setState(() => _tripUpdates = val),
+            _DividerLine(),
+            _ToggleTile(
+              title: context.tr.notificationSettingsToursTitle,
+              subtitle: context.tr.notificationSettingsToursSubtitle,
+              value: _tours,
+              onChanged: (v) => setState(() => _tours = v),
             ),
-            const Divider(height: 1, color: AppColors.border),
-            _buildToggleRow(
+            _DividerLine(),
+            _ToggleTile(
+              title: context.tr.notificationSettingsReviewsTitle,
+              subtitle: context.tr.notificationSettingsReviewsSubtitle,
+              value: _reviews,
+              onChanged: (v) => setState(() => _reviews = v),
+            ),
+            _DividerLine(),
+            _ToggleTile(
               title: context.tr.notificationSettingsPromotions,
+              subtitle: context.tr.notificationSettingsPromotionsSubtitle,
               value: _promotions,
-              onChanged: (val) => setState(() => _promotions = val),
+              onChanged: (v) => setState(() => _promotions = v),
             ),
-            const Divider(height: 1, color: AppColors.border),
-            _buildToggleRow(
-              title: context.tr.notificationSettingsPriceAlerts,
-              value: _priceAlerts,
-              onChanged: (val) => setState(() => _priceAlerts = val),
-            ),
+            _DividerLine(),
           ],
         ),
       ),
     );
   }
+}
 
-  Widget _buildToggleRow({
-    required String title,
-    required bool value,
-    required ValueChanged<bool> onChanged,
-  }) {
+class _ToggleTile extends StatelessWidget {
+  const _ToggleTile({
+    required this.title,
+    required this.subtitle,
+    required this.value,
+    required this.onChanged,
+  });
+
+  final String title;
+  final String subtitle;
+  final bool value;
+  final ValueChanged<bool> onChanged;
+
+  @override
+  Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 6),
+      padding: EdgeInsetsDirectional.symmetric(vertical: 14.h),
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            title,
-            style: GoogleFonts.inter(
-              fontSize: 16,
-              fontWeight: FontWeight.w400,
-              color: AppColors.darkText,
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  title,
+                  style: AppTextStyles.bodyMedium(color: AppColors.darkText)
+                      .copyWith(fontWeight: FontWeight.w700),
+                ),
+                SizedBox(height: 8.h),
+                Text(
+                  subtitle,
+                  style: AppTextStyles.bodySmall(color: AppColors.greyText),
+                ),
+              ],
             ),
           ),
+          SizedBox(width: 12.w),
           Switch(
             value: value,
             onChanged: onChanged,
-            activeThumbColor: AppColors.primary,
+            activeTrackColor: AppColors.primary,
+            inactiveTrackColor: AppColors.border,
+            thumbColor: WidgetStateProperty.resolveWith<Color>(
+              (_) => AppColors.white,
+            ),
           ),
         ],
       ),
     );
+  }
+}
+
+class _DividerLine extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Container(height: 1.h, color: AppColors.border);
   }
 }

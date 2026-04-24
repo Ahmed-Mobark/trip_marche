@@ -4,7 +4,10 @@ import 'package:iconsax/iconsax.dart';
 import 'package:trip_marche/core/config/app_colors.dart';
 import 'package:trip_marche/core/config/styles/styles.dart';
 import 'package:trip_marche/core/data/dummy_data.dart';
+import 'package:trip_marche/core/injection/injection_container.dart';
+import 'package:trip_marche/core/navigation/app_navigator.dart';
 import 'package:trip_marche/core/widgets/app_cached_network_image.dart';
+import 'package:trip_marche/features/trip_details/presentation/view/trip_details_view.dart';
 
 class MyTripBookingCard extends StatelessWidget {
   const MyTripBookingCard({
@@ -38,179 +41,189 @@ class MyTripBookingCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsetsDirectional.all(14.w),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(22.r),
-      ),
-      child: Row(
-        children: [
-          ClipRRect(
-            borderRadius: BorderRadius.circular(18.r),
-            child: SizedBox(
-              width: 140.w,
-              height: 180.w,
-              child: Stack(
+    return GestureDetector(
+      onTap: () {
+        sl<AppNavigator>().push(screen: TripDetailsView());
+      },
+      child: Container(
+        padding: EdgeInsetsDirectional.all(14.w),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(22.r),
+        ),
+        child: Row(
+          children: [
+            ClipRRect(
+              borderRadius: BorderRadius.circular(18.r),
+              child: SizedBox(
+                width: 140.w,
+                height: 180.w,
+                child: Stack(
+                  children: [
+                    Positioned.fill(
+                      child: AppCachedNetworkImage(
+                        imageUrl: trip.imageUrl,
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                    PositionedDirectional(
+                      top: 10.h,
+                      start: 10.w,
+                      child: Container(
+                        padding: EdgeInsetsDirectional.symmetric(
+                          horizontal: 6.w,
+                          vertical: 2.h,
+                        ),
+                        decoration: BoxDecoration(
+                          color: statusColor,
+                          borderRadius: BorderRadius.circular(14.r),
+                        ),
+                        child: Text(
+                          statusText,
+                          style: AppTextStyles.bodySmall(color: Colors.white),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            SizedBox(width: 14.w),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Positioned.fill(
-                    child: AppCachedNetworkImage(
-                      imageUrl: trip.imageUrl,
-                      fit: BoxFit.cover,
-                    ),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: Text(
+                          trip.title,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: AppTextStyles.subtitle(
+                            color: AppColors.darkText,
+                          ).copyWith(fontWeight: FontWeight.w700),
+                        ),
+                      ),
+                      InkWell(
+                        onTap: onFavoriteTap,
+                        borderRadius: BorderRadius.circular(999),
+                        child: Container(
+                          width: 36.w,
+                          height: 36.w,
+                          decoration: BoxDecoration(
+                            color: AppColors.inputBg,
+                            shape: BoxShape.circle,
+                          ),
+                          child: Icon(
+                            isFavorite ? Iconsax.heart5 : Iconsax.heart,
+                            size: 18.sp,
+                            color: isFavorite
+                                ? AppColors.red
+                                : AppColors.greyText,
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
-                  PositionedDirectional(
-                    top: 10.h,
-                    start: 10.w,
-                    child: Container(
-                      padding: EdgeInsetsDirectional.symmetric(
-                        horizontal: 6.w,
-                        vertical: 2.h,
+                  SizedBox(height: 6.h),
+                  Row(
+                    children: [
+                      Icon(
+                        Iconsax.star1,
+                        size: 14.sp,
+                        color: AppColors.starYellow,
                       ),
-                      decoration: BoxDecoration(
-                        color: statusColor,
-                        borderRadius: BorderRadius.circular(14.r),
+                      SizedBox(width: 6.w),
+                      Text(
+                        trip.rating.toStringAsFixed(1),
+                        style: AppTextStyles.bodySmall(
+                          color: AppColors.darkText,
+                        ).copyWith(fontWeight: FontWeight.w700),
                       ),
-                      child: Text(
-                        statusText,
-                        style: AppTextStyles.bodySmall(color: Colors.white),
+                      Text(
+                        ' (112)',
+                        style: AppTextStyles.bodySmall(
+                          color: AppColors.greyText,
+                        ),
                       ),
-                    ),
+                    ],
+                  ),
+                  SizedBox(height: 10.h),
+                  Row(
+                    children: [
+                      Icon(
+                        Iconsax.location,
+                        size: 14.sp,
+                        color: AppColors.greyText,
+                      ),
+                      SizedBox(width: 6.w),
+                      Expanded(
+                        child: Text(
+                          locationText,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: AppTextStyles.bodySmall(
+                            color: AppColors.greyText,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 8.h),
+                  Row(
+                    children: [
+                      Icon(
+                        Iconsax.calendar_1,
+                        size: 14.sp,
+                        color: AppColors.greyText,
+                      ),
+                      SizedBox(width: 6.w),
+                      Expanded(
+                        child: Text(
+                          trip.dateRange,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: AppTextStyles.bodySmall(
+                            color: AppColors.greyText,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 10.h),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: _ActionPill(
+                          text: primaryActionText,
+                          backgroundColor: AppColors.primary,
+                          textColor: Colors.white,
+                          onTap: onPrimaryActionTap,
+                        ),
+                      ),
+                      SizedBox(width: 10.w),
+                      Expanded(
+                        child: _ActionPill(
+                          text: secondaryActionText,
+                          backgroundColor: Colors.white,
+                          textColor: AppColors.darkText,
+                          borderColor: AppColors.border,
+                          onTap: onSecondaryActionTap,
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 10.h),
+                  _BottomAction(
+                    text: bottomActionText,
+                    onTap: onBottomActionTap,
                   ),
                 ],
               ),
             ),
-          ),
-          SizedBox(width: 14.w),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  children: [
-                    Expanded(
-                      child: Text(
-                        trip.title,
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        style: AppTextStyles.subtitle(
-                          color: AppColors.darkText,
-                        ).copyWith(fontWeight: FontWeight.w700),
-                      ),
-                    ),
-                    InkWell(
-                      onTap: onFavoriteTap,
-                      borderRadius: BorderRadius.circular(999),
-                      child: Container(
-                        width: 36.w,
-                        height: 36.w,
-                        decoration: BoxDecoration(
-                          color: AppColors.inputBg,
-                          shape: BoxShape.circle,
-                        ),
-                        child: Icon(
-                          isFavorite ? Iconsax.heart5 : Iconsax.heart,
-                          size: 18.sp,
-                          color: isFavorite
-                              ? AppColors.red
-                              : AppColors.greyText,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-                SizedBox(height: 6.h),
-                Row(
-                  children: [
-                    Icon(
-                      Iconsax.star1,
-                      size: 14.sp,
-                      color: AppColors.starYellow,
-                    ),
-                    SizedBox(width: 6.w),
-                    Text(
-                      trip.rating.toStringAsFixed(1),
-                      style: AppTextStyles.bodySmall(
-                        color: AppColors.darkText,
-                      ).copyWith(fontWeight: FontWeight.w700),
-                    ),
-                    Text(
-                      ' (112)',
-                      style: AppTextStyles.bodySmall(color: AppColors.greyText),
-                    ),
-                  ],
-                ),
-                SizedBox(height: 10.h),
-                Row(
-                  children: [
-                    Icon(
-                      Iconsax.location,
-                      size: 14.sp,
-                      color: AppColors.greyText,
-                    ),
-                    SizedBox(width: 6.w),
-                    Expanded(
-                      child: Text(
-                        locationText,
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        style: AppTextStyles.bodySmall(
-                          color: AppColors.greyText,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-                SizedBox(height: 8.h),
-                Row(
-                  children: [
-                    Icon(
-                      Iconsax.calendar_1,
-                      size: 14.sp,
-                      color: AppColors.greyText,
-                    ),
-                    SizedBox(width: 6.w),
-                    Expanded(
-                      child: Text(
-                        trip.dateRange,
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        style: AppTextStyles.bodySmall(
-                          color: AppColors.greyText,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-                SizedBox(height: 10.h),
-                Row(
-                  children: [
-                    Expanded(
-                      child: _ActionPill(
-                        text: primaryActionText,
-                        backgroundColor: AppColors.primary,
-                        textColor: Colors.white,
-                        onTap: onPrimaryActionTap,
-                      ),
-                    ),
-                    SizedBox(width: 10.w),
-                    Expanded(
-                      child: _ActionPill(
-                        text: secondaryActionText,
-                        backgroundColor: Colors.white,
-                        textColor: AppColors.darkText,
-                        borderColor: AppColors.border,
-                        onTap: onSecondaryActionTap,
-                      ),
-                    ),
-                  ],
-                ),
-                SizedBox(height: 10.h),
-                _BottomAction(text: bottomActionText, onTap: onBottomActionTap),
-              ],
-            ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

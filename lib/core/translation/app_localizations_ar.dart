@@ -450,6 +450,9 @@ class AppLocalizationsAr extends AppLocalizations {
   String get settingsLanguage => 'اللغة';
 
   @override
+  String get settingsCurrency => 'العملة';
+
+  @override
   String get settingsEnglish => 'الإنجليزية';
 
   @override
@@ -465,6 +468,35 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get notificationSettingsTitle => 'إعدادات الإشعارات';
+
+  @override
+  String get notificationSettingsIntro =>
+      'قم بإدارة تفضيلات الإشعارات للبقاء على اطلاع على الرحلات الجديدة والعروض وتحديثات الحجز.';
+
+  @override
+  String get notificationSettingsBookingUpdatesTitle => 'تحديثات الحجز';
+
+  @override
+  String get notificationSettingsBookingUpdatesSubtitle =>
+      'استلم تحديثات فورية حول تأكيدات الرحلة والإلغاءات والتغييرات على حجوزاتك.';
+
+  @override
+  String get notificationSettingsToursTitle => 'الجولات';
+
+  @override
+  String get notificationSettingsToursSubtitle =>
+      'سيصلك إشعار عند إضافة رحلات أو جولات جديدة تتوافق مع اهتماماتك.';
+
+  @override
+  String get notificationSettingsReviewsTitle => 'التقييمات';
+
+  @override
+  String get notificationSettingsReviewsSubtitle =>
+      'سيتم تنبيهك عند ردّ شخص ما على تقييمك أو عند دعوتك لتقييم رحلة قمت بها.';
+
+  @override
+  String get notificationSettingsPromotionsSubtitle =>
+      'احصل على خصومات خاصة وعروض لفترة محدودة وعروض موسمية.';
 
   @override
   String get notificationSettingsPush => 'إشعارات الدفع';
@@ -495,6 +527,18 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get profileMyReviews => 'تقييماتي';
+
+  @override
+  String get profileAddReview => 'إضافة تقييم';
+
+  @override
+  String get profileReviewLabel => 'التقييم';
+
+  @override
+  String get profileProductRatingLabel => 'تقييم المنتج';
+
+  @override
+  String get profileMyReviewsRoute => 'القاهرة → دهب';
 
   @override
   String get profileFollowingCompanies => 'الشركات المتابعة';
@@ -544,6 +588,14 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get followingsTitle => 'الشركات التي أتابعها';
+
+  @override
+  String followingsCountTitle(Object count) {
+    return '$count متابعة';
+  }
+
+  @override
+  String get followingsUnfollow => 'إلغاء المتابعة';
 
   @override
   String get followingsEmptyTitle => 'لا توجد متابعات بعد';
@@ -730,6 +782,30 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get profilePersonalInfoTitle => 'المعلومات الشخصية';
+
+  @override
+  String get profileFullNameLabel => 'الاسم الكامل';
+
+  @override
+  String get profileEmailLabel => 'البريد الإلكتروني';
+
+  @override
+  String get profilePhoneNumberLabel => 'رقم الهاتف';
+
+  @override
+  String get profilePasswordLabel => 'كلمة المرور';
+
+  @override
+  String get profileCountryLabel => 'الدولة';
+
+  @override
+  String get profileCityLabel => 'المدينة';
+
+  @override
+  String get profileEditAction => 'تعديل';
+
+  @override
+  String get profileChangePasswordAction => 'تغيير كلمة المرور';
 
   @override
   String get profileGender => 'الجنس';
@@ -1247,10 +1323,16 @@ class AppLocalizationsAr extends AppLocalizations {
   String get tripDetailsAccommodationTitle => 'الإقامة';
 
   @override
+  String get tripDetailsAccommodationHotelNameLabel => 'اسم الفندق';
+
+  @override
   String get tripDetailsHotelName => 'لو ميريديان دهب ريزورت';
 
   @override
   String get tripDetailsHotelRatingStars => '5.0';
+
+  @override
+  String get tripDetailsAccommodationHotelLocationLabel => 'موقع الفندق';
 
   @override
   String get tripDetailsHotelAddress => 'طريق البلو هول، دهب، مصر';
@@ -1261,6 +1343,9 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get tripDetailsViewMap => 'عرض الخريطة';
+
+  @override
+  String get tripDetailsSeeAllAccommodation => 'عرض كل أماكن الإقامة';
 
   @override
   String get tripDetailsViewFullItinerary => 'عرض البرنامج كاملًا';
@@ -1285,6 +1370,59 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get tripDetailsDestinationNuweiba => 'نويبع';
+
+  @override
+  String get tripDetailsDestinationDetailsTitle => 'تفاصيل الوجهة';
+
+  @override
+  String get tripDetailsDestinationVisaLabel => 'التأشيرة';
+
+  @override
+  String get tripDetailsDestinationVisaValue => 'التأشيرة مطلوبة';
+
+  @override
+  String get tripDetailsDestinationRequiredVaccinesLabel =>
+      'التطعيمات المطلوبة';
+
+  @override
+  String get tripDetailsDestinationRequiredVaccinesValue => '+201026329736';
+
+  @override
+  String get tripDetailsDestinationTimeLabel => 'الوقت';
+
+  @override
+  String get tripDetailsDestinationTimeValue => 'GMT+1';
+
+  @override
+  String get tripDetailsDestinationLanguageLabel => 'اللغة';
+
+  @override
+  String get tripDetailsDestinationLanguageValue => 'الإنجليزية';
+
+  @override
+  String get tripDetailsDestinationCurrencyLabel => 'العملة';
+
+  @override
+  String get tripDetailsDestinationCurrencyValue => 'يورو (EUR)';
+
+  @override
+  String get tripDetailsDestinationTemperatureLabel => 'درجة الحرارة';
+
+  @override
+  String get tripDetailsDestinationTemperatureValue => '25°م';
+
+  @override
+  String get tripDetailsDestinationPublicTransportationLabel =>
+      'المواصلات العامة';
+
+  @override
+  String get tripDetailsDestinationPublicTransportationValue => 'حافلة';
+
+  @override
+  String get tripDetailsDestinationTaxiAppsLabel => 'تطبيقات التاكسي';
+
+  @override
+  String get tripDetailsDestinationTaxiAppsValue => 'Uber, InDrive';
 
   @override
   String get tripDetailsIncludesExcludesTitle => 'يشمل ولا يشمل';
@@ -1330,6 +1468,45 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get tripDetailsViewAllActivities => 'عرض كل الأنشطة';
+
+  @override
+  String get tripDetailsActivityRateTitle => 'تقييم الأنشطة';
+
+  @override
+  String get tripDetailsActivityRateLuxury => 'مستوى الفخامة';
+
+  @override
+  String get tripDetailsActivityRateShopping => 'التسوق';
+
+  @override
+  String get tripDetailsActivityRateNightOutings => 'السهرات الليلية';
+
+  @override
+  String get tripDetailsSeeAllActivities => 'عرض كل الأنشطة';
+
+  @override
+  String get tripDetailsVisaDetailsTitle => 'تفاصيل التأشيرة';
+
+  @override
+  String get tripDetailsTripInstructionsTitle => 'تعليمات الرحلة';
+
+  @override
+  String get tripDetailsSafetyProceduresTitle => 'إجراءات السلامة';
+
+  @override
+  String get tripDetailsCompanySectionTitle => 'الشركة';
+
+  @override
+  String get tripDetailsViewAll => 'عرض الكل';
+
+  @override
+  String get tripDetailsReviewCountry => 'إسبانيا';
+
+  @override
+  String get tripDetailsCompanyRatingValue => '4.9';
+
+  @override
+  String get tripDetailsCompanyRatingCount => '112';
 
   @override
   String get tripDetailsPolicyCancellation => 'سياسة الإلغاء';

@@ -6,7 +6,11 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:intl/intl.dart' as intl;
 
 import 'app_localizations_ar.dart';
+import 'app_localizations_de.dart';
 import 'app_localizations_en.dart';
+import 'app_localizations_es.dart';
+import 'app_localizations_fr.dart';
+import 'app_localizations_it.dart';
 
 // ignore_for_file: type=lint
 
@@ -95,7 +99,11 @@ abstract class AppLocalizations {
   /// A list of this localizations delegate's supported locales.
   static const List<Locale> supportedLocales = <Locale>[
     Locale('ar'),
+    Locale('de'),
     Locale('en'),
+    Locale('es'),
+    Locale('fr'),
+    Locale('it'),
   ];
 
   /// No description provided for @errorFieldRequired.
@@ -962,6 +970,12 @@ abstract class AppLocalizations {
   /// **'Language'**
   String get settingsLanguage;
 
+  /// No description provided for @settingsCurrency.
+  ///
+  /// In en, this message translates to:
+  /// **'Currency'**
+  String get settingsCurrency;
+
   /// No description provided for @settingsEnglish.
   ///
   /// In en, this message translates to:
@@ -991,6 +1005,54 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Notification Setting'**
   String get notificationSettingsTitle;
+
+  /// No description provided for @notificationSettingsIntro.
+  ///
+  /// In en, this message translates to:
+  /// **'Manage your notification preferences to stay updated on new trips, offers, and booking updates.'**
+  String get notificationSettingsIntro;
+
+  /// No description provided for @notificationSettingsBookingUpdatesTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Booking Updates'**
+  String get notificationSettingsBookingUpdatesTitle;
+
+  /// No description provided for @notificationSettingsBookingUpdatesSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Receive real-time updates about trip confirmations, cancellations, and changes to your bookings.'**
+  String get notificationSettingsBookingUpdatesSubtitle;
+
+  /// No description provided for @notificationSettingsToursTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Tours'**
+  String get notificationSettingsToursTitle;
+
+  /// No description provided for @notificationSettingsToursSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Get notified when new trips or tours are added that match your interests.'**
+  String get notificationSettingsToursSubtitle;
+
+  /// No description provided for @notificationSettingsReviewsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Reviews'**
+  String get notificationSettingsReviewsTitle;
+
+  /// No description provided for @notificationSettingsReviewsSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Be alerted when someone responds to your review or when you\'re invited to review a trip you’ve taken.'**
+  String get notificationSettingsReviewsSubtitle;
+
+  /// No description provided for @notificationSettingsPromotionsSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Get access to special discounts, limited-time offers, and seasonal promotions.'**
+  String get notificationSettingsPromotionsSubtitle;
 
   /// No description provided for @notificationSettingsPush.
   ///
@@ -1051,6 +1113,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'My Reviews'**
   String get profileMyReviews;
+
+  /// No description provided for @profileAddReview.
+  ///
+  /// In en, this message translates to:
+  /// **'Add Review'**
+  String get profileAddReview;
+
+  /// No description provided for @profileReviewLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Review'**
+  String get profileReviewLabel;
+
+  /// No description provided for @profileProductRatingLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Product Rating'**
+  String get profileProductRatingLabel;
+
+  /// No description provided for @profileMyReviewsRoute.
+  ///
+  /// In en, this message translates to:
+  /// **'Cairo → Dahab'**
+  String get profileMyReviewsRoute;
 
   /// No description provided for @profileFollowingCompanies.
   ///
@@ -1141,6 +1227,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'My Followings'**
   String get followingsTitle;
+
+  /// No description provided for @followingsCountTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} Following'**
+  String followingsCountTitle(Object count);
+
+  /// No description provided for @followingsUnfollow.
+  ///
+  /// In en, this message translates to:
+  /// **'Unfollow'**
+  String get followingsUnfollow;
 
   /// No description provided for @followingsEmptyTitle.
   ///
@@ -1501,6 +1599,54 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Personal Info'**
   String get profilePersonalInfoTitle;
+
+  /// No description provided for @profileFullNameLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Full Name'**
+  String get profileFullNameLabel;
+
+  /// No description provided for @profileEmailLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Email'**
+  String get profileEmailLabel;
+
+  /// No description provided for @profilePhoneNumberLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Phone Number'**
+  String get profilePhoneNumberLabel;
+
+  /// No description provided for @profilePasswordLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Password'**
+  String get profilePasswordLabel;
+
+  /// No description provided for @profileCountryLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Country'**
+  String get profileCountryLabel;
+
+  /// No description provided for @profileCityLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'City'**
+  String get profileCityLabel;
+
+  /// No description provided for @profileEditAction.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit'**
+  String get profileEditAction;
+
+  /// No description provided for @profileChangePasswordAction.
+  ///
+  /// In en, this message translates to:
+  /// **'Change Password'**
+  String get profileChangePasswordAction;
 
   /// No description provided for @profileGender.
   ///
@@ -2486,6 +2632,12 @@ abstract class AppLocalizations {
   /// **'Accommodation'**
   String get tripDetailsAccommodationTitle;
 
+  /// No description provided for @tripDetailsAccommodationHotelNameLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Hotel Name'**
+  String get tripDetailsAccommodationHotelNameLabel;
+
   /// No description provided for @tripDetailsHotelName.
   ///
   /// In en, this message translates to:
@@ -2497,6 +2649,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'5.0'**
   String get tripDetailsHotelRatingStars;
+
+  /// No description provided for @tripDetailsAccommodationHotelLocationLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Hotel Location'**
+  String get tripDetailsAccommodationHotelLocationLabel;
 
   /// No description provided for @tripDetailsHotelAddress.
   ///
@@ -2515,6 +2673,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'View map'**
   String get tripDetailsViewMap;
+
+  /// No description provided for @tripDetailsSeeAllAccommodation.
+  ///
+  /// In en, this message translates to:
+  /// **'See All Accommodation'**
+  String get tripDetailsSeeAllAccommodation;
 
   /// No description provided for @tripDetailsViewFullItinerary.
   ///
@@ -2563,6 +2727,108 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Nuweiba'**
   String get tripDetailsDestinationNuweiba;
+
+  /// No description provided for @tripDetailsDestinationDetailsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Destination Details'**
+  String get tripDetailsDestinationDetailsTitle;
+
+  /// No description provided for @tripDetailsDestinationVisaLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Visa'**
+  String get tripDetailsDestinationVisaLabel;
+
+  /// No description provided for @tripDetailsDestinationVisaValue.
+  ///
+  /// In en, this message translates to:
+  /// **'Visa required'**
+  String get tripDetailsDestinationVisaValue;
+
+  /// No description provided for @tripDetailsDestinationRequiredVaccinesLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Required Vaccines'**
+  String get tripDetailsDestinationRequiredVaccinesLabel;
+
+  /// No description provided for @tripDetailsDestinationRequiredVaccinesValue.
+  ///
+  /// In en, this message translates to:
+  /// **'+201026329736'**
+  String get tripDetailsDestinationRequiredVaccinesValue;
+
+  /// No description provided for @tripDetailsDestinationTimeLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Time'**
+  String get tripDetailsDestinationTimeLabel;
+
+  /// No description provided for @tripDetailsDestinationTimeValue.
+  ///
+  /// In en, this message translates to:
+  /// **'GMT+1'**
+  String get tripDetailsDestinationTimeValue;
+
+  /// No description provided for @tripDetailsDestinationLanguageLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Language'**
+  String get tripDetailsDestinationLanguageLabel;
+
+  /// No description provided for @tripDetailsDestinationLanguageValue.
+  ///
+  /// In en, this message translates to:
+  /// **'English'**
+  String get tripDetailsDestinationLanguageValue;
+
+  /// No description provided for @tripDetailsDestinationCurrencyLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Currency'**
+  String get tripDetailsDestinationCurrencyLabel;
+
+  /// No description provided for @tripDetailsDestinationCurrencyValue.
+  ///
+  /// In en, this message translates to:
+  /// **'Euro (EUR)'**
+  String get tripDetailsDestinationCurrencyValue;
+
+  /// No description provided for @tripDetailsDestinationTemperatureLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Temperature'**
+  String get tripDetailsDestinationTemperatureLabel;
+
+  /// No description provided for @tripDetailsDestinationTemperatureValue.
+  ///
+  /// In en, this message translates to:
+  /// **'25°C'**
+  String get tripDetailsDestinationTemperatureValue;
+
+  /// No description provided for @tripDetailsDestinationPublicTransportationLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Public Transportation'**
+  String get tripDetailsDestinationPublicTransportationLabel;
+
+  /// No description provided for @tripDetailsDestinationPublicTransportationValue.
+  ///
+  /// In en, this message translates to:
+  /// **'Bus'**
+  String get tripDetailsDestinationPublicTransportationValue;
+
+  /// No description provided for @tripDetailsDestinationTaxiAppsLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Taxi Apps'**
+  String get tripDetailsDestinationTaxiAppsLabel;
+
+  /// No description provided for @tripDetailsDestinationTaxiAppsValue.
+  ///
+  /// In en, this message translates to:
+  /// **'Uber, InDrive'**
+  String get tripDetailsDestinationTaxiAppsValue;
 
   /// No description provided for @tripDetailsIncludesExcludesTitle.
   ///
@@ -2653,6 +2919,84 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'View all activities'**
   String get tripDetailsViewAllActivities;
+
+  /// No description provided for @tripDetailsActivityRateTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Activity Rate'**
+  String get tripDetailsActivityRateTitle;
+
+  /// No description provided for @tripDetailsActivityRateLuxury.
+  ///
+  /// In en, this message translates to:
+  /// **'level of luxury'**
+  String get tripDetailsActivityRateLuxury;
+
+  /// No description provided for @tripDetailsActivityRateShopping.
+  ///
+  /// In en, this message translates to:
+  /// **'Shopping'**
+  String get tripDetailsActivityRateShopping;
+
+  /// No description provided for @tripDetailsActivityRateNightOutings.
+  ///
+  /// In en, this message translates to:
+  /// **'Night outings'**
+  String get tripDetailsActivityRateNightOutings;
+
+  /// No description provided for @tripDetailsSeeAllActivities.
+  ///
+  /// In en, this message translates to:
+  /// **'See All Activities'**
+  String get tripDetailsSeeAllActivities;
+
+  /// No description provided for @tripDetailsVisaDetailsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Visa Details'**
+  String get tripDetailsVisaDetailsTitle;
+
+  /// No description provided for @tripDetailsTripInstructionsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Trip Instructions'**
+  String get tripDetailsTripInstructionsTitle;
+
+  /// No description provided for @tripDetailsSafetyProceduresTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Safety Procedures'**
+  String get tripDetailsSafetyProceduresTitle;
+
+  /// No description provided for @tripDetailsCompanySectionTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Company'**
+  String get tripDetailsCompanySectionTitle;
+
+  /// No description provided for @tripDetailsViewAll.
+  ///
+  /// In en, this message translates to:
+  /// **'View All'**
+  String get tripDetailsViewAll;
+
+  /// No description provided for @tripDetailsReviewCountry.
+  ///
+  /// In en, this message translates to:
+  /// **'Spain'**
+  String get tripDetailsReviewCountry;
+
+  /// No description provided for @tripDetailsCompanyRatingValue.
+  ///
+  /// In en, this message translates to:
+  /// **'4.9'**
+  String get tripDetailsCompanyRatingValue;
+
+  /// No description provided for @tripDetailsCompanyRatingCount.
+  ///
+  /// In en, this message translates to:
+  /// **'112'**
+  String get tripDetailsCompanyRatingCount;
 
   /// No description provided for @tripDetailsPolicyCancellation.
   ///
@@ -3001,8 +3345,14 @@ class _AppLocalizationsDelegate
   }
 
   @override
-  bool isSupported(Locale locale) =>
-      <String>['ar', 'en'].contains(locale.languageCode);
+  bool isSupported(Locale locale) => <String>[
+    'ar',
+    'de',
+    'en',
+    'es',
+    'fr',
+    'it',
+  ].contains(locale.languageCode);
 
   @override
   bool shouldReload(_AppLocalizationsDelegate old) => false;
@@ -3013,8 +3363,16 @@ AppLocalizations lookupAppLocalizations(Locale locale) {
   switch (locale.languageCode) {
     case 'ar':
       return AppLocalizationsAr();
+    case 'de':
+      return AppLocalizationsDe();
     case 'en':
       return AppLocalizationsEn();
+    case 'es':
+      return AppLocalizationsEs();
+    case 'fr':
+      return AppLocalizationsFr();
+    case 'it':
+      return AppLocalizationsIt();
   }
 
   throw FlutterError(

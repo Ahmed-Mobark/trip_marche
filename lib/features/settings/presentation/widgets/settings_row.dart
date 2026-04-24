@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:trip_marche/core/theme/app_colors.dart';
+import 'package:trip_marche/core/theme/app_text_styles.dart';
 
 class SettingsRow extends StatelessWidget {
   final IconData icon;
@@ -21,19 +22,15 @@ class SettingsRow extends StatelessWidget {
     return InkWell(
       onTap: onTap,
       child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 14),
+        padding: EdgeInsetsDirectional.symmetric(vertical: 18.h),
         child: Row(
           children: [
-            Icon(icon, size: 22, color: AppColors.secondaryText),
-            const SizedBox(width: 14),
+            Icon(icon, size: 22.sp, color: AppColors.darkText),
+            SizedBox(width: 14.w),
             Expanded(
               child: Text(
                 title,
-                style: GoogleFonts.inter(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w400,
-                  color: AppColors.darkText,
-                ),
+                style: AppTextStyles.bodyMedium(color: AppColors.darkText),
               ),
             ),
             trailing,

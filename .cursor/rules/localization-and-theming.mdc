@@ -10,11 +10,11 @@ alwaysApply: false
 
 ### Supported Locales
 
-**Arabic (`ar`)** and **English (`en`)** — both must stay in sync.
+**Arabic (`ar`)**, **English (`en`)**, **Spanish (`es`)**, **French (`fr`)**, **German (`de`)**, **Italian (`it`)** — all must stay in sync.
 
 ### ARB Files
 
-- Located in `assets/translation/` — `en.arb` (template), `ar.arb`.
+- Located in `assets/translation/` — `en.arb` (template), plus `ar.arb`, `es.arb`, `fr.arb`, `de.arb`, `it.arb`.
 - Regenerate with `flutter gen-l10n` (automatic via `flutter: generate: true` in `pubspec.yaml`).
 - Generated output: `lib/core/translation/app_localizations*.dart`.
 
@@ -74,5 +74,5 @@ alwaysApply: false
 
 - Every user-visible string goes through ARB + `context.tr` — no exceptions.
 - When adding a new colour, add it to `AppColors` first, then reference it.
-- Never skip a locale — both ARBs must have every key.
+- Never skip a locale — all 6 ARBs must have every key (missing translations fall back to template but should be filled).
 - Prefer semantic `AppTextStyles.*` over raw `TextStyles.textView*` in screens.

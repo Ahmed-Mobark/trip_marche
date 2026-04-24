@@ -1,32 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:iconsax/iconsax.dart';
 import 'package:trip_marche/core/theme/app_colors.dart';
 import 'package:trip_marche/core/theme/app_text_styles.dart';
-import 'package:trip_marche/features/profile/presentation/widgets/profile_avatar.dart';
 import 'package:trip_marche/core/extensions/localization.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class PersonalInfoView extends StatefulWidget {
+class PersonalInfoView extends StatelessWidget {
   const PersonalInfoView({super.key});
-
-  @override
-  State<PersonalInfoView> createState() => _PersonalInfoViewState();
-}
-
-class _PersonalInfoViewState extends State<PersonalInfoView> {
-  final _fullNameController = TextEditingController(text: 'Abdallah Ibrahim');
-  final _emailController = TextEditingController(text: 'abdallah@gmail.com');
-  final _phoneController = TextEditingController(text: '+20 123 456 7890');
-  String _selectedGender = 'male';
-  DateTime _dateOfBirth = DateTime(1995, 6, 15);
-
-  @override
-  void dispose() {
-    _fullNameController.dispose();
-    _emailController.dispose();
-    _phoneController.dispose();
-    super.dispose();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -36,254 +15,123 @@ class _PersonalInfoViewState extends State<PersonalInfoView> {
         backgroundColor: AppColors.background,
         elevation: 0,
         leading: IconButton(
-          icon: const Icon(Iconsax.arrow_left, color: AppColors.darkText),
+          icon: const Icon(
+            Icons.arrow_back_ios_new_rounded,
+            color: AppColors.darkText,
+          ),
           onPressed: () => Navigator.pop(context),
         ),
         title: Text(
           context.tr.profilePersonalInfoTitle,
-          style: AppTextStyles.subtitle(),
+          style: AppTextStyles.subtitle(color: AppColors.darkText),
         ),
         centerTitle: true,
       ),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+      body: Padding(
+        padding: EdgeInsetsDirectional.only(start: 20.w, end: 20.w, top: 10.h),
         child: Column(
           children: [
-            // Avatar with camera icon
-            Center(
-              child: ProfileAvatar(
-                radius: 50,
-                editIcon: Iconsax.camera,
-                editButtonSize: 32,
-                editIconSize: 16,
-                onEditTap: () {
-                  // Pick image
-                },
-              ),
+            _InfoRow(
+              label: context.tr.profileFullNameLabel,
+              value: 'Abdallah Ibrahim',
+              actionText: context.tr.profileEditAction,
+              onAction: () {},
             ),
-            const SizedBox(height: 32),
-
-            // Full Name
-            _buildField(
-              label: context.tr.authFullNameLabel,
-              controller: _fullNameController,
+            _DividerLine(),
+            _InfoRow(
+              label: context.tr.profileEmailLabel,
+              value: 'abdalaa2434@gmail.com',
             ),
-            const SizedBox(height: 20),
-
-            // Email
-            _buildField(
-              label: context.tr.authEmailLabel,
-              controller: _emailController,
-              keyboardType: TextInputType.emailAddress,
+            _DividerLine(),
+            _InfoRow(
+              label: context.tr.profilePhoneNumberLabel,
+              value: '+20 114398594t',
+              actionText: context.tr.profileEditAction,
+              onAction: () {},
             ),
-            const SizedBox(height: 20),
-
-            // Phone
-            _buildField(
-              label: context.tr.bookingContactPhoneLabel,
-              controller: _phoneController,
-              keyboardType: TextInputType.phone,
+            _DividerLine(),
+            _InfoRow(
+              label: context.tr.profilePasswordLabel,
+              value: '***********',
+              actionText: context.tr.profileChangePasswordAction,
+              onAction: () {},
             ),
-            const SizedBox(height: 20),
-
-            // Gender Dropdown
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  context.tr.profileGender,
-                  style: AppTextStyles.label(),
-                ),
-                const SizedBox(height: 8),
-                Container(
-                  width: double.infinity,
-                  padding: const EdgeInsets.symmetric(horizontal: 16),
-                  decoration: BoxDecoration(
-                    color: AppColors.lightBg,
-                    borderRadius: BorderRadius.circular(12),
-                    border: Border.all(color: AppColors.border),
-                  ),
-                  child: DropdownButtonHideUnderline(
-                    child: DropdownButton<String>(
-                      value: _selectedGender,
-                      isExpanded: true,
-                      icon: const Icon(
-                        Iconsax.arrow_down_1,
-                        color: AppColors.greyText,
-                        size: 18,
-                      ),
-                      style: GoogleFonts.inter(
-                        fontSize: 14,
-                        fontWeight: FontWeight.w500,
-                        color: AppColors.darkText,
-                      ),
-                      items: [
-                        DropdownMenuItem(
-                          value: 'male',
-                          child: Text(context.tr.profileGenderMale),
-                        ),
-                        DropdownMenuItem(
-                          value: 'female',
-                          child: Text(context.tr.profileGenderFemale),
-                        ),
-                      ],
-                      onChanged: (value) {
-                        if (value != null) {
-                          setState(() {
-                            _selectedGender = value;
-                          });
-                        }
-                      },
-                    ),
-                  ),
-                ),
-              ],
+            _DividerLine(),
+            _InfoRow(
+              label: context.tr.profileCountryLabel,
+              value: 'Egypt',
             ),
-            const SizedBox(height: 20),
-
-            // Date of Birth
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  context.tr.profileDateOfBirth,
-                  style: AppTextStyles.label(),
-                ),
-                const SizedBox(height: 8),
-                GestureDetector(
-                  onTap: () async {
-                    final picked = await showDatePicker(
-                      context: context,
-                      initialDate: _dateOfBirth,
-                      firstDate: DateTime(1950),
-                      lastDate: DateTime.now(),
-                      builder: (context, child) {
-                        return Theme(
-                          data: Theme.of(context).copyWith(
-                            colorScheme: const ColorScheme.light(
-                              primary: AppColors.primary,
-                            ),
-                          ),
-                          child: child!,
-                        );
-                      },
-                    );
-                    if (picked != null) {
-                      setState(() {
-                        _dateOfBirth = picked;
-                      });
-                    }
-                  },
-                  child: Container(
-                    width: double.infinity,
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 16, vertical: 16),
-                    decoration: BoxDecoration(
-                      color: AppColors.lightBg,
-                      borderRadius: BorderRadius.circular(12),
-                      border: Border.all(color: AppColors.border),
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          '${_dateOfBirth.day}/${_dateOfBirth.month}/${_dateOfBirth.year}',
-                          style: GoogleFonts.inter(
-                            fontSize: 14,
-                            fontWeight: FontWeight.w500,
-                            color: AppColors.darkText,
-                          ),
-                        ),
-                        const Icon(
-                          Iconsax.calendar_1,
-                          color: AppColors.greyText,
-                          size: 18,
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ],
+            _DividerLine(),
+            _InfoRow(
+              label: context.tr.profileCityLabel,
+              value: 'Cairo',
             ),
-            const SizedBox(height: 40),
-
-            // Save Changes Button
-            SizedBox(
-              width: double.infinity,
-              height: 56,
-              child: DecoratedBox(
-                decoration: BoxDecoration(
-                  gradient: AppColors.primaryGradient,
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                child: ElevatedButton(
-                  onPressed: () {
-                    // Save changes
-                    Navigator.pop(context);
-                  },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.transparent,
-                    shadowColor: Colors.transparent,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                  ),
-                  child: Text(
-                    context.tr.profileSaveChanges,
-                    style: AppTextStyles.button(),
-                  ),
-                ),
-              ),
-            ),
-            const SizedBox(height: 24),
+            _DividerLine(),
           ],
         ),
       ),
     );
   }
+}
 
-  Widget _buildField({
-    required String label,
-    required TextEditingController controller,
-    TextInputType keyboardType = TextInputType.text,
-  }) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          label,
-          style: AppTextStyles.label(),
-        ),
-        const SizedBox(height: 8),
-        TextFormField(
-          controller: controller,
-          keyboardType: keyboardType,
-          style: GoogleFonts.inter(
-            fontSize: 14,
-            fontWeight: FontWeight.w500,
-            color: AppColors.darkText,
-          ),
-          decoration: InputDecoration(
-            filled: true,
-            fillColor: AppColors.lightBg,
-            contentPadding:
-                const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(12),
-              borderSide: const BorderSide(color: AppColors.border),
-            ),
-            enabledBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(12),
-              borderSide: const BorderSide(color: AppColors.border),
-            ),
-            focusedBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(12),
-              borderSide:
-                  const BorderSide(color: AppColors.primary, width: 1),
+class _InfoRow extends StatelessWidget {
+  const _InfoRow({
+    required this.label,
+    required this.value,
+    this.actionText,
+    this.onAction,
+  });
+
+  final String label;
+  final String value;
+  final String? actionText;
+  final VoidCallback? onAction;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: EdgeInsetsDirectional.only(top: 18.h, bottom: 14.h),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  label,
+                  style: AppTextStyles.bodyMedium(color: AppColors.darkText)
+                      .copyWith(fontWeight: FontWeight.w700),
+                ),
+                SizedBox(height: 10.h),
+                Text(
+                  value,
+                  style: AppTextStyles.bodyMedium(color: AppColors.greyText),
+                ),
+              ],
             ),
           ),
-        ),
-      ],
+          if (actionText != null)
+            Padding(
+              padding: EdgeInsetsDirectional.only(top: 26.h),
+              child: InkWell(
+                onTap: onAction,
+                child: Text(
+                  actionText!,
+                  style: AppTextStyles.bodyMedium(color: AppColors.darkText)
+                      .copyWith(fontWeight: FontWeight.w600),
+                ),
+              ),
+            ),
+        ],
+      ),
     );
+  }
+}
+
+class _DividerLine extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Container(height: 1.h, color: AppColors.border);
   }
 }
