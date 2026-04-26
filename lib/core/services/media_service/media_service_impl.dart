@@ -1,6 +1,6 @@
 import 'dart:io';
 import 'dart:math';
-import 'package:trip_marche/core/enums/media_type.dart';
+import '../../enums/media_type.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_image_compress/flutter_image_compress.dart';

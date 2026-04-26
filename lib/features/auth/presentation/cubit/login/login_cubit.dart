@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'package:trip_marche/core/navigation/app_navigator.dart';
-import 'package:trip_marche/core/storage/data/storage.dart';
-import 'package:trip_marche/features/auth/data/models/login_request.dart';
-import 'package:trip_marche/features/auth/domain/repositories/auth_repository.dart';
-import 'package:trip_marche/features/auth/presentation/cubit/login/login_state.dart';
-import 'package:trip_marche/features/auth/presentation/view/forgot_password_view.dart';
-import 'package:trip_marche/features/auth/presentation/view/sign_up_view.dart';
-import 'package:trip_marche/features/nav_bar/presentation/view/main_nav_view.dart';
+import '../../../../../core/navigation/app_navigator.dart';
+import '../../../../../core/storage/data/storage.dart';
+import '../../../data/models/login_request.dart';
+import '../../../domain/repositories/auth_repository.dart';
+import 'login_state.dart';
+import '../../view/forgot_password_view.dart';
+import '../../view/sign_up_view.dart';
+import '../../../../nav_bar/presentation/view/main_nav_view.dart';
 
 class LoginCubit extends Cubit<LoginState> {
   LoginCubit(this._navigator, this._authRepository, this._storage)

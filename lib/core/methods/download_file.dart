@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:dio/dio.dart';
-import 'package:trip_marche/core/injection/injection_container.dart';
+import '../injection/injection_container.dart';
 import 'package:path_provider/path_provider.dart';
 
 class DownloadFile {

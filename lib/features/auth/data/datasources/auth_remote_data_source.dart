@@ -1,9 +1,9 @@
-import 'package:trip_marche/core/config/app_end_points.dart';
-import 'package:trip_marche/core/network/network_service/api_basehelper.dart';
-import 'package:trip_marche/features/auth/data/models/login_request.dart';
-import 'package:trip_marche/features/auth/data/models/register_request.dart';
-import 'package:trip_marche/features/auth/data/models/reset_password_request.dart';
-import 'package:trip_marche/features/auth/data/models/verify_email_request.dart';
+import '../../../../core/config/app_end_points.dart';
+import '../../../../core/network/network_service/api_basehelper.dart';
+import '../models/login_request.dart';
+import '../models/register_request.dart';
+import '../models/reset_password_request.dart';
+import '../models/verify_email_request.dart';
 
 abstract class AuthRemoteDataSource {
   Future<Map<String, dynamic>> register(RegisterRequest request);

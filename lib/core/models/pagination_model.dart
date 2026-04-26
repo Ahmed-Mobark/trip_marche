@@ -1,5 +1,5 @@
 
-import 'package:trip_marche/core/entities/pagination.dart';
+import '../entities/pagination.dart';
 
 class PaginationModel extends Pagination {
   const PaginationModel({

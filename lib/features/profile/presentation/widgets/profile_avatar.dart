@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
-import 'package:trip_marche/core/config/app_colors.dart';
-import 'package:trip_marche/core/config/app_images.dart';
+import '../../../../core/config/app_colors.dart';
+import '../../../../core/config/app_images.dart';
 
 class ProfileAvatar extends StatelessWidget {
   final double radius;

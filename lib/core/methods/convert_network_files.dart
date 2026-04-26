@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:http_parser/http_parser.dart';
 import 'package:mime/mime.dart';
-import 'package:trip_marche/core/methods/download_file.dart';
+import 'download_file.dart';
 
 class ConvertNetworkFiles {
   static bool isImageLink(String url) {

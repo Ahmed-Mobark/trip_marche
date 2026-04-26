@@ -1,14 +1,14 @@
 import 'package:adaptive_theme/adaptive_theme.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:trip_marche/core/injection/injection_container.dart';
-import 'package:trip_marche/core/navigation/app_navigator.dart';
-import 'package:trip_marche/core/navigation/route_observer.dart';
-import 'package:trip_marche/core/network/network_service/api_basehelper.dart';
-import 'package:trip_marche/core/storage/data/storage.dart';
+import '../injection/injection_container.dart';
+import '../navigation/app_navigator.dart';
+import '../navigation/route_observer.dart';
+import '../network/network_service/api_basehelper.dart';
+import '../storage/data/storage.dart';
 import 'package:flutter/material.dart';
-import 'package:trip_marche/core/theme/app_theme.dart';
-import 'package:trip_marche/core/translation/app_localizations.dart';
-import 'package:trip_marche/features/splash/presentation/view/splash_view.dart';
+import '../theme/app_theme.dart';
+import '../translation/app_localizations.dart';
+import '../../features/splash/presentation/view/splash_view.dart';
 
 
 class MyApp extends StatefulWidget {

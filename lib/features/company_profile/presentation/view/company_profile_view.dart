@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:iconsax/iconsax.dart';
-import 'package:trip_marche/core/theme/app_colors.dart';
-import 'package:trip_marche/core/theme/app_text_styles.dart';
-import 'package:trip_marche/features/company_profile/presentation/widgets/company_stat_item.dart';
-import 'package:trip_marche/features/company_profile/presentation/widgets/company_review_item.dart';
-import 'package:trip_marche/core/extensions/localization.dart';
+import '../../../../core/theme/app_colors.dart';
+import '../../../../core/theme/app_text_styles.dart';
+import '../widgets/company_stat_item.dart';
+import '../widgets/company_review_item.dart';
+import '../../../../core/extensions/localization.dart';
 
 class CompanyProfileView extends StatefulWidget {
   const CompanyProfileView({super.key});

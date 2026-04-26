@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:iconsax/iconsax.dart';
-import 'package:trip_marche/core/theme/app_colors.dart';
-import 'package:trip_marche/core/theme/app_text_styles.dart';
-import 'package:trip_marche/features/booking/presentation/widgets/trip_summary_card.dart';
-import 'package:trip_marche/features/booking/presentation/widgets/radio_option.dart';
-import 'package:trip_marche/features/booking/presentation/widgets/counter_button.dart';
+import '../../../../core/theme/app_colors.dart';
+import '../../../../core/theme/app_text_styles.dart';
+import '../widgets/trip_summary_card.dart';
+import '../widgets/radio_option.dart';
+import '../widgets/counter_button.dart';
 
 class TripOptionsView extends StatefulWidget {
   const TripOptionsView({super.key});

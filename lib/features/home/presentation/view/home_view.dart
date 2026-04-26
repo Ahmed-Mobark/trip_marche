@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:trip_marche/core/theme/app_colors.dart';
-import 'package:trip_marche/core/theme/app_text_styles.dart';
-import 'package:trip_marche/core/data/dummy_data.dart';
-import 'package:trip_marche/core/injection/injection_container.dart';
-import 'package:trip_marche/core/navigation/app_navigator.dart';
-import 'package:trip_marche/core/extensions/localization.dart';
+import '../../../../core/theme/app_colors.dart';
+import '../../../../core/theme/app_text_styles.dart';
+import '../../../../core/data/dummy_data.dart';
+import '../../../../core/injection/injection_container.dart';
+import '../../../../core/navigation/app_navigator.dart';
+import '../../../../core/extensions/localization.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:trip_marche/features/home/presentation/widgets/home_header.dart';
-import 'package:trip_marche/features/home/presentation/widgets/trending_destination_card.dart';
-import 'package:trip_marche/features/home/presentation/widgets/popular_trip_grid_card.dart';
-import 'package:trip_marche/features/home/presentation/widgets/promo_banner_item.dart';
-import 'package:trip_marche/features/home/presentation/widgets/category_chip.dart';
-import 'package:trip_marche/features/home/presentation/widgets/special_trip_wide_card.dart';
-import 'package:trip_marche/features/trip_details/presentation/view/trip_details_view.dart';
+import '../widgets/home_header.dart';
+import '../widgets/trending_destination_card.dart';
+import '../widgets/popular_trip_grid_card.dart';
+import '../widgets/promo_banner_item.dart';
+import '../widgets/category_chip.dart';
+import '../widgets/special_trip_wide_card.dart';
+import '../../../trip_details/presentation/view/trip_details_view.dart';
 
 class HomeView extends StatefulWidget {
   const HomeView({super.key});

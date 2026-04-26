@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:iconsax/iconsax.dart';
-import 'package:trip_marche/core/config/styles/styles.dart';
-import 'package:trip_marche/core/extensions/localization.dart';
-import 'package:trip_marche/core/config/app_images.dart';
-import 'package:trip_marche/core/theme/app_colors.dart';
-import 'package:trip_marche/core/widgets/app_cached_network_image.dart';
-import 'package:trip_marche/features/trip_details/presentation/widgets/trip_details_info_card.dart';
+import '../../../../core/config/styles/styles.dart';
+import '../../../../core/extensions/localization.dart';
+import '../../../../core/config/app_images.dart';
+import '../../../../core/theme/app_colors.dart';
+import '../../../../core/widgets/app_cached_network_image.dart';
+import 'trip_details_info_card.dart';
 
 class TripDetailsAccommodationSection extends StatelessWidget {
   const TripDetailsAccommodationSection({super.key});

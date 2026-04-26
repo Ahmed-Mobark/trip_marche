@@ -1,6 +1,6 @@
 import 'package:dartz/dartz.dart';
-import 'package:trip_marche/core/network/network_service/exceptions.dart';
-import 'package:trip_marche/core/network/network_service/failures.dart';
+import 'exceptions.dart';
+import 'failures.dart';
 
 mixin RepositoryHelper {
   Future<Either<Failure, T>> handleEither<T>(Future<T> Function() call) async {

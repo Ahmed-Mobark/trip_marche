@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:trip_marche/core/theme/app_colors.dart';
+import '../../../../core/theme/app_colors.dart';
 
 class CounterButton extends StatelessWidget {
   const CounterButton({

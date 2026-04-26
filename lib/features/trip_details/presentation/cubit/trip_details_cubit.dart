@@ -1,6 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'package:trip_marche/features/trip_details/presentation/cubit/trip_details_state.dart';
+import 'trip_details_state.dart';
 
 class TripDetailsCubit extends Cubit<TripDetailsState> {
   TripDetailsCubit() : super(const TripDetailsState());

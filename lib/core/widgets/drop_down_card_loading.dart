@@ -1,5 +1,5 @@
-import 'package:trip_marche/core/widgets/app_shimmer.dart';
-import 'package:trip_marche/core/widgets/shimmer_shape.dart';
+import 'app_shimmer.dart';
+import 'shimmer_shape.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 

@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'package:trip_marche/core/navigation/app_navigator.dart';
-import 'package:trip_marche/features/auth/domain/repositories/auth_repository.dart';
-import 'package:trip_marche/features/auth/presentation/cubit/forgot_password/forgot_password_state.dart';
-import 'package:trip_marche/features/auth/presentation/cubit/verify_number/verify_number_cubit.dart';
-import 'package:trip_marche/features/auth/presentation/view/verify_number_view.dart';
+import '../../../../../core/navigation/app_navigator.dart';
+import '../../../domain/repositories/auth_repository.dart';
+import 'forgot_password_state.dart';
+import '../verify_number/verify_number_cubit.dart';
+import '../../view/verify_number_view.dart';
 
 class ForgotPasswordCubit extends Cubit<ForgotPasswordState> {
   ForgotPasswordCubit(this._navigator, this._authRepository)

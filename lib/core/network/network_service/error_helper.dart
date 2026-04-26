@@ -1,5 +1,5 @@
 import 'package:dio/dio.dart';
-import 'package:trip_marche/core/network/network_service/exceptions.dart';
+import 'exceptions.dart';
 
 class ErrorHelper {
   /// Extracts user-facing message from API error response.

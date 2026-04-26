@@ -1,6 +1,6 @@
-import 'package:trip_marche/core/extensions/localization.dart';
-import 'package:trip_marche/core/navigation/app_navigator.dart';
-import 'package:trip_marche/core/injection/injection_container.dart';
+import '../extensions/localization.dart';
+import '../navigation/app_navigator.dart';
+import '../injection/injection_container.dart';
 import 'package:flutter/material.dart';
 
 class Validator {

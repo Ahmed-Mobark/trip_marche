@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:trip_marche/core/theme/app_colors.dart';
+import '../../../../core/theme/app_colors.dart';
 
 /// A row of single-digit OTP input boxes.
 ///

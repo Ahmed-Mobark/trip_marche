@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
-import 'package:trip_marche/core/theme/app_colors.dart';
-import 'package:trip_marche/core/theme/app_text_styles.dart';
-import 'package:trip_marche/features/booking/presentation/widgets/payment_option_tile.dart';
-import 'package:trip_marche/core/extensions/localization.dart';
+import '../../../../core/theme/app_colors.dart';
+import '../../../../core/theme/app_text_styles.dart';
+import '../widgets/payment_option_tile.dart';
+import '../../../../core/extensions/localization.dart';
 
 class PaymentMethodView extends StatefulWidget {
   const PaymentMethodView({super.key});

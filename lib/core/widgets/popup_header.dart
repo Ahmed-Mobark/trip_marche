@@ -1,8 +1,8 @@
-import 'package:trip_marche/core/config/app_colors.dart';
-import 'package:trip_marche/core/config/app_icons.dart';
-import 'package:trip_marche/core/config/styles/styles.dart';
-import 'package:trip_marche/core/injection/injection_container.dart';
-import 'package:trip_marche/core/navigation/app_navigator.dart';
+import '../config/app_colors.dart';
+import '../config/app_icons.dart';
+import '../config/styles/styles.dart';
+import '../injection/injection_container.dart';
+import '../navigation/app_navigator.dart';
 import 'package:flutter/material.dart';
 
 class PopupHeader extends StatelessWidget {

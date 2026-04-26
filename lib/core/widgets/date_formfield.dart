@@ -1,6 +1,6 @@
-import 'package:trip_marche/core/theme/calendar_theme.dart';
-import 'package:trip_marche/core/utils/validator.dart';
-import 'package:trip_marche/core/widgets/app_text_form_field.dart';
+import '../theme/calendar_theme.dart';
+import '../utils/validator.dart';
+import 'app_text_form_field.dart';
 import 'package:flutter/material.dart';
 
 class DateFormfield extends StatelessWidget {

@@ -1,6 +1,6 @@
 import 'dart:math';
-import 'package:trip_marche/core/toast/app_toast.dart';
-import 'package:trip_marche/core/toast/custom_toast.dart';
+import 'app_toast.dart';
+import 'custom_toast.dart';
 import 'package:flutter/material.dart';
 
 class ToastViewManager<T> extends ValueNotifier<T> {

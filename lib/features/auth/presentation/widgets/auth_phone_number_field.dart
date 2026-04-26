@@ -1,11 +1,11 @@
 import 'package:country_code_picker/country_code_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:trip_marche/core/theme/app_colors.dart';
-import 'package:trip_marche/core/theme/app_text_styles.dart';
-import 'package:trip_marche/core/theme/calendar_theme.dart';
-import 'package:trip_marche/core/widgets/app_text_form_field.dart';
-import 'package:trip_marche/core/config/app_colors.dart';
+import '../../../../core/theme/app_colors.dart';
+import '../../../../core/theme/app_text_styles.dart';
+import '../../../../core/theme/calendar_theme.dart';
+import '../../../../core/widgets/app_text_form_field.dart';
+import '../../../../core/config/app_colors.dart';
 
 class AuthPhoneNumberField extends StatelessWidget {
   const AuthPhoneNumberField({

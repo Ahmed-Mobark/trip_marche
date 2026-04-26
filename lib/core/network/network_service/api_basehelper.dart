@@ -1,14 +1,14 @@
 import 'dart:developer';
 import 'dart:io';
 import 'package:dio/dio.dart';
-import 'package:trip_marche/core/config/app_end_points.dart';
+import '../../config/app_end_points.dart';
 import 'package:flutter/foundation.dart';
-import 'package:trip_marche/core/config/map_end_points.dart';
-import 'package:trip_marche/core/injection/injection_container.dart';
-import 'package:trip_marche/core/network/network_service/error_helper.dart';
-import 'package:trip_marche/core/network/network_service/exceptions.dart';
+import '../../config/map_end_points.dart';
+import '../../injection/injection_container.dart';
+import 'error_helper.dart';
+import 'exceptions.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
-import 'package:trip_marche/core/storage/data/storage.dart';
+import '../../storage/data/storage.dart';
 
 enum ApiEnvironment {primary, secondary, map}
 

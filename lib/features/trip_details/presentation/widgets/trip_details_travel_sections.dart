@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:trip_marche/features/trip_details/presentation/widgets/trip_details_accommodation_section.dart';
-import 'package:trip_marche/features/trip_details/presentation/widgets/trip_details_destination_details_section.dart';
-import 'package:trip_marche/features/trip_details/presentation/widgets/trip_details_flight_details_section.dart';
-import 'package:trip_marche/features/trip_details/presentation/widgets/trip_details_transportation_section.dart';
+import 'trip_details_accommodation_section.dart';
+import 'trip_details_destination_details_section.dart';
+import 'trip_details_flight_details_section.dart';
+import 'trip_details_transportation_section.dart';
 
 class TripDetailsTravelSections extends StatelessWidget {
   const TripDetailsTravelSections({super.key});

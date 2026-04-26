@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:iconsax/iconsax.dart';
-import 'package:trip_marche/core/config/app_colors.dart';
-import 'package:trip_marche/core/config/styles/styles.dart';
-import 'package:trip_marche/core/data/dummy_data.dart';
-import 'package:trip_marche/core/extensions/localization.dart';
-import 'package:trip_marche/features/my_trips/presentation/widgets/my_trip_booking_card.dart';
+import '../../../../core/config/app_colors.dart';
+import '../../../../core/config/styles/styles.dart';
+import '../../../../core/data/dummy_data.dart';
+import '../../../../core/extensions/localization.dart';
+import '../widgets/my_trip_booking_card.dart';
 
 class MyTripsView extends StatefulWidget {
   const MyTripsView({super.key});

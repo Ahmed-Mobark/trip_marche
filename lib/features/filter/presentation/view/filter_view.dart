@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:iconsax/iconsax.dart';
-import 'package:trip_marche/core/theme/app_colors.dart';
-import 'package:trip_marche/core/theme/app_text_styles.dart';
-import 'package:trip_marche/features/filter/presentation/widgets/price_range_slider.dart';
-import 'package:trip_marche/features/filter/presentation/widgets/filter_chip_option.dart';
-import 'package:trip_marche/core/extensions/localization.dart';
+import '../../../../core/theme/app_colors.dart';
+import '../../../../core/theme/app_text_styles.dart';
+import '../widgets/price_range_slider.dart';
+import '../widgets/filter_chip_option.dart';
+import '../../../../core/extensions/localization.dart';
 
 class FilterView extends StatefulWidget {
   const FilterView({super.key});

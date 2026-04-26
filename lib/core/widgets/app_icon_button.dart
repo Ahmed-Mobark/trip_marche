@@ -1,4 +1,4 @@
-import 'package:trip_marche/core/config/app_colors.dart';
+import '../config/app_colors.dart';
 import 'package:flutter/material.dart';
 
 class AppIconButton extends StatelessWidget {

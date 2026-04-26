@@ -1,6 +1,6 @@
-import 'package:trip_marche/core/config/app_colors.dart';
-import 'package:trip_marche/core/config/styles/styles.dart';
-import 'package:trip_marche/core/toast/app_toast.dart';
+import '../config/app_colors.dart';
+import '../config/styles/styles.dart';
+import 'app_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
