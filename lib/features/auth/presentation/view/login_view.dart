@@ -1,19 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:google_fonts/google_fonts.dart';
-import '../../../../core/theme/app_colors.dart';
-import '../../../../core/config/styles/styles.dart';
-import '../../../../core/injection/injection_container.dart';
-import '../../../../core/widgets/social_login_button.dart';
-import '../../../../core/widgets/app_text_field.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:trip_marche/core/config/app_icons.dart';
+import 'package:trip_marche/core/config/styles/styles.dart';
+import 'package:trip_marche/core/extensions/localization.dart';
+import 'package:trip_marche/core/injection/injection_container.dart';
+import 'package:trip_marche/core/theme/app_colors.dart';
+import 'package:trip_marche/core/theme/app_text_styles.dart';
+import 'package:trip_marche/core/toast/app_toast.dart';
+import 'package:trip_marche/core/widgets/app_button.dart';
+import 'package:trip_marche/core/widgets/app_text_field.dart';
+import 'package:trip_marche/core/widgets/social_login_button.dart';
 import '../widgets/auth_header.dart';
 import '../widgets/divider_with_text.dart';
-import '../../../../core/extensions/localization.dart';
 import '../cubit/login/login_cubit.dart';
 import '../cubit/login/login_state.dart';
-import '../../../../core/config/app_icons.dart';
-import '../../../../core/toast/app_toast.dart';
 
 class LoginView extends StatelessWidget {
   const LoginView({super.key});
@@ -43,9 +45,11 @@ class LoginView extends StatelessWidget {
               child: AuthHeader(
                 scrollable: true,
                 child: Padding(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 20,
-                    vertical: 20,
+                  padding: EdgeInsetsDirectional.only(
+                    start: 20.w,
+                    end: 20.w,
+                    top: 20.h,
+                    bottom: 20.h,
                   ),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -53,20 +57,17 @@ class LoginView extends StatelessWidget {
                     // Title
                     Text(
                       context.tr.authLoginTitle,
-                      style: GoogleFonts.inter(
-                        fontSize: AppFonts.heading2,
-                        fontWeight: FontWeight.w700,
-                        color: AppColors.darkText,
-                      ),
+                      style: AppTextStyles.heading2(color: AppColors.darkText)
+                          .copyWith(fontWeight: FontWeight.w800),
                     ),
-                    const SizedBox(height: 20),
+                    SizedBox(height: 20.h),
                     _FieldTitle(text: context.tr.authEmailLabel),
-                    const SizedBox(height: 8),
+                    SizedBox(height: 8.h),
                     AppTextField(
                       hint: context.tr.authEmailHint,
                       controller: context.read<LoginCubit>().emailController,
                       prefixWidget: Padding(
-                        padding: const EdgeInsets.all(12),
+                        padding: EdgeInsets.all(12.r),
                         child: SvgPicture.asset(
                           AppIcons.icSms,
                           width: 20,
@@ -79,10 +80,10 @@ class LoginView extends StatelessWidget {
                       ),
                       keyboardType: TextInputType.emailAddress,
                     ),
-                    const SizedBox(height: 18),
+                    SizedBox(height: 18.h),
 
                     _FieldTitle(text: context.tr.authPasswordLabel),
-                    const SizedBox(height: 8),
+                    SizedBox(height: 8.h),
                     BlocBuilder<LoginCubit, LoginState>(
                       buildWhen: (p, n) =>
                           p.obscurePassword != n.obscurePassword,
@@ -93,7 +94,7 @@ class LoginView extends StatelessWidget {
                               .read<LoginCubit>()
                               .passwordController,
                           prefixWidget: Padding(
-                            padding: const EdgeInsets.all(12),
+                            padding: EdgeInsets.all(12.r),
                             child: SvgPicture.asset(
                               AppIcons.icLock,
                               width: 20,
@@ -110,7 +111,7 @@ class LoginView extends StatelessWidget {
                                 .read<LoginCubit>()
                                 .toggleObscurePassword,
                             child: Padding(
-                              padding: const EdgeInsets.all(12),
+                              padding: EdgeInsets.all(12.r),
                               child: SvgPicture.asset(
                                 AppIcons.icEyeSlash,
                                 width: 20,
@@ -125,7 +126,7 @@ class LoginView extends StatelessWidget {
                         );
                       },
                     ),
-                    const SizedBox(height: 10),
+                    SizedBox(height: 10.h),
 
                     // Forget Password
                     Align(
@@ -134,58 +135,43 @@ class LoginView extends StatelessWidget {
                         onTap: context.read<LoginCubit>().openForgotPassword,
                         child: Text(
                           context.tr.authForgotPassword,
-                          style: GoogleFonts.inter(
-                            fontSize: AppFonts.bodySmall,
-                            fontWeight: FontWeight.w600,
-                            color: AppColors.primary,
-                          ),
+                          style: AppTextStyles.bodySmall(color: AppColors.primary)
+                              .copyWith(fontWeight: FontWeight.w700),
                         ),
                       ),
                     ),
-                    const SizedBox(height: 22),
+                    SizedBox(height: 22.h),
 
                     // Login button
                     BlocBuilder<LoginCubit, LoginState>(
                       buildWhen: (p, n) => p.status != n.status,
                       builder: (context, state) {
                         final isLoading = state.status == LoginStatus.loading;
-                        return SizedBox(
-                          width: double.infinity,
-                          height: 48,
-                          child: ElevatedButton(
-                            onPressed: isLoading ? null : () {
-                              context.read<LoginCubit>().submitLogin();
-                            },
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: AppColors.primary,
-                              foregroundColor: Colors.white,
-                              elevation: 0,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(50),
-                              ),
-                            ),
-                            child: isLoading
-                                ? const SizedBox(
-                                    width: 24,
-                                    height: 24,
-                                    child: CircularProgressIndicator(
-                                      color: Colors.white,
-                                      strokeWidth: 2.5,
-                                    ),
-                                  )
-                                : Text(
-                                    context.tr.authLoginButton,
-                                    style: GoogleFonts.inter(
-                                      fontSize: AppFonts.bodyLarge,
-                                      fontWeight: FontWeight.w600,
-                                      color: Colors.white,
-                                    ),
+                        return AppButton(
+                          heigh: 54.h,
+                          radius: 999.r,
+                          color: AppColors.primary,
+                          onTap: isLoading
+                              ? null
+                              : () => context.read<LoginCubit>().submitLogin(),
+                          child: isLoading
+                              ? SizedBox(
+                                  width: 22.r,
+                                  height: 22.r,
+                                  child: const CircularProgressIndicator(
+                                    color: Colors.white,
+                                    strokeWidth: 2.5,
                                   ),
-                          ),
+                                )
+                              : Text(
+                                  context.tr.authLoginButton,
+                                  style: AppTextStyles.button(color: Colors.white)
+                                      .copyWith(fontWeight: FontWeight.w700),
+                                ),
                         );
                       },
                     ),
-                    const SizedBox(height: 16),
+                    SizedBox(height: 16.h),
 
                     // Don't have an account? Create One
                     Center(
@@ -193,30 +179,27 @@ class LoginView extends StatelessWidget {
                         onTap: context.read<LoginCubit>().openSignUp,
                         child: RichText(
                           text: TextSpan(
-                            style: GoogleFonts.inter(
-                              fontSize: AppFonts.bodyMedium,
+                            style: AppTextStyles.bodyMedium(
                               color: AppColors.greyText,
                             ),
                             children: [
                               TextSpan(text: context.tr.authNoAccountPrompt),
                               TextSpan(
                                 text: context.tr.authCreateOne,
-                                style: GoogleFonts.inter(
-                                  fontSize: AppFonts.bodyMedium,
-                                  fontWeight: FontWeight.w600,
+                                style: AppTextStyles.bodyMedium(
                                   color: AppColors.primary,
-                                ),
+                                ).copyWith(fontWeight: FontWeight.w700),
                               ),
                             ],
                           ),
                         ),
                       ),
                     ),
-                    const SizedBox(height: 18),
+                    SizedBox(height: 18.h),
 
                     // Divider: "Or Login with"
                     DividerWithText(text: context.tr.authOrLoginWith),
-                    const SizedBox(height: 14),
+                    SizedBox(height: 14.h),
 
                     // Continue with Google
                     SocialLoginButton(
@@ -228,7 +211,7 @@ class LoginView extends StatelessWidget {
                       text: context.tr.authContinueWithGoogle,
                       onPressed: () {},
                     ),
-                    const SizedBox(height: 12),
+                    SizedBox(height: 12.h),
 
                     // Continue with Apple
                     SocialLoginButton(
@@ -240,31 +223,28 @@ class LoginView extends StatelessWidget {
                       text: context.tr.authContinueWithApple,
                       onPressed: () {},
                     ),
-                    const SizedBox(height: 18),
+                    SizedBox(height: 18.h),
 
                     // Travel Agency
                     Center(
                       child: RichText(
                         text: TextSpan(
-                          style: GoogleFonts.inter(
-                            fontSize: AppFonts.bodyMedium,
+                          style: AppTextStyles.bodyMedium(
                             color: AppColors.greyText,
                           ),
                           children: [
                             TextSpan(text: context.tr.authTravelAgencyPrompt),
                             TextSpan(
                               text: context.tr.authJoinAsTripPartner,
-                              style: GoogleFonts.inter(
-                                fontSize: AppFonts.bodyMedium,
-                                fontWeight: FontWeight.w600,
+                              style: AppTextStyles.bodyMedium(
                                 color: AppColors.primary,
-                              ),
+                              ).copyWith(fontWeight: FontWeight.w700),
                             ),
                           ],
                         ),
                       ),
                     ),
-                    const SizedBox(height: 16),
+                    SizedBox(height: 16.h),
                   ],
                   ),
                 ),
@@ -286,11 +266,8 @@ class _FieldTitle extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       text,
-      style: GoogleFonts.inter(
-        fontSize: AppFonts.bodyLarge,
-        fontWeight: FontWeight.w700,
-        color: AppColors.darkText,
-      ),
+      style: AppTextStyles.bodyMedium(color: AppColors.darkText)
+          .copyWith(fontWeight: FontWeight.w700),
     );
   }
 }

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import '../../../../core/theme/app_colors.dart';
-import '../../../../core/theme/app_text_styles.dart';
+import 'package:trip_marche/core/theme/app_colors.dart';
+import 'package:trip_marche/core/theme/app_text_styles.dart';
 import 'trip_details_info_card.dart';
 
 class TripDetailsStatGrid extends StatelessWidget {
