@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'package:trip_marche/core/navigation/app_navigator.dart';
-import 'package:trip_marche/core/utils/validator.dart';
-import 'package:trip_marche/features/auth/data/models/register_request.dart';
-import 'package:trip_marche/features/auth/domain/repositories/auth_repository.dart';
-import 'package:trip_marche/features/auth/presentation/cubit/sign_up/sign_up_state.dart';
-import 'package:trip_marche/features/auth/presentation/view/verify_number_view.dart';
+import '../../../../../core/navigation/app_navigator.dart';
+import '../../../../../core/utils/validator.dart';
+import '../../../data/models/register_request.dart';
+import '../../../domain/repositories/auth_repository.dart';
+import 'sign_up_state.dart';
+import '../../view/verify_number_view.dart';
 
 class SignUpCubit extends Cubit<SignUpState> {
   SignUpCubit(this._navigator, this._authRepository) : super(const SignUpState());

@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
-import 'package:trip_marche/core/theme/app_colors.dart';
-import 'package:trip_marche/core/theme/app_text_styles.dart';
-import 'package:trip_marche/core/data/dummy_data.dart';
-import 'package:trip_marche/features/search/presentation/widgets/destination_grid_item.dart';
-import 'package:trip_marche/features/search/presentation/widgets/recent_search_chip.dart';
-import 'package:trip_marche/core/extensions/localization.dart';
+import '../../../../core/theme/app_colors.dart';
+import '../../../../core/theme/app_text_styles.dart';
+import '../../../../core/data/dummy_data.dart';
+import '../widgets/destination_grid_item.dart';
+import '../widgets/recent_search_chip.dart';
+import '../../../../core/extensions/localization.dart';
 
 class DestinationView extends StatelessWidget {
   const DestinationView({super.key});

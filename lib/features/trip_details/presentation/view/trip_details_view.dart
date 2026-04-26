@@ -2,15 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:iconsax/iconsax.dart';
-import 'package:trip_marche/core/extensions/localization.dart';
-import 'package:trip_marche/core/theme/app_colors.dart';
-import 'package:trip_marche/features/trip_details/presentation/cubit/trip_details_cubit.dart';
-import 'package:trip_marche/features/trip_details/presentation/widgets/trip_details_booking_bar.dart';
-import 'package:trip_marche/features/trip_details/presentation/widgets/trip_details_hero_header.dart';
-import 'package:trip_marche/features/trip_details/presentation/widgets/trip_details_stat_grid.dart';
-import 'package:trip_marche/features/trip_details/presentation/widgets/trip_details_post_stats_sections.dart';
-import 'package:trip_marche/features/trip_details/presentation/widgets/trip_details_program_section.dart';
-import 'package:trip_marche/features/trip_details/presentation/widgets/trip_details_travel_sections.dart';
+import '../../../../core/extensions/localization.dart';
+import '../../../../core/theme/app_colors.dart';
+import '../cubit/trip_details_cubit.dart';
+import '../widgets/trip_details_booking_bar.dart';
+import '../widgets/trip_details_hero_header.dart';
+import '../widgets/trip_details_stat_grid.dart';
+import '../widgets/trip_details_post_stats_sections.dart';
+import '../widgets/trip_details_program_section.dart';
+import '../widgets/trip_details_travel_sections.dart';
 
 class TripDetailsView extends StatelessWidget {
   const TripDetailsView({super.key});

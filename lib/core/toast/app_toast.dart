@@ -1,4 +1,4 @@
-import 'package:trip_marche/core/toast/toast_service.dart';
+import 'toast_service.dart';
 import 'package:flutter/material.dart';
 
 Future<void> appToast({

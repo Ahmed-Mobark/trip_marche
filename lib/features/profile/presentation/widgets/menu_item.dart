@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:iconsax/iconsax.dart';
-import 'package:trip_marche/core/config/app_colors.dart';
-import 'package:trip_marche/core/config/styles/styles.dart';
+import '../../../../core/config/app_colors.dart';
+import '../../../../core/config/styles/styles.dart';
 
 class ProfileMenuItem extends StatelessWidget {
   final IconData icon;

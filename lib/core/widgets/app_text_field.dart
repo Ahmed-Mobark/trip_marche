@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:trip_marche/core/widgets/app_text_form_field.dart';
+import 'app_text_form_field.dart';
 
 class AppTextField extends StatelessWidget {
   final String? label;

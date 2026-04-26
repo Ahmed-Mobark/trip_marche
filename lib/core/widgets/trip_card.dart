@@ -1,9 +1,9 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
-import 'package:trip_marche/core/config/app_colors.dart';
-import 'package:trip_marche/core/config/styles/styles.dart';
-import 'package:trip_marche/core/data/dummy_data.dart';
+import '../config/app_colors.dart';
+import '../config/styles/styles.dart';
+import '../data/dummy_data.dart';
 
 class TripCard extends StatelessWidget {
   const TripCard({

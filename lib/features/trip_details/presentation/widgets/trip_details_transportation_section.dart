@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:iconsax/iconsax.dart';
-import 'package:trip_marche/core/config/styles/styles.dart';
-import 'package:trip_marche/core/extensions/localization.dart';
-import 'package:trip_marche/features/trip_details/presentation/widgets/trip_details_travel_leg_card.dart';
+import '../../../../core/config/styles/styles.dart';
+import '../../../../core/extensions/localization.dart';
+import 'trip_details_travel_leg_card.dart';
 
 class TripDetailsTransportationSection extends StatelessWidget {
   const TripDetailsTransportationSection({super.key});

@@ -1,5 +1,5 @@
-import 'package:trip_marche/core/config/app_icons.dart';
-import 'package:trip_marche/core/config/styles/styles.dart';
+import '../config/app_icons.dart';
+import '../config/styles/styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';

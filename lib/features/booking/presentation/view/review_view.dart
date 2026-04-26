@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:iconsax/iconsax.dart';
-import 'package:trip_marche/core/theme/app_colors.dart';
-import 'package:trip_marche/core/theme/app_text_styles.dart';
-import 'package:trip_marche/features/booking/presentation/widgets/trip_summary_card.dart';
-import 'package:trip_marche/features/booking/presentation/widgets/info_row.dart';
-import 'package:trip_marche/features/booking/presentation/widgets/price_breakdown.dart';
+import '../../../../core/theme/app_colors.dart';
+import '../../../../core/theme/app_text_styles.dart';
+import '../widgets/trip_summary_card.dart';
+import '../widgets/info_row.dart';
+import '../widgets/price_breakdown.dart';
 
 class ReviewView extends StatefulWidget {
   const ReviewView({super.key});

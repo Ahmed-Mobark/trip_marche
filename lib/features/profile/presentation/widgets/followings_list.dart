@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:trip_marche/features/profile/presentation/widgets/company_card.dart';
+import 'company_card.dart';
 
 class FollowingsList extends StatelessWidget {
   const FollowingsList({

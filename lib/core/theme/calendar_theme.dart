@@ -1,7 +1,7 @@
-import 'package:trip_marche/core/config/app_colors.dart';
-import 'package:trip_marche/core/config/styles/styles.dart';
-import 'package:trip_marche/core/injection/injection_container.dart';
-import 'package:trip_marche/core/storage/data/storage.dart';
+import '../config/app_colors.dart';
+import '../config/styles/styles.dart';
+import '../injection/injection_container.dart';
+import '../storage/data/storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 

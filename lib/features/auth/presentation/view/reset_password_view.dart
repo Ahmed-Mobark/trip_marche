@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:trip_marche/core/theme/app_text_styles.dart';
-import 'package:trip_marche/core/theme/app_colors.dart';
-import 'package:trip_marche/core/widgets/app_button.dart';
-import 'package:trip_marche/core/widgets/app_text_field.dart';
-import 'package:trip_marche/core/extensions/localization.dart';
-import 'package:trip_marche/core/injection/injection_container.dart';
-import 'package:trip_marche/core/navigation/app_navigator.dart';
-import 'package:trip_marche/core/config/app_icons.dart';
-import 'package:trip_marche/core/toast/app_toast.dart';
-import 'package:trip_marche/features/auth/domain/repositories/auth_repository.dart';
-import 'package:trip_marche/features/auth/presentation/cubit/reset_password/reset_password_cubit.dart';
-import 'package:trip_marche/features/auth/presentation/cubit/reset_password/reset_password_state.dart';
-import 'package:trip_marche/features/auth/presentation/widgets/auth_header.dart';
+import '../../../../core/theme/app_text_styles.dart';
+import '../../../../core/theme/app_colors.dart';
+import '../../../../core/widgets/app_button.dart';
+import '../../../../core/widgets/app_text_field.dart';
+import '../../../../core/extensions/localization.dart';
+import '../../../../core/injection/injection_container.dart';
+import '../../../../core/navigation/app_navigator.dart';
+import '../../../../core/config/app_icons.dart';
+import '../../../../core/toast/app_toast.dart';
+import '../../domain/repositories/auth_repository.dart';
+import '../cubit/reset_password/reset_password_cubit.dart';
+import '../cubit/reset_password/reset_password_state.dart';
+import '../widgets/auth_header.dart';
 
 class ResetPasswordView extends StatelessWidget {
   const ResetPasswordView({

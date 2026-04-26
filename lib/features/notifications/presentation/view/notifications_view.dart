@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:iconsax/iconsax.dart';
-import 'package:trip_marche/core/theme/app_colors.dart';
-import 'package:trip_marche/core/theme/app_text_styles.dart';
-import 'package:trip_marche/features/notifications/presentation/widgets/notification_item.dart';
+import '../../../../core/theme/app_colors.dart';
+import '../../../../core/theme/app_text_styles.dart';
+import '../widgets/notification_item.dart';
 
 class NotificationsView extends StatelessWidget {
   const NotificationsView({super.key});

@@ -1,7 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:trip_marche/core/config/app_colors.dart';
-import 'package:trip_marche/core/config/app_images.dart';
-import 'package:trip_marche/core/widgets/app_shimmer.dart';
+import '../config/app_colors.dart';
+import '../config/app_images.dart';
+import 'app_shimmer.dart';
 import 'package:flutter/material.dart';
 
 class AppCachedNetworkImage extends StatelessWidget {

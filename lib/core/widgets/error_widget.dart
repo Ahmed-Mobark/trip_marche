@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:trip_marche/core/config/styles/styles.dart';
+import '../config/styles/styles.dart';
 
 class AppErrorWidget extends StatelessWidget {
   final String message;

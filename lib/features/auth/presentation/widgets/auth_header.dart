@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:trip_marche/core/config/app_icons.dart';
-import 'package:trip_marche/core/theme/app_colors.dart';
+import '../../../../core/config/app_icons.dart';
+import '../../../../core/theme/app_colors.dart';
 
 class AuthHeader extends StatelessWidget {
   final Widget child;

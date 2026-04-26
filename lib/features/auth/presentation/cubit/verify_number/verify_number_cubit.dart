@@ -2,13 +2,13 @@ import 'dart:async';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'package:trip_marche/core/navigation/app_navigator.dart';
-import 'package:trip_marche/core/storage/data/storage.dart';
-import 'package:trip_marche/features/auth/data/models/verify_email_request.dart';
-import 'package:trip_marche/features/auth/domain/repositories/auth_repository.dart';
-import 'package:trip_marche/features/auth/presentation/cubit/verify_number/verify_number_state.dart';
-import 'package:trip_marche/features/auth/presentation/view/reset_password_view.dart';
-import 'package:trip_marche/features/nav_bar/presentation/view/main_nav_view.dart';
+import '../../../../../core/navigation/app_navigator.dart';
+import '../../../../../core/storage/data/storage.dart';
+import '../../../data/models/verify_email_request.dart';
+import '../../../domain/repositories/auth_repository.dart';
+import 'verify_number_state.dart';
+import '../../view/reset_password_view.dart';
+import '../../../../nav_bar/presentation/view/main_nav_view.dart';
 
 enum VerifyType { emailVerification, passwordReset }
 

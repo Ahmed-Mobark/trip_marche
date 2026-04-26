@@ -1,13 +1,13 @@
 import 'dart:io';
-import 'package:trip_marche/core/config/app_icons.dart';
-import 'package:trip_marche/core/enums/media_type.dart';
-import 'package:trip_marche/core/injection/injection_container.dart';
-import 'package:trip_marche/core/navigation/app_navigator.dart';
-import 'package:trip_marche/core/services/media_service/media_services.dart';
-import 'package:trip_marche/core/widgets/bottom_sheet_card.dart';
+import '../config/app_icons.dart';
+import '../enums/media_type.dart';
+import '../injection/injection_container.dart';
+import '../navigation/app_navigator.dart';
+import '../services/media_service/media_services.dart';
+import 'bottom_sheet_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:trip_marche/core/extensions/localization.dart';
+import '../extensions/localization.dart';
 
 class UploadBottomSheet extends StatelessWidget {
   final Function(File file) onchange;

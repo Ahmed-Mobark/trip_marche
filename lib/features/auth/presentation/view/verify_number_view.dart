@@ -1,20 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:trip_marche/core/config/app_icons.dart';
-import 'package:trip_marche/core/navigation/app_navigator.dart';
-import 'package:trip_marche/core/theme/app_colors.dart';
-import 'package:trip_marche/core/theme/app_text_styles.dart';
-import 'package:trip_marche/core/widgets/app_button.dart';
-import 'package:trip_marche/features/auth/presentation/widgets/otp_input_field.dart';
-import 'package:trip_marche/core/extensions/localization.dart';
-import 'package:trip_marche/core/injection/injection_container.dart';
-import 'package:trip_marche/features/auth/domain/repositories/auth_repository.dart';
-import 'package:trip_marche/core/storage/data/storage.dart';
-import 'package:trip_marche/features/auth/presentation/cubit/verify_number/verify_number_cubit.dart';
-import 'package:trip_marche/features/auth/presentation/cubit/verify_number/verify_number_state.dart';
-import 'package:trip_marche/features/auth/presentation/widgets/auth_header.dart';
-import 'package:trip_marche/core/toast/app_toast.dart';
+import '../../../../core/config/app_icons.dart';
+import '../../../../core/navigation/app_navigator.dart';
+import '../../../../core/theme/app_colors.dart';
+import '../../../../core/theme/app_text_styles.dart';
+import '../../../../core/widgets/app_button.dart';
+import '../widgets/otp_input_field.dart';
+import '../../../../core/extensions/localization.dart';
+import '../../../../core/injection/injection_container.dart';
+import '../../domain/repositories/auth_repository.dart';
+import '../../../../core/storage/data/storage.dart';
+import '../cubit/verify_number/verify_number_cubit.dart';
+import '../cubit/verify_number/verify_number_state.dart';
+import '../widgets/auth_header.dart';
+import '../../../../core/toast/app_toast.dart';
 
 class VerifyNumberView extends StatelessWidget {
   const VerifyNumberView({

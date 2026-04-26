@@ -1,5 +1,5 @@
-import 'package:trip_marche/core/config/app_colors.dart';
-import 'package:trip_marche/core/config/app_images.dart';
+import '../config/app_colors.dart';
+import '../config/app_images.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 

@@ -1,6 +1,6 @@
-import 'package:trip_marche/core/config/app_colors.dart';
-import 'package:trip_marche/core/config/app_icons.dart';
-import 'package:trip_marche/core/widgets/app_text_form_field.dart';
+import '../config/app_colors.dart';
+import '../config/app_icons.dart';
+import 'app_text_form_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 

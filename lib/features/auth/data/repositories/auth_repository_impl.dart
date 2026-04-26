@@ -1,12 +1,12 @@
 import 'package:dartz/dartz.dart';
-import 'package:trip_marche/core/network/network_service/failures.dart';
-import 'package:trip_marche/core/network/network_service/repository_helper.dart';
-import 'package:trip_marche/features/auth/data/datasources/auth_remote_data_source.dart';
-import 'package:trip_marche/features/auth/data/models/login_request.dart';
-import 'package:trip_marche/features/auth/data/models/register_request.dart';
-import 'package:trip_marche/features/auth/data/models/reset_password_request.dart';
-import 'package:trip_marche/features/auth/data/models/verify_email_request.dart';
-import 'package:trip_marche/features/auth/domain/repositories/auth_repository.dart';
+import '../../../../core/network/network_service/failures.dart';
+import '../../../../core/network/network_service/repository_helper.dart';
+import '../datasources/auth_remote_data_source.dart';
+import '../models/login_request.dart';
+import '../models/register_request.dart';
+import '../models/reset_password_request.dart';
+import '../models/verify_email_request.dart';
+import '../../domain/repositories/auth_repository.dart';
 
 class AuthRepositoryImpl with RepositoryHelper implements AuthRepository {
   AuthRepositoryImpl(this._remoteDataSource);

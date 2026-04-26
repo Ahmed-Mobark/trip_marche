@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:trip_marche/core/config/app_colors.dart';
-import 'package:trip_marche/core/extensions/localization.dart';
+import '../config/app_colors.dart';
+import '../extensions/localization.dart';
 
 class CustomUpdateDialog extends StatelessWidget {
   const CustomUpdateDialog({super.key, required this.onUpdateNow, this.onSkip});

@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:iconsax/iconsax.dart';
-import 'package:trip_marche/core/theme/app_colors.dart';
-import 'package:trip_marche/features/home/presentation/view/home_view.dart';
-import 'package:trip_marche/features/my_trips/presentation/view/my_trips_view.dart';
-import 'package:trip_marche/features/wishlist/presentation/view/wishlist_view.dart';
-import 'package:trip_marche/features/profile/presentation/view/profile_view.dart';
-import 'package:trip_marche/core/extensions/localization.dart';
+import '../../../../core/theme/app_colors.dart';
+import '../../../home/presentation/view/home_view.dart';
+import '../../../my_trips/presentation/view/my_trips_view.dart';
+import '../../../wishlist/presentation/view/wishlist_view.dart';
+import '../../../profile/presentation/view/profile_view.dart';
+import '../../../../core/extensions/localization.dart';
 
 class MainNavView extends StatefulWidget {
   const MainNavView({super.key});

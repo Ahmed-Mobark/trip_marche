@@ -1,5 +1,5 @@
 import 'package:dio/dio.dart';
-import 'package:trip_marche/core/network/network_service/api_basehelper.dart';
+import 'network_service/api_basehelper.dart';
 import 'package:get_it/get_it.dart';
 import 'package:internet_connection_checker_plus/internet_connection_checker_plus.dart';
 

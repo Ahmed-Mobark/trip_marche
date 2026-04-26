@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
-import 'package:trip_marche/core/theme/app_colors.dart';
-import 'package:trip_marche/core/theme/app_text_styles.dart';
-import 'package:trip_marche/core/injection/injection_container.dart';
-import 'package:trip_marche/core/navigation/app_navigator.dart';
-import 'package:trip_marche/features/settings/presentation/widgets/settings_row.dart';
-import 'package:trip_marche/features/settings/presentation/view/notification_settings_view.dart';
-import 'package:trip_marche/features/settings/presentation/view/language_view.dart';
-import 'package:trip_marche/core/extensions/localization.dart';
+import '../../../../core/theme/app_colors.dart';
+import '../../../../core/theme/app_text_styles.dart';
+import '../../../../core/injection/injection_container.dart';
+import '../../../../core/navigation/app_navigator.dart';
+import '../widgets/settings_row.dart';
+import 'notification_settings_view.dart';
+import 'language_view.dart';
+import '../../../../core/extensions/localization.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class SettingsView extends StatefulWidget {

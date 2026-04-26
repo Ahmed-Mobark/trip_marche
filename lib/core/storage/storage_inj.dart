@@ -1,5 +1,5 @@
-import 'package:trip_marche/core/storage/data/storage.dart';
-import 'package:trip_marche/core/storage/data/storage_impl.dart';
+import 'data/storage.dart';
+import 'data/storage_impl.dart';
 import 'package:get_it/get_it.dart';
 import 'package:path_provider/path_provider.dart' as path_provider;
 import 'package:hive_flutter/hive_flutter.dart';

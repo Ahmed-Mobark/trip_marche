@@ -1,4 +1,4 @@
-import 'package:trip_marche/core/storage/data/storage.dart';
+import 'storage.dart';
 import 'package:hive/hive.dart';
 import 'dart:convert';
 

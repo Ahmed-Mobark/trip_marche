@@ -1,9 +1,9 @@
 import 'package:dartz/dartz.dart';
-import 'package:trip_marche/core/network/network_service/failures.dart';
-import 'package:trip_marche/features/auth/data/models/login_request.dart';
-import 'package:trip_marche/features/auth/data/models/register_request.dart';
-import 'package:trip_marche/features/auth/data/models/reset_password_request.dart';
-import 'package:trip_marche/features/auth/data/models/verify_email_request.dart';
+import '../../../../core/network/network_service/failures.dart';
+import '../../data/models/login_request.dart';
+import '../../data/models/register_request.dart';
+import '../../data/models/reset_password_request.dart';
+import '../../data/models/verify_email_request.dart';
 
 /// Auth repository contract (domain). Implemented in [AuthRepositoryImpl].
 abstract class AuthRepository {

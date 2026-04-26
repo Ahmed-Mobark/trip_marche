@@ -1,4 +1,4 @@
-import 'package:trip_marche/core/network/network_service/api_error.dart';
+import 'api_error.dart';
 
 class ApiResponse<T> {
   final T? data;

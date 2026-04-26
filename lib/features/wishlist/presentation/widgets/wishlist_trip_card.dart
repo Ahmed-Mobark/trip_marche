@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:iconsax/iconsax.dart';
-import 'package:trip_marche/core/data/dummy_data.dart';
-import 'package:trip_marche/core/injection/injection_container.dart';
-import 'package:trip_marche/core/navigation/app_navigator.dart';
-import 'package:trip_marche/core/theme/app_colors.dart';
-import 'package:trip_marche/core/theme/app_text_styles.dart';
-import 'package:trip_marche/core/widgets/app_cached_network_image.dart';
-import 'package:trip_marche/features/trip_details/presentation/view/trip_details_view.dart';
+import '../../../../core/data/dummy_data.dart';
+import '../../../../core/injection/injection_container.dart';
+import '../../../../core/navigation/app_navigator.dart';
+import '../../../../core/theme/app_colors.dart';
+import '../../../../core/theme/app_text_styles.dart';
+import '../../../../core/widgets/app_cached_network_image.dart';
+import '../../../trip_details/presentation/view/trip_details_view.dart';
 
 class WishlistTripCard extends StatelessWidget {
   const WishlistTripCard({

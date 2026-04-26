@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:iconsax/iconsax.dart';
-import 'package:trip_marche/core/extensions/localization.dart';
-import 'package:trip_marche/core/theme/app_colors.dart';
-import 'package:trip_marche/core/theme/app_text_styles.dart';
-import 'package:trip_marche/core/widgets/app_button.dart';
-import 'package:trip_marche/features/wishlist/presentation/cubit/wishlist_filter_cubit.dart';
-import 'package:trip_marche/features/wishlist/presentation/cubit/wishlist_filter_state.dart';
-import 'package:trip_marche/features/wishlist/presentation/widgets/wishlist_filter_widgets.dart';
+import '../../../../core/extensions/localization.dart';
+import '../../../../core/theme/app_colors.dart';
+import '../../../../core/theme/app_text_styles.dart';
+import '../../../../core/widgets/app_button.dart';
+import '../cubit/wishlist_filter_cubit.dart';
+import '../cubit/wishlist_filter_state.dart';
+import '../widgets/wishlist_filter_widgets.dart';
 
 class WishlistFilterView extends StatelessWidget {
   const WishlistFilterView({super.key});

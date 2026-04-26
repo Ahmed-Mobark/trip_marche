@@ -1,5 +1,5 @@
 import 'dart:io';
-import 'package:trip_marche/core/enums/media_type.dart';
+import '../../enums/media_type.dart';
 import 'package:flutter/cupertino.dart';
 
 

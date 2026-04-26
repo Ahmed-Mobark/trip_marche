@@ -1,7 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/material.dart';
 
-import 'package:trip_marche/features/wishlist/presentation/cubit/wishlist_filter_state.dart';
+import 'wishlist_filter_state.dart';
 
 class WishlistFilterCubit extends Cubit<WishlistFilterState> {
   WishlistFilterCubit() : super(const WishlistFilterState());
