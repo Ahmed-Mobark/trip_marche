@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:iconsax/iconsax.dart';
-import '../../../../core/extensions/localization.dart';
-import '../../../../core/theme/app_colors.dart';
+import 'package:trip_marche/core/extensions/localization.dart';
+import 'package:trip_marche/core/theme/app_colors.dart';
 import '../cubit/trip_details_cubit.dart';
 import '../widgets/trip_details_booking_bar.dart';
 import '../widgets/trip_details_hero_header.dart';
@@ -56,38 +56,57 @@ class _TripDetailsBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final horizontalPadding = 20.w;
+    // Figma-like layout: hero image + rounded "sheet" that overlaps the hero.
+    final horizontalPadding = 16.w;
+    final sheetTopRadius = 28.r;
+    final sheetOverlap = 26.h;
+
     return Scaffold(
       backgroundColor: AppColors.scaffoldBg,
       body: Stack(
         children: [
-          SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const TripDetailsHeroHeader(),
-                Container(
-                  width: double.infinity,
-                  decoration: BoxDecoration(color: AppColors.white),
-                  child: Padding(
-                    padding: EdgeInsetsDirectional.only(
-                      start: horizontalPadding,
-                      end: horizontalPadding,
-                      bottom: 120.h,
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        _buildStatGrid(context),
-                        const TripDetailsPostStatsSections(),
-                        const TripDetailsProgramSection(),
-                        const TripDetailsTravelSections(),
+          CustomScrollView(
+            slivers: [
+              const SliverToBoxAdapter(child: TripDetailsHeroHeader()),
+              SliverToBoxAdapter(
+                child: Transform.translate(
+                  offset: Offset(0, -sheetOverlap),
+                  child: Container(
+                    width: double.infinity,
+                    decoration: BoxDecoration(
+                      color: AppColors.white,
+                      borderRadius: BorderRadius.vertical(
+                        top: Radius.circular(sheetTopRadius),
+                      ),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withValues(alpha: 0.06),
+                          blurRadius: 22.r,
+                          offset: Offset(0, 10.h),
+                        ),
                       ],
+                    ),
+                    child: Padding(
+                      padding: EdgeInsetsDirectional.only(
+                        start: horizontalPadding,
+                        end: horizontalPadding,
+                        top: 18.h,
+                        bottom: 140.h,
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          _buildStatGrid(context),
+                          const TripDetailsPostStatsSections(),
+                          const TripDetailsProgramSection(),
+                          const TripDetailsTravelSections(),
+                        ],
+                      ),
                     ),
                   ),
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
           PositionedDirectional(
             bottom: 0,

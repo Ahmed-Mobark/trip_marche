@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:iconsax/iconsax.dart';
-import '../../../../core/config/app_colors.dart';
-import '../../../../core/config/styles/styles.dart';
-import '../../../../core/injection/injection_container.dart';
-import '../../../../core/navigation/app_navigator.dart';
+import 'package:trip_marche/core/config/app_colors.dart';
+import 'package:trip_marche/core/config/styles/styles.dart';
+import 'package:trip_marche/core/injection/injection_container.dart';
+import 'package:trip_marche/core/navigation/app_navigator.dart';
+import 'package:trip_marche/core/widgets/app_confirm_dialog.dart';
 import '../widgets/menu_item.dart';
 import '../widgets/profile_avatar.dart';
 import 'personal_info_view.dart';
@@ -213,33 +214,15 @@ class ProfileView extends StatelessWidget {
   void _showDeleteAccountDialog(BuildContext context) {
     showDialog(
       context: context,
-      builder: (context) => AlertDialog(
-        title: Text(
-          context.tr.profileDeleteAccountTitle,
-          style: AppTextStyles.subtitle(color: AppColors.darkText),
-        ),
-        content: Text(
-          context.tr.profileDeleteAccountMessage,
-          style: AppTextStyles.body(color: AppColors.greyText),
-        ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(context),
-            child: Text(
-              context.tr.commonCancel,
-              style: AppTextStyles.bodyMedium(color: AppColors.greyText),
-            ),
-          ),
-          TextButton(
-            onPressed: () {
-              Navigator.pop(context);
-            },
-            child: Text(
-              context.tr.commonDelete,
-              style: AppTextStyles.bodyMedium(color: AppColors.error),
-            ),
-          ),
-        ],
+      barrierColor: Colors.black.withValues(alpha: 0.55),
+      builder: (dialogContext) => AppConfirmDialog(
+        message: context.tr.profileDeleteAccountMessage,
+        secondaryActionText: context.tr.commonCancel,
+        onSecondaryAction: () => Navigator.pop(dialogContext),
+        primaryActionText: context.tr.commonDelete,
+        onPrimaryAction: () {
+          Navigator.pop(dialogContext);
+        },
       ),
     );
   }
@@ -247,34 +230,17 @@ class ProfileView extends StatelessWidget {
   void _showLogoutDialog(BuildContext context) {
     showDialog(
       context: context,
-      builder: (context) => AlertDialog(
-        title: Text(
-          context.tr.profileLogoutConfirmTitle,
-          style: AppTextStyles.subtitle(color: AppColors.darkText),
-        ),
-        content: Text(
-          context.tr.profileLogoutConfirmMessage,
-          style: AppTextStyles.body(color: AppColors.greyText),
-        ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(context),
-            child: Text(
-              context.tr.commonCancel,
-              style: AppTextStyles.bodyMedium(color: AppColors.greyText),
-            ),
-          ),
-          TextButton(
-            onPressed: () {
-              Navigator.pop(context);
-              _performLogout(context);
-            },
-            child: Text(
-              context.tr.profileLogout,
-              style: AppTextStyles.bodyMedium(color: AppColors.error),
-            ),
-          ),
-        ],
+      barrierColor: Colors.black.withValues(alpha: 0.55),
+      builder: (dialogContext) => AppConfirmDialog(
+        message: context.tr.profileLogoutConfirmMessage,
+        secondaryActionText: context.tr.commonCancel,
+        onSecondaryAction: () => Navigator.pop(dialogContext),
+        primaryActionText: context.tr.profileLogout,
+        onPrimaryAction: () {
+          Navigator.pop(dialogContext);
+          _performLogout(context);
+        },
+        primaryActionColor: AppColors.error,
       ),
     );
   }

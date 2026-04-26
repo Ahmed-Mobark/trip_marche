@@ -25,7 +25,7 @@ class PopularTripGridCard extends StatelessWidget {
     return LayoutBuilder(
       builder: (context, constraints) {
         final maxH = constraints.maxHeight;
-        final imageH = (maxH * 0.48).clamp(116.0, 220.0);
+        final imageH = (maxH * 0.58).clamp(116.0, 220.0);
         return GestureDetector(
           onTap: onTap,
           child: Container(

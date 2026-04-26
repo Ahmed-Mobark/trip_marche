@@ -1,11 +1,10 @@
 import 'package:country_code_picker/country_code_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import '../../../../core/theme/app_colors.dart';
-import '../../../../core/theme/app_text_styles.dart';
-import '../../../../core/theme/calendar_theme.dart';
-import '../../../../core/widgets/app_text_form_field.dart';
-import '../../../../core/config/app_colors.dart';
+import 'package:trip_marche/core/theme/app_colors.dart';
+import 'package:trip_marche/core/theme/app_text_styles.dart';
+import 'package:trip_marche/core/theme/calendar_theme.dart';
+import 'package:trip_marche/core/widgets/app_text_form_field.dart';
 
 class AuthPhoneNumberField extends StatelessWidget {
   const AuthPhoneNumberField({
@@ -37,7 +36,7 @@ class AuthPhoneNumberField extends StatelessWidget {
       borderColor: Colors.grey.shade500,
       focusedBorderColor: AppColors.primary.withValues(alpha: 0.95),
       errorBorderColor: AppColors.error.withValues(alpha: 0.9),
-      borderRadius: 18,
+      borderRadius: 18.r,
       contentPadding: EdgeInsetsDirectional.fromSTEB(0, 16.h, 16.w, 16.h),
       prefixWidget: _CountryPrefix(
         selectedDialCode: selectedDialCode,

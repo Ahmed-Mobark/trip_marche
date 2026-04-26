@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import '../../../../core/theme/app_colors.dart';
-import '../../../../core/theme/app_text_styles.dart';
+import 'package:trip_marche/core/theme/app_colors.dart';
+import 'package:trip_marche/core/theme/app_text_styles.dart';
 
 class CategoryChip extends StatelessWidget {
   final String label;
@@ -22,10 +22,13 @@ class CategoryChip extends StatelessWidget {
       child: GestureDetector(
         onTap: onTap,
         child: Container(
-          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+          padding: EdgeInsetsDirectional.symmetric(
+            horizontal: 16.w,
+            vertical: 8.h,
+          ),
           decoration: BoxDecoration(
             color: isSelected ? AppColors.primary : AppColors.background,
-            borderRadius: BorderRadius.circular(20),
+            borderRadius: BorderRadius.circular(999.r),
             border: Border.all(
               color: isSelected ? AppColors.primary : AppColors.border,
             ),

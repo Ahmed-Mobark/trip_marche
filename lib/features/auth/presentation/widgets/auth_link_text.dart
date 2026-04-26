@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import '../../../../core/config/app_colors.dart';
 import '../../../../core/theme/app_text_styles.dart';
 
@@ -45,11 +44,8 @@ class AuthLinkText extends StatelessWidget {
               TextSpan(
                 text: actionText,
                 style: actionStyle ??
-                    GoogleFonts.inter(
-                      fontSize: 14,
-                      fontWeight: FontWeight.w600,
-                      color: AppColors.primary,
-                    ),
+                    AppTextStyles.bodyMedium(color: AppColors.primary)
+                        .copyWith(fontWeight: FontWeight.w700),
               ),
             ],
           ),

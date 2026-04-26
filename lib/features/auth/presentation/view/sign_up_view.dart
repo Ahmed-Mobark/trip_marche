@@ -1,21 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import '../../../../core/theme/app_text_styles.dart';
-import '../../../../core/theme/app_colors.dart';
-import '../../../../core/widgets/app_button.dart';
-import '../../../../core/widgets/app_text_field.dart';
-import '../../../../core/widgets/social_login_button.dart';
-import '../../../../core/injection/injection_container.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:trip_marche/core/config/app_icons.dart';
+import 'package:trip_marche/core/extensions/localization.dart';
+import 'package:trip_marche/core/injection/injection_container.dart';
+import 'package:trip_marche/core/theme/app_colors.dart';
+import 'package:trip_marche/core/theme/app_text_styles.dart';
+import 'package:trip_marche/core/toast/app_toast.dart';
+import 'package:trip_marche/core/widgets/app_button.dart';
+import 'package:trip_marche/core/widgets/app_text_field.dart';
+import 'package:trip_marche/core/widgets/social_login_button.dart';
 import '../cubit/sign_up/sign_up_cubit.dart';
 import '../cubit/sign_up/sign_up_state.dart';
 import '../widgets/auth_link_text.dart';
 import '../widgets/auth_header.dart';
 import '../widgets/auth_phone_number_field.dart';
 import '../widgets/divider_with_text.dart';
-import '../../../../core/extensions/localization.dart';
-import '../../../../core/config/app_icons.dart';
-import '../../../../core/toast/app_toast.dart';
 
 class SignUpView extends StatelessWidget {
   const SignUpView({super.key});
@@ -52,21 +53,24 @@ class SignUpView extends StatelessWidget {
               child: AuthHeader(
                 scrollable: true,
                 child: Padding(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 20,
-                    vertical: 20,
+                  padding: EdgeInsetsDirectional.only(
+                    start: 20.w,
+                    end: 20.w,
+                    top: 20.h,
+                    bottom: 20.h,
                   ),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
                         context.tr.authSignUpSubtitle,
-                        style: AppTextStyles.heading2(),
+                        style: AppTextStyles.heading2(color: AppColors.darkText)
+                            .copyWith(fontWeight: FontWeight.w800),
                       ),
-                      const SizedBox(height: 18),
+                      SizedBox(height: 18.h),
 
                       _FieldTitle(text: context.tr.authFullNameLabel),
-                      const SizedBox(height: 8),
+                      SizedBox(height: 8.h),
                       AppTextField(
                         validator: (value) =>
                             context.read<SignUpCubit>().validateName(value),
@@ -75,19 +79,19 @@ class SignUpView extends StatelessWidget {
                             .read<SignUpCubit>()
                             .fullNameController,
                         keyboardType: TextInputType.name,
-                        prefixWidget: const Padding(
-                          padding: EdgeInsets.all(12),
+                        prefixWidget: Padding(
+                          padding: EdgeInsets.all(12.r),
                           child: Icon(
                             Icons.person_outline,
-                            size: 22,
+                            size: 22.sp,
                             color: AppColors.greyText,
                           ),
                         ),
                       ),
-                      const SizedBox(height: 16),
+                      SizedBox(height: 16.h),
 
                       _FieldTitle(text: context.tr.authEmailLabel),
-                      const SizedBox(height: 8),
+                      SizedBox(height: 8.h),
                       AppTextField(
                         validator: (value) =>
                             context.read<SignUpCubit>().validateEmail(value),
@@ -95,7 +99,7 @@ class SignUpView extends StatelessWidget {
                         controller: context.read<SignUpCubit>().emailController,
                         keyboardType: TextInputType.emailAddress,
                         prefixWidget: Padding(
-                          padding: const EdgeInsets.all(12),
+                          padding: EdgeInsets.all(12.r),
                           child: SvgPicture.asset(
                             AppIcons.icSms,
                             width: 20,
@@ -107,10 +111,10 @@ class SignUpView extends StatelessWidget {
                           ),
                         ),
                       ),
-                      const SizedBox(height: 16),
+                      SizedBox(height: 16.h),
 
                       _FieldTitle(text: context.tr.authPasswordLabel),
-                      const SizedBox(height: 8),
+                      SizedBox(height: 8.h),
                       BlocBuilder<SignUpCubit, SignUpState>(
                         buildWhen: (p, n) =>
                             p.obscurePassword != n.obscurePassword,
@@ -127,7 +131,7 @@ class SignUpView extends StatelessWidget {
                                 .passwordController,
                             obscureText: state.obscurePassword,
                             prefixWidget: Padding(
-                              padding: const EdgeInsets.all(12),
+                              padding: EdgeInsets.all(12.r),
                               child: SvgPicture.asset(
                                 AppIcons.icLock,
                                 width: 20,
@@ -144,7 +148,7 @@ class SignUpView extends StatelessWidget {
                                     ? Icons.visibility_off_outlined
                                     : Icons.visibility_outlined,
                                 color: AppColors.greyText,
-                                size: 20,
+                                size: 20.sp,
                               ),
                               onPressed: context
                                   .read<SignUpCubit>()
@@ -153,10 +157,10 @@ class SignUpView extends StatelessWidget {
                           );
                         },
                       ),
-                      const SizedBox(height: 16),
+                      SizedBox(height: 16.h),
 
                       _FieldTitle(text: context.tr.authPhoneLabel),
-                      const SizedBox(height: 8),
+                      SizedBox(height: 8.h),
                       BlocBuilder<SignUpCubit, SignUpState>(
                         buildWhen: (p, n) => p.dialCode != n.dialCode,
                         builder: (context, state) {
@@ -175,7 +179,7 @@ class SignUpView extends StatelessWidget {
                           );
                         },
                       ),
-                      const SizedBox(height: 22),
+                      SizedBox(height: 22.h),
 
                       // Sign Up button
                       BlocBuilder<SignUpCubit, SignUpState>(
@@ -184,6 +188,9 @@ class SignUpView extends StatelessWidget {
                           final isLoading =
                               state.status == SignUpStatus.loading;
                           return AppButton(
+                            heigh: 54.h,
+                            radius: 999.r,
+                            color: AppColors.primary,
                             text: isLoading
                                 ? null
                                 : context.tr.authSignUpButton,
@@ -193,10 +200,10 @@ class SignUpView extends StatelessWidget {
                                     context.read<SignUpCubit>().submitSignUp();
                                   },
                             child: isLoading
-                                ? const SizedBox(
-                                    width: 24,
-                                    height: 24,
-                                    child: CircularProgressIndicator(
+                                ? SizedBox(
+                                    width: 22.r,
+                                    height: 22.r,
+                                    child: const CircularProgressIndicator(
                                       color: Colors.white,
                                       strokeWidth: 2.5,
                                     ),
@@ -205,7 +212,7 @@ class SignUpView extends StatelessWidget {
                           );
                         },
                       ),
-                      const SizedBox(height: 16),
+                      SizedBox(height: 16.h),
 
                       // Already have an account
                       Center(
@@ -215,11 +222,11 @@ class SignUpView extends StatelessWidget {
                           onTap: () => Navigator.pop(context),
                         ),
                       ),
-                      const SizedBox(height: 14),
+                      SizedBox(height: 14.h),
 
                       // Or Login with divider (design)
                       DividerWithText(text: context.tr.authOrLoginWith),
-                      const SizedBox(height: 12),
+                      SizedBox(height: 12.h),
 
                       // Social login buttons
                       SocialLoginButton(
@@ -232,7 +239,7 @@ class SignUpView extends StatelessWidget {
                         onPressed: () {},
                       ),
 
-                      const SizedBox(height: 12),
+                      SizedBox(height: 12.h),
                       SocialLoginButton(
                         icon: SvgPicture.asset(
                           AppIcons.icApple,
@@ -242,7 +249,7 @@ class SignUpView extends StatelessWidget {
                         text: context.tr.authContinueWithApple,
                         onPressed: () {},
                       ),
-                      const SizedBox(height: 16),
+                      SizedBox(height: 16.h),
                     ],
                   ),
                 ),

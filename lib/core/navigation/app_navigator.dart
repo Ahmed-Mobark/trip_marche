@@ -14,7 +14,7 @@ class AppNavigator {
 
   Future<void> push({
     required Widget screen,
-    NavAnimation animation = NavAnimation.fade,
+    NavAnimation animation = NavAnimation.cupertino,
   }) async {
     _log('PUSH', screen);
     await navigatorKey.currentState!.push(
@@ -27,7 +27,7 @@ class AppNavigator {
 
   Future<void> pushReplacement({
     required Widget screen,
-    NavAnimation animation = NavAnimation.fade,
+    NavAnimation animation = NavAnimation.cupertino,
   }) async {
     _log('PUSH_REPLACEMENT', screen);
     await navigatorKey.currentState!.pushReplacement(
@@ -40,7 +40,7 @@ class AppNavigator {
 
   Future<void> pushAndRemoveUntil({
     required Widget screen,
-    NavAnimation animation = NavAnimation.fade,
+    NavAnimation animation = NavAnimation.cupertino,
   }) async {
     _log('PUSH_AND_REMOVE_UNTIL', screen);
     await navigatorKey.currentState!.pushAndRemoveUntil(

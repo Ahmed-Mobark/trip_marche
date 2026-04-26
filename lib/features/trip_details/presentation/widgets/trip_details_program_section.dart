@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:iconsax/iconsax.dart';
-import '../../../../core/config/styles/styles.dart';
-import '../../../../core/extensions/localization.dart';
-import '../../../../core/theme/app_colors.dart';
+import 'package:trip_marche/core/config/styles/styles.dart';
+import 'package:trip_marche/core/extensions/localization.dart';
+import 'package:trip_marche/core/theme/app_colors.dart';
 import 'trip_details_info_card.dart';
 
 class TripDetailsProgramSection extends StatelessWidget {
@@ -19,7 +19,8 @@ class TripDetailsProgramSection extends StatelessWidget {
           children: [
             Text(
               context.tr.tripDetailsProgramTitle,
-              style: TextStyles.textViewBold14,
+              style: AppTextStyles.body(color: AppColors.darkText)
+                  .copyWith(fontWeight: FontWeight.w700),
             ),
             SizedBox(height: 16.h),
             _DayCard(
