@@ -1,11 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:trip_marche/core/widgets/app_cached_network_image.dart';
+import 'package:url_launcher/url_launcher.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_text_styles.dart';
 
 class PromoBannerItem extends StatelessWidget {
   final String title;
   final String subtitle;
+  final String imageUrl;
+  final String buttonText;
+  final String urlLaunch;
   final int currentIndex;
   final int totalCount;
   final VoidCallback? onBookNowTap;
@@ -14,8 +19,11 @@ class PromoBannerItem extends StatelessWidget {
     super.key,
     required this.title,
     required this.subtitle,
+    required this.imageUrl,
     required this.currentIndex,
     required this.totalCount,
+    required this.buttonText,
+    required this.urlLaunch,
     this.onBookNowTap,
   });
 
@@ -31,7 +39,10 @@ class PromoBannerItem extends StatelessWidget {
         return Container(
           margin: EdgeInsets.symmetric(horizontal: 4.w),
           decoration: BoxDecoration(
-            gradient: AppColors.primaryGradient,
+            image: DecorationImage(
+              image: AppCachedNetworkImage.getImageProvider(imageUrl),
+              fit: BoxFit.cover,
+            ),
             borderRadius: BorderRadius.circular(16.r),
           ),
           child: Padding(
@@ -66,7 +77,7 @@ class PromoBannerItem extends StatelessWidget {
                           fit: BoxFit.scaleDown,
                           alignment: AlignmentDirectional.centerStart,
                           child: GestureDetector(
-                            onTap: onBookNowTap,
+                            onTap: () async => await launchUrl(Uri.parse(urlLaunch)),
                             child: Container(
                               padding: EdgeInsets.symmetric(
                                 horizontal: 16.w,
@@ -77,7 +88,7 @@ class PromoBannerItem extends StatelessWidget {
                                 borderRadius: BorderRadius.circular(999.r),
                               ),
                               child: Text(
-                                'Book Now',
+                                buttonText,
                                 style: AppTextStyles.bodyMedium(
                                   color: AppColors.darkText,
                                 ),

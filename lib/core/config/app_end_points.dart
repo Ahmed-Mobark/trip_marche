@@ -1,6 +1,5 @@
 class AppEndpoints {
-  static String baseUrl =
-      "https://api.tripmarche.com/api/";
+  static String baseUrl = "https://api.tripmarche.com/api/";
 
   static const String authRegister = "auth/register";
   static const String authLogin = "auth/login";
@@ -9,4 +8,10 @@ class AppEndpoints {
   static const String authVerifyOtp = "auth/verify-otp";
   static const String authResetPassword = "auth/reset-password";
   static const String authLogout = "auth/logout";
+
+  // Home
+  static const String homeSections = "home/sections";
+  static const String homeBanners = "home/banners";
+  static const String homeCategories = "home/categories";
+  static const String homeSpecialTrips = "home/special-trips";
 }
