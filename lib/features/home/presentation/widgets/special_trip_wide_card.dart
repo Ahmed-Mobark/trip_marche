@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:iconsax/iconsax.dart';
-import '../../../../core/data/dummy_data.dart';
+import '../../data/models/home_section_response.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_text_styles.dart';
 import '../../../../core/widgets/app_cached_network_image.dart';
@@ -13,13 +13,11 @@ class SpecialTripWideCard extends StatelessWidget {
     required this.trip,
     this.onTap,
     this.onFavoriteTap,
-    this.isFavorite = true,
   });
 
-  final TripItem trip;
+  final TripModel trip;
   final VoidCallback? onTap;
   final VoidCallback? onFavoriteTap;
-  final bool isFavorite;
 
   @override
   Widget build(BuildContext context) {
@@ -41,37 +39,38 @@ class SpecialTripWideCard extends StatelessWidget {
                     width: 150.w,
                     height: 200.h,
                     child: AppCachedNetworkImage(
-                      imageUrl: trip.imageUrl,
+                      imageUrl: trip.coverImage,
                       fit: BoxFit.cover,
                     ),
                   ),
-                  PositionedDirectional(
-                    top: 0,
-                    start: 0,
-                    end: 0,
-                    child: Container(
-                      padding: EdgeInsetsDirectional.only(
-                        start: 12.w,
-                        end: 12.w,
-                        top: 4.h,
-                        bottom: 4.h,
-                      ),
-                      decoration: BoxDecoration(
-                        color: AppColors.starYellow,
-                        borderRadius: BorderRadius.vertical(
-                          top: Radius.circular(16.r),
+                  if (trip.badge != null && trip.badge!.isNotEmpty)
+                    PositionedDirectional(
+                      top: 0,
+                      start: 0,
+                      end: 0,
+                      child: Container(
+                        padding: EdgeInsetsDirectional.only(
+                          start: 12.w,
+                          end: 12.w,
+                          top: 4.h,
+                          bottom: 4.h,
                         ),
-                      ),
-                      child: Center(
-                        child: Text(
-                          context.tr.homeTopRated,
-                          style: AppTextStyles.bodySmall(
-                            color: Colors.white,
-                          ).copyWith(fontWeight: FontWeight.w800),
+                        decoration: BoxDecoration(
+                          color: AppColors.starYellow,
+                          borderRadius: BorderRadius.vertical(
+                            top: Radius.circular(16.r),
+                          ),
+                        ),
+                        child: Center(
+                          child: Text(
+                            trip.badge!,
+                            style: AppTextStyles.bodySmall(
+                              color: Colors.white,
+                            ).copyWith(fontWeight: FontWeight.w800),
+                          ),
                         ),
                       ),
                     ),
-                  ),
                 ],
               ),
             ),
@@ -103,9 +102,9 @@ class SpecialTripWideCard extends StatelessWidget {
                             shape: BoxShape.circle,
                           ),
                           child: Icon(
-                            isFavorite ? Iconsax.heart5 : Iconsax.heart,
+                            trip.isWishlisted ? Iconsax.heart5 : Iconsax.heart,
                             size: 18.sp,
-                            color: isFavorite
+                            color: trip.isWishlisted
                                 ? AppColors.red
                                 : AppColors.greyText,
                           ),
@@ -129,7 +128,7 @@ class SpecialTripWideCard extends StatelessWidget {
                         ).copyWith(fontWeight: FontWeight.w700),
                       ),
                       Text(
-                        ' (112)',
+                        ' (${trip.reviewsCount})',
                         style: AppTextStyles.bodySmall(
                           color: AppColors.greyText,
                         ),
@@ -147,7 +146,7 @@ class SpecialTripWideCard extends StatelessWidget {
                       SizedBox(width: 6.w),
                       Expanded(
                         child: Text(
-                          context.tr.homeFromCairoAlexandria,
+                          trip.fromLocation,
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                           style: AppTextStyles.bodySmall(
@@ -178,45 +177,44 @@ class SpecialTripWideCard extends StatelessWidget {
                       ),
                     ],
                   ),
-                  SizedBox(height: 10.h),
-                  Container(
-                    padding: EdgeInsetsDirectional.symmetric(
-                      horizontal: 12.w,
-                      vertical: 4.h,
-                    ),
-                    decoration: BoxDecoration(
-                      color: AppColors.primary,
-                      borderRadius: BorderRadius.circular(8.r),
-                    ),
-                    child: Text(
-                      context.tr.homeNewInTripMarche,
-                      style: AppTextStyles.bodySmall(
-                        color: Colors.white,
-                      ).copyWith(fontWeight: FontWeight.w700),
-                    ),
-                  ),
                   SizedBox(height: 12.h),
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
-                      Text(
-                        '\$1000',
-                        style: AppTextStyles.bodyMedium(
-                          color: AppColors.greyText,
-                        ).copyWith(decoration: TextDecoration.lineThrough),
-                      ),
-                      SizedBox(width: 8.w),
-                      Text(
-                        '\$${trip.price.toStringAsFixed(0)}',
-                        style: AppTextStyles.heading3(
-                          color: AppColors.darkText,
-                        ).copyWith(fontWeight: FontWeight.w900),
-                      ),
+                      if (trip.discountPrice != null) ...[
+                        Text(
+                          '\$${trip.discountPrice!.toStringAsFixed(0)}',
+                          style: AppTextStyles.heading3(
+                            color: AppColors.darkText,
+                          ).copyWith(fontWeight: FontWeight.w900),
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                        SizedBox(width: 8.w),
+                        Text(
+                          '\$${trip.price.toStringAsFixed(0)}',
+                          style: AppTextStyles.bodyMedium(
+                            color: AppColors.greyText,
+                          ).copyWith(decoration: TextDecoration.lineThrough),
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ] else
+                        Text(
+                          '\$${trip.price.toStringAsFixed(0)}',
+                          style: AppTextStyles.heading3(
+                            color: AppColors.darkText,
+                          ).copyWith(fontWeight: FontWeight.w900),
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                        ),
                       Text(
                         ' /${context.tr.homePerPerson}',
                         style: AppTextStyles.bodySmall(
                           color: AppColors.greyText,
                         ),
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
                       ),
                     ],
                   ),

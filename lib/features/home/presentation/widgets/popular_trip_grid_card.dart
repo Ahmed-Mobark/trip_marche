@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:iconsax/iconsax.dart';
-import '../../../../core/data/dummy_data.dart';
+import '../../data/models/home_section_response.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_text_styles.dart';
 import '../../../../core/widgets/app_cached_network_image.dart';
@@ -15,7 +15,7 @@ class PopularTripGridCard extends StatelessWidget {
     this.isFavorite = false,
   });
 
-  final TripItem trip;
+  final TripModel trip;
   final VoidCallback? onTap;
   final VoidCallback? onFavoriteTap;
   final bool isFavorite;
@@ -45,7 +45,7 @@ class PopularTripGridCard extends StatelessWidget {
                       children: [
                         Positioned.fill(
                           child: AppCachedNetworkImage(
-                            imageUrl: trip.imageUrl,
+                            imageUrl: trip.coverImage,
                             fit: BoxFit.cover,
                           ),
                         ),
@@ -63,7 +63,9 @@ class PopularTripGridCard extends StatelessWidget {
                                 shape: BoxShape.circle,
                               ),
                               child: Icon(
-                                isFavorite ? Iconsax.heart5 : Iconsax.heart,
+                                trip.isWishlisted
+                                    ? Iconsax.heart5
+                                    : Iconsax.heart,
                                 size: 16.sp,
                                 color: Colors.white,
                               ),
@@ -104,7 +106,7 @@ class PopularTripGridCard extends StatelessWidget {
                         ).copyWith(fontWeight: FontWeight.w700),
                       ),
                       Text(
-                        ' (112)',
+                        ' (${trip.reviewsCount})',
                         style: AppTextStyles.bodySmall(
                           color: AppColors.greyText,
                         ),
@@ -125,7 +127,7 @@ class PopularTripGridCard extends StatelessWidget {
                       SizedBox(width: 6.w),
                       Expanded(
                         child: Text(
-                          trip.location,
+                          trip.fromLocation,
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                           style: AppTextStyles.bodySmall(
@@ -170,16 +172,37 @@ class PopularTripGridCard extends StatelessWidget {
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
+                      if (trip.discountPrice != null) ...[
+                        Text(
+                          '\$${trip.discountPrice!.toStringAsFixed(0)}',
+                          style:
+                              AppTextStyles.heading3(
+                                color: AppColors.darkText,
+                              ).copyWith(
+                                fontWeight: FontWeight.w800,
+                                fontSize: 18.sp,
+                              ),
+                        ),
+                        SizedBox(width: 6.w),
+                        Text(
+                          '\$${trip.price.toStringAsFixed(0)}',
+                          style: AppTextStyles.bodySmall(
+                            color: AppColors.greyText,
+                          ).copyWith(decoration: TextDecoration.lineThrough),
+                        ),
+                      ] else
+                        Text(
+                          '\$${trip.price.toStringAsFixed(0)}',
+                          style:
+                              AppTextStyles.heading3(
+                                color: AppColors.darkText,
+                              ).copyWith(
+                                fontWeight: FontWeight.w800,
+                                fontSize: 18.sp,
+                              ),
+                        ),
                       Text(
-                        '\$${trip.price.toStringAsFixed(0)}',
-                        style: AppTextStyles.heading3(color: AppColors.darkText)
-                            .copyWith(
-                              fontWeight: FontWeight.w800,
-                              fontSize: 18.sp,
-                            ),
-                      ),
-                      Text(
-                        ' /${'Person'}',
+                        ' /Person',
                         style: AppTextStyles.bodySmall(
                           color: AppColors.greyText,
                         ),
