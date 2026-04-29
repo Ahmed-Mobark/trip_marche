@@ -25,7 +25,7 @@ class SearchResultView extends StatelessWidget {
         backgroundColor: AppColors.background,
         elevation: 0,
         leading: IconButton(
-          icon: const Icon(Iconsax.arrow_left, color: AppColors.darkText),
+          icon: Icon(Iconsax.arrow_left, color: AppColors.darkText),
           onPressed: () => Navigator.pop(context),
         ),
         title: _buildSearchBar(context),
@@ -39,7 +39,7 @@ class SearchResultView extends StatelessWidget {
                 color: AppColors.lightBg,
                 borderRadius: BorderRadius.circular(10),
               ),
-              child: const Icon(Iconsax.setting_4,
+              child: Icon(Iconsax.setting_4,
                   color: AppColors.secondaryText, size: 20),
             ),
           ),
@@ -85,7 +85,7 @@ class SearchResultView extends StatelessWidget {
       child: Row(
         children: [
           const SizedBox(width: 12),
-          const Icon(Iconsax.search_normal,
+          Icon(Iconsax.search_normal,
               color: AppColors.greyText, size: 18),
           const SizedBox(width: 8),
           Expanded(
@@ -94,7 +94,7 @@ class SearchResultView extends StatelessWidget {
               style: AppTextStyles.bodyMedium(color: AppColors.darkText),
             ),
           ),
-          const Icon(Iconsax.close_circle,
+          Icon(Iconsax.close_circle,
               color: AppColors.greyText, size: 18),
           const SizedBox(width: 12),
         ],

@@ -73,7 +73,7 @@ class MyTripCard extends StatelessWidget {
                     const SizedBox(height: 6),
                     Row(
                       children: [
-                        const Icon(Iconsax.calendar_1,
+                        Icon(Iconsax.calendar_1,
                             size: 14, color: AppColors.greyText),
                         const SizedBox(width: 4),
                         Text(
@@ -85,7 +85,7 @@ class MyTripCard extends StatelessWidget {
                     const SizedBox(height: 4),
                     Row(
                       children: [
-                        const Icon(Iconsax.location,
+                        Icon(Iconsax.location,
                             size: 14, color: AppColors.greyText),
                         const SizedBox(width: 4),
                         Text(

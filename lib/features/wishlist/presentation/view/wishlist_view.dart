@@ -87,7 +87,7 @@ class WishlistView extends StatelessWidget {
               color: AppColors.lightBg,
               shape: BoxShape.circle,
             ),
-            child: const Icon(
+            child: Icon(
               Iconsax.heart,
               size: 36,
               color: AppColors.greyText,

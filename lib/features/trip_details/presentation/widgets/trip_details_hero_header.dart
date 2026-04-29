@@ -42,9 +42,9 @@ class TripDetailsHeroHeader extends StatelessWidget {
         child: Stack(
           fit: StackFit.expand,
           children: [
-            const ColoredBox(
+            ColoredBox(
               color: AppColors.lightBg,
-              child: AppCachedNetworkImage(
+              child: const AppCachedNetworkImage(
                 imageUrl: _heroUrl,
                 fit: BoxFit.cover,
               ),

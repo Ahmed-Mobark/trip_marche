@@ -40,7 +40,7 @@ class _LanguageViewState extends State<LanguageView> {
         backgroundColor: AppColors.background,
         elevation: 0,
         leading: IconButton(
-          icon: const Icon(
+          icon: Icon(
             Icons.arrow_back_ios_new_rounded,
             color: AppColors.darkText,
           ),
@@ -62,9 +62,9 @@ class _LanguageViewState extends State<LanguageView> {
                 child: _LanguageTile(
                   item: e,
                   selected: _selectedCode == e.code,
-                  onTap: () async {
+                  onTap: () {
                     setState(() => _selectedCode = e.code);
-                    await MyApp.of(context)?.setLocale(Locale(e.code));
+                    MyApp.of(context)?.setLocale(Locale(e.code));
                   },
                 ),
               ),

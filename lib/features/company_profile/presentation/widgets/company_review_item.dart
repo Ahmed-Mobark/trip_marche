@@ -37,7 +37,7 @@ class CompanyReviewItem extends StatelessWidget {
                 CircleAvatar(
                   radius: 18,
                   backgroundColor: AppColors.lightBg,
-                  child: const Icon(Iconsax.user,
+                  child: Icon(Iconsax.user,
                       size: 18, color: AppColors.greyText),
                 ),
                 const SizedBox(width: 10),

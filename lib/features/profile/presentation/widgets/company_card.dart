@@ -50,7 +50,7 @@ class CompanyCard extends StatelessWidget {
                     color: AppColors.lightBg,
                     borderRadius: BorderRadius.circular(8),
                   ),
-                  child: const Icon(
+                  child: Icon(
                     Iconsax.building,
                     color: AppColors.greyText,
                     size: 24,

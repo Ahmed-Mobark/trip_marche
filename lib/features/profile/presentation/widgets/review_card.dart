@@ -48,7 +48,7 @@ class ReviewCard extends StatelessWidget {
                       color: AppColors.lightBg,
                       borderRadius: BorderRadius.circular(8),
                     ),
-                    child: const Icon(
+                    child: Icon(
                       Iconsax.image,
                       color: AppColors.greyText,
                     ),

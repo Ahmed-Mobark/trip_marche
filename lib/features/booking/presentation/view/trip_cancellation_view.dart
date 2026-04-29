@@ -15,7 +15,7 @@ class TripCancellationView extends StatelessWidget {
         backgroundColor: AppColors.background,
         elevation: 0,
         leading: IconButton(
-          icon: const Icon(Iconsax.arrow_left, color: AppColors.darkText),
+          icon: Icon(Iconsax.arrow_left, color: AppColors.darkText),
           onPressed: () => Navigator.pop(context),
         ),
         title: Text('Cancellation Policy', style: AppTextStyles.subtitle(color: AppColors.darkText)),

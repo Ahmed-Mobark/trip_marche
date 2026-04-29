@@ -29,7 +29,7 @@ class DestinationGridItem extends StatelessWidget {
               placeholder: (context, url) => Container(color: AppColors.inputBg),
               errorWidget: (context, url, error) => Container(
                 color: AppColors.inputBg,
-                child: const Icon(Icons.image, color: AppColors.greyText),
+                child: Icon(Icons.image, color: AppColors.greyText),
               ),
             ),
             Container(

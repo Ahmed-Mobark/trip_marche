@@ -45,7 +45,7 @@ class _MainNavViewState extends State<MainNavView> {
           return Stack(
             children: [
               Container(
-                decoration: const BoxDecoration(
+                decoration: BoxDecoration(
                   color: AppColors.white,
                   border: Border(
                     top: BorderSide(color: AppColors.border, width: 0.5),

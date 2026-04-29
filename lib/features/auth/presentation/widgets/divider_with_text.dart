@@ -11,7 +11,7 @@ class DividerWithText extends StatelessWidget {
   final TextStyle? textStyle;
 
   /// Color of the divider lines. Defaults to [AppColors.border].
-  final Color dividerColor;
+  final Color? dividerColor;
 
   /// Horizontal padding around the text. Defaults to 16.
   final double horizontalPadding;
@@ -20,16 +20,17 @@ class DividerWithText extends StatelessWidget {
     super.key,
     required this.text,
     this.textStyle,
-    this.dividerColor = AppColors.border,
+    this.dividerColor,
     this.horizontalPadding = 16,
   });
 
   @override
   Widget build(BuildContext context) {
+    final color = dividerColor ?? AppColors.border;
     return Row(
       children: [
         Expanded(
-          child: Divider(color: dividerColor),
+          child: Divider(color: color),
         ),
         Padding(
           padding: EdgeInsets.symmetric(horizontal: horizontalPadding),
@@ -39,7 +40,7 @@ class DividerWithText extends StatelessWidget {
           ),
         ),
         Expanded(
-          child: Divider(color: dividerColor),
+          child: Divider(color: color),
         ),
       ],
     );
