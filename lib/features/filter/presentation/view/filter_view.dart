@@ -59,7 +59,7 @@ class _FilterViewState extends State<FilterView> {
         backgroundColor: AppColors.background,
         elevation: 0,
         leading: IconButton(
-          icon: const Icon(Iconsax.arrow_left, color: AppColors.darkText),
+          icon: Icon(Iconsax.arrow_left, color: AppColors.darkText),
           onPressed: () => Navigator.pop(context),
         ),
         title: Text(
@@ -217,7 +217,7 @@ class _FilterViewState extends State<FilterView> {
                           ),
                         ),
                         isExpanded: true,
-                        icon: const Icon(
+                        icon: Icon(
                           Iconsax.arrow_down_1,
                           color: AppColors.greyText,
                           size: 18,

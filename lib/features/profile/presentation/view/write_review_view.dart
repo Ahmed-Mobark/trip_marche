@@ -36,7 +36,7 @@ class _WriteReviewViewState extends State<WriteReviewView> {
         backgroundColor: AppColors.background,
         elevation: 0,
         leading: IconButton(
-          icon: const Icon(Iconsax.arrow_left, color: AppColors.darkText),
+          icon: Icon(Iconsax.arrow_left, color: AppColors.darkText),
           onPressed: () => Navigator.pop(context),
         ),
         title: Text(
@@ -161,11 +161,11 @@ class _WriteReviewViewState extends State<WriteReviewView> {
                 contentPadding: const EdgeInsets.all(16),
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(12),
-                  borderSide: const BorderSide(color: AppColors.border),
+                  borderSide: BorderSide(color: AppColors.border),
                 ),
                 enabledBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(12),
-                  borderSide: const BorderSide(color: AppColors.border),
+                  borderSide: BorderSide(color: AppColors.border),
                 ),
                 focusedBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(12),
@@ -222,7 +222,7 @@ class _WriteReviewViewState extends State<WriteReviewView> {
         color: AppColors.lightBg,
         borderRadius: BorderRadius.circular(8),
       ),
-      child: const Icon(
+      child: Icon(
         Iconsax.image,
         color: AppColors.greyText,
       ),

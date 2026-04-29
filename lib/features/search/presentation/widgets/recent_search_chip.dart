@@ -27,7 +27,7 @@ class RecentSearchChip extends StatelessWidget {
         child: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
-            const Icon(Iconsax.clock, size: 14, color: AppColors.greyText),
+            Icon(Iconsax.clock, size: 14, color: AppColors.greyText),
             const SizedBox(width: 6),
             Text(
               searchTerm,

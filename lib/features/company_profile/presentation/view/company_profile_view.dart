@@ -33,7 +33,7 @@ class _CompanyProfileViewState extends State<CompanyProfileView> {
               child: CircleAvatar(
                 backgroundColor: Colors.white.withValues(alpha: 0.9),
                 child: IconButton(
-                  icon: const Icon(
+                  icon: Icon(
                     Iconsax.arrow_left,
                     color: AppColors.darkText,
                     size: 20,
@@ -45,7 +45,7 @@ class _CompanyProfileViewState extends State<CompanyProfileView> {
             flexibleSpace: FlexibleSpaceBar(
               background: Container(
                 color: AppColors.lightBg,
-                child: const Icon(
+                child: Icon(
                   Iconsax.image,
                   size: 48,
                   color: AppColors.greyText,
@@ -72,7 +72,7 @@ class _CompanyProfileViewState extends State<CompanyProfileView> {
                           borderRadius: BorderRadius.circular(12),
                           border: Border.all(color: AppColors.border),
                         ),
-                        child: const Icon(
+                        child: Icon(
                           Iconsax.building,
                           color: AppColors.greyText,
                           size: 28,
@@ -290,14 +290,14 @@ class _CompanyProfileViewState extends State<CompanyProfileView> {
           Expanded(
             flex: 3,
             child: Container(
-              decoration: const BoxDecoration(
+              decoration: BoxDecoration(
                 color: AppColors.lightBg,
-                borderRadius: BorderRadius.only(
+                borderRadius: const BorderRadius.only(
                   topLeft: Radius.circular(12),
                   topRight: Radius.circular(12),
                 ),
               ),
-              child: const Center(
+              child: Center(
                 child: Icon(Iconsax.image, color: AppColors.greyText, size: 32),
               ),
             ),

@@ -70,7 +70,7 @@ class ForgotPasswordView extends StatelessWidget {
                           AppIcons.icSms,
                           width: 20,
                           height: 20,
-                          colorFilter: const ColorFilter.mode(
+                          colorFilter: ColorFilter.mode(
                             AppColors.greyText,
                             BlendMode.srcIn,
                           ),

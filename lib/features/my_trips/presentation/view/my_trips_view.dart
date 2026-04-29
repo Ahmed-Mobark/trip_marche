@@ -151,11 +151,11 @@ class _MyTripsViewState extends State<MyTripsView> {
           Container(
             width: 80,
             height: 80,
-            decoration: const BoxDecoration(
+            decoration: BoxDecoration(
               color: AppColors.lightBg,
               shape: BoxShape.circle,
             ),
-            child: const Icon(Iconsax.map, size: 36, color: AppColors.greyText),
+            child: Icon(Iconsax.map, size: 36, color: AppColors.greyText),
           ),
           const SizedBox(height: 16),
           Text(

@@ -39,8 +39,8 @@ class PriceBreakdown extends StatelessWidget {
       child: Column(
         children: [
           ...items.map((item) => _buildPriceRow(item.label, item.value, isDiscount: item.isDiscount)),
-          const Padding(
-            padding: EdgeInsets.symmetric(vertical: 8),
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 8),
             child: Divider(color: AppColors.border),
           ),
           Row(

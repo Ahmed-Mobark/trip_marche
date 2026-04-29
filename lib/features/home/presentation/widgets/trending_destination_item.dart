@@ -37,7 +37,7 @@ class TrendingDestinationItem extends StatelessWidget {
                     placeholder: (context, url) => Container(
                       width: 64,
                       height: 64,
-                      decoration: const BoxDecoration(
+                      decoration: BoxDecoration(
                         color: AppColors.inputBg,
                         shape: BoxShape.circle,
                       ),
@@ -45,11 +45,11 @@ class TrendingDestinationItem extends StatelessWidget {
                     errorWidget: (context, url, error) => Container(
                       width: 64,
                       height: 64,
-                      decoration: const BoxDecoration(
+                      decoration: BoxDecoration(
                         color: AppColors.inputBg,
                         shape: BoxShape.circle,
                       ),
-                      child: const Icon(Icons.image,
+                      child: Icon(Icons.image,
                           color: AppColors.greyText, size: 24),
                     ),
                   ),

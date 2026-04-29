@@ -1,8 +1,18 @@
 import 'package:flutter/material.dart';
 
 abstract class AppColors {
+  // ---------------------------------------------------------------------------
+  // Brightness signal (kept in sync from MyApp via AdaptiveTheme/Theme.of)
+  // ---------------------------------------------------------------------------
+  static Brightness brightness = Brightness.light;
+  static bool get _isDark => brightness == Brightness.dark;
+
+  // ---------------------------------------------------------------------------
+  // Brand / fixed tokens
+  // ---------------------------------------------------------------------------
   static const Color primary = Color(0xFF9B36D5);
   static const Color accent = purpleColor;
+
   static const Color scaffoldColorLight = Color(0xFFF8F8F8);
   static const Color cardColorLight = Color(0xFFffffff);
   static const Color textColorLight = Color(0xFF2B2B2B);
@@ -10,6 +20,7 @@ abstract class AppColors {
   static const Color hintColorLight = Color(0xFFA5A5A5);
   static const Color borderColorLight = Color(0xFFE8E4E4);
   static const Color disableColorLight = Color(0xFFA6BBBE);
+  static const Color inputBgLight = Color(0xFFF2F2F2);
 
   static const Color primaryDark = Color(0xFF645A9E);
   static const Color purpleColor = Color(0xFF5D5FEF);
@@ -21,42 +32,23 @@ abstract class AppColors {
   static const Color hintColorDark = Color(0xFF8C8C8C);
   static const Color borderColorDark = Color(0xFF333333);
   static const Color disableColorDark = Color(0xFF556E73);
+  static const Color inputBgDark = Color(0xFF1C1C1C);
 
   static const Color red = Color(0xFFD00416);
   static const Color yellow = Color(0xFFFFD43B);
   static const Color green = Color(0xFF1FC16B);
 
   static const Color transparent = Colors.transparent;
-
-  // ---------------------------------------------------------------------------
-  // Compatibility aliases used across feature widgets/screens
-  // ---------------------------------------------------------------------------
   static const Color white = Colors.white;
   static const Color black = Colors.black;
 
-  static const Color darkText = textColorLight;
-  static const Color greyText = greyTextColorLight;
-  static const Color captionText = hintColorLight;
-  static const Color lightGreyText = hintColorLight;
-  static const Color bodyText = textColorLight;
-  static const Color secondaryText = greyTextColorLight;
-
-  static const Color border = borderColorLight;
-  static const Color inputBg = Color(0xFFF2F2F2);
-  static const Color lightBg = inputBg;
-
-  static const Color scaffoldBg = scaffoldColorLight;
-  static const Color background = cardColorLight;
-  static const Color cardBg = cardColorLight;
-
   static const Color statusBadge = Color(0xFFC89563);
   static const Color tabActive = primaryDark;
-  static const Color tabInactive = hintColorLight;
+  static const Color starYellow = Color(0xFFFBB532);
 
   static const Color error = red;
   static const Color success = green;
   static const Color warning = yellow;
-  static const Color starYellow = Color(0xFFFBB532);
 
   // Social buttons
   static const Color google = Color(0xFFDB4437);
@@ -67,4 +59,37 @@ abstract class AppColors {
     end: Alignment.centerRight,
     colors: [primary, primaryDark],
   );
+
+  // ---------------------------------------------------------------------------
+  // Theme-aware aliases used across feature widgets/screens.
+  // These resolve based on [brightness] which is updated by MyApp on every
+  // theme change, so screens repaint automatically when the toggle flips.
+  // ---------------------------------------------------------------------------
+  static Color get darkText =>
+      _isDark ? textColorDark : textColorLight;
+  static Color get bodyText =>
+      _isDark ? textColorDark : textColorLight;
+  static Color get greyText =>
+      _isDark ? greyTextColorDark : greyTextColorLight;
+  static Color get secondaryText =>
+      _isDark ? greyTextColorDark : greyTextColorLight;
+  static Color get captionText =>
+      _isDark ? hintColorDark : hintColorLight;
+  static Color get lightGreyText =>
+      _isDark ? hintColorDark : hintColorLight;
+  static Color get tabInactive =>
+      _isDark ? hintColorDark : hintColorLight;
+
+  static Color get border =>
+      _isDark ? borderColorDark : borderColorLight;
+  static Color get inputBg =>
+      _isDark ? inputBgDark : inputBgLight;
+  static Color get lightBg => inputBg;
+
+  static Color get scaffoldBg =>
+      _isDark ? scaffoldColorDark : scaffoldColorLight;
+  static Color get background =>
+      _isDark ? cardColorDark : cardColorLight;
+  static Color get cardBg =>
+      _isDark ? cardColorDark : cardColorLight;
 }

@@ -105,7 +105,7 @@ class ResetPasswordView extends StatelessWidget {
                                 AppIcons.icLock,
                                 width: 20,
                                 height: 20,
-                                colorFilter: const ColorFilter.mode(
+                                colorFilter: ColorFilter.mode(
                                   AppColors.greyText,
                                   BlendMode.srcIn,
                                 ),
@@ -152,7 +152,7 @@ class ResetPasswordView extends StatelessWidget {
                                 AppIcons.icLock,
                                 width: 20,
                                 height: 20,
-                                colorFilter: const ColorFilter.mode(
+                                colorFilter: ColorFilter.mode(
                                   AppColors.greyText,
                                   BlendMode.srcIn,
                                 ),
