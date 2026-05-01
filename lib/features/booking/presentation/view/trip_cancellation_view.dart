@@ -18,7 +18,10 @@ class TripCancellationView extends StatelessWidget {
           icon: Icon(Iconsax.arrow_left, color: AppColors.darkText),
           onPressed: () => Navigator.pop(context),
         ),
-        title: Text('Cancellation Policy', style: AppTextStyles.subtitle(color: AppColors.darkText)),
+        title: Text(
+          'Cancellation Policy',
+          style: AppTextStyles.subtitle(color: AppColors.darkText),
+        ),
         centerTitle: true,
       ),
       body: SingleChildScrollView(
@@ -37,16 +40,18 @@ class TripCancellationView extends StatelessWidget {
             const PolicyCard(
               title: 'Free Cancellation',
               subtitle: 'More than 30 days before departure',
-              description: 'Full refund of the total amount paid, including the deposit. '
+              description:
+                  'Full refund of the total amount paid, including the deposit. '
                   'The refund will be processed within 5-7 business days to the original payment method.',
-              color: Colors.green,
+              color: AppColors.success,
               icon: Iconsax.tick_circle,
             ),
             const SizedBox(height: 12),
             PolicyCard(
               title: '50% Refund',
               subtitle: '15 to 30 days before departure',
-              description: '50% of the total booking amount will be refunded. '
+              description:
+                  '50% of the total booking amount will be refunded. '
                   'The remaining 50% will be retained as a cancellation fee to cover pre-arranged services.',
               color: AppColors.accent,
               icon: Iconsax.warning_2,
@@ -55,22 +60,27 @@ class TripCancellationView extends StatelessWidget {
             const PolicyCard(
               title: '25% Refund',
               subtitle: '7 to 14 days before departure',
-              description: '25% of the total booking amount will be refunded. '
+              description:
+                  '25% of the total booking amount will be refunded. '
                   'This reduced refund accounts for non-recoverable costs already committed for your trip.',
-              color: Colors.orange,
+              color: AppColors.warning,
               icon: Iconsax.info_circle,
             ),
             const SizedBox(height: 12),
             PolicyCard(
               title: 'No Refund',
               subtitle: 'Less than 7 days before departure',
-              description: 'No refund will be issued for cancellations made less than 7 days before the departure date. '
+              description:
+                  'No refund will be issued for cancellations made less than 7 days before the departure date. '
                   'At this point, all arrangements have been finalized and costs are non-recoverable.',
               color: AppColors.error,
               icon: Iconsax.close_circle,
             ),
             const SizedBox(height: 24),
-            Text('Additional Information', style: AppTextStyles.subtitle(color: AppColors.darkText)),
+            Text(
+              'Additional Information',
+              style: AppTextStyles.subtitle(color: AppColors.darkText),
+            ),
             const SizedBox(height: 12),
             Text(
               'All cancellation requests must be submitted in writing through the Trip Marche app or by emailing support@tripmarche.com. '
@@ -83,12 +93,18 @@ class TripCancellationView extends StatelessWidget {
               style: AppTextStyles.body(),
             ),
             const SizedBox(height: 24),
-            Text('How to Cancel', style: AppTextStyles.subtitle(color: AppColors.darkText)),
+            Text(
+              'How to Cancel',
+              style: AppTextStyles.subtitle(color: AppColors.darkText),
+            ),
             const SizedBox(height: 12),
             _buildStep('1', 'Go to "My Bookings" in the app'),
             _buildStep('2', 'Select the trip you wish to cancel'),
             _buildStep('3', 'Tap "Cancel Booking" and confirm'),
-            _buildStep('4', 'You will receive a confirmation email with refund details'),
+            _buildStep(
+              '4',
+              'You will receive a confirmation email with refund details',
+            ),
             const SizedBox(height: 20),
           ],
         ),
@@ -116,9 +132,7 @@ class TripCancellationView extends StatelessWidget {
             ),
           ),
           const SizedBox(width: 12),
-          Expanded(
-            child: Text(text, style: AppTextStyles.body()),
-          ),
+          Expanded(child: Text(text, style: AppTextStyles.body())),
         ],
       ),
     );

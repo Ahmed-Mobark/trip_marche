@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:trip_marche/core/theme/app_colors.dart';
 
 class CardPreview extends StatelessWidget {
   const CardPreview({
@@ -26,12 +26,12 @@ class CardPreview extends StatelessWidget {
         gradient: const LinearGradient(
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
-          colors: [Color(0xFF1A1A2E), Color(0xFF16213E)],
+          colors: [AppColors.cardPreviewStart, AppColors.cardPreviewEnd],
         ),
         borderRadius: BorderRadius.circular(20),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withValues(alpha: 0.3),
+            color: AppColors.shadow.withValues(alpha: 0.3),
             blurRadius: 20,
             offset: const Offset(0, 10),
           ),
@@ -44,13 +44,17 @@ class CardPreview extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const Icon(Iconsax.card, color: Colors.white70, size: 32),
+              Icon(
+                Iconsax.card,
+                color: AppColors.onImage.withValues(alpha: 0.70),
+                size: 32,
+              ),
               Text(
                 brandLabel,
-                style: GoogleFonts.inter(
+                style: Theme.of(context).textTheme.bodyMedium!.copyWith(
                   fontSize: 22,
                   fontWeight: FontWeight.w700,
-                  color: Colors.white,
+                  color: AppColors.onImage,
                   letterSpacing: 2,
                 ),
               ),
@@ -58,10 +62,10 @@ class CardPreview extends StatelessWidget {
           ),
           Text(
             maskedCardNumber,
-            style: GoogleFonts.inter(
+            style: Theme.of(context).textTheme.bodyMedium!.copyWith(
               fontSize: 22,
               fontWeight: FontWeight.w600,
-              color: Colors.white,
+              color: AppColors.onImage,
               letterSpacing: 3,
             ),
           ),
@@ -73,19 +77,19 @@ class CardPreview extends StatelessWidget {
                 children: [
                   Text(
                     'CARDHOLDER',
-                    style: GoogleFonts.inter(
+                    style: Theme.of(context).textTheme.bodyMedium!.copyWith(
                       fontSize: 10,
-                      color: Colors.white54,
+                      color: AppColors.onImage.withValues(alpha: 0.54),
                       letterSpacing: 1,
                     ),
                   ),
                   const SizedBox(height: 2),
                   Text(
                     cardholderName,
-                    style: GoogleFonts.inter(
+                    style: Theme.of(context).textTheme.bodyMedium!.copyWith(
                       fontSize: 14,
                       fontWeight: FontWeight.w600,
-                      color: Colors.white,
+                      color: AppColors.onImage,
                     ),
                   ),
                 ],
@@ -95,19 +99,19 @@ class CardPreview extends StatelessWidget {
                 children: [
                   Text(
                     'EXPIRES',
-                    style: GoogleFonts.inter(
+                    style: Theme.of(context).textTheme.bodyMedium!.copyWith(
                       fontSize: 10,
-                      color: Colors.white54,
+                      color: AppColors.onImage.withValues(alpha: 0.54),
                       letterSpacing: 1,
                     ),
                   ),
                   const SizedBox(height: 2),
                   Text(
                     expiry,
-                    style: GoogleFonts.inter(
+                    style: Theme.of(context).textTheme.bodyMedium!.copyWith(
                       fontSize: 14,
                       fontWeight: FontWeight.w600,
-                      color: Colors.white,
+                      color: AppColors.onImage,
                     ),
                   ),
                 ],

@@ -86,4 +86,3 @@ class _AirlineRow extends StatelessWidget {
     );
   }
 }
-

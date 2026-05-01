@@ -22,7 +22,10 @@ class DestinationView extends StatelessWidget {
           onPressed: () => Navigator.pop(context),
         ),
         centerTitle: true,
-        title: Text(context.tr.destinationTitle, style: AppTextStyles.heading3()),
+        title: Text(
+          context.tr.destinationTitle,
+          style: AppTextStyles.heading3(),
+        ),
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -42,15 +45,19 @@ class DestinationView extends StatelessWidget {
                 child: Row(
                   children: [
                     const SizedBox(width: 14),
-                    Icon(Iconsax.search_normal,
-                        color: AppColors.greyText, size: 20),
+                    Icon(
+                      Iconsax.search_normal,
+                      color: AppColors.greyText,
+                      size: 20,
+                    ),
                     const SizedBox(width: 10),
                     Expanded(
                       child: TextField(
                         decoration: InputDecoration(
                           hintText: context.tr.destinationSearchHint,
                           hintStyle: AppTextStyles.bodyMedium(
-                              color: AppColors.greyText),
+                            color: AppColors.greyText,
+                          ),
                           border: InputBorder.none,
                           contentPadding: EdgeInsets.zero,
                           isDense: true,
@@ -71,13 +78,15 @@ class DestinationView extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(context.tr.destinationRecentSearches, style: AppTextStyles.subtitle()),
+                  Text(
+                    context.tr.destinationRecentSearches,
+                    style: AppTextStyles.subtitle(),
+                  ),
                   GestureDetector(
                     onTap: () {},
                     child: Text(
                       context.tr.destinationClearAll,
-                      style:
-                          AppTextStyles.bodySmall(color: AppColors.primary),
+                      style: AppTextStyles.bodySmall(color: AppColors.primary),
                     ),
                   ),
                 ],
@@ -90,10 +99,7 @@ class DestinationView extends StatelessWidget {
                 spacing: 8,
                 runSpacing: 8,
                 children: DummyData.recentSearches.map((search) {
-                  return RecentSearchChip(
-                    searchTerm: search,
-                    onTap: () {},
-                  );
+                  return RecentSearchChip(searchTerm: search, onTap: () {});
                 }).toList(),
               ),
             ),
@@ -102,8 +108,10 @@ class DestinationView extends StatelessWidget {
             // Popular Destinations
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16),
-              child:
-                  Text(context.tr.destinationPopularDestinations, style: AppTextStyles.heading3()),
+              child: Text(
+                context.tr.destinationPopularDestinations,
+                style: AppTextStyles.heading3(),
+              ),
             ),
             const SizedBox(height: 12),
             Padding(

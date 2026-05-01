@@ -8,8 +8,16 @@ class AppDivider extends StatelessWidget {
   final double margin;
   final double thickness;
   final double radius;
-  const AppDivider({required this.type, required this.length, this.color, this.margin = 15, this.thickness = 1.5, this.radius = 5, super.key});
-  
+  const AppDivider({
+    required this.type,
+    required this.length,
+    this.color,
+    this.margin = 15,
+    this.thickness = 1.5,
+    this.radius = 5,
+    super.key,
+  });
+
   bool isHorizontal() => type == DividerType.horizontal;
 
   @override
@@ -17,16 +25,16 @@ class AppDivider extends StatelessWidget {
     return Container(
       width: !isHorizontal() ? thickness.w : length.w,
       height: isHorizontal() ? thickness.h : length.h,
-      margin: EdgeInsets.symmetric(horizontal: isHorizontal()?0:margin.w , vertical: !isHorizontal()?0:margin.h),
+      margin: EdgeInsets.symmetric(
+        horizontal: isHorizontal() ? 0 : margin.w,
+        vertical: !isHorizontal() ? 0 : margin.h,
+      ),
       decoration: BoxDecoration(
-        color: color?? Theme.of(context).dividerColor.withValues(alpha: 0.5),
-        borderRadius: BorderRadius.circular(radius.r)
+        color: color ?? Theme.of(context).dividerColor.withValues(alpha: 0.5),
+        borderRadius: BorderRadius.circular(radius.r),
       ),
     );
   }
 }
 
-enum DividerType {
-  horizontal,
-  vertical
-}
+enum DividerType { horizontal, vertical }

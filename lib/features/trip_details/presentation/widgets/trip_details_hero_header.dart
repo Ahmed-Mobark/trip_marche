@@ -8,6 +8,7 @@ import 'package:trip_marche/core/theme/app_text_styles.dart';
 import 'package:trip_marche/core/widgets/app_cached_network_image.dart';
 import '../cubit/trip_details_cubit.dart';
 import '../cubit/trip_details_state.dart';
+import '../trip_wishlist_pop_result.dart';
 import 'circle_icon_button.dart';
 
 class TripDetailsHeroHeader extends StatelessWidget {
@@ -55,8 +56,8 @@ class TripDetailsHeroHeader extends StatelessWidget {
                   begin: Alignment.topCenter,
                   end: Alignment.bottomCenter,
                   colors: [
-                    Colors.black.withValues(alpha: 0.25),
-                    Colors.black.withValues(alpha: 0.65),
+                    AppColors.shadow.withValues(alpha: 0.25),
+                    AppColors.shadow.withValues(alpha: 0.65),
                   ],
                 ),
               ),
@@ -66,7 +67,16 @@ class TripDetailsHeroHeader extends StatelessWidget {
               start: 16.w,
               child: CircleIconButton(
                 icon: Iconsax.arrow_left,
-                onTap: () => Navigator.pop(context),
+                onTap: () {
+                  final cubit = context.read<TripDetailsCubit>();
+                  Navigator.pop(
+                    context,
+                    TripWishlistPopResult(
+                      tripId: cubit.tripId,
+                      isWishlisted: cubit.state.isFavorite,
+                    ),
+                  );
+                },
               ),
             ),
             PositionedDirectional(
@@ -75,16 +85,24 @@ class TripDetailsHeroHeader extends StatelessWidget {
               child: CircleIconButton(icon: Iconsax.share, onTap: () {}),
             ),
             BlocBuilder<TripDetailsCubit, TripDetailsState>(
+              buildWhen: (p, n) =>
+                  p.isFavorite != n.isFavorite ||
+                  p.wishlistToggling != n.wishlistToggling,
               builder: (context, state) {
                 return PositionedDirectional(
                   top: topPad + 8.h,
                   end: 16.w + 44.w,
-                  child: CircleIconButton(
-                    icon: state.isFavorite ? Iconsax.heart5 : Iconsax.heart,
-                    iconColor: state.isFavorite
-                        ? AppColors.error
-                        : Colors.white,
-                    onTap: context.read<TripDetailsCubit>().toggleFavorite,
+                  child: Opacity(
+                    opacity: state.wishlistToggling ? 0.55 : 1,
+                    child: CircleIconButton(
+                      icon: state.isFavorite ? Iconsax.heart5 : Iconsax.heart,
+                      iconColor: state.isFavorite
+                          ? AppColors.error
+                          : AppColors.onImage,
+                      onTap: state.wishlistToggling
+                          ? null
+                          : context.read<TripDetailsCubit>().toggleWishlist,
+                    ),
                   ),
                 );
               },
@@ -103,7 +121,9 @@ class TripDetailsHeroHeader extends StatelessWidget {
                       children: [
                         Text(
                           context.tr.tripDetailsTitle,
-                          style: AppTextStyles.heading2(color: Colors.white),
+                          style: AppTextStyles.heading2(
+                            color: AppColors.onImage,
+                          ),
                           maxLines: 2,
                           overflow: TextOverflow.ellipsis,
                         ),
@@ -119,7 +139,9 @@ class TripDetailsHeroHeader extends StatelessWidget {
                             Expanded(
                               child: Text(
                                 context.tr.tripDetailsHeroRatingLine,
-                                style: AppTextStyles.bodySmall(color: Colors.white),
+                                style: AppTextStyles.bodySmall(
+                                  color: AppColors.onImage,
+                                ),
                               ),
                             ),
                           ],
@@ -129,14 +151,16 @@ class TripDetailsHeroHeader extends StatelessWidget {
                           children: [
                             Icon(
                               Iconsax.location,
-                              color: Colors.white,
+                              color: AppColors.onImage,
                               size: 16.sp,
                             ),
                             SizedBox(width: 6.w),
                             Expanded(
                               child: Text(
                                 context.tr.tripDetailsHeroLocationShort,
-                                style: AppTextStyles.bodySmall(color: Colors.white),
+                                style: AppTextStyles.bodySmall(
+                                  color: AppColors.onImage,
+                                ),
                               ),
                             ),
                           ],
@@ -148,13 +172,14 @@ class TripDetailsHeroHeader extends StatelessWidget {
                             vertical: 6.h,
                           ),
                           decoration: BoxDecoration(
-                            color: Colors.black.withValues(alpha: 0.45),
+                            color: AppColors.shadow.withValues(alpha: 0.45),
                             borderRadius: BorderRadius.circular(999.r),
                           ),
                           child: Text(
                             context.tr.tripDetailsHeroDaysBadge,
-                            style: AppTextStyles.caption(color: Colors.white)
-                                .copyWith(fontWeight: FontWeight.w700),
+                            style: AppTextStyles.caption(
+                              color: AppColors.onImage,
+                            ).copyWith(fontWeight: FontWeight.w700),
                           ),
                         ),
                       ],
@@ -213,12 +238,12 @@ class _ThumbTile extends StatelessWidget {
             AppCachedNetworkImage(imageUrl: url, fit: BoxFit.cover),
             if (showMoreOverlay)
               ColoredBox(
-                color: Colors.black.withValues(alpha: 0.55),
+                color: AppColors.shadow.withValues(alpha: 0.55),
                 child: Center(
                   child: Text(
                     moreLabel,
                     style: AppTextStyles.bodyMedium(
-                      color: Colors.white,
+                      color: AppColors.onImage,
                     ).copyWith(fontWeight: FontWeight.w700),
                   ),
                 ),

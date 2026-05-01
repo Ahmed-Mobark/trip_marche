@@ -84,7 +84,7 @@ class _SearchField extends StatelessWidget {
         height: 44.h,
         padding: EdgeInsetsDirectional.symmetric(horizontal: 14.w),
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: AppColors.cardBg,
           borderRadius: BorderRadius.circular(14.r),
         ),
         child: Row(
@@ -133,13 +133,13 @@ class _NotificationButton extends StatelessWidget {
               width: 38.w,
               height: 38.w,
               decoration: BoxDecoration(
-                color: Colors.white.withValues(alpha: 0.18),
+                color: AppColors.onImage.withValues(alpha: 0.18),
                 shape: BoxShape.circle,
               ),
               child: Icon(
                 Iconsax.notification,
                 size: 20.sp,
-                color: Colors.white,
+                color: AppColors.onImage,
               ),
             ),
             if (hasNotification)
@@ -150,10 +150,10 @@ class _NotificationButton extends StatelessWidget {
                   width: 10.w,
                   height: 10.w,
                   decoration: BoxDecoration(
-                    color: AppColors.red,
+                    color: AppColors.error,
                     shape: BoxShape.circle,
                     border: Border.all(
-                      color: Colors.white.withValues(alpha: 0.6),
+                      color: AppColors.onImage.withValues(alpha: 0.6),
                       width: 1,
                     ),
                   ),

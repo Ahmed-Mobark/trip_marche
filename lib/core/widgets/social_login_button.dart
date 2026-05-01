@@ -24,14 +24,18 @@ class SocialLoginButton extends StatelessWidget {
       child: OutlinedButton.icon(
         onPressed: onPressed,
         icon: icon,
-        label: Text(text, style: AppTextStyles.subtitle(color: AppColors.darkText)),
+        label: Text(
+          text,
+          style: AppTextStyles.subtitle(color: AppColors.darkText),
+        ),
         style: OutlinedButton.styleFrom(
-          backgroundColor: Colors.white,
+          backgroundColor: AppColors.cardBg,
           side: BorderSide(color: AppColors.border),
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.r)),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(12.r),
+          ),
         ),
       ),
     );
   }
 }
-

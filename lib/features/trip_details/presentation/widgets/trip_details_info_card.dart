@@ -28,7 +28,7 @@ class TripDetailsInfoCard extends StatelessWidget {
       width: double.infinity,
       padding: padding ?? EdgeInsetsDirectional.all(20.r),
       decoration: BoxDecoration(
-        color: backgroundColor ?? AppColors.white,
+        color: backgroundColor ?? AppColors.onImage,
         borderRadius: BorderRadius.circular(radius),
         border: Border.all(
           color: (borderColor ?? AppColors.border).withValues(alpha: 0.6),
@@ -36,7 +36,7 @@ class TripDetailsInfoCard extends StatelessWidget {
         boxShadow: withShadow
             ? [
                 BoxShadow(
-                  color: Colors.black.withValues(alpha: 0.05),
+                  color: AppColors.shadow.withValues(alpha: 0.05),
                   blurRadius: 22.r,
                   offset: Offset(0, 10.h),
                 ),

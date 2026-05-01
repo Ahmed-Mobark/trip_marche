@@ -1,4 +1,4 @@
-import '../config/app_colors.dart';
+import '../theme/app_colors.dart';
 import '../config/styles/styles.dart';
 import 'app_toast.dart';
 import 'package:flutter/material.dart';
@@ -38,9 +38,9 @@ class CustomToast extends StatefulWidget {
 
 class _CustomToastState extends State<CustomToast> {
   Color getColor() => switch (widget.type) {
-    ToastType.success => Colors.green,
-    ToastType.warning => AppColors.yellow,
-    ToastType.error => AppColors.red,
+    ToastType.success => AppColors.success,
+    ToastType.warning => AppColors.warning,
+    ToastType.error => AppColors.error,
   };
 
   IconData getIconData() => switch (widget.type) {
@@ -55,7 +55,7 @@ class _CustomToastState extends State<CustomToast> {
       animation: widget.controller!,
       builder: (context, _) {
         return Material(
-          color: Colors.transparent,
+          color: AppColors.transparent,
           child: SlideTransition(
             position:
                 Tween<Offset>(
@@ -92,10 +92,10 @@ class _CustomToastState extends State<CustomToast> {
                       height: 35,
                       margin: EdgeInsetsDirectional.only(end: 15.w),
                       decoration: BoxDecoration(
-                        color: Colors.red.withValues(alpha: 0.2),
+                        color: getColor().withValues(alpha: 0.2),
                         shape: BoxShape.circle,
                       ),
-                      child: Icon(getIconData(), color: Colors.red, size: 22),
+                      child: Icon(getIconData(), color: getColor(), size: 22),
                     ),
                     // getIcon(),
                     Expanded(

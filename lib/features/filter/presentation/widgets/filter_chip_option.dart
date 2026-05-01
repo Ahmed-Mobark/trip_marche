@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import '../../../../core/theme/app_colors.dart';
 
 class FilterChipOption extends StatelessWidget {
@@ -25,7 +24,7 @@ class FilterChipOption extends StatelessWidget {
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
         decoration: BoxDecoration(
-          color: isSelected ? AppColors.primary : Colors.transparent,
+          color: isSelected ? AppColors.primary : AppColors.transparent,
           borderRadius: BorderRadius.circular(20),
           border: Border.all(
             color: isSelected ? AppColors.primary : AppColors.border,
@@ -35,19 +34,16 @@ class FilterChipOption extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             if (isSelected && showCheckmark) ...[
-              const Icon(Icons.check, size: 16, color: Colors.white),
+              const Icon(Icons.check, size: 16, color: AppColors.onImage),
               const SizedBox(width: 6),
             ],
-            if (leading != null) ...[
-              leading!,
-              const SizedBox(width: 4),
-            ],
+            if (leading != null) ...[leading!, const SizedBox(width: 4)],
             Text(
               label,
-              style: GoogleFonts.inter(
+              style: Theme.of(context).textTheme.bodyMedium!.copyWith(
                 fontSize: 14,
                 fontWeight: FontWeight.w500,
-                color: isSelected ? Colors.white : AppColors.secondaryText,
+                color: isSelected ? AppColors.onImage : AppColors.secondaryText,
               ),
             ),
           ],

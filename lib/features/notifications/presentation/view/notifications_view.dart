@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:iconsax/iconsax.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_text_styles.dart';
@@ -79,10 +78,7 @@ class NotificationsView extends StatelessWidget {
           icon: Icon(Iconsax.arrow_left, color: AppColors.darkText),
           onPressed: () => Navigator.pop(context),
         ),
-        title: Text(
-          'Notification',
-          style: AppTextStyles.subtitle(),
-        ),
+        title: Text('Notification', style: AppTextStyles.subtitle()),
         centerTitle: true,
         actions: [
           TextButton(
@@ -91,7 +87,7 @@ class NotificationsView extends StatelessWidget {
             },
             child: Text(
               'Mark all read',
-              style: GoogleFonts.inter(
+              style: Theme.of(context).textTheme.bodyMedium!.copyWith(
                 fontSize: 13,
                 fontWeight: FontWeight.w500,
                 color: AppColors.primary,
@@ -112,11 +108,13 @@ class NotificationsView extends StatelessWidget {
             children: [
               // Group Header
               Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 20,
+                  vertical: 8,
+                ),
                 child: Text(
                   group['group'] as String,
-                  style: GoogleFonts.inter(
+                  style: Theme.of(context).textTheme.bodyMedium!.copyWith(
                     fontSize: 14,
                     fontWeight: FontWeight.w600,
                     color: AppColors.greyText,
@@ -124,15 +122,17 @@ class NotificationsView extends StatelessWidget {
                 ),
               ),
               // Items
-              ...items.map((item) => NotificationItem(
-                    icon: item['icon'] as IconData,
-                    title: item['title'] as String,
-                    description: item['description'] as String,
-                    timestamp: item['time'] as String,
-                    onTap: () {
-                      // Handle notification tap
-                    },
-                  )),
+              ...items.map(
+                (item) => NotificationItem(
+                  icon: item['icon'] as IconData,
+                  title: item['title'] as String,
+                  description: item['description'] as String,
+                  timestamp: item['time'] as String,
+                  onTap: () {
+                    // Handle notification tap
+                  },
+                ),
+              ),
             ],
           );
         },

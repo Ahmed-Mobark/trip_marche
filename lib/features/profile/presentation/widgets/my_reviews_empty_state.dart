@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:iconsax/iconsax.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_text_styles.dart';
@@ -27,7 +26,7 @@ class MyReviewsEmptyState extends StatelessWidget {
           Text(
             'Your reviews will appear here after\nyou review a trip.',
             textAlign: TextAlign.center,
-            style: GoogleFonts.inter(
+            style: Theme.of(context).textTheme.bodyMedium!.copyWith(
               fontSize: 14,
               fontWeight: FontWeight.w400,
               color: AppColors.greyText,
@@ -38,4 +37,3 @@ class MyReviewsEmptyState extends StatelessWidget {
     );
   }
 }
-

@@ -10,20 +10,25 @@ import 'exceptions.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 import '../../storage/data/storage.dart';
 
-enum ApiEnvironment {primary, secondary, map}
+enum ApiEnvironment { primary, secondary, map }
 
 class ApiBaseHelper {
   static String primaryBaseUrl = AppEndpoints.baseUrl;
   static String secondaryBaseUrl = AppEndpoints.baseUrl;
   static String mapBaseUrl = MapEndpoints.baseUrl;
 
-  
   static final ApiBaseHelper _instance = ApiBaseHelper._internal();
   final Map<ApiEnvironment, Dio> _dioInstances = {};
 
-  factory ApiBaseHelper({Dio? dio, ApiEnvironment environment = ApiEnvironment.primary}) {
-    if (dio != null) {_instance._dioInstances[environment] = dio;}
-    else {_instance._initializeDio(environment);}
+  factory ApiBaseHelper({
+    Dio? dio,
+    ApiEnvironment environment = ApiEnvironment.primary,
+  }) {
+    if (dio != null) {
+      _instance._dioInstances[environment] = dio;
+    } else {
+      _instance._initializeDio(environment);
+    }
     return _instance;
   }
 
@@ -31,34 +36,43 @@ class ApiBaseHelper {
 
   void _initializeDio(ApiEnvironment environment) {
     final baseUrl = _getBaseUrl(environment);
-    _dioInstances[environment] = Dio(
-      BaseOptions(baseUrl: baseUrl, headers: _defaultHeaders()),
-    )..interceptors.add(PrettyDioLogger(
-      requestHeader: true,
-        requestBody: true,
-        responseBody: true,
-        responseHeader: false,
-        error: true,
-        compact: true,
-        maxWidth: 90,
-        enabled: kDebugMode,
-    ));
+    _dioInstances[environment] =
+        Dio(BaseOptions(baseUrl: baseUrl, headers: _defaultHeaders()))
+          ..interceptors.add(
+            PrettyDioLogger(
+              requestHeader: true,
+              requestBody: true,
+              responseBody: true,
+              responseHeader: false,
+              error: true,
+              compact: true,
+              maxWidth: 90,
+              enabled: kDebugMode,
+            ),
+          );
   }
 
-  String _getBaseUrl(ApiEnvironment environment) => switch(environment) {
+  String _getBaseUrl(ApiEnvironment environment) => switch (environment) {
     ApiEnvironment.primary => primaryBaseUrl,
     ApiEnvironment.secondary => secondaryBaseUrl,
     ApiEnvironment.map => mapBaseUrl,
   };
 
   Dio getDio(ApiEnvironment environment) {
-    if (!_dioInstances.containsKey(environment)) {_initializeDio(environment);}
+    if (!_dioInstances.containsKey(environment)) {
+      _initializeDio(environment);
+    }
     return _dioInstances[environment]!;
   }
 
   void updateLocaleInHeaders(String locale, {ApiEnvironment? environment}) {
-    if (environment != null) {getDio(environment).options.headers['Accept-Language'] = locale;}
-    else {for (var dio in _dioInstances.values) {dio.options.headers['Accept-Language'] = locale;}}
+    if (environment != null) {
+      getDio(environment).options.headers['Accept-Language'] = locale;
+    } else {
+      for (var dio in _dioInstances.values) {
+        dio.options.headers['Accept-Language'] = locale;
+      }
+    }
   }
 
   static Map<String, String> _defaultHeaders() => {
@@ -68,11 +82,16 @@ class ApiBaseHelper {
     'Accept-Language': sl<Storage>().getLang(),
   };
 
-  Future<T> _performRequest<T>(Future<Response<T>> Function() request, {required ApiEnvironment environment}) async {
+  Future<T> _performRequest<T>(
+    Future<Response<T>> Function() request, {
+    required ApiEnvironment environment,
+  }) async {
     try {
       final dio = getDio(environment);
       String? token = sl<Storage>().getToken();
-      if(token != null) {dio.options.headers['Authorization'] = 'Bearer $token';}
+      if (token != null) {
+        dio.options.headers['Authorization'] = 'Bearer $token';
+      }
       final response = await request();
       return response.data!;
     } on DioException catch (e) {
@@ -86,24 +105,73 @@ class ApiBaseHelper {
     }
   }
 
-
-  Future<T> get<T>({required String url, Map<String, dynamic>? queryParameters, Map<String, dynamic>? body, ApiEnvironment environment = ApiEnvironment.primary}) async {
-    return _performRequest<T>(() => getDio(environment).get<T>(url, queryParameters: queryParameters, data: body), environment: environment);
+  Future<T> get<T>({
+    required String url,
+    Map<String, dynamic>? queryParameters,
+    Map<String, dynamic>? body,
+    ApiEnvironment environment = ApiEnvironment.primary,
+  }) async {
+    return _performRequest<T>(
+      () => getDio(
+        environment,
+      ).get<T>(url, queryParameters: queryParameters, data: body),
+      environment: environment,
+    );
   }
 
-  Future<T> post<T>({required String url, Map<String, dynamic>? body, FormData? formData, Options? options, ApiEnvironment environment = ApiEnvironment.primary}) async {
-    return _performRequest<T>(() => getDio(environment).post<T>(url, data: formData ?? body, options: options),environment: environment,);
+  Future<T> post<T>({
+    required String url,
+    Map<String, dynamic>? body,
+    FormData? formData,
+    Options? options,
+    ApiEnvironment environment = ApiEnvironment.primary,
+  }) async {
+    return _performRequest<T>(
+      () => getDio(
+        environment,
+      ).post<T>(url, data: formData ?? body, options: options),
+      environment: environment,
+    );
   }
 
-  Future<T> put<T>({required String url, Map<String, dynamic>? body, FormData? formData, Options? options, ApiEnvironment environment = ApiEnvironment.primary}) async {
-    return _performRequest<T>(() => getDio(environment).put<T>(url, data: formData ?? body, options: options), environment: environment,);
+  Future<T> put<T>({
+    required String url,
+    Map<String, dynamic>? body,
+    FormData? formData,
+    Options? options,
+    ApiEnvironment environment = ApiEnvironment.primary,
+  }) async {
+    return _performRequest<T>(
+      () => getDio(
+        environment,
+      ).put<T>(url, data: formData ?? body, options: options),
+      environment: environment,
+    );
   }
 
-  Future<T> patch<T>({required String url, Map<String, dynamic>? body, FormData? formData, Options? options, ApiEnvironment environment = ApiEnvironment.primary}) async {
-    return _performRequest<T>(() => getDio(environment).patch<T>(url, data: formData ?? body, options: options), environment: environment,);
+  Future<T> patch<T>({
+    required String url,
+    Map<String, dynamic>? body,
+    FormData? formData,
+    Options? options,
+    ApiEnvironment environment = ApiEnvironment.primary,
+  }) async {
+    return _performRequest<T>(
+      () => getDio(
+        environment,
+      ).patch<T>(url, data: formData ?? body, options: options),
+      environment: environment,
+    );
   }
 
-  Future<T> delete<T>({required String url, Map<String, dynamic>? body, ApiEnvironment environment = ApiEnvironment.primary,}) async {
-    return _performRequest<T>(() => getDio(environment).delete<T>(url, data: body), environment: environment);
+  Future<T> delete<T>({
+    required String url,
+    Map<String, dynamic>? body,
+    ApiEnvironment environment = ApiEnvironment.primary,
+  }) async {
+    return _performRequest<T>(
+      () => getDio(environment).delete<T>(url, data: body),
+      environment: environment,
+    );
   }
 }

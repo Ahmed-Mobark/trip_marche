@@ -7,7 +7,7 @@ class ToastViewManager<T> extends ValueNotifier<T> {
   ToastViewManager(super.val);
 }
 
-enum ToastLength {short, medium, long, ages, never }
+enum ToastLength { short, medium, long, ages, never }
 
 class ToastService {
   static final ToastViewManager<int> _expandedIndex = ToastViewManager<int>(-1);
@@ -19,8 +19,13 @@ class ToastService {
   static int? _showToastNumber;
 
   static void showToastNumber(int val) {
-    assert(val > 0, "Show toast number can't be negative or zero. Default show toast number is 5.");
-    if (val > 0) {_showToastNumber = val;}
+    assert(
+      val > 0,
+      "Show toast number can't be negative or zero. Default show toast number is 5.",
+    );
+    if (val > 0) {
+      _showToastNumber = val;
+    }
   }
 
   static void _reverseAnimation(int index) {
@@ -52,7 +57,8 @@ class ToastService {
     _overlayIndexList.add(index);
   }
 
-  static bool _isToastInFront(int index) => index > _overlayPositions.length - 5;
+  static bool _isToastInFront(int index) =>
+      index > _overlayPositions.length - 5;
 
   static void _updateOverlayPositions({bool isReverse = false, int pos = 0}) {
     if (isReverse) {
@@ -85,7 +91,9 @@ class ToastService {
   static double _calculateOpacity(int index) {
     int noOfShowToast = _showToastNumber ?? 5;
     if (_overlayIndexList.length <= noOfShowToast) return 1;
-    final isFirstFiveToast = _overlayIndexList.sublist(_overlayIndexList.length - noOfShowToast).contains(index);
+    final isFirstFiveToast = _overlayIndexList
+        .sublist(_overlayIndexList.length - noOfShowToast)
+        .contains(index);
     return isFirstFiveToast ? 1 : 0;
   }
 
@@ -104,7 +112,7 @@ class ToastService {
       ToastLength.medium => const Duration(milliseconds: 4000),
       ToastLength.long => const Duration(milliseconds: 6000),
       ToastLength.ages => const Duration(minutes: 2),
-      ToastLength.never => Duration.zero
+      ToastLength.never => Duration.zero,
     };
   }
 
@@ -123,7 +131,10 @@ class ToastService {
     ToastLength length = ToastLength.short,
     DismissDirection dismissDirection = DismissDirection.down,
   }) async {
-    assert(expandedHeight >= 0.0, "Expanded height should not be a negative number!");
+    assert(
+      expandedHeight >= 0.0,
+      "Expanded height should not be a negative number!",
+    );
     if (context.mounted) {
       _overlayState = Overlay.of(context);
       final controller = AnimationController(
@@ -136,10 +147,15 @@ class ToastService {
       _addOverlayPosition(controllerIndex);
       final overlayEntry = OverlayEntry(
         builder: (context) => AnimatedPositioned(
-          top: topView?_calculatePosition(controllerIndex) + (_expandedIndex.value == controllerIndex ? expandedHeight : 0.0):null,
+          top: topView
+              ? _calculatePosition(controllerIndex) +
+                    (_expandedIndex.value == controllerIndex
+                        ? expandedHeight
+                        : 0.0)
+              : null,
           left: 10,
           right: 10,
-          bottom: topView?null:30,
+          bottom: topView ? null : 30,
           duration: const Duration(milliseconds: 500),
           curve: positionCurve,
           child: Dismissible(
@@ -153,7 +169,11 @@ class ToastService {
               );
             },
             child: AnimatedPadding(
-              padding: EdgeInsets.symmetric(horizontal: (_expandedIndex.value == controllerIndex ? 10 : max(_calculatePosition(controllerIndex) - 35, 0.0))),
+              padding: EdgeInsets.symmetric(
+                horizontal: (_expandedIndex.value == controllerIndex
+                    ? 10
+                    : max(_calculatePosition(controllerIndex) - 35, 0.0)),
+              ),
               duration: const Duration(milliseconds: 500),
               curve: positionCurve,
               child: AnimatedOpacity(
@@ -167,12 +187,19 @@ class ToastService {
                   descriptionStyle: descriptionStyle,
                   curve: slideCurve,
                   isClosable: isClosable,
-                  isInFront: _isToastInFront(_animationControllers.indexOf(controller)),
+                  isInFront: _isToastInFront(
+                    _animationControllers.indexOf(controller),
+                  ),
                   controller: controller,
                   onTap: () => _toggleExpand(controllerIndex),
                   onClose: () {
-                    _removeOverlayEntry(_animationControllers.indexOf(controller));
-                    _updateOverlayPositions(isReverse: true, pos: _animationControllers.indexOf(controller));
+                    _removeOverlayEntry(
+                      _animationControllers.indexOf(controller),
+                    );
+                    _updateOverlayPositions(
+                      isReverse: true,
+                      pos: _animationControllers.indexOf(controller),
+                    );
                   },
                 ),
               ),
@@ -188,7 +215,6 @@ class ToastService {
     }
   }
 
-  
   static Future<void> showToast(
     BuildContext context, {
     required ToastType type,

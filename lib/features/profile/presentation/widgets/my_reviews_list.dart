@@ -2,10 +2,7 @@ import 'package:flutter/material.dart';
 import 'review_card.dart';
 
 class MyReviewsList extends StatelessWidget {
-  const MyReviewsList({
-    super.key,
-    required this.reviews,
-  });
+  const MyReviewsList({super.key, required this.reviews});
 
   final List<Map<String, dynamic>> reviews;
 
@@ -28,4 +25,3 @@ class MyReviewsList extends StatelessWidget {
     );
   }
 }
-

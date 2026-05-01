@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:iconsax/iconsax.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../home/presentation/view/home_view.dart';
@@ -18,21 +17,18 @@ class MainNavView extends StatefulWidget {
 class _MainNavViewState extends State<MainNavView> {
   int _currentIndex = 0;
 
-  final List<Widget> _pages = const [
-    HomeView(),
-    MyTripsView(),
-    WishlistView(),
-    ProfileView(),
+  final List<Widget> _pages = [
+    const HomeView(),
+    const MyTripsView(),
+    const WishlistView(),
+    const ProfileView(),
   ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.background,
-      body: IndexedStack(
-        index: _currentIndex,
-        children: _pages,
-      ),
+      body: IndexedStack(index: _currentIndex, children: _pages),
       bottomNavigationBar: LayoutBuilder(
         builder: (context, constraints) {
           const itemCount = 4;
@@ -46,7 +42,7 @@ class _MainNavViewState extends State<MainNavView> {
             children: [
               Container(
                 decoration: BoxDecoration(
-                  color: AppColors.white,
+                  color: AppColors.cardBg,
                   border: Border(
                     top: BorderSide(color: AppColors.border, width: 0.5),
                   ),
@@ -59,18 +55,14 @@ class _MainNavViewState extends State<MainNavView> {
                     });
                   },
                   type: BottomNavigationBarType.fixed,
-                  backgroundColor: AppColors.white,
+                  backgroundColor: AppColors.cardBg,
                   elevation: 0,
                   selectedItemColor: AppColors.primary,
                   unselectedItemColor: AppColors.greyText,
-                  selectedLabelStyle: GoogleFonts.inter(
-                    fontSize: 14,
-                    fontWeight: FontWeight.w600,
-                  ),
-                  unselectedLabelStyle: GoogleFonts.inter(
-                    fontSize: 14,
-                    fontWeight: FontWeight.w500,
-                  ),
+                  selectedLabelStyle: Theme.of(context).textTheme.bodyMedium!
+                      .copyWith(fontSize: 14, fontWeight: FontWeight.w600),
+                  unselectedLabelStyle: Theme.of(context).textTheme.bodyMedium!
+                      .copyWith(fontSize: 14, fontWeight: FontWeight.w500),
                   items: [
                     BottomNavigationBarItem(
                       icon: const Icon(Iconsax.home),

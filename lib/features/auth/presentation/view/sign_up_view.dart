@@ -64,8 +64,9 @@ class SignUpView extends StatelessWidget {
                     children: [
                       Text(
                         context.tr.authSignUpSubtitle,
-                        style: AppTextStyles.heading2(color: AppColors.darkText)
-                            .copyWith(fontWeight: FontWeight.w800),
+                        style: AppTextStyles.heading2(
+                          color: AppColors.darkText,
+                        ).copyWith(fontWeight: FontWeight.w800),
                       ),
                       SizedBox(height: 18.h),
 
@@ -204,7 +205,7 @@ class SignUpView extends StatelessWidget {
                                     width: 22.r,
                                     height: 22.r,
                                     child: const CircularProgressIndicator(
-                                      color: Colors.white,
+                                      color: AppColors.onImage,
                                       strokeWidth: 2.5,
                                     ),
                                   )

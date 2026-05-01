@@ -61,8 +61,8 @@ class TrendingDestinationCard extends StatelessWidget {
                       begin: Alignment.topCenter,
                       end: Alignment.bottomCenter,
                       colors: [
-                        Colors.black.withValues(alpha: 0.0),
-                        Colors.black.withValues(alpha: 0.55),
+                        AppColors.shadow.withValues(alpha: 0.0),
+                        AppColors.shadow.withValues(alpha: 0.55),
                       ],
                     ),
                   ),
@@ -72,7 +72,7 @@ class TrendingDestinationCard extends StatelessWidget {
                     overflow: TextOverflow.ellipsis,
                     textAlign: TextAlign.center,
                     style: AppTextStyles.subtitle(
-                      color: Colors.white,
+                      color: AppColors.onImage,
                     ).copyWith(fontSize: 14.sp, fontWeight: FontWeight.w700),
                   ),
                 ),
@@ -104,7 +104,7 @@ class _RankRibbon extends StatelessWidget {
           Text(
             '#$rank',
             style: AppTextStyles.bodySmall(
-              color: Colors.white,
+              color: AppColors.onImage,
             ).copyWith(fontWeight: FontWeight.w900, fontSize: 11.sp, height: 1),
           ),
         ],

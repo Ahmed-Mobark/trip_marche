@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:iconsax/iconsax.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_text_styles.dart';
@@ -56,10 +55,7 @@ class FaqsView extends StatelessWidget {
           icon: Icon(Iconsax.arrow_left, color: AppColors.darkText),
           onPressed: () => Navigator.pop(context),
         ),
-        title: Text(
-          'FAQs',
-          style: AppTextStyles.subtitle(),
-        ),
+        title: Text('FAQs', style: AppTextStyles.subtitle()),
         centerTitle: true,
       ),
       body: ListView.builder(
@@ -75,16 +71,18 @@ class FaqsView extends StatelessWidget {
                 border: Border.all(color: AppColors.border),
               ),
               child: Theme(
-                data: Theme.of(context)
-                    .copyWith(dividerColor: Colors.transparent),
+                data: Theme.of(
+                  context,
+                ).copyWith(dividerColor: AppColors.transparent),
                 child: ExpansionTile(
-                  tilePadding:
-                      const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
-                  childrenPadding:
-                      const EdgeInsets.fromLTRB(16, 0, 16, 16),
+                  tilePadding: const EdgeInsets.symmetric(
+                    horizontal: 16,
+                    vertical: 4,
+                  ),
+                  childrenPadding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
                   title: Text(
                     faq['question']!,
-                    style: GoogleFonts.inter(
+                    style: Theme.of(context).textTheme.bodyMedium!.copyWith(
                       fontSize: 14,
                       fontWeight: FontWeight.w600,
                       color: AppColors.darkText,
@@ -95,7 +93,7 @@ class FaqsView extends StatelessWidget {
                   children: [
                     Text(
                       faq['answer']!,
-                      style: GoogleFonts.inter(
+                      style: Theme.of(context).textTheme.bodyMedium!.copyWith(
                         fontSize: 14,
                         fontWeight: FontWeight.w400,
                         color: AppColors.secondaryText,

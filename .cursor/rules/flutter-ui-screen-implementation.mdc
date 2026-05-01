@@ -23,9 +23,14 @@ alwaysApply: false
 
 ## Design Tokens
 
-- **Colors:** Always use `AppColors.*` — never inline `Color(0xFF...)`.
-- **Typography:** Use `AppTextStyles.*` (`heading1`, `body`, `button`, `caption`, etc.). Fine-tune with `.copyWith(fontSize: X.sp)`.
-- **Shared widgets:** Check `lib/core/widgets/` first (buttons, text fields, shimmer, dialogs, empty states, cached images).
+- **Colors (required for theme correctness):** Every new or updated widget must take **light and dark mode** into account. Source all colours from **`AppColors`** (`package:trip_marche/core/theme/app_colors.dart`). Do **not** use `Colors.white`, `Colors.black`, `Colors.grey[…]`, `MaterialColor` shadings, or inline `Color(0xFF…)` for UI surfaces, text, icons, borders, inputs, buttons, app bars, sheets, or dialogs — those break dark mode and bypass the shared theme logic.
+- Prefer **semantic** tokens that already flip with brightness (e.g. `AppColors.scaffoldBg`, `AppColors.background`, `AppColors.cardBg`, `AppColors.bodyText`, `AppColors.greyText`, `AppColors.captionText`, `AppColors.border`, `AppColors.inputBg`, `AppColors.onImage`, `AppColors.primary`). If the design needs a colour that does not exist yet, **add it to `AppColors`** (as a const for brand-only colours, or as a brightness-aware getter if it must change between themes), then reference it — never hardcode in the widget.
+- **Theme / Material alignment:** Where a Material role fits (e.g. `Theme.of(context).colorScheme.error`), you may use `colorScheme` / `textTheme` for standard Material widgets, but the project’s default for app-specific chrome and feature UI is **`AppColors`** so behaviour stays consistent with `AdaptiveTheme` and `AppColors.brightness`.
+- **Typography:** Use `AppTextStyles.*` (`heading1`, `body`, `button`, `caption`, etc.). Prefer pairing semantic colours with those styles (e.g. `AppTextStyles.body(color: AppColors.bodyText)`). Fine-tune with `.copyWith(fontSize: X.sp)` when needed.
+- **Shared widgets:** Check `lib/core/widgets/` first (buttons, text fields, **`CustomLoading`**, dialogs, empty states, cached images). When changing a core widget, preserve or improve **theme-aware** colours so all call sites stay correct in light and dark mode.
+- **Verification:** After UI work, mentally check both themes (settings dark-mode toggle): no invisible text, no white cards on dark scaffold, no low-contrast borders.
+
+See also: `.cursor/rules/localization-and-theming.mdc` for ARB workflow, `AppTheme` / `AppThemeData`, and `adaptive_theme` wiring.
 
 ## Strings & Localisation
 
@@ -57,6 +62,6 @@ alwaysApply: false
 - Buttons: fully rounded (`BorderRadius.circular(999.r)`), height `50–58.h`.
 - Cards: rounded corners `12–16.r`, light border or subtle shadow.
 - Spacing: consistent `16.w` horizontal padding, `12–24.h` vertical gaps.
-- Loading states: use `Shimmer` widgets from `core/widgets/`, not bare `CircularProgressIndicator`.
+- **Loading states (default):** Use **`CustomLoading`** (`lib/core/widgets/custom_loading.dart`) for full sections, first paint, and pagination footers. It uses **`AppColors.primary`** by default; pass `size`, `strokeWidth`, `top` / `bottom`, and `color` when the layout needs a smaller inline spinner or different emphasis. Do **not** use bare `CircularProgressIndicator` in feature screens unless there is a documented exception. Reserve **`shimmer`** / skeleton UIs for cases where the product explicitly requires placeholder shapes—not as the default loading pattern.
 - Empty states: use `AppEmptyScreen` with illustration + message.
 - Error states: show user-friendly message from `Failure.message`, not raw exceptions.

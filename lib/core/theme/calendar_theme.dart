@@ -11,22 +11,18 @@ class CalendarTheme {
   ) => Theme.of(context).copyWith(
     colorScheme: ColorScheme.dark(
       primary: Theme.of(context).primaryColor, // Selected date circle
-      onPrimary: Colors.white, // Selected date text
+      onPrimary: AppColors.onPrimary, // Selected date text
       surface: Theme.of(context).scaffoldBackgroundColor, // Dialog background
       onSurface: Theme.of(context).colorScheme.onSurface, // General text color
     ),
     datePickerTheme: DatePickerThemeData(
       confirmButtonStyle: ButtonStyle(
         backgroundColor: WidgetStatePropertyAll(Theme.of(context).primaryColor),
-        foregroundColor: const WidgetStatePropertyAll(
-          AppColors.scaffoldColorLight,
-        ),
+        foregroundColor: WidgetStatePropertyAll(AppColors.onPrimary),
       ),
       cancelButtonStyle: ButtonStyle(
         backgroundColor: WidgetStatePropertyAll(Theme.of(context).primaryColor),
-        foregroundColor: const WidgetStatePropertyAll(
-          AppColors.scaffoldColorLight,
-        ),
+        foregroundColor: WidgetStatePropertyAll(AppColors.onPrimary),
       ),
       headerHelpStyle: TextStyles.textViewBold16.copyWith(
         color: Theme.of(context).primaryColor,
@@ -40,15 +36,11 @@ class CalendarTheme {
     timePickerTheme: TimePickerThemeData(
       confirmButtonStyle: ButtonStyle(
         backgroundColor: WidgetStatePropertyAll(Theme.of(context).primaryColor),
-        foregroundColor: const WidgetStatePropertyAll(
-          AppColors.scaffoldColorLight,
-        ),
+        foregroundColor: WidgetStatePropertyAll(AppColors.onPrimary),
       ),
       cancelButtonStyle: ButtonStyle(
         backgroundColor: WidgetStatePropertyAll(Theme.of(context).primaryColor),
-        foregroundColor: const WidgetStatePropertyAll(
-          AppColors.scaffoldColorLight,
-        ),
+        foregroundColor: WidgetStatePropertyAll(AppColors.onPrimary),
       ),
       dayPeriodShape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(10.r),

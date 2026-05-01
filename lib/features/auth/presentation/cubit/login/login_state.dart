@@ -17,11 +17,14 @@ class LoginState extends Equatable {
 
   String? get validationErrorsDescription {
     if (validationErrors == null || validationErrors!.isEmpty) return null;
-    return validationErrors!.entries.map((e) {
-      final msgs =
-          e.value is List ? (e.value as List).join(', ') : e.value.toString();
-      return msgs;
-    }).join('\n');
+    return validationErrors!.entries
+        .map((e) {
+          final msgs = e.value is List
+              ? (e.value as List).join(', ')
+              : e.value.toString();
+          return msgs;
+        })
+        .join('\n');
   }
 
   LoginState copyWith({
@@ -40,9 +43,9 @@ class LoginState extends Equatable {
 
   @override
   List<Object?> get props => [
-        obscurePassword,
-        status,
-        errorMessage,
-        validationErrors,
-      ];
+    obscurePassword,
+    status,
+    errorMessage,
+    validationErrors,
+  ];
 }

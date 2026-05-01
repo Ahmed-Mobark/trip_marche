@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:iconsax/iconsax.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_text_styles.dart';
@@ -62,17 +61,14 @@ class _FilterViewState extends State<FilterView> {
           icon: Icon(Iconsax.arrow_left, color: AppColors.darkText),
           onPressed: () => Navigator.pop(context),
         ),
-        title: Text(
-          context.tr.filterTitle,
-          style: AppTextStyles.subtitle(),
-        ),
+        title: Text(context.tr.filterTitle, style: AppTextStyles.subtitle()),
         centerTitle: true,
         actions: [
           TextButton(
             onPressed: _resetFilters,
             child: Text(
               context.tr.filterReset,
-              style: GoogleFonts.inter(
+              style: Theme.of(context).textTheme.bodyMedium!.copyWith(
                 fontSize: 14,
                 fontWeight: FontWeight.w500,
                 color: AppColors.primary,
@@ -85,8 +81,7 @@ class _FilterViewState extends State<FilterView> {
         children: [
           Expanded(
             child: SingleChildScrollView(
-              padding:
-                  const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -120,8 +115,7 @@ class _FilterViewState extends State<FilterView> {
                         isSelected: isSelected,
                         onTap: () {
                           setState(() {
-                            _selectedDuration =
-                                isSelected ? '' : duration;
+                            _selectedDuration = isSelected ? '' : duration;
                           });
                         },
                       );
@@ -176,13 +170,12 @@ class _FilterViewState extends State<FilterView> {
                           Icons.star,
                           size: 16,
                           color: isSelected
-                              ? Colors.white
-                              : const Color(0xFFFFD43B),
+                              ? AppColors.onImage
+                              : AppColors.yellow,
                         ),
                         onTap: () {
                           setState(() {
-                            _selectedRating =
-                                isSelected ? 0 : rating;
+                            _selectedRating = isSelected ? 0 : rating;
                           });
                         },
                       );
@@ -205,16 +198,15 @@ class _FilterViewState extends State<FilterView> {
                     ),
                     child: DropdownButtonHideUnderline(
                       child: DropdownButton<String>(
-                        value: _selectedCity.isEmpty
-                            ? null
-                            : _selectedCity,
+                        value: _selectedCity.isEmpty ? null : _selectedCity,
                         hint: Text(
                           context.tr.filterSelectCity,
-                          style: GoogleFonts.inter(
-                            fontSize: 14,
-                            fontWeight: FontWeight.w400,
-                            color: AppColors.greyText,
-                          ),
+                          style: Theme.of(context).textTheme.bodyMedium!
+                              .copyWith(
+                                fontSize: 14,
+                                fontWeight: FontWeight.w400,
+                                color: AppColors.greyText,
+                              ),
                         ),
                         isExpanded: true,
                         icon: Icon(
@@ -222,7 +214,7 @@ class _FilterViewState extends State<FilterView> {
                           color: AppColors.greyText,
                           size: 18,
                         ),
-                        style: GoogleFonts.inter(
+                        style: Theme.of(context).textTheme.bodyMedium!.copyWith(
                           fontSize: 14,
                           fontWeight: FontWeight.w500,
                           color: AppColors.darkText,
@@ -251,8 +243,7 @@ class _FilterViewState extends State<FilterView> {
 
           // Apply Button
           Padding(
-            padding:
-                const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
             child: SizedBox(
               width: double.infinity,
               height: 56,
@@ -267,8 +258,8 @@ class _FilterViewState extends State<FilterView> {
                     Navigator.pop(context);
                   },
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.transparent,
-                    shadowColor: Colors.transparent,
+                    backgroundColor: AppColors.transparent,
+                    shadowColor: AppColors.transparent,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(12),
                     ),

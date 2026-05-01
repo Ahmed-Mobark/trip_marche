@@ -16,11 +16,7 @@ import '../cubit/reset_password/reset_password_state.dart';
 import '../widgets/auth_header.dart';
 
 class ResetPasswordView extends StatelessWidget {
-  const ResetPasswordView({
-    super.key,
-    required this.email,
-    required this.code,
-  });
+  const ResetPasswordView({super.key, required this.email, required this.code});
 
   final String email;
   final String code;
@@ -189,16 +185,14 @@ class ResetPasswordView extends StatelessWidget {
                             onTap: isLoading
                                 ? null
                                 : () {
-                                    context
-                                        .read<ResetPasswordCubit>()
-                                        .submit();
+                                    context.read<ResetPasswordCubit>().submit();
                                   },
                             child: isLoading
                                 ? const SizedBox(
                                     width: 24,
                                     height: 24,
                                     child: CircularProgressIndicator(
-                                      color: Colors.white,
+                                      color: AppColors.onImage,
                                       strokeWidth: 2.5,
                                     ),
                                   )

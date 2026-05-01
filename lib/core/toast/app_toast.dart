@@ -31,8 +31,4 @@ Future<void> appToast({
   dismissDirection: dismissDirection,
 );
 
-enum ToastType {
-  success,
-  error,
-  warning,
-}
+enum ToastType { success, error, warning }

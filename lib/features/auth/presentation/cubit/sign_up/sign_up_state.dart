@@ -24,10 +24,14 @@ class SignUpState extends Equatable {
   /// Returns a combined description of all validation errors.
   String? get validationErrorsDescription {
     if (validationErrors == null || validationErrors!.isEmpty) return null;
-    return validationErrors!.entries.map((e) {
-      final msgs = e.value is List ? (e.value as List).join(', ') : e.value.toString();
-      return msgs;
-    }).join('\n');
+    return validationErrors!.entries
+        .map((e) {
+          final msgs = e.value is List
+              ? (e.value as List).join(', ')
+              : e.value.toString();
+          return msgs;
+        })
+        .join('\n');
   }
 
   SignUpState copyWith({
@@ -50,16 +54,15 @@ class SignUpState extends Equatable {
       validationErrors: validationErrors,
     );
   }
-  
 
   @override
   List<Object?> get props => [
-        obscurePassword,
-        obscureConfirmPassword,
-        dialCode,
-        status,
-        errorMessage,
-        successMessage,
-        validationErrors,
-      ];
+    obscurePassword,
+    obscureConfirmPassword,
+    dialCode,
+    status,
+    errorMessage,
+    successMessage,
+    validationErrors,
+  ];
 }

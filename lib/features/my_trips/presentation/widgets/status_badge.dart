@@ -5,15 +5,12 @@ import '../../../../core/theme/app_text_styles.dart';
 class StatusBadge extends StatelessWidget {
   final String status;
 
-  const StatusBadge({
-    super.key,
-    required this.status,
-  });
+  const StatusBadge({super.key, required this.status});
 
   Color _statusColor() {
     switch (status) {
       case 'Confirmed':
-        return const Color(0xFF22C55E);
+        return AppColors.success;
       case 'Completed':
         return AppColors.primary;
       case 'Cancelled':
@@ -26,7 +23,7 @@ class StatusBadge extends StatelessWidget {
   Color _statusBgColor() {
     switch (status) {
       case 'Confirmed':
-        return const Color(0xFF22C55E).withValues(alpha: 0.1);
+        return AppColors.success.withValues(alpha: 0.1);
       case 'Completed':
         return AppColors.primary.withValues(alpha: 0.1);
       case 'Cancelled':

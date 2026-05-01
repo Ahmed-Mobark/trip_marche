@@ -38,4 +38,3 @@ class MapEndpoints {
       "&destination=$destinationLat,$destinationLng"
       "&key=$mapKey";
 }
-

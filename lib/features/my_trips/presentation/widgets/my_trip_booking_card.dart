@@ -1,18 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:iconsax/iconsax.dart';
-import '../../../../core/config/app_colors.dart';
-import '../../../../core/config/styles/styles.dart';
 import '../../../../core/data/dummy_data.dart';
+import '../../../../core/theme/app_colors.dart';
+import '../../../../core/config/styles/styles.dart';
 import '../../../../core/injection/injection_container.dart';
 import '../../../../core/navigation/app_navigator.dart';
 import '../../../../core/widgets/app_cached_network_image.dart';
-import '../../../trip_details/presentation/view/trip_details_view.dart';
+import 'package:trip_marche/features/trip_details/presentation/trip_wishlist_pop_result.dart';
+import 'package:trip_marche/features/trip_details/presentation/view/trip_details_view.dart';
+import 'package:trip_marche/features/wishlist/domain/entities/wishlist_entities.dart';
 
 class MyTripBookingCard extends StatelessWidget {
-  const MyTripBookingCard({
+  /// Local dummy / past trips row.
+  const MyTripBookingCard.legacy({
     super.key,
-    required this.trip,
+    required TripItem trip,
     required this.statusText,
     required this.statusColor,
     required this.locationText,
@@ -24,9 +27,32 @@ class MyTripBookingCard extends StatelessWidget {
     this.onPrimaryActionTap,
     this.onSecondaryActionTap,
     this.onBottomActionTap,
-  });
+  })  : _legacyTrip = trip,
+        _apiTrip = null,
+        onReturnedFromTripDetails = null;
 
-  final TripItem trip;
+  /// Trip from GET [/trips] (same shape as wishlist rows).
+  const MyTripBookingCard.api({
+    super.key,
+    required WishlistTripItem trip,
+    required this.statusText,
+    required this.statusColor,
+    required this.locationText,
+    required this.primaryActionText,
+    required this.secondaryActionText,
+    required this.bottomActionText,
+    this.onFavoriteTap,
+    this.onPrimaryActionTap,
+    this.onSecondaryActionTap,
+    this.onBottomActionTap,
+    this.onReturnedFromTripDetails,
+  })  : _apiTrip = trip,
+        _legacyTrip = null,
+        isFavorite = false;
+
+  final TripItem? _legacyTrip;
+  final WishlistTripItem? _apiTrip;
+
   final String statusText;
   final Color statusColor;
   final String locationText;
@@ -38,17 +64,48 @@ class MyTripBookingCard extends StatelessWidget {
   final VoidCallback? onPrimaryActionTap;
   final VoidCallback? onSecondaryActionTap;
   final VoidCallback? onBottomActionTap;
+  final void Function(TripWishlistPopResult? result)? onReturnedFromTripDetails;
+
+  int get _tripId => _apiTrip?.id ?? _legacyTrip?.id ?? 0;
+
+  String get _title => _apiTrip?.title ?? _legacyTrip?.title ?? '';
+
+  double get _rating => _apiTrip?.rating ?? _legacyTrip?.rating ?? 0;
+
+  int get _reviewsCount => _apiTrip?.reviewsCount ?? 112;
+
+  String get _dateRange =>
+      _apiTrip?.dateRange ?? _legacyTrip?.dateRange ?? '';
+
+  String? get _imageUrl {
+    final api = _apiTrip;
+    if (api != null) {
+      final u = api.coverImage.trim();
+      return u.isEmpty ? null : u;
+    }
+    return _legacyTrip?.imageUrl;
+  }
+
+  bool get _heartFilled =>
+      _apiTrip?.isWishlisted ?? isFavorite;
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {
-        sl<AppNavigator>().push(screen: TripDetailsView());
+      onTap: () async {
+        final initialWishlisted = _apiTrip?.isWishlisted ?? isFavorite;
+        final result = await sl<AppNavigator>().push<TripWishlistPopResult>(
+          screen: TripDetailsView(
+            tripId: _tripId,
+            initialIsWishlisted: initialWishlisted,
+          ),
+        );
+        onReturnedFromTripDetails?.call(result);
       },
       child: Container(
         padding: EdgeInsetsDirectional.all(14.w),
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: AppColors.cardBg,
           borderRadius: BorderRadius.circular(22.r),
         ),
         child: Row(
@@ -62,7 +119,7 @@ class MyTripBookingCard extends StatelessWidget {
                   children: [
                     Positioned.fill(
                       child: AppCachedNetworkImage(
-                        imageUrl: trip.imageUrl,
+                        imageUrl: _imageUrl,
                         fit: BoxFit.cover,
                       ),
                     ),
@@ -80,7 +137,9 @@ class MyTripBookingCard extends StatelessWidget {
                         ),
                         child: Text(
                           statusText,
-                          style: AppTextStyles.bodySmall(color: Colors.white),
+                          style: AppTextStyles.bodySmall(
+                            color: AppColors.onImage,
+                          ),
                         ),
                       ),
                     ),
@@ -97,7 +156,7 @@ class MyTripBookingCard extends StatelessWidget {
                     children: [
                       Expanded(
                         child: Text(
-                          trip.title,
+                          _title,
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                           style: AppTextStyles.subtitle(
@@ -116,10 +175,10 @@ class MyTripBookingCard extends StatelessWidget {
                             shape: BoxShape.circle,
                           ),
                           child: Icon(
-                            isFavorite ? Iconsax.heart5 : Iconsax.heart,
+                            _heartFilled ? Iconsax.heart5 : Iconsax.heart,
                             size: 18.sp,
-                            color: isFavorite
-                                ? AppColors.red
+                            color: _heartFilled
+                                ? AppColors.error
                                 : AppColors.greyText,
                           ),
                         ),
@@ -136,13 +195,13 @@ class MyTripBookingCard extends StatelessWidget {
                       ),
                       SizedBox(width: 6.w),
                       Text(
-                        trip.rating.toStringAsFixed(1),
+                        _rating.toStringAsFixed(1),
                         style: AppTextStyles.bodySmall(
                           color: AppColors.darkText,
                         ).copyWith(fontWeight: FontWeight.w700),
                       ),
                       Text(
-                        ' (112)',
+                        ' ($_reviewsCount)',
                         style: AppTextStyles.bodySmall(
                           color: AppColors.greyText,
                         ),
@@ -181,7 +240,7 @@ class MyTripBookingCard extends StatelessWidget {
                       SizedBox(width: 6.w),
                       Expanded(
                         child: Text(
-                          trip.dateRange,
+                          _dateRange,
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                           style: AppTextStyles.bodySmall(
@@ -198,7 +257,7 @@ class MyTripBookingCard extends StatelessWidget {
                         child: _ActionPill(
                           text: primaryActionText,
                           backgroundColor: AppColors.primary,
-                          textColor: Colors.white,
+                          textColor: AppColors.onImage,
                           onTap: onPrimaryActionTap,
                         ),
                       ),
@@ -206,7 +265,7 @@ class MyTripBookingCard extends StatelessWidget {
                       Expanded(
                         child: _ActionPill(
                           text: secondaryActionText,
-                          backgroundColor: Colors.white,
+                          backgroundColor: AppColors.inputBg,
                           textColor: AppColors.darkText,
                           borderColor: AppColors.border,
                           onTap: onSecondaryActionTap,
@@ -277,7 +336,7 @@ class _BottomAction extends StatelessWidget {
       child: Container(
         height: 40.h,
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: AppColors.inputBg,
           borderRadius: BorderRadius.circular(12.r),
           border: Border.all(color: AppColors.border),
         ),
@@ -285,7 +344,11 @@ class _BottomAction extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(Iconsax.document_download, size: 18.sp, color: AppColors.red),
+            Icon(
+              Iconsax.document_download,
+              size: 18.sp,
+              color: AppColors.error,
+            ),
             SizedBox(width: 10.w),
             Flexible(
               child: Text(

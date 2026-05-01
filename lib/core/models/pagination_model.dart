@@ -1,4 +1,3 @@
-
 import '../entities/pagination.dart';
 
 class PaginationModel extends Pagination {
@@ -8,9 +7,10 @@ class PaginationModel extends Pagination {
     required super.page,
   });
 
-  factory PaginationModel.fromJson(Map<String, dynamic> json) => PaginationModel(
-    totalItems: json['totalItems'],
-    totalPages: json['totalPages'],
-    page: json['page'],
-  );
+  factory PaginationModel.fromJson(Map<String, dynamic> json) =>
+      PaginationModel(
+        totalItems: json['totalItems'],
+        totalPages: json['totalPages'],
+        page: json['page'],
+      );
 }

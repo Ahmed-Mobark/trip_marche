@@ -1,7 +1,7 @@
 import 'package:adaptive_theme/adaptive_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
-import '../../../../core/config/app_colors.dart';
+import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_text_styles.dart';
 import '../../../../core/injection/injection_container.dart';
 import '../../../../core/navigation/app_navigator.dart';
@@ -24,14 +24,11 @@ class SettingsView extends StatelessWidget {
         // Use [mode] from the notifier (not Theme/AppColors) so the sheet repaints
         // on the same frame as setThemeMode — notifier fires before MaterialApp.
         final isDark = mode.isDark;
-        final pageBg =
-            isDark ? AppColors.cardColorDark : AppColors.cardColorLight;
-        final titleColor =
-            isDark ? AppColors.textColorDark : AppColors.textColorLight;
-        final muted =
-            isDark ? AppColors.greyTextColorDark : AppColors.greyTextColorLight;
-        final borderTone =
-            isDark ? AppColors.borderColorDark : AppColors.borderColorLight;
+        AppColors.brightness = isDark ? Brightness.dark : Brightness.light;
+        final pageBg = AppColors.background;
+        final titleColor = AppColors.bodyText;
+        final muted = AppColors.greyText;
+        final borderTone = AppColors.border;
 
         return Scaffold(
           backgroundColor: pageBg,
@@ -39,10 +36,7 @@ class SettingsView extends StatelessWidget {
             backgroundColor: pageBg,
             elevation: 0,
             leading: IconButton(
-              icon: Icon(
-                Icons.arrow_back_ios_new_rounded,
-                color: titleColor,
-              ),
+              icon: Icon(Icons.arrow_back_ios_new_rounded, color: titleColor),
               onPressed: () => Navigator.pop(context),
             ),
             title: Text(
@@ -52,19 +46,18 @@ class SettingsView extends StatelessWidget {
             centerTitle: true,
           ),
           body: Padding(
-            padding:
-                EdgeInsetsDirectional.only(start: 20.w, end: 20.w, top: 6.h),
+            padding: EdgeInsetsDirectional.only(
+              start: 20.w,
+              end: 20.w,
+              top: 6.h,
+            ),
             child: Column(
               children: [
                 SettingsRow(
                   icon: Iconsax.notification,
                   title: context.tr.settingsNotificationSetting,
                   foregroundColor: titleColor,
-                  trailing: Icon(
-                    Iconsax.arrow_right_3,
-                    size: 18,
-                    color: muted,
-                  ),
+                  trailing: Icon(Iconsax.arrow_right_3, size: 18, color: muted),
                   onTap: () {
                     sl<AppNavigator>().push(
                       screen: const NotificationSettingsView(),
@@ -76,11 +69,7 @@ class SettingsView extends StatelessWidget {
                   icon: Iconsax.global,
                   title: context.tr.settingsLanguage,
                   foregroundColor: titleColor,
-                  trailing: Icon(
-                    Iconsax.arrow_right_3,
-                    size: 18,
-                    color: muted,
-                  ),
+                  trailing: Icon(Iconsax.arrow_right_3, size: 18, color: muted),
                   onTap: () {
                     sl<AppNavigator>().push(screen: const LanguageView());
                   },
@@ -90,11 +79,7 @@ class SettingsView extends StatelessWidget {
                   icon: Iconsax.dollar_circle,
                   title: context.tr.settingsCurrency,
                   foregroundColor: titleColor,
-                  trailing: Icon(
-                    Iconsax.arrow_right_3,
-                    size: 18,
-                    color: muted,
-                  ),
+                  trailing: Icon(Iconsax.arrow_right_3, size: 18, color: muted),
                   onTap: () {},
                 ),
                 _DividerLine(color: borderTone),
@@ -104,14 +89,14 @@ class SettingsView extends StatelessWidget {
                   foregroundColor: titleColor,
                   trailing: Switch.adaptive(
                     value: isDark,
-                    onChanged: (value) => AdaptiveTheme.of(context).setThemeMode(
-                      value
-                          ? AdaptiveThemeMode.dark
-                          : AdaptiveThemeMode.light,
-                    ),
-                    activeThumbColor: AppColors.white,
-                    activeTrackColor:
-                        AppColors.primary.withValues(alpha: 0.45),
+                    onChanged: (value) =>
+                        AdaptiveTheme.of(context).setThemeMode(
+                          value
+                              ? AdaptiveThemeMode.dark
+                              : AdaptiveThemeMode.light,
+                        ),
+                    activeThumbColor: AppColors.onImage,
+                    activeTrackColor: AppColors.primary.withValues(alpha: 0.45),
                     inactiveTrackColor: borderTone,
                   ),
                   onTap: null,

@@ -1,4 +1,3 @@
-
 abstract class Storage {
   // User Storage
   Future<void> storeUser({required Map<String, dynamic> userJson});
@@ -24,6 +23,4 @@ abstract class Storage {
 
   // Check Language
   bool isSelectLang();
-
-
 }

@@ -60,15 +60,14 @@ class VerifyNumberCubit extends Cubit<VerifyNumberState> {
       type: _resendType,
     );
 
-    result.fold(
-      (failure) {
-        emit(state.copyWith(
+    result.fold((failure) {
+      emit(
+        state.copyWith(
           status: VerifyStatus.failure,
           errorMessage: failure.message,
-        ));
-      },
-      (_) => startTimer(),
-    );
+        ),
+      );
+    }, (_) => startTimer());
   }
 
   Future<void> verify() async {
@@ -89,11 +88,13 @@ class VerifyNumberCubit extends Cubit<VerifyNumberState> {
 
     result.fold(
       (failure) {
-        emit(state.copyWith(
-          status: VerifyStatus.failure,
-          errorMessage: failure.message,
-          validationErrors: failure.errors,
-        ));
+        emit(
+          state.copyWith(
+            status: VerifyStatus.failure,
+            errorMessage: failure.message,
+            validationErrors: failure.errors,
+          ),
+        );
       },
       (data) async {
         final user = data['data'];
@@ -121,11 +122,13 @@ class VerifyNumberCubit extends Cubit<VerifyNumberState> {
 
     result.fold(
       (failure) {
-        emit(state.copyWith(
-          status: VerifyStatus.failure,
-          errorMessage: failure.message,
-          validationErrors: failure.errors,
-        ));
+        emit(
+          state.copyWith(
+            status: VerifyStatus.failure,
+            errorMessage: failure.message,
+            validationErrors: failure.errors,
+          ),
+        );
       },
       (_) {
         emit(state.copyWith(status: VerifyStatus.success));

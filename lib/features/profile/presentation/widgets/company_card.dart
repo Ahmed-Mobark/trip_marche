@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:iconsax/iconsax.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_text_styles.dart';
@@ -73,7 +72,7 @@ class CompanyCard extends StatelessWidget {
                   const SizedBox(height: 4),
                   Text(
                     '$tripCount Trips',
-                    style: GoogleFonts.inter(
+                    style: Theme.of(context).textTheme.bodyMedium!.copyWith(
                       fontSize: 12,
                       fontWeight: FontWeight.w400,
                       color: AppColors.greyText,
@@ -86,10 +85,14 @@ class CompanyCard extends StatelessWidget {
             GestureDetector(
               onTap: onFollowTap,
               child: Container(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 16,
+                  vertical: 8,
+                ),
                 decoration: BoxDecoration(
-                  color: isFollowing ? AppColors.primary : Colors.transparent,
+                  color: isFollowing
+                      ? AppColors.primary
+                      : AppColors.transparent,
                   borderRadius: BorderRadius.circular(20),
                   border: Border.all(
                     color: isFollowing ? AppColors.primary : AppColors.border,
@@ -97,10 +100,10 @@ class CompanyCard extends StatelessWidget {
                 ),
                 child: Text(
                   isFollowing ? 'Following' : 'Follow',
-                  style: GoogleFonts.inter(
+                  style: Theme.of(context).textTheme.bodyMedium!.copyWith(
                     fontSize: 12,
                     fontWeight: FontWeight.w600,
-                    color: isFollowing ? Colors.white : AppColors.primary,
+                    color: isFollowing ? AppColors.onImage : AppColors.primary,
                   ),
                 ),
               ),

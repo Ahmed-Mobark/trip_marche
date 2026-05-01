@@ -22,7 +22,7 @@ class AppErrorWidget extends StatelessWidget {
             style: TextStyles.textViewBold20,
             textAlign: TextAlign.center,
           ),
-        )
+        ),
       ],
     );
   }

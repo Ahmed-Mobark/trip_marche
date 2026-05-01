@@ -57,15 +57,9 @@ class PersonalInfoView extends StatelessWidget {
               onAction: () {},
             ),
             _DividerLine(),
-            _InfoRow(
-              label: context.tr.profileCountryLabel,
-              value: 'Egypt',
-            ),
+            _InfoRow(label: context.tr.profileCountryLabel, value: 'Egypt'),
             _DividerLine(),
-            _InfoRow(
-              label: context.tr.profileCityLabel,
-              value: 'Cairo',
-            ),
+            _InfoRow(label: context.tr.profileCityLabel, value: 'Cairo'),
             _DividerLine(),
           ],
         ),
@@ -100,8 +94,9 @@ class _InfoRow extends StatelessWidget {
               children: [
                 Text(
                   label,
-                  style: AppTextStyles.bodyMedium(color: AppColors.darkText)
-                      .copyWith(fontWeight: FontWeight.w700),
+                  style: AppTextStyles.bodyMedium(
+                    color: AppColors.darkText,
+                  ).copyWith(fontWeight: FontWeight.w700),
                 ),
                 SizedBox(height: 10.h),
                 Text(
@@ -118,8 +113,9 @@ class _InfoRow extends StatelessWidget {
                 onTap: onAction,
                 child: Text(
                   actionText!,
-                  style: AppTextStyles.bodyMedium(color: AppColors.darkText)
-                      .copyWith(fontWeight: FontWeight.w600),
+                  style: AppTextStyles.bodyMedium(
+                    color: AppColors.darkText,
+                  ).copyWith(fontWeight: FontWeight.w600),
                 ),
               ),
             ),

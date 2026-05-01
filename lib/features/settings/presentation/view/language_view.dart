@@ -102,13 +102,18 @@ class _LanguageTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Material(
-      color: selected ? AppColors.primary.withValues(alpha: 0.12) : AppColors.white,
+      color: selected
+          ? AppColors.primary.withValues(alpha: 0.12)
+          : AppColors.onImage,
       borderRadius: BorderRadius.circular(18.r),
       child: InkWell(
         borderRadius: BorderRadius.circular(18.r),
         onTap: onTap,
         child: Container(
-          padding: EdgeInsetsDirectional.symmetric(horizontal: 16.w, vertical: 14.h),
+          padding: EdgeInsetsDirectional.symmetric(
+            horizontal: 16.w,
+            vertical: 14.h,
+          ),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(18.r),
             border: Border.all(

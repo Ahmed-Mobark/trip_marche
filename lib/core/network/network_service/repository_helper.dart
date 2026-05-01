@@ -9,8 +9,10 @@ mixin RepositoryHelper {
       return Right(result);
     } on ServerException catch (e) {
       return Left(ServerFailure(message: e.message));
-    }     on ValidationException catch (e) {
-      return Left(ValidationFailure(message: e.message, errors: e.validationErrors));
+    } on ValidationException catch (e) {
+      return Left(
+        ValidationFailure(message: e.message, errors: e.validationErrors),
+      );
     } on NetworkException catch (e) {
       return Left(NetworkFailure(message: e.message));
     } catch (e) {

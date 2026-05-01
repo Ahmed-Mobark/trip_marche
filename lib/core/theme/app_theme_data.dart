@@ -34,7 +34,7 @@ class AppThemeData {
     borderColor,
     primaryColor,
   }) => InputDecorationTheme(
-    filled: false,
+    filled: true,
     fillColor: fillColor,
     suffixIconColor: hintColor,
     prefixIconColor: hintColor,
@@ -58,7 +58,7 @@ class AppThemeData {
       fontFamily: AppFont.fontFamily,
     ),
     errorStyle: TextStyle(
-      color: AppColors.red,
+      color: AppColors.error,
       fontSize: 12.sp,
       fontWeight: AppFont.medium,
       fontFamily: AppFont.fontFamily,
@@ -80,11 +80,11 @@ class AppThemeData {
       borderRadius: BorderRadius.circular(15.r),
     ),
     errorBorder: OutlineInputBorder(
-      borderSide: BorderSide(color: AppColors.red, width: 1.5.r),
+      borderSide: BorderSide(color: AppColors.error, width: 1.5.r),
       borderRadius: BorderRadius.circular(15.r),
     ),
     focusedErrorBorder: OutlineInputBorder(
-      borderSide: BorderSide(color: AppColors.red, width: 1.5.r),
+      borderSide: BorderSide(color: AppColors.error, width: 1.5.r),
       borderRadius: BorderRadius.circular(15.r),
     ),
   );
@@ -104,32 +104,35 @@ class AppThemeData {
     ),
   );
 
-  static CheckboxThemeData checkboxThemeData({required Color primaryColor}) =>
-      CheckboxThemeData(
-        fillColor: WidgetStateProperty.resolveWith(
-          (Set<WidgetState> states) => states.contains(WidgetState.selected)
-              ? primaryColor
-              : AppColors.transparent,
-        ),
-        side: WidgetStateBorderSide.resolveWith(
-          (Set<WidgetState> states) => states.contains(WidgetState.selected)
-              ? BorderSide.none
-              : BorderSide(color: primaryColor, width: 1.5.r),
-        ),
-        checkColor: WidgetStateProperty.all(AppColors.cardColorLight),
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5.r)),
-      );
+  static CheckboxThemeData checkboxThemeData({
+    required Color primaryColor,
+    required Color onPrimaryColor,
+  }) => CheckboxThemeData(
+    fillColor: WidgetStateProperty.resolveWith(
+      (Set<WidgetState> states) => states.contains(WidgetState.selected)
+          ? primaryColor
+          : AppColors.transparent,
+    ),
+    side: WidgetStateBorderSide.resolveWith(
+      (Set<WidgetState> states) => states.contains(WidgetState.selected)
+          ? BorderSide.none
+          : BorderSide(color: primaryColor, width: 1.5.r),
+    ),
+    checkColor: WidgetStateProperty.all(onPrimaryColor),
+    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5.r)),
+  );
 
   static TabBarThemeData tabBarThemeData({
     required Color primaryColor,
-    borderColor,
+    required Color borderColor,
+    required Color labelColor,
   }) => TabBarThemeData(
     labelColor: primaryColor,
     indicatorColor: borderColor,
     unselectedLabelColor: primaryColor.withValues(alpha: 0.2),
     indicatorSize: TabBarIndicatorSize.tab,
     labelStyle: TextStyle(
-      color: AppColors.scaffoldColorLight,
+      color: labelColor,
       fontWeight: AppFont.medium,
       fontSize: 14.sp,
       fontFamily: AppFont.fontFamily,

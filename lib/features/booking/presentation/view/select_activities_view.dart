@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:iconsax/iconsax.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_text_styles.dart';
@@ -96,7 +95,10 @@ class _SelectActivitiesViewState extends State<SelectActivitiesView> {
           icon: Icon(Iconsax.arrow_left, color: AppColors.darkText),
           onPressed: () => Navigator.pop(context),
         ),
-        title: Text('Select Activities', style: AppTextStyles.subtitle(color: AppColors.darkText)),
+        title: Text(
+          'Select Activities',
+          style: AppTextStyles.subtitle(color: AppColors.darkText),
+        ),
         centerTitle: true,
       ),
       body: Column(
@@ -114,7 +116,9 @@ class _SelectActivitiesViewState extends State<SelectActivitiesView> {
                   description: activity.description,
                   price: activity.price,
                   isSelected: activity.isSelected,
-                  onTap: () => setState(() => activity.isSelected = !activity.isSelected),
+                  onTap: () => setState(
+                    () => activity.isSelected = !activity.isSelected,
+                  ),
                 );
               },
             ),
@@ -137,7 +141,7 @@ class _SelectActivitiesViewState extends State<SelectActivitiesView> {
         color: AppColors.background,
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withValues(alpha: 0.06),
+            color: AppColors.shadow.withValues(alpha: 0.06),
             blurRadius: 10,
             offset: const Offset(0, -4),
           ),
@@ -149,10 +153,13 @@ class _SelectActivitiesViewState extends State<SelectActivitiesView> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text('Activities Total', style: AppTextStyles.bodyMedium(color: AppColors.greyText)),
+              Text(
+                'Activities Total',
+                style: AppTextStyles.bodyMedium(color: AppColors.greyText),
+              ),
               Text(
                 '+\$${_totalActivitiesPrice.toStringAsFixed(0)}',
-                style: GoogleFonts.inter(
+                style: Theme.of(context).textTheme.bodyMedium!.copyWith(
                   fontSize: 20,
                   fontWeight: FontWeight.w700,
                   color: AppColors.primary,

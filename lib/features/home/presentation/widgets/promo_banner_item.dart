@@ -33,8 +33,8 @@ class PromoBannerItem extends StatelessWidget {
       builder: (context, constraints) {
         final isTight = constraints.maxHeight <= 140;
         final titleStyle = isTight
-            ? AppTextStyles.heading3(color: AppColors.white)
-            : AppTextStyles.heading2(color: AppColors.white);
+            ? AppTextStyles.heading3(color: AppColors.onImage)
+            : AppTextStyles.heading2(color: AppColors.onImage);
 
         return Container(
           margin: EdgeInsets.symmetric(horizontal: 4.w),
@@ -64,7 +64,7 @@ class PromoBannerItem extends StatelessWidget {
                         child: Text(
                           subtitle,
                           style: AppTextStyles.bodyMedium(
-                            color: AppColors.white.withValues(alpha: 0.85),
+                            color: AppColors.onImage.withValues(alpha: 0.85),
                           ),
                           maxLines: isTight ? 1 : 2,
                           overflow: TextOverflow.ellipsis,
@@ -77,7 +77,8 @@ class PromoBannerItem extends StatelessWidget {
                           fit: BoxFit.scaleDown,
                           alignment: AlignmentDirectional.centerStart,
                           child: GestureDetector(
-                            onTap: () async => await launchUrl(Uri.parse(urlLaunch)),
+                            onTap: () async =>
+                                await launchUrl(Uri.parse(urlLaunch)),
                             child: Container(
                               padding: EdgeInsets.symmetric(
                                 horizontal: 16.w,
@@ -107,12 +108,12 @@ class PromoBannerItem extends StatelessWidget {
                     vertical: 4.h,
                   ),
                   decoration: BoxDecoration(
-                    color: AppColors.white.withValues(alpha: 0.2),
+                    color: AppColors.onImage.withValues(alpha: 0.2),
                     borderRadius: BorderRadius.circular(12.r),
                   ),
                   child: Text(
                     '${currentIndex + 1}/$totalCount',
-                    style: AppTextStyles.bodySmall(color: AppColors.white),
+                    style: AppTextStyles.bodySmall(color: AppColors.onImage),
                   ),
                 ),
               ],

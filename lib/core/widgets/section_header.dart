@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../config/app_colors.dart';
+import '../theme/app_colors.dart';
 import '../config/styles/styles.dart';
 
 class SectionHeader extends StatelessWidget {
@@ -40,4 +40,3 @@ class SectionHeader extends StatelessWidget {
     );
   }
 }
-

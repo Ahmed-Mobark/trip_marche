@@ -87,8 +87,9 @@ class _MyFollowingsViewState extends State<MyFollowingsView> {
                 if (index == 0) {
                   return Text(
                     context.tr.followingsCountTitle(_companies.length),
-                    style: AppTextStyles.bodyMedium(color: AppColors.darkText)
-                        .copyWith(fontWeight: FontWeight.w700),
+                    style: AppTextStyles.bodyMedium(
+                      color: AppColors.darkText,
+                    ).copyWith(fontWeight: FontWeight.w700),
                   );
                 }
 
@@ -144,7 +145,7 @@ class _FollowingCompanyCard extends StatelessWidget {
     final borderColor = AppColors.border.withValues(alpha: 0.8);
 
     return Material(
-      color: AppColors.white,
+      color: AppColors.cardBg,
       borderRadius: BorderRadius.circular(18.r),
       child: InkWell(
         borderRadius: BorderRadius.circular(18.r),
@@ -187,8 +188,9 @@ class _FollowingCompanyCard extends StatelessWidget {
                       name,
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
-                      style: AppTextStyles.bodyMedium(color: AppColors.darkText)
-                          .copyWith(fontWeight: FontWeight.w800, fontSize: 16.sp),
+                      style: AppTextStyles.bodyMedium(
+                        color: AppColors.darkText,
+                      ).copyWith(fontWeight: FontWeight.w800, fontSize: 16.sp),
                     ),
                     SizedBox(height: 6.h),
                     Row(
@@ -201,12 +203,15 @@ class _FollowingCompanyCard extends StatelessWidget {
                         SizedBox(width: 6.w),
                         Text(
                           ratingValue,
-                          style: AppTextStyles.bodySmall(color: AppColors.darkText)
-                              .copyWith(fontWeight: FontWeight.w700),
+                          style: AppTextStyles.bodySmall(
+                            color: AppColors.darkText,
+                          ).copyWith(fontWeight: FontWeight.w700),
                         ),
                         Text(
                           '($ratingCount)',
-                          style: AppTextStyles.bodySmall(color: AppColors.greyText),
+                          style: AppTextStyles.bodySmall(
+                            color: AppColors.greyText,
+                          ),
                         ),
                       ],
                     ),
@@ -217,10 +222,7 @@ class _FollowingCompanyCard extends StatelessWidget {
               OutlinedButton(
                 onPressed: onAction,
                 style: OutlinedButton.styleFrom(
-                  side: BorderSide(
-                    color: AppColors.error,
-                    width: 1,
-                  ),
+                  side: BorderSide(color: AppColors.error, width: 1),
                   foregroundColor: AppColors.error,
                   padding: EdgeInsetsDirectional.symmetric(
                     horizontal: 16.w,
@@ -234,8 +236,9 @@ class _FollowingCompanyCard extends StatelessWidget {
                 ),
                 child: Text(
                   actionText,
-                  style: AppTextStyles.bodySmall(color: AppColors.error)
-                      .copyWith(fontWeight: FontWeight.w600),
+                  style: AppTextStyles.bodySmall(
+                    color: AppColors.error,
+                  ).copyWith(fontWeight: FontWeight.w600),
                 ),
               ),
             ],

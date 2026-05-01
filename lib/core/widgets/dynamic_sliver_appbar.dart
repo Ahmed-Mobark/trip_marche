@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:trip_marche/core/theme/app_colors.dart';
 
 class DynamicSliverAppBar extends StatefulWidget {
   const DynamicSliverAppBar({
@@ -113,7 +114,9 @@ class _DynamicSliverAppBarState extends State<DynamicSliverAppBar> {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       if (_childKey.currentContext == null) return;
       setState(() {
-        _height = (_childKey.currentContext!.findRenderObject()! as RenderBox).size.height;
+        _height = (_childKey.currentContext!.findRenderObject()! as RenderBox)
+            .size
+            .height;
       });
     });
   }
@@ -124,28 +127,35 @@ class _DynamicSliverAppBarState extends State<DynamicSliverAppBar> {
     if (_height == 0) {
       return SliverToBoxAdapter(
         child: Stack(
-            children: [
-              Padding(
-                // Padding which centers the flexible space within the app bar
-                padding: EdgeInsets.symmetric(vertical: MediaQuery.paddingOf(context).top / 2),
-                child: Container(key: _childKey, child: widget.flexibleSpace ?? const SizedBox(height: kToolbarHeight)),
+          children: [
+            Padding(
+              // Padding which centers the flexible space within the app bar
+              padding: EdgeInsets.symmetric(
+                vertical: MediaQuery.paddingOf(context).top / 2,
               ),
-              Positioned.fill(
-                // 10 is the magic number which the app bar is pushed down within the sliver app bar. Couldnt find exactly where this number
-                // comes from and found it through trial and error.
-                top: 10,
-                child: Align(
-                  alignment: Alignment.topCenter,
-                  child: AppBar(
-                    backgroundColor: Colors.transparent,
-                    elevation: 0,
-                    leading: widget.leading,
-                    actions: widget.actions,
-                  ),
+              child: Container(
+                key: _childKey,
+                child:
+                    widget.flexibleSpace ??
+                    const SizedBox(height: kToolbarHeight),
+              ),
+            ),
+            Positioned.fill(
+              // 10 is the magic number which the app bar is pushed down within the sliver app bar. Couldnt find exactly where this number
+              // comes from and found it through trial and error.
+              top: 10,
+              child: Align(
+                alignment: Alignment.topCenter,
+                child: AppBar(
+                  backgroundColor: AppColors.transparent,
+                  elevation: 0,
+                  leading: widget.leading,
+                  actions: widget.actions,
                 ),
-              )
-            ],
-          ),
+              ),
+            ),
+          ],
+        ),
       );
     }
 

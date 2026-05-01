@@ -29,11 +29,11 @@ class AuthPhoneNumberField extends StatelessWidget {
       hintText: hint,
       keyboardType: TextInputType.phone,
       validator: validator,
-      cardColor: AppColors.white,
+      cardColor: AppColors.inputBg,
       hintStyle: AppTextStyles.body(
         color: AppColors.captionText,
       ).copyWith(fontSize: 14.sp),
-      borderColor: Colors.grey.shade500,
+      borderColor: AppColors.border,
       focusedBorderColor: AppColors.primary.withValues(alpha: 0.95),
       errorBorderColor: AppColors.error.withValues(alpha: 0.9),
       borderRadius: 18.r,
@@ -65,8 +65,7 @@ class _CountryPrefix extends StatelessWidget {
         children: [
           Theme(
             data: Theme.of(context).copyWith(
-              brightness: Brightness.light,
-              canvasColor: AppColors.white,
+              canvasColor: AppColors.cardBg,
               dialogTheme: CalendarTheme.getCalendarTheme(context).dialogTheme,
             ),
             child: CountryCodePicker(
@@ -93,7 +92,7 @@ class _CountryPrefix extends StatelessWidget {
                   color: AppColors.captionText,
                 ).copyWith(fontSize: 13.sp),
                 filled: true,
-                fillColor: AppColors.white,
+                fillColor: AppColors.inputBg,
                 prefixIcon: Icon(
                   Icons.search_rounded,
                   color: AppColors.greyText,
@@ -118,7 +117,7 @@ class _CountryPrefix extends StatelessWidget {
               ),
               flagWidth: 18.w,
               boxDecoration: const BoxDecoration(),
-              barrierColor: AppColors.black.withValues(alpha: 0.25),
+              barrierColor: AppColors.shadow.withValues(alpha: 0.25),
               closeIcon: Icon(
                 Icons.close_rounded,
                 color: AppColors.darkText,
@@ -135,7 +134,7 @@ class _CountryPrefix extends StatelessWidget {
             width: 1.w,
             height: 30.h,
             margin: EdgeInsetsDirectional.only(start: 4.w),
-            color: Colors.grey.shade500,
+            color: AppColors.border,
           ),
         ],
       ),

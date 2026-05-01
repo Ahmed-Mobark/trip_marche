@@ -8,11 +8,13 @@ class HomeSectionsState extends Equatable {
     this.status = HomeSectionsStatus.initial,
     this.sections = const [],
     this.errorMessage,
+    this.wishlistErrorMessage,
   });
 
   final HomeSectionsStatus status;
   final List<HomeSectionModel> sections;
   final String? errorMessage;
+  final String? wishlistErrorMessage;
 
   HomeSectionModel? sectionByKey(String key) {
     try {
@@ -26,14 +28,19 @@ class HomeSectionsState extends Equatable {
     HomeSectionsStatus? status,
     List<HomeSectionModel>? sections,
     String? errorMessage,
+    String? wishlistErrorMessage,
+    bool clearWishlistError = false,
   }) {
     return HomeSectionsState(
       status: status ?? this.status,
       sections: sections ?? this.sections,
       errorMessage: errorMessage,
+      wishlistErrorMessage: clearWishlistError
+          ? null
+          : (wishlistErrorMessage ?? this.wishlistErrorMessage),
     );
   }
 
   @override
-  List<Object?> get props => [status, sections, errorMessage];
+  List<Object?> get props => [status, sections, errorMessage, wishlistErrorMessage];
 }

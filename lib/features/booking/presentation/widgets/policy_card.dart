@@ -39,8 +39,14 @@ class PolicyCard extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(title, style: AppTextStyles.subtitle(color: AppColors.darkText)),
-                    Text(subtitle, style: AppTextStyles.bodySmall(color: AppColors.greyText)),
+                    Text(
+                      title,
+                      style: AppTextStyles.subtitle(color: AppColors.darkText),
+                    ),
+                    Text(
+                      subtitle,
+                      style: AppTextStyles.bodySmall(color: AppColors.greyText),
+                    ),
                   ],
                 ),
               ),

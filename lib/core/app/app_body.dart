@@ -53,9 +53,11 @@ class MyAppState extends State<MyApp> {
           locale: _locale,
           navigatorKey: sl<AppNavigator>().navigatorKey,
           builder: (context, child) {
+            // Use the same resolved ThemeData as AdaptiveTheme (light / dark /
+            // system). Avoid relying on [Theme.of] here or a nullable brightness
+            // that can lag behind the effective theme on pushed routes.
             AppColors.brightness =
-                AdaptiveTheme.of(context).brightness ??
-                Theme.of(context).brightness;
+                AdaptiveTheme.of(context).theme.brightness;
             return child ?? const SizedBox.shrink();
           },
           home: AppState.currentScreen(),

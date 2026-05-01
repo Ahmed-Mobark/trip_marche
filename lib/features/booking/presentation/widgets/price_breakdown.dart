@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_text_styles.dart';
 
@@ -38,7 +37,13 @@ class PriceBreakdown extends StatelessWidget {
       ),
       child: Column(
         children: [
-          ...items.map((item) => _buildPriceRow(item.label, item.value, isDiscount: item.isDiscount)),
+          ...items.map(
+            (item) => _buildPriceRow(
+              item.label,
+              item.value,
+              isDiscount: item.isDiscount,
+            ),
+          ),
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 8),
             child: Divider(color: AppColors.border),
@@ -46,10 +51,13 @@ class PriceBreakdown extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(totalLabel, style: AppTextStyles.subtitle(color: AppColors.darkText)),
+              Text(
+                totalLabel,
+                style: AppTextStyles.subtitle(color: AppColors.darkText),
+              ),
               Text(
                 totalValue,
-                style: GoogleFonts.inter(
+                style: Theme.of(context).textTheme.bodyMedium!.copyWith(
                   fontSize: 22,
                   fontWeight: FontWeight.w700,
                   color: AppColors.primary,
@@ -72,7 +80,7 @@ class PriceBreakdown extends StatelessWidget {
           Text(
             value,
             style: AppTextStyles.bodyMedium(
-              color: isDiscount ? Colors.green : AppColors.darkText,
+              color: isDiscount ? AppColors.success : AppColors.darkText,
             ),
           ),
         ],

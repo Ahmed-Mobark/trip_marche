@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:iconsax/iconsax.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_text_styles.dart';
@@ -18,10 +17,7 @@ class CustomerServiceView extends StatelessWidget {
           icon: Icon(Iconsax.arrow_left, color: AppColors.darkText),
           onPressed: () => Navigator.pop(context),
         ),
-        title: Text(
-          'Customer Service',
-          style: AppTextStyles.subtitle(),
-        ),
+        title: Text('Customer Service', style: AppTextStyles.subtitle()),
         centerTitle: true,
       ),
       body: Padding(
@@ -29,6 +25,7 @@ class CustomerServiceView extends StatelessWidget {
         child: Column(
           children: [
             _buildContactOption(
+              context,
               icon: Iconsax.call,
               title: 'Phone',
               subtitle: '+20 123 456 7890',
@@ -39,6 +36,7 @@ class CustomerServiceView extends StatelessWidget {
             ),
             const SizedBox(height: 12),
             _buildContactOption(
+              context,
               icon: Iconsax.sms,
               title: 'Email',
               subtitle: 'support@tripmarche.com',
@@ -49,6 +47,7 @@ class CustomerServiceView extends StatelessWidget {
             ),
             const SizedBox(height: 12),
             _buildContactOption(
+              context,
               icon: Iconsax.message,
               title: 'WhatsApp',
               subtitle: '+20 123 456 7890',
@@ -59,6 +58,7 @@ class CustomerServiceView extends StatelessWidget {
             ),
             const SizedBox(height: 12),
             _buildContactOption(
+              context,
               icon: Iconsax.messages_1,
               title: 'Live Chat',
               subtitle: 'Available 24/7',
@@ -73,7 +73,8 @@ class CustomerServiceView extends StatelessWidget {
     );
   }
 
-  Widget _buildContactOption({
+  Widget _buildContactOption(
+    BuildContext context, {
     required IconData icon,
     required String title,
     required String subtitle,
@@ -95,11 +96,7 @@ class CustomerServiceView extends StatelessWidget {
               color: AppColors.primary.withValues(alpha: 0.1),
               borderRadius: BorderRadius.circular(10),
             ),
-            child: Icon(
-              icon,
-              color: AppColors.primary,
-              size: 22,
-            ),
+            child: Icon(icon, color: AppColors.primary, size: 22),
           ),
           const SizedBox(width: 14),
           Expanded(
@@ -108,7 +105,7 @@ class CustomerServiceView extends StatelessWidget {
               children: [
                 Text(
                   title,
-                  style: GoogleFonts.inter(
+                  style: Theme.of(context).textTheme.bodyMedium!.copyWith(
                     fontSize: 16,
                     fontWeight: FontWeight.w600,
                     color: AppColors.darkText,
@@ -117,7 +114,7 @@ class CustomerServiceView extends StatelessWidget {
                 const SizedBox(height: 2),
                 Text(
                   subtitle,
-                  style: GoogleFonts.inter(
+                  style: Theme.of(context).textTheme.bodyMedium!.copyWith(
                     fontSize: 13,
                     fontWeight: FontWeight.w400,
                     color: AppColors.greyText,
@@ -129,18 +126,17 @@ class CustomerServiceView extends StatelessWidget {
           GestureDetector(
             onTap: onAction,
             child: Container(
-              padding:
-                  const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
               decoration: BoxDecoration(
                 color: AppColors.primary,
                 borderRadius: BorderRadius.circular(20),
               ),
               child: Text(
                 actionText,
-                style: GoogleFonts.inter(
+                style: Theme.of(context).textTheme.bodyMedium!.copyWith(
                   fontSize: 13,
                   fontWeight: FontWeight.w600,
-                  color: Colors.white,
+                  color: AppColors.onImage,
                 ),
               ),
             ),

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:iconsax/iconsax.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_text_styles.dart';
@@ -22,7 +21,8 @@ class _ReviewViewState extends State<ReviewView> {
   final double _activitiesPrice = 130.0;
   final double _discount = 50.0;
 
-  double get _totalPrice => _basePrice + _activitiesPrice - (_couponApplied ? _discount : 0);
+  double get _totalPrice =>
+      _basePrice + _activitiesPrice - (_couponApplied ? _discount : 0);
 
   @override
   void dispose() {
@@ -41,7 +41,10 @@ class _ReviewViewState extends State<ReviewView> {
           icon: Icon(Iconsax.arrow_left, color: AppColors.darkText),
           onPressed: () => Navigator.pop(context),
         ),
-        title: Text('Review', style: AppTextStyles.bodyMedium(color: AppColors.darkText)),
+        title: Text(
+          'Review',
+          style: AppTextStyles.bodyMedium(color: AppColors.darkText),
+        ),
         centerTitle: true,
       ),
       body: SingleChildScrollView(
@@ -93,10 +96,20 @@ class _ReviewViewState extends State<ReviewView> {
             const SizedBox(height: 20),
             PriceBreakdown(
               items: [
-                PriceBreakdownItem(label: 'Base Price', value: '\$${_basePrice.toStringAsFixed(0)}'),
-                PriceBreakdownItem(label: 'Activities', value: '+\$${_activitiesPrice.toStringAsFixed(0)}'),
+                PriceBreakdownItem(
+                  label: 'Base Price',
+                  value: '\$${_basePrice.toStringAsFixed(0)}',
+                ),
+                PriceBreakdownItem(
+                  label: 'Activities',
+                  value: '+\$${_activitiesPrice.toStringAsFixed(0)}',
+                ),
                 if (_couponApplied)
-                  PriceBreakdownItem(label: 'Discount', value: '-\$${_discount.toStringAsFixed(0)}', isDiscount: true),
+                  PriceBreakdownItem(
+                    label: 'Discount',
+                    value: '-\$${_discount.toStringAsFixed(0)}',
+                    isDiscount: true,
+                  ),
               ],
               totalLabel: 'Total',
               totalValue: '\$${_totalPrice.toStringAsFixed(0)}',
@@ -137,21 +150,27 @@ class _ReviewViewState extends State<ReviewView> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text('Coupon Code', style: AppTextStyles.subtitle(color: AppColors.darkText)),
+        Text(
+          'Coupon Code',
+          style: AppTextStyles.subtitle(color: AppColors.darkText),
+        ),
         const SizedBox(height: 10),
         Row(
           children: [
             Expanded(
               child: TextFormField(
                 controller: _couponController,
-                style: GoogleFonts.inter(
+                style: Theme.of(context).textTheme.bodyMedium!.copyWith(
                   fontSize: 14,
                   fontWeight: FontWeight.w500,
                   color: AppColors.darkText,
                 ),
                 decoration: InputDecoration(
                   hintText: 'Enter coupon code',
-                  hintStyle: GoogleFonts.inter(fontSize: 14, color: AppColors.greyText),
+                  hintStyle: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                    fontSize: 14,
+                    color: AppColors.greyText,
+                  ),
                   filled: true,
                   fillColor: AppColors.lightBg,
                   border: OutlineInputBorder(
@@ -166,7 +185,10 @@ class _ReviewViewState extends State<ReviewView> {
                     borderRadius: BorderRadius.circular(12),
                     borderSide: const BorderSide(color: AppColors.primary),
                   ),
-                  contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+                  contentPadding: const EdgeInsets.symmetric(
+                    horizontal: 16,
+                    vertical: 14,
+                  ),
                 ),
               ),
             ),
@@ -196,11 +218,15 @@ class _ReviewViewState extends State<ReviewView> {
             padding: const EdgeInsets.only(top: 8),
             child: Row(
               children: [
-                const Icon(Iconsax.tick_circle, color: Colors.green, size: 16),
+                const Icon(
+                  Iconsax.tick_circle,
+                  color: AppColors.success,
+                  size: 16,
+                ),
                 const SizedBox(width: 6),
                 Text(
                   'Coupon applied! -\$${_discount.toStringAsFixed(0)}',
-                  style: AppTextStyles.bodySmall(color: Colors.green),
+                  style: AppTextStyles.bodySmall(color: AppColors.success),
                 ),
               ],
             ),

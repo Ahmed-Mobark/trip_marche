@@ -7,6 +7,7 @@ class SettingsRow extends StatelessWidget {
   final String title;
   final Widget trailing;
   final VoidCallback? onTap;
+
   /// Row label + leading icon color (pass explicit light/dark when driven by
   /// [AdaptiveTheme] so it updates on the same frame as the theme toggle).
   final Color foregroundColor;

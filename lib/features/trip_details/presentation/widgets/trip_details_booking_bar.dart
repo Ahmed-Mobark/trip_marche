@@ -37,7 +37,7 @@ class TripDetailsBookingBar extends StatelessWidget {
         color: AppColors.background,
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withValues(alpha: 0.08),
+            color: AppColors.shadow.withValues(alpha: 0.08),
             blurRadius: 10.r,
             offset: Offset(0, -4.h),
           ),
@@ -56,8 +56,9 @@ class TripDetailsBookingBar extends StatelessWidget {
               ),
               Text(
                 priceText,
-                style: AppTextStyles.heading3(color: AppColors.darkText)
-                    .copyWith(fontWeight: FontWeight.w800),
+                style: AppTextStyles.heading3(
+                  color: AppColors.darkText,
+                ).copyWith(fontWeight: FontWeight.w800),
               ),
             ],
           ),
@@ -83,8 +84,9 @@ class TripDetailsBookingBar extends StatelessWidget {
                     ),
                     child: Text(
                       secondaryBadgeText!,
-                      style: AppTextStyles.caption(color: AppColors.white)
-                          .copyWith(fontWeight: FontWeight.w700),
+                      style: AppTextStyles.caption(
+                        color: AppColors.onImage,
+                      ).copyWith(fontWeight: FontWeight.w700),
                     ),
                   ),
               ],
@@ -113,4 +115,3 @@ class TripDetailsBookingBar extends StatelessWidget {
     );
   }
 }
-

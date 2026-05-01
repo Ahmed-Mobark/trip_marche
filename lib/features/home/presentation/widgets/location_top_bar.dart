@@ -26,14 +26,18 @@ class LocationTopBar extends StatelessWidget {
             child: Row(
               mainAxisSize: MainAxisSize.min,
               children: [
-                const Icon(Iconsax.location, color: AppColors.primary, size: 20),
-                const SizedBox(width: 6),
-                Text(
-                  locationName,
-                  style: AppTextStyles.subtitle(),
+                const Icon(
+                  Iconsax.location,
+                  color: AppColors.primary,
+                  size: 20,
                 ),
-                Icon(Iconsax.arrow_down_1,
-                    size: 16, color: AppColors.secondaryText),
+                const SizedBox(width: 6),
+                Text(locationName, style: AppTextStyles.subtitle()),
+                Icon(
+                  Iconsax.arrow_down_1,
+                  size: 16,
+                  color: AppColors.secondaryText,
+                ),
               ],
             ),
           ),
@@ -47,8 +51,11 @@ class LocationTopBar extends StatelessWidget {
                 color: AppColors.lightBg,
                 borderRadius: BorderRadius.circular(12),
               ),
-              child: Icon(Iconsax.notification,
-                  color: AppColors.secondaryText, size: 22),
+              child: Icon(
+                Iconsax.notification,
+                color: AppColors.secondaryText,
+                size: 22,
+              ),
             ),
           ),
         ],

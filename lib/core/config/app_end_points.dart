@@ -14,4 +14,13 @@ class AppEndpoints {
   static const String homeBanners = "home/banners";
   static const String homeCategories = "home/categories";
   static const String homeSpecialTrips = "home/special-trips";
+
+  /// GET — paginated trips catalog (query: page, per_page, search?, destination_id?).
+  static const String trips = 'trips';
+
+  /// GET — paginated wishlist (query: current_page, per_page).
+  static const String wishlist = 'wishlist';
+
+  /// POST — toggles wishlist for [tripId]. Response includes `is_wishlisted`.
+  static String wishlistToggle(int tripId) => 'wishlist/$tripId/toggle';
 }

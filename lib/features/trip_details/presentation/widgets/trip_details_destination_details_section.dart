@@ -87,9 +87,8 @@ class _DestinationDetailsCard extends StatelessWidget {
           childAspectRatio: 3.3,
         ),
         itemCount: items.length,
-        itemBuilder: (context, index) => _DestinationDetailsItem(
-          data: items[index],
-        ),
+        itemBuilder: (context, index) =>
+            _DestinationDetailsItem(data: items[index]),
       ),
     );
   }
@@ -123,11 +122,7 @@ class _DestinationDetailsItem extends StatelessWidget {
             color: AppColors.primary.withValues(alpha: 0.10),
             borderRadius: BorderRadius.circular(8.r),
           ),
-          child: Icon(
-            data.icon,
-            size: 16.sp,
-            color: AppColors.primary,
-          ),
+          child: Icon(data.icon, size: 16.sp, color: AppColors.primary),
         ),
         SizedBox(width: 10.w),
         Expanded(
@@ -157,4 +152,3 @@ class _DestinationDetailsItem extends StatelessWidget {
     );
   }
 }
-

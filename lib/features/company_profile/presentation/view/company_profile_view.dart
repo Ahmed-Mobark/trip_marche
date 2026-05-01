@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:iconsax/iconsax.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_text_styles.dart';
@@ -31,7 +30,7 @@ class _CompanyProfileViewState extends State<CompanyProfileView> {
             leading: Padding(
               padding: const EdgeInsets.all(8.0),
               child: CircleAvatar(
-                backgroundColor: Colors.white.withValues(alpha: 0.9),
+                backgroundColor: AppColors.onImage.withValues(alpha: 0.9),
                 child: IconButton(
                   icon: Icon(
                     Iconsax.arrow_left,
@@ -45,11 +44,7 @@ class _CompanyProfileViewState extends State<CompanyProfileView> {
             flexibleSpace: FlexibleSpaceBar(
               background: Container(
                 color: AppColors.lightBg,
-                child: Icon(
-                  Iconsax.image,
-                  size: 48,
-                  color: AppColors.greyText,
-                ),
+                child: Icon(Iconsax.image, size: 48, color: AppColors.greyText),
               ),
             ),
           ),
@@ -93,18 +88,21 @@ class _CompanyProfileViewState extends State<CompanyProfileView> {
                                 const Icon(
                                   Icons.star,
                                   size: 16,
-                                  color: Color(0xFFFFD43B),
+                                  color: AppColors.yellow,
                                 ),
                                 const SizedBox(width: 4),
                                 Text('4.8', style: AppTextStyles.bodyMedium()),
                                 const SizedBox(width: 4),
                                 Text(
-                                  context.tr.companyProfileReviewsCountShort('120'),
-                                  style: GoogleFonts.inter(
-                                    fontSize: 12,
-                                    fontWeight: FontWeight.w400,
-                                    color: AppColors.greyText,
+                                  context.tr.companyProfileReviewsCountShort(
+                                    '120',
                                   ),
+                                  style: Theme.of(context).textTheme.bodyMedium!
+                                      .copyWith(
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.w400,
+                                        color: AppColors.greyText,
+                                      ),
                                 ),
                               ],
                             ),
@@ -128,7 +126,7 @@ class _CompanyProfileViewState extends State<CompanyProfileView> {
                       style: OutlinedButton.styleFrom(
                         backgroundColor: _isFollowing
                             ? AppColors.primary
-                            : Colors.transparent,
+                            : AppColors.transparent,
                         side: BorderSide(
                           color: _isFollowing
                               ? AppColors.primary
@@ -142,11 +140,11 @@ class _CompanyProfileViewState extends State<CompanyProfileView> {
                         _isFollowing
                             ? context.tr.companyProfileFollowing
                             : context.tr.companyProfileFollow,
-                        style: GoogleFonts.inter(
+                        style: Theme.of(context).textTheme.bodyMedium!.copyWith(
                           fontSize: 14,
                           fontWeight: FontWeight.w600,
                           color: _isFollowing
-                              ? Colors.white
+                              ? AppColors.onImage
                               : AppColors.primary,
                         ),
                       ),
@@ -177,11 +175,14 @@ class _CompanyProfileViewState extends State<CompanyProfileView> {
                   const SizedBox(height: 24),
 
                   // About Section
-                  Text(context.tr.companyProfileAbout, style: AppTextStyles.subtitle()),
+                  Text(
+                    context.tr.companyProfileAbout,
+                    style: AppTextStyles.subtitle(),
+                  ),
                   const SizedBox(height: 8),
                   Text(
                     context.tr.companyProfileAboutDescription,
-                    style: GoogleFonts.inter(
+                    style: Theme.of(context).textTheme.bodyMedium!.copyWith(
                       fontSize: 14,
                       fontWeight: FontWeight.w400,
                       color: AppColors.secondaryText,
@@ -194,16 +195,20 @@ class _CompanyProfileViewState extends State<CompanyProfileView> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text(context.tr.companyProfileTrips, style: AppTextStyles.subtitle()),
+                      Text(
+                        context.tr.companyProfileTrips,
+                        style: AppTextStyles.subtitle(),
+                      ),
                       TextButton(
                         onPressed: () {},
                         child: Text(
                           context.tr.companyProfileSeeAll,
-                          style: GoogleFonts.inter(
-                            fontSize: 14,
-                            fontWeight: FontWeight.w500,
-                            color: AppColors.primary,
-                          ),
+                          style: Theme.of(context).textTheme.bodyMedium!
+                              .copyWith(
+                                fontSize: 14,
+                                fontWeight: FontWeight.w500,
+                                color: AppColors.primary,
+                              ),
                         ),
                       ),
                     ],
@@ -242,16 +247,20 @@ class _CompanyProfileViewState extends State<CompanyProfileView> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text(context.tr.companyProfileReviews, style: AppTextStyles.subtitle()),
+                      Text(
+                        context.tr.companyProfileReviews,
+                        style: AppTextStyles.subtitle(),
+                      ),
                       TextButton(
                         onPressed: () {},
                         child: Text(
                           context.tr.companyProfileSeeAll,
-                          style: GoogleFonts.inter(
-                            fontSize: 14,
-                            fontWeight: FontWeight.w500,
-                            color: AppColors.primary,
-                          ),
+                          style: Theme.of(context).textTheme.bodyMedium!
+                              .copyWith(
+                                fontSize: 14,
+                                fontWeight: FontWeight.w500,
+                                color: AppColors.primary,
+                              ),
                         ),
                       ),
                     ],
@@ -312,7 +321,7 @@ class _CompanyProfileViewState extends State<CompanyProfileView> {
                 children: [
                   Text(
                     context.tr.companyProfileTripName,
-                    style: GoogleFonts.inter(
+                    style: Theme.of(context).textTheme.bodyMedium!.copyWith(
                       fontSize: 13,
                       fontWeight: FontWeight.w600,
                       color: AppColors.darkText,
@@ -323,15 +332,11 @@ class _CompanyProfileViewState extends State<CompanyProfileView> {
                   const SizedBox(height: 4),
                   Row(
                     children: [
-                      const Icon(
-                        Icons.star,
-                        size: 12,
-                        color: Color(0xFFFFD43B),
-                      ),
+                      const Icon(Icons.star, size: 12, color: AppColors.yellow),
                       const SizedBox(width: 2),
                       Text(
                         '4.5',
-                        style: GoogleFonts.inter(
+                        style: Theme.of(context).textTheme.bodyMedium!.copyWith(
                           fontSize: 11,
                           fontWeight: FontWeight.w500,
                           color: AppColors.secondaryText,
@@ -342,7 +347,7 @@ class _CompanyProfileViewState extends State<CompanyProfileView> {
                   const Spacer(),
                   Text(
                     '\$199/Person',
-                    style: GoogleFonts.inter(
+                    style: Theme.of(context).textTheme.bodyMedium!.copyWith(
                       fontSize: 13,
                       fontWeight: FontWeight.w600,
                       color: AppColors.primary,

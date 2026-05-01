@@ -42,8 +42,8 @@ class ActivityItem extends StatelessWidget {
               height: 48,
               decoration: BoxDecoration(
                 color: isSelected
-                        ? AppColors.primary.withValues(alpha: 0.1)
-                        : AppColors.border.withValues(alpha: 0.5),
+                    ? AppColors.primary.withValues(alpha: 0.1)
+                    : AppColors.border.withValues(alpha: 0.5),
                 borderRadius: BorderRadius.circular(10),
               ),
               child: Icon(
@@ -79,7 +79,7 @@ class ActivityItem extends StatelessWidget {
               width: 22,
               height: 22,
               decoration: BoxDecoration(
-                color: isSelected ? AppColors.primary : Colors.transparent,
+                color: isSelected ? AppColors.primary : AppColors.transparent,
                 borderRadius: BorderRadius.circular(4),
                 border: Border.all(
                   color: isSelected ? AppColors.primary : AppColors.greyText,
@@ -87,7 +87,7 @@ class ActivityItem extends StatelessWidget {
                 ),
               ),
               child: isSelected
-                  ? const Icon(Icons.check, color: Colors.white, size: 16)
+                  ? const Icon(Icons.check, color: AppColors.onImage, size: 16)
                   : null,
             ),
           ],

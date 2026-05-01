@@ -1,4 +1,4 @@
-import '../config/app_colors.dart';
+import '../theme/app_colors.dart';
 import '../config/styles/styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -76,14 +76,14 @@ class AppButton extends StatelessWidget {
                       style:
                           style ??
                           TextStyles.textViewSemiBold16.copyWith(
-                            color: textColor ?? AppColors.cardColorLight,
+                            color: textColor ?? AppColors.onPrimary,
                           ),
                     ),
                     if (isBackIcon) SizedBox(width: 8.w),
                     if (isBackIcon)
                       Icon(
                         Icons.arrow_forward,
-                        color: textColor ?? AppColors.cardColorLight,
+                        color: textColor ?? AppColors.onPrimary,
                         size: 16.w,
                       ),
                   ],

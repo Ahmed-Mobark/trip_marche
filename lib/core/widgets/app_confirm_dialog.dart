@@ -26,11 +26,13 @@ class AppConfirmDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final radius = 18.r;
-    final bg = const Color(0xFF2B2B2B);
-    final msgColor = Colors.white.withValues(alpha: 0.72);
+    final bg = AppColors.cardBg;
+    final msgColor = AppColors.bodyText.withValues(alpha: 0.72);
+    final secondaryColor =
+        secondaryActionColor ?? AppColors.bodyText.withValues(alpha: 0.55);
 
     return Dialog(
-      backgroundColor: Colors.transparent,
+      backgroundColor: AppColors.transparent,
       insetPadding: EdgeInsets.symmetric(horizontal: 26.w),
       child: Container(
         padding: EdgeInsetsDirectional.fromSTEB(20.w, 18.h, 20.w, 14.h),
@@ -44,10 +46,9 @@ class AppConfirmDialog extends StatelessWidget {
             Text(
               message,
               textAlign: TextAlign.center,
-              style: AppTextStyles.bodyMedium(color: msgColor).copyWith(
-                height: 1.35,
-                fontWeight: FontWeight.w500,
-              ),
+              style: AppTextStyles.bodyMedium(
+                color: msgColor,
+              ).copyWith(height: 1.35, fontWeight: FontWeight.w500),
             ),
             SizedBox(height: 14.h),
             Row(
@@ -62,14 +63,12 @@ class AppConfirmDialog extends StatelessWidget {
                     ),
                     minimumSize: Size.zero,
                     tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                    foregroundColor: secondaryActionColor ??
-                        Colors.white.withValues(alpha: 0.55),
+                    foregroundColor: secondaryColor,
                   ),
                   child: Text(
                     secondaryActionText,
                     style: AppTextStyles.bodyMedium(
-                      color: secondaryActionColor ??
-                          Colors.white.withValues(alpha: 0.55),
+                      color: secondaryColor,
                     ).copyWith(fontWeight: FontWeight.w600),
                   ),
                 ),
@@ -100,4 +99,3 @@ class AppConfirmDialog extends StatelessWidget {
     );
   }
 }
-

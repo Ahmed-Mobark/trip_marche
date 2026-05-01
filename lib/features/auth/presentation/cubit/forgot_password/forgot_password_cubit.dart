@@ -9,7 +9,7 @@ import '../../view/verify_number_view.dart';
 
 class ForgotPasswordCubit extends Cubit<ForgotPasswordState> {
   ForgotPasswordCubit(this._navigator, this._authRepository)
-      : super(const ForgotPasswordState());
+    : super(const ForgotPasswordState());
 
   final AppNavigator _navigator;
   final AuthRepository _authRepository;
@@ -26,10 +26,12 @@ class ForgotPasswordCubit extends Cubit<ForgotPasswordState> {
 
     result.fold(
       (failure) {
-        emit(state.copyWith(
-          status: ForgotPasswordStatus.failure,
-          errorMessage: failure.message,
-        ));
+        emit(
+          state.copyWith(
+            status: ForgotPasswordStatus.failure,
+            errorMessage: failure.message,
+          ),
+        );
       },
       (_) {
         emit(state.copyWith(status: ForgotPasswordStatus.success));

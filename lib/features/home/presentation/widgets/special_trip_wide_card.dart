@@ -26,7 +26,7 @@ class SpecialTripWideCard extends StatelessWidget {
       child: Container(
         padding: EdgeInsetsDirectional.all(12.w),
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: AppColors.cardBg,
           borderRadius: BorderRadius.circular(18.r),
         ),
         child: Row(
@@ -65,7 +65,7 @@ class SpecialTripWideCard extends StatelessWidget {
                           child: Text(
                             trip.badge!,
                             style: AppTextStyles.bodySmall(
-                              color: Colors.white,
+                              color: AppColors.onImage,
                             ).copyWith(fontWeight: FontWeight.w800),
                           ),
                         ),
@@ -105,7 +105,7 @@ class SpecialTripWideCard extends StatelessWidget {
                             trip.isWishlisted ? Iconsax.heart5 : Iconsax.heart,
                             size: 18.sp,
                             color: trip.isWishlisted
-                                ? AppColors.red
+                                ? AppColors.error
                                 : AppColors.greyText,
                           ),
                         ),

@@ -39,8 +39,11 @@ class SearchResultView extends StatelessWidget {
                 color: AppColors.lightBg,
                 borderRadius: BorderRadius.circular(10),
               ),
-              child: Icon(Iconsax.setting_4,
-                  color: AppColors.secondaryText, size: 20),
+              child: Icon(
+                Iconsax.setting_4,
+                color: AppColors.secondaryText,
+                size: 20,
+              ),
             ),
           ),
         ],
@@ -85,8 +88,7 @@ class SearchResultView extends StatelessWidget {
       child: Row(
         children: [
           const SizedBox(width: 12),
-          Icon(Iconsax.search_normal,
-              color: AppColors.greyText, size: 18),
+          Icon(Iconsax.search_normal, color: AppColors.greyText, size: 18),
           const SizedBox(width: 8),
           Expanded(
             child: Text(
@@ -94,8 +96,7 @@ class SearchResultView extends StatelessWidget {
               style: AppTextStyles.bodyMedium(color: AppColors.darkText),
             ),
           ),
-          Icon(Iconsax.close_circle,
-              color: AppColors.greyText, size: 18),
+          Icon(Iconsax.close_circle, color: AppColors.greyText, size: 18),
           const SizedBox(width: 12),
         ],
       ),

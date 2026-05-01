@@ -432,12 +432,12 @@ class _DestinationsRow extends StatelessWidget {
                 Container(
                   width: 160.w,
                   padding: EdgeInsetsDirectional.symmetric(vertical: 8.h),
-                  color: Colors.black.withValues(alpha: 0.45),
+                  color: AppColors.shadow.withValues(alpha: 0.45),
                   child: Text(
                     labels[i],
                     textAlign: TextAlign.center,
                     style: AppTextStyles.bodySmall(
-                      color: Colors.white,
+                      color: AppColors.onImage,
                     ).copyWith(fontWeight: FontWeight.w600),
                   ),
                 ),
@@ -658,7 +658,7 @@ class _ActivityRows extends StatelessWidget {
                             style: AppTextStyles.caption(
                               color: added
                                   ? AppColors.greyText
-                                  : AppColors.white,
+                                  : AppColors.onImage,
                             ).copyWith(fontWeight: FontWeight.w700),
                           ),
                         ),
@@ -689,7 +689,7 @@ class _PolicyList extends StatelessWidget {
       children: items
           .map(
             (e) => Material(
-              color: AppColors.white,
+              color: AppColors.cardBg,
               child: InkWell(
                 onTap: () {},
                 child: Padding(

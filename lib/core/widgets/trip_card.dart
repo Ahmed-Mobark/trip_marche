@@ -1,16 +1,12 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
-import '../config/app_colors.dart';
+import '../theme/app_colors.dart';
 import '../config/styles/styles.dart';
 import '../data/dummy_data.dart';
 
 class TripCard extends StatelessWidget {
-  const TripCard({
-    super.key,
-    required this.trip,
-    this.onTap,
-  });
+  const TripCard({super.key, required this.trip, this.onTap});
 
   final TripItem trip;
   final VoidCallback? onTap;
@@ -31,7 +27,9 @@ class TripCard extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             ClipRRect(
-              borderRadius: const BorderRadius.vertical(top: Radius.circular(16)),
+              borderRadius: const BorderRadius.vertical(
+                top: Radius.circular(16),
+              ),
               child: CachedNetworkImage(
                 imageUrl: trip.imageUrl,
                 height: 110,
@@ -64,12 +62,16 @@ class TripCard extends StatelessWidget {
                       const SizedBox(width: 4),
                       Text(
                         trip.rating.toStringAsFixed(1),
-                        style: AppTextStyles.bodySmall(color: AppColors.darkText),
+                        style: AppTextStyles.bodySmall(
+                          color: AppColors.darkText,
+                        ),
                       ),
                       const Spacer(),
                       Text(
                         '\$${trip.price.toStringAsFixed(0)}',
-                        style: AppTextStyles.subtitle(color: AppColors.primaryDark),
+                        style: AppTextStyles.subtitle(
+                          color: AppColors.primaryDark,
+                        ),
                       ),
                     ],
                   ),
@@ -84,11 +86,7 @@ class TripCard extends StatelessWidget {
 }
 
 class TripCardWide extends StatelessWidget {
-  const TripCardWide({
-    super.key,
-    required this.trip,
-    this.onTap,
-  });
+  const TripCardWide({super.key, required this.trip, this.onTap});
 
   final TripItem trip;
   final VoidCallback? onTap;
@@ -150,11 +148,7 @@ class TripCardWide extends StatelessWidget {
 }
 
 class TripCardGrid extends StatelessWidget {
-  const TripCardGrid({
-    super.key,
-    required this.trip,
-    this.onTap,
-  });
+  const TripCardGrid({super.key, required this.trip, this.onTap});
 
   final TripItem trip;
   final VoidCallback? onTap;
@@ -162,4 +156,3 @@ class TripCardGrid extends StatelessWidget {
   @override
   Widget build(BuildContext context) => TripCard(trip: trip, onTap: onTap);
 }
-

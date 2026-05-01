@@ -111,8 +111,9 @@ class _ToggleTile extends StatelessWidget {
               children: [
                 Text(
                   title,
-                  style: AppTextStyles.bodyMedium(color: AppColors.darkText)
-                      .copyWith(fontWeight: FontWeight.w700),
+                  style: AppTextStyles.bodyMedium(
+                    color: AppColors.darkText,
+                  ).copyWith(fontWeight: FontWeight.w700),
                 ),
                 SizedBox(height: 8.h),
                 Text(
@@ -129,7 +130,7 @@ class _ToggleTile extends StatelessWidget {
             activeTrackColor: AppColors.primary,
             inactiveTrackColor: AppColors.border,
             thumbColor: WidgetStateProperty.resolveWith<Color>(
-              (_) => AppColors.white,
+              (_) => AppColors.onImage,
             ),
           ),
         ],

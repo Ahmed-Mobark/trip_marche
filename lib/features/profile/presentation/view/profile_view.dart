@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:iconsax/iconsax.dart';
-import 'package:trip_marche/core/config/app_colors.dart';
+import 'package:trip_marche/core/theme/app_colors.dart';
 import 'package:trip_marche/core/config/styles/styles.dart';
 import 'package:trip_marche/core/injection/injection_container.dart';
 import 'package:trip_marche/core/navigation/app_navigator.dart';
@@ -75,7 +75,7 @@ class ProfileView extends StatelessWidget {
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                             style: AppTextStyles.heading3(
-                              color: Colors.white,
+                              color: AppColors.onImage,
                             ).copyWith(fontWeight: FontWeight.w800),
                           ),
                           SizedBox(height: 4.h),
@@ -84,7 +84,7 @@ class ProfileView extends StatelessWidget {
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                             style: AppTextStyles.bodyMedium(
-                              color: Colors.white.withValues(alpha: 0.85),
+                              color: AppColors.onImage.withValues(alpha: 0.85),
                             ),
                           ),
                           SizedBox(height: 6.h),
@@ -106,7 +106,7 @@ class ProfileView extends StatelessWidget {
             top: headerHeight,
             child: Container(
               decoration: BoxDecoration(
-                color: AppColors.scaffoldColorLight,
+                color: AppColors.scaffoldBg,
                 borderRadius: BorderRadius.vertical(
                   top: Radius.circular(sheetRadius),
                 ),
@@ -214,7 +214,7 @@ class ProfileView extends StatelessWidget {
   void _showDeleteAccountDialog(BuildContext context) {
     showDialog(
       context: context,
-      barrierColor: Colors.black.withValues(alpha: 0.55),
+      barrierColor: AppColors.scrim.withValues(alpha: 0.55),
       builder: (dialogContext) => AppConfirmDialog(
         message: context.tr.profileDeleteAccountMessage,
         secondaryActionText: context.tr.commonCancel,
@@ -230,7 +230,7 @@ class ProfileView extends StatelessWidget {
   void _showLogoutDialog(BuildContext context) {
     showDialog(
       context: context,
-      barrierColor: Colors.black.withValues(alpha: 0.55),
+      barrierColor: AppColors.scrim.withValues(alpha: 0.55),
       builder: (dialogContext) => AppConfirmDialog(
         message: context.tr.profileLogoutConfirmMessage,
         secondaryActionText: context.tr.commonCancel,
@@ -275,11 +275,11 @@ class _SectionCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: AppColors.cardBg,
         borderRadius: BorderRadius.circular(18.r),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withValues(alpha: 0.04),
+            color: AppColors.shadow.withValues(alpha: 0.04),
             blurRadius: 18,
             offset: const Offset(0, 10),
           ),
@@ -334,7 +334,7 @@ class _LogoutButton extends StatelessWidget {
       child: OutlinedButton(
         onPressed: onTap,
         style: OutlinedButton.styleFrom(
-          backgroundColor: Colors.white,
+          backgroundColor: AppColors.cardBg,
           side: BorderSide(color: AppColors.border),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(14.r),

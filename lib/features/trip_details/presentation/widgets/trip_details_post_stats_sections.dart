@@ -236,7 +236,7 @@ class _MapButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Material(
-      color: AppColors.white,
+      color: AppColors.cardBg,
       borderRadius: BorderRadius.circular(12.r),
       child: InkWell(
         onTap: onTap,
@@ -249,7 +249,7 @@ class _MapButton extends StatelessWidget {
             border: Border.all(color: AppColors.border.withValues(alpha: 0.6)),
             boxShadow: [
               BoxShadow(
-                color: Colors.black.withValues(alpha: 0.06),
+                color: AppColors.shadow.withValues(alpha: 0.06),
                 blurRadius: 12.r,
                 offset: Offset(0, 6.h),
               ),

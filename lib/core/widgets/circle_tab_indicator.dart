@@ -21,9 +21,9 @@ class _CirclePainter extends BoxPainter {
   final double verticalPadding;
 
   _CirclePainter(Color color, this.radius, this.verticalPadding)
-      : _paint = Paint()
-          ..color = color
-          ..isAntiAlias = true;
+    : _paint = Paint()
+        ..color = color
+        ..isAntiAlias = true;
 
   @override
   void paint(Canvas canvas, Offset offset, ImageConfiguration cfg) {

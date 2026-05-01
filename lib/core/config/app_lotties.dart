@@ -1,6 +1,6 @@
 class AppLotties {
   AppLotties._();
-  
+
   static const String _path = "assets/lotties/";
 
   // Lottie paths

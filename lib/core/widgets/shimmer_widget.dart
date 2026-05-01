@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import '../config/app_colors.dart';
+import '../theme/app_colors.dart';
 import 'package:shimmer/shimmer.dart';
 
 class AppShimmer extends StatelessWidget {
@@ -22,11 +22,12 @@ class AppShimmer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (!enabled) return child;
+    final base = AppColors.greyText.withValues(alpha: 0.25);
 
     return Shimmer.fromColors(
-      baseColor:
-          baseColor ?? AppColors.greyTextColorLight.withValues(alpha: 0.3),
-      highlightColor: highlightColor ?? Colors.white.withValues(alpha: 0.8),
+      baseColor: baseColor ?? base,
+      highlightColor:
+          highlightColor ?? AppColors.cardBg.withValues(alpha: 0.85),
       period: duration ?? const Duration(milliseconds: 1500),
       direction: ShimmerDirection.ltr,
       child: child,
@@ -60,7 +61,7 @@ class ShimmerContainer extends StatelessWidget {
       margin: margin,
       padding: padding,
       decoration: BoxDecoration(
-        color: color ?? AppColors.greyTextColorLight.withValues(alpha: 0.3),
+        color: color ?? AppColors.greyText.withValues(alpha: 0.25),
         borderRadius: BorderRadius.circular(borderRadius ?? 8.r),
       ),
     );
@@ -88,7 +89,7 @@ class ShimmerText extends StatelessWidget {
       height: height ?? (fontSize != null ? fontSize! * 1.2 : 16.h),
       margin: margin,
       decoration: BoxDecoration(
-        color: AppColors.greyTextColorLight.withValues(alpha: 0.3),
+        color: AppColors.greyText.withValues(alpha: 0.25),
         borderRadius: BorderRadius.circular(4.r),
       ),
     );
@@ -108,7 +109,7 @@ class ShimmerCircle extends StatelessWidget {
       height: size ?? 40.h,
       margin: margin,
       decoration: BoxDecoration(
-        color: AppColors.greyTextColorLight.withValues(alpha: 0.3),
+        color: AppColors.greyText.withValues(alpha: 0.25),
         shape: BoxShape.circle,
       ),
     );

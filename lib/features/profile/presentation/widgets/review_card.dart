@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:iconsax/iconsax.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_text_styles.dart';
@@ -48,10 +47,7 @@ class ReviewCard extends StatelessWidget {
                       color: AppColors.lightBg,
                       borderRadius: BorderRadius.circular(8),
                     ),
-                    child: Icon(
-                      Iconsax.image,
-                      color: AppColors.greyText,
-                    ),
+                    child: Icon(Iconsax.image, color: AppColors.greyText),
                   ),
                 ),
               ),
@@ -69,7 +65,7 @@ class ReviewCard extends StatelessWidget {
                     const SizedBox(height: 4),
                     Text(
                       date,
-                      style: GoogleFonts.inter(
+                      style: Theme.of(context).textTheme.bodyMedium!.copyWith(
                         fontSize: 12,
                         fontWeight: FontWeight.w400,
                         color: AppColors.greyText,
@@ -85,21 +81,30 @@ class ReviewCard extends StatelessWidget {
           Row(
             children: List.generate(5, (i) {
               if (i < rating.floor()) {
-                return const Icon(Icons.star,
-                    size: 18, color: Color(0xFFFFD43B));
+                return const Icon(
+                  Icons.star,
+                  size: 18,
+                  color: AppColors.yellow,
+                );
               } else if (i < rating) {
-                return const Icon(Icons.star_half,
-                    size: 18, color: Color(0xFFFFD43B));
+                return const Icon(
+                  Icons.star_half,
+                  size: 18,
+                  color: AppColors.yellow,
+                );
               } else {
-                return Icon(Icons.star_border,
-                    size: 18, color: AppColors.greyText.withValues(alpha: 0.4));
+                return Icon(
+                  Icons.star_border,
+                  size: 18,
+                  color: AppColors.greyText.withValues(alpha: 0.4),
+                );
               }
             }),
           ),
           const SizedBox(height: 8),
           Text(
             review,
-            style: GoogleFonts.inter(
+            style: Theme.of(context).textTheme.bodyMedium!.copyWith(
               fontSize: 14,
               fontWeight: FontWeight.w400,
               color: AppColors.secondaryText,

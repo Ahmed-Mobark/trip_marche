@@ -183,7 +183,9 @@ class _ReviewCard extends StatelessWidget {
                         SizedBox(width: 6.w),
                         Text(
                           country,
-                          style: AppTextStyles.caption(color: AppColors.greyText),
+                          style: AppTextStyles.caption(
+                            color: AppColors.greyText,
+                          ),
                         ),
                       ],
                     ),
@@ -293,8 +295,9 @@ class _CompanyCard extends StatelessWidget {
                     SizedBox(width: 6.w),
                     Text(
                       ratingValue,
-                      style: AppTextStyles.caption(color: AppColors.darkText)
-                          .copyWith(fontWeight: FontWeight.w700),
+                      style: AppTextStyles.caption(
+                        color: AppColors.darkText,
+                      ).copyWith(fontWeight: FontWeight.w700),
                     ),
                     Text(
                       '($ratingCount)',
@@ -321,8 +324,9 @@ class _CompanyCard extends StatelessWidget {
             ),
             child: Text(
               context.tr.tripDetailsFollow,
-              style: AppTextStyles.bodyMedium(color: AppColors.primary)
-                  .copyWith(fontWeight: FontWeight.w600),
+              style: AppTextStyles.bodyMedium(
+                color: AppColors.primary,
+              ).copyWith(fontWeight: FontWeight.w600),
             ),
           ),
         ],
@@ -388,9 +392,12 @@ class _RatePillRow extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      padding: EdgeInsetsDirectional.symmetric(horizontal: 14.w, vertical: 10.h),
+      padding: EdgeInsetsDirectional.symmetric(
+        horizontal: 14.w,
+        vertical: 10.h,
+      ),
       decoration: BoxDecoration(
-        color: AppColors.white,
+        color: AppColors.cardBg,
         borderRadius: BorderRadius.circular(999.r),
         border: Border.all(color: AppColors.border),
       ),
@@ -457,7 +464,7 @@ class _QuickLinkTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Material(
-      color: AppColors.white,
+      color: AppColors.cardBg,
       borderRadius: BorderRadius.circular(16.r),
       child: InkWell(
         borderRadius: BorderRadius.circular(16.r),
@@ -603,4 +610,3 @@ class _AccommodationItemCard extends StatelessWidget {
     );
   }
 }
-

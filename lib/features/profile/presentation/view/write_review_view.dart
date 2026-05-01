@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:iconsax/iconsax.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_text_styles.dart';
@@ -8,11 +7,7 @@ class WriteReviewView extends StatefulWidget {
   final String? tripName;
   final String? tripImage;
 
-  const WriteReviewView({
-    super.key,
-    this.tripName,
-    this.tripImage,
-  });
+  const WriteReviewView({super.key, this.tripName, this.tripImage});
 
   @override
   State<WriteReviewView> createState() => _WriteReviewViewState();
@@ -39,10 +34,7 @@ class _WriteReviewViewState extends State<WriteReviewView> {
           icon: Icon(Iconsax.arrow_left, color: AppColors.darkText),
           onPressed: () => Navigator.pop(context),
         ),
-        title: Text(
-          'Write Review',
-          style: AppTextStyles.subtitle(),
-        ),
+        title: Text('Write Review', style: AppTextStyles.subtitle()),
         centerTitle: true,
       ),
       body: SingleChildScrollView(
@@ -113,7 +105,7 @@ class _WriteReviewViewState extends State<WriteReviewView> {
                             : Icons.star_border,
                         size: 40,
                         color: index < _selectedRating
-                            ? const Color(0xFFFFD43B)
+                            ? AppColors.yellow
                             : AppColors.greyText.withValues(alpha: 0.4),
                       ),
                     ),
@@ -126,7 +118,7 @@ class _WriteReviewViewState extends State<WriteReviewView> {
               Center(
                 child: Text(
                   _getRatingText(),
-                  style: GoogleFonts.inter(
+                  style: Theme.of(context).textTheme.bodyMedium!.copyWith(
                     fontSize: 14,
                     fontWeight: FontWeight.w500,
                     color: AppColors.primary,
@@ -136,22 +128,19 @@ class _WriteReviewViewState extends State<WriteReviewView> {
             const SizedBox(height: 32),
 
             // Review Text
-            Text(
-              'Write your review',
-              style: AppTextStyles.label(),
-            ),
+            Text('Write your review', style: AppTextStyles.label()),
             const SizedBox(height: 8),
             TextFormField(
               controller: _reviewController,
               maxLines: 6,
-              style: GoogleFonts.inter(
+              style: Theme.of(context).textTheme.bodyMedium!.copyWith(
                 fontSize: 14,
                 fontWeight: FontWeight.w400,
                 color: AppColors.darkText,
               ),
               decoration: InputDecoration(
                 hintText: 'Share your experience about this trip...',
-                hintStyle: GoogleFonts.inter(
+                hintStyle: Theme.of(context).textTheme.bodyMedium!.copyWith(
                   fontSize: 14,
                   fontWeight: FontWeight.w400,
                   color: AppColors.greyText,
@@ -169,8 +158,10 @@ class _WriteReviewViewState extends State<WriteReviewView> {
                 ),
                 focusedBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(12),
-                  borderSide:
-                      const BorderSide(color: AppColors.primary, width: 1),
+                  borderSide: const BorderSide(
+                    color: AppColors.primary,
+                    width: 1,
+                  ),
                 ),
               ),
             ),
@@ -193,17 +184,14 @@ class _WriteReviewViewState extends State<WriteReviewView> {
                         }
                       : null,
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.transparent,
-                    shadowColor: Colors.transparent,
-                    disabledBackgroundColor: Colors.transparent,
+                    backgroundColor: AppColors.transparent,
+                    shadowColor: AppColors.transparent,
+                    disabledBackgroundColor: AppColors.transparent,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(12),
                     ),
                   ),
-                  child: Text(
-                    'Submit Review',
-                    style: AppTextStyles.button(),
-                  ),
+                  child: Text('Submit Review', style: AppTextStyles.button()),
                 ),
               ),
             ),
@@ -222,10 +210,7 @@ class _WriteReviewViewState extends State<WriteReviewView> {
         color: AppColors.lightBg,
         borderRadius: BorderRadius.circular(8),
       ),
-      child: Icon(
-        Iconsax.image,
-        color: AppColors.greyText,
-      ),
+      child: Icon(Iconsax.image, color: AppColors.greyText),
     );
   }
 

@@ -54,66 +54,50 @@ class LoginView extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                    // Title
-                    Text(
-                      context.tr.authLoginTitle,
-                      style: AppTextStyles.heading2(color: AppColors.darkText)
-                          .copyWith(fontWeight: FontWeight.w800),
-                    ),
-                    SizedBox(height: 20.h),
-                    _FieldTitle(text: context.tr.authEmailLabel),
-                    SizedBox(height: 8.h),
-                    AppTextField(
-                      hint: context.tr.authEmailHint,
-                      controller: context.read<LoginCubit>().emailController,
-                      prefixWidget: Padding(
-                        padding: EdgeInsets.all(12.r),
-                        child: SvgPicture.asset(
-                          AppIcons.icSms,
-                          width: 20,
-                          height: 20,
-                          colorFilter: ColorFilter.mode(
-                            AppColors.greyText,
-                            BlendMode.srcIn,
-                          ),
-                        ),
+                      // Title
+                      Text(
+                        context.tr.authLoginTitle,
+                        style: AppTextStyles.heading2(
+                          color: AppColors.darkText,
+                        ).copyWith(fontWeight: FontWeight.w800),
                       ),
-                      keyboardType: TextInputType.emailAddress,
-                    ),
-                    SizedBox(height: 18.h),
-
-                    _FieldTitle(text: context.tr.authPasswordLabel),
-                    SizedBox(height: 8.h),
-                    BlocBuilder<LoginCubit, LoginState>(
-                      buildWhen: (p, n) =>
-                          p.obscurePassword != n.obscurePassword,
-                      builder: (context, state) {
-                        return AppTextField(
-                          hint: context.tr.authPasswordHint,
-                          controller: context
-                              .read<LoginCubit>()
-                              .passwordController,
-                          prefixWidget: Padding(
-                            padding: EdgeInsets.all(12.r),
-                            child: SvgPicture.asset(
-                              AppIcons.icLock,
-                              width: 20,
-                              height: 20,
-                              colorFilter: ColorFilter.mode(
-                                AppColors.greyText,
-                                BlendMode.srcIn,
-                              ),
+                      SizedBox(height: 20.h),
+                      _FieldTitle(text: context.tr.authEmailLabel),
+                      SizedBox(height: 8.h),
+                      AppTextField(
+                        hint: context.tr.authEmailHint,
+                        controller: context.read<LoginCubit>().emailController,
+                        prefixWidget: Padding(
+                          padding: EdgeInsets.all(12.r),
+                          child: SvgPicture.asset(
+                            AppIcons.icSms,
+                            width: 20,
+                            height: 20,
+                            colorFilter: ColorFilter.mode(
+                              AppColors.greyText,
+                              BlendMode.srcIn,
                             ),
                           ),
-                          obscureText: state.obscurePassword,
-                          suffixIcon: GestureDetector(
-                            onTap: context
+                        ),
+                        keyboardType: TextInputType.emailAddress,
+                      ),
+                      SizedBox(height: 18.h),
+
+                      _FieldTitle(text: context.tr.authPasswordLabel),
+                      SizedBox(height: 8.h),
+                      BlocBuilder<LoginCubit, LoginState>(
+                        buildWhen: (p, n) =>
+                            p.obscurePassword != n.obscurePassword,
+                        builder: (context, state) {
+                          return AppTextField(
+                            hint: context.tr.authPasswordHint,
+                            controller: context
                                 .read<LoginCubit>()
-                                .toggleObscurePassword,
-                            child: Padding(
+                                .passwordController,
+                            prefixWidget: Padding(
                               padding: EdgeInsets.all(12.r),
                               child: SvgPicture.asset(
-                                AppIcons.icEyeSlash,
+                                AppIcons.icLock,
                                 width: 20,
                                 height: 20,
                                 colorFilter: ColorFilter.mode(
@@ -122,70 +106,140 @@ class LoginView extends StatelessWidget {
                                 ),
                               ),
                             ),
-                          ),
-                        );
-                      },
-                    ),
-                    SizedBox(height: 10.h),
+                            obscureText: state.obscurePassword,
+                            suffixIcon: GestureDetector(
+                              onTap: context
+                                  .read<LoginCubit>()
+                                  .toggleObscurePassword,
+                              child: Padding(
+                                padding: EdgeInsets.all(12.r),
+                                child: SvgPicture.asset(
+                                  AppIcons.icEyeSlash,
+                                  width: 20,
+                                  height: 20,
+                                  colorFilter: ColorFilter.mode(
+                                    AppColors.greyText,
+                                    BlendMode.srcIn,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          );
+                        },
+                      ),
+                      SizedBox(height: 10.h),
 
-                    // Forget Password
-                    Align(
-                      alignment: Alignment.centerLeft,
-                      child: GestureDetector(
-                        onTap: context.read<LoginCubit>().openForgotPassword,
-                        child: Text(
-                          context.tr.authForgotPassword,
-                          style: AppTextStyles.bodySmall(color: AppColors.primary)
-                              .copyWith(fontWeight: FontWeight.w700),
+                      // Forget Password
+                      Align(
+                        alignment: Alignment.centerLeft,
+                        child: GestureDetector(
+                          onTap: context.read<LoginCubit>().openForgotPassword,
+                          child: Text(
+                            context.tr.authForgotPassword,
+                            style: AppTextStyles.bodySmall(
+                              color: AppColors.primary,
+                            ).copyWith(fontWeight: FontWeight.w700),
+                          ),
                         ),
                       ),
-                    ),
-                    SizedBox(height: 22.h),
+                      SizedBox(height: 22.h),
 
-                    // Login button
-                    BlocBuilder<LoginCubit, LoginState>(
-                      buildWhen: (p, n) => p.status != n.status,
-                      builder: (context, state) {
-                        final isLoading = state.status == LoginStatus.loading;
-                        return AppButton(
-                          heigh: 54.h,
-                          radius: 999.r,
-                          color: AppColors.primary,
-                          onTap: isLoading
-                              ? null
-                              : () => context.read<LoginCubit>().submitLogin(),
-                          child: isLoading
-                              ? SizedBox(
-                                  width: 22.r,
-                                  height: 22.r,
-                                  child: const CircularProgressIndicator(
-                                    color: Colors.white,
-                                    strokeWidth: 2.5,
+                      // Login button
+                      BlocBuilder<LoginCubit, LoginState>(
+                        buildWhen: (p, n) => p.status != n.status,
+                        builder: (context, state) {
+                          final isLoading = state.status == LoginStatus.loading;
+                          return AppButton(
+                            heigh: 54.h,
+                            radius: 999.r,
+                            color: AppColors.primary,
+                            onTap: isLoading
+                                ? null
+                                : () =>
+                                      context.read<LoginCubit>().submitLogin(),
+                            child: isLoading
+                                ? SizedBox(
+                                    width: 22.r,
+                                    height: 22.r,
+                                    child: const CircularProgressIndicator(
+                                      color: AppColors.onImage,
+                                      strokeWidth: 2.5,
+                                    ),
+                                  )
+                                : Text(
+                                    context.tr.authLoginButton,
+                                    style: AppTextStyles.button(
+                                      color: AppColors.onImage,
+                                    ).copyWith(fontWeight: FontWeight.w700),
                                   ),
-                                )
-                              : Text(
-                                  context.tr.authLoginButton,
-                                  style: AppTextStyles.button(color: Colors.white)
-                                      .copyWith(fontWeight: FontWeight.w700),
-                                ),
-                        );
-                      },
-                    ),
-                    SizedBox(height: 16.h),
+                          );
+                        },
+                      ),
+                      SizedBox(height: 16.h),
 
-                    // Don't have an account? Create One
-                    Center(
-                      child: GestureDetector(
-                        onTap: context.read<LoginCubit>().openSignUp,
+                      // Don't have an account? Create One
+                      Center(
+                        child: GestureDetector(
+                          onTap: context.read<LoginCubit>().openSignUp,
+                          child: RichText(
+                            text: TextSpan(
+                              style: AppTextStyles.bodyMedium(
+                                color: AppColors.greyText,
+                              ),
+                              children: [
+                                TextSpan(text: context.tr.authNoAccountPrompt),
+                                TextSpan(
+                                  text: context.tr.authCreateOne,
+                                  style: AppTextStyles.bodyMedium(
+                                    color: AppColors.primary,
+                                  ).copyWith(fontWeight: FontWeight.w700),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                      SizedBox(height: 18.h),
+
+                      // Divider: "Or Login with"
+                      DividerWithText(text: context.tr.authOrLoginWith),
+                      SizedBox(height: 14.h),
+
+                      // Continue with Google
+                      SocialLoginButton(
+                        icon: SvgPicture.asset(
+                          AppIcons.icGoogle,
+                          width: 20,
+                          height: 20,
+                        ),
+                        text: context.tr.authContinueWithGoogle,
+                        onPressed: () {},
+                      ),
+                      SizedBox(height: 12.h),
+
+                      // Continue with Apple
+                      SocialLoginButton(
+                        icon: SvgPicture.asset(
+                          AppIcons.icApple,
+                          width: 20,
+                          height: 20,
+                        ),
+                        text: context.tr.authContinueWithApple,
+                        onPressed: () {},
+                      ),
+                      SizedBox(height: 18.h),
+
+                      // Travel Agency
+                      Center(
                         child: RichText(
                           text: TextSpan(
                             style: AppTextStyles.bodyMedium(
                               color: AppColors.greyText,
                             ),
                             children: [
-                              TextSpan(text: context.tr.authNoAccountPrompt),
+                              TextSpan(text: context.tr.authTravelAgencyPrompt),
                               TextSpan(
-                                text: context.tr.authCreateOne,
+                                text: context.tr.authJoinAsTripPartner,
                                 style: AppTextStyles.bodyMedium(
                                   color: AppColors.primary,
                                 ).copyWith(fontWeight: FontWeight.w700),
@@ -194,58 +248,8 @@ class LoginView extends StatelessWidget {
                           ),
                         ),
                       ),
-                    ),
-                    SizedBox(height: 18.h),
-
-                    // Divider: "Or Login with"
-                    DividerWithText(text: context.tr.authOrLoginWith),
-                    SizedBox(height: 14.h),
-
-                    // Continue with Google
-                    SocialLoginButton(
-                      icon: SvgPicture.asset(
-                        AppIcons.icGoogle,
-                        width: 20,
-                        height: 20,
-                      ),
-                      text: context.tr.authContinueWithGoogle,
-                      onPressed: () {},
-                    ),
-                    SizedBox(height: 12.h),
-
-                    // Continue with Apple
-                    SocialLoginButton(
-                      icon: SvgPicture.asset(
-                        AppIcons.icApple,
-                        width: 20,
-                        height: 20,
-                      ),
-                      text: context.tr.authContinueWithApple,
-                      onPressed: () {},
-                    ),
-                    SizedBox(height: 18.h),
-
-                    // Travel Agency
-                    Center(
-                      child: RichText(
-                        text: TextSpan(
-                          style: AppTextStyles.bodyMedium(
-                            color: AppColors.greyText,
-                          ),
-                          children: [
-                            TextSpan(text: context.tr.authTravelAgencyPrompt),
-                            TextSpan(
-                              text: context.tr.authJoinAsTripPartner,
-                              style: AppTextStyles.bodyMedium(
-                                color: AppColors.primary,
-                              ).copyWith(fontWeight: FontWeight.w700),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                    SizedBox(height: 16.h),
-                  ],
+                      SizedBox(height: 16.h),
+                    ],
                   ),
                 ),
               ),
@@ -266,8 +270,9 @@ class _FieldTitle extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       text,
-      style: AppTextStyles.bodyMedium(color: AppColors.darkText)
-          .copyWith(fontWeight: FontWeight.w700),
+      style: AppTextStyles.bodyMedium(
+        color: AppColors.darkText,
+      ).copyWith(fontWeight: FontWeight.w700),
     );
   }
 }
