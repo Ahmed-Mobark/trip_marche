@@ -29,7 +29,7 @@ class _PaymentMethodViewState extends State<PaymentMethodView> {
         backgroundColor: AppColors.background,
         elevation: 0,
         leading: IconButton(
-          icon: Icon(Iconsax.arrow_left, color: AppColors.darkText),
+          icon: Icon(Icons.arrow_back_ios_new_rounded, color: AppColors.darkText),
           onPressed: () => Navigator.pop(context),
         ),
         title: Text(
@@ -206,7 +206,7 @@ class _PaymentMethodViewState extends State<PaymentMethodView> {
         ),
         child: Center(
           child: Text(
-            context.tr.bookingPayNow('\$779'),
+            context.tr.bookingPayNow('779'),
             style: AppTextStyles.button(),
           ),
         ),

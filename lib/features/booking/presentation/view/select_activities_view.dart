@@ -92,7 +92,7 @@ class _SelectActivitiesViewState extends State<SelectActivitiesView> {
         backgroundColor: AppColors.background,
         elevation: 0,
         leading: IconButton(
-          icon: Icon(Iconsax.arrow_left, color: AppColors.darkText),
+          icon: Icon(Icons.arrow_back_ios_new_rounded, color: AppColors.darkText),
           onPressed: () => Navigator.pop(context),
         ),
         title: Text(
@@ -158,7 +158,7 @@ class _SelectActivitiesViewState extends State<SelectActivitiesView> {
                 style: AppTextStyles.bodyMedium(color: AppColors.greyText),
               ),
               Text(
-                '+\$${_totalActivitiesPrice.toStringAsFixed(0)}',
+                '+${_totalActivitiesPrice.toStringAsFixed(0)}',
                 style: Theme.of(context).textTheme.bodyMedium!.copyWith(
                   fontSize: 20,
                   fontWeight: FontWeight.w700,

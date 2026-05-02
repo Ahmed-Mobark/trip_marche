@@ -33,7 +33,7 @@ class _CompanyProfileViewState extends State<CompanyProfileView> {
                 backgroundColor: AppColors.onImage.withValues(alpha: 0.9),
                 child: IconButton(
                   icon: Icon(
-                    Iconsax.arrow_left,
+                    Icons.arrow_back_ios_new_rounded,
                     color: AppColors.darkText,
                     size: 20,
                   ),
@@ -346,7 +346,7 @@ class _CompanyProfileViewState extends State<CompanyProfileView> {
                   ),
                   const Spacer(),
                   Text(
-                    '\$199/Person',
+                    '199/Person',
                     style: Theme.of(context).textTheme.bodyMedium!.copyWith(
                       fontSize: 13,
                       fontWeight: FontWeight.w600,

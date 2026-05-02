@@ -14,7 +14,7 @@ class VisaDetailsView extends StatelessWidget {
         backgroundColor: AppColors.background,
         elevation: 0,
         leading: IconButton(
-          icon: Icon(Iconsax.arrow_left, color: AppColors.darkText),
+          icon: Icon(Icons.arrow_back_ios_new_rounded, color: AppColors.darkText),
           onPressed: () => Navigator.pop(context),
         ),
         title: Text(
@@ -92,7 +92,7 @@ class VisaDetailsView extends StatelessWidget {
             const SizedBox(height: 12),
             Text(
               'If you plan to travel beyond the Sinai Peninsula to other parts of Egypt such as Cairo or Luxor, '
-              'you will need a full Egyptian tourist visa. This can be obtained on arrival at the airport for a fee of approximately \$25 USD. '
+              'you will need a full Egyptian tourist visa. This can be obtained on arrival at the airport for a fee of approximately 25 USD. '
               'Some nationalities may require a pre-arranged visa from the Egyptian embassy in their home country.\n\n'
               'We recommend checking with your local Egyptian embassy or consulate for the most up-to-date visa requirements '
               'specific to your nationality. Our travel team is also available to assist you with any visa-related queries.',

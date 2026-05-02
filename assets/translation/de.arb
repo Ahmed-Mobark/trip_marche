@@ -43,8 +43,11 @@
   "authOrLoginWith": "Oder anmelden mit",
   "authContinueWithGoogle": "Mit Google fortfahren",
   "authContinueWithApple": "Mit Apple fortfahren",
-  "authTravelAgencyPrompt": "Reiseagentur? ",
-  "authJoinAsTripPartner": "Als Trip-Partner beitreten",
+  "authTravelAgencyPrompt": "Reiseveranstalter oder Agentur? ",
+  "authJoinAsTripPartner": "Als Anbieter beitreten",
+  "authPartnerPortalTitle": "Partnerportal",
+  "authWebViewLoadFailed": "Diese Seite konnte nicht geladen werden. Bitte Verbindung prüfen und erneut versuchen.",
+  "authWebViewRetry": "Erneut versuchen",
 
   "authSignUpTitle": "Erstelle dein Konto",
   "authSignUpSubtitle": "Registriere dich, um zu starten",
@@ -322,6 +325,7 @@
   "tripDetailsHeroFromLocation": "Von Kairo & Alexandria",
   "tripDetailsHeroDateRange": "27. Nov → 4. Dez",
   "tripDetailsGalleryMoreCount": "+{count}",
+  "imageGalleryPosition": "{current} von {total}",
   "tripDetailsOverviewTitle": "Reiseübersicht",
   "tripDetailsOverviewBody": "Erlebe die atemberaubende Schönheit der Schweizer Alpen auf diesem 7-tägigen Abenteuer. Besuche ikonische Ziele, genieße malerische Zugfahrten und tauche in die Schweizer Kultur ein. Perfekt für Naturliebhaber und Fotografie-Fans.",
   "tripDetailsWhatsIncludedTitle": "Inklusive",
@@ -382,7 +386,7 @@
   "tripDetailsStatCitiesValue": "7 Städte",
   "tripDetailsPriceLabel": "Preis",
   "tripDetailsPerPersonSmall": "pro Person",
-  "tripDetailsBookingPriceDisplay": "$1000,00",
+  "tripDetailsBookingPriceDisplay": "1000,00",
   "tripDetailsCompanyName": "Travel Egypt Co.",
   "tripDetailsCompanyTagline": "Abenteuer-Reiseagentur",
   "tripDetailsFollow": "Folgen",
@@ -565,6 +569,16 @@
   "authNewPasswordHint": "Neues Passwort eingeben",
   "authConfirmNewPasswordLabel": "Neues Passwort bestätigen",
   "authConfirmNewPasswordHint": "Neues Passwort bestätigen",
-  "authResetPasswordButton": "Passwort zurücksetzen"
+  "authResetPasswordButton": "Passwort zurücksetzen",
+
+  "tripDetailsDurationUnit": "Tage",
+  "tripDetailsProgramDayPrefix": "Tag",
+  "tripDetailsTypeDomestic": "Inland",
+  "tripDetailsPayOnArrival": "Zahlung bei Ankunft",
+  "tripDetailsFailedToLoad": "Reisedetails konnten nicht geladen werden.",
+  "tripDetailsTryAgain": "Erneut versuchen",
+  "tripDetailsNoFlights": "Flugdetails erscheinen hier, sobald sie verfügbar sind.",
+  "tripDetailsNoTransport": "Details zu Land- oder Seetransport erscheinen hier, sobald sie verfügbar sind.",
+  "tripDetailsVisaAndEntryTitle": "Visum und Einreise"
 }
 

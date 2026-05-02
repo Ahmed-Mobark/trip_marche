@@ -1,16 +1,41 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:trip_marche/core/config/styles/styles.dart';
 import 'package:trip_marche/core/extensions/localization.dart';
 import 'package:trip_marche/core/theme/app_colors.dart';
+import 'package:trip_marche/features/trip_details/domain/entities/trip_details_entity.dart';
+import '../cubit/trip_details_cubit.dart';
+import '../cubit/trip_details_state.dart';
 import 'trip_details_info_card.dart';
 
 class TripDetailsProgramSection extends StatelessWidget {
-  const TripDetailsProgramSection({super.key});
+  const TripDetailsProgramSection({super.key, required this.trip});
+
+  final TripDetails trip;
+
+  static List<String> _mealCodes(TripDayMeals meals) {
+    final c = <String>[];
+    if (meals.breakfast) {
+      c.add('B');
+    }
+    if (meals.lunch) {
+      c.add('L');
+    }
+    if (meals.dinner) {
+      c.add('D');
+    }
+    return c;
+  }
 
   @override
   Widget build(BuildContext context) {
+    final days = trip.days;
+    if (days.isEmpty) {
+      return const SizedBox.shrink();
+    }
+
     return Padding(
       padding: EdgeInsetsDirectional.only(top: 20.h),
       child: TripDetailsInfoCard(
@@ -24,45 +49,28 @@ class TripDetailsProgramSection extends StatelessWidget {
               ).copyWith(fontWeight: FontWeight.w700),
             ),
             SizedBox(height: 16.h),
-            _DayCard(
-              dayLabel: context.tr.tripDetailsProgramDay1,
-              city: context.tr.tripDetailsProgramCity1,
-              mealCodes: const ['B', 'L', 'D'],
-              items: [
-                context.tr.tripDetailsProgramDay1Item1,
-                context.tr.tripDetailsProgramDay1Item2,
-                context.tr.tripDetailsProgramDay1Item3,
-                context.tr.tripDetailsProgramDay1Item4,
-              ],
-            ),
-            SizedBox(height: 14.h),
-            _DayCard(
-              dayLabel: context.tr.tripDetailsProgramDay2,
-              city: context.tr.tripDetailsProgramCity2,
-              mealCodes: const ['B', 'D'],
-              items: [
-                context.tr.tripDetailsProgramDay2Item1,
-                context.tr.tripDetailsProgramDay2Item2,
-                context.tr.tripDetailsProgramDay2Item3,
-              ],
-            ),
-            SizedBox(height: 18.h),
-            Center(
-              child: TextButton(
-                onPressed: () {},
-                style: TextButton.styleFrom(
-                  padding: EdgeInsetsDirectional.symmetric(
-                    horizontal: 12.w,
-                    vertical: 10.h,
-                  ),
-                ),
-                child: Text(
-                  context.tr.tripDetailsProgramSeeAll,
-                  style: AppTextStyles.subtitle(
-                    color: AppColors.primary,
-                  ).copyWith(fontWeight: FontWeight.w600),
-                ),
-              ),
+            BlocBuilder<TripDetailsCubit, TripDetailsState>(
+              buildWhen: (p, n) => p.expandedDayIndex != n.expandedDayIndex,
+              builder: (context, state) {
+                return Column(
+                  children: [
+                    for (var i = 0; i < days.length; i++) ...[
+                      if (i > 0) SizedBox(height: 14.h),
+                      _DayCard(
+                        dayLabel:
+                            '${context.tr.tripDetailsProgramDayPrefix} ${days[i].dayNumber}',
+                        city: days[i].title,
+                        mealCodes: _mealCodes(days[i].meals),
+                        items: days[i].items,
+                        expanded: state.expandedDayIndex == i,
+                        onHeaderTap: () => context
+                            .read<TripDetailsCubit>()
+                            .toggleExpandedDay(i),
+                      ),
+                    ],
+                  ],
+                );
+              },
             ),
           ],
         ),
@@ -77,12 +85,16 @@ class _DayCard extends StatelessWidget {
     required this.city,
     required this.mealCodes,
     required this.items,
+    required this.expanded,
+    required this.onHeaderTap,
   });
 
   final String dayLabel;
   final String city;
   final List<String> mealCodes;
   final List<String> items;
+  final bool expanded;
+  final VoidCallback onHeaderTap;
 
   @override
   Widget build(BuildContext context) {
@@ -94,53 +106,69 @@ class _DayCard extends StatelessWidget {
       ),
       child: Column(
         children: [
-          Container(
-            width: double.infinity,
-            padding: EdgeInsetsDirectional.symmetric(
-              horizontal: 18.w,
-              vertical: 14.h,
-            ),
-            decoration: BoxDecoration(
-              color: AppColors.lightBg,
-              borderRadius: BorderRadius.vertical(top: Radius.circular(18.r)),
-              border: Border(
-                bottom: BorderSide(
-                  color: AppColors.border.withValues(alpha: 0.7),
-                ),
+          InkWell(
+            onTap: onHeaderTap,
+            borderRadius: BorderRadius.vertical(top: Radius.circular(18.r)),
+            child: Container(
+              width: double.infinity,
+              padding: EdgeInsetsDirectional.symmetric(
+                horizontal: 18.w,
+                vertical: 14.h,
               ),
-            ),
-            child: Text(dayLabel, style: TextStyles.textViewSemiBold16),
-          ),
-          Padding(
-            padding: EdgeInsetsDirectional.only(
-              start: 18.w,
-              end: 18.w,
-              top: 18.h,
-              bottom: 18.h,
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Expanded(
-                      child: Text(city, style: TextStyles.textViewSemiBold16),
-                    ),
-                    SizedBox(width: 12.w),
-                    _MealsBadgeRow(codes: mealCodes),
-                  ],
-                ),
-                SizedBox(height: 12.h),
-                ...items.map(
-                  (t) => Padding(
-                    padding: EdgeInsetsDirectional.only(top: 10.h),
-                    child: _ChecklistRow(text: t),
+              decoration: BoxDecoration(
+                color: AppColors.lightBg,
+                borderRadius: BorderRadius.vertical(top: Radius.circular(18.r)),
+                border: Border(
+                  bottom: BorderSide(
+                    color: AppColors.border.withValues(alpha: 0.7),
                   ),
                 ),
-              ],
+              ),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: Text(dayLabel, style: TextStyles.textViewSemiBold16),
+                  ),
+                  Icon(
+                    expanded ? Iconsax.arrow_up_2 : Iconsax.arrow_down_1,
+                    size: 18.sp,
+                    color: AppColors.greyText,
+                  ),
+                ],
+              ),
             ),
           ),
+          if (expanded)
+            Padding(
+              padding: EdgeInsetsDirectional.only(
+                start: 18.w,
+                end: 18.w,
+                top: 18.h,
+                bottom: 18.h,
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Expanded(
+                        child: Text(city, style: TextStyles.textViewSemiBold16),
+                      ),
+                      SizedBox(width: 12.w),
+                      _MealsBadgeRow(codes: mealCodes),
+                    ],
+                  ),
+                  SizedBox(height: 12.h),
+                  ...items.map(
+                    (t) => Padding(
+                      padding: EdgeInsetsDirectional.only(top: 10.h),
+                      child: _ChecklistRow(text: t),
+                    ),
+                  ),
+                ],
+              ),
+            ),
         ],
       ),
     );

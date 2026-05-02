@@ -355,14 +355,32 @@ abstract class AppLocalizations {
   /// No description provided for @authTravelAgencyPrompt.
   ///
   /// In en, this message translates to:
-  /// **'Travel Agency? '**
+  /// **'Travel vendor or agency? '**
   String get authTravelAgencyPrompt;
 
   /// No description provided for @authJoinAsTripPartner.
   ///
   /// In en, this message translates to:
-  /// **'Join as a trip partner'**
+  /// **'Join as a vendor'**
   String get authJoinAsTripPartner;
+
+  /// No description provided for @authPartnerPortalTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Partner portal'**
+  String get authPartnerPortalTitle;
+
+  /// No description provided for @authWebViewLoadFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'This page could not be loaded. Check your connection and try again.'**
+  String get authWebViewLoadFailed;
+
+  /// No description provided for @authWebViewRetry.
+  ///
+  /// In en, this message translates to:
+  /// **'Retry'**
+  String get authWebViewRetry;
 
   /// No description provided for @authSignUpTitle.
   ///
@@ -1900,6 +1918,12 @@ abstract class AppLocalizations {
   /// **'+{count}'**
   String tripDetailsGalleryMoreCount(Object count);
 
+  /// Full-screen photo viewer counter
+  ///
+  /// In en, this message translates to:
+  /// **'{current} of {total}'**
+  String imageGalleryPosition(int current, int total);
+
   /// No description provided for @tripDetailsOverviewTitle.
   ///
   /// In en, this message translates to:
@@ -2263,7 +2287,7 @@ abstract class AppLocalizations {
   /// No description provided for @tripDetailsBookingPriceDisplay.
   ///
   /// In en, this message translates to:
-  /// **'\$1000.00'**
+  /// **'1000.00'**
   String get tripDetailsBookingPriceDisplay;
 
   /// No description provided for @tripDetailsCompanyName.
@@ -3333,6 +3357,60 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Reset Password'**
   String get authResetPasswordButton;
+
+  /// No description provided for @tripDetailsDurationUnit.
+  ///
+  /// In en, this message translates to:
+  /// **'Days'**
+  String get tripDetailsDurationUnit;
+
+  /// No description provided for @tripDetailsProgramDayPrefix.
+  ///
+  /// In en, this message translates to:
+  /// **'Day'**
+  String get tripDetailsProgramDayPrefix;
+
+  /// No description provided for @tripDetailsTypeDomestic.
+  ///
+  /// In en, this message translates to:
+  /// **'Domestic'**
+  String get tripDetailsTypeDomestic;
+
+  /// No description provided for @tripDetailsPayOnArrival.
+  ///
+  /// In en, this message translates to:
+  /// **'Pay on arrival'**
+  String get tripDetailsPayOnArrival;
+
+  /// No description provided for @tripDetailsFailedToLoad.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not load trip details.'**
+  String get tripDetailsFailedToLoad;
+
+  /// No description provided for @tripDetailsTryAgain.
+  ///
+  /// In en, this message translates to:
+  /// **'Try again'**
+  String get tripDetailsTryAgain;
+
+  /// No description provided for @tripDetailsNoFlights.
+  ///
+  /// In en, this message translates to:
+  /// **'Flight details will appear here when available.'**
+  String get tripDetailsNoFlights;
+
+  /// No description provided for @tripDetailsNoTransport.
+  ///
+  /// In en, this message translates to:
+  /// **'Ground or sea transport details will appear here when available.'**
+  String get tripDetailsNoTransport;
+
+  /// No description provided for @tripDetailsVisaAndEntryTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Visa and entry'**
+  String get tripDetailsVisaAndEntryTitle;
 }
 
 class _AppLocalizationsDelegate

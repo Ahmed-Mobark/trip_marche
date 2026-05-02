@@ -38,7 +38,7 @@ class _ReviewViewState extends State<ReviewView> {
         backgroundColor: AppColors.background,
         elevation: 0,
         leading: IconButton(
-          icon: Icon(Iconsax.arrow_left, color: AppColors.darkText),
+          icon: Icon(Icons.arrow_back_ios_new_rounded, color: AppColors.darkText),
           onPressed: () => Navigator.pop(context),
         ),
         title: Text(
@@ -87,8 +87,8 @@ class _ReviewViewState extends State<ReviewView> {
             _buildSectionCard(
               title: 'Activities',
               children: const [
-                InfoRow(label: 'Snorkeling', value: '+\$50'),
-                InfoRow(label: 'Desert Safari', value: '+\$80'),
+                InfoRow(label: 'Snorkeling', value: '+50'),
+                InfoRow(label: 'Desert Safari', value: '+80'),
               ],
             ),
             const SizedBox(height: 20),
@@ -98,21 +98,21 @@ class _ReviewViewState extends State<ReviewView> {
               items: [
                 PriceBreakdownItem(
                   label: 'Base Price',
-                  value: '\$${_basePrice.toStringAsFixed(0)}',
+                  value: _basePrice.toStringAsFixed(0),
                 ),
                 PriceBreakdownItem(
                   label: 'Activities',
-                  value: '+\$${_activitiesPrice.toStringAsFixed(0)}',
+                  value: '+${_activitiesPrice.toStringAsFixed(0)}',
                 ),
                 if (_couponApplied)
                   PriceBreakdownItem(
                     label: 'Discount',
-                    value: '-\$${_discount.toStringAsFixed(0)}',
+                    value: '-${_discount.toStringAsFixed(0)}',
                     isDiscount: true,
                   ),
               ],
               totalLabel: 'Total',
-              totalValue: '\$${_totalPrice.toStringAsFixed(0)}',
+              totalValue: _totalPrice.toStringAsFixed(0),
             ),
             const SizedBox(height: 24),
             _buildProceedButton(),
@@ -225,7 +225,7 @@ class _ReviewViewState extends State<ReviewView> {
                 ),
                 const SizedBox(width: 6),
                 Text(
-                  'Coupon applied! -\$${_discount.toStringAsFixed(0)}',
+                  'Coupon applied! -${_discount.toStringAsFixed(0)}',
                   style: AppTextStyles.bodySmall(color: AppColors.success),
                 ),
               ],

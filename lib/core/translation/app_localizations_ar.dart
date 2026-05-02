@@ -137,10 +137,20 @@ class AppLocalizationsAr extends AppLocalizations {
   String get authContinueWithApple => 'المتابعة باستخدام Apple';
 
   @override
-  String get authTravelAgencyPrompt => 'وكالة سفر؟ ';
+  String get authTravelAgencyPrompt => 'تاجر أو وكالة رحلات؟ ';
 
   @override
-  String get authJoinAsTripPartner => 'انضم كشريك رحلات';
+  String get authJoinAsTripPartner => 'انضم كبائع';
+
+  @override
+  String get authPartnerPortalTitle => 'بوابة الشركاء';
+
+  @override
+  String get authWebViewLoadFailed =>
+      'تعذر تحميل هذه الصفحة. تحقق من الاتصال وحاول مرة أخرى.';
+
+  @override
+  String get authWebViewRetry => 'إعادة المحاولة';
 
   @override
   String get authSignUpTitle => 'أنشئ حسابك';
@@ -942,6 +952,11 @@ class AppLocalizationsAr extends AppLocalizations {
   }
 
   @override
+  String imageGalleryPosition(int current, int total) {
+    return '$current من $total';
+  }
+
+  @override
   String get tripDetailsOverviewTitle => 'نظرة عامة على الرحلة';
 
   @override
@@ -1125,7 +1140,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get tripDetailsPerPersonSmall => 'للفرد';
 
   @override
-  String get tripDetailsBookingPriceDisplay => '\$1000.00';
+  String get tripDetailsBookingPriceDisplay => '1000.00';
 
   @override
   String get tripDetailsCompanyName => 'Travel Egypt Co.';
@@ -1690,4 +1705,33 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get authResetPasswordButton => 'إعادة تعيين كلمة المرور';
+
+  @override
+  String get tripDetailsDurationUnit => 'أيام';
+
+  @override
+  String get tripDetailsProgramDayPrefix => 'يوم';
+
+  @override
+  String get tripDetailsTypeDomestic => 'محلي';
+
+  @override
+  String get tripDetailsPayOnArrival => 'الدفع عند الوصول';
+
+  @override
+  String get tripDetailsFailedToLoad => 'تعذر تحميل تفاصيل الرحلة.';
+
+  @override
+  String get tripDetailsTryAgain => 'إعادة المحاولة';
+
+  @override
+  String get tripDetailsNoFlights =>
+      'ستظهر تفاصيل الرحلة الجوية هنا عند توفرها.';
+
+  @override
+  String get tripDetailsNoTransport =>
+      'ستظهر تفاصيل النقل البري أو البحري هنا عند توفرها.';
+
+  @override
+  String get tripDetailsVisaAndEntryTitle => 'التأشيرة والدخول';
 }

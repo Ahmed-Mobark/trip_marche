@@ -43,8 +43,11 @@
   "authOrLoginWith": "Ou se connecter avec",
   "authContinueWithGoogle": "Continuer avec Google",
   "authContinueWithApple": "Continuer avec Apple",
-  "authTravelAgencyPrompt": "Agence de voyage ? ",
-  "authJoinAsTripPartner": "Rejoindre en tant que partenaire",
+  "authTravelAgencyPrompt": "Vendeur ou agence de voyages ? ",
+  "authJoinAsTripPartner": "Rejoindre en tant que vendeur",
+  "authPartnerPortalTitle": "Portail partenaire",
+  "authWebViewLoadFailed": "Impossible de charger cette page. Vérifiez votre connexion et réessayez.",
+  "authWebViewRetry": "Réessayer",
 
   "authSignUpTitle": "Créez votre compte",
   "authSignUpSubtitle": "Inscrivez-vous pour commencer",
@@ -322,6 +325,7 @@
   "tripDetailsHeroFromLocation": "Depuis Le Caire & Alexandrie",
   "tripDetailsHeroDateRange": "27 nov → 4 déc",
   "tripDetailsGalleryMoreCount": "+{count}",
+  "imageGalleryPosition": "{current} sur {total}",
   "tripDetailsOverviewTitle": "Aperçu du voyage",
   "tripDetailsOverviewBody": "Découvrez la beauté à couper le souffle des Alpes suisses lors de cette aventure de 7 jours. Visitez des destinations emblématiques, profitez de trajets en train panoramiques et plongez dans la culture suisse. Parfait pour les amoureux de la nature et de la photo.",
   "tripDetailsWhatsIncludedTitle": "Inclus",
@@ -382,7 +386,7 @@
   "tripDetailsStatCitiesValue": "7 villes",
   "tripDetailsPriceLabel": "Prix",
   "tripDetailsPerPersonSmall": "par personne",
-  "tripDetailsBookingPriceDisplay": "$1000.00",
+  "tripDetailsBookingPriceDisplay": "1000.00",
   "tripDetailsCompanyName": "Travel Egypt Co.",
   "tripDetailsCompanyTagline": "Agence de voyage d’aventure",
   "tripDetailsFollow": "Suivre",
@@ -565,6 +569,16 @@
   "authNewPasswordHint": "Saisissez le nouveau mot de passe",
   "authConfirmNewPasswordLabel": "Confirmer le nouveau mot de passe",
   "authConfirmNewPasswordHint": "Confirmez le nouveau mot de passe",
-  "authResetPasswordButton": "Réinitialiser le mot de passe"
+  "authResetPasswordButton": "Réinitialiser le mot de passe",
+
+  "tripDetailsDurationUnit": "Jours",
+  "tripDetailsProgramDayPrefix": "Jour",
+  "tripDetailsTypeDomestic": "National",
+  "tripDetailsPayOnArrival": "Paiement à l'arrivée",
+  "tripDetailsFailedToLoad": "Impossible de charger les détails du voyage.",
+  "tripDetailsTryAgain": "Réessayer",
+  "tripDetailsNoFlights": "Les détails du vol apparaîtront ici lorsqu'ils seront disponibles.",
+  "tripDetailsNoTransport": "Les détails de transport terrestre ou maritime apparaîtront ici lorsqu'ils seront disponibles.",
+  "tripDetailsVisaAndEntryTitle": "Visa et entrée"
 }
 

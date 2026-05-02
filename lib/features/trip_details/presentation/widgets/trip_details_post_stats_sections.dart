@@ -4,13 +4,18 @@ import 'package:iconsax/iconsax.dart';
 import 'package:trip_marche/core/extensions/localization.dart';
 import 'package:trip_marche/core/theme/app_colors.dart';
 import 'package:trip_marche/core/theme/app_text_styles.dart';
+import 'package:trip_marche/features/trip_details/domain/entities/trip_details_entity.dart';
 import 'trip_details_info_card.dart';
 
 class TripDetailsPostStatsSections extends StatelessWidget {
-  const TripDetailsPostStatsSections({super.key});
+  const TripDetailsPostStatsSections({super.key, required this.trip});
+
+  final TripDetails trip;
 
   @override
   Widget build(BuildContext context) {
+    final inclusions = trip.inclusions.map((e) => e.label).where((s) => s.isNotEmpty).toList();
+
     return Column(
       children: [
         SizedBox(height: 16.h),
@@ -26,7 +31,7 @@ class TripDetailsPostStatsSections extends StatelessWidget {
               ),
               SizedBox(height: 10.h),
               Text(
-                context.tr.tripDetailsOverviewBody,
+                trip.overview.isNotEmpty ? trip.overview : trip.description,
                 style: AppTextStyles.body(
                   color: AppColors.greyText,
                 ).copyWith(height: 1.45),
@@ -35,22 +40,22 @@ class TripDetailsPostStatsSections extends StatelessWidget {
           ),
         ),
         SizedBox(height: 20.h),
-        TripDetailsInfoCard(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                context.tr.tripDetailsWhatsIncludedTitle,
-                style: AppTextStyles.body(
-                  color: AppColors.darkText,
-                ).copyWith(fontWeight: FontWeight.w700),
-              ),
-              // SizedBox(height: 16.h),
-              const _IncludedGrid(),
-            ],
+        if (inclusions.isNotEmpty)
+          TripDetailsInfoCard(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  context.tr.tripDetailsWhatsIncludedTitle,
+                  style: AppTextStyles.body(
+                    color: AppColors.darkText,
+                  ).copyWith(fontWeight: FontWeight.w700),
+                ),
+                _IncludedGrid(items: inclusions),
+              ],
+            ),
           ),
-        ),
-        SizedBox(height: 20.h),
+        if (inclusions.isNotEmpty) SizedBox(height: 20.h),
         TripDetailsInfoCard(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -65,14 +70,16 @@ class TripDetailsPostStatsSections extends StatelessWidget {
               _LocationRow(
                 icon: Iconsax.location,
                 label: context.tr.tripDetailsMeetingLocationLabel,
-                value: context.tr.tripDetailsMeetingLocationValue,
-                trailing: _MapButton(onTap: () {}),
+                value: trip.meeting.location,
+                trailing: trip.meeting.lat != null && trip.meeting.lng != null
+                    ? _MapButton(onTap: () {})
+                    : null,
               ),
               SizedBox(height: 18.h),
               _LocationRow(
                 icon: Iconsax.routing_2,
                 label: context.tr.tripDetailsReturnLocationLabel,
-                value: context.tr.tripDetailsReturnLocationValue,
+                value: trip.returnPoint.location,
               ),
               SizedBox(height: 18.h),
               Row(
@@ -81,7 +88,7 @@ class TripDetailsPostStatsSections extends StatelessWidget {
                     child: _TimeRow(
                       icon: Iconsax.clock,
                       label: context.tr.tripDetailsMeetingTimeLabel,
-                      value: context.tr.tripDetailsMeetingTimeValue,
+                      value: trip.meeting.time,
                     ),
                   ),
                   SizedBox(width: 20.w),
@@ -89,7 +96,7 @@ class TripDetailsPostStatsSections extends StatelessWidget {
                     child: _TimeRow(
                       icon: Iconsax.clock,
                       label: context.tr.tripDetailsReturnTimeLabel,
-                      value: context.tr.tripDetailsReturnTimeValue,
+                      value: trip.returnPoint.time,
                     ),
                   ),
                 ],
@@ -103,17 +110,12 @@ class TripDetailsPostStatsSections extends StatelessWidget {
 }
 
 class _IncludedGrid extends StatelessWidget {
-  const _IncludedGrid();
+  const _IncludedGrid({required this.items});
+
+  final List<String> items;
 
   @override
   Widget build(BuildContext context) {
-    final items = [
-      context.tr.tripDetailsIncludedFlightTickets,
-      context.tr.tripDetailsIncludedHotelStay,
-      context.tr.tripDetailsIncludedBreakfast,
-      context.tr.tripDetailsIncludedAirportTransfer,
-    ];
-
     return GridView.builder(
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),

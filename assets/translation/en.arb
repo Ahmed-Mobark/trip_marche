@@ -43,8 +43,11 @@
   "authOrLoginWith": "Or Login with",
   "authContinueWithGoogle": "Continue with Google",
   "authContinueWithApple": "Continue with Apple",
-  "authTravelAgencyPrompt": "Travel Agency? ",
-  "authJoinAsTripPartner": "Join as a trip partner",
+  "authTravelAgencyPrompt": "Travel vendor or agency? ",
+  "authJoinAsTripPartner": "Join as a vendor",
+  "authPartnerPortalTitle": "Partner portal",
+  "authWebViewLoadFailed": "This page could not be loaded. Check your connection and try again.",
+  "authWebViewRetry": "Retry",
 
   "authSignUpTitle": "Create Your Account",
   "authSignUpSubtitle": "Sign Up To Get Started",
@@ -322,6 +325,14 @@
   "tripDetailsHeroFromLocation": "From Cairo & Alexandria",
   "tripDetailsHeroDateRange": "27 Nov → 4 Dec",
   "tripDetailsGalleryMoreCount": "+{count}",
+  "imageGalleryPosition": "{current} of {total}",
+  "@imageGalleryPosition": {
+    "description": "Full-screen photo viewer counter",
+    "placeholders": {
+      "current": {"type": "int"},
+      "total": {"type": "int"}
+    }
+  },
   "tripDetailsOverviewTitle": "Trip Overview",
   "tripDetailsOverviewBody": "Experience the breathtaking beauty of the Swiss Alps on this 7-day adventure. Visit iconic destinations, enjoy scenic train rides, and immerse yourself in Swiss culture. Perfect for nature lovers and photography enthusiasts.",
   "tripDetailsWhatsIncludedTitle": "What's Included",
@@ -382,7 +393,7 @@
   "tripDetailsStatCitiesValue": "7 Cities",
   "tripDetailsPriceLabel": "Price",
   "tripDetailsPerPersonSmall": "per person",
-  "tripDetailsBookingPriceDisplay": "$1000.00",
+  "tripDetailsBookingPriceDisplay": "1000.00",
   "tripDetailsCompanyName": "Travel Egypt Co.",
   "tripDetailsCompanyTagline": "Adventure Travel Agency",
   "tripDetailsFollow": "Follow",
@@ -565,5 +576,15 @@
   "authNewPasswordHint": "Enter new password",
   "authConfirmNewPasswordLabel": "Confirm New Password",
   "authConfirmNewPasswordHint": "Confirm new password",
-  "authResetPasswordButton": "Reset Password"
+  "authResetPasswordButton": "Reset Password",
+
+  "tripDetailsDurationUnit": "Days",
+  "tripDetailsProgramDayPrefix": "Day",
+  "tripDetailsTypeDomestic": "Domestic",
+  "tripDetailsPayOnArrival": "Pay on arrival",
+  "tripDetailsFailedToLoad": "Could not load trip details.",
+  "tripDetailsTryAgain": "Try again",
+  "tripDetailsNoFlights": "Flight details will appear here when available.",
+  "tripDetailsNoTransport": "Ground or sea transport details will appear here when available.",
+  "tripDetailsVisaAndEntryTitle": "Visa and entry"
 }

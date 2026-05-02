@@ -60,6 +60,27 @@ class HomeSectionsCubit extends Cubit<HomeSectionsState> {
     );
   }
 
+  /// Reload sections without clearing the UI (pull-to-refresh). On failure, keeps prior data.
+  Future<void> refreshSections() async {
+    if (state.status != HomeSectionsStatus.success) {
+      await loadSections();
+      return;
+    }
+    final result = await _homeRepository.getHomeSections();
+    result.fold(
+      (_) {},
+      (data) {
+        final response = HomeSectionsResponse.fromJson(data);
+        emit(
+          state.copyWith(
+            status: HomeSectionsStatus.success,
+            sections: response.sections,
+          ),
+        );
+      },
+    );
+  }
+
   /// Sync wishlist heart on section trip cards (API + optimistic UI).
   Future<void> toggleTripWishlist(int tripId) async {
     if (tripId <= 0 ||

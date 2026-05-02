@@ -41,4 +41,50 @@ class HomeCategoriesCubit extends Cubit<HomeCategoriesState> {
   void selectCategory(String slug, int id) {
     emit(state.copyWith(selectedSlug: slug, selectedId: id));
   }
+
+  /// Reload categories while preserving the selected chip when it still exists.
+  Future<void> refreshCategories() async {
+    if (state.status != HomeCategoriesStatus.success ||
+        state.categories.isEmpty) {
+      await loadCategories();
+      return;
+    }
+    final prevSlug = state.selectedSlug;
+    final result = await _homeRepository.getHomeCategories();
+    result.fold(
+      (_) {},
+      (data) {
+        final response = HomeCategoryResponse.fromJson(data);
+        final categories = response.data;
+        if (categories.isEmpty) {
+          emit(
+            const HomeCategoriesState(
+              status: HomeCategoriesStatus.success,
+              categories: [],
+              selectedSlug: null,
+              selectedId: null,
+            ),
+          );
+          return;
+        }
+        var selected = categories.first;
+        if (prevSlug != null) {
+          for (final c in categories) {
+            if (c.slug == prevSlug) {
+              selected = c;
+              break;
+            }
+          }
+        }
+        emit(
+          state.copyWith(
+            status: HomeCategoriesStatus.success,
+            categories: categories,
+            selectedSlug: selected.slug,
+            selectedId: selected.id,
+          ),
+        );
+      },
+    );
+  }
 }

@@ -142,10 +142,20 @@ class AppLocalizationsDe extends AppLocalizations {
   String get authContinueWithApple => 'Mit Apple fortfahren';
 
   @override
-  String get authTravelAgencyPrompt => 'Reiseagentur? ';
+  String get authTravelAgencyPrompt => 'Reiseveranstalter oder Agentur? ';
 
   @override
-  String get authJoinAsTripPartner => 'Als Trip-Partner beitreten';
+  String get authJoinAsTripPartner => 'Als Anbieter beitreten';
+
+  @override
+  String get authPartnerPortalTitle => 'Partnerportal';
+
+  @override
+  String get authWebViewLoadFailed =>
+      'Diese Seite konnte nicht geladen werden. Bitte Verbindung prüfen und erneut versuchen.';
+
+  @override
+  String get authWebViewRetry => 'Erneut versuchen';
 
   @override
   String get authSignUpTitle => 'Erstelle dein Konto';
@@ -952,6 +962,11 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
+  String imageGalleryPosition(int current, int total) {
+    return '$current von $total';
+  }
+
+  @override
   String get tripDetailsOverviewTitle => 'Reiseübersicht';
 
   @override
@@ -1136,7 +1151,7 @@ class AppLocalizationsDe extends AppLocalizations {
   String get tripDetailsPerPersonSmall => 'pro Person';
 
   @override
-  String get tripDetailsBookingPriceDisplay => '\$1000,00';
+  String get tripDetailsBookingPriceDisplay => '1000,00';
 
   @override
   String get tripDetailsCompanyName => 'Travel Egypt Co.';
@@ -1704,4 +1719,34 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get authResetPasswordButton => 'Passwort zurücksetzen';
+
+  @override
+  String get tripDetailsDurationUnit => 'Tage';
+
+  @override
+  String get tripDetailsProgramDayPrefix => 'Tag';
+
+  @override
+  String get tripDetailsTypeDomestic => 'Inland';
+
+  @override
+  String get tripDetailsPayOnArrival => 'Zahlung bei Ankunft';
+
+  @override
+  String get tripDetailsFailedToLoad =>
+      'Reisedetails konnten nicht geladen werden.';
+
+  @override
+  String get tripDetailsTryAgain => 'Erneut versuchen';
+
+  @override
+  String get tripDetailsNoFlights =>
+      'Flugdetails erscheinen hier, sobald sie verfügbar sind.';
+
+  @override
+  String get tripDetailsNoTransport =>
+      'Details zu Land- oder Seetransport erscheinen hier, sobald sie verfügbar sind.';
+
+  @override
+  String get tripDetailsVisaAndEntryTitle => 'Visum und Einreise';
 }

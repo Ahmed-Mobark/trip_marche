@@ -43,8 +43,11 @@
   "authOrLoginWith": "أو سجّل الدخول باستخدام",
   "authContinueWithGoogle": "المتابعة باستخدام Google",
   "authContinueWithApple": "المتابعة باستخدام Apple",
-  "authTravelAgencyPrompt": "وكالة سفر؟ ",
-  "authJoinAsTripPartner": "انضم كشريك رحلات",
+  "authTravelAgencyPrompt": "تاجر أو وكالة رحلات؟ ",
+  "authJoinAsTripPartner": "انضم كبائع",
+  "authPartnerPortalTitle": "بوابة الشركاء",
+  "authWebViewLoadFailed": "تعذر تحميل هذه الصفحة. تحقق من الاتصال وحاول مرة أخرى.",
+  "authWebViewRetry": "إعادة المحاولة",
 
   "authSignUpTitle": "أنشئ حسابك",
   "authSignUpSubtitle": "سجّل لإنشاء حسابك والبدء",
@@ -322,6 +325,7 @@
   "tripDetailsHeroFromLocation": "من القاهرة والإسكندرية",
   "tripDetailsHeroDateRange": "27 نوفمبر ← 4 ديسمبر",
   "tripDetailsGalleryMoreCount": "+{count}",
+  "imageGalleryPosition": "{current} من {total}",
   "tripDetailsOverviewTitle": "نظرة عامة على الرحلة",
   "tripDetailsOverviewBody": "استمتع بجمال جبال الألب السويسرية الخلاب في هذه المغامرة لمدة 7 أيام. زر وجهات شهيرة، استمتع برحلات قطار ساحرة، وانغمس في الثقافة السويسرية. مثالي لعشاق الطبيعة وعشاق التصوير.",
   "tripDetailsWhatsIncludedTitle": "ما الذي يتضمنه العرض",
@@ -382,7 +386,7 @@
   "tripDetailsStatCitiesValue": "7 مدن",
   "tripDetailsPriceLabel": "السعر",
   "tripDetailsPerPersonSmall": "للفرد",
-  "tripDetailsBookingPriceDisplay": "$1000.00",
+  "tripDetailsBookingPriceDisplay": "1000.00",
   "tripDetailsCompanyName": "Travel Egypt Co.",
   "tripDetailsCompanyTagline": "وكالة سفر مغامرات",
   "tripDetailsFollow": "متابعة",
@@ -565,5 +569,15 @@
   "authNewPasswordHint": "أدخل كلمة المرور الجديدة",
   "authConfirmNewPasswordLabel": "تأكيد كلمة المرور الجديدة",
   "authConfirmNewPasswordHint": "أكد كلمة المرور الجديدة",
-  "authResetPasswordButton": "إعادة تعيين كلمة المرور"
+  "authResetPasswordButton": "إعادة تعيين كلمة المرور",
+
+  "tripDetailsDurationUnit": "أيام",
+  "tripDetailsProgramDayPrefix": "يوم",
+  "tripDetailsTypeDomestic": "محلي",
+  "tripDetailsPayOnArrival": "الدفع عند الوصول",
+  "tripDetailsFailedToLoad": "تعذر تحميل تفاصيل الرحلة.",
+  "tripDetailsTryAgain": "إعادة المحاولة",
+  "tripDetailsNoFlights": "ستظهر تفاصيل الرحلة الجوية هنا عند توفرها.",
+  "tripDetailsNoTransport": "ستظهر تفاصيل النقل البري أو البحري هنا عند توفرها.",
+  "tripDetailsVisaAndEntryTitle": "التأشيرة والدخول"
 }

@@ -43,8 +43,11 @@
   "authOrLoginWith": "O inicia sesión con",
   "authContinueWithGoogle": "Continuar con Google",
   "authContinueWithApple": "Continuar con Apple",
-  "authTravelAgencyPrompt": "¿Agencia de viajes? ",
-  "authJoinAsTripPartner": "Únete como socio de viajes",
+  "authTravelAgencyPrompt": "¿Proveedor o agencia de viajes? ",
+  "authJoinAsTripPartner": "Únete como proveedor",
+  "authPartnerPortalTitle": "Portal de socios",
+  "authWebViewLoadFailed": "No se pudo cargar esta página. Comprueba tu conexión e inténtalo de nuevo.",
+  "authWebViewRetry": "Reintentar",
 
   "authSignUpTitle": "Crea tu cuenta",
   "authSignUpSubtitle": "Regístrate para comenzar",
@@ -322,6 +325,7 @@
   "tripDetailsHeroFromLocation": "Desde El Cairo y Alejandría",
   "tripDetailsHeroDateRange": "27 nov → 4 dic",
   "tripDetailsGalleryMoreCount": "+{count}",
+  "imageGalleryPosition": "{current} de {total}",
   "tripDetailsOverviewTitle": "Resumen del viaje",
   "tripDetailsOverviewBody": "Vive la impresionante belleza de los Alpes suizos en esta aventura de 7 días. Visita destinos icónicos, disfruta de viajes en tren panorámicos y sumérgete en la cultura suiza. Perfecto para amantes de la naturaleza y la fotografía.",
   "tripDetailsWhatsIncludedTitle": "Qué incluye",
@@ -382,7 +386,7 @@
   "tripDetailsStatCitiesValue": "7 ciudades",
   "tripDetailsPriceLabel": "Precio",
   "tripDetailsPerPersonSmall": "por persona",
-  "tripDetailsBookingPriceDisplay": "$1000.00",
+  "tripDetailsBookingPriceDisplay": "1000.00",
   "tripDetailsCompanyName": "Travel Egypt Co.",
   "tripDetailsCompanyTagline": "Agencia de viajes de aventura",
   "tripDetailsFollow": "Seguir",
@@ -565,6 +569,16 @@
   "authNewPasswordHint": "Introduce la nueva contraseña",
   "authConfirmNewPasswordLabel": "Confirmar nueva contraseña",
   "authConfirmNewPasswordHint": "Confirma la nueva contraseña",
-  "authResetPasswordButton": "Restablecer contraseña"
+  "authResetPasswordButton": "Restablecer contraseña",
+
+  "tripDetailsDurationUnit": "Días",
+  "tripDetailsProgramDayPrefix": "Día",
+  "tripDetailsTypeDomestic": "Nacional",
+  "tripDetailsPayOnArrival": "Pago a la llegada",
+  "tripDetailsFailedToLoad": "No se pudieron cargar los detalles del viaje.",
+  "tripDetailsTryAgain": "Reintentar",
+  "tripDetailsNoFlights": "Los detalles del vuelo aparecerán aquí cuando estén disponibles.",
+  "tripDetailsNoTransport": "Los detalles de transporte terrestre o marítimo aparecerán aquí cuando estén disponibles.",
+  "tripDetailsVisaAndEntryTitle": "Visa e ingreso"
 }
 

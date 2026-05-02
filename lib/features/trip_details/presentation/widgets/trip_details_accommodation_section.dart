@@ -1,32 +1,81 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:iconsax/iconsax.dart';
-import '../../../../core/config/styles/styles.dart';
-import '../../../../core/extensions/localization.dart';
-import '../../../../core/config/app_images.dart';
-import '../../../../core/theme/app_colors.dart';
-import '../../../../core/widgets/app_cached_network_image.dart';
+import 'package:trip_marche/core/config/app_images.dart';
+import 'package:trip_marche/core/config/styles/styles.dart';
+import 'package:trip_marche/core/extensions/localization.dart';
+import 'package:trip_marche/core/theme/app_colors.dart';
+import 'package:trip_marche/core/widgets/app_cached_network_image.dart';
+import 'package:trip_marche/core/widgets/app_image_gallery_screen.dart';
+import 'package:trip_marche/features/trip_details/domain/entities/trip_details_entity.dart';
 import 'trip_details_info_card.dart';
 
 class TripDetailsAccommodationSection extends StatelessWidget {
-  const TripDetailsAccommodationSection({super.key});
+  const TripDetailsAccommodationSection({super.key, required this.trip});
 
-  static const _hotelImageUrls = <String>[
-    'https://images.unsplash.com/photo-1501117716987-c8e1ecb2101f?w=600',
-    'https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?w=600',
-    'https://images.unsplash.com/photo-1560067174-8943bd6d4cd7?w=600',
-  ];
+  final TripDetails trip;
 
-  static const _reviewImageUrls = <String>[
-    'https://images.unsplash.com/photo-1528909514045-2fa4ac7a08ba?w=400',
-    'https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?w=400',
-    'https://images.unsplash.com/photo-1469474968028-56623f02e42e?w=400',
-    'https://images.unsplash.com/photo-1528127269322-539801943592?w=400',
-    'https://images.unsplash.com/photo-1526772662000-3f88f10405ff?w=400',
-  ];
+  void _showTextSheet(BuildContext context, String title, String? body) {
+    final text = body?.trim();
+    if (text == null || text.isEmpty) {
+      return;
+    }
+    showModalBottomSheet<void>(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: AppColors.cardBg,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(20.r)),
+      ),
+      builder: (ctx) {
+        final maxH = MediaQuery.sizeOf(ctx).height * 0.65;
+        return SafeArea(
+          child: Padding(
+            padding: EdgeInsetsDirectional.only(
+              start: 20.w,
+              end: 20.w,
+              top: 16.h,
+              bottom: MediaQuery.paddingOf(ctx).bottom + 16.h,
+            ),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  title,
+                  style: AppTextStyles.heading3(color: AppColors.darkText),
+                ),
+                SizedBox(height: 12.h),
+                ConstrainedBox(
+                  constraints: BoxConstraints(maxHeight: maxH),
+                  child: SingleChildScrollView(
+                    child: SelectableText(
+                      text,
+                      style: AppTextStyles.body(color: AppColors.secondaryText),
+                    ),
+                  ),
+                ),
+                SizedBox(height: 16.h),
+                Align(
+                  alignment: AlignmentDirectional.centerEnd,
+                  child: TextButton(
+                    onPressed: () => Navigator.pop(ctx),
+                    child: Text(context.tr.commonCancel),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
+    final accommodations = trip.accommodations;
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -35,59 +84,70 @@ class TripDetailsAccommodationSection extends StatelessWidget {
           style: TextStyles.textViewBold14,
         ),
         SizedBox(height: 14.h),
-        _AccommodationItemCard(
-          hotelName: context.tr.tripDetailsHotelName,
-          hotelLocation: context.tr.tripDetailsHotelAddress,
-          imageUrls: _hotelImageUrls,
-          onMapTap: () {},
-        ),
-        SizedBox(height: 14.h),
-        _AccommodationItemCard(
-          hotelName: context.tr.tripDetailsHotelName,
-          hotelLocation: context.tr.tripDetailsHotelAddress,
-          imageUrls: _hotelImageUrls,
-          onMapTap: () {},
-        ),
-        SizedBox(height: 10.h),
-        Center(
-          child: TextButton(
-            onPressed: () {},
-            child: Text(
-              context.tr.tripDetailsSeeAllAccommodation,
-              style: AppTextStyles.bodyMedium(
-                color: AppColors.primary,
-              ).copyWith(fontWeight: FontWeight.w600),
-            ),
+        for (final hotel in accommodations) ...[
+          _AccommodationItemCard(
+            hotelName: hotel.name,
+            hotelLocation: hotel.address,
+            imageUrls: hotel.images,
+            onMapTap: () {},
+          ),
+          SizedBox(height: 14.h),
+        ],
+        if (trip.activityRates.isNotEmpty) ...[
+          _ActivityRateCard(rates: trip.activityRates),
+          SizedBox(height: 14.h),
+        ],
+        _TripDetailsQuickLinks(
+          onVisa: () => _showTextSheet(
+            context,
+            context.tr.tripDetailsVisaDetailsTitle,
+            trip.visaDetails,
+          ),
+          onInstructions: () => _showTextSheet(
+            context,
+            context.tr.tripDetailsTripInstructionsTitle,
+            trip.tripInstructions,
+          ),
+          onSafety: () => _showTextSheet(
+            context,
+            context.tr.tripDetailsSafetyProceduresTitle,
+            trip.safetyProcedures,
+          ),
+          onTerms: () => _showTextSheet(
+            context,
+            context.tr.tripDetailsPolicyTerms,
+            trip.termsConditions,
+          ),
+          onCancellation: () => _showTextSheet(
+            context,
+            context.tr.tripDetailsPolicyCancellation,
+            trip.cancellationPolicy,
           ),
         ),
         SizedBox(height: 24.h),
-        const _ActivityRateCard(),
-        SizedBox(height: 14.h),
-        const _TripDetailsQuickLinks(),
-        SizedBox(height: 24.h),
-        _SectionHeader(
-          title: context.tr.tripDetailsReviewsTitle,
-          actionText: context.tr.tripDetailsViewAll,
-          onAction: () {},
-        ),
-        SizedBox(height: 12.h),
-        _ReviewCard(
-          name: 'Emma Thompson',
-          country: context.tr.tripDetailsReviewCountry,
-          rating: 5,
-          comment: context.tr.tripDetailsReviewSampleBody,
-          imageUrls: _reviewImageUrls,
-        ),
-        SizedBox(height: 24.h),
+        if (trip.reviewsCount > 0) ...[
+          _SectionHeader(
+            title: context.tr.tripDetailsReviewsTitle,
+            actionText: context.tr.tripDetailsReviewsCount(trip.reviewsCount),
+            onAction: () {},
+          ),
+          SizedBox(height: 8.h),
+          Text(
+            '${trip.rating.toStringAsFixed(2)} · ${context.tr.tripDetailsReviewsCount(trip.reviewsCount)}',
+            style: AppTextStyles.body(color: AppColors.greyText),
+          ),
+          SizedBox(height: 24.h),
+        ],
         Text(
           context.tr.tripDetailsCompanySectionTitle,
           style: TextStyles.textViewBold14,
         ),
         SizedBox(height: 12.h),
         _CompanyCard(
-          companyName: context.tr.tripDetailsCompanyName,
-          ratingValue: context.tr.tripDetailsCompanyRatingValue,
-          ratingCount: context.tr.tripDetailsCompanyRatingCount,
+          companyName: trip.vendor.name,
+          ratingValue: trip.rating.toStringAsFixed(2),
+          ratingCount: context.tr.tripDetailsReviewsCount(trip.reviewsCount),
+          avatarUrl: trip.vendor.avatar,
           onFollow: () {},
         ),
       ],
@@ -130,125 +190,20 @@ class _SectionHeader extends StatelessWidget {
   }
 }
 
-class _ReviewCard extends StatelessWidget {
-  const _ReviewCard({
-    required this.name,
-    required this.country,
-    required this.rating,
-    required this.comment,
-    required this.imageUrls,
-  });
-
-  final String name;
-  final String country;
-  final int rating;
-  final String comment;
-  final List<String> imageUrls;
-
-  @override
-  Widget build(BuildContext context) {
-    return TripDetailsInfoCard(
-      withShadow: false,
-      borderRadius: 16.r,
-      padding: EdgeInsetsDirectional.all(14.r),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              CircleAvatar(
-                radius: 20.r,
-                backgroundColor: AppColors.lightBg,
-                child: Text(
-                  name.isNotEmpty ? name[0] : '',
-                  style: AppTextStyles.bodyMedium(color: AppColors.primary),
-                ),
-              ),
-              SizedBox(width: 12.w),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      name,
-                      style: AppTextStyles.bodyMedium(
-                        color: AppColors.darkText,
-                      ).copyWith(fontWeight: FontWeight.w700),
-                    ),
-                    SizedBox(height: 4.h),
-                    Row(
-                      children: [
-                        Text('🇪🇸', style: TextStyle(fontSize: 14.sp)),
-                        SizedBox(width: 6.w),
-                        Text(
-                          country,
-                          style: AppTextStyles.caption(
-                            color: AppColors.greyText,
-                          ),
-                        ),
-                      ],
-                    ),
-                    SizedBox(height: 6.h),
-                    Row(
-                      children: List.generate(
-                        rating,
-                        (_) => Padding(
-                          padding: EdgeInsetsDirectional.only(end: 2.w),
-                          child: Icon(
-                            Iconsax.star1,
-                            color: AppColors.starYellow,
-                            size: 14.sp,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
-          SizedBox(height: 10.h),
-          Text(
-            comment,
-            style: AppTextStyles.body(color: AppColors.secondaryText),
-          ),
-          SizedBox(height: 12.h),
-          SizedBox(
-            height: 52.h,
-            child: ListView.separated(
-              scrollDirection: Axis.horizontal,
-              itemCount: imageUrls.length,
-              separatorBuilder: (_, __) => SizedBox(width: 8.w),
-              itemBuilder: (_, i) => ClipRRect(
-                borderRadius: BorderRadius.circular(10.r),
-                child: AppCachedNetworkImage(
-                  imageUrl: imageUrls[i],
-                  width: 60.w,
-                  height: 52.h,
-                  fit: BoxFit.cover,
-                ),
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
 class _CompanyCard extends StatelessWidget {
   const _CompanyCard({
     required this.companyName,
     required this.ratingValue,
     required this.ratingCount,
     required this.onFollow,
+    this.avatarUrl,
   });
 
   final String companyName;
   final String ratingValue;
   final String ratingCount;
   final VoidCallback onFollow;
+  final String? avatarUrl;
 
   @override
   Widget build(BuildContext context) {
@@ -260,15 +215,17 @@ class _CompanyCard extends StatelessWidget {
         children: [
           ClipRRect(
             borderRadius: BorderRadius.circular(12.r),
-            child: Container(
+            child: SizedBox(
               width: 56.r,
               height: 56.r,
-              decoration: BoxDecoration(
-                color: AppColors.lightBg,
-                border: Border.all(color: AppColors.border),
-                borderRadius: BorderRadius.circular(12.r),
-              ),
-              child: Image.asset(AppImages.logo, fit: BoxFit.cover),
+              child: avatarUrl != null && avatarUrl!.isNotEmpty
+                  ? CachedNetworkImage(
+                      imageUrl: avatarUrl!,
+                      fit: BoxFit.cover,
+                      errorWidget: (_, __, ___) =>
+                          Image.asset(AppImages.logo, fit: BoxFit.cover),
+                    )
+                  : Image.asset(AppImages.logo, fit: BoxFit.cover),
             ),
           ),
           SizedBox(width: 12.w),
@@ -300,7 +257,7 @@ class _CompanyCard extends StatelessWidget {
                       ).copyWith(fontWeight: FontWeight.w700),
                     ),
                     Text(
-                      '($ratingCount)',
+                      ' ($ratingCount)',
                       style: AppTextStyles.caption(color: AppColors.greyText),
                     ),
                   ],
@@ -336,16 +293,12 @@ class _CompanyCard extends StatelessWidget {
 }
 
 class _ActivityRateCard extends StatelessWidget {
-  const _ActivityRateCard();
+  const _ActivityRateCard({required this.rates});
+
+  final List<TripActivityRate> rates;
 
   @override
   Widget build(BuildContext context) {
-    final rows = [
-      (context.tr.tripDetailsActivityRateLuxury, 9),
-      (context.tr.tripDetailsActivityRateShopping, 6),
-      (context.tr.tripDetailsActivityRateNightOutings, 8),
-    ];
-
     return TripDetailsInfoCard(
       withShadow: false,
       borderRadius: 16.r,
@@ -358,21 +311,12 @@ class _ActivityRateCard extends StatelessWidget {
             style: AppTextStyles.subtitle(color: AppColors.darkText),
           ),
           SizedBox(height: 12.h),
-          ...rows.map(
+          ...rates.map(
             (r) => Padding(
               padding: EdgeInsetsDirectional.only(bottom: 10.h),
-              child: _RatePillRow(label: r.$1, score: r.$2),
-            ),
-          ),
-          SizedBox(height: 2.h),
-          Center(
-            child: TextButton(
-              onPressed: () {},
-              child: Text(
-                context.tr.tripDetailsSeeAllActivities,
-                style: AppTextStyles.bodyMedium(
-                  color: AppColors.primary,
-                ).copyWith(fontWeight: FontWeight.w600),
+              child: _RatePillRow(
+                label: r.label.isNotEmpty ? r.label : r.key,
+                score: r.value,
               ),
             ),
           ),
@@ -425,16 +369,28 @@ class _RatePillRow extends StatelessWidget {
 }
 
 class _TripDetailsQuickLinks extends StatelessWidget {
-  const _TripDetailsQuickLinks();
+  const _TripDetailsQuickLinks({
+    required this.onVisa,
+    required this.onInstructions,
+    required this.onSafety,
+    required this.onTerms,
+    required this.onCancellation,
+  });
+
+  final VoidCallback onVisa;
+  final VoidCallback onInstructions;
+  final VoidCallback onSafety;
+  final VoidCallback onTerms;
+  final VoidCallback onCancellation;
 
   @override
   Widget build(BuildContext context) {
-    final items = [
-      (Iconsax.document_text, context.tr.tripDetailsVisaDetailsTitle),
-      (Iconsax.clipboard_text, context.tr.tripDetailsTripInstructionsTitle),
-      (Iconsax.shield_tick, context.tr.tripDetailsSafetyProceduresTitle),
-      (Iconsax.document, context.tr.tripDetailsPolicyTerms),
-      (Iconsax.close_circle, context.tr.tripDetailsPolicyCancellation),
+    final items = <(IconData, String, VoidCallback)>[
+      (Iconsax.document_text, context.tr.tripDetailsVisaDetailsTitle, onVisa),
+      (Iconsax.clipboard_text, context.tr.tripDetailsTripInstructionsTitle, onInstructions),
+      (Iconsax.shield_tick, context.tr.tripDetailsSafetyProceduresTitle, onSafety),
+      (Iconsax.document, context.tr.tripDetailsPolicyTerms, onTerms),
+      (Iconsax.close_circle, context.tr.tripDetailsPolicyCancellation, onCancellation),
     ];
 
     return Column(
@@ -442,7 +398,7 @@ class _TripDetailsQuickLinks extends StatelessWidget {
           .map(
             (e) => Padding(
               padding: EdgeInsetsDirectional.only(bottom: 10.h),
-              child: _QuickLinkTile(icon: e.$1, title: e.$2, onTap: () {}),
+              child: _QuickLinkTile(icon: e.$1, title: e.$2, onTap: e.$3),
             ),
           )
           .toList(),
@@ -499,8 +455,8 @@ class _QuickLinkTile extends StatelessWidget {
                 ),
               ),
               Icon(
-                Iconsax.arrow_right_3,
-                size: 16.sp,
+                Icons.chevron_right,
+                size: 22.sp,
                 color: AppColors.greyText,
               ),
             ],
@@ -587,24 +543,37 @@ class _AccommodationItemCard extends StatelessWidget {
               ),
             ],
           ),
-          SizedBox(height: 14.h),
-          SizedBox(
-            height: 86.h,
-            child: ListView.separated(
-              scrollDirection: Axis.horizontal,
-              itemCount: imageUrls.length,
-              separatorBuilder: (_, __) => SizedBox(width: 10.w),
-              itemBuilder: (_, i) => ClipRRect(
-                borderRadius: BorderRadius.circular(14.r),
-                child: AppCachedNetworkImage(
-                  imageUrl: imageUrls[i],
-                  width: 120.w,
-                  height: 86.h,
-                  fit: BoxFit.cover,
+          if (imageUrls.isNotEmpty) ...[
+            SizedBox(height: 14.h),
+            SizedBox(
+              height: 86.h,
+              child: ListView.separated(
+                scrollDirection: Axis.horizontal,
+                itemCount: imageUrls.length,
+                separatorBuilder: (_, __) => SizedBox(width: 10.w),
+                itemBuilder: (_, i) => Material(
+                  color: Colors.transparent,
+                  child: InkWell(
+                    onTap: () => AppImageGalleryScreen.open(
+                      context,
+                      imageUrls: imageUrls,
+                      initialIndex: i,
+                    ),
+                    borderRadius: BorderRadius.circular(14.r),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(14.r),
+                      child: AppCachedNetworkImage(
+                        imageUrl: imageUrls[i],
+                        width: 120.w,
+                        height: 86.h,
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                  ),
                 ),
               ),
             ),
-          ),
+          ],
         ],
       ),
     );

@@ -7,11 +7,15 @@ import 'package:trip_marche/core/extensions/localization.dart';
 import 'package:trip_marche/core/injection/injection_container.dart';
 import 'package:trip_marche/core/theme/app_colors.dart';
 import 'package:trip_marche/core/toast/app_toast.dart';
+import 'package:trip_marche/core/widgets/custom_loading.dart';
+import 'package:trip_marche/features/trip_details/domain/entities/trip_details_entity.dart';
+import 'package:trip_marche/features/trip_details/domain/usecases/get_trip_details_usecase.dart';
+import 'package:trip_marche/features/trip_details/presentation/trip_details_ui_formatters.dart';
 import 'package:trip_marche/features/wishlist/domain/repositories/trip_wishlist_repository.dart';
 import '../cubit/trip_details_cubit.dart';
 import '../cubit/trip_details_state.dart';
-import '../widgets/trip_details_booking_bar.dart';
 import '../trip_wishlist_pop_result.dart';
+import '../widgets/trip_details_booking_bar.dart';
 import '../widgets/trip_details_hero_header.dart';
 import '../widgets/trip_details_stat_grid.dart';
 import '../widgets/trip_details_post_stats_sections.dart';
@@ -33,13 +37,12 @@ class TripDetailsView extends StatelessWidget {
     return BlocProvider(
       create: (_) => TripDetailsCubit(
         sl<TripWishlistRepository>(),
+        sl<GetTripDetailsUseCase>(),
         tripId: tripId,
         initialIsWishlisted: initialIsWishlisted,
-      ),
+      )..loadTrip(),
       child: ValueListenableBuilder<AdaptiveThemeMode>(
         valueListenable: AdaptiveTheme.of(context).modeChangeNotifier,
-        // Brightness is synced globally by `MyApp.builder`; we only need to
-        // rebuild this subtree when the user toggles the mode.
         builder: (context, _, __) => const _TripDetailsBody(),
       ),
     );
@@ -49,28 +52,33 @@ class TripDetailsView extends StatelessWidget {
 class _TripDetailsBody extends StatelessWidget {
   const _TripDetailsBody();
 
-  Widget _buildStatGrid(BuildContext context) {
+  Widget _buildStatGrid(BuildContext context, TripDetails trip) {
+    final typeValue = trip.flags.international
+        ? context.tr.tripDetailsTypeValue
+        : context.tr.tripDetailsTypeDomestic;
+
     return TripDetailsStatGrid(
       cells: [
         TripDetailsStatCellData(
           icon: Iconsax.calendar,
           label: context.tr.tripDetailsDurationLabel,
-          value: context.tr.tripDetailsDurationValue,
+          value:
+              '${trip.durationDays} ${context.tr.tripDetailsDurationUnit}',
         ),
         TripDetailsStatCellData(
           icon: Iconsax.people,
           label: context.tr.tripDetailsGroupSizeLabel,
-          value: context.tr.tripDetailsGroupSizeValue,
+          value: '${trip.groupSize.min}-${trip.groupSize.max}',
         ),
         TripDetailsStatCellData(
           icon: Iconsax.routing,
           label: context.tr.tripDetailsStatCitiesLabel,
-          value: context.tr.tripDetailsStatCitiesValue,
+          value: '${trip.citiesCount}',
         ),
         TripDetailsStatCellData(
           icon: Iconsax.airplane,
           label: context.tr.tripDetailsTypeLabel,
-          value: context.tr.tripDetailsTypeValue,
+          value: typeValue,
         ),
       ],
     );
@@ -78,7 +86,6 @@ class _TripDetailsBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Figma-like layout: hero image + rounded "sheet" that overlaps the hero.
     final horizontalPadding = 16.w;
     final sheetTopRadius = 28.r;
     final sheetOverlap = 26.h;
@@ -117,69 +124,120 @@ class _TripDetailsBody extends StatelessWidget {
           context.read<TripDetailsCubit>().clearWishlistFeedback();
         },
         child: Scaffold(
-        backgroundColor: AppColors.scaffoldBg,
-        body: Stack(
-          children: [
-            CustomScrollView(
-              slivers: [
-                const SliverToBoxAdapter(child: TripDetailsHeroHeader()),
-                SliverToBoxAdapter(
-                  child: Transform.translate(
-                    offset: Offset(0, -sheetOverlap),
-                    child: Container(
-                      width: double.infinity,
-                      decoration: BoxDecoration(
-                        color: AppColors.cardBg,
-                        borderRadius: BorderRadius.vertical(
-                          top: Radius.circular(sheetTopRadius),
+          backgroundColor: AppColors.scaffoldBg,
+          body: BlocBuilder<TripDetailsCubit, TripDetailsState>(
+            buildWhen: (p, n) =>
+                p.loadStatus != n.loadStatus ||
+                p.loadError != n.loadError ||
+                p.trip != n.trip,
+            builder: (context, state) {
+              if (state.loadStatus == TripDetailsLoadStatus.loading ||
+                  state.loadStatus == TripDetailsLoadStatus.initial) {
+                return const Center(child: CustomLoading(top: 40, bottom: 40));
+              }
+              if (state.loadStatus == TripDetailsLoadStatus.failure) {
+                return Center(
+                  child: Padding(
+                    padding: EdgeInsetsDirectional.symmetric(horizontal: 24.w),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Text(
+                          state.loadError ?? context.tr.tripDetailsFailedToLoad,
+                          textAlign: TextAlign.center,
+                          style: Theme.of(context).textTheme.bodyLarge,
                         ),
-                        boxShadow: [
-                          BoxShadow(
-                            color: AppColors.shadow.withValues(alpha: 0.06),
-                            blurRadius: 22.r,
-                            offset: Offset(0, 10.h),
-                          ),
-                        ],
-                      ),
-                      child: Padding(
-                        padding: EdgeInsetsDirectional.only(
-                          start: horizontalPadding,
-                          end: horizontalPadding,
-                          top: 18.h,
-                          bottom: 140.h,
+                        SizedBox(height: 16.h),
+                        FilledButton(
+                          onPressed: () =>
+                              context.read<TripDetailsCubit>().loadTrip(),
+                          child: Text(context.tr.tripDetailsTryAgain),
                         ),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            _buildStatGrid(context),
-                            const TripDetailsPostStatsSections(),
-                            const TripDetailsProgramSection(),
-                            const TripDetailsTravelSections(),
-                          ],
-                        ),
-                      ),
+                      ],
                     ),
                   ),
-                ),
-              ],
-            ),
-            PositionedDirectional(
-              bottom: 0,
-              start: 0,
-              end: 0,
-              child: TripDetailsBookingBar(
-                priceLabel: context.tr.tripDetailsStartingFrom,
-                priceText: context.tr.tripDetailsBookingFromPrice,
-                secondaryLabel: 'Pay When Arrive',
-                secondaryBadgeText: '+400\$',
-                bookNowText: context.tr.tripDetailsBookNow,
-                onBookNow: () {},
-              ),
-            ),
-          ],
+                );
+              }
+
+              final trip = state.trip;
+              if (trip == null) {
+                return Center(child: Text(context.tr.tripDetailsFailedToLoad));
+              }
+
+              final displayPrice = TripDetailsUiFormatters.formatAmount(
+                trip.discountPrice ?? trip.price,
+              );
+              final payExtra = trip.payOnArrivalAmount != null &&
+                      trip.payOnArrivalAmount! > 0
+                  ? TripDetailsUiFormatters.formatAmount(trip.payOnArrivalAmount!)
+                  : null;
+
+              return Stack(
+                children: [
+                  CustomScrollView(
+                    slivers: [
+                      SliverToBoxAdapter(child: TripDetailsHeroHeader(trip: trip)),
+                      SliverToBoxAdapter(
+                        child: Transform.translate(
+                          offset: Offset(0, -sheetOverlap),
+                          child: Container(
+                            width: double.infinity,
+                            decoration: BoxDecoration(
+                              color: AppColors.cardBg,
+                              borderRadius: BorderRadius.vertical(
+                                top: Radius.circular(sheetTopRadius),
+                              ),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: AppColors.shadow.withValues(alpha: 0.06),
+                                  blurRadius: 22.r,
+                                  offset: Offset(0, 10.h),
+                                ),
+                              ],
+                            ),
+                            child: Padding(
+                              padding: EdgeInsetsDirectional.only(
+                                start: horizontalPadding,
+                                end: horizontalPadding,
+                                top: 18.h,
+                                bottom: 140.h,
+                              ),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  _buildStatGrid(context, trip),
+                                  TripDetailsPostStatsSections(trip: trip),
+                                  TripDetailsProgramSection(trip: trip),
+                                  TripDetailsTravelSections(trip: trip),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  PositionedDirectional(
+                    bottom: 0,
+                    start: 0,
+                    end: 0,
+                    child: TripDetailsBookingBar(
+                      priceLabel: context.tr.tripDetailsStartingFrom,
+                      priceText: displayPrice,
+                      secondaryLabel: payExtra != null
+                          ? context.tr.tripDetailsPayOnArrival
+                          : null,
+                      secondaryBadgeText: payExtra,
+                      bookNowText: context.tr.tripDetailsBookNow,
+                      onBookNow: () {},
+                    ),
+                  ),
+                ],
+              );
+            },
+          ),
         ),
       ),
-    ),
     );
   }
 }

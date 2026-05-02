@@ -179,7 +179,7 @@ class PopularTripGridCard extends StatelessWidget {
                     children: [
                       if (trip.discountPrice != null) ...[
                         Text(
-                          '\$${trip.discountPrice!.toStringAsFixed(0)}',
+                          trip.discountPrice!.toStringAsFixed(0),
                           style:
                               AppTextStyles.heading3(
                                 color: AppColors.darkText,
@@ -190,14 +190,14 @@ class PopularTripGridCard extends StatelessWidget {
                         ),
                         SizedBox(width: 6.w),
                         Text(
-                          '\$${trip.price.toStringAsFixed(0)}',
+                          trip.price.toStringAsFixed(0),
                           style: AppTextStyles.bodySmall(
                             color: AppColors.greyText,
                           ).copyWith(decoration: TextDecoration.lineThrough),
                         ),
                       ] else
                         Text(
-                          '\$${trip.price.toStringAsFixed(0)}',
+                          trip.price.toStringAsFixed(0),
                           style:
                               AppTextStyles.heading3(
                                 color: AppColors.darkText,

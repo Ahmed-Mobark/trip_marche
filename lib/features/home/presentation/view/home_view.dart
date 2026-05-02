@@ -61,6 +61,24 @@ class _HomeViewState extends State<HomeView> {
     }
   }
 
+  Future<void> _refreshHome(BuildContext context) async {
+    final sections = context.read<HomeSectionsCubit>();
+    final banners = context.read<HomeBannersCubit>();
+    final categories = context.read<HomeCategoriesCubit>();
+    final special = context.read<SpecialTripsCubit>();
+
+    await Future.wait([
+      sections.refreshSections(),
+      banners.refreshBanners(),
+      categories.refreshCategories(),
+    ]);
+
+    final categoryId = categories.state.selectedId;
+    if (categoryId != null) {
+      await special.loadTrips(categoryId);
+    }
+  }
+
   Future<void> _onSpecialTripHeartTap(
     BuildContext context,
     TripModel trip,
@@ -130,66 +148,78 @@ class _HomeViewState extends State<HomeView> {
         ],
         child: Scaffold(
           backgroundColor: AppColors.scaffoldBg,
-          body: CustomScrollView(
-            slivers: [
-              SliverToBoxAdapter(
-                child: HomeHeader(
-                  searchHint: context.tr.homeSearchHint,
-                  locationText: context.tr.homeLocationText,
-                  onNotificationsTap: () {},
-                ),
-              ),
-              SliverToBoxAdapter(
-                child: Transform.translate(
-                  offset: Offset(0, -sheetOverlap),
-                  child: Container(
-                    width: double.infinity,
-                    padding: EdgeInsetsDirectional.only(
-                      start: horizontalPadding,
-                      end: horizontalPadding,
-                      top: 18.h,
-                      bottom: 24.h,
-                    ),
-                    decoration: BoxDecoration(
-                      color: AppColors.scaffoldBg,
-                      borderRadius: BorderRadius.vertical(
-                        top: Radius.circular(sheetTopRadius),
-                      ),
-                      boxShadow: [
-                        BoxShadow(
-                          color: AppColors.shadow.withValues(alpha: 0.04),
-                          blurRadius: 18.r,
-                          offset: Offset(0, 10.h),
-                        ),
-                      ],
-                    ),
-                    child: BlocBuilder<HomeSectionsCubit, HomeSectionsState>(
-                      builder: (context, state) {
-                        if (state.status == HomeSectionsStatus.loading ||
-                            state.status == HomeSectionsStatus.initial) {
-                          return _buildHomeSectionsLoading();
-                        }
-
-                        if (state.status == HomeSectionsStatus.failure) {
-                          return _buildError(
-                            context,
-                            state.errorMessage ?? 'Something went wrong',
-                          );
-                        }
-
-                        return _buildContent(
-                          context,
-                          state,
-                          sectionTitleStyle,
-                          actionStyle,
-                        );
-                      },
-                    ),
+          body: Builder(
+            builder: (scrollContext) {
+              return RefreshIndicator(
+                color: AppColors.primary,
+                edgeOffset: MediaQuery.paddingOf(scrollContext).top + 8,
+                onRefresh: () => _refreshHome(scrollContext),
+                child: CustomScrollView(
+                  physics: const AlwaysScrollableScrollPhysics(
+                    parent: BouncingScrollPhysics(),
                   ),
+                  slivers: [
+                    SliverToBoxAdapter(
+                      child: HomeHeader(
+                        searchHint: scrollContext.tr.homeSearchHint,
+                        locationText: scrollContext.tr.homeLocationText,
+                        onNotificationsTap: () {},
+                      ),
+                    ),
+                    SliverToBoxAdapter(
+                      child: Transform.translate(
+                        offset: Offset(0, -sheetOverlap),
+                        child: Container(
+                          width: double.infinity,
+                          padding: EdgeInsetsDirectional.only(
+                            start: horizontalPadding,
+                            end: horizontalPadding,
+                            top: 18.h,
+                            bottom: 24.h,
+                          ),
+                          decoration: BoxDecoration(
+                            color: AppColors.scaffoldBg,
+                            borderRadius: BorderRadius.vertical(
+                              top: Radius.circular(sheetTopRadius),
+                            ),
+                            boxShadow: [
+                              BoxShadow(
+                                color: AppColors.shadow.withValues(alpha: 0.04),
+                                blurRadius: 18.r,
+                                offset: Offset(0, 10.h),
+                              ),
+                            ],
+                          ),
+                          child: BlocBuilder<HomeSectionsCubit, HomeSectionsState>(
+                            builder: (context, state) {
+                              if (state.status == HomeSectionsStatus.loading ||
+                                  state.status == HomeSectionsStatus.initial) {
+                                return _buildHomeSectionsLoading();
+                              }
+
+                              if (state.status == HomeSectionsStatus.failure) {
+                                return _buildError(
+                                  context,
+                                  state.errorMessage ?? 'Something went wrong',
+                                );
+                              }
+
+                              return _buildContent(
+                                context,
+                                state,
+                                sectionTitleStyle,
+                                actionStyle,
+                              );
+                            },
+                          ),
+                        ),
+                      ),
+                    ),
+                    SliverToBoxAdapter(child: SizedBox(height: sheetOverlap)),
+                  ],
                 ),
-              ),
-              SliverToBoxAdapter(child: SizedBox(height: sheetOverlap)),
-            ],
+              );
+            },
           ),
         ),
       ),

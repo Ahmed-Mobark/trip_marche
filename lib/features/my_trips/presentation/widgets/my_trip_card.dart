@@ -95,7 +95,7 @@ class MyTripCard extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          '\$${trip.price.toInt()}',
+                          '${trip.price.toInt()}',
                           style: AppTextStyles.subtitle(
                             color: AppColors.primary,
                           ).copyWith(fontSize: 15),
