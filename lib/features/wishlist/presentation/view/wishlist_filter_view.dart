@@ -20,11 +20,9 @@ class WishlistFilterView extends StatelessWidget {
       create: (_) => WishlistFilterCubit(),
       child: ValueListenableBuilder<AdaptiveThemeMode>(
         valueListenable: AdaptiveTheme.of(context).modeChangeNotifier,
-        builder: (context, _, __) {
-          AppColors.brightness =
-              AdaptiveTheme.of(context).theme.brightness;
-          return const _WishlistFilterBody();
-        },
+        // Brightness is synced globally by `MyApp.builder`; we only need to
+        // rebuild this subtree when the user toggles the mode.
+        builder: (context, _, __) => const _WishlistFilterBody(),
       ),
     );
   }

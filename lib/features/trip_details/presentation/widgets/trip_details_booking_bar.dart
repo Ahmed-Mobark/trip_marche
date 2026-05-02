@@ -34,10 +34,12 @@ class TripDetailsBookingBar extends StatelessWidget {
         bottom: MediaQuery.paddingOf(context).bottom + 16.h,
       ),
       decoration: BoxDecoration(
-        color: AppColors.background,
+        color: AppColors.scaffoldBg,
         boxShadow: [
           BoxShadow(
-            color: AppColors.shadow.withValues(alpha: 0.08),
+            color: AppColors.shadow.withValues(
+              alpha: AppColors.brightness == Brightness.dark ? 0.35 : 0.08,
+            ),
             blurRadius: 10.r,
             offset: Offset(0, -4.h),
           ),
@@ -85,7 +87,7 @@ class TripDetailsBookingBar extends StatelessWidget {
                     child: Text(
                       secondaryBadgeText!,
                       style: AppTextStyles.caption(
-                        color: AppColors.onImage,
+                        color: AppColors.black,
                       ).copyWith(fontWeight: FontWeight.w700),
                     ),
                   ),
@@ -107,6 +109,7 @@ class TripDetailsBookingBar extends StatelessWidget {
             heigh: 54.h,
             radius: 999.r,
             color: AppColors.primary,
+            textColor: AppColors.onImage,
             onTap: onBookNow,
             text: bookNowText,
           ),

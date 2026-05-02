@@ -1,6 +1,7 @@
 import 'package:adaptive_theme/adaptive_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
+import '../../../../core/app/app_state.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_text_styles.dart';
 import '../../../../core/injection/injection_container.dart';
@@ -16,15 +17,13 @@ class SettingsView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Rebuild the whole screen when theme mode changes so AppColors.* and
-    // scaffold colors update immediately (not only after popping the route).
+    // Rebuild on theme change so the toggle and surfaces update on the same
+    // frame as `setThemeMode`. Brightness itself is owned by `MyApp` (single
+    // source of truth) — we only READ via Theme.of here.
     return ValueListenableBuilder<AdaptiveThemeMode>(
       valueListenable: AdaptiveTheme.of(context).modeChangeNotifier,
-      builder: (context, mode, __) {
-        // Use [mode] from the notifier (not Theme/AppColors) so the sheet repaints
-        // on the same frame as setThemeMode — notifier fires before MaterialApp.
-        final isDark = mode.isDark;
-        AppColors.brightness = isDark ? Brightness.dark : Brightness.light;
+      builder: (context, _, __) {
+        final isDark = Theme.of(context).brightness == Brightness.dark;
         final pageBg = AppColors.background;
         final titleColor = AppColors.bodyText;
         final muted = AppColors.greyText;
@@ -89,12 +88,13 @@ class SettingsView extends StatelessWidget {
                   foregroundColor: titleColor,
                   trailing: Switch.adaptive(
                     value: isDark,
-                    onChanged: (value) =>
-                        AdaptiveTheme.of(context).setThemeMode(
-                          value
-                              ? AdaptiveThemeMode.dark
-                              : AdaptiveThemeMode.light,
-                        ),
+                    onChanged: (value) async {
+                      final mode = value
+                          ? AdaptiveThemeMode.dark
+                          : AdaptiveThemeMode.light;
+                      AdaptiveTheme.of(context).setThemeMode(mode);
+                      await AppState.storeThemeMode(mode);
+                    },
                     activeThumbColor: AppColors.onImage,
                     activeTrackColor: AppColors.primary.withValues(alpha: 0.45),
                     inactiveTrackColor: borderTone,

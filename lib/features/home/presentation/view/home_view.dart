@@ -27,6 +27,7 @@ import '../widgets/category_chip.dart';
 import '../widgets/special_trip_wide_card.dart';
 import '../../../trip_details/presentation/trip_wishlist_pop_result.dart';
 import '../../../trip_details/presentation/view/trip_details_view.dart';
+import '../../../my_trips/presentation/view/my_trips_view.dart';
 
 class HomeView extends StatefulWidget {
   const HomeView({super.key});
@@ -240,6 +241,16 @@ class _HomeViewState extends State<HomeView> {
                   name: dest.name,
                   imageUrl: dest.image,
                   rank: dest.trendingRank,
+                  onTap: dest.id <= 0
+                      ? null
+                      : () {
+                          sl<AppNavigator>().push(
+                            screen: MyTripsView(
+                              catalogDestinationId: dest.id,
+                              destinationBrowseTitle: dest.name,
+                            ),
+                          );
+                        },
                 );
               },
             ),
