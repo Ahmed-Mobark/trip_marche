@@ -9,7 +9,8 @@ import 'sign_up_state.dart';
 import '../../view/verify_number_view.dart';
 
 class SignUpCubit extends Cubit<SignUpState> {
-  SignUpCubit(this._navigator, this._authRepository) : super(const SignUpState());
+  SignUpCubit(this._navigator, this._authRepository)
+    : super(const SignUpState());
 
   final AppNavigator _navigator;
   final AuthRepository _authRepository;
@@ -32,17 +33,12 @@ class SignUpCubit extends Cubit<SignUpState> {
     return Validator.confirmPassword(value, passwordController.text);
   }
 
-
   void toggleObscurePassword() {
     emit(state.copyWith(obscurePassword: !state.obscurePassword));
   }
 
   void toggleObscureConfirmPassword() {
-    emit(
-      state.copyWith(
-        obscureConfirmPassword: !state.obscureConfirmPassword,
-      ),
-    );
+    emit(state.copyWith(obscureConfirmPassword: !state.obscureConfirmPassword));
   }
 
   void setDialCode(String dialCode) {
@@ -65,18 +61,19 @@ class SignUpCubit extends Cubit<SignUpState> {
 
     result.fold(
       (failure) {
-        emit(state.copyWith(
-          status: SignUpStatus.failure,
-          errorMessage: failure.message,
-          validationErrors: failure.errors,
-        ));
+        emit(
+          state.copyWith(
+            status: SignUpStatus.failure,
+            errorMessage: failure.message,
+            validationErrors: failure.errors,
+          ),
+        );
       },
       (data) {
         final message = data['message'] as String?;
-        emit(state.copyWith(
-          status: SignUpStatus.success,
-          successMessage: message,
-        ));
+        emit(
+          state.copyWith(status: SignUpStatus.success, successMessage: message),
+        );
         _navigator.push(
           screen: VerifyNumberView(email: emailController.text.trim()),
         );

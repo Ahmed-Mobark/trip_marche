@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
-import '../../../../core/config/app_colors.dart';
+import '../../../../core/theme/app_colors.dart';
 import '../../../../core/config/app_images.dart';
 
 class ProfileAvatar extends StatelessWidget {
@@ -56,7 +56,11 @@ class ProfileAvatar extends StatelessWidget {
                 color: AppColors.primary,
                 shape: BoxShape.circle,
               ),
-              child: Icon(editIcon, color: Colors.white, size: editIconSize),
+              child: Icon(
+                editIcon,
+                color: AppColors.onImage,
+                size: editIconSize,
+              ),
             ),
           ),
         ),

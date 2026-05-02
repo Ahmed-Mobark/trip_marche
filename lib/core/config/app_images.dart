@@ -21,7 +21,6 @@ class AppImages {
   static const String onboarding2 = _fallbackPng;
   static const String onboarding3 = _fallbackPng;
   static const String onboarding4 = _fallbackPng;
-
 }
 
 /// Splash and other video/GIF assets under assets/videos/

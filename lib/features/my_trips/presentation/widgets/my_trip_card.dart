@@ -10,11 +10,7 @@ class MyTripCard extends StatelessWidget {
   final TripItem trip;
   final VoidCallback? onTap;
 
-  const MyTripCard({
-    super.key,
-    required this.trip,
-    this.onTap,
-  });
+  const MyTripCard({super.key, required this.trip, this.onTap});
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +23,7 @@ class MyTripCard extends StatelessWidget {
           borderRadius: BorderRadius.circular(12),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withValues(alpha: 0.06),
+              color: AppColors.shadow.withValues(alpha: 0.06),
               blurRadius: 8,
               offset: const Offset(0, 2),
             ),
@@ -73,25 +69,25 @@ class MyTripCard extends StatelessWidget {
                     const SizedBox(height: 6),
                     Row(
                       children: [
-                        Icon(Iconsax.calendar_1,
-                            size: 14, color: AppColors.greyText),
-                        const SizedBox(width: 4),
-                        Text(
-                          trip.dateRange,
-                          style: AppTextStyles.caption(),
+                        Icon(
+                          Iconsax.calendar_1,
+                          size: 14,
+                          color: AppColors.greyText,
                         ),
+                        const SizedBox(width: 4),
+                        Text(trip.dateRange, style: AppTextStyles.caption()),
                       ],
                     ),
                     const SizedBox(height: 4),
                     Row(
                       children: [
-                        Icon(Iconsax.location,
-                            size: 14, color: AppColors.greyText),
-                        const SizedBox(width: 4),
-                        Text(
-                          trip.location,
-                          style: AppTextStyles.caption(),
+                        Icon(
+                          Iconsax.location,
+                          size: 14,
+                          color: AppColors.greyText,
                         ),
+                        const SizedBox(width: 4),
+                        Text(trip.location, style: AppTextStyles.caption()),
                       ],
                     ),
                     const SizedBox(height: 8),
@@ -100,8 +96,9 @@ class MyTripCard extends StatelessWidget {
                       children: [
                         Text(
                           '\$${trip.price.toInt()}',
-                          style: AppTextStyles.subtitle(color: AppColors.primary)
-                              .copyWith(fontSize: 15),
+                          style: AppTextStyles.subtitle(
+                            color: AppColors.primary,
+                          ).copyWith(fontSize: 15),
                         ),
                         if (trip.status != null)
                           StatusBadge(status: trip.status!),

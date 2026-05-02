@@ -30,7 +30,10 @@ class TripInstructionsView extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(context.tr.bookingTripInstructionsHeader, style: AppTextStyles.heading3()),
+            Text(
+              context.tr.bookingTripInstructionsHeader,
+              style: AppTextStyles.heading3(),
+            ),
             const SizedBox(height: 12),
             Text(
               context.tr.bookingTripInstructionsIntro,

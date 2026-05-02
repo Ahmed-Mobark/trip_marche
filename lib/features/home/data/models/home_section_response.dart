@@ -116,6 +116,40 @@ class TripModel {
 
   String get dateRange => '$startDate - $endDate';
 
+  TripModel copyWith({
+    int? id,
+    String? title,
+    String? slug,
+    String? coverImage,
+    String? fromLocation,
+    String? startDate,
+    String? endDate,
+    double? price,
+    double? discountPrice,
+    double? rating,
+    int? reviewsCount,
+    String? badge,
+    TripFlags? flags,
+    bool? isWishlisted,
+  }) {
+    return TripModel(
+      id: id ?? this.id,
+      title: title ?? this.title,
+      slug: slug ?? this.slug,
+      coverImage: coverImage ?? this.coverImage,
+      fromLocation: fromLocation ?? this.fromLocation,
+      startDate: startDate ?? this.startDate,
+      endDate: endDate ?? this.endDate,
+      price: price ?? this.price,
+      discountPrice: discountPrice ?? this.discountPrice,
+      rating: rating ?? this.rating,
+      reviewsCount: reviewsCount ?? this.reviewsCount,
+      badge: badge ?? this.badge,
+      flags: flags ?? this.flags,
+      isWishlisted: isWishlisted ?? this.isWishlisted,
+    );
+  }
+
   factory TripModel.fromJson(Map<String, dynamic> json) {
     return TripModel(
       id: json['id'] as int? ?? 0,

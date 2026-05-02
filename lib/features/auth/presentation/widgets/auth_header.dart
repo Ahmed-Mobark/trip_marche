@@ -54,20 +54,19 @@ class AuthHeader extends StatelessWidget {
               children: [
                 IconButton(
                   padding: EdgeInsets.zero,
-                  constraints: const BoxConstraints(minWidth: 44, minHeight: 44),
+                  constraints: const BoxConstraints(
+                    minWidth: 44,
+                    minHeight: 44,
+                  ),
                   onPressed: onBack ?? () => Navigator.maybePop(context),
                   icon: const Icon(
                     Icons.arrow_back_ios_new,
-                    color: Colors.white,
+                    color: AppColors.onImage,
                     size: 18,
                   ),
                 ),
                 const Spacer(),
-                Image.asset(
-                  AppIcons.lloPng,
-                  height: 28,
-                  fit: BoxFit.contain,
-                ),
+                Image.asset(AppIcons.lloPng, height: 28, fit: BoxFit.contain),
               ],
             ),
           ),
@@ -98,7 +97,7 @@ class AuthHeader extends StatelessWidget {
                     clipper: _AuthCurveClipper(),
                     child: Container(
                       width: double.infinity,
-                      color: Colors.white,
+                      color: AppColors.background,
                       child: Padding(
                         padding: const EdgeInsets.only(top: 90),
                         child: child,
@@ -112,7 +111,7 @@ class AuthHeader extends StatelessWidget {
               children: [
                 SizedBox(height: MediaQuery.of(context).padding.top),
                 _buildTop(context),
-                // White content area with Figma curve
+                // Content area with Figma curve
                 Expanded(
                   child: Stack(
                     children: [
@@ -120,7 +119,7 @@ class AuthHeader extends StatelessWidget {
                         clipper: _AuthCurveClipper(),
                         child: Container(
                           width: double.infinity,
-                          color: Colors.white,
+                          color: AppColors.background,
                         ),
                       ),
                       Padding(

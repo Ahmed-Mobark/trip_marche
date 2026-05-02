@@ -342,10 +342,7 @@ class TextStyles {
 
 class AppTextStyles {
   static TextStyle heading1({Color? color}) {
-    return TextStyles.textViewBold24.copyWith(
-      fontSize: 30,
-      color: color,
-    );
+    return TextStyles.textViewBold24.copyWith(fontSize: 30, color: color);
   }
 
   static TextStyle heading2({Color? color}) {

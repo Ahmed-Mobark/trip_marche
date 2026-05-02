@@ -144,10 +144,35 @@ Future<void> initScheduleInjection(GetIt sl) async {
 }
 ```
 
+## Cross-feature wishlist (domain-only imports)
+
+Wishlist is used from **home**, **trip details**, and **wishlist** screens. All wishlist code lives under **`lib/features/wishlist/`**. Other features may import **only**:
+
+- `features/wishlist/domain/entities/…`
+- `features/wishlist/domain/repositories/trip_wishlist_repository.dart` (abstract `TripWishlistRepository`)
+
+They must **not** import `features/wishlist/data/**` or `features/wishlist/presentation/**`. DI registers `TripWishlistRepository` → impl inside `wishlist_inj.dart`.
+
+**Reference layout:**
+
+```
+lib/features/wishlist/
+├── wishlist_inj.dart
+├── domain/
+│   ├── entities/wishlist_entities.dart
+│   ├── repositories/trip_wishlist_repository.dart
+│   └── usecases/
+├── data/
+│   ├── datasources/wishlist_remote_data_source.dart
+│   ├── models/
+│   └── repositories/wishlist_repository_impl.dart
+└── presentation/…
+```
+
 ## Rules
 
 - Domain must **never** import from data or presentation.
 - Data may import domain but **never** presentation.
 - Presentation may import domain (entities, use cases) but **never** data directly.
 - One use case = one public method (`call`). Do not bundle multiple actions.
-- Feature folders must not import from other features. Share through `core/`.
+- Feature folders must not import from other features **except** the wishlist **domain** surface above (entities + `TripWishlistRepository` contract). For other shared APIs, prefer a small neutral module or revisit this pattern.

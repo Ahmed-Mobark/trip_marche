@@ -19,8 +19,9 @@ class TripDetailsProgramSection extends StatelessWidget {
           children: [
             Text(
               context.tr.tripDetailsProgramTitle,
-              style: AppTextStyles.body(color: AppColors.darkText)
-                  .copyWith(fontWeight: FontWeight.w700),
+              style: AppTextStyles.body(
+                color: AppColors.darkText,
+              ).copyWith(fontWeight: FontWeight.w700),
             ),
             SizedBox(height: 16.h),
             _DayCard(
@@ -87,7 +88,7 @@ class _DayCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: AppColors.white,
+        color: AppColors.cardBg,
         borderRadius: BorderRadius.circular(18.r),
         border: Border.all(color: AppColors.border.withValues(alpha: 0.7)),
       ),

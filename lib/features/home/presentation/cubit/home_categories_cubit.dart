@@ -4,7 +4,8 @@ import '../../domain/repositories/home_repository.dart';
 import 'home_categories_state.dart';
 
 class HomeCategoriesCubit extends Cubit<HomeCategoriesState> {
-  HomeCategoriesCubit(this._homeRepository) : super(const HomeCategoriesState());
+  HomeCategoriesCubit(this._homeRepository)
+    : super(const HomeCategoriesState());
 
   final HomeRepository _homeRepository;
 

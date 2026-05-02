@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import '../../../../core/theme/app_colors.dart';
 
 class NotificationItem extends StatelessWidget {
@@ -34,11 +33,7 @@ class NotificationItem extends StatelessWidget {
                 color: AppColors.primary.withValues(alpha: 0.1),
                 borderRadius: BorderRadius.circular(10),
               ),
-              child: Icon(
-                icon,
-                color: AppColors.primary,
-                size: 20,
-              ),
+              child: Icon(icon, color: AppColors.primary, size: 20),
             ),
             const SizedBox(width: 12),
             Expanded(
@@ -51,18 +46,19 @@ class NotificationItem extends StatelessWidget {
                       Expanded(
                         child: Text(
                           title,
-                          style: GoogleFonts.inter(
-                            fontSize: 14,
-                            fontWeight: FontWeight.w600,
-                            color: AppColors.darkText,
-                          ),
+                          style: Theme.of(context).textTheme.bodyMedium!
+                              .copyWith(
+                                fontSize: 14,
+                                fontWeight: FontWeight.w600,
+                                color: AppColors.darkText,
+                              ),
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                         ),
                       ),
                       Text(
                         timestamp,
-                        style: GoogleFonts.inter(
+                        style: Theme.of(context).textTheme.bodyMedium!.copyWith(
                           fontSize: 11,
                           fontWeight: FontWeight.w400,
                           color: AppColors.greyText,
@@ -73,7 +69,7 @@ class NotificationItem extends StatelessWidget {
                   const SizedBox(height: 4),
                   Text(
                     description,
-                    style: GoogleFonts.inter(
+                    style: Theme.of(context).textTheme.bodyMedium!.copyWith(
                       fontSize: 13,
                       fontWeight: FontWeight.w400,
                       color: AppColors.secondaryText,

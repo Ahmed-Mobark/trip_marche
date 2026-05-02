@@ -35,23 +35,34 @@ class TripSafetyView extends StatelessWidget {
               decoration: BoxDecoration(
                 color: AppColors.error.withValues(alpha: 0.08),
                 borderRadius: BorderRadius.circular(12),
-                border: Border.all(color: AppColors.error.withValues(alpha: 0.2)),
+                border: Border.all(
+                  color: AppColors.error.withValues(alpha: 0.2),
+                ),
               ),
               child: Row(
                 children: [
-                  const Icon(Iconsax.shield_tick, color: AppColors.error, size: 22),
+                  const Icon(
+                    Iconsax.shield_tick,
+                    color: AppColors.error,
+                    size: 22,
+                  ),
                   const SizedBox(width: 10),
                   Expanded(
                     child: Text(
                       context.tr.bookingTripSafetyBanner,
-                      style: AppTextStyles.bodySmall(color: AppColors.secondaryText),
+                      style: AppTextStyles.bodySmall(
+                        color: AppColors.secondaryText,
+                      ),
                     ),
                   ),
                 ],
               ),
             ),
             const SizedBox(height: 24),
-            Text(context.tr.bookingTripSafetyHeader, style: AppTextStyles.heading3()),
+            Text(
+              context.tr.bookingTripSafetyHeader,
+              style: AppTextStyles.heading3(),
+            ),
             const SizedBox(height: 12),
             Text(
               context.tr.bookingTripSafetyIntro,
@@ -108,10 +119,7 @@ class TripSafetyView extends StatelessWidget {
     );
   }
 
-  Widget _buildSafetySection({
-    required String title,
-    required String content,
-  }) {
+  Widget _buildSafetySection({required String title, required String content}) {
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.all(16),

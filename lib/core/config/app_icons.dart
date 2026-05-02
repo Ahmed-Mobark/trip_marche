@@ -36,7 +36,6 @@ class AppIcons {
   static const String authIllustration = '${_path}auth_illustration.svg';
   static const String bookIcon = '${_path}book_icon.png';
 
-
   // Method to render SVG as a widget
   static Widget icon({required String icon, double size = 24, Color? color}) {
     return SizedBox(

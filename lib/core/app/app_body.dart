@@ -12,7 +12,11 @@ import 'package:trip_marche/core/theme/app_theme.dart';
 import 'package:trip_marche/core/translation/app_localizations.dart';
 
 class MyApp extends StatefulWidget {
-  const MyApp({super.key});
+  const MyApp({super.key, required this.initialThemeMode});
+
+  /// Persisted theme read in `main()` via [AppState.bootThemeMode].
+  final AdaptiveThemeMode initialThemeMode;
+
   static MyAppState? of(BuildContext context) =>
       context.findAncestorStateOfType<MyAppState>();
   @override
@@ -38,7 +42,7 @@ class MyAppState extends State<MyApp> {
       builder: (BuildContext context, Widget? child) => AdaptiveTheme(
         light: AppTheme.appLightTheme,
         dark: AppTheme.appDarkTheme,
-        initial: AdaptiveThemeMode.light,
+        initial: widget.initialThemeMode,
         debugShowFloatingThemeButton: false,
         builder: (theme, darkTheme) => MaterialApp(
           debugShowCheckedModeBanner: false,
@@ -53,9 +57,10 @@ class MyAppState extends State<MyApp> {
           locale: _locale,
           navigatorKey: sl<AppNavigator>().navigatorKey,
           builder: (context, child) {
-            AppColors.brightness =
-                AdaptiveTheme.of(context).brightness ??
-                Theme.of(context).brightness;
+            // Single source of truth for [AppColors.brightness]: the resolved
+            // [Theme] applied by [AdaptiveTheme]. This handles `system` mode
+            // correctly (where `mode.isDark` would always be false).
+            AppColors.brightness = Theme.of(context).brightness;
             return child ?? const SizedBox.shrink();
           },
           home: AppState.currentScreen(),

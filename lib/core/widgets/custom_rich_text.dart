@@ -10,7 +10,7 @@ class CustomRichText extends StatelessWidget {
     this.startSubText,
     this.centerSubText,
     this.endSubText,
-    this.textAlign
+    this.textAlign,
   });
 
   final TextStyle? startSubTextStyle;
@@ -26,22 +26,15 @@ class CustomRichText extends StatelessWidget {
     return RichText(
       textAlign: textAlign ?? TextAlign.start,
       text: TextSpan(
-        style: TextStyles.textViewRegular14.copyWith(color: Theme.of(context).textTheme.bodyLarge!.color),
+        style: TextStyles.textViewRegular14.copyWith(
+          color: Theme.of(context).textTheme.bodyLarge!.color,
+        ),
         children: [
-          TextSpan(
-            text: startSubText,
-            style: startSubTextStyle,
-          ),
-          TextSpan(
-            text: centerSubText,
-            style: centerSubTextStyle,
-          ),
-          TextSpan(
-            text: endSubText,
-            style: endSubTextStyle,
-          )
-        ]
-      ) 
+          TextSpan(text: startSubText, style: startSubTextStyle),
+          TextSpan(text: centerSubText, style: centerSubTextStyle),
+          TextSpan(text: endSubText, style: endSubTextStyle),
+        ],
+      ),
     );
   }
 }

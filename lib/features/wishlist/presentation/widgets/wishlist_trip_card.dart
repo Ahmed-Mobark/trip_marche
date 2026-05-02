@@ -1,53 +1,113 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:iconsax/iconsax.dart';
-import '../../../../core/data/dummy_data.dart';
-import '../../../../core/injection/injection_container.dart';
-import '../../../../core/navigation/app_navigator.dart';
-import '../../../../core/theme/app_colors.dart';
-import '../../../../core/theme/app_text_styles.dart';
-import '../../../../core/widgets/app_cached_network_image.dart';
-import '../../../trip_details/presentation/view/trip_details_view.dart';
+import 'package:trip_marche/core/extensions/localization.dart';
+import 'package:trip_marche/core/injection/injection_container.dart';
+import 'package:trip_marche/core/navigation/app_navigator.dart';
+import 'package:trip_marche/core/theme/app_colors.dart';
+import 'package:trip_marche/core/theme/app_text_styles.dart';
+import 'package:trip_marche/core/widgets/app_cached_network_image.dart';
+import 'package:trip_marche/features/trip_details/presentation/trip_wishlist_pop_result.dart';
+import 'package:trip_marche/features/trip_details/presentation/view/trip_details_view.dart';
+import 'package:trip_marche/features/wishlist/domain/entities/wishlist_entities.dart';
+import '../cubit/wishlist_cubit.dart';
 
 class WishlistTripCard extends StatelessWidget {
   const WishlistTripCard({
     super.key,
     required this.trip,
-    required this.badgeText,
-    required this.badgeColor,
     this.onFavoriteTap,
-    this.isFavorite = true,
   });
 
-  final TripItem trip;
-  final String badgeText;
-  final Color badgeColor;
+  final WishlistTripItem trip;
   final VoidCallback? onFavoriteTap;
-  final bool isFavorite;
+
+  ({String text, Color color})? _derivedFlagBadge(BuildContext context) {
+    if (trip.badge != null && trip.badge!.isNotEmpty) {
+      return null;
+    }
+    if (trip.flags.recommended) {
+      return (text: context.tr.wishlistRecommended, color: AppColors.warning);
+    }
+    if (trip.flags.sponsored) {
+      return (text: context.tr.wishlistNewInTripMarche, color: AppColors.primary);
+    }
+    if (trip.flags.special) {
+      return (text: context.tr.wishlistBestPrice, color: AppColors.success);
+    }
+    return null;
+  }
 
   @override
   Widget build(BuildContext context) {
+    final flagBadge = _derivedFlagBadge(context);
+
     return GestureDetector(
-      onTap: () {
-        sl<AppNavigator>().push(screen: TripDetailsView());
+      onTap: () async {
+        final result = await sl<AppNavigator>().push<TripWishlistPopResult>(
+          screen: TripDetailsView(
+            tripId: trip.id,
+            initialIsWishlisted: trip.isWishlisted,
+          ),
+        );
+        if (!context.mounted || result == null) {
+          return;
+        }
+        context.read<WishlistCubit>().applyWishlistStateFromDetails(
+          result.tripId,
+          result.isWishlisted,
+        );
       },
       child: Container(
         padding: EdgeInsetsDirectional.all(12.w),
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: AppColors.cardBg,
           borderRadius: BorderRadius.circular(18.r),
         ),
         child: Row(
           children: [
             ClipRRect(
               borderRadius: BorderRadius.circular(16.r),
-              child: SizedBox(
-                width: 150.w,
-                height: 200.h,
-                child: AppCachedNetworkImage(
-                  imageUrl: trip.imageUrl,
-                  fit: BoxFit.cover,
-                ),
+              child: Stack(
+                children: [
+                  SizedBox(
+                    width: 150.w,
+                    height: 200.h,
+                    child: AppCachedNetworkImage(
+                      imageUrl: trip.coverImage,
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                  if (trip.badge != null && trip.badge!.isNotEmpty)
+                    PositionedDirectional(
+                      top: 0,
+                      start: 0,
+                      end: 0,
+                      child: Container(
+                        padding: EdgeInsetsDirectional.only(
+                          start: 12.w,
+                          end: 12.w,
+                          top: 4.h,
+                          bottom: 4.h,
+                        ),
+                        decoration: BoxDecoration(
+                          color: AppColors.starYellow,
+                          borderRadius: BorderRadius.vertical(
+                            top: Radius.circular(16.r),
+                          ),
+                        ),
+                        child: Center(
+                          child: Text(
+                            trip.badge!,
+                            style: AppTextStyles.bodySmall(
+                              color: AppColors.onImage,
+                            ).copyWith(fontWeight: FontWeight.w800),
+                          ),
+                        ),
+                      ),
+                    ),
+                ],
               ),
             ),
             SizedBox(width: 14.w),
@@ -78,10 +138,10 @@ class WishlistTripCard extends StatelessWidget {
                             shape: BoxShape.circle,
                           ),
                           child: Icon(
-                            isFavorite ? Iconsax.heart5 : Iconsax.heart,
+                            trip.isWishlisted ? Iconsax.heart5 : Iconsax.heart,
                             size: 18.sp,
-                            color: isFavorite
-                                ? AppColors.red
+                            color: trip.isWishlisted
+                                ? AppColors.error
                                 : AppColors.greyText,
                           ),
                         ),
@@ -104,7 +164,7 @@ class WishlistTripCard extends StatelessWidget {
                         ).copyWith(fontWeight: FontWeight.w700),
                       ),
                       Text(
-                        ' (112)',
+                        ' (${trip.reviewsCount})',
                         style: AppTextStyles.bodySmall(
                           color: AppColors.greyText,
                         ),
@@ -122,7 +182,7 @@ class WishlistTripCard extends StatelessWidget {
                       SizedBox(width: 6.w),
                       Expanded(
                         child: Text(
-                          trip.location,
+                          trip.fromLocation,
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                           style: AppTextStyles.bodySmall(
@@ -153,45 +213,63 @@ class WishlistTripCard extends StatelessWidget {
                       ),
                     ],
                   ),
-                  SizedBox(height: 10.h),
-                  Container(
-                    padding: EdgeInsetsDirectional.symmetric(
-                      horizontal: 12.w,
-                      vertical: 4.h,
+                  if (flagBadge != null) ...[
+                    SizedBox(height: 10.h),
+                    Container(
+                      padding: EdgeInsetsDirectional.symmetric(
+                        horizontal: 12.w,
+                        vertical: 4.h,
+                      ),
+                      decoration: BoxDecoration(
+                        color: flagBadge.color,
+                        borderRadius: BorderRadius.circular(8.r),
+                      ),
+                      child: Text(
+                        flagBadge.text,
+                        style: AppTextStyles.bodySmall(
+                          color: AppColors.onImage,
+                        ).copyWith(fontWeight: FontWeight.w700),
+                      ),
                     ),
-                    decoration: BoxDecoration(
-                      color: badgeColor,
-                      borderRadius: BorderRadius.circular(8.r),
-                    ),
-                    child: Text(
-                      badgeText,
-                      style: AppTextStyles.bodySmall(
-                        color: Colors.white,
-                      ).copyWith(fontWeight: FontWeight.w700),
-                    ),
-                  ),
+                  ],
                   SizedBox(height: 12.h),
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
+                      if (trip.discountPrice != null) ...[
+                        Text(
+                          '\$${trip.discountPrice!.toStringAsFixed(0)}',
+                          style: AppTextStyles.heading3(
+                            color: AppColors.darkText,
+                          ).copyWith(fontWeight: FontWeight.w900),
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                        SizedBox(width: 8.w),
+                        Text(
+                          '\$${trip.price.toStringAsFixed(0)}',
+                          style: AppTextStyles.bodyMedium(
+                            color: AppColors.greyText,
+                          ).copyWith(decoration: TextDecoration.lineThrough),
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ] else
+                        Text(
+                          '\$${trip.price.toStringAsFixed(0)}',
+                          style: AppTextStyles.heading3(
+                            color: AppColors.darkText,
+                          ).copyWith(fontWeight: FontWeight.w900),
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                        ),
                       Text(
-                        '\$1000',
-                        style: AppTextStyles.bodyMedium(
-                          color: AppColors.greyText,
-                        ).copyWith(decoration: TextDecoration.lineThrough),
-                      ),
-                      SizedBox(width: 8.w),
-                      Text(
-                        '\$${trip.price.toStringAsFixed(0)}',
-                        style: AppTextStyles.heading3(
-                          color: AppColors.darkText,
-                        ).copyWith(fontWeight: FontWeight.w900),
-                      ),
-                      Text(
-                        ' /Person',
+                        ' /${context.tr.homePerPerson}',
                         style: AppTextStyles.bodySmall(
                           color: AppColors.greyText,
                         ),
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
                       ),
                     ],
                   ),

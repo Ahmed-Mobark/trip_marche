@@ -7,11 +7,7 @@ class RecentSearchChip extends StatelessWidget {
   final String searchTerm;
   final VoidCallback? onTap;
 
-  const RecentSearchChip({
-    super.key,
-    required this.searchTerm,
-    this.onTap,
-  });
+  const RecentSearchChip({super.key, required this.searchTerm, this.onTap});
 
   @override
   Widget build(BuildContext context) {

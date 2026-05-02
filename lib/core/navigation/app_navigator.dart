@@ -12,42 +12,33 @@ class AppNavigator {
     }
   }
 
-  Future<void> push({
+  Future<T?> push<T>({
     required Widget screen,
     NavAnimation animation = NavAnimation.cupertino,
-  }) async {
+  }) {
     _log('PUSH', screen);
-    await navigatorKey.currentState!.push(
-      AppPageRoute.build(
-        screen: screen,
-        animation: animation,
-      ),
+    return navigatorKey.currentState!.push<T>(
+      AppPageRoute.build<T>(screen: screen, animation: animation),
     );
   }
 
-  Future<void> pushReplacement({
+  Future<T?> pushReplacement<T>({
     required Widget screen,
     NavAnimation animation = NavAnimation.cupertino,
-  }) async {
+  }) {
     _log('PUSH_REPLACEMENT', screen);
-    await navigatorKey.currentState!.pushReplacement(
-      AppPageRoute.build(
-        screen: screen,
-        animation: animation,
-      ),
+    return navigatorKey.currentState!.pushReplacement<T, T>(
+      AppPageRoute.build<T>(screen: screen, animation: animation),
     );
   }
 
-  Future<void> pushAndRemoveUntil({
+  Future<T?> pushAndRemoveUntil<T>({
     required Widget screen,
     NavAnimation animation = NavAnimation.cupertino,
-  }) async {
+  }) {
     _log('PUSH_AND_REMOVE_UNTIL', screen);
-    await navigatorKey.currentState!.pushAndRemoveUntil(
-      AppPageRoute.build(
-        screen: screen,
-        animation: animation,
-      ),
+    return navigatorKey.currentState!.pushAndRemoveUntil<T>(
+      AppPageRoute.build<T>(screen: screen, animation: animation),
       (_) => false,
     );
   }

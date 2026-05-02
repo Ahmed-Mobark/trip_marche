@@ -19,11 +19,14 @@ class ResetPasswordState extends Equatable {
 
   String? get validationErrorsDescription {
     if (validationErrors == null || validationErrors!.isEmpty) return null;
-    return validationErrors!.entries.map((e) {
-      final msgs =
-          e.value is List ? (e.value as List).join(', ') : e.value.toString();
-      return msgs;
-    }).join('\n');
+    return validationErrors!.entries
+        .map((e) {
+          final msgs = e.value is List
+              ? (e.value as List).join(', ')
+              : e.value.toString();
+          return msgs;
+        })
+        .join('\n');
   }
 
   ResetPasswordState copyWith({
@@ -45,10 +48,10 @@ class ResetPasswordState extends Equatable {
 
   @override
   List<Object?> get props => [
-        status,
-        obscurePassword,
-        obscureConfirmPassword,
-        errorMessage,
-        validationErrors,
-      ];
+    status,
+    obscurePassword,
+    obscureConfirmPassword,
+    errorMessage,
+    validationErrors,
+  ];
 }

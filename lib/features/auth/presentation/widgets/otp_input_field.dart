@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:google_fonts/google_fonts.dart';
 import '../../../../core/theme/app_colors.dart';
 
 /// A row of single-digit OTP input boxes.
@@ -96,7 +95,7 @@ class _OtpInputFieldState extends State<OtpInputField> {
               keyboardType: TextInputType.number,
               textAlign: TextAlign.center,
               maxLength: 1,
-              style: GoogleFonts.inter(
+              style: Theme.of(context).textTheme.bodyMedium!.copyWith(
                 fontSize: 24,
                 fontWeight: FontWeight.w700,
                 color: AppColors.darkText,

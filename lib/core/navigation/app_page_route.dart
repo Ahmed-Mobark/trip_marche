@@ -3,37 +3,34 @@ import 'package:flutter/cupertino.dart';
 enum NavAnimation { slide, fade, scale, cupertino }
 
 class AppPageRoute {
-  static PageRoute build({
+  static PageRoute<T> build<T>({
     required Widget screen,
     required NavAnimation animation,
   }) {
     switch (animation) {
       case NavAnimation.fade:
-        return _fade(screen);
+        return _fade<T>(screen);
 
       case NavAnimation.scale:
-        return _scale(screen);
+        return _scale<T>(screen);
 
       case NavAnimation.cupertino:
-        return CupertinoPageRoute(builder: (_) => screen);
+        return CupertinoPageRoute<T>(builder: (_) => screen);
 
       case NavAnimation.slide:
-        return _slide(screen);
+        return _slide<T>(screen);
     }
   }
 
   /// =======================
   /// Fade (same as FadePageRoute)
   /// =======================
-  static PageRoute _fade(Widget screen) {
-    return PageRouteBuilder(
+  static PageRoute<T> _fade<T>(Widget screen) {
+    return PageRouteBuilder<T>(
       transitionDuration: const Duration(milliseconds: 500),
       pageBuilder: (_, animation, __) => screen,
       transitionsBuilder: (_, animation, __, child) {
-        return FadeTransition(
-          opacity: animation,
-          child: child,
-        );
+        return FadeTransition(opacity: animation, child: child);
       },
     );
   }
@@ -42,8 +39,8 @@ class AppPageRoute {
   /// Slide (same as SlidePageRoute + createRoute)
   /// Default: from right → center
   /// =======================
-  static PageRoute _slide(Widget screen) {
-    return PageRouteBuilder(
+  static PageRoute<T> _slide<T>(Widget screen) {
+    return PageRouteBuilder<T>(
       transitionDuration: const Duration(milliseconds: 350),
       pageBuilder: (_, animation, __) => screen,
       transitionsBuilder: (_, animation, __, child) {
@@ -60,8 +57,8 @@ class AppPageRoute {
   /// =======================
   /// Scale (same as ScalePageRoute)
   /// =======================
-  static PageRoute _scale(Widget screen) {
-    return PageRouteBuilder(
+  static PageRoute<T> _scale<T>(Widget screen) {
+    return PageRouteBuilder<T>(
       transitionDuration: const Duration(milliseconds: 300),
       pageBuilder: (_, animation, __) => screen,
       transitionsBuilder: (_, animation, __, child) {

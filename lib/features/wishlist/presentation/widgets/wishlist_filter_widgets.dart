@@ -13,8 +13,9 @@ class WishlistFilterSectionTitle extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       title,
-      style: AppTextStyles.bodyMedium(color: AppColors.darkText)
-          .copyWith(fontWeight: FontWeight.w700),
+      style: AppTextStyles.bodyMedium(
+        color: AppColors.darkText,
+      ).copyWith(fontWeight: FontWeight.w700),
     );
   }
 }
@@ -37,7 +38,7 @@ class WishlistFilterSelectField extends StatelessWidget {
     final color = value.isEmpty ? AppColors.greyText : AppColors.darkText;
 
     return Material(
-      color: AppColors.white,
+      color: AppColors.cardBg,
       child: InkWell(
         onTap: onTap,
         borderRadius: BorderRadius.circular(12.r),
@@ -58,7 +59,11 @@ class WishlistFilterSelectField extends StatelessWidget {
                   style: AppTextStyles.bodyMedium(color: color),
                 ),
               ),
-              Icon(Iconsax.arrow_down_1, color: AppColors.greyText, size: 18.sp),
+              Icon(
+                Iconsax.arrow_down_1,
+                color: AppColors.greyText,
+                size: 18.sp,
+              ),
             ],
           ),
         ),
@@ -73,7 +78,24 @@ class WishlistFilterPriceHistogram extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     const heights = <double>[
-      10, 18, 26, 16, 22, 30, 12, 20, 28, 14, 24, 18, 12, 22, 16, 26, 14, 20,
+      10,
+      18,
+      26,
+      16,
+      22,
+      30,
+      12,
+      20,
+      28,
+      14,
+      24,
+      18,
+      12,
+      22,
+      16,
+      26,
+      14,
+      20,
     ];
     return Container(
       height: 56.h,
@@ -120,8 +142,9 @@ class WishlistFilterPricePill extends StatelessWidget {
       alignment: Alignment.center,
       child: Text(
         value,
-        style: AppTextStyles.bodyMedium(color: AppColors.darkText)
-            .copyWith(fontWeight: FontWeight.w600),
+        style: AppTextStyles.bodyMedium(
+          color: AppColors.darkText,
+        ).copyWith(fontWeight: FontWeight.w600),
       ),
     );
   }
@@ -174,7 +197,11 @@ class WishlistFilterSegmented extends StatelessWidget {
 }
 
 class _SegItem extends StatelessWidget {
-  const _SegItem({required this.label, required this.selected, required this.onTap});
+  const _SegItem({
+    required this.label,
+    required this.selected,
+    required this.onTap,
+  });
   final String label;
   final bool selected;
   final VoidCallback onTap;
@@ -182,20 +209,20 @@ class _SegItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Material(
-      color: Colors.transparent,
+      color: AppColors.transparent,
       child: InkWell(
         onTap: onTap,
         borderRadius: BorderRadius.circular(999.r),
-        child: Container(
+          child: Container(
           decoration: BoxDecoration(
-            color: selected ? AppColors.white : Colors.transparent,
+            color: selected ? AppColors.cardBg : AppColors.transparent,
             borderRadius: BorderRadius.circular(999.r),
           ),
           alignment: Alignment.center,
           child: Text(
             label,
             style: AppTextStyles.bodyMedium(
-              color: selected ? AppColors.darkText : AppColors.greyText,
+              color: selected ? AppColors.bodyText : AppColors.greyText,
             ).copyWith(fontWeight: FontWeight.w600),
           ),
         ),
@@ -219,21 +246,26 @@ class WishlistFilterChip extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Material(
-      color: Colors.transparent,
+      color: AppColors.transparent,
       child: InkWell(
         onTap: onTap,
         borderRadius: BorderRadius.circular(999.r),
         child: Container(
-          padding: EdgeInsetsDirectional.symmetric(horizontal: 14.w, vertical: 10.h),
+          padding: EdgeInsetsDirectional.symmetric(
+            horizontal: 14.w,
+            vertical: 10.h,
+          ),
           decoration: BoxDecoration(
-            color: selected ? AppColors.purpleColor : AppColors.white,
+            color: selected ? AppColors.primary : AppColors.cardBg,
             borderRadius: BorderRadius.circular(999.r),
-            border: Border.all(color: selected ? AppColors.purpleColor : AppColors.border),
+            border: Border.all(
+              color: selected ? AppColors.primary : AppColors.border,
+            ),
           ),
           child: Text(
             label,
             style: AppTextStyles.bodyMedium(
-              color: selected ? AppColors.white : AppColors.darkText,
+              color: selected ? AppColors.onImage : AppColors.bodyText,
             ).copyWith(fontWeight: FontWeight.w600),
           ),
         ),
@@ -272,7 +304,11 @@ class WishlistFilterChoiceChips extends StatelessWidget {
 }
 
 class WishlistFilterRatingChips extends StatelessWidget {
-  const WishlistFilterRatingChips({super.key, required this.value, required this.onChanged});
+  const WishlistFilterRatingChips({
+    super.key,
+    required this.value,
+    required this.onChanged,
+  });
   final int value;
   final ValueChanged<int> onChanged;
 
@@ -294,7 +330,11 @@ class WishlistFilterRatingChips extends StatelessWidget {
 }
 
 class WishlistFilterNumberChips extends StatelessWidget {
-  const WishlistFilterNumberChips({super.key, required this.value, required this.onChanged});
+  const WishlistFilterNumberChips({
+    super.key,
+    required this.value,
+    required this.onChanged,
+  });
   final int value;
   final ValueChanged<int> onChanged;
 
@@ -340,12 +380,20 @@ class WishlistFilterTripFeatures extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Theme(
-      data: Theme.of(context).copyWith(dividerColor: Colors.transparent),
+      data: Theme.of(context).copyWith(dividerColor: AppColors.transparent),
       child: ExpansionTile(
         tilePadding: EdgeInsetsDirectional.zero,
         childrenPadding: EdgeInsetsDirectional.only(top: 8.h, bottom: 8.h),
+        backgroundColor: AppColors.background,
+        collapsedBackgroundColor: AppColors.background,
+        iconColor: AppColors.greyText,
+        collapsedIconColor: AppColors.greyText,
         title: WishlistFilterSectionTitle(title: title),
-        trailing: Icon(Iconsax.arrow_down_1, size: 18.sp, color: AppColors.greyText),
+        trailing: Icon(
+          Iconsax.arrow_down_1,
+          size: 18.sp,
+          color: AppColors.greyText,
+        ),
         children: items.map((it) {
           final isSelected = selectedKeys.contains(it.$1);
           return CheckboxListTile(
@@ -355,7 +403,7 @@ class WishlistFilterTripFeatures extends StatelessWidget {
             onChanged: (v) => onChanged(it.$1, v ?? false),
             title: Text(
               it.$2,
-              style: AppTextStyles.bodyMedium(color: AppColors.darkText),
+              style: AppTextStyles.bodyMedium(color: AppColors.bodyText),
             ),
           );
         }).toList(),
@@ -383,8 +431,9 @@ class WishlistFilterToggleRow extends StatelessWidget {
         Expanded(
           child: Text(
             label,
-            style: AppTextStyles.bodyMedium(color: AppColors.darkText)
-                .copyWith(fontWeight: FontWeight.w600),
+            style: AppTextStyles.bodyMedium(
+              color: AppColors.darkText,
+            ).copyWith(fontWeight: FontWeight.w600),
           ),
         ),
         AppSwitch(value: value, onChanged: onChanged),
@@ -392,4 +441,3 @@ class WishlistFilterToggleRow extends StatelessWidget {
     );
   }
 }
-

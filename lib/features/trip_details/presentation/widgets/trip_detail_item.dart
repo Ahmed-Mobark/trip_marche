@@ -18,7 +18,10 @@ class TripDetailItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsetsDirectional.symmetric(horizontal: 16.w, vertical: 12.h),
+      padding: EdgeInsetsDirectional.symmetric(
+        horizontal: 16.w,
+        vertical: 12.h,
+      ),
       decoration: BoxDecoration(
         color: AppColors.lightBg,
         borderRadius: BorderRadius.circular(12.r),
@@ -28,7 +31,10 @@ class TripDetailItem extends StatelessWidget {
         children: [
           Icon(icon, color: AppColors.primary, size: 22.sp),
           SizedBox(height: 6.h),
-          Text(value, style: AppTextStyles.bodyMedium(color: AppColors.darkText)),
+          Text(
+            value,
+            style: AppTextStyles.bodyMedium(color: AppColors.darkText),
+          ),
           SizedBox(height: 2.h),
           Text(label, style: AppTextStyles.caption(color: AppColors.greyText)),
         ],

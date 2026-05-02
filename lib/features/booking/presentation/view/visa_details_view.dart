@@ -17,7 +17,10 @@ class VisaDetailsView extends StatelessWidget {
           icon: Icon(Iconsax.arrow_left, color: AppColors.darkText),
           onPressed: () => Navigator.pop(context),
         ),
-        title: Text('Visa Details', style: AppTextStyles.subtitle(color: AppColors.darkText)),
+        title: Text(
+          'Visa Details',
+          style: AppTextStyles.subtitle(color: AppColors.darkText),
+        ),
         centerTitle: true,
       ),
       body: SingleChildScrollView(
@@ -31,16 +34,24 @@ class VisaDetailsView extends StatelessWidget {
               decoration: BoxDecoration(
                 color: AppColors.accent.withValues(alpha: 0.1),
                 borderRadius: BorderRadius.circular(12),
-                border: Border.all(color: AppColors.accent.withValues(alpha: 0.3)),
+                border: Border.all(
+                  color: AppColors.accent.withValues(alpha: 0.3),
+                ),
               ),
               child: Row(
                 children: [
-                  const Icon(Iconsax.info_circle, color: AppColors.accent, size: 22),
+                  const Icon(
+                    Iconsax.info_circle,
+                    color: AppColors.accent,
+                    size: 22,
+                  ),
                   const SizedBox(width: 10),
                   Expanded(
                     child: Text(
                       'Please ensure your travel documents are up to date before the trip.',
-                      style: AppTextStyles.bodySmall(color: AppColors.secondaryText),
+                      style: AppTextStyles.bodySmall(
+                        color: AppColors.secondaryText,
+                      ),
                     ),
                   ),
                 ],
@@ -55,15 +66,29 @@ class VisaDetailsView extends StatelessWidget {
               style: AppTextStyles.body(),
             ),
             const SizedBox(height: 20),
-            Text('Required Documents', style: AppTextStyles.subtitle(color: AppColors.darkText)),
+            Text(
+              'Required Documents',
+              style: AppTextStyles.subtitle(color: AppColors.darkText),
+            ),
             const SizedBox(height: 12),
-            _buildRequirement('Valid passport with at least 6 months validity from the date of entry'),
-            _buildRequirement('Two recent passport-sized photographs with white background'),
+            _buildRequirement(
+              'Valid passport with at least 6 months validity from the date of entry',
+            ),
+            _buildRequirement(
+              'Two recent passport-sized photographs with white background',
+            ),
             _buildRequirement('Return flight ticket or proof of onward travel'),
-            _buildRequirement('Hotel reservation confirmation or proof of accommodation'),
-            _buildRequirement('Proof of sufficient funds for the duration of your stay'),
+            _buildRequirement(
+              'Hotel reservation confirmation or proof of accommodation',
+            ),
+            _buildRequirement(
+              'Proof of sufficient funds for the duration of your stay',
+            ),
             const SizedBox(height: 20),
-            Text('Important Notes', style: AppTextStyles.subtitle(color: AppColors.darkText)),
+            Text(
+              'Important Notes',
+              style: AppTextStyles.subtitle(color: AppColors.darkText),
+            ),
             const SizedBox(height: 12),
             Text(
               'If you plan to travel beyond the Sinai Peninsula to other parts of Egypt such as Cairo or Luxor, '
@@ -96,9 +121,7 @@ class VisaDetailsView extends StatelessWidget {
             ),
           ),
           const SizedBox(width: 10),
-          Expanded(
-            child: Text(text, style: AppTextStyles.body()),
-          ),
+          Expanded(child: Text(text, style: AppTextStyles.body())),
         ],
       ),
     );

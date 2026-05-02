@@ -64,7 +64,7 @@
 //         badge: true,
 //         sound: true,
 //       );
-      
+
 //       // Get APNS token for iOS
 //       String? apnsToken = await _firebaseMessaging.getAPNSToken();
 //       debugPrint('APNS Token: $apnsToken');
@@ -72,9 +72,9 @@
 
 //     // Initialize local notifications
 //     const AndroidInitializationSettings initializationSettingsAndroid = AndroidInitializationSettings('@mipmap/ic_launcher');
-        
+
 //     final DarwinInitializationSettings initializationSettingsIOS = DarwinInitializationSettings();
-            
+
 //     final InitializationSettings initializationSettings = InitializationSettings(
 //       android: initializationSettingsAndroid,
 //       iOS: initializationSettingsIOS,
@@ -96,7 +96,7 @@
 //     // Set up message handlers
 //     FirebaseMessaging.onMessage.listen(_handleForegroundMessage);
 //     FirebaseMessaging.onMessageOpenedApp.listen(_handleMessageOpenedApp);
-    
+
 //     // Check if app was opened from a notification
 //     await _checkInitialMessage();
 //   }
@@ -120,7 +120,7 @@
 //   Future<void> _getToken() async {
 //     _token = await _firebaseMessaging.getToken();
 //     debugPrint('FCM Token: $_token');
-    
+
 //     // Set up token refresh listener
 //     _firebaseMessaging.onTokenRefresh.listen((String token) {
 //       _token = token;
@@ -179,7 +179,7 @@
 //   // Check if app was opened from a notification when it was terminated
 //   Future<void> _checkInitialMessage() async {
 //     RemoteMessage? initialMessage = await _firebaseMessaging.getInitialMessage();
-    
+
 //     if (initialMessage != null) {
 //       debugPrint('App opened from terminated state: ${initialMessage.data}');
 //       _navigateToRoute(initialMessage.data);
@@ -190,7 +190,7 @@
 //   void _navigateToRoute(Map<String, dynamic> data) {
 //     // Extract route information from notification data
 //     String? route = data['route'];
-    
+
 //     if (route != null) {
 //       switch (route) {
 //         case 'order_details':

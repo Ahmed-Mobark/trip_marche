@@ -33,4 +33,3 @@ class FollowingsList extends StatelessWidget {
     );
   }
 }
-

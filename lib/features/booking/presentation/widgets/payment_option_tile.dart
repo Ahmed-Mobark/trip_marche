@@ -59,9 +59,15 @@ class PaymentOptionTile extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(title, style: AppTextStyles.bodyMedium(color: AppColors.darkText)),
+                  Text(
+                    title,
+                    style: AppTextStyles.bodyMedium(color: AppColors.darkText),
+                  ),
                   const SizedBox(height: 2),
-                  Text(subtitle, style: AppTextStyles.bodySmall(color: AppColors.greyText)),
+                  Text(
+                    subtitle,
+                    style: AppTextStyles.bodySmall(color: AppColors.greyText),
+                  ),
                 ],
               ),
             ),

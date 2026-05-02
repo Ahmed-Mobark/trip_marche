@@ -45,6 +45,15 @@ abstract class AppColors {
   static const Color statusBadge = Color(0xFFC89563);
   static const Color tabActive = primaryDark;
   static const Color starYellow = Color(0xFFFBB532);
+  static const Color infoBlue = Color(0xFF5B7FFF);
+  static const Color linkBlue = Color(0xFF1976D2);
+  static const Color burntOrange = Color(0xFFC93E27);
+  static const Color neutralIcon = greyTextColorLight;
+  static const Color cardPreviewStart = Color(0xFF1A1A2E);
+  static const Color cardPreviewEnd = Color(0xFF16213E);
+  static const Color scrim = Color(0xFF000000);
+  static const Color onImage = Color(0xFFFFFFFF);
+  static const Color shadow = Color(0xFF000000);
 
   static const Color error = red;
   static const Color success = green;
@@ -65,31 +74,24 @@ abstract class AppColors {
   // These resolve based on [brightness] which is updated by MyApp on every
   // theme change, so screens repaint automatically when the toggle flips.
   // ---------------------------------------------------------------------------
-  static Color get darkText =>
-      _isDark ? textColorDark : textColorLight;
-  static Color get bodyText =>
-      _isDark ? textColorDark : textColorLight;
-  static Color get greyText =>
-      _isDark ? greyTextColorDark : greyTextColorLight;
+  static Color get darkText => _isDark ? textColorDark : textColorLight;
+  static Color get bodyText => _isDark ? textColorDark : textColorLight;
+  static Color get greyText => _isDark ? greyTextColorDark : greyTextColorLight;
   static Color get secondaryText =>
       _isDark ? greyTextColorDark : greyTextColorLight;
-  static Color get captionText =>
-      _isDark ? hintColorDark : hintColorLight;
-  static Color get lightGreyText =>
-      _isDark ? hintColorDark : hintColorLight;
-  static Color get tabInactive =>
-      _isDark ? hintColorDark : hintColorLight;
+  static Color get captionText => _isDark ? hintColorDark : hintColorLight;
+  static Color get lightGreyText => _isDark ? hintColorDark : hintColorLight;
+  static Color get tabInactive => _isDark ? hintColorDark : hintColorLight;
+  static Color get onPrimary => _isDark ? textColorDark : cardColorLight;
+  static Color get inverseText => _isDark ? textColorLight : textColorDark;
 
-  static Color get border =>
-      _isDark ? borderColorDark : borderColorLight;
-  static Color get inputBg =>
-      _isDark ? inputBgDark : inputBgLight;
+  static Color get border => _isDark ? borderColorDark : borderColorLight;
+  static Color get inputBg => _isDark ? inputBgDark : inputBgLight;
   static Color get lightBg => inputBg;
+  static Color get disabled => _isDark ? disableColorDark : disableColorLight;
 
   static Color get scaffoldBg =>
       _isDark ? scaffoldColorDark : scaffoldColorLight;
-  static Color get background =>
-      _isDark ? cardColorDark : cardColorLight;
-  static Color get cardBg =>
-      _isDark ? cardColorDark : cardColorLight;
+  static Color get background => _isDark ? cardColorDark : cardColorLight;
+  static Color get cardBg => _isDark ? cardColorDark : cardColorLight;
 }

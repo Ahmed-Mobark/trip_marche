@@ -29,7 +29,10 @@ class TripTermsView extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(context.tr.bookingTripTermsHeader, style: AppTextStyles.heading3()),
+            Text(
+              context.tr.bookingTripTermsHeader,
+              style: AppTextStyles.heading3(),
+            ),
             const SizedBox(height: 8),
             Text(
               context.tr.bookingTripTermsLastUpdated('January 2026'),

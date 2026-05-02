@@ -11,12 +11,6 @@ class Pagination extends Equatable {
     required this.page,
   });
 
-
   @override
-  List<Object?> get props => [
-    totalItems,
-    totalPages,
-    page,
-  ];
-
+  List<Object?> get props => [totalItems, totalPages, page];
 }

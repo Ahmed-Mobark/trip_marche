@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'core/app/app_body.dart';
+import 'core/app/app_state.dart';
 import 'core/bloc/bloc_observer.dart';
 import 'core/injection/injection_container.dart' as injection;
 
@@ -11,5 +12,8 @@ void main() async {
   await ScreenUtil.ensureScreenSize();
   await injection.init();
   Bloc.observer = MyBlocObserver();
-  runApp(const MyApp());
+  // Read the persisted theme BEFORE the first frame so [AdaptiveTheme] can use
+  // it as its `initial` and we don't flash the wrong theme on app start.
+  final initialThemeMode = AppState.bootThemeMode();
+  runApp(MyApp(initialThemeMode: initialThemeMode));
 }

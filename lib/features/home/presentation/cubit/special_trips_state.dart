@@ -11,6 +11,7 @@ class SpecialTripsState extends Equatable {
     this.meta,
     this.categoryId,
     this.errorMessage,
+    this.wishlistErrorMessage,
   });
 
   final SpecialTripsStatus status;
@@ -18,6 +19,7 @@ class SpecialTripsState extends Equatable {
   final PaginationMeta? meta;
   final int? categoryId;
   final String? errorMessage;
+  final String? wishlistErrorMessage;
 
   bool get hasMore => meta?.hasMore ?? false;
   int get nextPage => (meta?.currentPage ?? 0) + 1;
@@ -28,6 +30,8 @@ class SpecialTripsState extends Equatable {
     PaginationMeta? meta,
     int? categoryId,
     String? errorMessage,
+    String? wishlistErrorMessage,
+    bool clearWishlistError = false,
   }) {
     return SpecialTripsState(
       status: status ?? this.status,
@@ -35,9 +39,13 @@ class SpecialTripsState extends Equatable {
       meta: meta ?? this.meta,
       categoryId: categoryId ?? this.categoryId,
       errorMessage: errorMessage,
+      wishlistErrorMessage: clearWishlistError
+          ? null
+          : (wishlistErrorMessage ?? this.wishlistErrorMessage),
     );
   }
 
   @override
-  List<Object?> get props => [status, trips, meta, categoryId, errorMessage];
+  List<Object?> get props =>
+      [status, trips, meta, categoryId, errorMessage, wishlistErrorMessage];
 }

@@ -4,7 +4,8 @@ import '../injection/injection_container.dart';
 import 'package:flutter/material.dart';
 
 class Validator {
-  static BuildContext context = sl<AppNavigator>().navigatorKey.currentState!.context;
+  static BuildContext context =
+      sl<AppNavigator>().navigatorKey.currentState!.context;
 
   static String? defaultValidator(String? value) {
     if (value == null || value.trim().isEmpty) {
@@ -56,12 +57,13 @@ class Validator {
     return null;
   }
 
-
   static String? email(String? value) {
     if (value == null || value.trim().isEmpty) {
       return context.tr.errorFieldRequired;
     }
-    if (!RegExp(r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$').hasMatch(value)) {
+    if (!RegExp(
+      r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$',
+    ).hasMatch(value)) {
       return context.tr.errorInvalidEmail;
     }
     return null;
@@ -72,8 +74,9 @@ class Validator {
       return context.tr.errorFieldRequired;
     }
     if (value.length < 8 ||
-        !RegExp(r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9#?!@$%^&*-]).{8,}$')
-            .hasMatch(value)) {
+        !RegExp(
+          r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9#?!@$%^&*-]).{8,}$',
+        ).hasMatch(value)) {
       return context.tr.errorInvalidPassword;
     }
     return null;
@@ -93,13 +96,14 @@ class Validator {
     if (value == null || value.trim().isEmpty) {
       return context.tr.errorFieldRequired;
     }
-    final sanitizedValue = value.startsWith("+") ? value.replaceFirst("+", "") : value;
+    final sanitizedValue = value.startsWith("+")
+        ? value.replaceFirst("+", "")
+        : value;
     if (int.tryParse(sanitizedValue) == null) {
       return context.tr.errorInvalidNumber;
     }
     return null;
   }
-
 
   static String? ibanValidator(String? value, String payment) {
     if (value == null || value.trim().isEmpty) {
@@ -126,7 +130,6 @@ class Validator {
     return null;
   }
 
-
   static String? stcPayMobileValidator(String? value) {
     if (value == null || value.trim().isEmpty) {
       return context.tr.errorFieldRequired;
@@ -147,7 +150,6 @@ class Validator {
     }
     return null;
   }
-
 
   static String? nationalIdValidator(String? value, String payment) {
     if (value == null || value.trim().isEmpty) {
@@ -181,11 +183,10 @@ class Validator {
     if (value == null || value.trim().isEmpty) {
       return context.tr.errorFieldRequired;
     }
-    const passportPattern = r'^[a-zA-Z0-9]{6,9}$'; 
+    const passportPattern = r'^[a-zA-Z0-9]{6,9}$';
     if (!RegExp(passportPattern).hasMatch(value.trim())) {
       return context.tr.errorInvalidPassport;
     }
     return null;
   }
-
 }

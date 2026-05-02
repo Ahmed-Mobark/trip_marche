@@ -35,6 +35,11 @@ class HomeCategoriesState extends Equatable {
   }
 
   @override
-  List<Object?> get props =>
-      [status, categories, selectedSlug, selectedId, errorMessage];
+  List<Object?> get props => [
+    status,
+    categories,
+    selectedSlug,
+    selectedId,
+    errorMessage,
+  ];
 }

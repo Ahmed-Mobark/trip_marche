@@ -10,7 +10,8 @@ class AppException implements Exception {
 }
 
 class ServerException extends AppException {
-  ServerException({required String message, Response? response}) : super(message, response: response);
+  ServerException({required String message, Response? response})
+    : super(message, response: response);
 }
 
 class FetchDataException extends AppException {

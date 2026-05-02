@@ -11,6 +11,7 @@ class StorageImpl implements Storage {
   static const String _token = "token";
   static const String _language = "language";
   static const String _onboarding = "onboarding";
+  static const String _themeMode = "theme_mode";
 
   StorageImpl({required this.stringBox, required this.boolBox});
 
@@ -79,4 +80,18 @@ class StorageImpl implements Storage {
   //* check language
   @override
   bool isSelectLang() => stringBox.get(_language) != null;
+
+  //* theme storage
+  @override
+  Future<void> storeThemeMode({required String themeMode}) async {
+    await stringBox.put(_themeMode, themeMode);
+  }
+
+  @override
+  String? getThemeMode() => stringBox.get(_themeMode);
+
+  @override
+  Future<void> deleteThemeMode() async {
+    await stringBox.delete(_themeMode);
+  }
 }

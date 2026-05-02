@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:iconsax/iconsax.dart';
-import '../../../../core/config/app_colors.dart';
+import '../../../../core/theme/app_colors.dart';
 import '../../../../core/config/styles/styles.dart';
 
 class ProfileMenuItem extends StatelessWidget {
@@ -29,7 +29,10 @@ class ProfileMenuItem extends StatelessWidget {
     return InkWell(
       onTap: onTap,
       child: Padding(
-        padding: EdgeInsetsDirectional.symmetric(horizontal: 18.w, vertical: 14.h),
+        padding: EdgeInsetsDirectional.symmetric(
+          horizontal: 18.w,
+          vertical: 14.h,
+        ),
         child: Row(
           children: [
             Icon(

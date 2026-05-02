@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:iconsax/iconsax.dart';
 import '../../../../core/theme/app_colors.dart';
 
@@ -37,8 +36,11 @@ class CompanyReviewItem extends StatelessWidget {
                 CircleAvatar(
                   radius: 18,
                   backgroundColor: AppColors.lightBg,
-                  child: Icon(Iconsax.user,
-                      size: 18, color: AppColors.greyText),
+                  child: Icon(
+                    Iconsax.user,
+                    size: 18,
+                    color: AppColors.greyText,
+                  ),
                 ),
                 const SizedBox(width: 10),
                 Expanded(
@@ -47,7 +49,7 @@ class CompanyReviewItem extends StatelessWidget {
                     children: [
                       Text(
                         name,
-                        style: GoogleFonts.inter(
+                        style: Theme.of(context).textTheme.bodyMedium!.copyWith(
                           fontSize: 14,
                           fontWeight: FontWeight.w600,
                           color: AppColors.darkText,
@@ -59,7 +61,7 @@ class CompanyReviewItem extends StatelessWidget {
                           (i) => Icon(
                             i < rating ? Icons.star : Icons.star_border,
                             size: 14,
-                            color: const Color(0xFFFFD43B),
+                            color: AppColors.yellow,
                           ),
                         ),
                       ),
@@ -68,7 +70,7 @@ class CompanyReviewItem extends StatelessWidget {
                 ),
                 Text(
                   date,
-                  style: GoogleFonts.inter(
+                  style: Theme.of(context).textTheme.bodyMedium!.copyWith(
                     fontSize: 11,
                     fontWeight: FontWeight.w400,
                     color: AppColors.greyText,
@@ -79,7 +81,7 @@ class CompanyReviewItem extends StatelessWidget {
             const SizedBox(height: 8),
             Text(
               comment,
-              style: GoogleFonts.inter(
+              style: Theme.of(context).textTheme.bodyMedium!.copyWith(
                 fontSize: 13,
                 fontWeight: FontWeight.w400,
                 color: AppColors.secondaryText,

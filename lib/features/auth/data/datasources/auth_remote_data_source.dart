@@ -9,8 +9,14 @@ abstract class AuthRemoteDataSource {
   Future<Map<String, dynamic>> register(RegisterRequest request);
   Future<Map<String, dynamic>> login(LoginRequest request);
   Future<Map<String, dynamic>> verifyEmail(VerifyEmailRequest request);
-  Future<Map<String, dynamic>> sendOtp({required String email, required String type});
-  Future<Map<String, dynamic>> verifyOtp({required String email, required String code});
+  Future<Map<String, dynamic>> sendOtp({
+    required String email,
+    required String type,
+  });
+  Future<Map<String, dynamic>> verifyOtp({
+    required String email,
+    required String code,
+  });
   Future<Map<String, dynamic>> resetPassword(ResetPasswordRequest request);
   Future<Map<String, dynamic>> logout();
 }
@@ -48,7 +54,10 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
   }
 
   @override
-  Future<Map<String, dynamic>> sendOtp({required String email, required String type}) async {
+  Future<Map<String, dynamic>> sendOtp({
+    required String email,
+    required String type,
+  }) async {
     final response = await _apiHelper.post<Map<String, dynamic>>(
       url: AppEndpoints.authSendOtp,
       body: {'email': email, 'type': type},
@@ -57,7 +66,10 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
   }
 
   @override
-  Future<Map<String, dynamic>> verifyOtp({required String email, required String code}) async {
+  Future<Map<String, dynamic>> verifyOtp({
+    required String email,
+    required String code,
+  }) async {
     final response = await _apiHelper.post<Map<String, dynamic>>(
       url: AppEndpoints.authVerifyOtp,
       body: {'email': email, 'code': code},
@@ -66,7 +78,9 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
   }
 
   @override
-  Future<Map<String, dynamic>> resetPassword(ResetPasswordRequest request) async {
+  Future<Map<String, dynamic>> resetPassword(
+    ResetPasswordRequest request,
+  ) async {
     final response = await _apiHelper.post<Map<String, dynamic>>(
       url: AppEndpoints.authResetPassword,
       body: request.toJson(),

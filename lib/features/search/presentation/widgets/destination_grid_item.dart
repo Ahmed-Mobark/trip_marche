@@ -8,11 +8,7 @@ class DestinationGridItem extends StatelessWidget {
   final DestinationItem destination;
   final VoidCallback? onTap;
 
-  const DestinationGridItem({
-    super.key,
-    required this.destination,
-    this.onTap,
-  });
+  const DestinationGridItem({super.key, required this.destination, this.onTap});
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +22,8 @@ class DestinationGridItem extends StatelessWidget {
             CachedNetworkImage(
               imageUrl: destination.imageUrl,
               fit: BoxFit.cover,
-              placeholder: (context, url) => Container(color: AppColors.inputBg),
+              placeholder: (context, url) =>
+                  Container(color: AppColors.inputBg),
               errorWidget: (context, url, error) => Container(
                 color: AppColors.inputBg,
                 child: Icon(Icons.image, color: AppColors.greyText),
@@ -38,8 +35,8 @@ class DestinationGridItem extends StatelessWidget {
                   begin: Alignment.topCenter,
                   end: Alignment.bottomCenter,
                   colors: [
-                    Colors.transparent,
-                    Colors.black.withValues(alpha: 0.55),
+                    AppColors.transparent,
+                    AppColors.shadow.withValues(alpha: 0.55),
                   ],
                 ),
               ),
@@ -49,8 +46,9 @@ class DestinationGridItem extends StatelessWidget {
               left: 10,
               child: Text(
                 destination.name,
-                style: AppTextStyles.subtitle(color: AppColors.white)
-                    .copyWith(fontSize: 14),
+                style: AppTextStyles.subtitle(
+                  color: AppColors.onImage,
+                ).copyWith(fontSize: 14),
               ),
             ),
           ],

@@ -6,7 +6,14 @@ class ShimmerShape extends StatelessWidget {
   final double radius;
   final Color? color;
   final EdgeInsetsGeometry? margin;
-  const ShimmerShape({super.key, this.color, this.margin, required this.width, required this.height, required this.radius});
+  const ShimmerShape({
+    super.key,
+    this.color,
+    this.margin,
+    required this.width,
+    required this.height,
+    required this.radius,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +23,7 @@ class ShimmerShape extends StatelessWidget {
       margin: margin,
       decoration: BoxDecoration(
         color: color ?? Theme.of(context).cardColor,
-        borderRadius: BorderRadius.circular(radius)
+        borderRadius: BorderRadius.circular(radius),
       ),
     );
   }

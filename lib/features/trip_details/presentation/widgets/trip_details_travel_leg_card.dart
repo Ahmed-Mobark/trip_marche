@@ -104,8 +104,9 @@ class _CityTimeColumn extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final crossAxis =
-        alignEnd ? CrossAxisAlignment.end : CrossAxisAlignment.start;
+    final crossAxis = alignEnd
+        ? CrossAxisAlignment.end
+        : CrossAxisAlignment.start;
     final textAlign = alignEnd ? TextAlign.end : TextAlign.start;
 
     return Column(
@@ -125,4 +126,3 @@ class _CityTimeColumn extends StatelessWidget {
     );
   }
 }
-

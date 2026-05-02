@@ -19,11 +19,14 @@ class VerifyNumberState extends Equatable {
 
   String? get validationErrorsDescription {
     if (validationErrors == null || validationErrors!.isEmpty) return null;
-    return validationErrors!.entries.map((e) {
-      final msgs =
-          e.value is List ? (e.value as List).join(', ') : e.value.toString();
-      return msgs;
-    }).join('\n');
+    return validationErrors!.entries
+        .map((e) {
+          final msgs = e.value is List
+              ? (e.value as List).join(', ')
+              : e.value.toString();
+          return msgs;
+        })
+        .join('\n');
   }
 
   VerifyNumberState copyWith({
@@ -44,10 +47,10 @@ class VerifyNumberState extends Equatable {
 
   @override
   List<Object?> get props => [
-        secondsRemaining,
-        canResend,
-        status,
-        errorMessage,
-        validationErrors,
-      ];
+    secondsRemaining,
+    canResend,
+    status,
+    errorMessage,
+    validationErrors,
+  ];
 }

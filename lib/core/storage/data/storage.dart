@@ -1,4 +1,3 @@
-
 abstract class Storage {
   // User Storage
   Future<void> storeUser({required Map<String, dynamic> userJson});
@@ -25,5 +24,12 @@ abstract class Storage {
   // Check Language
   bool isSelectLang();
 
+  // Theme Storage
+  /// Persists the active app theme mode (`light`, `dark` or `system`).
+  Future<void> storeThemeMode({required String themeMode});
 
+  /// Returns the persisted theme mode key, or `null` when never set.
+  String? getThemeMode();
+
+  Future<void> deleteThemeMode();
 }

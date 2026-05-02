@@ -8,6 +8,8 @@ class LoadingCardForDropDowns extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return AppShimmer(child: ShimmerShape(width: double.infinity, height: 50.h, radius: 15.r));
+    return AppShimmer(
+      child: ShimmerShape(width: double.infinity, height: 50.h, radius: 15.r),
+    );
   }
 }

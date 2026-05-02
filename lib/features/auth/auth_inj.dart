@@ -9,7 +9,6 @@ import 'presentation/cubit/forgot_password/forgot_password_cubit.dart';
 import 'presentation/cubit/login/login_cubit.dart';
 import 'presentation/cubit/sign_up/sign_up_cubit.dart';
 
-
 Future<void> initAuthInjection(GetIt sl) async {
   // Data Sources
   sl.registerLazySingleton<AuthRemoteDataSource>(
@@ -33,4 +32,3 @@ Future<void> initAuthInjection(GetIt sl) async {
   );
   // VerifyNumberCubit is created directly in the view (requires email param)
 }
-

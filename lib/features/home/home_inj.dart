@@ -1,4 +1,5 @@
 import 'package:get_it/get_it.dart';
+import 'package:trip_marche/features/wishlist/domain/repositories/trip_wishlist_repository.dart';
 import '../../core/network/network_service/api_basehelper.dart';
 import 'data/datasources/home_remote_data_source.dart';
 import 'data/repositories/home_repository_impl.dart';
@@ -21,7 +22,7 @@ void initHomeInjection(GetIt sl) {
 
   // Cubits
   sl.registerFactory<HomeSectionsCubit>(
-    () => HomeSectionsCubit(sl<HomeRepository>()),
+    () => HomeSectionsCubit(sl<HomeRepository>(), sl<TripWishlistRepository>()),
   );
   sl.registerFactory<HomeBannersCubit>(
     () => HomeBannersCubit(sl<HomeRepository>()),
@@ -30,6 +31,6 @@ void initHomeInjection(GetIt sl) {
     () => HomeCategoriesCubit(sl<HomeRepository>()),
   );
   sl.registerFactory<SpecialTripsCubit>(
-    () => SpecialTripsCubit(sl<HomeRepository>()),
+    () => SpecialTripsCubit(sl<HomeRepository>(), sl<TripWishlistRepository>()),
   );
 }

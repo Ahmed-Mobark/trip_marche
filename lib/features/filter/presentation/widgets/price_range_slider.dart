@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_text_styles.dart';
 
@@ -24,17 +23,14 @@ class PriceRangeSlider extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          'Price Range',
-          style: AppTextStyles.subtitle(),
-        ),
+        Text('Price Range', style: AppTextStyles.subtitle()),
         const SizedBox(height: 8),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
               '\$${values.start.round()}',
-              style: GoogleFonts.inter(
+              style: Theme.of(context).textTheme.bodyMedium!.copyWith(
                 fontSize: 14,
                 fontWeight: FontWeight.w500,
                 color: AppColors.primary,
@@ -42,7 +38,7 @@ class PriceRangeSlider extends StatelessWidget {
             ),
             Text(
               '\$${values.end.round()}',
-              style: GoogleFonts.inter(
+              style: Theme.of(context).textTheme.bodyMedium!.copyWith(
                 fontSize: 14,
                 fontWeight: FontWeight.w500,
                 color: AppColors.primary,

@@ -31,29 +31,34 @@ class InstructionSection extends StatelessWidget {
             children: [
               Icon(icon, color: AppColors.primary, size: 22),
               const SizedBox(width: 10),
-              Text(title, style: AppTextStyles.subtitle(color: AppColors.darkText)),
+              Text(
+                title,
+                style: AppTextStyles.subtitle(color: AppColors.darkText),
+              ),
             ],
           ),
           const SizedBox(height: 12),
-          ...items.map((item) => Padding(
-                padding: const EdgeInsets.only(bottom: 8),
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Container(
-                      margin: const EdgeInsets.only(top: 6),
-                      width: 6,
-                      height: 6,
-                      decoration: const BoxDecoration(
-                        color: AppColors.primary,
-                        shape: BoxShape.circle,
-                      ),
+          ...items.map(
+            (item) => Padding(
+              padding: const EdgeInsets.only(bottom: 8),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Container(
+                    margin: const EdgeInsets.only(top: 6),
+                    width: 6,
+                    height: 6,
+                    decoration: const BoxDecoration(
+                      color: AppColors.primary,
+                      shape: BoxShape.circle,
                     ),
-                    const SizedBox(width: 10),
-                    Expanded(child: Text(item, style: AppTextStyles.body())),
-                  ],
-                ),
-              )),
+                  ),
+                  const SizedBox(width: 10),
+                  Expanded(child: Text(item, style: AppTextStyles.body())),
+                ],
+              ),
+            ),
+          ),
         ],
       ),
     );

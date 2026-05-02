@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:iconsax/iconsax.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_text_styles.dart';
@@ -56,7 +55,10 @@ class _TripOptionsViewState extends State<TripOptionsView> {
           icon: Icon(Iconsax.arrow_left, color: AppColors.darkText),
           onPressed: () => Navigator.pop(context),
         ),
-        title: Text('Trip Options', style: AppTextStyles.subtitle(color: AppColors.darkText)),
+        title: Text(
+          'Trip Options',
+          style: AppTextStyles.subtitle(color: AppColors.darkText),
+        ),
         centerTitle: true,
       ),
       body: SingleChildScrollView(
@@ -95,11 +97,29 @@ class _TripOptionsViewState extends State<TripOptionsView> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text('Room Type', style: AppTextStyles.subtitle(color: AppColors.darkText)),
+        Text(
+          'Room Type',
+          style: AppTextStyles.subtitle(color: AppColors.darkText),
+        ),
         const SizedBox(height: 12),
-        RadioOption(value: 'Single', label: 'Single Room (+\$100)', groupValue: _roomType, onChanged: (v) => setState(() => _roomType = v!)),
-        RadioOption(value: 'Double', label: 'Double Room (Default)', groupValue: _roomType, onChanged: (v) => setState(() => _roomType = v!)),
-        RadioOption(value: 'Triple', label: 'Triple Room (-\$50)', groupValue: _roomType, onChanged: (v) => setState(() => _roomType = v!)),
+        RadioOption(
+          value: 'Single',
+          label: 'Single Room (+\$100)',
+          groupValue: _roomType,
+          onChanged: (v) => setState(() => _roomType = v!),
+        ),
+        RadioOption(
+          value: 'Double',
+          label: 'Double Room (Default)',
+          groupValue: _roomType,
+          onChanged: (v) => setState(() => _roomType = v!),
+        ),
+        RadioOption(
+          value: 'Triple',
+          label: 'Triple Room (-\$50)',
+          groupValue: _roomType,
+          onChanged: (v) => setState(() => _roomType = v!),
+        ),
       ],
     );
   }
@@ -108,11 +128,29 @@ class _TripOptionsViewState extends State<TripOptionsView> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text('Bus Seat', style: AppTextStyles.subtitle(color: AppColors.darkText)),
+        Text(
+          'Bus Seat',
+          style: AppTextStyles.subtitle(color: AppColors.darkText),
+        ),
         const SizedBox(height: 12),
-        RadioOption(value: 'Front', label: 'Front Seat (+\$20)', groupValue: _busSeat, onChanged: (v) => setState(() => _busSeat = v!)),
-        RadioOption(value: 'Middle', label: 'Middle Seat (Default)', groupValue: _busSeat, onChanged: (v) => setState(() => _busSeat = v!)),
-        RadioOption(value: 'Back', label: 'Back Seat', groupValue: _busSeat, onChanged: (v) => setState(() => _busSeat = v!)),
+        RadioOption(
+          value: 'Front',
+          label: 'Front Seat (+\$20)',
+          groupValue: _busSeat,
+          onChanged: (v) => setState(() => _busSeat = v!),
+        ),
+        RadioOption(
+          value: 'Middle',
+          label: 'Middle Seat (Default)',
+          groupValue: _busSeat,
+          onChanged: (v) => setState(() => _busSeat = v!),
+        ),
+        RadioOption(
+          value: 'Back',
+          label: 'Back Seat',
+          groupValue: _busSeat,
+          onChanged: (v) => setState(() => _busSeat = v!),
+        ),
       ],
     );
   }
@@ -121,7 +159,10 @@ class _TripOptionsViewState extends State<TripOptionsView> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text('Number of Travelers', style: AppTextStyles.subtitle(color: AppColors.darkText)),
+        Text(
+          'Number of Travelers',
+          style: AppTextStyles.subtitle(color: AppColors.darkText),
+        ),
         const SizedBox(height: 12),
         Container(
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
@@ -133,7 +174,10 @@ class _TripOptionsViewState extends State<TripOptionsView> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text('Travelers', style: AppTextStyles.bodyMedium(color: AppColors.darkText)),
+              Text(
+                'Travelers',
+                style: AppTextStyles.bodyMedium(color: AppColors.darkText),
+              ),
               Row(
                 children: [
                   CounterButton(
@@ -166,15 +210,25 @@ class _TripOptionsViewState extends State<TripOptionsView> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text('Special Requests', style: AppTextStyles.subtitle(color: AppColors.darkText)),
+        Text(
+          'Special Requests',
+          style: AppTextStyles.subtitle(color: AppColors.darkText),
+        ),
         const SizedBox(height: 12),
         TextFormField(
           controller: _specialRequestsController,
           maxLines: 3,
-          style: GoogleFonts.inter(fontSize: 14, fontWeight: FontWeight.w500, color: AppColors.darkText),
+          style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+            fontSize: 14,
+            fontWeight: FontWeight.w500,
+            color: AppColors.darkText,
+          ),
           decoration: InputDecoration(
             hintText: 'Any special requests or dietary requirements...',
-            hintStyle: GoogleFonts.inter(fontSize: 14, color: AppColors.greyText),
+            hintStyle: Theme.of(context).textTheme.bodyMedium!.copyWith(
+              fontSize: 14,
+              color: AppColors.greyText,
+            ),
             filled: true,
             fillColor: AppColors.lightBg,
             border: OutlineInputBorder(
@@ -207,10 +261,13 @@ class _TripOptionsViewState extends State<TripOptionsView> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text('Total Price', style: AppTextStyles.subtitle(color: AppColors.darkText)),
+          Text(
+            'Total Price',
+            style: AppTextStyles.subtitle(color: AppColors.darkText),
+          ),
           Text(
             '\$${_totalPrice.toStringAsFixed(0)}',
-            style: GoogleFonts.inter(
+            style: Theme.of(context).textTheme.bodyMedium!.copyWith(
               fontSize: 24,
               fontWeight: FontWeight.w700,
               color: AppColors.primary,
@@ -231,9 +288,7 @@ class _TripOptionsViewState extends State<TripOptionsView> {
           gradient: AppColors.primaryGradient,
           borderRadius: BorderRadius.circular(12),
         ),
-        child: Center(
-          child: Text('Continue', style: AppTextStyles.button()),
-        ),
+        child: Center(child: Text('Continue', style: AppTextStyles.button())),
       ),
     );
   }

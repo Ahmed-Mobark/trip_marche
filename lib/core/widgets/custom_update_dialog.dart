@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import '../config/app_colors.dart';
+import '../theme/app_colors.dart';
+import '../theme/app_text_styles.dart';
 import '../extensions/localization.dart';
 
 class CustomUpdateDialog extends StatelessWidget {
@@ -15,7 +16,7 @@ class CustomUpdateDialog extends StatelessWidget {
     return PopScope(
       canPop: isMandatory ? false : true,
       child: Dialog(
-        backgroundColor: Colors.white,
+        backgroundColor: AppColors.cardBg,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(20.0),
         ),
@@ -32,10 +33,7 @@ class CustomUpdateDialog extends StatelessWidget {
               const SizedBox(height: 20),
               Text(
                 context.tr.updateAvailableTitle,
-                style: const TextStyle(
-                  fontSize: 22,
-                  fontWeight: FontWeight.bold,
-                ),
+                style: AppTextStyles.heading2(color: AppColors.bodyText),
               ),
               const SizedBox(height: 20),
               Text(
@@ -43,7 +41,7 @@ class CustomUpdateDialog extends StatelessWidget {
                     ? context.tr.updateMandatoryMessage
                     : context.tr.updateOptionalMessage,
                 textAlign: TextAlign.center,
-                style: const TextStyle(fontSize: 16),
+                style: AppTextStyles.body(color: AppColors.bodyText),
               ),
               const SizedBox(height: 30),
               Row(
@@ -62,8 +60,7 @@ class CustomUpdateDialog extends StatelessWidget {
                         ),
                         child: Text(
                           context.tr.skip,
-                          style: const TextStyle(
-                            fontSize: 16,
+                          style: AppTextStyles.bodyMedium(
                             color: AppColors.primary,
                           ),
                         ),
@@ -83,9 +80,8 @@ class CustomUpdateDialog extends StatelessWidget {
                       ),
                       child: Text(
                         context.tr.updateNow,
-                        style: const TextStyle(
-                          fontSize: 16,
-                          color: Colors.white,
+                        style: AppTextStyles.bodyMedium(
+                          color: AppColors.onPrimary,
                         ),
                       ),
                     ),

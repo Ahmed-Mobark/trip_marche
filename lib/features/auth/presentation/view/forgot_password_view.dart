@@ -37,76 +37,86 @@ class ForgotPasswordView extends StatelessWidget {
                 }
               },
               child: AuthHeader(
-              showIllustration: false,
-              compactTopBar: true,
-              onBack: () => sl<AppNavigator>().pop(),
-              child: SingleChildScrollView(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 24, vertical: 20),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      context.tr.authForgotPasswordTitle,
-                      style: AppTextStyles.heading2(),
-                    ),
-                    const SizedBox(height: 8),
-                    Text(
-                      context.tr.authForgotPasswordSubtitle,
-                      style: AppTextStyles.body(color: AppColors.greyText),
-                    ),
-                    const SizedBox(height: 32),
+                showIllustration: false,
+                compactTopBar: true,
+                onBack: () => sl<AppNavigator>().pop(),
+                child: SingleChildScrollView(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 24,
+                    vertical: 20,
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        context.tr.authForgotPasswordTitle,
+                        style: AppTextStyles.heading2(),
+                      ),
+                      const SizedBox(height: 8),
+                      Text(
+                        context.tr.authForgotPasswordSubtitle,
+                        style: AppTextStyles.body(color: AppColors.greyText),
+                      ),
+                      const SizedBox(height: 32),
 
-                    _FieldTitle(text: context.tr.authEmailLabel),
-                    const SizedBox(height: 8),
-                    AppTextField(
-                      hint: context.tr.authEmailHint,
-                      controller:
-                          context.read<ForgotPasswordCubit>().emailController,
-                      keyboardType: TextInputType.emailAddress,
-                      prefixWidget: Padding(
-                        padding: const EdgeInsets.all(12),
-                        child: SvgPicture.asset(
-                          AppIcons.icSms,
-                          width: 20,
-                          height: 20,
-                          colorFilter: ColorFilter.mode(
-                            AppColors.greyText,
-                            BlendMode.srcIn,
+                      _FieldTitle(text: context.tr.authEmailLabel),
+                      const SizedBox(height: 8),
+                      AppTextField(
+                        hint: context.tr.authEmailHint,
+                        controller: context
+                            .read<ForgotPasswordCubit>()
+                            .emailController,
+                        keyboardType: TextInputType.emailAddress,
+                        prefixWidget: Padding(
+                          padding: const EdgeInsets.all(12),
+                          child: SvgPicture.asset(
+                            AppIcons.icSms,
+                            width: 20,
+                            height: 20,
+                            colorFilter: ColorFilter.mode(
+                              AppColors.greyText,
+                              BlendMode.srcIn,
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                    const SizedBox(height: 44),
+                      const SizedBox(height: 44),
 
-                    BlocBuilder<ForgotPasswordCubit, ForgotPasswordState>(
-                      buildWhen: (p, n) => p.status != n.status,
-                      builder: (context, state) {
-                        final isLoading = state.status == ForgotPasswordStatus.loading;
-                        return AppButton(
-                          text: isLoading ? null : context.tr.authSendCodeButton,
-                          radius: 999,
-                          heigh: 54,
-                          onTap: isLoading ? null : () {
-                            context.read<ForgotPasswordCubit>().submit();
-                          },
-                          child: isLoading
-                              ? const SizedBox(
-                                  width: 24,
-                                  height: 24,
-                                  child: CircularProgressIndicator(
-                                    color: Colors.white,
-                                    strokeWidth: 2.5,
-                                  ),
-                                )
-                              : null,
-                        );
-                      },
-                    ),
-                  ],
+                      BlocBuilder<ForgotPasswordCubit, ForgotPasswordState>(
+                        buildWhen: (p, n) => p.status != n.status,
+                        builder: (context, state) {
+                          final isLoading =
+                              state.status == ForgotPasswordStatus.loading;
+                          return AppButton(
+                            text: isLoading
+                                ? null
+                                : context.tr.authSendCodeButton,
+                            radius: 999,
+                            heigh: 54,
+                            onTap: isLoading
+                                ? null
+                                : () {
+                                    context
+                                        .read<ForgotPasswordCubit>()
+                                        .submit();
+                                  },
+                            child: isLoading
+                                ? const SizedBox(
+                                    width: 24,
+                                    height: 24,
+                                    child: CircularProgressIndicator(
+                                      color: AppColors.onImage,
+                                      strokeWidth: 2.5,
+                                    ),
+                                  )
+                                : null,
+                          );
+                        },
+                      ),
+                    ],
+                  ),
                 ),
               ),
-            ),
             ),
           );
         },
@@ -124,10 +134,9 @@ class _FieldTitle extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       text,
-      style: AppTextStyles.bodyMedium(color: AppColors.darkText).copyWith(
-        fontWeight: FontWeight.w700,
-        fontSize: 14,
-      ),
+      style: AppTextStyles.bodyMedium(
+        color: AppColors.darkText,
+      ).copyWith(fontWeight: FontWeight.w700, fontSize: 14),
     );
   }
 }

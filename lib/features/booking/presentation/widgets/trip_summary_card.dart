@@ -51,13 +51,13 @@ class TripSummaryCard extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(title, style: AppTextStyles.bodyMedium(color: AppColors.darkText)),
+                Text(
+                  title,
+                  style: AppTextStyles.bodyMedium(color: AppColors.darkText),
+                ),
                 const SizedBox(height: 4),
                 Text(subtitle, style: AppTextStyles.bodySmall()),
-                if (trailing != null) ...[
-                  const SizedBox(height: 4),
-                  trailing!,
-                ],
+                if (trailing != null) ...[const SizedBox(height: 4), trailing!],
                 if (ratingRow != null) ...[
                   const SizedBox(height: 4),
                   ratingRow!,

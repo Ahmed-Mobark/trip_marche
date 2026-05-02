@@ -1,4 +1,1 @@
-enum AppImageSource {
-  camera,
-  gallery,
-}
+enum AppImageSource { camera, gallery }

@@ -28,8 +28,7 @@ class ResetPasswordCubit extends Cubit<ResetPasswordState> {
   }
 
   void toggleObscureConfirmPassword() {
-    emit(state.copyWith(
-        obscureConfirmPassword: !state.obscureConfirmPassword));
+    emit(state.copyWith(obscureConfirmPassword: !state.obscureConfirmPassword));
   }
 
   Future<void> submit() async {
@@ -46,11 +45,13 @@ class ResetPasswordCubit extends Cubit<ResetPasswordState> {
 
     result.fold(
       (failure) {
-        emit(state.copyWith(
-          status: ResetPasswordStatus.failure,
-          errorMessage: failure.message,
-          validationErrors: failure.errors,
-        ));
+        emit(
+          state.copyWith(
+            status: ResetPasswordStatus.failure,
+            errorMessage: failure.message,
+            validationErrors: failure.errors,
+          ),
+        );
       },
       (_) {
         emit(state.copyWith(status: ResetPasswordStatus.success));

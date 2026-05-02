@@ -28,8 +28,8 @@ class ErrorHelper {
         final String message = _extractMessage(data);
         final Map<String, dynamic>? errors =
             data is Map<String, dynamic> && data['errors'] is Map
-                ? Map<String, dynamic>.from(data['errors'])
-                : null;
+            ? Map<String, dynamic>.from(data['errors'])
+            : null;
         return ValidationException(message, validationErrors: errors);
       default:
         return ServerException(

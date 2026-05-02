@@ -1,4 +1,5 @@
 import '../config/app_icons.dart';
+import '../theme/app_colors.dart';
 import '../config/styles/styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -79,6 +80,7 @@ class AppTextFormField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final radius = BorderRadius.circular((borderRadius ?? 12).r);
+    final colorScheme = Theme.of(context).colorScheme;
 
     OutlineInputBorder buildBorder(Color color) {
       return OutlineInputBorder(
@@ -98,7 +100,7 @@ class AppTextFormField extends StatelessWidget {
       onTap: onTap,
       readOnly: readOnly,
       style: TextStyles.textViewMedium14.copyWith(
-        color: textColor ?? Colors.black,
+        color: textColor ?? colorScheme.onSurface,
       ),
       onTapOutside: (event) {
         FocusManager.instance.primaryFocus?.unfocus();
@@ -115,7 +117,7 @@ class AppTextFormField extends StatelessWidget {
       maxLengthEnforcement: MaxLengthEnforcement.none,
       decoration: InputDecoration(
         filled: true,
-        fillColor: cardColor ?? Theme.of(context).cardColor,
+        fillColor: cardColor ?? AppColors.inputBg,
         hintText: hintText,
         hintStyle: hintStyle,
         labelText: label,
@@ -145,12 +147,12 @@ class AppTextFormField extends StatelessWidget {
         prefix: prefix,
         suffix: suffix,
 
-        enabledBorder: buildBorder(borderColor ?? Colors.grey.shade500),
+        enabledBorder: buildBorder(borderColor ?? AppColors.border),
         focusedBorder: buildBorder(
           focusedBorderColor ?? Theme.of(context).primaryColor,
         ),
-        errorBorder: buildBorder(errorBorderColor ?? Colors.red),
-        focusedErrorBorder: buildBorder(errorBorderColor ?? Colors.red),
+        errorBorder: buildBorder(errorBorderColor ?? colorScheme.error),
+        focusedErrorBorder: buildBorder(errorBorderColor ?? colorScheme.error),
         errorMaxLines: errorMaxLines,
       ),
     );

@@ -12,13 +12,11 @@ class PopularTripGridCard extends StatelessWidget {
     required this.trip,
     this.onTap,
     this.onFavoriteTap,
-    this.isFavorite = false,
   });
 
   final TripModel trip;
   final VoidCallback? onTap;
   final VoidCallback? onFavoriteTap;
-  final bool isFavorite;
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +28,7 @@ class PopularTripGridCard extends StatelessWidget {
           onTap: onTap,
           child: Container(
             decoration: BoxDecoration(
-              color: Colors.white,
+              color: AppColors.cardBg,
               borderRadius: BorderRadius.circular(18.r),
             ),
             child: Column(
@@ -52,22 +50,29 @@ class PopularTripGridCard extends StatelessWidget {
                         PositionedDirectional(
                           top: 10.h,
                           end: 10.w,
-                          child: InkWell(
-                            onTap: onFavoriteTap,
-                            borderRadius: BorderRadius.circular(999),
-                            child: Container(
-                              width: 32.w,
-                              height: 32.w,
-                              decoration: BoxDecoration(
-                                color: Colors.black.withValues(alpha: 0.25),
-                                shape: BoxShape.circle,
-                              ),
-                              child: Icon(
-                                trip.isWishlisted
-                                    ? Iconsax.heart5
-                                    : Iconsax.heart,
-                                size: 16.sp,
-                                color: Colors.white,
+                          child: Material(
+                            color: AppColors.transparent,
+                            child: InkWell(
+                              onTap: onFavoriteTap,
+                              borderRadius: BorderRadius.circular(999),
+                              child: Container(
+                                width: 32.w,
+                                height: 32.w,
+                                decoration: BoxDecoration(
+                                  color: AppColors.shadow.withValues(
+                                    alpha: 0.35,
+                                  ),
+                                  shape: BoxShape.circle,
+                                ),
+                                child: Icon(
+                                  trip.isWishlisted
+                                      ? Iconsax.heart5
+                                      : Iconsax.heart,
+                                  size: 16.sp,
+                                  color: trip.isWishlisted
+                                      ? AppColors.error
+                                      : AppColors.onImage,
+                                ),
                               ),
                             ),
                           ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:trip_marche/core/theme/app_colors.dart';
 
 class QuickActionItem {
   final String title;
@@ -129,6 +130,7 @@ class DestinationItem {
 }
 
 class TripItem {
+  final int id;
   final String title;
   final String location;
   final String imageUrl;
@@ -138,6 +140,7 @@ class TripItem {
   final String? status;
 
   const TripItem({
+    this.id = 0,
     required this.title,
     required this.location,
     required this.imageUrl,
@@ -153,32 +156,32 @@ abstract class DummyData {
     QuickActionItem(
       title: 'Schedule',
       icon: Icons.calendar_month_outlined,
-      iconColor: Color(0xFF5B7FFF),
+      iconColor: AppColors.infoBlue,
     ),
     QuickActionItem(
       title: 'Messages',
       icon: Icons.chat_bubble_outline,
-      iconColor: Color(0xFF645A9E),
+      iconColor: AppColors.primaryDark,
     ),
     QuickActionItem(
       title: 'Expense',
       icon: Icons.receipt_long_outlined,
-      iconColor: Color(0xFFC93E27),
+      iconColor: AppColors.burntOrange,
     ),
     QuickActionItem(
       title: 'News',
       icon: Icons.newspaper_outlined,
-      iconColor: Color(0xFF1976D2),
+      iconColor: AppColors.linkBlue,
     ),
     QuickActionItem(
       title: 'Profile',
       icon: Icons.person_outline,
-      iconColor: Color(0xFF1FC16B),
+      iconColor: AppColors.success,
     ),
     QuickActionItem(
       title: 'Settings',
       icon: Icons.settings_outlined,
-      iconColor: Color(0xFF555555),
+      iconColor: AppColors.neutralIcon,
     ),
   ];
 
@@ -203,21 +206,21 @@ abstract class DummyData {
       subtitle: 'Groceries • \$62.75',
       time: 'Today',
       icon: Icons.shopping_bag_outlined,
-      iconBgColor: Color(0xFFFEDB65),
+      iconBgColor: AppColors.primary,
     ),
     ActivityItem(
       title: 'New message',
       subtitle: 'Pickup time confirmed',
       time: 'Yesterday',
       icon: Icons.chat_bubble_outline,
-      iconBgColor: Color(0xFF5B7FFF),
+      iconBgColor: AppColors.infoBlue,
     ),
     ActivityItem(
       title: 'Schedule updated',
       subtitle: 'Doctor appointment added',
       time: '2 days',
       icon: Icons.calendar_month_outlined,
-      iconBgColor: Color(0xFFD00416),
+      iconBgColor: AppColors.error,
     ),
   ];
 
@@ -243,14 +246,16 @@ abstract class DummyData {
   static const List<NewsItem> newsFeed = [
     NewsItem(
       title: 'New school term dates announced',
-      body: 'The education ministry published the updated calendar for the new term.',
+      body:
+          'The education ministry published the updated calendar for the new term.',
       imageUrl: 'https://picsum.photos/seed/news1/800/400',
       source: 'Local News',
       date: 'Apr 12',
     ),
     NewsItem(
       title: 'Family support resources',
-      body: 'A curated list of resources for co-parenting and family coordination.',
+      body:
+          'A curated list of resources for co-parenting and family coordination.',
       imageUrl: 'https://picsum.photos/seed/news2/800/400',
       source: 'Community',
       date: 'Apr 09',
@@ -300,17 +305,20 @@ abstract class DummyData {
   static const List<DestinationItem> trendingDestinations = [
     DestinationItem(
       name: 'Dahab',
-      imageUrl: 'https://images.unsplash.com/photo-1544986581-efac024faf62?auto=format&fit=crop&w=800&q=60',
+      imageUrl:
+          'https://images.unsplash.com/photo-1544986581-efac024faf62?auto=format&fit=crop&w=800&q=60',
       rank: 1,
     ),
     DestinationItem(
       name: 'Aswan',
-      imageUrl: 'https://images.unsplash.com/photo-1544986581-efac024faf62?auto=format&fit=crop&w=800&q=60',
+      imageUrl:
+          'https://images.unsplash.com/photo-1544986581-efac024faf62?auto=format&fit=crop&w=800&q=60',
       rank: 2,
     ),
     DestinationItem(
       name: 'Siwa',
-      imageUrl: 'https://images.unsplash.com/photo-1544986581-efac024faf62?auto=format&fit=crop&w=800&q=60',
+      imageUrl:
+          'https://images.unsplash.com/photo-1544986581-efac024faf62?auto=format&fit=crop&w=800&q=60',
       rank: 3,
     ),
   ];
@@ -323,27 +331,33 @@ abstract class DummyData {
 
   static const List<TripItem> popularTrips = [
     TripItem(
+      id: 101,
       title: 'Dahab Adventure',
       location: 'South Sinai, Egypt',
-      imageUrl: 'https://images.unsplash.com/photo-1526779259212-939e64788e3c?auto=format&fit=crop&w=800&q=60',
+      imageUrl:
+          'https://images.unsplash.com/photo-1526779259212-939e64788e3c?auto=format&fit=crop&w=800&q=60',
       price: 199,
       rating: 4.6,
       dateRange: '12 - 15 May',
       status: 'Upcoming',
     ),
     TripItem(
+      id: 102,
       title: 'Luxor Day Tour',
       location: 'Luxor, Egypt',
-      imageUrl: 'https://images.unsplash.com/photo-1526779259212-939e64788e3c?auto=format&fit=crop&w=800&q=60',
+      imageUrl:
+          'https://images.unsplash.com/photo-1526779259212-939e64788e3c?auto=format&fit=crop&w=800&q=60',
       price: 149,
       rating: 4.4,
       dateRange: '20 May',
       status: 'Upcoming',
     ),
-      TripItem(
+    TripItem(
+      id: 103,
       title: 'Cairo City Break',
       location: 'Cairo, Egypt',
-      imageUrl: 'https://images.unsplash.com/photo-1526779259212-939e64788e3c?auto=format&fit=crop&w=800&q=60',
+      imageUrl:
+          'https://images.unsplash.com/photo-1526779259212-939e64788e3c?auto=format&fit=crop&w=800&q=60',
       price: 149,
       rating: 4.4,
       dateRange: '20 May',
@@ -362,9 +376,11 @@ abstract class DummyData {
 
   static const List<TripItem> pastTrips = [
     TripItem(
+      id: 104,
       title: 'Cairo City Break',
       location: 'Cairo, Egypt',
-      imageUrl: 'https://images.unsplash.com/photo-1526779259212-939e64788e3c?auto=format&fit=crop&w=800&q=60',
+      imageUrl:
+          'https://images.unsplash.com/photo-1526779259212-939e64788e3c?auto=format&fit=crop&w=800&q=60',
       price: 99,
       rating: 4.2,
       dateRange: '10 - 12 Mar',
@@ -372,4 +388,3 @@ abstract class DummyData {
     ),
   ];
 }
-

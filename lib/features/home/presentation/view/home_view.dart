@@ -2,12 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:shimmer/shimmer.dart';
 import 'package:trip_marche/core/extensions/localization.dart';
 import 'package:trip_marche/core/injection/injection_container.dart';
 import 'package:trip_marche/core/navigation/app_navigator.dart';
 import 'package:trip_marche/core/theme/app_colors.dart';
 import 'package:trip_marche/core/theme/app_text_styles.dart';
+import 'package:trip_marche/core/widgets/custom_loading.dart';
+import 'package:trip_marche/core/toast/app_toast.dart';
 import '../../data/models/home_section_response.dart';
 import '../cubit/home_sections_cubit.dart';
 import '../cubit/home_sections_state.dart';
@@ -24,7 +25,9 @@ import '../widgets/popular_trip_grid_card.dart';
 import '../widgets/promo_banner_item.dart';
 import '../widgets/category_chip.dart';
 import '../widgets/special_trip_wide_card.dart';
+import '../../../trip_details/presentation/trip_wishlist_pop_result.dart';
 import '../../../trip_details/presentation/view/trip_details_view.dart';
+import '../../../my_trips/presentation/view/my_trips_view.dart';
 
 class HomeView extends StatefulWidget {
   const HomeView({super.key});
@@ -34,6 +37,49 @@ class HomeView extends StatefulWidget {
 }
 
 class _HomeViewState extends State<HomeView> {
+  Future<void> _onPopularTripHeartTap(
+    BuildContext context,
+    TripModel trip,
+  ) async {
+    final sectionsCubit = context.read<HomeSectionsCubit>();
+    final specialCubit = context.read<SpecialTripsCubit>();
+    await sectionsCubit.toggleTripWishlist(trip.id);
+    TripModel? updated;
+    for (final s in sectionsCubit.state.sections) {
+      for (final t in s.trips) {
+        if (t.id == trip.id) {
+          updated = t;
+          break;
+        }
+      }
+      if (updated != null) {
+        break;
+      }
+    }
+    if (updated != null) {
+      specialCubit.syncWishlistFromOtherList(trip.id, updated.isWishlisted);
+    }
+  }
+
+  Future<void> _onSpecialTripHeartTap(
+    BuildContext context,
+    TripModel trip,
+  ) async {
+    final specialCubit = context.read<SpecialTripsCubit>();
+    final sectionsCubit = context.read<HomeSectionsCubit>();
+    await specialCubit.toggleTripWishlist(trip.id);
+    TripModel? updated;
+    for (final t in specialCubit.state.trips) {
+      if (t.id == trip.id) {
+        updated = t;
+        break;
+      }
+    }
+    if (updated != null) {
+      sectionsCubit.syncWishlistFromOtherList(trip.id, updated.isWishlisted);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final horizontalPadding = 16.w;
@@ -53,68 +99,98 @@ class _HomeViewState extends State<HomeView> {
         ),
         BlocProvider(create: (_) => sl<SpecialTripsCubit>()),
       ],
-      child: Scaffold(
-        backgroundColor: AppColors.scaffoldColorLight,
-        body: CustomScrollView(
-          slivers: [
-            SliverToBoxAdapter(
-              child: HomeHeader(
-                searchHint: context.tr.homeSearchHint,
-                locationText: context.tr.homeLocationText,
-                onNotificationsTap: () {},
+      child: MultiBlocListener(
+        listeners: [
+          BlocListener<HomeSectionsCubit, HomeSectionsState>(
+            listenWhen: (p, n) =>
+                n.wishlistErrorMessage != null &&
+                n.wishlistErrorMessage != p.wishlistErrorMessage,
+            listener: (context, state) {
+              final msg = state.wishlistErrorMessage;
+              if (msg == null) {
+                return;
+              }
+              appToast(context: context, type: ToastType.error, message: msg);
+              context.read<HomeSectionsCubit>().clearWishlistError();
+            },
+          ),
+          BlocListener<SpecialTripsCubit, SpecialTripsState>(
+            listenWhen: (p, n) =>
+                n.wishlistErrorMessage != null &&
+                n.wishlistErrorMessage != p.wishlistErrorMessage,
+            listener: (context, state) {
+              final msg = state.wishlistErrorMessage;
+              if (msg == null) {
+                return;
+              }
+              appToast(context: context, type: ToastType.error, message: msg);
+              context.read<SpecialTripsCubit>().clearWishlistError();
+            },
+          ),
+        ],
+        child: Scaffold(
+          backgroundColor: AppColors.scaffoldBg,
+          body: CustomScrollView(
+            slivers: [
+              SliverToBoxAdapter(
+                child: HomeHeader(
+                  searchHint: context.tr.homeSearchHint,
+                  locationText: context.tr.homeLocationText,
+                  onNotificationsTap: () {},
+                ),
               ),
-            ),
-            SliverToBoxAdapter(
-              child: Transform.translate(
-                offset: Offset(0, -sheetOverlap),
-                child: Container(
-                  width: double.infinity,
-                  padding: EdgeInsetsDirectional.only(
-                    start: horizontalPadding,
-                    end: horizontalPadding,
-                    top: 18.h,
-                    bottom: 24.h,
-                  ),
-                  decoration: BoxDecoration(
-                    color: AppColors.scaffoldColorLight,
-                    borderRadius: BorderRadius.vertical(
-                      top: Radius.circular(sheetTopRadius),
+              SliverToBoxAdapter(
+                child: Transform.translate(
+                  offset: Offset(0, -sheetOverlap),
+                  child: Container(
+                    width: double.infinity,
+                    padding: EdgeInsetsDirectional.only(
+                      start: horizontalPadding,
+                      end: horizontalPadding,
+                      top: 18.h,
+                      bottom: 24.h,
                     ),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black.withValues(alpha: 0.04),
-                        blurRadius: 18.r,
-                        offset: Offset(0, 10.h),
+                    decoration: BoxDecoration(
+                      color: AppColors.scaffoldBg,
+                      borderRadius: BorderRadius.vertical(
+                        top: Radius.circular(sheetTopRadius),
                       ),
-                    ],
-                  ),
-                  child: BlocBuilder<HomeSectionsCubit, HomeSectionsState>(
-                    builder: (context, state) {
-                      if (state.status == HomeSectionsStatus.loading ||
-                          state.status == HomeSectionsStatus.initial) {
-                        return _buildShimmerLoading();
-                      }
+                      boxShadow: [
+                        BoxShadow(
+                          color: AppColors.shadow.withValues(alpha: 0.04),
+                          blurRadius: 18.r,
+                          offset: Offset(0, 10.h),
+                        ),
+                      ],
+                    ),
+                    child: BlocBuilder<HomeSectionsCubit, HomeSectionsState>(
+                      builder: (context, state) {
+                        if (state.status == HomeSectionsStatus.loading ||
+                            state.status == HomeSectionsStatus.initial) {
+                          return _buildHomeSectionsLoading();
+                        }
 
-                      if (state.status == HomeSectionsStatus.failure) {
-                        return _buildError(
+                        if (state.status == HomeSectionsStatus.failure) {
+                          return _buildError(
+                            context,
+                            state.errorMessage ?? 'Something went wrong',
+                          );
+                        }
+
+                        return _buildContent(
                           context,
-                          state.errorMessage ?? 'Something went wrong',
+                          state,
+                          sectionTitleStyle,
+                          actionStyle,
                         );
-                      }
-
-                      return _buildContent(
-                        context,
-                        state,
-                        sectionTitleStyle,
-                        actionStyle,
-                      );
-                    },
+                      },
+                    ),
                   ),
                 ),
               ),
-            ),
-            SliverToBoxAdapter(child: SizedBox(height: sheetOverlap)),
-          ],
+              SliverToBoxAdapter(child: SizedBox(height: sheetOverlap)),
+            ],
+          ),
         ),
       ),
     );
@@ -132,6 +208,20 @@ class _HomeViewState extends State<HomeView> {
     final domesticSection = state.sectionByKey('domestic_trips');
     final internationalSection = state.sectionByKey('international_trips');
     final recommendedSection = state.sectionByKey('recommended_for_you');
+
+    void syncWishlistAfterTripDetails(TripWishlistPopResult? result) {
+      if (result == null || !context.mounted) {
+        return;
+      }
+      context.read<HomeSectionsCubit>().syncWishlistFromOtherList(
+        result.tripId,
+        result.isWishlisted,
+      );
+      context.read<SpecialTripsCubit>().syncWishlistFromOtherList(
+        result.tripId,
+        result.isWishlisted,
+      );
+    }
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -151,6 +241,16 @@ class _HomeViewState extends State<HomeView> {
                   name: dest.name,
                   imageUrl: dest.image,
                   rank: dest.trendingRank,
+                  onTap: dest.id <= 0
+                      ? null
+                      : () {
+                          sl<AppNavigator>().push(
+                            screen: MyTripsView(
+                              catalogDestinationId: dest.id,
+                              destinationBrowseTitle: dest.name,
+                            ),
+                          );
+                        },
                 );
               },
             ),
@@ -168,7 +268,11 @@ class _HomeViewState extends State<HomeView> {
             onAction: () {},
           ),
           SizedBox(height: 14.h),
-          _TripHorizontalList(trips: popularSection.trips),
+          _TripHorizontalList(
+            trips: popularSection.trips,
+            onFavoriteTap: (trip) => _onPopularTripHeartTap(context, trip),
+            onReturnedFromTripDetails: syncWishlistAfterTripDetails,
+          ),
           SizedBox(height: 18.h),
         ],
 
@@ -187,17 +291,9 @@ class _HomeViewState extends State<HomeView> {
             if (bannerState.status == HomeBannersStatus.loading) {
               return Column(
                 children: [
-                  Shimmer.fromColors(
-                    baseColor: Colors.grey.shade300,
-                    highlightColor: Colors.grey.shade100,
-                    child: Container(
-                      height: 140.h,
-                      margin: EdgeInsets.symmetric(horizontal: 4.w),
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(16.r),
-                      ),
-                    ),
+                  SizedBox(
+                    height: 140.h,
+                    child: CustomLoading(strokeWidth: 2.5),
                   ),
                   SizedBox(height: 22.h),
                 ],
@@ -217,7 +313,11 @@ class _HomeViewState extends State<HomeView> {
             onAction: () {},
           ),
           SizedBox(height: 14.h),
-          _TripHorizontalList(trips: sponsoredSection.trips),
+          _TripHorizontalList(
+            trips: sponsoredSection.trips,
+            onFavoriteTap: (trip) => _onPopularTripHeartTap(context, trip),
+            onReturnedFromTripDetails: syncWishlistAfterTripDetails,
+          ),
           SizedBox(height: 22.h),
         ],
 
@@ -231,7 +331,11 @@ class _HomeViewState extends State<HomeView> {
             onAction: () {},
           ),
           SizedBox(height: 14.h),
-          _TripHorizontalList(trips: domesticSection.trips),
+          _TripHorizontalList(
+            trips: domesticSection.trips,
+            onFavoriteTap: (trip) => _onPopularTripHeartTap(context, trip),
+            onReturnedFromTripDetails: syncWishlistAfterTripDetails,
+          ),
           SizedBox(height: 22.h),
         ],
 
@@ -245,7 +349,11 @@ class _HomeViewState extends State<HomeView> {
             onAction: () {},
           ),
           SizedBox(height: 14.h),
-          _TripHorizontalList(trips: internationalSection.trips),
+          _TripHorizontalList(
+            trips: internationalSection.trips,
+            onFavoriteTap: (trip) => _onPopularTripHeartTap(context, trip),
+            onReturnedFromTripDetails: syncWishlistAfterTripDetails,
+          ),
           SizedBox(height: 22.h),
         ],
 
@@ -259,7 +367,11 @@ class _HomeViewState extends State<HomeView> {
             onAction: () {},
           ),
           SizedBox(height: 14.h),
-          _TripHorizontalList(trips: recommendedSection.trips),
+          _TripHorizontalList(
+            trips: recommendedSection.trips,
+            onFavoriteTap: (trip) => _onPopularTripHeartTap(context, trip),
+            onReturnedFromTripDetails: syncWishlistAfterTripDetails,
+          ),
           SizedBox(height: 22.h),
         ],
 
@@ -276,24 +388,9 @@ class _HomeViewState extends State<HomeView> {
           },
           builder: (context, catState) {
             if (catState.status == HomeCategoriesStatus.loading) {
-              return Shimmer.fromColors(
-                baseColor: Colors.grey.shade300,
-                highlightColor: Colors.grey.shade100,
-                child: SizedBox(
-                  height: 40.h,
-                  child: ListView.builder(
-                    scrollDirection: Axis.horizontal,
-                    itemCount: 5,
-                    itemBuilder: (_, __) => Container(
-                      width: 80.w,
-                      margin: EdgeInsets.symmetric(horizontal: 4.w),
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(999.r),
-                      ),
-                    ),
-                  ),
-                ),
+              return SizedBox(
+                height: 40.h,
+                child: CustomLoading(size: 26, strokeWidth: 2),
               );
             }
             if (catState.status == HomeCategoriesStatus.success &&
@@ -336,16 +433,9 @@ class _HomeViewState extends State<HomeView> {
                   BlocBuilder<SpecialTripsCubit, SpecialTripsState>(
                     builder: (context, tripState) {
                       if (tripState.status == SpecialTripsStatus.loading) {
-                        return Shimmer.fromColors(
-                          baseColor: Colors.grey.shade300,
-                          highlightColor: Colors.grey.shade100,
-                          child: Container(
-                            height: 224.h,
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(18.r),
-                            ),
-                          ),
+                        return SizedBox(
+                          height: 224.h,
+                          child: CustomLoading(size: 32, strokeWidth: 2.5),
                         );
                       }
                       if (tripState.status == SpecialTripsStatus.success ||
@@ -372,6 +462,10 @@ class _HomeViewState extends State<HomeView> {
                           onLoadMore: () {
                             context.read<SpecialTripsCubit>().loadMore();
                           },
+                          onFavoriteTap: (trip) =>
+                              _onSpecialTripHeartTap(context, trip),
+                          onReturnedFromTripDetails:
+                              syncWishlistAfterTripDetails,
                         );
                       }
                       return const SizedBox.shrink();
@@ -388,80 +482,14 @@ class _HomeViewState extends State<HomeView> {
     );
   }
 
-  Widget _buildShimmerLoading() {
-    return Shimmer.fromColors(
-      baseColor: Colors.grey.shade300,
-      highlightColor: Colors.grey.shade100,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          // Title shimmer
-          Container(
-            width: 200.w,
-            height: 20.h,
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(8.r),
-            ),
-          ),
-          SizedBox(height: 12.h),
-          // Trending destinations shimmer
-          SizedBox(
-            height: 110.h,
-            child: ListView.builder(
-              scrollDirection: Axis.horizontal,
-              itemCount: 4,
-              itemBuilder: (_, __) => Container(
-                width: 118.w,
-                margin: EdgeInsetsDirectional.only(end: 12.w),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(16.r),
-                ),
-              ),
-            ),
-          ),
-          SizedBox(height: 22.h),
-          // Section header shimmer
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Container(
-                width: 140.w,
-                height: 20.h,
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(8.r),
-                ),
-              ),
-              Container(
-                width: 60.w,
-                height: 16.h,
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(8.r),
-                ),
-              ),
-            ],
-          ),
-          SizedBox(height: 14.h),
-          // Trip cards shimmer
-          SizedBox(
-            height: 340.h,
-            child: ListView.separated(
-              scrollDirection: Axis.horizontal,
-              itemCount: 3,
-              separatorBuilder: (_, __) => SizedBox(width: 14.w),
-              itemBuilder: (_, __) => Container(
-                width: 190.w,
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(18.r),
-                ),
-              ),
-            ),
-          ),
-        ],
+  /// Primary home content loading — keeps sheet height stable without skeleton UI.
+  Widget _buildHomeSectionsLoading() {
+    return SizedBox(
+      height: 420.h,
+      child: CustomLoading(
+        top: 32.h,
+        size: 36,
+        strokeWidth: 2.5,
       ),
     );
   }
@@ -492,7 +520,7 @@ class _HomeViewState extends State<HomeView> {
               ),
               child: Text(
                 'Retry',
-                style: AppTextStyles.bodyMedium(color: Colors.white),
+                style: AppTextStyles.bodyMedium(color: AppColors.onPrimary),
               ),
             ),
           ],
@@ -533,9 +561,15 @@ class _SectionHeader extends StatelessWidget {
 }
 
 class _TripHorizontalList extends StatelessWidget {
-  const _TripHorizontalList({required this.trips});
+  const _TripHorizontalList({
+    required this.trips,
+    required this.onFavoriteTap,
+    required this.onReturnedFromTripDetails,
+  });
 
   final List<TripModel> trips;
+  final void Function(TripModel trip) onFavoriteTap;
+  final void Function(TripWishlistPopResult? result) onReturnedFromTripDetails;
 
   @override
   Widget build(BuildContext context) {
@@ -551,8 +585,16 @@ class _TripHorizontalList extends StatelessWidget {
             width: 190.w,
             child: PopularTripGridCard(
               trip: trip,
-              onTap: () =>
-                  sl<AppNavigator>().push(screen: const TripDetailsView()),
+              onTap: () async {
+                final result = await sl<AppNavigator>().push<TripWishlistPopResult>(
+                  screen: TripDetailsView(
+                    tripId: trip.id,
+                    initialIsWishlisted: trip.isWishlisted,
+                  ),
+                );
+                onReturnedFromTripDetails(result);
+              },
+              onFavoriteTap: () => onFavoriteTap(trip),
             ),
           );
         },
@@ -633,12 +675,16 @@ class _SpecialTripsHorizontalList extends StatefulWidget {
     required this.isLoadingMore,
     required this.hasMore,
     required this.onLoadMore,
+    required this.onFavoriteTap,
+    required this.onReturnedFromTripDetails,
   });
 
   final List<TripModel> trips;
   final bool isLoadingMore;
   final bool hasMore;
   final VoidCallback onLoadMore;
+  final void Function(TripModel trip) onFavoriteTap;
+  final void Function(TripWishlistPopResult? result) onReturnedFromTripDetails;
 
   @override
   State<_SpecialTripsHorizontalList> createState() =>
@@ -686,18 +732,8 @@ class _SpecialTripsHorizontalListState
         separatorBuilder: (_, __) => SizedBox(width: 14.w),
         itemBuilder: (context, index) {
           if (index >= widget.trips.length) {
-            return SizedBox(
-              width: 60.w,
-              child: Center(
-                child: SizedBox(
-                  width: 24.w,
-                  height: 24.w,
-                  child: CircularProgressIndicator(
-                    strokeWidth: 2.5,
-                    color: AppColors.primary,
-                  ),
-                ),
-              ),
+            return Center(
+              child: CustomLoading(size: 24, strokeWidth: 2),
             );
           }
           final trip = widget.trips[index];
@@ -705,8 +741,16 @@ class _SpecialTripsHorizontalListState
             width: 350.w,
             child: SpecialTripWideCard(
               trip: trip,
-              onTap: () =>
-                  sl<AppNavigator>().push(screen: const TripDetailsView()),
+              onTap: () async {
+                final result = await sl<AppNavigator>().push<TripWishlistPopResult>(
+                  screen: TripDetailsView(
+                    tripId: trip.id,
+                    initialIsWishlisted: trip.isWishlisted,
+                  ),
+                );
+                widget.onReturnedFromTripDetails(result);
+              },
+              onFavoriteTap: () => widget.onFavoriteTap(trip),
             ),
           );
         },

@@ -1,5 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import '../config/app_colors.dart';
+import '../theme/app_colors.dart';
 import '../config/app_images.dart';
 import 'app_shimmer.dart';
 import 'package:flutter/material.dart';
@@ -23,15 +23,20 @@ class AppCachedNetworkImage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return imageUrl == null
+    final url = (imageUrl == null || imageUrl!.isEmpty) ? null : imageUrl;
+    return url == null
         ? Image.asset(AppImages.logo, fit: fit, height: height, width: width)
         : CachedNetworkImage(
-            imageUrl: imageUrl!,
+            imageUrl: url,
             fit: fit,
             width: width,
             height: height,
-            errorWidget: (context, url, error) =>
-                Image.asset(AppImages.logo, fit: fit, height: height, width: width),
+            errorWidget: (context, url, error) => Image.asset(
+              AppImages.logo,
+              fit: fit,
+              height: height,
+              width: width,
+            ),
             progressIndicatorBuilder: (context, url, downloadProgress) =>
                 AppShimmer(
                   child: Container(

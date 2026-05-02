@@ -25,8 +25,18 @@ class InfoRow extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text(label, style: AppTextStyles.bodySmall(color: labelColor ?? AppColors.greyText)),
-          Text(value, style: AppTextStyles.bodyMedium(color: valueColor ?? AppColors.darkText)),
+          Text(
+            label,
+            style: AppTextStyles.bodySmall(
+              color: labelColor ?? AppColors.greyText,
+            ),
+          ),
+          Text(
+            value,
+            style: AppTextStyles.bodyMedium(
+              color: valueColor ?? AppColors.darkText,
+            ),
+          ),
         ],
       ),
     );

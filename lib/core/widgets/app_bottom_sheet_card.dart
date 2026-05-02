@@ -10,12 +10,14 @@ class AppBottomSheetCard extends StatelessWidget {
     return Material(
       color: Theme.of(context).cardColor,
       child: Padding(
-        padding: EdgeInsets.only(right: 30.w, left: 30.w, top: 30.h, bottom: MediaQuery.viewInsetsOf(context).bottom + 30.h),
+        padding: EdgeInsets.only(
+          right: 30.w,
+          left: 30.w,
+          top: 30.h,
+          bottom: MediaQuery.viewInsetsOf(context).bottom + 30.h,
+        ),
         child: SingleChildScrollView(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: children,
-          ),
+          child: Column(mainAxisSize: MainAxisSize.min, children: children),
         ),
       ),
     );

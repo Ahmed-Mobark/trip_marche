@@ -17,16 +17,8 @@ class _PaymentMethodViewState extends State<PaymentMethodView> {
   int _selectedCard = 0;
 
   final List<Map<String, String>> _savedCards = [
-    {
-      'last4': '4242',
-      'brand': 'Visa',
-      'expiry': '12/27',
-    },
-    {
-      'last4': '8888',
-      'brand': 'Mastercard',
-      'expiry': '06/28',
-    },
+    {'last4': '4242', 'brand': 'Visa', 'expiry': '12/27'},
+    {'last4': '8888', 'brand': 'Mastercard', 'expiry': '06/28'},
   ];
 
   @override
@@ -107,7 +99,9 @@ class _PaymentMethodViewState extends State<PaymentMethodView> {
           margin: const EdgeInsets.only(bottom: 10),
           padding: const EdgeInsets.all(16),
           decoration: BoxDecoration(
-            gradient: isSelected ? LinearGradient(colors: [AppColors.primary, AppColors.primary]) : null,
+            gradient: isSelected
+                ? LinearGradient(colors: [AppColors.primary, AppColors.primary])
+                : null,
             color: isSelected ? null : AppColors.inputBg,
             borderRadius: BorderRadius.circular(14),
             border: isSelected ? null : Border.all(color: AppColors.border),
@@ -116,7 +110,7 @@ class _PaymentMethodViewState extends State<PaymentMethodView> {
             children: [
               Icon(
                 Iconsax.card,
-                color: isSelected ? Colors.white : AppColors.greyText,
+                color: isSelected ? AppColors.onImage : AppColors.greyText,
                 size: 24,
               ),
               const SizedBox(width: 14),
@@ -127,13 +121,17 @@ class _PaymentMethodViewState extends State<PaymentMethodView> {
                     Text(
                       '${card['brand']} **** ${card['last4']}',
                       style: AppTextStyles.bodyMedium(
-                        color: isSelected ? Colors.white : AppColors.darkText,
+                        color: isSelected
+                            ? AppColors.onImage
+                            : AppColors.darkText,
                       ),
                     ),
                     Text(
                       context.tr.bookingCardExpires(card['expiry'] ?? ''),
                       style: AppTextStyles.bodyMedium(
-                        color: isSelected ? Colors.white70 : AppColors.greyText,
+                        color: isSelected
+                            ? AppColors.onImage.withValues(alpha: 0.70)
+                            : AppColors.greyText,
                       ),
                     ),
                   ],
@@ -145,10 +143,10 @@ class _PaymentMethodViewState extends State<PaymentMethodView> {
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
                   border: Border.all(
-                    color: isSelected ? Colors.white : AppColors.greyText,
+                    color: isSelected ? AppColors.onImage : AppColors.greyText,
                     width: 2,
                   ),
-                  color: isSelected ? Colors.white : Colors.transparent,
+                  color: isSelected ? AppColors.onImage : AppColors.transparent,
                 ),
                 child: isSelected
                     ? Center(
@@ -201,7 +199,9 @@ class _PaymentMethodViewState extends State<PaymentMethodView> {
         width: double.infinity,
         height: 56,
         decoration: BoxDecoration(
-          gradient: LinearGradient(colors: [AppColors.primary, AppColors.primary]),
+          gradient: LinearGradient(
+            colors: [AppColors.primary, AppColors.primary],
+          ),
           borderRadius: BorderRadius.circular(12),
         ),
         child: Center(

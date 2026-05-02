@@ -7,7 +7,9 @@ import '../../data/models/verify_email_request.dart';
 
 /// Auth repository contract (domain). Implemented in [AuthRepositoryImpl].
 abstract class AuthRepository {
-  Future<Either<Failure, Map<String, dynamic>>> register(RegisterRequest request);
+  Future<Either<Failure, Map<String, dynamic>>> register(
+    RegisterRequest request,
+  );
 
   Future<Either<Failure, Map<String, dynamic>>> login(LoginRequest request);
 

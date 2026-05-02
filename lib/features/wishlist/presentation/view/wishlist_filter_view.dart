@@ -1,3 +1,4 @@
+import 'package:adaptive_theme/adaptive_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -17,7 +18,12 @@ class WishlistFilterView extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (_) => WishlistFilterCubit(),
-      child: const _WishlistFilterBody(),
+      child: ValueListenableBuilder<AdaptiveThemeMode>(
+        valueListenable: AdaptiveTheme.of(context).modeChangeNotifier,
+        // Brightness is synced globally by `MyApp.builder`; we only need to
+        // rebuild this subtree when the user toggles the mode.
+        builder: (context, _, __) => const _WishlistFilterBody(),
+      ),
     );
   }
 }
@@ -31,7 +37,7 @@ class _WishlistFilterBody extends StatelessWidget {
     final bottomCtaHeight = 56.h;
 
     return Scaffold(
-      backgroundColor: AppColors.white,
+      backgroundColor: AppColors.background,
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(kToolbarHeight + 10.h),
         child: SafeArea(
@@ -47,7 +53,7 @@ class _WishlistFilterBody extends StatelessWidget {
                   bottom: 6.h,
                 ),
                 decoration: BoxDecoration(
-                  color: AppColors.white,
+                  color: AppColors.background,
                   border: Border(
                     bottom: BorderSide(
                       color: AppColors.border.withValues(alpha: 0.7),
@@ -67,7 +73,9 @@ class _WishlistFilterBody extends StatelessWidget {
                     Expanded(
                       child: Text(
                         context.tr.wishlistFiltersTitle,
-                        style: AppTextStyles.heading3(color: AppColors.darkText),
+                        style: AppTextStyles.heading3(
+                          color: AppColors.darkText,
+                        ),
                       ),
                     ),
                     TextButton(
@@ -82,8 +90,9 @@ class _WishlistFilterBody extends StatelessWidget {
                       ),
                       child: Text(
                         context.tr.wishlistFiltersClearAll,
-                        style: AppTextStyles.bodyMedium(color: AppColors.error)
-                            .copyWith(fontWeight: FontWeight.w600),
+                        style: AppTextStyles.bodyMedium(
+                          color: AppColors.error,
+                        ).copyWith(fontWeight: FontWeight.w600),
                       ),
                     ),
                   ],
@@ -101,7 +110,10 @@ class _WishlistFilterBody extends StatelessWidget {
               start: horizontalPadding,
               end: horizontalPadding,
               top: 12.h,
-              bottom: (MediaQuery.paddingOf(context).bottom + bottomCtaHeight + 28.h),
+              bottom:
+                  (MediaQuery.paddingOf(context).bottom +
+                  bottomCtaHeight +
+                  28.h),
             ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -124,21 +136,32 @@ class _WishlistFilterBody extends StatelessWidget {
                   },
                 ),
                 SizedBox(height: 16.h),
-                WishlistFilterSectionTitle(title: context.tr.wishlistFiltersPriceRange),
+                WishlistFilterSectionTitle(
+                  title: context.tr.wishlistFiltersPriceRange,
+                ),
                 SizedBox(height: 10.h),
                 const WishlistFilterPriceHistogram(),
-                RangeSlider(
+                SliderTheme(
+                  data: SliderTheme.of(context).copyWith(
+                    activeTrackColor: AppColors.primary,
+                    inactiveTrackColor: AppColors.border,
+                    thumbColor: AppColors.primary,
+                    overlayColor: AppColors.primary.withValues(alpha: 0.12),
+                    rangeThumbShape: const RoundRangeSliderThumbShape(
+                      enabledThumbRadius: 10,
+                    ),
+                  ),
+                  child: RangeSlider(
                   values: state.priceRange,
                   min: 0,
                   max: 10000,
                   divisions: 100,
-                  activeColor: AppColors.purpleColor,
-                  inactiveColor: AppColors.border,
                   labels: RangeLabels(
                     '${state.priceRange.start.round()}',
                     '${state.priceRange.end.round()}',
                   ),
                   onChanged: cubit.setPriceRange,
+                ),
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -152,7 +175,9 @@ class _WishlistFilterBody extends StatelessWidget {
                   ],
                 ),
                 SizedBox(height: 18.h),
-                WishlistFilterSectionTitle(title: context.tr.wishlistFiltersTripType),
+                WishlistFilterSectionTitle(
+                  title: context.tr.wishlistFiltersTripType,
+                ),
                 SizedBox(height: 10.h),
                 WishlistFilterSegmented(
                   leftLabel: context.tr.wishlistFiltersDomestic,
@@ -179,7 +204,9 @@ class _WishlistFilterBody extends StatelessWidget {
                   },
                 ),
                 SizedBox(height: 14.h),
-                WishlistFilterSectionTitle(title: context.tr.wishlistFiltersDepartureCity),
+                WishlistFilterSectionTitle(
+                  title: context.tr.wishlistFiltersDepartureCity,
+                ),
                 SizedBox(height: 10.h),
                 WishlistFilterSelectField(
                   value: state.departureCity,
@@ -195,7 +222,9 @@ class _WishlistFilterBody extends StatelessWidget {
                   },
                 ),
                 SizedBox(height: 14.h),
-                WishlistFilterSectionTitle(title: context.tr.wishlistFiltersTripMonth),
+                WishlistFilterSectionTitle(
+                  title: context.tr.wishlistFiltersTripMonth,
+                ),
                 SizedBox(height: 10.h),
                 WishlistFilterSelectField(
                   value: state.tripMonth,
@@ -211,7 +240,9 @@ class _WishlistFilterBody extends StatelessWidget {
                   },
                 ),
                 SizedBox(height: 14.h),
-                WishlistFilterSectionTitle(title: context.tr.wishlistFiltersActions),
+                WishlistFilterSectionTitle(
+                  title: context.tr.wishlistFiltersActions,
+                ),
                 SizedBox(height: 10.h),
                 WishlistFilterSelectField(
                   value: state.actions,
@@ -227,7 +258,9 @@ class _WishlistFilterBody extends StatelessWidget {
                   },
                 ),
                 SizedBox(height: 14.h),
-                WishlistFilterSectionTitle(title: context.tr.wishlistFiltersTravelAgency),
+                WishlistFilterSectionTitle(
+                  title: context.tr.wishlistFiltersTravelAgency,
+                ),
                 SizedBox(height: 10.h),
                 WishlistFilterSelectField(
                   value: state.agency,
@@ -243,14 +276,18 @@ class _WishlistFilterBody extends StatelessWidget {
                   },
                 ),
                 SizedBox(height: 14.h),
-                WishlistFilterSectionTitle(title: context.tr.wishlistFiltersAgencyRating),
+                WishlistFilterSectionTitle(
+                  title: context.tr.wishlistFiltersAgencyRating,
+                ),
                 SizedBox(height: 10.h),
                 WishlistFilterRatingChips(
                   value: state.agencyRating,
                   onChanged: cubit.setAgencyRating,
                 ),
                 SizedBox(height: 18.h),
-                WishlistFilterSectionTitle(title: context.tr.wishlistFiltersOtherCountries),
+                WishlistFilterSectionTitle(
+                  title: context.tr.wishlistFiltersOtherCountries,
+                ),
                 SizedBox(height: 10.h),
                 WishlistFilterSelectField(
                   value: state.otherCountries,
@@ -266,7 +303,9 @@ class _WishlistFilterBody extends StatelessWidget {
                   },
                 ),
                 SizedBox(height: 14.h),
-                WishlistFilterSectionTitle(title: context.tr.wishlistFiltersOtherCities),
+                WishlistFilterSectionTitle(
+                  title: context.tr.wishlistFiltersOtherCities,
+                ),
                 SizedBox(height: 10.h),
                 WishlistFilterSelectField(
                   value: state.otherCities,
@@ -300,7 +339,9 @@ class _WishlistFilterBody extends StatelessWidget {
                   onChanged: cubit.setNumberOfCountries,
                 ),
                 SizedBox(height: 18.h),
-                WishlistFilterSectionTitle(title: context.tr.wishlistFiltersDuration),
+                WishlistFilterSectionTitle(
+                  title: context.tr.wishlistFiltersDuration,
+                ),
                 SizedBox(height: 10.h),
                 WishlistFilterChoiceChips(
                   value: state.duration,
@@ -312,7 +353,9 @@ class _WishlistFilterBody extends StatelessWidget {
                   onChanged: cubit.setDuration,
                 ),
                 SizedBox(height: 18.h),
-                WishlistFilterSectionTitle(title: context.tr.wishlistFiltersGroupSize),
+                WishlistFilterSectionTitle(
+                  title: context.tr.wishlistFiltersGroupSize,
+                ),
                 SizedBox(height: 10.h),
                 WishlistFilterChoiceChips(
                   value: state.groupSize,
@@ -324,7 +367,9 @@ class _WishlistFilterBody extends StatelessWidget {
                   onChanged: cubit.setGroupSize,
                 ),
                 SizedBox(height: 18.h),
-                WishlistFilterSectionTitle(title: context.tr.wishlistFiltersTripSeason),
+                WishlistFilterSectionTitle(
+                  title: context.tr.wishlistFiltersTripSeason,
+                ),
                 SizedBox(height: 10.h),
                 WishlistFilterChoiceChips(
                   value: state.tripSeason,
@@ -339,16 +384,27 @@ class _WishlistFilterBody extends StatelessWidget {
                 WishlistFilterTripFeatures(
                   title: context.tr.wishlistFiltersTripFeatures,
                   items: [
-                    ('includeFlight', context.tr.wishlistFiltersFeatureIncludeFlight),
-                    ('includeHotel', context.tr.wishlistFiltersFeatureIncludeHotel),
+                    (
+                      'includeFlight',
+                      context.tr.wishlistFiltersFeatureIncludeFlight,
+                    ),
+                    (
+                      'includeHotel',
+                      context.tr.wishlistFiltersFeatureIncludeHotel,
+                    ),
                     ('freeMeal', context.tr.wishlistFiltersFeatureFreeMeal),
-                    ('visaOnArrival', context.tr.wishlistFiltersFeatureVisaOnArrival),
+                    (
+                      'visaOnArrival',
+                      context.tr.wishlistFiltersFeatureVisaOnArrival,
+                    ),
                   ],
                   selectedKeys: state.tripFeatures,
                   onChanged: cubit.toggleTripFeature,
                 ),
                 SizedBox(height: 18.h),
-                WishlistFilterSectionTitle(title: context.tr.wishlistFiltersTripRating),
+                WishlistFilterSectionTitle(
+                  title: context.tr.wishlistFiltersTripRating,
+                ),
                 SizedBox(height: 10.h),
                 WishlistFilterRatingChips(
                   value: state.tripRating,
@@ -382,10 +438,10 @@ class _WishlistFilterBody extends StatelessWidget {
             14.h,
           ),
           decoration: BoxDecoration(
-            color: AppColors.white,
+            color: AppColors.cardBg,
             boxShadow: [
               BoxShadow(
-                color: Colors.black.withValues(alpha: 0.08),
+                color: AppColors.shadow.withValues(alpha: 0.08),
                 blurRadius: 12.r,
                 offset: Offset(0, -4.h),
               ),
@@ -411,7 +467,7 @@ class _WishlistFilterBody extends StatelessWidget {
   }) async {
     return showModalBottomSheet<String>(
       context: context,
-      backgroundColor: AppColors.white,
+      backgroundColor: AppColors.cardBg,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(top: Radius.circular(18.r)),
       ),
@@ -433,7 +489,9 @@ class _WishlistFilterBody extends StatelessWidget {
                     Expanded(
                       child: Text(
                         title,
-                        style: AppTextStyles.heading3(color: AppColors.darkText),
+                        style: AppTextStyles.heading3(
+                          color: AppColors.darkText,
+                        ),
                       ),
                     ),
                     IconButton(
@@ -449,7 +507,9 @@ class _WishlistFilterBody extends StatelessWidget {
                     contentPadding: EdgeInsetsDirectional.zero,
                     title: Text(
                       o,
-                      style: AppTextStyles.bodyMedium(color: AppColors.darkText),
+                      style: AppTextStyles.bodyMedium(
+                        color: AppColors.darkText,
+                      ),
                     ),
                     trailing: selected == o
                         ? Icon(
@@ -469,4 +529,3 @@ class _WishlistFilterBody extends StatelessWidget {
     );
   }
 }
-

@@ -45,20 +45,32 @@ class ReviewItemDisplay extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(name, style: AppTextStyles.bodyMedium(color: AppColors.darkText)),
+                    Text(
+                      name,
+                      style: AppTextStyles.bodyMedium(
+                        color: AppColors.darkText,
+                      ),
+                    ),
                     Text(date, style: AppTextStyles.caption()),
                   ],
                 ),
               ),
               Row(
                 children: List.generate(rating, (i) {
-                  return Icon(Iconsax.star1, color: AppColors.starYellow, size: 14.sp);
+                  return Icon(
+                    Iconsax.star1,
+                    color: AppColors.starYellow,
+                    size: 14.sp,
+                  );
                 }),
               ),
             ],
           ),
           SizedBox(height: 8.h),
-          Text(comment, style: AppTextStyles.body(color: AppColors.secondaryText)),
+          Text(
+            comment,
+            style: AppTextStyles.body(color: AppColors.secondaryText),
+          ),
         ],
       ),
     );

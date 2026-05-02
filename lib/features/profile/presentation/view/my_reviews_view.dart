@@ -113,14 +113,16 @@ class _HeroTripCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return LayoutBuilder(
       builder: (context, constraints) {
-        final imageWidth =
-            math.min(150.w, math.max(120.w, constraints.maxWidth * 0.44));
+        final imageWidth = math.min(
+          150.w,
+          math.max(120.w, constraints.maxWidth * 0.44),
+        );
         final imageHeight = math.max(150.h, imageWidth * 1.05);
 
         return Container(
           padding: EdgeInsetsDirectional.all(14.r),
           decoration: BoxDecoration(
-            color: AppColors.white,
+            color: AppColors.cardBg,
             borderRadius: BorderRadius.circular(18.r),
           ),
           child: Row(
@@ -143,11 +145,9 @@ class _HeroTripCard extends StatelessWidget {
                       title,
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
-                      style: AppTextStyles.bodyMedium(color: AppColors.darkText)
-                          .copyWith(
-                        fontWeight: FontWeight.w800,
-                        fontSize: 16.sp,
-                      ),
+                      style: AppTextStyles.bodyMedium(
+                        color: AppColors.darkText,
+                      ).copyWith(fontWeight: FontWeight.w800, fontSize: 16.sp),
                     ),
                     SizedBox(height: 6.h),
                     Row(
@@ -161,8 +161,9 @@ class _HeroTripCard extends StatelessWidget {
                         SizedBox(width: 6.w),
                         Text(
                           ratingValue,
-                          style: AppTextStyles.bodySmall(color: AppColors.darkText)
-                              .copyWith(fontWeight: FontWeight.w700),
+                          style: AppTextStyles.bodySmall(
+                            color: AppColors.darkText,
+                          ).copyWith(fontWeight: FontWeight.w700),
                         ),
                         SizedBox(width: 2.w),
                         Flexible(
@@ -170,8 +171,9 @@ class _HeroTripCard extends StatelessWidget {
                             '($ratingCount)',
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
-                            style:
-                                AppTextStyles.bodySmall(color: AppColors.greyText),
+                            style: AppTextStyles.bodySmall(
+                              color: AppColors.greyText,
+                            ),
                           ),
                         ),
                       ],
@@ -195,8 +197,9 @@ class _HeroTripCard extends StatelessWidget {
                           addReviewText,
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
-                          style: AppTextStyles.bodyMedium(color: AppColors.primary)
-                              .copyWith(fontWeight: FontWeight.w600),
+                          style: AppTextStyles.bodyMedium(
+                            color: AppColors.primary,
+                          ).copyWith(fontWeight: FontWeight.w600),
                         ),
                         style: OutlinedButton.styleFrom(
                           side: const BorderSide(color: AppColors.primary),
@@ -250,13 +253,15 @@ class _ReviewTripCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return LayoutBuilder(
       builder: (context, constraints) {
-        final thumb =
-            math.min(78.w, math.max(64.w, constraints.maxWidth * 0.24));
+        final thumb = math.min(
+          78.w,
+          math.max(64.w, constraints.maxWidth * 0.24),
+        );
 
         return Container(
           padding: EdgeInsetsDirectional.all(14.r),
           decoration: BoxDecoration(
-            color: AppColors.white,
+            color: AppColors.cardBg,
             borderRadius: BorderRadius.circular(18.r),
             border: Border.all(color: AppColors.border),
           ),
@@ -283,16 +288,21 @@ class _ReviewTripCard extends StatelessWidget {
                           title,
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
-                          style: AppTextStyles.bodyMedium(color: AppColors.darkText)
-                              .copyWith(
-                            fontWeight: FontWeight.w800,
-                            fontSize: 16.sp,
-                          ),
+                          style:
+                              AppTextStyles.bodyMedium(
+                                color: AppColors.darkText,
+                              ).copyWith(
+                                fontWeight: FontWeight.w800,
+                                fontSize: 16.sp,
+                              ),
                         ),
                         SizedBox(height: 8.h),
                         _InfoLine(icon: Iconsax.location, text: routeText),
                         SizedBox(height: 6.h),
-                        _InfoLine(icon: Iconsax.calendar_1, text: dateRangeText),
+                        _InfoLine(
+                          icon: Iconsax.calendar_1,
+                          text: dateRangeText,
+                        ),
                       ],
                     ),
                   ),
@@ -301,8 +311,9 @@ class _ReviewTripCard extends StatelessWidget {
               SizedBox(height: 14.h),
               Text(
                 reviewLabel,
-                style: AppTextStyles.bodySmall(color: AppColors.darkText)
-                    .copyWith(fontWeight: FontWeight.w700),
+                style: AppTextStyles.bodySmall(
+                  color: AppColors.darkText,
+                ).copyWith(fontWeight: FontWeight.w700),
               ),
               SizedBox(height: 10.h),
               Row(
@@ -319,8 +330,9 @@ class _ReviewTripCard extends StatelessWidget {
                   SizedBox(width: 6.w),
                   Text(
                     ratingValue,
-                    style: AppTextStyles.bodySmall(color: AppColors.darkText)
-                        .copyWith(fontWeight: FontWeight.w700),
+                    style: AppTextStyles.bodySmall(
+                      color: AppColors.darkText,
+                    ).copyWith(fontWeight: FontWeight.w700),
                   ),
                   SizedBox(width: 2.w),
                   Flexible(

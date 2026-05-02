@@ -155,7 +155,7 @@ class VerifyNumberView extends StatelessWidget {
                                     width: 24,
                                     height: 24,
                                     child: CircularProgressIndicator(
-                                      color: Colors.white,
+                                      color: AppColors.onImage,
                                       strokeWidth: 2.5,
                                     ),
                                   )

@@ -37,7 +37,10 @@ class RadioOption extends StatelessWidget {
         // ignore: deprecated_member_use
         onChanged: onChanged,
         activeColor: AppColors.primary,
-        title: Text(label, style: AppTextStyles.bodyMedium(color: AppColors.darkText)),
+        title: Text(
+          label,
+          style: AppTextStyles.bodyMedium(color: AppColors.darkText),
+        ),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
         contentPadding: const EdgeInsets.symmetric(horizontal: 12),
       ),

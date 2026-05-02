@@ -1,76 +1,204 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:iconsax/iconsax.dart';
-import '../../../../core/config/app_colors.dart';
-import '../../../../core/config/styles/styles.dart';
-import '../../../../core/data/dummy_data.dart';
-import '../../../../core/extensions/localization.dart';
-import '../../../../core/injection/injection_container.dart';
-import '../../../../core/navigation/app_navigator.dart';
-import 'wishlist_filter_view.dart';
+import 'package:trip_marche/core/config/styles/styles.dart';
+import 'package:trip_marche/core/extensions/localization.dart';
+import 'package:trip_marche/core/injection/injection_container.dart';
+import 'package:trip_marche/core/theme/app_colors.dart';
+import 'package:trip_marche/core/widgets/custom_loading.dart';
+import 'package:trip_marche/core/toast/app_toast.dart';
+import 'package:trip_marche/features/wishlist/presentation/cubit/wishlist_cubit.dart';
+import 'package:trip_marche/features/wishlist/presentation/cubit/wishlist_state.dart';
 import '../widgets/wishlist_trip_card.dart';
 
-class WishlistView extends StatelessWidget {
+class WishlistView extends StatefulWidget {
   const WishlistView({super.key});
 
   @override
+  State<WishlistView> createState() => _WishlistViewState();
+}
+
+class _WishlistViewState extends State<WishlistView> {
+  late final WishlistCubit _cubit;
+  late final ScrollController _scroll;
+
+  @override
+  void initState() {
+    super.initState();
+    _cubit = sl<WishlistCubit>()..loadInitial();
+    _scroll = ScrollController()..addListener(_onScroll);
+  }
+
+  void _onScroll() {
+    if (!_scroll.hasClients) {
+      return;
+    }
+    final pos = _scroll.position;
+    if (pos.pixels >= pos.maxScrollExtent - 280) {
+      _cubit.loadMore();
+    }
+  }
+
+  @override
+  void dispose() {
+    _scroll
+      ..removeListener(_onScroll)
+      ..dispose();
+    _cubit.close();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    final trips = DummyData.popularTrips;
     final headerHeight = 120.h;
     final sheetRadius = 32.r;
 
-    return Scaffold(
-      backgroundColor: AppColors.primary,
-      body: Stack(
-        children: [
-          Positioned.fill(
-            child: Container(
-              decoration: const BoxDecoration(
-                gradient: AppColors.primaryGradient,
-              ),
-            ),
-          ),
-          PositionedDirectional(
-            top: 0,
-            start: 0,
-            end: 0,
-            child: SafeArea(
-              bottom: false,
-              child: Padding(
-                padding: EdgeInsetsDirectional.only(
-                  start: 16.w,
-                  end: 16.w,
-                  top: 12.h,
-                ),
-                child: Text(
-                  context.tr.wishlistTitle,
-                  style: AppTextStyles.heading3(color: Colors.white),
+    return BlocProvider.value(
+      value: _cubit,
+      child: BlocListener<WishlistCubit, WishlistState>(
+        listenWhen: (p, n) =>
+            n.wishlistErrorMessage != null &&
+            n.wishlistErrorMessage != p.wishlistErrorMessage,
+        listener: (context, state) {
+          final msg = state.wishlistErrorMessage;
+          if (msg == null) {
+            return;
+          }
+          appToast(context: context, type: ToastType.error, message: msg);
+          context.read<WishlistCubit>().clearWishlistError();
+        },
+        child: Scaffold(
+          backgroundColor: AppColors.primary,
+          body: Stack(
+            children: [
+              Positioned.fill(
+                child: Container(
+                  decoration: const BoxDecoration(
+                    gradient: AppColors.primaryGradient,
+                  ),
                 ),
               ),
-            ),
-          ),
-          Positioned.fill(
-            top: headerHeight,
-            child: Container(
-              width: double.infinity,
-              padding: EdgeInsetsDirectional.only(
-                start: 16.w,
-                end: 16.w,
-                top: 16.h,
-                bottom: 16.h,
-              ),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.vertical(
-                  top: Radius.circular(sheetRadius),
+              PositionedDirectional(
+                top: 0,
+                start: 0,
+                end: 0,
+                child: SafeArea(
+                  bottom: false,
+                  child: Padding(
+                    padding: EdgeInsetsDirectional.only(
+                      start: 16.w,
+                      end: 16.w,
+                      top: 12.h,
+                    ),
+                    child: Text(
+                      context.tr.wishlistTitle,
+                      style: AppTextStyles.heading3(color: AppColors.onImage),
+                    ),
+                  ),
                 ),
               ),
-              child: trips.isEmpty
-                  ? _buildEmptyState(context)
-                  : _buildList(context, trips),
-            ),
+              Positioned.fill(
+                top: headerHeight,
+                child: Container(
+                  width: double.infinity,
+                  decoration: BoxDecoration(
+                    color: AppColors.cardBg,
+                    borderRadius: BorderRadius.vertical(
+                      top: Radius.circular(sheetRadius),
+                    ),
+                  ),
+                  child: BlocBuilder<WishlistCubit, WishlistState>(
+                    builder: (context, state) {
+                      if (state.status == WishlistPageStatus.loading &&
+                          state.trips.isEmpty) {
+                        return SizedBox(
+                          height: 280.h,
+                          child: CustomLoading(
+                            top: 48.h,
+                            size: 36,
+                            strokeWidth: 2.5,
+                          ),
+                        );
+                      }
+
+                      if (state.status == WishlistPageStatus.failure &&
+                          state.trips.isEmpty) {
+                        return _ErrorBody(
+                          message: state.errorMessage ?? 'Unknown error',
+                          onRetry: () =>
+                              context.read<WishlistCubit>().loadInitial(),
+                        );
+                      }
+
+                      if (state.trips.isEmpty) {
+                        return Padding(
+                          padding: EdgeInsetsDirectional.only(
+                            start: 16.w,
+                            end: 16.w,
+                            top: 16.h,
+                            bottom: 16.h,
+                          ),
+                          child: _buildEmptyState(context),
+                        );
+                      }
+
+                      return RefreshIndicator(
+                        color: AppColors.primary,
+                        onRefresh: () =>
+                            context.read<WishlistCubit>().refresh(),
+                        child: CustomScrollView(
+                          controller: _scroll,
+                          physics: const AlwaysScrollableScrollPhysics(),
+                          slivers: [
+                            SliverPadding(
+                              padding: EdgeInsetsDirectional.only(
+                                start: 16.w,
+                                end: 16.w,
+                                top: 16.h,
+                              ),
+                              sliver: SliverList.separated(
+                                itemCount:
+                                    state.trips.length +
+                                    (state.hasMore &&
+                                            state.status ==
+                                                WishlistPageStatus.loadingMore
+                                        ? 1
+                                        : 0),
+                                separatorBuilder: (_, __) =>
+                                    SizedBox(height: 14.h),
+                                itemBuilder: (context, index) {
+                                  if (index >= state.trips.length) {
+                                    return Padding(
+                                      padding: EdgeInsets.symmetric(
+                                        vertical: 16.h,
+                                      ),
+                                      child: CustomLoading(
+                                        size: 24,
+                                        strokeWidth: 2,
+                                      ),
+                                    );
+                                  }
+                                  final trip = state.trips[index];
+                                  return WishlistTripCard(
+                                    trip: trip,
+                                    onFavoriteTap: () => context
+                                        .read<WishlistCubit>()
+                                        .toggleTripWishlist(trip.id),
+                                  );
+                                },
+                              ),
+                            ),
+                          ],
+                        ),
+                      );
+                    },
+                  ),
+                ),
+              ),
+            ],
           ),
-        ],
+        ),
       ),
     );
   }
@@ -87,11 +215,7 @@ class WishlistView extends StatelessWidget {
               color: AppColors.lightBg,
               shape: BoxShape.circle,
             ),
-            child: Icon(
-              Iconsax.heart,
-              size: 36,
-              color: AppColors.greyText,
-            ),
+            child: Icon(Iconsax.heart, size: 36, color: AppColors.greyText),
           ),
           const SizedBox(height: 16),
           Text(
@@ -108,123 +232,39 @@ class WishlistView extends StatelessWidget {
       ),
     );
   }
-
-  Widget _buildList(BuildContext context, List<TripItem> trips) {
-    return SingleChildScrollView(
-      child: Column(
-        children: [
-          _SearchField(hint: context.tr.wishlistSearchHint),
-          SizedBox(height: 12.h),
-          Row(
-            children: [
-              Expanded(
-                child: _PillButton(
-                  label: context.tr.wishlistSortBy,
-                  icon: Iconsax.arrow_down_1,
-                  onTap: () {},
-                ),
-              ),
-              SizedBox(width: 12.w),
-              Expanded(
-                child: _PillButton(
-                  label: context.tr.wishlistFilters,
-                  icon: Iconsax.setting_4,
-                  onTap: () => sl<AppNavigator>().push(
-                    screen: const WishlistFilterView(),
-                  ),
-                ),
-              ),
-            ],
-          ),
-          SizedBox(height: 14.h),
-          ListView.separated(
-            itemCount: trips.length.clamp(0, 3),
-            shrinkWrap: true,
-            physics: const NeverScrollableScrollPhysics(),
-            separatorBuilder: (_, __) => SizedBox(height: 14.h),
-            itemBuilder: (context, index) {
-              final trip = trips[index];
-              final badge = switch (index) {
-                0 => (context.tr.wishlistNewInTripMarche, AppColors.primary),
-                1 => (context.tr.wishlistRecommended, const Color(0xFFF39C12)),
-                _ => (context.tr.wishlistBestPrice, AppColors.success),
-              };
-              return WishlistTripCard(
-                trip: trip,
-                badgeText: badge.$1,
-                badgeColor: badge.$2,
-              );
-            },
-          ),
-        ],
-      ),
-    );
-  }
 }
 
-class _SearchField extends StatelessWidget {
-  const _SearchField({required this.hint});
+class _ErrorBody extends StatelessWidget {
+  const _ErrorBody({required this.message, required this.onRetry});
 
-  final String hint;
+  final String message;
+  final VoidCallback onRetry;
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 46.h,
-      padding: EdgeInsetsDirectional.symmetric(horizontal: 14.w),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(14.r),
-        border: Border.all(color: AppColors.border),
-      ),
-      child: Row(
-        children: [
-          Icon(Iconsax.search_normal, size: 20.sp, color: AppColors.greyText),
-          SizedBox(width: 10.w),
-          Text(
-            hint,
-            style: AppTextStyles.bodyMedium(color: AppColors.greyText),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class _PillButton extends StatelessWidget {
-  const _PillButton({required this.label, required this.icon, this.onTap});
-
-  final String label;
-  final IconData icon;
-  final VoidCallback? onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    return Material(
-      color: Colors.transparent,
-      child: InkWell(
-        onTap: onTap,
-        borderRadius: BorderRadius.circular(999.r),
-        child: Container(
-          height: 46.h,
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(999.r),
-            border: Border.all(color: AppColors.border),
-          ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Icon(icon, size: 18.sp, color: AppColors.greyText),
-              SizedBox(width: 8.w),
-              Text(
-                label,
-                style: AppTextStyles.bodyMedium(
-                  color: AppColors.darkText,
-                ).copyWith(fontWeight: FontWeight.w600),
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: 24.w),
+      child: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(Iconsax.warning_2, size: 48, color: AppColors.greyText),
+            SizedBox(height: 16.h),
+            Text(
+              message,
+              style: AppTextStyles.bodyMedium(color: AppColors.secondaryText),
+              textAlign: TextAlign.center,
+            ),
+            SizedBox(height: 20.h),
+            FilledButton(
+              onPressed: onRetry,
+              style: FilledButton.styleFrom(
+                backgroundColor: AppColors.primary,
+                foregroundColor: AppColors.onImage,
               ),
-            ],
-          ),
+              child: const Text('Retry'),
+            ),
+          ],
         ),
       ),
     );

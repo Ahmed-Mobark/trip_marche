@@ -37,7 +37,7 @@ class AppTheme {
       surfaceContainerHighest: AppColors.scaffoldColorLight,
       shadow: AppColors.borderColorLight,
       outline: AppColors.borderColorLight,
-      error: AppColors.red,
+      error: AppColors.error,
       onError: AppColors.cardColorLight,
     ),
     inputDecorationTheme: AppThemeData.inputDecorationTheme(
@@ -52,6 +52,7 @@ class AppTheme {
     ),
     checkboxTheme: AppThemeData.checkboxThemeData(
       primaryColor: AppColors.primary,
+      onPrimaryColor: AppColors.cardColorLight,
     ),
     iconTheme: IconThemeData(color: AppColors.hintColorLight, size: 25.r),
     textSelectionTheme: const TextSelectionThemeData(
@@ -74,6 +75,7 @@ class AppTheme {
     tabBarTheme: AppThemeData.tabBarThemeData(
       primaryColor: AppColors.primary,
       borderColor: AppColors.borderColorLight,
+      labelColor: AppColors.textColorLight,
     ),
     textTheme: AppThemeData.textTheme(textColor: AppColors.textColorLight),
     cardTheme: CardThemeData(
@@ -127,7 +129,7 @@ class AppTheme {
       surfaceContainerHighest: AppColors.scaffoldColorDark,
       shadow: AppColors.borderColorDark,
       outline: AppColors.borderColorDark,
-      error: AppColors.red,
+      error: AppColors.error,
       onError: AppColors.textColorDark,
     ),
     inputDecorationTheme: AppThemeData.inputDecorationTheme(
@@ -142,6 +144,7 @@ class AppTheme {
     ),
     checkboxTheme: AppThemeData.checkboxThemeData(
       primaryColor: AppColors.primaryDark,
+      onPrimaryColor: AppColors.textColorDark,
     ),
     iconTheme: IconThemeData(color: AppColors.hintColorDark, size: 25.r),
     textSelectionTheme: const TextSelectionThemeData(
@@ -164,6 +167,7 @@ class AppTheme {
     tabBarTheme: AppThemeData.tabBarThemeData(
       primaryColor: AppColors.primaryDark,
       borderColor: AppColors.borderColorDark,
+      labelColor: AppColors.textColorDark,
     ),
     textTheme: AppThemeData.textTheme(textColor: AppColors.textColorDark),
     cardTheme: CardThemeData(

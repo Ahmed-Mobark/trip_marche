@@ -1,4 +1,4 @@
-import '../config/app_colors.dart';
+import '../theme/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -20,10 +20,7 @@ class AppShowDialog extends StatelessWidget {
               border: Border.all(color: Theme.of(context).dividerColor),
               color: Theme.of(context).cardColor,
             ),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: children,
-            ),
+            child: Column(mainAxisSize: MainAxisSize.min, children: children),
           ),
         ),
       ),

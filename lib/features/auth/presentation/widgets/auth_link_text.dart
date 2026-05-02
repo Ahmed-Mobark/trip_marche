@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../../../core/config/app_colors.dart';
+import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_text_styles.dart';
 
 /// A centred RichText link used for auth navigation, e.g.
@@ -38,14 +38,17 @@ class AuthLinkText extends StatelessWidget {
         child: RichText(
           text: TextSpan(
             text: leadingText,
-            style: leadingStyle ??
+            style:
+                leadingStyle ??
                 AppTextStyles.bodyMedium(color: AppColors.greyText),
             children: [
               TextSpan(
                 text: actionText,
-                style: actionStyle ??
-                    AppTextStyles.bodyMedium(color: AppColors.primary)
-                        .copyWith(fontWeight: FontWeight.w700),
+                style:
+                    actionStyle ??
+                    AppTextStyles.bodyMedium(
+                      color: AppColors.primary,
+                    ).copyWith(fontWeight: FontWeight.w700),
               ),
             ],
           ),

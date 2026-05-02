@@ -21,7 +21,9 @@ class DashedLine extends StatelessWidget {
               width: dashWidth,
               height: dashHeight,
               child: DecoratedBox(
-                decoration: BoxDecoration(color: color??Theme.of(context).primaryColor),
+                decoration: BoxDecoration(
+                  color: color ?? Theme.of(context).primaryColor,
+                ),
               ),
             );
           }),

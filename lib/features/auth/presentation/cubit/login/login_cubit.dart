@@ -12,7 +12,7 @@ import '../../../../nav_bar/presentation/view/main_nav_view.dart';
 
 class LoginCubit extends Cubit<LoginState> {
   LoginCubit(this._navigator, this._authRepository, this._storage)
-      : super(const LoginState());
+    : super(const LoginState());
 
   final AppNavigator _navigator;
   final AuthRepository _authRepository;
@@ -45,11 +45,13 @@ class LoginCubit extends Cubit<LoginState> {
 
     result.fold(
       (failure) {
-        emit(state.copyWith(
-          status: LoginStatus.failure,
-          errorMessage: failure.message,
-          validationErrors: failure.errors,
-        ));
+        emit(
+          state.copyWith(
+            status: LoginStatus.failure,
+            errorMessage: failure.message,
+            validationErrors: failure.errors,
+          ),
+        );
       },
       (data) async {
         final user = data['data'];
