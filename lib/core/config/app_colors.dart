@@ -45,6 +45,41 @@ abstract class AppColors {
   static const Color statusBadge = Color(0xFFC89563);
   static const Color tabActive = primaryDark;
   static const Color starYellow = Color(0xFFFBB532);
+
+  /// Trip details hero — company pill text/border (reference amber).
+  static const Color tripDetailsHeroCompanyAccent = Color(0xFFFFB347);
+
+  /// Trip details hero — compact rating star (reference #FFD700).
+  static const Color tripDetailsHeroStarGold = Color(0xFFFFD700);
+
+  /// Trip details hero — vertical gallery outer frame (teal tint).
+  static const Color tripDetailsHeroGalleryFrame = Color(0xFF0A6B6B);
+
+  /// Trip details stat icons (reference ~#8A4AF3).
+  static const Color tripDetailsStatIconPurple = Color(0xFF8A4AF3);
+
+  /// Trip details — secondary labels / overview body (reference #757575).
+  static Color get tripDetailsSecondaryGrey =>
+      _isDark ? greyTextColorDark : const Color(0xFF757575);
+
+  /// Trip details "What's included" checkmark (reference #58C299).
+  static const Color tripDetailsInclusionCheck = Color(0xFF58C299);
+
+  /// Departure details row icons (reference ~#9C27B0).
+  static const Color tripDetailsDepartureIconPurple = Color(0xFF9C27B0);
+
+  /// Map launcher chip on departure card (reference #F5F5F5).
+  static const Color tripDetailsMapButtonBg = Color(0xFFF5F5F5);
+
+  /// Google-style map glyph accent (reference Maps blue).
+  static const Color tripDetailsMapIconBlue = Color(0xFF4285F4);
+
+  /// Trip program meal code chips & checklist bullets (reference ~#FFA726).
+  static const Color tripDetailsProgramOrange = Color(0xFFFFA726);
+
+  /// Trip program day header bar (reference #F5F5F5).
+  static const Color tripDetailsProgramDayHeaderBar = Color(0xFFF5F5F5);
+
   static const Color infoBlue = Color(0xFF5B7FFF);
   static const Color linkBlue = Color(0xFF1976D2);
   static const Color burntOrange = Color(0xFFC93E27);

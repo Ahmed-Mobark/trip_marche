@@ -73,7 +73,7 @@ class _TripDetailsBody extends StatelessWidget {
         TripDetailsStatCellData(
           icon: Iconsax.routing,
           label: context.tr.tripDetailsStatCitiesLabel,
-          value: '${trip.citiesCount}',
+          value: context.tr.tripDetailsStatCitiesCount(trip.citiesCount),
         ),
         TripDetailsStatCellData(
           icon: Iconsax.airplane,

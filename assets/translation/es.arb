@@ -328,6 +328,17 @@
   "tripDetailsHeroByCompany": "Por la agencia de viajes",
   "tripDetailsHeroFromLocation": "Desde El Cairo y Alejandría",
   "tripDetailsHeroDateRange": "27 nov → 4 dic",
+  "tripDetailsHeroFromPrefix": "Desde ",
+  "@tripDetailsHeroFromPrefix": {
+    "description": "Prefix before pickup cities on trip details hero; cities follow in bold."
+  },
+  "tripDetailsHeroByCompanyLine": "Por {company}",
+  "@tripDetailsHeroByCompanyLine": {
+    "description": "Travel vendor line on trip details hero.",
+    "placeholders": {
+      "company": {"type": "String"}
+    }
+  },
   "tripDetailsGalleryMoreCount": "+{count}",
   "imageGalleryPosition": "{current} de {total}",
   "tripDetailsOverviewTitle": "Resumen del viaje",
@@ -388,6 +399,13 @@
   "tripDetailsDestinationParis": "París",
   "tripDetailsStatCitiesLabel": "Número de ciudades",
   "tripDetailsStatCitiesValue": "7 ciudades",
+  "tripDetailsStatCitiesCount": "{count} ciudades",
+  "@tripDetailsStatCitiesCount": {
+    "description": "Stat grid value for how many cities the trip visits.",
+    "placeholders": {
+      "count": {"type": "int"}
+    }
+  },
   "tripDetailsPriceLabel": "Precio",
   "tripDetailsPerPersonSmall": "por persona",
   "tripDetailsBookingPriceDisplay": "1000.00",

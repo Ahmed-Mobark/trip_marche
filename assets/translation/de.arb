@@ -328,6 +328,17 @@
   "tripDetailsHeroByCompany": "Von Reiseunternehmen",
   "tripDetailsHeroFromLocation": "Von Kairo & Alexandria",
   "tripDetailsHeroDateRange": "27. Nov → 4. Dez",
+  "tripDetailsHeroFromPrefix": "Von ",
+  "@tripDetailsHeroFromPrefix": {
+    "description": "Prefix before pickup cities on trip details hero; cities follow in bold."
+  },
+  "tripDetailsHeroByCompanyLine": "Von {company}",
+  "@tripDetailsHeroByCompanyLine": {
+    "description": "Travel vendor line on trip details hero.",
+    "placeholders": {
+      "company": {"type": "String"}
+    }
+  },
   "tripDetailsGalleryMoreCount": "+{count}",
   "imageGalleryPosition": "{current} von {total}",
   "tripDetailsOverviewTitle": "Reiseübersicht",
@@ -388,6 +399,13 @@
   "tripDetailsDestinationParis": "Paris",
   "tripDetailsStatCitiesLabel": "Anzahl der Städte",
   "tripDetailsStatCitiesValue": "7 Städte",
+  "tripDetailsStatCitiesCount": "{count} Städte",
+  "@tripDetailsStatCitiesCount": {
+    "description": "Stat grid value for how many cities the trip visits.",
+    "placeholders": {
+      "count": {"type": "int"}
+    }
+  },
   "tripDetailsPriceLabel": "Preis",
   "tripDetailsPerPersonSmall": "pro Person",
   "tripDetailsBookingPriceDisplay": "1000,00",

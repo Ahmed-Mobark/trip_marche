@@ -1936,6 +1936,18 @@ abstract class AppLocalizations {
   /// **'27 Nov → 4 Dec'**
   String get tripDetailsHeroDateRange;
 
+  /// Prefix before pickup cities on trip details hero; cities follow in bold.
+  ///
+  /// In en, this message translates to:
+  /// **'From '**
+  String get tripDetailsHeroFromPrefix;
+
+  /// Travel vendor line on trip details hero.
+  ///
+  /// In en, this message translates to:
+  /// **'By {company}'**
+  String tripDetailsHeroByCompanyLine(String company);
+
   /// No description provided for @tripDetailsGalleryMoreCount.
   ///
   /// In en, this message translates to:
@@ -2295,6 +2307,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'7 Cities'**
   String get tripDetailsStatCitiesValue;
+
+  /// Stat grid value for how many cities the trip visits.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} Cities'**
+  String tripDetailsStatCitiesCount(int count);
 
   /// No description provided for @tripDetailsPriceLabel.
   ///

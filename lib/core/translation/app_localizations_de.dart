@@ -971,6 +971,14 @@ class AppLocalizationsDe extends AppLocalizations {
   String get tripDetailsHeroDateRange => '27. Nov → 4. Dez';
 
   @override
+  String get tripDetailsHeroFromPrefix => 'Von ';
+
+  @override
+  String tripDetailsHeroByCompanyLine(String company) {
+    return 'Von $company';
+  }
+
+  @override
   String tripDetailsGalleryMoreCount(Object count) {
     return '+$count';
   }
@@ -1157,6 +1165,11 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get tripDetailsStatCitiesValue => '7 Städte';
+
+  @override
+  String tripDetailsStatCitiesCount(int count) {
+    return '$count Städte';
+  }
 
   @override
   String get tripDetailsPriceLabel => 'Preis';

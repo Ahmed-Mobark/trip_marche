@@ -328,6 +328,17 @@
   "tripDetailsHeroByCompany": "Par l’agence de voyage",
   "tripDetailsHeroFromLocation": "Depuis Le Caire & Alexandrie",
   "tripDetailsHeroDateRange": "27 nov → 4 déc",
+  "tripDetailsHeroFromPrefix": "Depuis ",
+  "@tripDetailsHeroFromPrefix": {
+    "description": "Prefix before pickup cities on trip details hero; cities follow in bold."
+  },
+  "tripDetailsHeroByCompanyLine": "Par {company}",
+  "@tripDetailsHeroByCompanyLine": {
+    "description": "Travel vendor line on trip details hero.",
+    "placeholders": {
+      "company": {"type": "String"}
+    }
+  },
   "tripDetailsGalleryMoreCount": "+{count}",
   "imageGalleryPosition": "{current} sur {total}",
   "tripDetailsOverviewTitle": "Aperçu du voyage",
@@ -388,6 +399,13 @@
   "tripDetailsDestinationParis": "Paris",
   "tripDetailsStatCitiesLabel": "Nombre de villes",
   "tripDetailsStatCitiesValue": "7 villes",
+  "tripDetailsStatCitiesCount": "{count} villes",
+  "@tripDetailsStatCitiesCount": {
+    "description": "Stat grid value for how many cities the trip visits.",
+    "placeholders": {
+      "count": {"type": "int"}
+    }
+  },
   "tripDetailsPriceLabel": "Prix",
   "tripDetailsPerPersonSmall": "par personne",
   "tripDetailsBookingPriceDisplay": "1000.00",

@@ -22,4 +22,18 @@ abstract final class TripDetailsUiFormatters {
     }
     return type[0].toUpperCase() + type.substring(1).toLowerCase();
   }
+
+  /// Compact range for hero overlay, e.g. "27 Nov → 4 Dec" (locale-aware).
+  static String heroTripDateRange(BuildContext context, String start, String end) {
+    final startDt = DateTime.tryParse(start);
+    final endDt = DateTime.tryParse(end);
+    if (startDt == null || endDt == null) {
+      return '';
+    }
+    final loc = Localizations.localeOf(context).toString();
+    final startLocal = startDt.toLocal();
+    final endLocal = endDt.toLocal();
+    final dayMonth = DateFormat('d MMM', loc);
+    return '${dayMonth.format(startLocal)} → ${dayMonth.format(endLocal)}';
+  }
 }

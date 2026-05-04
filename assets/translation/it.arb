@@ -328,6 +328,17 @@
   "tripDetailsHeroByCompany": "Da Agenzia di Viaggi",
   "tripDetailsHeroFromLocation": "Da Il Cairo & Alessandria",
   "tripDetailsHeroDateRange": "27 nov → 4 dic",
+  "tripDetailsHeroFromPrefix": "Da ",
+  "@tripDetailsHeroFromPrefix": {
+    "description": "Prefix before pickup cities on trip details hero; cities follow in bold."
+  },
+  "tripDetailsHeroByCompanyLine": "Da {company}",
+  "@tripDetailsHeroByCompanyLine": {
+    "description": "Travel vendor line on trip details hero.",
+    "placeholders": {
+      "company": {"type": "String"}
+    }
+  },
   "tripDetailsGalleryMoreCount": "+{count}",
   "imageGalleryPosition": "{current} di {total}",
   "tripDetailsOverviewTitle": "Panoramica viaggio",
@@ -388,6 +399,13 @@
   "tripDetailsDestinationParis": "Parigi",
   "tripDetailsStatCitiesLabel": "Numero di città",
   "tripDetailsStatCitiesValue": "7 città",
+  "tripDetailsStatCitiesCount": "{count} città",
+  "@tripDetailsStatCitiesCount": {
+    "description": "Stat grid value for how many cities the trip visits.",
+    "placeholders": {
+      "count": {"type": "int"}
+    }
+  },
   "tripDetailsPriceLabel": "Prezzo",
   "tripDetailsPerPersonSmall": "a persona",
   "tripDetailsBookingPriceDisplay": "1000.00",

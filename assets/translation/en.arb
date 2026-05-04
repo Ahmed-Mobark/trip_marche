@@ -333,6 +333,17 @@
   "tripDetailsHeroByCompany": "By Travel Company",
   "tripDetailsHeroFromLocation": "From Cairo & Alexandria",
   "tripDetailsHeroDateRange": "27 Nov → 4 Dec",
+  "tripDetailsHeroFromPrefix": "From ",
+  "@tripDetailsHeroFromPrefix": {
+    "description": "Prefix before pickup cities on trip details hero; cities follow in bold."
+  },
+  "tripDetailsHeroByCompanyLine": "By {company}",
+  "@tripDetailsHeroByCompanyLine": {
+    "description": "Travel vendor line on trip details hero.",
+    "placeholders": {
+      "company": {"type": "String"}
+    }
+  },
   "tripDetailsGalleryMoreCount": "+{count}",
   "imageGalleryPosition": "{current} of {total}",
   "@imageGalleryPosition": {
@@ -400,6 +411,13 @@
   "tripDetailsDestinationParis": "Paris",
   "tripDetailsStatCitiesLabel": "Number of Cities",
   "tripDetailsStatCitiesValue": "7 Cities",
+  "tripDetailsStatCitiesCount": "{count} Cities",
+  "@tripDetailsStatCitiesCount": {
+    "description": "Stat grid value for how many cities the trip visits.",
+    "placeholders": {
+      "count": {"type": "int"}
+    }
+  },
   "tripDetailsPriceLabel": "Price",
   "tripDetailsPerPersonSmall": "per person",
   "tripDetailsBookingPriceDisplay": "1000.00",
