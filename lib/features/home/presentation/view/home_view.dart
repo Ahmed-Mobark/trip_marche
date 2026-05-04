@@ -190,28 +190,33 @@ class _HomeViewState extends State<HomeView> {
                               ),
                             ],
                           ),
-                          child: BlocBuilder<HomeSectionsCubit, HomeSectionsState>(
-                            builder: (context, state) {
-                              if (state.status == HomeSectionsStatus.loading ||
-                                  state.status == HomeSectionsStatus.initial) {
-                                return _buildHomeSectionsLoading();
-                              }
+                          child:
+                              BlocBuilder<HomeSectionsCubit, HomeSectionsState>(
+                                builder: (context, state) {
+                                  if (state.status ==
+                                          HomeSectionsStatus.loading ||
+                                      state.status ==
+                                          HomeSectionsStatus.initial) {
+                                    return _buildHomeSectionsLoading();
+                                  }
 
-                              if (state.status == HomeSectionsStatus.failure) {
-                                return _buildError(
-                                  context,
-                                  state.errorMessage ?? 'Something went wrong',
-                                );
-                              }
+                                  if (state.status ==
+                                      HomeSectionsStatus.failure) {
+                                    return _buildError(
+                                      context,
+                                      state.errorMessage ??
+                                          'Something went wrong',
+                                    );
+                                  }
 
-                              return _buildContent(
-                                context,
-                                state,
-                                sectionTitleStyle,
-                                actionStyle,
-                              );
-                            },
-                          ),
+                                  return _buildContent(
+                                    context,
+                                    state,
+                                    sectionTitleStyle,
+                                    actionStyle,
+                                  );
+                                },
+                              ),
                         ),
                       ),
                     ),
@@ -275,9 +280,11 @@ class _HomeViewState extends State<HomeView> {
                       ? null
                       : () {
                           sl<AppNavigator>().push(
-                            screen: MyTripsView(
+                            screen: TrendingDestinationView(
                               catalogDestinationId: dest.id,
                               destinationBrowseTitle: dest.name,
+                              catalogDestinationImageUrl: dest.image,
+                              catalogDestinationCountry: dest.country,
                             ),
                           );
                         },
@@ -516,11 +523,7 @@ class _HomeViewState extends State<HomeView> {
   Widget _buildHomeSectionsLoading() {
     return SizedBox(
       height: 420.h,
-      child: CustomLoading(
-        top: 32.h,
-        size: 36,
-        strokeWidth: 2.5,
-      ),
+      child: CustomLoading(top: 32.h, size: 36, strokeWidth: 2.5),
     );
   }
 
@@ -616,12 +619,13 @@ class _TripHorizontalList extends StatelessWidget {
             child: PopularTripGridCard(
               trip: trip,
               onTap: () async {
-                final result = await sl<AppNavigator>().push<TripWishlistPopResult>(
-                  screen: TripDetailsView(
-                    tripId: trip.id,
-                    initialIsWishlisted: trip.isWishlisted,
-                  ),
-                );
+                final result = await sl<AppNavigator>()
+                    .push<TripWishlistPopResult>(
+                      screen: TripDetailsView(
+                        tripId: trip.id,
+                        initialIsWishlisted: trip.isWishlisted,
+                      ),
+                    );
                 onReturnedFromTripDetails(result);
               },
               onFavoriteTap: () => onFavoriteTap(trip),
@@ -762,9 +766,7 @@ class _SpecialTripsHorizontalListState
         separatorBuilder: (_, __) => SizedBox(width: 14.w),
         itemBuilder: (context, index) {
           if (index >= widget.trips.length) {
-            return Center(
-              child: CustomLoading(size: 24, strokeWidth: 2),
-            );
+            return Center(child: CustomLoading(size: 24, strokeWidth: 2));
           }
           final trip = widget.trips[index];
           return SizedBox(
@@ -772,12 +774,13 @@ class _SpecialTripsHorizontalListState
             child: SpecialTripWideCard(
               trip: trip,
               onTap: () async {
-                final result = await sl<AppNavigator>().push<TripWishlistPopResult>(
-                  screen: TripDetailsView(
-                    tripId: trip.id,
-                    initialIsWishlisted: trip.isWishlisted,
-                  ),
-                );
+                final result = await sl<AppNavigator>()
+                    .push<TripWishlistPopResult>(
+                      screen: TripDetailsView(
+                        tripId: trip.id,
+                        initialIsWishlisted: trip.isWishlisted,
+                      ),
+                    );
                 widget.onReturnedFromTripDetails(result);
               },
               onFavoriteTap: () => widget.onFavoriteTap(trip),

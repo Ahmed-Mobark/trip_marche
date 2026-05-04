@@ -243,7 +243,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get homeAppTitle => 'TripMarche';
 
   @override
-  String get homeSearchHint => 'شرم الشيخ';
+  String get homeSearchHint => 'ابحث عن رحلة';
 
   @override
   String get homeLocationText => 'مصر، القاهرة، القاهرة الجديدة';
@@ -625,6 +625,20 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get myTripsSearchHint => 'ابحث عن رحلة';
+
+  @override
+  String get myTripsCatalogTripsOf => 'رحلات';
+
+  @override
+  String myTripsCatalogReviewCountInline(int count) {
+    return '($count)';
+  }
+
+  @override
+  String get myTripsCatalogSaveWishlist => 'حفظ في المفضلة';
+
+  @override
+  String get myTripsCatalogRemoveWishlist => 'إزالة من المفضلة';
 
   @override
   String get myTripsTabActive => 'نشطة';

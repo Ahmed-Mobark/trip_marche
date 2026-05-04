@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../home/presentation/view/home_view.dart';
-import '../../../my_trips/presentation/view/my_trips_view.dart';
 import '../../../wishlist/presentation/view/wishlist_view.dart';
 import '../../../profile/presentation/view/profile_view.dart';
 import '../../../../core/extensions/localization.dart';
@@ -19,7 +18,7 @@ class _MainNavViewState extends State<MainNavView> {
 
   final List<Widget> _pages = [
     const HomeView(),
-    const MyTripsView(),
+     Container(),
     const WishlistView(),
     const ProfileView(),
   ];

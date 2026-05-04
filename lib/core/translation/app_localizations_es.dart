@@ -247,7 +247,7 @@ class AppLocalizationsEs extends AppLocalizations {
   String get homeAppTitle => 'TripMarche';
 
   @override
-  String get homeSearchHint => 'Sharm El Sheikh';
+  String get homeSearchHint => 'Buscar un viaje';
 
   @override
   String get homeLocationText => 'Egipto, El Cairo, Nueva El Cairo';
@@ -632,6 +632,20 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get myTripsSearchHint => 'Buscar un viaje';
+
+  @override
+  String get myTripsCatalogTripsOf => 'Viajes a';
+
+  @override
+  String myTripsCatalogReviewCountInline(int count) {
+    return '($count)';
+  }
+
+  @override
+  String get myTripsCatalogSaveWishlist => 'Guardar en favoritos';
+
+  @override
+  String get myTripsCatalogRemoveWishlist => 'Quitar de favoritos';
 
   @override
   String get myTripsTabActive => 'Activo';

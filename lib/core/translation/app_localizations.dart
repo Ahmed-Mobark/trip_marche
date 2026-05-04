@@ -559,7 +559,7 @@ abstract class AppLocalizations {
   /// No description provided for @homeSearchHint.
   ///
   /// In en, this message translates to:
-  /// **'Sharm El Sheikh'**
+  /// **'Search for a trip'**
   String get homeSearchHint;
 
   /// No description provided for @homeLocationText.
@@ -1293,6 +1293,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Search for a trip'**
   String get myTripsSearchHint;
+
+  /// No description provided for @myTripsCatalogTripsOf.
+  ///
+  /// In en, this message translates to:
+  /// **'Trips Of'**
+  String get myTripsCatalogTripsOf;
+
+  /// No description provided for @myTripsCatalogReviewCountInline.
+  ///
+  /// In en, this message translates to:
+  /// **'({count})'**
+  String myTripsCatalogReviewCountInline(int count);
+
+  /// No description provided for @myTripsCatalogSaveWishlist.
+  ///
+  /// In en, this message translates to:
+  /// **'Save to wishlist'**
+  String get myTripsCatalogSaveWishlist;
+
+  /// No description provided for @myTripsCatalogRemoveWishlist.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove from wishlist'**
+  String get myTripsCatalogRemoveWishlist;
 
   /// No description provided for @myTripsTabActive.
   ///

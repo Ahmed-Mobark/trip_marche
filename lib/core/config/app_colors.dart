@@ -94,4 +94,14 @@ abstract class AppColors {
       _isDark ? scaffoldColorDark : scaffoldColorLight;
   static Color get background => _isDark ? cardColorDark : cardColorLight;
   static Color get cardBg => _isDark ? cardColorDark : cardColorLight;
+
+  /// Trending destination sheet / catalog controls (reference #E0E0E0).
+  static const Color catalogSheetBorderLight = Color(0xFFE0E0E0);
+  /// Secondary lines, meta text, strikethrough prices (reference #9E9E9E).
+  static const Color catalogMetaMutedLight = Color(0xFF9E9E9E);
+
+  static Color get catalogSheetBorder =>
+      _isDark ? borderColorDark : catalogSheetBorderLight;
+  static Color get catalogMetaMuted =>
+      _isDark ? greyTextColorDark : catalogMetaMutedLight;
 }

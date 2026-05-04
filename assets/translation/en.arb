@@ -81,7 +81,7 @@
   "authResendNow": "Resend Now",
 
   "homeAppTitle": "TripMarche",
-  "homeSearchHint": "Sharm El Sheikh",
+  "homeSearchHint": "Search for a trip",
   "homeLocationText": "Egypt, Cairo, New Cairo",
   "homeTrendingDestinations": "Trending Destinations",
   "homePopularTrips": "Popular Trips",
@@ -211,6 +211,15 @@
   "myTripsTabUpcoming": "Upcoming",
   "myTripsTabPast": "Past",
   "myTripsSearchHint": "Search for a trip",
+  "myTripsCatalogTripsOf": "Trips Of",
+  "myTripsCatalogReviewCountInline": "({count})",
+  "@myTripsCatalogReviewCountInline": {
+    "placeholders": {
+      "count": {"type": "int"}
+    }
+  },
+  "myTripsCatalogSaveWishlist": "Save to wishlist",
+  "myTripsCatalogRemoveWishlist": "Remove from wishlist",
   "myTripsTabActive": "Active",
   "myTripsTabPastNew": "Past",
   "myTripsTabCanceled": "Canceled",
