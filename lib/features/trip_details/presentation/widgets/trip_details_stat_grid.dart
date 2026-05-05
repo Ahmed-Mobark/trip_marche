@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:trip_marche/core/config/styles/font_utils.dart';
 import 'package:trip_marche/core/theme/app_colors.dart';
-import 'package:trip_marche/core/theme/app_text_styles.dart';
 import 'trip_details_info_card.dart';
 
+/// Trip details 2×2 stat cards — fixed logical sizes (Figma @1×), no ScreenUtil.
 class TripDetailsStatGrid extends StatelessWidget {
   const TripDetailsStatGrid({super.key, required this.cells});
 
   final List<TripDetailsStatCellData> cells;
+
+  static const double _gridGap = 10;
+  static const double _aspect = 1.56;
 
   @override
   Widget build(BuildContext context) {
@@ -15,9 +18,10 @@ class TripDetailsStatGrid extends StatelessWidget {
       crossAxisCount: 2,
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
-      mainAxisSpacing: 12.h,
-      crossAxisSpacing: 12.w,
-      childAspectRatio: 1.45,
+      padding: EdgeInsets.zero,
+      mainAxisSpacing: _gridGap,
+      crossAxisSpacing: _gridGap,
+      childAspectRatio: _aspect,
       children: cells.map((c) => TripDetailsStatCell(data: c)).toList(),
     );
   }
@@ -41,13 +45,22 @@ class TripDetailsStatCell extends StatelessWidget {
   final TripDetailsStatCellData data;
 
   static final Color _cardBorder =
-      AppColors.border.withValues(alpha: 0.42);
+      AppColors.border.withValues(alpha: 0.35);
+
+  /// Figma: icon ~20, label 12 / w400, value 16 / w600, tight vertical rhythm.
+  static const double _cardRadius = 14;
+  static const double _cardPad = 14;
+  static const double _iconSize = 20;
+  static const double _gapIconToLabel = 6;
+  static const double _gapLabelToValue = 2;
+  static const double _labelSize = 12;
+  static const double _valueSize = 16;
 
   @override
   Widget build(BuildContext context) {
     return TripDetailsInfoCard(
-      padding: EdgeInsetsDirectional.all(16.w),
-      borderRadius: 14.r,
+      padding: const EdgeInsetsDirectional.all(_cardPad),
+      borderRadius: _cardRadius,
       borderColor: _cardBorder,
       withShadow: false,
       child: Column(
@@ -57,28 +70,30 @@ class TripDetailsStatCell extends StatelessWidget {
           Icon(
             data.icon,
             color: AppColors.tripDetailsStatIconPurple,
-            size: 24.sp,
+            size: _iconSize,
           ),
-          SizedBox(height: 12.h),
+          const SizedBox(height: _gapIconToLabel),
           Text(
             data.label,
-            style: AppTextStyles.caption(
-              color: AppColors.tripDetailsSecondaryGrey,
-            ).copyWith(
-              fontSize: 13.sp,
+            style: TextStyle(
+              fontFamily: AppFont.fontFamily,
+              fontSize: _labelSize,
               fontWeight: FontWeight.w400,
               height: 1.2,
+              letterSpacing: 0,
+              color: AppColors.tripDetailsSecondaryGrey,
             ),
           ),
-          SizedBox(height: 6.h),
+          const SizedBox(height: _gapLabelToValue),
           Text(
             data.value,
-            style: AppTextStyles.bodyMedium(
+            style: TextStyle(
+              fontFamily: AppFont.fontFamily,
+              fontSize: _valueSize,
+              fontWeight: FontWeight.w600,
+              height: 1.15,
+              letterSpacing: 0,
               color: AppColors.darkText,
-            ).copyWith(
-              fontSize: 19.sp,
-              fontWeight: FontWeight.w700,
-              height: 1.2,
             ),
             maxLines: 2,
             overflow: TextOverflow.ellipsis,

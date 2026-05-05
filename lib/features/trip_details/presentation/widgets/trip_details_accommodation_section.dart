@@ -1,8 +1,12 @@
+import 'dart:math' show min;
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:trip_marche/core/config/app_images.dart';
+import 'package:trip_marche/core/config/styles/font_utils.dart';
 import 'package:trip_marche/core/config/styles/styles.dart';
 import 'package:trip_marche/core/extensions/localization.dart';
 import 'package:trip_marche/core/theme/app_colors.dart';
@@ -10,6 +14,10 @@ import 'package:trip_marche/core/widgets/app_cached_network_image.dart';
 import 'package:trip_marche/core/widgets/app_image_gallery_screen.dart';
 import 'package:trip_marche/features/trip_details/domain/entities/trip_details_entity.dart';
 import 'trip_details_info_card.dart';
+
+// Accommodation card — Figma-fixed typography (no .sp on these styles).
+const Color _kAccommodationTitleValueLight = Color(0xFF000000);
+const Color _kAccommodationLabelLight = Color(0xFF9E9E9E);
 
 class TripDetailsAccommodationSection extends StatelessWidget {
   const TripDetailsAccommodationSection({super.key, required this.trip});
@@ -79,17 +87,63 @@ class TripDetailsAccommodationSection extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          context.tr.tripDetailsAccommodationTitle,
-          style: TextStyles.textViewBold14,
-        ),
-        SizedBox(height: 14.h),
-        for (final hotel in accommodations) ...[
-          _AccommodationItemCard(
-            hotelName: hotel.name,
-            hotelLocation: hotel.address,
-            imageUrls: hotel.images,
-            onMapTap: () {},
+        if (accommodations.isNotEmpty) ...[
+          TripDetailsInfoCard(
+            withShadow: true,
+            borderRadius: 20,
+            padding: const EdgeInsetsDirectional.all(20),
+            borderColor: AppColors.border.withValues(alpha: 0.35),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  context.tr.tripDetailsAccommodationTitle,
+                  style: TextStyle(
+                    fontFamily: AppFont.fontFamily,
+                    fontSize: 18,
+                    fontWeight: FontWeight.w700,
+                    height: 1.1,
+                    letterSpacing: 0,
+                    color: AppColors.brightness == Brightness.dark
+                        ? AppColors.darkText
+                        : _kAccommodationTitleValueLight,
+                  ),
+                ),
+                const SizedBox(height: 8),
+                for (var i = 0; i < accommodations.length; i++) ...[
+                  if (i > 0) const SizedBox(height: 24),
+                  _AccommodationHotelBlock(
+                    hotelName: accommodations[i].name,
+                    hotelLocation: accommodations[i].address,
+                    imageUrls: accommodations[i].images,
+                    onMapTap: () {},
+                  ),
+                ],
+                const SizedBox(height: 20),
+                Center(
+                  child: TextButton(
+                    style: TextButton.styleFrom(
+                      padding: EdgeInsets.zero,
+                      minimumSize: Size.zero,
+                      tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                    ),
+                    onPressed: () {},
+                    child: Text(
+                      context.tr.tripDetailsSeeAllAccommodation,
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontFamily: AppFont.fontFamily,
+                        fontSize: 15,
+                        fontWeight: FontWeight.w500,
+                        height: 1.2,
+                        letterSpacing: 0,
+                        color: AppColors.tripDetailsDepartureIconPurple,
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ),
           SizedBox(height: 14.h),
         ],
@@ -310,7 +364,7 @@ class _ActivityRateCard extends StatelessWidget {
             context.tr.tripDetailsActivityRateTitle,
             style: AppTextStyles.subtitle(color: AppColors.darkText),
           ),
-          SizedBox(height: 12.h),
+          SizedBox(height: 8.h),
           ...rates.map(
             (r) => Padding(
               padding: EdgeInsetsDirectional.only(bottom: 10.h),
@@ -467,8 +521,8 @@ class _QuickLinkTile extends StatelessWidget {
   }
 }
 
-class _AccommodationItemCard extends StatelessWidget {
-  const _AccommodationItemCard({
+class _AccommodationHotelBlock extends StatelessWidget {
+  const _AccommodationHotelBlock({
     required this.hotelName,
     required this.hotelLocation,
     required this.imageUrls,
@@ -480,101 +534,174 @@ class _AccommodationItemCard extends StatelessWidget {
   final List<String> imageUrls;
   final VoidCallback onMapTap;
 
+  static Color _metaLabelColor() =>
+      AppColors.brightness == Brightness.dark
+          ? AppColors.greyText
+          : _kAccommodationLabelLight;
+
+  static Color _valueColor() =>
+      AppColors.brightness == Brightness.dark
+          ? AppColors.darkText
+          : _kAccommodationTitleValueLight;
+
+  static Color _mapChipBg() =>
+      AppColors.brightness == Brightness.dark
+          ? AppColors.inputBg
+          : AppColors.tripDetailsMapButtonBg;
+
   @override
   Widget build(BuildContext context) {
-    return TripDetailsInfoCard(
-      withShadow: false,
-      borderRadius: 16.r,
-      padding: EdgeInsetsDirectional.all(16.r),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      context.tr.tripDetailsAccommodationHotelNameLabel,
-                      style: AppTextStyles.caption(color: AppColors.greyText),
-                    ),
-                    SizedBox(height: 2.h),
-                    Text(
-                      hotelName,
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: AppTextStyles.bodyMedium(
-                        color: AppColors.darkText,
-                      ).copyWith(fontWeight: FontWeight.w700),
-                    ),
-                    SizedBox(height: 10.h),
-                    Text(
-                      context.tr.tripDetailsAccommodationHotelLocationLabel,
-                      style: AppTextStyles.caption(color: AppColors.greyText),
-                    ),
-                    SizedBox(height: 2.h),
-                    Text(
-                      hotelLocation,
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
-                      style: AppTextStyles.bodySmall(color: AppColors.greyText),
-                    ),
-                  ],
-                ),
-              ),
-              SizedBox(width: 10.w),
-              Material(
-                color: AppColors.lightBg,
-                shape: const CircleBorder(),
-                child: InkWell(
-                  customBorder: const CircleBorder(),
-                  onTap: onMapTap,
-                  child: Padding(
-                    padding: EdgeInsets.all(10.r),
-                    child: Icon(
-                      Iconsax.location,
-                      color: AppColors.success,
-                      size: 20.sp,
-                    ),
+    final labelStyle = TextStyle(
+      fontFamily: AppFont.fontFamily,
+      fontSize: 12,
+      fontWeight: FontWeight.w400,
+      height: 1.15,
+      letterSpacing: 0,
+      color: _metaLabelColor(),
+    );
+    final hotelNameStyle = TextStyle(
+      fontFamily: AppFont.fontFamily,
+      fontSize: 16,
+      fontWeight: FontWeight.w600,
+      height: 1.15,
+      letterSpacing: 0,
+      color: _valueColor(),
+    );
+    final locationStyle = TextStyle(
+      fontFamily: AppFont.fontFamily,
+      fontSize: 14,
+      fontWeight: FontWeight.w600,
+      height: 1.15,
+      letterSpacing: 0,
+      color: _valueColor(),
+    );
+
+    final thumbs = imageUrls.length;
+    final visible = min(3, thumbs);
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          context.tr.tripDetailsAccommodationHotelNameLabel,
+          style: labelStyle,
+        ),
+        const SizedBox(height: 3),
+        Text(
+          hotelName,
+          maxLines: 2,
+          overflow: TextOverflow.ellipsis,
+          style: hotelNameStyle,
+        ),
+        const SizedBox(height: 12),
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    context.tr.tripDetailsAccommodationHotelLocationLabel,
+                    style: labelStyle,
                   ),
-                ),
+                  const SizedBox(height: 3),
+                  Text(
+                    hotelLocation,
+                    maxLines: 3,
+                    overflow: TextOverflow.ellipsis,
+                    style: locationStyle,
+                  ),
+                ],
               ),
-            ],
-          ),
-          if (imageUrls.isNotEmpty) ...[
-            SizedBox(height: 14.h),
-            SizedBox(
-              height: 86.h,
-              child: ListView.separated(
-                scrollDirection: Axis.horizontal,
-                itemCount: imageUrls.length,
-                separatorBuilder: (_, __) => SizedBox(width: 10.w),
-                itemBuilder: (_, i) => Material(
-                  color: Colors.transparent,
-                  child: InkWell(
-                    onTap: () => AppImageGalleryScreen.open(
-                      context,
-                      imageUrls: imageUrls,
-                      initialIndex: i,
-                    ),
-                    borderRadius: BorderRadius.circular(14.r),
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(14.r),
-                      child: AppCachedNetworkImage(
-                        imageUrl: imageUrls[i],
-                        width: 120.w,
-                        height: 86.h,
-                        fit: BoxFit.cover,
-                      ),
-                    ),
+            ),
+            const SizedBox(width: 8),
+            Material(
+              color: _mapChipBg(),
+              borderRadius: BorderRadius.circular(8),
+              clipBehavior: Clip.antiAlias,
+              child: InkWell(
+                onTap: onMapTap,
+                child: const SizedBox(
+                  width: 36,
+                  height: 36,
+                  child: Center(
+                    child: _AccommodationMapGlyph(),
                   ),
                 ),
               ),
             ),
           ],
+        ),
+        if (visible > 0) ...[
+          const SizedBox(height: 12),
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              for (var i = 0; i < visible; i++) ...[
+                if (i > 0) const SizedBox(width: 8),
+                Expanded(
+                  child: _AccommodationGalleryThumb(
+                    imageUrl: imageUrls[i],
+                    imageUrls: imageUrls,
+                    index: i,
+                  ),
+                ),
+              ],
+            ],
+          ),
         ],
+      ],
+    );
+  }
+}
+
+class _AccommodationMapGlyph extends StatelessWidget {
+  const _AccommodationMapGlyph();
+
+  @override
+  Widget build(BuildContext context) {
+    return SvgPicture.asset(
+      AppImages.tripDetailsMapMarker,
+      width: 20,
+      height: 20,
+      fit: BoxFit.contain,
+    );
+  }
+}
+
+class _AccommodationGalleryThumb extends StatelessWidget {
+  const _AccommodationGalleryThumb({
+    required this.imageUrl,
+    required this.imageUrls,
+    required this.index,
+  });
+
+  final String imageUrl;
+  final List<String> imageUrls;
+  final int index;
+
+  @override
+  Widget build(BuildContext context) {
+    return Material(
+      color: Colors.transparent,
+      child: InkWell(
+        onTap: () => AppImageGalleryScreen.open(
+          context,
+          imageUrls: imageUrls,
+          initialIndex: index,
+        ),
+        borderRadius: BorderRadius.circular(11),
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(11),
+          child: AspectRatio(
+            aspectRatio: 4 / 3,
+            child: AppCachedNetworkImage(
+              imageUrl: imageUrl,
+              fit: BoxFit.cover,
+            ),
+          ),
+        ),
       ),
     );
   }

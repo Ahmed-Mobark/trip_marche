@@ -35,7 +35,7 @@ class TripDetailsTransportationSection extends StatelessWidget {
             context.tr.tripDetailsTransportationTitle,
             style: TextStyles.textViewBold14,
           ),
-          SizedBox(height: 12.h),
+          SizedBox(height: 8.h),
           Text(
             context.tr.tripDetailsNoTransport,
             style: TextStyles.textViewRegular14.copyWith(color: AppColors.greyText),
@@ -53,7 +53,7 @@ class TripDetailsTransportationSection extends StatelessWidget {
           context.tr.tripDetailsTransportationTitle,
           style: TextStyles.textViewBold14,
         ),
-        SizedBox(height: 14.h),
+        SizedBox(height: 8.h),
         for (var i = 0; i < sorted.length; i++) ...[
           if (i > 0) SizedBox(height: 12.h),
           TripDetailsTravelLegCard(

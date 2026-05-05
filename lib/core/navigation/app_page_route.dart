@@ -1,4 +1,4 @@
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
 enum NavAnimation { slide, fade, scale, cupertino }
 
@@ -7,32 +7,9 @@ class AppPageRoute {
     required Widget screen,
     required NavAnimation animation,
   }) {
-    switch (animation) {
-      case NavAnimation.fade:
-        return _fade<T>(screen);
-
-      case NavAnimation.scale:
-        return _scale<T>(screen);
-
-      case NavAnimation.cupertino:
-        return CupertinoPageRoute<T>(builder: (_) => screen);
-
-      case NavAnimation.slide:
-        return _slide<T>(screen);
-    }
-  }
-
-  /// =======================
-  /// Fade (same as FadePageRoute)
-  /// =======================
-  static PageRoute<T> _fade<T>(Widget screen) {
-    return PageRouteBuilder<T>(
-      transitionDuration: const Duration(milliseconds: 500),
-      pageBuilder: (_, animation, __) => screen,
-      transitionsBuilder: (_, animation, __, child) {
-        return FadeTransition(opacity: animation, child: child);
-      },
-    );
+    // Client requirement: replace all page transitions with a SlideTransition.
+    // Duration is fixed to 300ms (regardless of [animation]).
+    return _slide<T>(screen);
   }
 
   /// =======================
@@ -41,7 +18,7 @@ class AppPageRoute {
   /// =======================
   static PageRoute<T> _slide<T>(Widget screen) {
     return PageRouteBuilder<T>(
-      transitionDuration: const Duration(milliseconds: 350),
+      transitionDuration: const Duration(milliseconds: 300),
       pageBuilder: (_, animation, __) => screen,
       transitionsBuilder: (_, animation, __, child) {
         final tween = Tween<Offset>(
@@ -54,19 +31,4 @@ class AppPageRoute {
     );
   }
 
-  /// =======================
-  /// Scale (same as ScalePageRoute)
-  /// =======================
-  static PageRoute<T> _scale<T>(Widget screen) {
-    return PageRouteBuilder<T>(
-      transitionDuration: const Duration(milliseconds: 300),
-      pageBuilder: (_, animation, __) => screen,
-      transitionsBuilder: (_, animation, __, child) {
-        return ScaleTransition(
-          scale: Tween<double>(begin: 0.0, end: 1.0).animate(animation),
-          child: child,
-        );
-      },
-    );
-  }
 }

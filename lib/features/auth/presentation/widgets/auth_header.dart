@@ -106,7 +106,7 @@ class AuthHeader extends StatelessWidget {
                         _heightAboveWhiteSheet(context))
                     .clamp(240.0, double.infinity);
                 return SingleChildScrollView(
-                  physics: const BouncingScrollPhysics(),
+                  physics: const ClampingScrollPhysics(),
                   child: Column(
                     children: [
                       SizedBox(height: media.padding.top),

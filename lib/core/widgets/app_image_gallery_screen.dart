@@ -30,12 +30,21 @@ class AppImageGalleryScreen extends StatefulWidget {
     final i = initialIndex.clamp(0, urls.length - 1);
     return Navigator.of(context, rootNavigator: true).push<void>(
       PageRouteBuilder<void>(
+        transitionDuration: const Duration(milliseconds: 300),
         opaque: true,
         pageBuilder: (context, animation, secondaryAnimation) {
           return AppImageGalleryScreen(imageUrls: urls, initialIndex: i);
         },
         transitionsBuilder: (context, animation, secondaryAnimation, child) {
-          return FadeTransition(opacity: animation, child: child);
+          final tween = Tween<Offset>(
+            begin: const Offset(1, 0),
+            end: Offset.zero,
+          ).chain(CurveTween(curve: Curves.ease));
+
+          return SlideTransition(
+            position: animation.drive(tween),
+            child: child,
+          );
         },
       ),
     );
@@ -79,7 +88,7 @@ class _AppImageGalleryScreenState extends State<AppImageGalleryScreen> {
           fit: StackFit.expand,
           children: [
             PhotoViewGallery.builder(
-                scrollPhysics: const BouncingScrollPhysics(),
+                scrollPhysics: const ClampingScrollPhysics(),
                 pageController: _pageController,
                 itemCount: total,
                 backgroundDecoration: const BoxDecoration(color: Colors.black),

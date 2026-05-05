@@ -152,16 +152,16 @@ class _WishlistFilterBody extends StatelessWidget {
                     ),
                   ),
                   child: RangeSlider(
-                  values: state.priceRange,
-                  min: 0,
-                  max: 10000,
-                  divisions: 100,
-                  labels: RangeLabels(
-                    '${state.priceRange.start.round()}',
-                    '${state.priceRange.end.round()}',
+                    values: state.priceRange,
+                    min: 0,
+                    max: 10000,
+                    divisions: 100,
+                    labels: RangeLabels(
+                      '${state.priceRange.start.round()}',
+                      '${state.priceRange.end.round()}',
+                    ),
+                    onChanged: cubit.setPriceRange,
                   ),
-                  onChanged: cubit.setPriceRange,
-                ),
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,

@@ -39,6 +39,7 @@ class OtpInputField extends StatefulWidget {
 class _OtpInputFieldState extends State<OtpInputField> {
   late final List<TextEditingController> _controllers;
   late final List<FocusNode> _focusNodes;
+  bool _isProgrammaticUpdate = false;
 
   @override
   void initState() {
@@ -60,20 +61,63 @@ class _OtpInputFieldState extends State<OtpInputField> {
 
   String get _currentOtp => _controllers.map((c) => c.text).join();
 
+  void _emitOtpIfNeeded() {
+    final otp = _currentOtp;
+    widget.onChanged?.call(otp);
+    if (otp.length == widget.length) {
+      widget.onCompleted?.call(otp);
+    }
+  }
+
+  void _applyAt(int index, String raw) {
+    final digits = raw.replaceAll(RegExp(r'[^0-9]'), '');
+    if (digits.isEmpty) {
+      return;
+    }
+
+    _isProgrammaticUpdate = true;
+    for (var i = 0; i < widget.length; i++) {
+      final shouldFill = i >= index && i < index + digits.length;
+      if (shouldFill) {
+        _controllers[i].text = digits[i - index];
+      } else if (i >= index) {
+        // Clear remaining boxes after paste point to avoid stale digits.
+        _controllers[i].text = '';
+      }
+    }
+    _isProgrammaticUpdate = false;
+
+    setState(() {});
+
+    // Move focus to the next empty box.
+    final nextIndex = (index + digits.length).clamp(0, widget.length - 1);
+    if (_currentOtp.length < widget.length) {
+      _focusNodes[nextIndex].requestFocus();
+    }
+
+    _emitOtpIfNeeded();
+  }
+
   void _handleChanged(String value, int index) {
+    if (_isProgrammaticUpdate) {
+      return;
+    }
+
+    // Paste of multi-digit OTP can land in a single box.
+    if (value.length > 1) {
+      _applyAt(index, value);
+      return;
+    }
+
     if (value.isNotEmpty && index < widget.length - 1) {
       _focusNodes[index + 1].requestFocus();
     }
     if (value.isEmpty && index > 0) {
       _focusNodes[index - 1].requestFocus();
     }
-    setState(() {});
 
-    final otp = _currentOtp;
-    widget.onChanged?.call(otp);
-    if (otp.length == widget.length) {
-      widget.onCompleted?.call(otp);
-    }
+    setState(() {});
+    _emitOtpIfNeeded();
   }
 
   @override
@@ -94,7 +138,6 @@ class _OtpInputFieldState extends State<OtpInputField> {
               focusNode: _focusNodes[index],
               keyboardType: TextInputType.number,
               textAlign: TextAlign.center,
-              maxLength: 1,
               style: Theme.of(context).textTheme.bodyMedium!.copyWith(
                 fontSize: 24,
                 fontWeight: FontWeight.w700,

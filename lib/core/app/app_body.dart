@@ -14,6 +14,29 @@ import 'package:trip_marche/core/theme/app_colors.dart';
 import 'package:trip_marche/core/theme/app_theme.dart';
 import 'package:trip_marche/core/translation/app_localizations.dart';
 
+/// Global scroll tuning:
+/// - Disable iOS bounce/stretch
+/// - Hide overscroll glow/indicator
+/// This is required by client feedback ("prevent background exposure on over-scroll").
+class _NoOverScrollBehavior extends ScrollBehavior {
+  const _NoOverScrollBehavior();
+
+  @override
+  ScrollPhysics getScrollPhysics(BuildContext context) {
+    return const ClampingScrollPhysics();
+  }
+
+  @override
+  Widget buildOverscrollIndicator(
+    BuildContext context,
+    Widget child,
+    ScrollableDetails details,
+  ) {
+    // Keep the original scrollable child visible while removing glow.
+    return child;
+  }
+}
+
 class MyApp extends StatefulWidget {
   const MyApp({super.key, required this.initialThemeMode});
 
@@ -55,9 +78,7 @@ class MyAppState extends State<MyApp> {
         debugShowFloatingThemeButton: false,
         builder: (theme, darkTheme) => MaterialApp(
           debugShowCheckedModeBanner: false,
-          scrollBehavior: const ScrollBehavior().copyWith(
-            physics: const BouncingScrollPhysics(),
-          ),
+          scrollBehavior: const _NoOverScrollBehavior(),
           theme: theme,
           darkTheme: darkTheme,
           localizationsDelegates: AppLocalizations.localizationsDelegates,

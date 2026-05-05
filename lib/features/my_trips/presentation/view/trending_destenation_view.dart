@@ -277,83 +277,93 @@ class _TrendingDestinationViewState extends State<TrendingDestinationView> {
           final media = MediaQuery.of(context);
           final heroH = (media.size.height * 0.56).clamp(200.0, 360.0);
           final rating = _heroRatingFromTrips(listState.trips);
+          final bottomSafe = MediaQuery.paddingOf(context).bottom;
 
-          return Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              SizedBox(
-                height: heroH,
-                child: _BrowseCatalogHero(
-                  imageUrl: widget.catalogDestinationImageUrl,
-                  country: widget.catalogDestinationCountry ?? '',
-                  destinationName: widget.destinationBrowseTitle?.trim() ?? '',
-                  rating: rating,
-                  onBack: () => sl<AppNavigator>().pop(),
-                  tripsOfLabel: context.tr.myTripsCatalogTripsOf,
-                ),
-              ),
-              Expanded(
-                child: Transform.translate(
-                  offset: Offset(0, -overlap),
-                  child: DecoratedBox(
-                    decoration: BoxDecoration(
-                      color: AppColors.cardBg,
-                      borderRadius: sheetTopOnly,
-                      border: Border.all(
-                        color: AppColors.onImage.withValues(alpha: 0.42),
-                        width: 1,
-                      ),
+          return RefreshIndicator(
+            color: AppColors.primary,
+            onRefresh: () => context.read<MyTripsListCubit>().refresh(),
+            child: SingleChildScrollView(
+              controller: _scroll,
+              physics: const AlwaysScrollableScrollPhysics(),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  SizedBox(
+                    height: heroH,
+                    child: _BrowseCatalogHero(
+                      imageUrl: widget.catalogDestinationImageUrl,
+                      country: widget.catalogDestinationCountry ?? '',
+                      destinationName:
+                          widget.destinationBrowseTitle?.trim() ?? '',
+                      rating: rating,
+                      onBack: () => sl<AppNavigator>().pop(),
+                      tripsOfLabel: context.tr.myTripsCatalogTripsOf,
                     ),
-                    child: ClipRRect(
-                      borderRadius: sheetTopOnly,
-                      child: ColoredBox(
+                  ),
+                  Transform.translate(
+                    offset: Offset(0, -overlap),
+                    child: DecoratedBox(
+                      decoration: BoxDecoration(
                         color: AppColors.cardBg,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.stretch,
-                          children: [
-                            Padding(
-                              padding: EdgeInsetsDirectional.fromSTEB(
-                                padH,
-                                24.h,
-                                padH,
-                                0,
+                        borderRadius: sheetTopOnly,
+                        border: Border.all(
+                          color: AppColors.onImage.withValues(alpha: 0.42),
+                          width: 1,
+                        ),
+                      ),
+                      child: ClipRRect(
+                        borderRadius: sheetTopOnly,
+                        child: ColoredBox(
+                          color: AppColors.cardBg,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.stretch,
+                            children: [
+                              Padding(
+                                padding: EdgeInsetsDirectional.fromSTEB(
+                                  padH,
+                                  24.h,
+                                  padH,
+                                  0,
+                                ),
+                                child: Column(
+                                  crossAxisAlignment:
+                                      CrossAxisAlignment.stretch,
+                                  children: [
+                                    _MyTripsSearchField(
+                                      controller: _searchCtrl,
+                                      hint: context.tr.myTripsSearchHint,
+                                      onChanged: _onSearchTextChanged,
+                                      onSubmitted: _flushSearchImmediate,
+                                      onClear: _clearSearchField,
+                                      catalogBrowseStyle: true,
+                                    ),
+                                    SizedBox(height: 16.h),
+                                    Align(
+                                      alignment:
+                                          AlignmentDirectional.centerStart,
+                                      child: const _CatalogSortChip(),
+                                    ),
+                                  ],
+                                ),
                               ),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.stretch,
-                                children: [
-                                  _MyTripsSearchField(
-                                    controller: _searchCtrl,
-                                    hint: context.tr.myTripsSearchHint,
-                                    onChanged: _onSearchTextChanged,
-                                    onSubmitted: _flushSearchImmediate,
-                                    onClear: _clearSearchField,
-                                    catalogBrowseStyle: true,
-                                  ),
-                                  SizedBox(height: 16.h),
-                                  Align(
-                                    alignment: AlignmentDirectional.centerStart,
-                                    child: const _CatalogSortChip(),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            SizedBox(height: 12.h),
-                            Expanded(
-                              child: _buildActiveTabBody(
+                              SizedBox(height: 12.h),
+                              _buildActiveTabBody(
                                 context,
                                 browseStatus,
                                 catalogListLayout: true,
-                                catalogViewportBottomCompensation: overlap,
+                                catalogViewportBottomCompensation:
+                                    overlap + bottomSafe,
+                                catalogEmbedInOuterScroll: true,
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
                       ),
                     ),
                   ),
-                ),
+                ],
               ),
-            ],
+            ),
           );
         },
       ),
@@ -463,50 +473,66 @@ class _TrendingDestinationViewState extends State<TrendingDestinationView> {
     BuildContext context,
     (String, Color, String, String) status, {
     bool catalogListLayout = false,
-
     double catalogViewportBottomCompensation = 0,
+    bool catalogEmbedInOuterScroll = false,
   }) {
     return BlocBuilder<MyTripsListCubit, MyTripsListState>(
       builder: (context, state) {
         if (state.status == MyTripsListStatus.loading && state.trips.isEmpty) {
+          if (catalogEmbedInOuterScroll) {
+            return Padding(
+              padding: EdgeInsets.symmetric(vertical: 32.h),
+              child: Center(
+                child: CustomLoading(top: 0, size: 36, strokeWidth: 2.5),
+              ),
+            );
+          }
           return Center(
             child: CustomLoading(top: 24.h, size: 36, strokeWidth: 2.5),
           );
         }
 
         if (state.status == MyTripsListStatus.failure && state.trips.isEmpty) {
-          return Center(
-            child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: 24.w),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Icon(Iconsax.warning_2, size: 40, color: AppColors.greyText),
-                  SizedBox(height: 12.h),
-                  Text(
-                    state.errorMessage ?? 'Unknown error',
-                    style: AppTextStyles.bodyMedium(
-                      color: AppColors.secondaryText,
-                    ),
-                    textAlign: TextAlign.center,
+          final errorColumn = Padding(
+            padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 24.h),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Icon(Iconsax.warning_2, size: 40, color: AppColors.greyText),
+                SizedBox(height: 12.h),
+                Text(
+                  state.errorMessage ?? 'Unknown error',
+                  style: AppTextStyles.bodyMedium(
+                    color: AppColors.secondaryText,
                   ),
-                  SizedBox(height: 16.h),
-                  FilledButton(
-                    onPressed: () =>
-                        context.read<MyTripsListCubit>().loadInitial(),
-                    style: FilledButton.styleFrom(
-                      backgroundColor: AppColors.primary,
-                      foregroundColor: AppColors.onImage,
-                    ),
-                    child: Text(context.tr.tripDetailsTryAgain),
+                  textAlign: TextAlign.center,
+                ),
+                SizedBox(height: 16.h),
+                FilledButton(
+                  onPressed: () =>
+                      context.read<MyTripsListCubit>().loadInitial(),
+                  style: FilledButton.styleFrom(
+                    backgroundColor: AppColors.primary,
+                    foregroundColor: AppColors.onImage,
                   ),
-                ],
-              ),
+                  child: Text(context.tr.tripDetailsTryAgain),
+                ),
+              ],
             ),
           );
+          if (catalogEmbedInOuterScroll) {
+            return errorColumn;
+          }
+          return Center(child: errorColumn);
         }
 
         if (state.trips.isEmpty) {
+          if (catalogEmbedInOuterScroll) {
+            return Padding(
+              padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 24.h),
+              child: _buildEmptyStateContent(context),
+            );
+          }
           return _buildEmptyState(context);
         }
 
@@ -522,58 +548,35 @@ class _TrendingDestinationViewState extends State<TrendingDestinationView> {
             ? catalogViewportBottomCompensation
             : 0.0;
 
-        return RefreshIndicator(
-          color: AppColors.primary,
-          onRefresh: () => context.read<MyTripsListCubit>().refresh(),
-          child: ListView.separated(
-            controller: _scroll,
-            physics: const AlwaysScrollableScrollPhysics(),
-            padding: listBottomPad > 0
-                ? EdgeInsets.only(bottom: listBottomPad)
-                : EdgeInsets.zero,
-            itemCount: itemCount,
-            separatorBuilder: (_, __) => SizedBox(height: gap),
-            itemBuilder: (context, index) {
-              if (index >= state.trips.length) {
-                return Padding(
-                  padding: EdgeInsets.symmetric(vertical: 12.h),
-                  child: CustomLoading(size: 24, strokeWidth: 2),
-                );
-              }
-              final trip = state.trips[index];
-              final rawLocation = trip.fromLocation.trim();
-              final locationText =
-                  rawLocation.startsWith(context.tr.myTripsFromPrefix)
-                  ? rawLocation
-                  : '${context.tr.myTripsFromPrefix} $rawLocation';
-              if (catalogListLayout) {
-                return MyTripCatalogCard(
-                  trip: trip,
-                  locationLabel: locationText,
-                  onFavoriteTap: () => context
-                      .read<MyTripsListCubit>()
-                      .toggleTripWishlist(trip.id),
-                  onReturnedFromTripDetails: (result) {
-                    if (result == null || !context.mounted) {
-                      return;
-                    }
-                    context
-                        .read<MyTripsListCubit>()
-                        .applyWishlistStateFromDetails(
-                          result.tripId,
-                          result.isWishlisted,
-                        );
-                  },
-                );
-              }
-              return MyTripBookingCard.api(
+        final list = ListView.separated(
+          controller: catalogEmbedInOuterScroll ? null : _scroll,
+          physics: catalogEmbedInOuterScroll
+              ? const NeverScrollableScrollPhysics()
+              : const AlwaysScrollableScrollPhysics(),
+          shrinkWrap: catalogEmbedInOuterScroll,
+          primary: false,
+          padding: listBottomPad > 0
+              ? EdgeInsets.only(bottom: listBottomPad)
+              : EdgeInsets.zero,
+          itemCount: itemCount,
+          separatorBuilder: (_, __) => SizedBox(height: gap),
+          itemBuilder: (context, index) {
+            if (index >= state.trips.length) {
+              return Padding(
+                padding: EdgeInsets.symmetric(vertical: 12.h),
+                child: CustomLoading(size: 24, strokeWidth: 2),
+              );
+            }
+            final trip = state.trips[index];
+            final rawLocation = trip.fromLocation.trim();
+            final locationText =
+                rawLocation.startsWith(context.tr.myTripsFromPrefix)
+                ? rawLocation
+                : '${context.tr.myTripsFromPrefix} $rawLocation';
+            if (catalogListLayout) {
+              return MyTripCatalogCard(
                 trip: trip,
-                statusText: status.$1,
-                statusColor: status.$2,
-                locationText: locationText,
-                primaryActionText: status.$3,
-                secondaryActionText: context.tr.myTripsViewReceipt,
-                bottomActionText: status.$4,
+                locationLabel: locationText,
                 onFavoriteTap: () => context
                     .read<MyTripsListCubit>()
                     .toggleTripWishlist(trip.id),
@@ -589,8 +592,39 @@ class _TrendingDestinationViewState extends State<TrendingDestinationView> {
                       );
                 },
               );
-            },
-          ),
+            }
+            return MyTripBookingCard.api(
+              trip: trip,
+              statusText: status.$1,
+              statusColor: status.$2,
+              locationText: locationText,
+              primaryActionText: status.$3,
+              secondaryActionText: context.tr.myTripsViewReceipt,
+              bottomActionText: status.$4,
+              onFavoriteTap: () => context
+                  .read<MyTripsListCubit>()
+                  .toggleTripWishlist(trip.id),
+              onReturnedFromTripDetails: (result) {
+                if (result == null || !context.mounted) {
+                  return;
+                }
+                context.read<MyTripsListCubit>().applyWishlistStateFromDetails(
+                  result.tripId,
+                  result.isWishlisted,
+                );
+              },
+            );
+          },
+        );
+
+        if (catalogEmbedInOuterScroll) {
+          return list;
+        }
+
+        return RefreshIndicator(
+          color: AppColors.primary,
+          onRefresh: () => context.read<MyTripsListCubit>().refresh(),
+          child: list,
         );
       },
     );
@@ -627,53 +661,57 @@ class _TrendingDestinationViewState extends State<TrendingDestinationView> {
     );
   }
 
+  Widget _buildEmptyStateContent(BuildContext context) {
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Container(
+          width: 80,
+          height: 80,
+          decoration: BoxDecoration(
+            color: AppColors.lightBg,
+            shape: BoxShape.circle,
+          ),
+          child: Icon(Iconsax.map, size: 36, color: AppColors.greyText),
+        ),
+        const SizedBox(height: 16),
+        Text(
+          context.tr.myTripsEmptyTitle,
+          style: AppTextStyles.heading3(color: AppColors.secondaryText),
+        ),
+        const SizedBox(height: 8),
+        Text(
+          context.tr.myTripsEmptyDescription,
+          style: AppTextStyles.bodyMedium(color: AppColors.greyText),
+          textAlign: TextAlign.center,
+        ),
+        const SizedBox(height: 20),
+        ElevatedButton(
+          onPressed: () {
+            sl<AppNavigator>().pop();
+          },
+          style: ElevatedButton.styleFrom(
+            backgroundColor: AppColors.primary,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(12.r),
+            ),
+            padding: EdgeInsetsDirectional.symmetric(
+              horizontal: 32.w,
+              vertical: 14.h,
+            ),
+          ),
+          child: Text(
+            context.tr.myTripsExploreTrips,
+            style: AppTextStyles.button(color: AppColors.onImage),
+          ),
+        ),
+      ],
+    );
+  }
+
   Widget _buildEmptyState(BuildContext context) {
     return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Container(
-            width: 80,
-            height: 80,
-            decoration: BoxDecoration(
-              color: AppColors.lightBg,
-              shape: BoxShape.circle,
-            ),
-            child: Icon(Iconsax.map, size: 36, color: AppColors.greyText),
-          ),
-          const SizedBox(height: 16),
-          Text(
-            context.tr.myTripsEmptyTitle,
-            style: AppTextStyles.heading3(color: AppColors.secondaryText),
-          ),
-          const SizedBox(height: 8),
-          Text(
-            context.tr.myTripsEmptyDescription,
-            style: AppTextStyles.bodyMedium(color: AppColors.greyText),
-            textAlign: TextAlign.center,
-          ),
-          const SizedBox(height: 20),
-          ElevatedButton(
-            onPressed: () {
-              sl<AppNavigator>().pop();
-            },
-            style: ElevatedButton.styleFrom(
-              backgroundColor: AppColors.primary,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(12.r),
-              ),
-              padding: EdgeInsetsDirectional.symmetric(
-                horizontal: 32.w,
-                vertical: 14.h,
-              ),
-            ),
-            child: Text(
-              context.tr.myTripsExploreTrips,
-              style: AppTextStyles.button(color: AppColors.onImage),
-            ),
-          ),
-        ],
-      ),
+      child: _buildEmptyStateContent(context),
     );
   }
 }

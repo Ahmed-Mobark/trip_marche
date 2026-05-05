@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:trip_marche/core/config/styles/font_utils.dart';
 import 'package:trip_marche/core/extensions/localization.dart';
 import 'package:trip_marche/core/theme/app_colors.dart';
-import 'package:trip_marche/core/theme/app_text_styles.dart';
 import 'package:trip_marche/features/trip_details/domain/entities/trip_details_entity.dart';
 import '../cubit/trip_details_cubit.dart';
 import '../cubit/trip_details_state.dart';
@@ -37,36 +36,44 @@ class TripDetailsProgramSection extends StatelessWidget {
     }
 
     final collapsible = days.length > 1;
-    final programBorder = AppColors.border.withValues(alpha: 0.32);
 
     return Padding(
-      padding: EdgeInsetsDirectional.only(top: 24.h),
+      padding: const EdgeInsetsDirectional.only(top: 12),
       child: TripDetailsInfoCard(
-        padding: EdgeInsetsDirectional.all(20.w),
-        borderRadius: 24.r,
-        borderColor: programBorder,
-        withShadow: true,
+        padding: const EdgeInsetsDirectional.only(
+          start: 16,
+          end: 16,
+          top: 16,
+          bottom: 16,
+        ),
+        borderRadius: 14,
+        borderColor: AppColors.tripDetailsFigmaDivider,
+        withShadow: false,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisSize: MainAxisSize.min,
           children: [
             Text(
               context.tr.tripDetailsProgramTitle,
-              style: AppTextStyles.body(
-                color: AppColors.darkText,
-              ).copyWith(
-                fontSize: 20.sp,
+              style: TextStyle(
+                fontFamily: AppFont.fontFamily,
+                fontSize: 16,
                 fontWeight: FontWeight.w700,
-                height: 1.2,
+                height: 1.0,
+                letterSpacing: 0,
+                color: AppColors.darkText,
               ),
             ),
-            SizedBox(height: 14.h),
+            const SizedBox(height: 10),
             BlocBuilder<TripDetailsCubit, TripDetailsState>(
               buildWhen: (p, n) => p.expandedDayIndex != n.expandedDayIndex,
               builder: (context, state) {
                 return Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     for (var i = 0; i < days.length; i++) ...[
-                      if (i > 0) SizedBox(height: 14.h),
+                      if (i > 0) const SizedBox(height: 10),
                       _DayCard(
                         dayLabel:
                             '${context.tr.tripDetailsProgramDayPrefix} ${days[i].dayNumber}',
@@ -110,24 +117,25 @@ class _DayCard extends StatelessWidget {
   final bool collapsible;
   final VoidCallback onHeaderTap;
 
-  static final Color _innerBorder =
-      AppColors.border.withValues(alpha: 0.4);
+  static const double _radius = 12;
 
   @override
   Widget build(BuildContext context) {
-    final radius = 16.r;
-
     final header = Container(
       width: double.infinity,
-      padding: EdgeInsetsDirectional.symmetric(
-        horizontal: 16.w,
-        vertical: 12.h,
+      padding: const EdgeInsetsDirectional.only(
+        start: 16,
+        end: 16,
+        top: 10,
+        bottom: 10,
       ),
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
         color: AppColors.tripDetailsProgramDayHeaderBar,
-        borderRadius: BorderRadius.vertical(top: Radius.circular(radius)),
+        borderRadius: BorderRadius.vertical(
+          top: Radius.circular(_radius),
+        ),
         border: Border(
-          bottom: BorderSide(color: _innerBorder),
+          bottom: BorderSide(color: AppColors.tripDetailsFigmaDivider),
         ),
       ),
       child: Row(
@@ -135,20 +143,21 @@ class _DayCard extends StatelessWidget {
           Expanded(
             child: Text(
               dayLabel,
-              style: AppTextStyles.subtitle(
-                color: AppColors.darkText,
-              ).copyWith(
-                fontSize: 16.sp,
+              style: TextStyle(
+                fontFamily: AppFont.fontFamily,
+                fontSize: 14,
                 fontWeight: FontWeight.w700,
-                height: 1.2,
+                height: 1.15,
+                letterSpacing: 0,
+                color: AppColors.darkText,
               ),
             ),
           ),
           if (collapsible)
             Icon(
               expanded ? Iconsax.arrow_up_2 : Iconsax.arrow_down_1,
-              size: 18.sp,
-              color: AppColors.tripDetailsSecondaryGrey,
+              size: 16,
+              color: AppColors.tripDetailsFigmaLabel,
             ),
         ],
       ),
@@ -157,29 +166,34 @@ class _DayCard extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
         color: AppColors.cardBg,
-        borderRadius: BorderRadius.circular(radius),
-        border: Border.all(color: _innerBorder),
+        borderRadius: BorderRadius.circular(_radius),
+        border: Border.all(color: AppColors.tripDetailsFigmaDivider),
       ),
       child: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           if (collapsible)
             InkWell(
               onTap: onHeaderTap,
-              borderRadius: BorderRadius.vertical(top: Radius.circular(radius)),
+              borderRadius: const BorderRadius.vertical(
+                top: Radius.circular(_radius),
+              ),
               child: header,
             )
           else
             header,
           if (expanded || !collapsible)
             Padding(
-              padding: EdgeInsetsDirectional.only(
-                start: 16.w,
-                end: 16.w,
-                top: 16.h,
-                bottom: 20.h,
+              padding: const EdgeInsetsDirectional.only(
+                start: 16,
+                end: 16,
+                top: 16,
+                bottom: 16,
               ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
                 children: [
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -187,22 +201,23 @@ class _DayCard extends StatelessWidget {
                       Expanded(
                         child: Text(
                           city,
-                          style: AppTextStyles.subtitle(
-                            color: AppColors.darkText,
-                          ).copyWith(
-                            fontSize: 18.sp,
+                          style: TextStyle(
+                            fontFamily: AppFont.fontFamily,
+                            fontSize: 16,
                             fontWeight: FontWeight.w700,
-                            height: 1.25,
+                            height: 1.15,
+                            letterSpacing: 0,
+                            color: AppColors.darkText,
                           ),
                         ),
                       ),
-                      SizedBox(width: 12.w),
+                      const SizedBox(width: 8),
                       _MealsBadgeRow(codes: mealCodes),
                     ],
                   ),
-                  SizedBox(height: 14.h),
+                  const SizedBox(height: 12),
                   for (var i = 0; i < items.length; i++) ...[
-                    if (i > 0) SizedBox(height: 14.h),
+                    if (i > 0) const SizedBox(height: 8),
                     _ChecklistRow(text: items[i]),
                   ],
                 ],
@@ -225,19 +240,32 @@ class _MealsBadgeRow extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        Text(
-          context.tr.tripDetailsProgramMealsLabel,
-          style: AppTextStyles.caption(
-            color: AppColors.tripDetailsSecondaryGrey,
-          ).copyWith(
-            fontSize: 12.sp,
-            fontWeight: FontWeight.w400,
-            height: 1.2,
+        Container(
+          padding: const EdgeInsetsDirectional.only(
+            start: 6,
+            end: 6,
+            top: 3,
+            bottom: 3,
+          ),
+          decoration: BoxDecoration(
+            color: AppColors.tripDetailsProgramDayHeaderBar,
+            borderRadius: BorderRadius.circular(20),
+          ),
+          child: Text(
+            context.tr.tripDetailsProgramMealsLabel,
+            style: TextStyle(
+              fontFamily: AppFont.fontFamily,
+              fontSize: 11,
+              fontWeight: FontWeight.w600,
+              height: 1.15,
+              letterSpacing: 0,
+              color: AppColors.darkText,
+            ),
           ),
         ),
-        SizedBox(width: 8.w),
+        const SizedBox(width: 6),
         for (var i = 0; i < codes.length; i++) ...[
-          if (i > 0) SizedBox(width: 6.w),
+          if (i > 0) const SizedBox(width: 4),
           _MealCodeChip(code: codes[i]),
         ],
       ],
@@ -253,21 +281,22 @@ class _MealCodeChip extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 24.r,
-      height: 24.r,
+      width: 20,
+      height: 20,
       alignment: Alignment.center,
       decoration: BoxDecoration(
         color: AppColors.tripDetailsProgramOrange,
-        borderRadius: BorderRadius.circular(6.r),
+        borderRadius: BorderRadius.circular(5),
       ),
       child: Text(
         code,
-        style: AppTextStyles.small(
-          color: AppColors.onImage,
-        ).copyWith(
-          fontSize: 10.sp,
+        style: const TextStyle(
+          fontFamily: AppFont.fontFamily,
+          fontSize: 10,
           fontWeight: FontWeight.w700,
           height: 1,
+          letterSpacing: 0,
+          color: AppColors.onImage,
         ),
       ),
     );
@@ -285,29 +314,30 @@ class _ChecklistRow extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         Container(
-          width: 20.r,
-          height: 20.r,
+          width: 18,
+          height: 18,
           alignment: Alignment.center,
           decoration: const BoxDecoration(
             shape: BoxShape.circle,
             color: AppColors.tripDetailsProgramOrange,
           ),
-          child: Icon(
+          child: const Icon(
             Icons.check,
-            size: 12.sp,
+            size: 10,
             color: AppColors.onImage,
           ),
         ),
-        SizedBox(width: 12.w),
+        const SizedBox(width: 8),
         Expanded(
           child: Text(
             text,
-            style: AppTextStyles.bodyMedium(
+            style: TextStyle(
+              fontFamily: AppFont.fontFamily,
+              fontSize: 14,
+              fontWeight: FontWeight.w400,
+              height: 1.2,
+              letterSpacing: 0,
               color: AppColors.darkText,
-            ).copyWith(
-              fontSize: 14.sp,
-              fontWeight: FontWeight.w500,
-              height: 1.45,
             ),
           ),
         ),

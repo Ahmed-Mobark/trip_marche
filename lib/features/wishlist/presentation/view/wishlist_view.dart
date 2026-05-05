@@ -149,7 +149,9 @@ class _WishlistViewState extends State<WishlistView> {
                             context.read<WishlistCubit>().refresh(),
                         child: CustomScrollView(
                           controller: _scroll,
-                          physics: const AlwaysScrollableScrollPhysics(),
+                          physics: const AlwaysScrollableScrollPhysics(
+                            parent: ClampingScrollPhysics(),
+                          ),
                           slivers: [
                             SliverPadding(
                               padding: EdgeInsetsDirectional.only(
