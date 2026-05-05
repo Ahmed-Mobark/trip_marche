@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:trip_marche/core/config/styles/styles.dart';
 import 'package:trip_marche/core/extensions/localization.dart';
 import 'package:trip_marche/core/injection/injection_container.dart';
 import 'package:trip_marche/core/theme/app_colors.dart';
@@ -11,7 +12,6 @@ import 'package:trip_marche/features/my_trips/presentation/my_trips_figma_tokens
 import 'package:trip_marche/features/my_trips/presentation/widgets/my_trips_screen_tabs.dart';
 import 'package:trip_marche/features/my_trips/presentation/widgets/my_trips_screen_trip_card.dart';
 
-/// Static My Trips UI — [MyTripsShellCubit] only (local dummy rows, no APIs).
 class MyTripsView extends StatelessWidget {
   const MyTripsView({super.key});
 
@@ -38,8 +38,8 @@ class _MyTripsViewBody extends StatelessWidget {
         final trips = q.isEmpty
             ? state.trips
             : state.trips
-                .where((t) => t.title.toLowerCase().contains(q))
-                .toList();
+                  .where((t) => t.title.toLowerCase().contains(q))
+                  .toList();
 
         return Scaffold(
           backgroundColor: AppColors.primary,
@@ -47,9 +47,7 @@ class _MyTripsViewBody extends StatelessWidget {
             fit: StackFit.expand,
             children: [
               const DecoratedBox(
-                decoration: BoxDecoration(
-                  gradient: AppColors.primaryGradient,
-                ),
+                decoration: BoxDecoration(gradient: AppColors.primaryGradient),
               ),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -67,10 +65,7 @@ class _MyTripsViewBody extends StatelessWidget {
                         alignment: AlignmentDirectional.centerStart,
                         child: Text(
                           context.tr.myTripsTitle,
-                          style: MyTripsFigmaTokens.text(
-                            fontSize: MyTripsFigmaTokens.headerTitleSize,
-                            fontWeight: FontWeight.w700,
-                            height: MyTripsFigmaTokens.headerTitleLineHeight,
+                          style: AppTextStyles.heading3(
                             color: AppColors.onImage,
                           ),
                         ),
@@ -82,7 +77,9 @@ class _MyTripsViewBody extends StatelessWidget {
                       decoration: BoxDecoration(
                         color: AppColors.cardBg,
                         borderRadius: BorderRadius.vertical(
-                          top: Radius.circular(MyTripsFigmaTokens.sheetTopRadius),
+                          top: Radius.circular(
+                            MyTripsFigmaTokens.sheetTopRadius,
+                          ),
                         ),
                       ),
                       child: CustomScrollView(
@@ -102,9 +99,7 @@ class _MyTripsViewBody extends StatelessWidget {
                               ),
                             ),
                           ),
-                          const SliverToBoxAdapter(
-                            child: MyTripsScreenTabs(),
-                          ),
+                          const SliverToBoxAdapter(child: MyTripsScreenTabs()),
                           SliverPadding(
                             padding: EdgeInsetsDirectional.only(
                               start: MyTripsFigmaTokens.padH,
@@ -114,8 +109,9 @@ class _MyTripsViewBody extends StatelessWidget {
                             ),
                             sliver: SliverList.separated(
                               itemCount: trips.length,
-                              separatorBuilder: (_, __) =>
-                                  SizedBox(height: MyTripsFigmaTokens.cardSeparator),
+                              separatorBuilder: (_, __) => SizedBox(
+                                height: MyTripsFigmaTokens.cardSeparator,
+                              ),
                               itemBuilder: (context, index) {
                                 return MyTripsScreenTripCard(
                                   trip: trips[index],
@@ -150,10 +146,7 @@ class _SearchField extends StatelessWidget {
   Widget build(BuildContext context) {
     final border = OutlineInputBorder(
       borderRadius: BorderRadius.circular(MyTripsFigmaTokens.searchRadiusPill),
-      borderSide: BorderSide(
-        color: AppColors.myTripsBorderFigma,
-        width: 1.w,
-      ),
+      borderSide: BorderSide(color: AppColors.myTripsBorderFigma, width: 1.w),
     );
 
     return SizedBox(
