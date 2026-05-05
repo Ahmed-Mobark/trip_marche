@@ -1,10 +1,13 @@
 import 'package:adaptive_theme/adaptive_theme.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter/material.dart';
 import 'package:trip_marche/core/app/app_state.dart';
 import 'package:trip_marche/core/injection/injection_container.dart';
 import 'package:trip_marche/core/navigation/app_navigator.dart';
 import 'package:trip_marche/core/navigation/route_observer.dart';
+import 'package:trip_marche/core/network/connectivity/connectivity_cubit.dart';
+import 'package:trip_marche/core/network/connectivity/offline_screen.dart';
 import 'package:trip_marche/core/network/network_service/api_basehelper.dart';
 import 'package:trip_marche/core/storage/data/storage.dart';
 import 'package:trip_marche/core/theme/app_colors.dart';
@@ -64,7 +67,19 @@ class MyAppState extends State<MyApp> {
           navigatorKey: sl<AppNavigator>().navigatorKey,
           builder: (context, child) {
             AppColors.brightness = Theme.of(context).brightness;
-            return child ?? const SizedBox.shrink();
+            return BlocProvider.value(
+              value: sl<ConnectivityCubit>(),
+              child: BlocBuilder<ConnectivityCubit, bool>(
+                builder: (context, isConnected) {
+                  return Stack(
+                    children: [
+                      child ?? const SizedBox.shrink(),
+                      if (!isConnected) const OfflineScreen(),
+                    ],
+                  );
+                },
+              ),
+            );
           },
           home: AppState.currentScreen(),
         ),
