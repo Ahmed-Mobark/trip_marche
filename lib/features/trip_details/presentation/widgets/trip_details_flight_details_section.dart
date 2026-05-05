@@ -34,7 +34,7 @@ class TripDetailsFlightDetailsSection extends StatelessWidget {
             context.tr.tripDetailsFlightDetailsTitle,
             style: TextStyles.textViewBold14,
           ),
-          SizedBox(height: 12.h),
+          SizedBox(height: 8.h),
           Text(
             context.tr.tripDetailsNoFlights,
             style: TextStyles.textViewRegular14.copyWith(color: AppColors.greyText),
@@ -52,7 +52,7 @@ class TripDetailsFlightDetailsSection extends StatelessWidget {
           context.tr.tripDetailsFlightDetailsTitle,
           style: TextStyles.textViewBold14,
         ),
-        SizedBox(height: 14.h),
+        SizedBox(height: 8.h),
         _AirlineRow(
           label: context.tr.tripDetailsAirlineLabel,
           name: primaryAirline,

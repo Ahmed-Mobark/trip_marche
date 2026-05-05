@@ -21,6 +21,9 @@ class AppImages {
   static const String onboarding2 = _fallbackPng;
   static const String onboarding3 = _fallbackPng;
   static const String onboarding4 = _fallbackPng;
+
+  /// Trip details accommodation map chip (replace with Figma export for pixel parity).
+  static const String tripDetailsMapMarker = '${_iconsPath}trip_details_map_marker.svg';
 }
 
 /// Splash and other video/GIF assets under assets/videos/

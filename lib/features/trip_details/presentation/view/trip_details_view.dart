@@ -2,7 +2,6 @@ import 'package:adaptive_theme/adaptive_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:iconsax/iconsax.dart';
 import 'package:trip_marche/core/extensions/localization.dart';
 import 'package:trip_marche/core/injection/injection_container.dart';
 import 'package:trip_marche/core/theme/app_colors.dart';
@@ -60,23 +59,22 @@ class _TripDetailsBody extends StatelessWidget {
     return TripDetailsStatGrid(
       cells: [
         TripDetailsStatCellData(
-          icon: Iconsax.calendar,
+          icon: Icons.calendar_today_outlined,
           label: context.tr.tripDetailsDurationLabel,
-          value:
-              '${trip.durationDays} ${context.tr.tripDetailsDurationUnit}',
+          value: '${trip.durationDays} ${context.tr.tripDetailsDurationUnit}',
         ),
         TripDetailsStatCellData(
-          icon: Iconsax.people,
+          icon: Icons.groups_outlined,
           label: context.tr.tripDetailsGroupSizeLabel,
           value: '${trip.groupSize.min}-${trip.groupSize.max}',
         ),
         TripDetailsStatCellData(
-          icon: Iconsax.routing,
+          icon: Icons.location_city_outlined,
           label: context.tr.tripDetailsStatCitiesLabel,
           value: context.tr.tripDetailsStatCitiesCount(trip.citiesCount),
         ),
         TripDetailsStatCellData(
-          icon: Iconsax.airplane,
+          icon: Icons.airplanemode_active_outlined,
           label: context.tr.tripDetailsTypeLabel,
           value: typeValue,
         ),
@@ -87,8 +85,8 @@ class _TripDetailsBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final horizontalPadding = 16.w;
-    final sheetTopRadius = 28.r;
-    final sheetOverlap = 26.h;
+
+    final sheetOverlap = 5.h;
 
     return PopScope(
       canPop: false,
@@ -124,7 +122,7 @@ class _TripDetailsBody extends StatelessWidget {
           context.read<TripDetailsCubit>().clearWishlistFeedback();
         },
         child: Scaffold(
-          backgroundColor: AppColors.scaffoldBg,
+          backgroundColor: AppColors.tripDetailsScreenBg,
           body: BlocBuilder<TripDetailsCubit, TripDetailsState>(
             buildWhen: (p, n) =>
                 p.loadStatus != n.loadStatus ||
@@ -167,49 +165,48 @@ class _TripDetailsBody extends StatelessWidget {
               final displayPrice = TripDetailsUiFormatters.formatAmount(
                 trip.discountPrice ?? trip.price,
               );
-              final payExtra = trip.payOnArrivalAmount != null &&
+              final payExtra =
+                  trip.payOnArrivalAmount != null &&
                       trip.payOnArrivalAmount! > 0
-                  ? TripDetailsUiFormatters.formatAmount(trip.payOnArrivalAmount!)
+                  ? TripDetailsUiFormatters.formatAmount(
+                      trip.payOnArrivalAmount!,
+                    )
                   : null;
 
               return Stack(
                 children: [
                   CustomScrollView(
                     slivers: [
-                      SliverToBoxAdapter(child: TripDetailsHeroHeader(trip: trip)),
+                      SliverToBoxAdapter(
+                        child: TripDetailsHeroHeader(trip: trip),
+                      ),
                       SliverToBoxAdapter(
                         child: Transform.translate(
                           offset: Offset(0, -sheetOverlap),
                           child: Container(
                             width: double.infinity,
-                            decoration: BoxDecoration(
-                              color: AppColors.cardBg,
-                              borderRadius: BorderRadius.vertical(
-                                top: Radius.circular(sheetTopRadius),
+                            decoration: BoxDecoration(color: AppColors.cardBg),
+                            child: MediaQuery(
+                              data: MediaQuery.of(context).copyWith(
+                                textScaler: TextScaler.noScaling,
                               ),
-                              boxShadow: [
-                                BoxShadow(
-                                  color: AppColors.shadow.withValues(alpha: 0.06),
-                                  blurRadius: 22.r,
-                                  offset: Offset(0, 10.h),
+                              child: Padding(
+                                padding: EdgeInsetsDirectional.only(
+                                  start: horizontalPadding,
+                                  end: horizontalPadding,
+                                  top: 16.h,
+                                  bottom: 140.h,
                                 ),
-                              ],
-                            ),
-                            child: Padding(
-                              padding: EdgeInsetsDirectional.only(
-                                start: horizontalPadding,
-                                end: horizontalPadding,
-                                top: 18.h,
-                                bottom: 140.h,
-                              ),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  _buildStatGrid(context, trip),
-                                  TripDetailsPostStatsSections(trip: trip),
-                                  TripDetailsProgramSection(trip: trip),
-                                  TripDetailsTravelSections(trip: trip),
-                                ],
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    _buildStatGrid(context, trip),
+                                    TripDetailsPostStatsSections(trip: trip),
+                                    TripDetailsProgramSection(trip: trip),
+                                    TripDetailsTravelSections(trip: trip),
+                                  ],
+                                ),
                               ),
                             ),
                           ),

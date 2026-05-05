@@ -55,8 +55,8 @@ abstract class AppColors {
   /// Trip details hero — vertical gallery outer frame (teal tint).
   static const Color tripDetailsHeroGalleryFrame = Color(0xFF0A6B6B);
 
-  /// Trip details stat icons (reference ~#8A4AF3).
-  static const Color tripDetailsStatIconPurple = Color(0xFF8A4AF3);
+  /// Trip details stat icons (reference Material purple ~#9C27B0).
+  static const Color tripDetailsStatIconPurple = Color(0xFF9C27B0);
 
   /// Trip details — secondary labels / overview body (reference #757575).
   static Color get tripDetailsSecondaryGrey =>
@@ -65,8 +65,8 @@ abstract class AppColors {
   /// Trip details "What's included" checkmark (reference #58C299).
   static const Color tripDetailsInclusionCheck = Color(0xFF58C299);
 
-  /// Departure details row icons (reference ~#9C27B0).
-  static const Color tripDetailsDepartureIconPurple = Color(0xFF9C27B0);
+  /// Departure details row icons (Figma ref #8A2BE2).
+  static const Color tripDetailsDepartureIconPurple = Color(0xFF8A2BE2);
 
   /// Map launcher chip on departure card (reference #F5F5F5).
   static const Color tripDetailsMapButtonBg = Color(0xFFF5F5F5);
@@ -74,11 +74,29 @@ abstract class AppColors {
   /// Google-style map glyph accent (reference Maps blue).
   static const Color tripDetailsMapIconBlue = Color(0xFF4285F4);
 
-  /// Trip program meal code chips & checklist bullets (reference ~#FFA726).
-  static const Color tripDetailsProgramOrange = Color(0xFFFFA726);
+  /// Trip program meal code chips & checklist bullets (Figma ref #F9A825).
+  static const Color tripDetailsProgramOrange = Color(0xFFF9A825);
 
   /// Trip program day header bar (reference #F5F5F5).
   static const Color tripDetailsProgramDayHeaderBar = Color(0xFFF5F5F5);
+
+  // --- Trip details: Figma screenshot tokens (Departure + Program) ---
+  /// Secondary labels (Figma #8E8E93).
+  static const Color tripDetailsFigmaLabel = Color(0xFF8E8E93);
+
+  /// Hairlines / card borders (Figma #E5E5EA).
+  static const Color tripDetailsFigmaDivider = Color(0xFFE5E5EA);
+
+  /// Primary titles & values on light cards (Figma #000000).
+  static const Color tripDetailsFigmaBlack = Color(0xFF000000);
+
+  /// Destination details grid — icon glyph (reference #9C27B0; light tint in dark).
+  static Color get tripDetailsDestinationIconPurple =>
+      _isDark ? const Color(0xFFE1BEE7) : const Color(0xFF9C27B0);
+
+  /// Destination details grid — 32×32 icon tile fill (reference #F3E5F5).
+  static Color get tripDetailsDestinationIconTileBg =>
+      _isDark ? const Color(0xFF332742) : const Color(0xFFF3E5F5);
 
   static const Color infoBlue = Color(0xFF5B7FFF);
   static const Color linkBlue = Color(0xFF1976D2);
@@ -129,6 +147,10 @@ abstract class AppColors {
       _isDark ? scaffoldColorDark : scaffoldColorLight;
   static Color get background => _isDark ? cardColorDark : cardColorLight;
   static Color get cardBg => _isDark ? cardColorDark : cardColorLight;
+
+  /// Trip details screen canvas (reference off-white #F8F9FA).
+  static Color get tripDetailsScreenBg =>
+      _isDark ? scaffoldColorDark : const Color(0xFFF8F9FA);
 
   /// Trending destination sheet / catalog controls (reference #E0E0E0).
   static const Color catalogSheetBorderLight = Color(0xFFE0E0E0);

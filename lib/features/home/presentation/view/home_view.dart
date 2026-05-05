@@ -156,7 +156,7 @@ class _HomeViewState extends State<HomeView> {
                 onRefresh: () => _refreshHome(scrollContext),
                 child: CustomScrollView(
                   physics: const AlwaysScrollableScrollPhysics(
-                    parent: BouncingScrollPhysics(),
+                    parent: ClampingScrollPhysics(),
                   ),
                   slivers: [
                     SliverToBoxAdapter(
