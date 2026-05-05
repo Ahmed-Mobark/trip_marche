@@ -154,6 +154,7 @@ abstract class AppColors {
 
   /// Trending destination sheet / catalog controls (reference #E0E0E0).
   static const Color catalogSheetBorderLight = Color(0xFFE0E0E0);
+
   /// Secondary lines, meta text, strikethrough prices (reference #9E9E9E).
   static const Color catalogMetaMutedLight = Color(0xFF9E9E9E);
 
@@ -161,4 +162,89 @@ abstract class AppColors {
       _isDark ? borderColorDark : catalogSheetBorderLight;
   static Color get catalogMetaMuted =>
       _isDark ? greyTextColorDark : catalogMetaMutedLight;
+
+  // --- My Trips (Figma / design QA — light reference; dark fallbacks) ---
+  /// Header gradient top (Figma ref #8E24AA).
+  static const Color myTripsHeaderGradientStart = Color(0xFF8E24AA);
+  static const Color myTripsHeaderGradientEnd = Color(0xFFAB47BC);
+
+  /// Primary purple for tabs + primary buttons on this screen (Figma #9C27B0).
+  static const Color myTripsPrimary = Color(0xFF9C27B0);
+  static const Color myTripsBadgeActive = Color(0xFF4CAF50);
+  static const Color myTripsBadgePast = Color(0xFFFF5252);
+  static const Color myTripsBadgeCanceled = Color(0xFF9E9E9E);
+  static const Color myTripsBorderFigma = Color(0xFFE0E0E0);
+  static const Color myTripsMetaGrey = Color(0xFF757575);
+  static const Color myTripsPdfIcon = Color(0xFFD00416);
+
+  /// List / canvas behind cards (Figma #F8F8F8).
+  static Color get myTripsListBackground =>
+      _isDark ? const Color(0xFF1A1A1A) : const Color(0xFFF8F8F8);
+
+  /// Secondary outline button: white surface in light (Figma).
+  static Color get myTripsOutlineButtonFill => _isDark ? cardColorDark : white;
+
+  static Color get myTripsOutlineButtonBorder =>
+      _isDark ? borderColorDark : black;
+
+  static Color get myTripsOutlineButtonText => _isDark ? textColorDark : black;
+
+  /// "View Receipt" — thin **grey** stroke in Figma (not black).
+  static Color get myTripsSecondaryButtonBorder =>
+      _isDark ? borderColorDark : myTripsBorderFigma;
+
+  /// Favorite chip on card (Figma: light grey circle + shadow).
+  static Color get myTripsFavoriteCircleFill =>
+      _isDark ? cardColorDark : inputBgLight;
+
+  /// My Trips trip card — outer border (Figma #EEEEEE).
+  static Color get myTripsCardBorderHairline =>
+      _isDark ? borderColorDark : const Color(0xFFEEEEEE);
+
+  /// My Trips trip card — title + rating value (Figma #212121).
+  static Color get myTripsCardTitle =>
+      _isDark ? textColorDark : const Color(0xFF212121);
+
+  /// My Trips trip card — location, date, pin/calendar icons (Figma #546E7A).
+  static Color get myTripsCardSlate =>
+      _isDark ? greyTextColorDark : const Color(0xFF546E7A);
+
+  /// My Trips trip card — favorite heart (Figma #E91E63).
+  static const Color myTripsCardHeartPink = Color(0xFFE91E63);
+
+  /// My Trips trip card — star (Figma #FFB300).
+  static const Color myTripsCardStarAmber = Color(0xFFFFB300);
+
+  /// My Trips trip card — review count (Figma #9E9E9E).
+  static Color get myTripsCardReviewCount =>
+      _isDark ? greyTextColorDark : const Color(0xFF9E9E9E);
+
+  // --- My Trips trip card — pixel Figma frame (tailwind-scale ref) ---
+  /// Primary CTA fill (#9333EA).
+  static const Color myTripsTripCardPurple = Color(0xFF9333EA);
+
+  /// "Active" pill (#4ADE80).
+  static const Color myTripsTripCardBadgeGreen = Color(0xFF4ADE80);
+
+  /// Heart + PDF (#EF4444).
+  static const Color myTripsTripCardRed = Color(0xFFEF4444);
+
+  /// Star (#FBBF24).
+  static const Color myTripsTripCardStar = Color(0xFFFBBF24);
+
+  /// Secondary lines (location, date, review count) (#6B7280).
+  static Color get myTripsTripCardMuted =>
+      _isDark ? greyTextColorDark : const Color(0xFF6B7280);
+
+  /// Card / outline stroke (#E5E7EB).
+  static Color get myTripsTripCardBorder =>
+      _isDark ? borderColorDark : const Color(0xFFE5E7EB);
+
+  /// Title + rating value — black.
+  static Color get myTripsTripCardInk =>
+      _isDark ? textColorDark : const Color(0xFF000000);
+
+  /// Favorite circle fill (off-white).
+  static Color get myTripsTripCardFavoriteFill =>
+      _isDark ? const Color(0xFF2C2C2C) : const Color(0xFFF3F4F6);
 }

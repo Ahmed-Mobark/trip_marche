@@ -666,26 +666,26 @@ class _TrendingDestinationViewState extends State<TrendingDestinationView> {
       mainAxisSize: MainAxisSize.min,
       children: [
         Container(
-          width: 80,
-          height: 80,
+          width: 80.w,
+          height: 80.h,
           decoration: BoxDecoration(
             color: AppColors.lightBg,
             shape: BoxShape.circle,
           ),
-          child: Icon(Iconsax.map, size: 36, color: AppColors.greyText),
+          child: Icon(Iconsax.map, size: 36.sp, color: AppColors.greyText),
         ),
-        const SizedBox(height: 16),
+        SizedBox(height: 16.h),
         Text(
           context.tr.myTripsEmptyTitle,
           style: AppTextStyles.heading3(color: AppColors.secondaryText),
         ),
-        const SizedBox(height: 8),
+        SizedBox(height: 8.h),
         Text(
           context.tr.myTripsEmptyDescription,
           style: AppTextStyles.bodyMedium(color: AppColors.greyText),
           textAlign: TextAlign.center,
         ),
-        const SizedBox(height: 20),
+        SizedBox(height: 20.h),
         ElevatedButton(
           onPressed: () {
             sl<AppNavigator>().pop();

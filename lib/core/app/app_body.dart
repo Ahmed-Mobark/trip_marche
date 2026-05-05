@@ -1,23 +1,16 @@
 import 'package:adaptive_theme/adaptive_theme.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter/material.dart';
 import 'package:trip_marche/core/app/app_state.dart';
 import 'package:trip_marche/core/injection/injection_container.dart';
 import 'package:trip_marche/core/navigation/app_navigator.dart';
 import 'package:trip_marche/core/navigation/route_observer.dart';
-import 'package:trip_marche/core/network/connectivity/connectivity_cubit.dart';
-import 'package:trip_marche/core/network/connectivity/offline_screen.dart';
 import 'package:trip_marche/core/network/network_service/api_basehelper.dart';
 import 'package:trip_marche/core/storage/data/storage.dart';
 import 'package:trip_marche/core/theme/app_colors.dart';
 import 'package:trip_marche/core/theme/app_theme.dart';
 import 'package:trip_marche/core/translation/app_localizations.dart';
 
-/// Global scroll tuning:
-/// - Disable iOS bounce/stretch
-/// - Hide overscroll glow/indicator
-/// This is required by client feedback ("prevent background exposure on over-scroll").
 class _NoOverScrollBehavior extends ScrollBehavior {
   const _NoOverScrollBehavior();
 
@@ -32,7 +25,6 @@ class _NoOverScrollBehavior extends ScrollBehavior {
     Widget child,
     ScrollableDetails details,
   ) {
-    // Keep the original scrollable child visible while removing glow.
     return child;
   }
 }
@@ -40,7 +32,6 @@ class _NoOverScrollBehavior extends ScrollBehavior {
 class MyApp extends StatefulWidget {
   const MyApp({super.key, required this.initialThemeMode});
 
-  /// Persisted theme read in `main()` via [AppState.bootThemeMode].
   final AdaptiveThemeMode initialThemeMode;
 
   static MyAppState? of(BuildContext context) =>
@@ -52,7 +43,6 @@ class MyApp extends StatefulWidget {
 class MyAppState extends State<MyApp> {
   Locale _locale = Locale(sl<Storage>().getLang());
 
-  /// Persists [locale] to [Storage], updates [MaterialApp.locale], and syncs API headers.
   Future<void> setLocale(Locale locale) async {
     final code = locale.languageCode;
     await sl<Storage>().storeLang(langCode: code);
@@ -88,19 +78,7 @@ class MyAppState extends State<MyApp> {
           navigatorKey: sl<AppNavigator>().navigatorKey,
           builder: (context, child) {
             AppColors.brightness = Theme.of(context).brightness;
-            return BlocProvider.value(
-              value: sl<ConnectivityCubit>(),
-              child: BlocBuilder<ConnectivityCubit, bool>(
-                builder: (context, isConnected) {
-                  return Stack(
-                    children: [
-                      child ?? const SizedBox.shrink(),
-                      if (!isConnected) const OfflineScreen(),
-                    ],
-                  );
-                },
-              ),
-            );
+            return child ?? const SizedBox.shrink();
           },
           home: AppState.currentScreen(),
         ),

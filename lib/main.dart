@@ -12,8 +12,6 @@ void main() async {
   await ScreenUtil.ensureScreenSize();
   await injection.init();
   Bloc.observer = MyBlocObserver();
-  // Read the persisted theme BEFORE the first frame so [AdaptiveTheme] can use
-  // it as its `initial` and we don't flash the wrong theme on app start.
   final initialThemeMode = AppState.bootThemeMode();
   runApp(MyApp(initialThemeMode: initialThemeMode));
 }
