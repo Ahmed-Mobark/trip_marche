@@ -43,8 +43,11 @@
   "authOrLoginWith": "أو سجّل الدخول باستخدام",
   "authContinueWithGoogle": "المتابعة باستخدام Google",
   "authContinueWithApple": "المتابعة باستخدام Apple",
-  "authTravelAgencyPrompt": "وكالة سفر؟ ",
-  "authJoinAsTripPartner": "انضم كشريك رحلات",
+  "authTravelAgencyPrompt": "تاجر أو وكالة رحلات؟ ",
+  "authJoinAsTripPartner": "انضم كبائع",
+  "authPartnerPortalTitle": "بوابة الشركاء",
+  "authWebViewLoadFailed": "تعذر تحميل هذه الصفحة. تحقق من الاتصال وحاول مرة أخرى.",
+  "authWebViewRetry": "إعادة المحاولة",
 
   "authSignUpTitle": "أنشئ حسابك",
   "authSignUpSubtitle": "سجّل لإنشاء حسابك والبدء",
@@ -78,7 +81,7 @@
   "authResendNow": "أعد الإرسال الآن",
 
   "homeAppTitle": "TripMarche",
-  "homeSearchHint": "شرم الشيخ",
+  "homeSearchHint": "ابحث عن رحلة",
   "homeLocationText": "مصر، القاهرة، القاهرة الجديدة",
   "homeTrendingDestinations": "الوجهات الرائجة",
   "homePopularTrips": "الرحلات الشائعة",
@@ -208,6 +211,10 @@
   "myTripsTabUpcoming": "القادمة",
   "myTripsTabPast": "السابقة",
   "myTripsSearchHint": "ابحث عن رحلة",
+  "myTripsCatalogTripsOf": "رحلات",
+  "myTripsCatalogReviewCountInline": "({count})",
+  "myTripsCatalogSaveWishlist": "حفظ في المفضلة",
+  "myTripsCatalogRemoveWishlist": "إزالة من المفضلة",
   "myTripsTabActive": "نشطة",
   "myTripsTabPastNew": "السابقة",
   "myTripsTabCanceled": "ملغاة",
@@ -321,7 +328,19 @@
   "tripDetailsHeroByCompany": "بواسطة شركة السفر",
   "tripDetailsHeroFromLocation": "من القاهرة والإسكندرية",
   "tripDetailsHeroDateRange": "27 نوفمبر ← 4 ديسمبر",
+  "tripDetailsHeroFromPrefix": "من ",
+  "@tripDetailsHeroFromPrefix": {
+    "description": "Prefix before pickup cities on trip details hero; cities follow in bold."
+  },
+  "tripDetailsHeroByCompanyLine": "بواسطة {company}",
+  "@tripDetailsHeroByCompanyLine": {
+    "description": "Travel vendor line on trip details hero.",
+    "placeholders": {
+      "company": {"type": "String"}
+    }
+  },
   "tripDetailsGalleryMoreCount": "+{count}",
+  "imageGalleryPosition": "{current} من {total}",
   "tripDetailsOverviewTitle": "نظرة عامة على الرحلة",
   "tripDetailsOverviewBody": "استمتع بجمال جبال الألب السويسرية الخلاب في هذه المغامرة لمدة 7 أيام. زر وجهات شهيرة، استمتع برحلات قطار ساحرة، وانغمس في الثقافة السويسرية. مثالي لعشاق الطبيعة وعشاق التصوير.",
   "tripDetailsWhatsIncludedTitle": "ما الذي يتضمنه العرض",
@@ -380,9 +399,16 @@
   "tripDetailsDestinationParis": "باريس",
   "tripDetailsStatCitiesLabel": "عدد المدن",
   "tripDetailsStatCitiesValue": "7 مدن",
+  "tripDetailsStatCitiesCount": "{count} مدن",
+  "@tripDetailsStatCitiesCount": {
+    "description": "Stat grid value for how many cities the trip visits.",
+    "placeholders": {
+      "count": {"type": "int"}
+    }
+  },
   "tripDetailsPriceLabel": "السعر",
   "tripDetailsPerPersonSmall": "للفرد",
-  "tripDetailsBookingPriceDisplay": "$1000.00",
+  "tripDetailsBookingPriceDisplay": "1000.00",
   "tripDetailsCompanyName": "Travel Egypt Co.",
   "tripDetailsCompanyTagline": "وكالة سفر مغامرات",
   "tripDetailsFollow": "متابعة",
@@ -565,5 +591,15 @@
   "authNewPasswordHint": "أدخل كلمة المرور الجديدة",
   "authConfirmNewPasswordLabel": "تأكيد كلمة المرور الجديدة",
   "authConfirmNewPasswordHint": "أكد كلمة المرور الجديدة",
-  "authResetPasswordButton": "إعادة تعيين كلمة المرور"
+  "authResetPasswordButton": "إعادة تعيين كلمة المرور",
+
+  "tripDetailsDurationUnit": "أيام",
+  "tripDetailsProgramDayPrefix": "يوم",
+  "tripDetailsTypeDomestic": "محلي",
+  "tripDetailsPayOnArrival": "الدفع عند الوصول",
+  "tripDetailsFailedToLoad": "تعذر تحميل تفاصيل الرحلة.",
+  "tripDetailsTryAgain": "إعادة المحاولة",
+  "tripDetailsNoFlights": "ستظهر تفاصيل الرحلة الجوية هنا عند توفرها.",
+  "tripDetailsNoTransport": "ستظهر تفاصيل النقل البري أو البحري هنا عند توفرها.",
+  "tripDetailsVisaAndEntryTitle": "التأشيرة والدخول"
 }

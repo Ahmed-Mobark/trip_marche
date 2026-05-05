@@ -68,7 +68,7 @@ class TripCard extends StatelessWidget {
                       ),
                       const Spacer(),
                       Text(
-                        '\$${trip.price.toStringAsFixed(0)}',
+                        trip.price.toStringAsFixed(0),
                         style: AppTextStyles.subtitle(
                           color: AppColors.primaryDark,
                         ),
@@ -134,7 +134,7 @@ class TripCardWide extends StatelessWidget {
                   ),
                   const SizedBox(height: 8),
                   Text(
-                    '\$${trip.price.toStringAsFixed(0)}',
+                    trip.price.toStringAsFixed(0),
                     style: AppTextStyles.subtitle(color: AppColors.primaryDark),
                   ),
                 ],

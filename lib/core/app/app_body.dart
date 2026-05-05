@@ -29,11 +29,17 @@ class MyApp extends StatefulWidget {
 class MyAppState extends State<MyApp> {
   Locale _locale = Locale(sl<Storage>().getLang());
 
-  void setLocale(Locale locale) {
+  /// Persists [locale] to [Storage], updates [MaterialApp.locale], and syncs API headers.
+  Future<void> setLocale(Locale locale) async {
+    final code = locale.languageCode;
+    await sl<Storage>().storeLang(langCode: code);
+    if (!mounted) {
+      return;
+    }
     setState(() {
-      _locale = locale;
+      _locale = Locale(code);
     });
-    sl<ApiBaseHelper>().updateLocaleInHeaders(sl<Storage>().getLang());
+    sl<ApiBaseHelper>().updateLocaleInHeaders(code);
   }
 
   @override
@@ -60,9 +66,6 @@ class MyAppState extends State<MyApp> {
           locale: _locale,
           navigatorKey: sl<AppNavigator>().navigatorKey,
           builder: (context, child) {
-            // Single source of truth for [AppColors.brightness]: the resolved
-            // [Theme] applied by [AdaptiveTheme]. This handles `system` mode
-            // correctly (where `mode.isDark` would always be false).
             AppColors.brightness = Theme.of(context).brightness;
             return BlocProvider.value(
               value: sl<ConnectivityCubit>(),

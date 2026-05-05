@@ -56,7 +56,7 @@ class SettingsView extends StatelessWidget {
                   icon: Iconsax.notification,
                   title: context.tr.settingsNotificationSetting,
                   foregroundColor: titleColor,
-                  trailing: Icon(Iconsax.arrow_right_3, size: 18, color: muted),
+                  trailing: Icon(Icons.chevron_right, size: 22, color: muted),
                   onTap: () {
                     sl<AppNavigator>().push(
                       screen: const NotificationSettingsView(),
@@ -68,7 +68,7 @@ class SettingsView extends StatelessWidget {
                   icon: Iconsax.global,
                   title: context.tr.settingsLanguage,
                   foregroundColor: titleColor,
-                  trailing: Icon(Iconsax.arrow_right_3, size: 18, color: muted),
+                  trailing: Icon(Icons.chevron_right, size: 22, color: muted),
                   onTap: () {
                     sl<AppNavigator>().push(screen: const LanguageView());
                   },
@@ -78,7 +78,7 @@ class SettingsView extends StatelessWidget {
                   icon: Iconsax.dollar_circle,
                   title: context.tr.settingsCurrency,
                   foregroundColor: titleColor,
-                  trailing: Icon(Iconsax.arrow_right_3, size: 18, color: muted),
+                  trailing: Icon(Icons.chevron_right, size: 22, color: muted),
                   onTap: () {},
                 ),
                 _DividerLine(color: borderTone),

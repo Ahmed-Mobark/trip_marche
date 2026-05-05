@@ -43,8 +43,11 @@
   "authOrLoginWith": "Oder anmelden mit",
   "authContinueWithGoogle": "Mit Google fortfahren",
   "authContinueWithApple": "Mit Apple fortfahren",
-  "authTravelAgencyPrompt": "Reiseagentur? ",
-  "authJoinAsTripPartner": "Als Trip-Partner beitreten",
+  "authTravelAgencyPrompt": "Reiseveranstalter oder Agentur? ",
+  "authJoinAsTripPartner": "Als Anbieter beitreten",
+  "authPartnerPortalTitle": "Partnerportal",
+  "authWebViewLoadFailed": "Diese Seite konnte nicht geladen werden. Bitte Verbindung prüfen und erneut versuchen.",
+  "authWebViewRetry": "Erneut versuchen",
 
   "authSignUpTitle": "Erstelle dein Konto",
   "authSignUpSubtitle": "Registriere dich, um zu starten",
@@ -78,7 +81,7 @@
   "authResendNow": "Jetzt erneut senden",
 
   "homeAppTitle": "TripMarche",
-  "homeSearchHint": "Sharm El Sheikh",
+  "homeSearchHint": "Nach einer Reise suchen",
   "homeLocationText": "Ägypten, Kairo, New Cairo",
   "homeTrendingDestinations": "Trendziele",
   "homePopularTrips": "Beliebte Reisen",
@@ -208,6 +211,10 @@
   "myTripsTabUpcoming": "Bevorstehend",
   "myTripsTabPast": "Vergangen",
   "myTripsSearchHint": "Nach einer Reise suchen",
+  "myTripsCatalogTripsOf": "Reisen in",
+  "myTripsCatalogReviewCountInline": "({count})",
+  "myTripsCatalogSaveWishlist": "Zur Merkliste hinzufügen",
+  "myTripsCatalogRemoveWishlist": "Von der Merkliste entfernen",
   "myTripsTabActive": "Aktiv",
   "myTripsTabPastNew": "Vergangen",
   "myTripsTabCanceled": "Storniert",
@@ -321,7 +328,19 @@
   "tripDetailsHeroByCompany": "Von Reiseunternehmen",
   "tripDetailsHeroFromLocation": "Von Kairo & Alexandria",
   "tripDetailsHeroDateRange": "27. Nov → 4. Dez",
+  "tripDetailsHeroFromPrefix": "Von ",
+  "@tripDetailsHeroFromPrefix": {
+    "description": "Prefix before pickup cities on trip details hero; cities follow in bold."
+  },
+  "tripDetailsHeroByCompanyLine": "Von {company}",
+  "@tripDetailsHeroByCompanyLine": {
+    "description": "Travel vendor line on trip details hero.",
+    "placeholders": {
+      "company": {"type": "String"}
+    }
+  },
   "tripDetailsGalleryMoreCount": "+{count}",
+  "imageGalleryPosition": "{current} von {total}",
   "tripDetailsOverviewTitle": "Reiseübersicht",
   "tripDetailsOverviewBody": "Erlebe die atemberaubende Schönheit der Schweizer Alpen auf diesem 7-tägigen Abenteuer. Besuche ikonische Ziele, genieße malerische Zugfahrten und tauche in die Schweizer Kultur ein. Perfekt für Naturliebhaber und Fotografie-Fans.",
   "tripDetailsWhatsIncludedTitle": "Inklusive",
@@ -380,9 +399,16 @@
   "tripDetailsDestinationParis": "Paris",
   "tripDetailsStatCitiesLabel": "Anzahl der Städte",
   "tripDetailsStatCitiesValue": "7 Städte",
+  "tripDetailsStatCitiesCount": "{count} Städte",
+  "@tripDetailsStatCitiesCount": {
+    "description": "Stat grid value for how many cities the trip visits.",
+    "placeholders": {
+      "count": {"type": "int"}
+    }
+  },
   "tripDetailsPriceLabel": "Preis",
   "tripDetailsPerPersonSmall": "pro Person",
-  "tripDetailsBookingPriceDisplay": "$1000,00",
+  "tripDetailsBookingPriceDisplay": "1000,00",
   "tripDetailsCompanyName": "Travel Egypt Co.",
   "tripDetailsCompanyTagline": "Abenteuer-Reiseagentur",
   "tripDetailsFollow": "Folgen",
@@ -565,6 +591,16 @@
   "authNewPasswordHint": "Neues Passwort eingeben",
   "authConfirmNewPasswordLabel": "Neues Passwort bestätigen",
   "authConfirmNewPasswordHint": "Neues Passwort bestätigen",
-  "authResetPasswordButton": "Passwort zurücksetzen"
+  "authResetPasswordButton": "Passwort zurücksetzen",
+
+  "tripDetailsDurationUnit": "Tage",
+  "tripDetailsProgramDayPrefix": "Tag",
+  "tripDetailsTypeDomestic": "Inland",
+  "tripDetailsPayOnArrival": "Zahlung bei Ankunft",
+  "tripDetailsFailedToLoad": "Reisedetails konnten nicht geladen werden.",
+  "tripDetailsTryAgain": "Erneut versuchen",
+  "tripDetailsNoFlights": "Flugdetails erscheinen hier, sobald sie verfügbar sind.",
+  "tripDetailsNoTransport": "Details zu Land- oder Seetransport erscheinen hier, sobald sie verfügbar sind.",
+  "tripDetailsVisaAndEntryTitle": "Visum und Einreise"
 }
 

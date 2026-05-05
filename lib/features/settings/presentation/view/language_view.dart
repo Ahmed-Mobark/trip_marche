@@ -62,9 +62,12 @@ class _LanguageViewState extends State<LanguageView> {
                 child: _LanguageTile(
                   item: e,
                   selected: _selectedCode == e.code,
-                  onTap: () {
+                  onTap: () async {
                     setState(() => _selectedCode = e.code);
-                    MyApp.of(context)?.setLocale(Locale(e.code));
+                    final app = MyApp.of(context);
+                    if (app != null) {
+                      await app.setLocale(Locale(e.code));
+                    }
                   },
                 ),
               ),

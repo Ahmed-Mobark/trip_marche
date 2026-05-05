@@ -7,6 +7,7 @@ import '../../../../core/config/styles/styles.dart';
 import '../../../../core/injection/injection_container.dart';
 import '../../../../core/navigation/app_navigator.dart';
 import '../../../../core/widgets/app_cached_network_image.dart';
+import '../../../../core/widgets/trip_favorite_circle_button.dart';
 import 'package:trip_marche/features/trip_details/presentation/trip_wishlist_pop_result.dart';
 import 'package:trip_marche/features/trip_details/presentation/view/trip_details_view.dart';
 import 'package:trip_marche/features/wishlist/domain/entities/wishlist_entities.dart';
@@ -103,18 +104,25 @@ class MyTripBookingCard extends StatelessWidget {
         onReturnedFromTripDetails?.call(result);
       },
       child: Container(
-        padding: EdgeInsetsDirectional.all(14.w),
+        padding: EdgeInsetsDirectional.all(12.w),
         decoration: BoxDecoration(
           color: AppColors.cardBg,
-          borderRadius: BorderRadius.circular(22.r),
+          borderRadius: BorderRadius.circular(20.r),
+          boxShadow: [
+            BoxShadow(
+              color: AppColors.shadow.withValues(alpha: 0.06),
+              blurRadius: 14.r,
+              offset: Offset(0, 6.h),
+            ),
+          ],
         ),
         child: Row(
           children: [
             ClipRRect(
-              borderRadius: BorderRadius.circular(18.r),
+              borderRadius: BorderRadius.circular(16.r),
               child: SizedBox(
-                width: 140.w,
-                height: 180.w,
+                width: 132.w,
+                height: 172.w,
                 child: Stack(
                   children: [
                     Positioned.fill(
@@ -147,7 +155,7 @@ class MyTripBookingCard extends StatelessWidget {
                 ),
               ),
             ),
-            SizedBox(width: 14.w),
+            SizedBox(width: 12.w),
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -164,24 +172,9 @@ class MyTripBookingCard extends StatelessWidget {
                           ).copyWith(fontWeight: FontWeight.w700),
                         ),
                       ),
-                      InkWell(
-                        onTap: onFavoriteTap,
-                        borderRadius: BorderRadius.circular(999),
-                        child: Container(
-                          width: 36.w,
-                          height: 36.w,
-                          decoration: BoxDecoration(
-                            color: AppColors.inputBg,
-                            shape: BoxShape.circle,
-                          ),
-                          child: Icon(
-                            _heartFilled ? Iconsax.heart5 : Iconsax.heart,
-                            size: 18.sp,
-                            color: _heartFilled
-                                ? AppColors.error
-                                : AppColors.greyText,
-                          ),
-                        ),
+                      TripFavoriteCircleButton(
+                        isFavorite: _heartFilled,
+                        onTap: () => onFavoriteTap?.call(),
                       ),
                     ],
                   ),
@@ -309,14 +302,19 @@ class _ActionPill extends StatelessWidget {
       onTap: onTap,
       borderRadius: BorderRadius.circular(12.r),
       child: Container(
-        height: 30.h,
+        height: 34.h,
         decoration: BoxDecoration(
           color: backgroundColor,
-          borderRadius: BorderRadius.circular(10.r),
+          borderRadius: BorderRadius.circular(12.r),
           border: borderColor == null ? null : Border.all(color: borderColor!),
         ),
         alignment: Alignment.center,
-        child: Text(text, style: AppTextStyles.bodySmall(color: textColor)),
+        child: Text(
+          text,
+          style: AppTextStyles.bodySmall(color: textColor).copyWith(
+            fontWeight: FontWeight.w600,
+          ),
+        ),
       ),
     );
   }
@@ -334,11 +332,13 @@ class _BottomAction extends StatelessWidget {
       onTap: onTap,
       borderRadius: BorderRadius.circular(12.r),
       child: Container(
-        height: 40.h,
+        height: 42.h,
         decoration: BoxDecoration(
-          color: AppColors.inputBg,
+          color: AppColors.cardBg,
           borderRadius: BorderRadius.circular(12.r),
-          border: Border.all(color: AppColors.border),
+          border: Border.all(
+            color: AppColors.border.withValues(alpha: 0.75),
+          ),
         ),
         padding: EdgeInsetsDirectional.symmetric(horizontal: 12.w),
         child: Row(
@@ -347,7 +347,7 @@ class _BottomAction extends StatelessWidget {
             Icon(
               Iconsax.document_download,
               size: 18.sp,
-              color: AppColors.error,
+              color: AppColors.primary,
             ),
             SizedBox(width: 10.w),
             Flexible(

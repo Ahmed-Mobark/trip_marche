@@ -58,7 +58,7 @@ class _FilterViewState extends State<FilterView> {
         backgroundColor: AppColors.background,
         elevation: 0,
         leading: IconButton(
-          icon: Icon(Iconsax.arrow_left, color: AppColors.darkText),
+          icon: Icon(Icons.arrow_back_ios_new_rounded, color: AppColors.darkText),
           onPressed: () => Navigator.pop(context),
         ),
         title: Text(context.tr.filterTitle, style: AppTextStyles.subtitle()),

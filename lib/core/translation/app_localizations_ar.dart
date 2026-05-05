@@ -137,10 +137,20 @@ class AppLocalizationsAr extends AppLocalizations {
   String get authContinueWithApple => 'المتابعة باستخدام Apple';
 
   @override
-  String get authTravelAgencyPrompt => 'وكالة سفر؟ ';
+  String get authTravelAgencyPrompt => 'تاجر أو وكالة رحلات؟ ';
 
   @override
-  String get authJoinAsTripPartner => 'انضم كشريك رحلات';
+  String get authJoinAsTripPartner => 'انضم كبائع';
+
+  @override
+  String get authPartnerPortalTitle => 'بوابة الشركاء';
+
+  @override
+  String get authWebViewLoadFailed =>
+      'تعذر تحميل هذه الصفحة. تحقق من الاتصال وحاول مرة أخرى.';
+
+  @override
+  String get authWebViewRetry => 'إعادة المحاولة';
 
   @override
   String get authSignUpTitle => 'أنشئ حسابك';
@@ -233,7 +243,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get homeAppTitle => 'TripMarche';
 
   @override
-  String get homeSearchHint => 'شرم الشيخ';
+  String get homeSearchHint => 'ابحث عن رحلة';
 
   @override
   String get homeLocationText => 'مصر، القاهرة، القاهرة الجديدة';
@@ -617,6 +627,20 @@ class AppLocalizationsAr extends AppLocalizations {
   String get myTripsSearchHint => 'ابحث عن رحلة';
 
   @override
+  String get myTripsCatalogTripsOf => 'رحلات';
+
+  @override
+  String myTripsCatalogReviewCountInline(int count) {
+    return '($count)';
+  }
+
+  @override
+  String get myTripsCatalogSaveWishlist => 'حفظ في المفضلة';
+
+  @override
+  String get myTripsCatalogRemoveWishlist => 'إزالة من المفضلة';
+
+  @override
   String get myTripsTabActive => 'نشطة';
 
   @override
@@ -937,8 +961,21 @@ class AppLocalizationsAr extends AppLocalizations {
   String get tripDetailsHeroDateRange => '27 نوفمبر ← 4 ديسمبر';
 
   @override
+  String get tripDetailsHeroFromPrefix => 'من ';
+
+  @override
+  String tripDetailsHeroByCompanyLine(String company) {
+    return 'بواسطة $company';
+  }
+
+  @override
   String tripDetailsGalleryMoreCount(Object count) {
     return '+$count';
+  }
+
+  @override
+  String imageGalleryPosition(int current, int total) {
+    return '$current من $total';
   }
 
   @override
@@ -1119,13 +1156,18 @@ class AppLocalizationsAr extends AppLocalizations {
   String get tripDetailsStatCitiesValue => '7 مدن';
 
   @override
+  String tripDetailsStatCitiesCount(int count) {
+    return '$count مدن';
+  }
+
+  @override
   String get tripDetailsPriceLabel => 'السعر';
 
   @override
   String get tripDetailsPerPersonSmall => 'للفرد';
 
   @override
-  String get tripDetailsBookingPriceDisplay => '\$1000.00';
+  String get tripDetailsBookingPriceDisplay => '1000.00';
 
   @override
   String get tripDetailsCompanyName => 'Travel Egypt Co.';
@@ -1690,4 +1732,33 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get authResetPasswordButton => 'إعادة تعيين كلمة المرور';
+
+  @override
+  String get tripDetailsDurationUnit => 'أيام';
+
+  @override
+  String get tripDetailsProgramDayPrefix => 'يوم';
+
+  @override
+  String get tripDetailsTypeDomestic => 'محلي';
+
+  @override
+  String get tripDetailsPayOnArrival => 'الدفع عند الوصول';
+
+  @override
+  String get tripDetailsFailedToLoad => 'تعذر تحميل تفاصيل الرحلة.';
+
+  @override
+  String get tripDetailsTryAgain => 'إعادة المحاولة';
+
+  @override
+  String get tripDetailsNoFlights =>
+      'ستظهر تفاصيل الرحلة الجوية هنا عند توفرها.';
+
+  @override
+  String get tripDetailsNoTransport =>
+      'ستظهر تفاصيل النقل البري أو البحري هنا عند توفرها.';
+
+  @override
+  String get tripDetailsVisaAndEntryTitle => 'التأشيرة والدخول';
 }

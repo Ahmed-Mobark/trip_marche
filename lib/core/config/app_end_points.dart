@@ -18,6 +18,9 @@ class AppEndpoints {
   /// GET — paginated trips catalog (query: page, per_page, search?, destination_id?).
   static const String trips = 'trips';
 
+  /// POST — trip detail by id (body may be empty `{}`).
+  static String tripById(int tripId) => 'trips/$tripId';
+
   /// GET — paginated wishlist (query: current_page, per_page).
   static const String wishlist = 'wishlist';
 

@@ -29,7 +29,7 @@ class PriceRangeSlider extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              '\$${values.start.round()}',
+              '${values.start.round()}',
               style: Theme.of(context).textTheme.bodyMedium!.copyWith(
                 fontSize: 14,
                 fontWeight: FontWeight.w500,
@@ -37,7 +37,7 @@ class PriceRangeSlider extends StatelessWidget {
               ),
             ),
             Text(
-              '\$${values.end.round()}',
+              '${values.end.round()}',
               style: Theme.of(context).textTheme.bodyMedium!.copyWith(
                 fontSize: 14,
                 fontWeight: FontWeight.w500,
@@ -54,8 +54,8 @@ class PriceRangeSlider extends StatelessWidget {
           activeColor: AppColors.primary,
           inactiveColor: AppColors.border,
           labels: RangeLabels(
-            '\$${values.start.round()}',
-            '\$${values.end.round()}',
+            '${values.start.round()}',
+            '${values.end.round()}',
           ),
           onChanged: onChanged,
         ),

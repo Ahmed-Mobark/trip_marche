@@ -27,7 +27,7 @@ import '../widgets/category_chip.dart';
 import '../widgets/special_trip_wide_card.dart';
 import '../../../trip_details/presentation/trip_wishlist_pop_result.dart';
 import '../../../trip_details/presentation/view/trip_details_view.dart';
-import '../../../my_trips/presentation/view/my_trips_view.dart';
+import '../../../my_trips/presentation/view/trending_destenation_view.dart';
 
 class HomeView extends StatefulWidget {
   const HomeView({super.key});
@@ -58,6 +58,24 @@ class _HomeViewState extends State<HomeView> {
     }
     if (updated != null) {
       specialCubit.syncWishlistFromOtherList(trip.id, updated.isWishlisted);
+    }
+  }
+
+  Future<void> _refreshHome(BuildContext context) async {
+    final sections = context.read<HomeSectionsCubit>();
+    final banners = context.read<HomeBannersCubit>();
+    final categories = context.read<HomeCategoriesCubit>();
+    final special = context.read<SpecialTripsCubit>();
+
+    await Future.wait([
+      sections.refreshSections(),
+      banners.refreshBanners(),
+      categories.refreshCategories(),
+    ]);
+
+    final categoryId = categories.state.selectedId;
+    if (categoryId != null) {
+      await special.loadTrips(categoryId);
     }
   }
 
@@ -130,66 +148,83 @@ class _HomeViewState extends State<HomeView> {
         ],
         child: Scaffold(
           backgroundColor: AppColors.scaffoldBg,
-          body: CustomScrollView(
-            slivers: [
-              SliverToBoxAdapter(
-                child: HomeHeader(
-                  searchHint: context.tr.homeSearchHint,
-                  locationText: context.tr.homeLocationText,
-                  onNotificationsTap: () {},
-                ),
-              ),
-              SliverToBoxAdapter(
-                child: Transform.translate(
-                  offset: Offset(0, -sheetOverlap),
-                  child: Container(
-                    width: double.infinity,
-                    padding: EdgeInsetsDirectional.only(
-                      start: horizontalPadding,
-                      end: horizontalPadding,
-                      top: 18.h,
-                      bottom: 24.h,
-                    ),
-                    decoration: BoxDecoration(
-                      color: AppColors.scaffoldBg,
-                      borderRadius: BorderRadius.vertical(
-                        top: Radius.circular(sheetTopRadius),
-                      ),
-                      boxShadow: [
-                        BoxShadow(
-                          color: AppColors.shadow.withValues(alpha: 0.04),
-                          blurRadius: 18.r,
-                          offset: Offset(0, 10.h),
-                        ),
-                      ],
-                    ),
-                    child: BlocBuilder<HomeSectionsCubit, HomeSectionsState>(
-                      builder: (context, state) {
-                        if (state.status == HomeSectionsStatus.loading ||
-                            state.status == HomeSectionsStatus.initial) {
-                          return _buildHomeSectionsLoading();
-                        }
-
-                        if (state.status == HomeSectionsStatus.failure) {
-                          return _buildError(
-                            context,
-                            state.errorMessage ?? 'Something went wrong',
-                          );
-                        }
-
-                        return _buildContent(
-                          context,
-                          state,
-                          sectionTitleStyle,
-                          actionStyle,
-                        );
-                      },
-                    ),
+          body: Builder(
+            builder: (scrollContext) {
+              return RefreshIndicator(
+                color: AppColors.primary,
+                edgeOffset: MediaQuery.paddingOf(scrollContext).top + 8,
+                onRefresh: () => _refreshHome(scrollContext),
+                child: CustomScrollView(
+                  physics: const AlwaysScrollableScrollPhysics(
+                    parent: BouncingScrollPhysics(),
                   ),
+                  slivers: [
+                    SliverToBoxAdapter(
+                      child: HomeHeader(
+                        searchHint: scrollContext.tr.homeSearchHint,
+                        locationText: scrollContext.tr.homeLocationText,
+                        onNotificationsTap: () {},
+                      ),
+                    ),
+                    SliverToBoxAdapter(
+                      child: Transform.translate(
+                        offset: Offset(0, -sheetOverlap),
+                        child: Container(
+                          width: double.infinity,
+                          padding: EdgeInsetsDirectional.only(
+                            start: horizontalPadding,
+                            end: horizontalPadding,
+                            top: 18.h,
+                            bottom: 24.h,
+                          ),
+                          decoration: BoxDecoration(
+                            color: AppColors.scaffoldBg,
+                            borderRadius: BorderRadius.vertical(
+                              top: Radius.circular(sheetTopRadius),
+                            ),
+                            boxShadow: [
+                              BoxShadow(
+                                color: AppColors.shadow.withValues(alpha: 0.04),
+                                blurRadius: 18.r,
+                                offset: Offset(0, 10.h),
+                              ),
+                            ],
+                          ),
+                          child:
+                              BlocBuilder<HomeSectionsCubit, HomeSectionsState>(
+                                builder: (context, state) {
+                                  if (state.status ==
+                                          HomeSectionsStatus.loading ||
+                                      state.status ==
+                                          HomeSectionsStatus.initial) {
+                                    return _buildHomeSectionsLoading();
+                                  }
+
+                                  if (state.status ==
+                                      HomeSectionsStatus.failure) {
+                                    return _buildError(
+                                      context,
+                                      state.errorMessage ??
+                                          'Something went wrong',
+                                    );
+                                  }
+
+                                  return _buildContent(
+                                    context,
+                                    state,
+                                    sectionTitleStyle,
+                                    actionStyle,
+                                  );
+                                },
+                              ),
+                        ),
+                      ),
+                    ),
+                    SliverToBoxAdapter(child: SizedBox(height: sheetOverlap)),
+                  ],
                 ),
-              ),
-              SliverToBoxAdapter(child: SizedBox(height: sheetOverlap)),
-            ],
+              );
+            },
           ),
         ),
       ),
@@ -245,9 +280,11 @@ class _HomeViewState extends State<HomeView> {
                       ? null
                       : () {
                           sl<AppNavigator>().push(
-                            screen: MyTripsView(
+                            screen: TrendingDestinationView(
                               catalogDestinationId: dest.id,
                               destinationBrowseTitle: dest.name,
+                              catalogDestinationImageUrl: dest.image,
+                              catalogDestinationCountry: dest.country,
                             ),
                           );
                         },
@@ -486,11 +523,7 @@ class _HomeViewState extends State<HomeView> {
   Widget _buildHomeSectionsLoading() {
     return SizedBox(
       height: 420.h,
-      child: CustomLoading(
-        top: 32.h,
-        size: 36,
-        strokeWidth: 2.5,
-      ),
+      child: CustomLoading(top: 32.h, size: 36, strokeWidth: 2.5),
     );
   }
 
@@ -586,12 +619,13 @@ class _TripHorizontalList extends StatelessWidget {
             child: PopularTripGridCard(
               trip: trip,
               onTap: () async {
-                final result = await sl<AppNavigator>().push<TripWishlistPopResult>(
-                  screen: TripDetailsView(
-                    tripId: trip.id,
-                    initialIsWishlisted: trip.isWishlisted,
-                  ),
-                );
+                final result = await sl<AppNavigator>()
+                    .push<TripWishlistPopResult>(
+                      screen: TripDetailsView(
+                        tripId: trip.id,
+                        initialIsWishlisted: trip.isWishlisted,
+                      ),
+                    );
                 onReturnedFromTripDetails(result);
               },
               onFavoriteTap: () => onFavoriteTap(trip),
@@ -732,9 +766,7 @@ class _SpecialTripsHorizontalListState
         separatorBuilder: (_, __) => SizedBox(width: 14.w),
         itemBuilder: (context, index) {
           if (index >= widget.trips.length) {
-            return Center(
-              child: CustomLoading(size: 24, strokeWidth: 2),
-            );
+            return Center(child: CustomLoading(size: 24, strokeWidth: 2));
           }
           final trip = widget.trips[index];
           return SizedBox(
@@ -742,12 +774,13 @@ class _SpecialTripsHorizontalListState
             child: SpecialTripWideCard(
               trip: trip,
               onTap: () async {
-                final result = await sl<AppNavigator>().push<TripWishlistPopResult>(
-                  screen: TripDetailsView(
-                    tripId: trip.id,
-                    initialIsWishlisted: trip.isWishlisted,
-                  ),
-                );
+                final result = await sl<AppNavigator>()
+                    .push<TripWishlistPopResult>(
+                      screen: TripDetailsView(
+                        tripId: trip.id,
+                        initialIsWishlisted: trip.isWishlisted,
+                      ),
+                    );
                 widget.onReturnedFromTripDetails(result);
               },
               onFavoriteTap: () => widget.onFavoriteTap(trip),

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:iconsax/iconsax.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/config/styles/styles.dart';
 
@@ -52,8 +51,8 @@ class ProfileMenuItem extends StatelessWidget {
             if (trailing != null) trailing!,
             if (showChevron)
               Icon(
-                Iconsax.arrow_right_3,
-                size: 18.sp,
+                Icons.chevron_right,
+                size: 20.sp,
                 color: AppColors.greyText,
               ),
           ],

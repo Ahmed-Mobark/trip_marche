@@ -142,10 +142,20 @@ class AppLocalizationsDe extends AppLocalizations {
   String get authContinueWithApple => 'Mit Apple fortfahren';
 
   @override
-  String get authTravelAgencyPrompt => 'Reiseagentur? ';
+  String get authTravelAgencyPrompt => 'Reiseveranstalter oder Agentur? ';
 
   @override
-  String get authJoinAsTripPartner => 'Als Trip-Partner beitreten';
+  String get authJoinAsTripPartner => 'Als Anbieter beitreten';
+
+  @override
+  String get authPartnerPortalTitle => 'Partnerportal';
+
+  @override
+  String get authWebViewLoadFailed =>
+      'Diese Seite konnte nicht geladen werden. Bitte Verbindung prüfen und erneut versuchen.';
+
+  @override
+  String get authWebViewRetry => 'Erneut versuchen';
 
   @override
   String get authSignUpTitle => 'Erstelle dein Konto';
@@ -239,7 +249,7 @@ class AppLocalizationsDe extends AppLocalizations {
   String get homeAppTitle => 'TripMarche';
 
   @override
-  String get homeSearchHint => 'Sharm El Sheikh';
+  String get homeSearchHint => 'Nach einer Reise suchen';
 
   @override
   String get homeLocationText => 'Ägypten, Kairo, New Cairo';
@@ -624,6 +634,20 @@ class AppLocalizationsDe extends AppLocalizations {
   String get myTripsSearchHint => 'Nach einer Reise suchen';
 
   @override
+  String get myTripsCatalogTripsOf => 'Reisen in';
+
+  @override
+  String myTripsCatalogReviewCountInline(int count) {
+    return '($count)';
+  }
+
+  @override
+  String get myTripsCatalogSaveWishlist => 'Zur Merkliste hinzufügen';
+
+  @override
+  String get myTripsCatalogRemoveWishlist => 'Von der Merkliste entfernen';
+
+  @override
   String get myTripsTabActive => 'Aktiv';
 
   @override
@@ -947,8 +971,21 @@ class AppLocalizationsDe extends AppLocalizations {
   String get tripDetailsHeroDateRange => '27. Nov → 4. Dez';
 
   @override
+  String get tripDetailsHeroFromPrefix => 'Von ';
+
+  @override
+  String tripDetailsHeroByCompanyLine(String company) {
+    return 'Von $company';
+  }
+
+  @override
   String tripDetailsGalleryMoreCount(Object count) {
     return '+$count';
+  }
+
+  @override
+  String imageGalleryPosition(int current, int total) {
+    return '$current von $total';
   }
 
   @override
@@ -1130,13 +1167,18 @@ class AppLocalizationsDe extends AppLocalizations {
   String get tripDetailsStatCitiesValue => '7 Städte';
 
   @override
+  String tripDetailsStatCitiesCount(int count) {
+    return '$count Städte';
+  }
+
+  @override
   String get tripDetailsPriceLabel => 'Preis';
 
   @override
   String get tripDetailsPerPersonSmall => 'pro Person';
 
   @override
-  String get tripDetailsBookingPriceDisplay => '\$1000,00';
+  String get tripDetailsBookingPriceDisplay => '1000,00';
 
   @override
   String get tripDetailsCompanyName => 'Travel Egypt Co.';
@@ -1704,4 +1746,34 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get authResetPasswordButton => 'Passwort zurücksetzen';
+
+  @override
+  String get tripDetailsDurationUnit => 'Tage';
+
+  @override
+  String get tripDetailsProgramDayPrefix => 'Tag';
+
+  @override
+  String get tripDetailsTypeDomestic => 'Inland';
+
+  @override
+  String get tripDetailsPayOnArrival => 'Zahlung bei Ankunft';
+
+  @override
+  String get tripDetailsFailedToLoad =>
+      'Reisedetails konnten nicht geladen werden.';
+
+  @override
+  String get tripDetailsTryAgain => 'Erneut versuchen';
+
+  @override
+  String get tripDetailsNoFlights =>
+      'Flugdetails erscheinen hier, sobald sie verfügbar sind.';
+
+  @override
+  String get tripDetailsNoTransport =>
+      'Details zu Land- oder Seetransport erscheinen hier, sobald sie verfügbar sind.';
+
+  @override
+  String get tripDetailsVisaAndEntryTitle => 'Visum und Einreise';
 }

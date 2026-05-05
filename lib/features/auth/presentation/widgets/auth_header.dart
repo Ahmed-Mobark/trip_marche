@@ -78,6 +78,16 @@ class AuthHeader extends StatelessWidget {
     return const SizedBox(height: 30);
   }
 
+  double _heightAboveWhiteSheet(BuildContext context) {
+    if (showIllustration) {
+      return 160 + 12 + 140;
+    }
+    if (compactTopBar) {
+      return 44 + 12.h;
+    }
+    return 30;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -88,24 +98,37 @@ class AuthHeader extends StatelessWidget {
         ),
       ),
       child: scrollable
-          ? SingleChildScrollView(
-              child: Column(
-                children: [
-                  SizedBox(height: MediaQuery.of(context).padding.top),
-                  _buildTop(context),
-                  ClipPath(
-                    clipper: _AuthCurveClipper(),
-                    child: Container(
-                      width: double.infinity,
-                      color: AppColors.background,
-                      child: Padding(
-                        padding: const EdgeInsets.only(top: 90),
-                        child: child,
+          ? LayoutBuilder(
+              builder: (context, constraints) {
+                final media = MediaQuery.of(context);
+                final minWhiteHeight = (media.size.height -
+                        media.padding.top -
+                        _heightAboveWhiteSheet(context))
+                    .clamp(240.0, double.infinity);
+                return SingleChildScrollView(
+                  physics: const BouncingScrollPhysics(),
+                  child: Column(
+                    children: [
+                      SizedBox(height: media.padding.top),
+                      _buildTop(context),
+                      ClipPath(
+                        clipper: _AuthCurveClipper(),
+                        child: ConstrainedBox(
+                          constraints: BoxConstraints(minHeight: minWhiteHeight),
+                          child: Container(
+                            width: double.infinity,
+                            color: AppColors.background,
+                            child: Padding(
+                              padding: const EdgeInsets.only(top: 90),
+                              child: child,
+                            ),
+                          ),
+                        ),
                       ),
-                    ),
+                    ],
                   ),
-                ],
-              ),
+                );
+              },
             )
           : Column(
               children: [

@@ -33,4 +33,25 @@ class HomeBannersCubit extends Cubit<HomeBannersState> {
       },
     );
   }
+
+  /// Reload banners without dropping existing ones during the request.
+  Future<void> refreshBanners() async {
+    if (state.status != HomeBannersStatus.success) {
+      await loadBanners();
+      return;
+    }
+    final result = await _homeRepository.getHomeBanners();
+    result.fold(
+      (_) {},
+      (data) {
+        final response = HomeBannerResponse.fromJson(data);
+        emit(
+          state.copyWith(
+            status: HomeBannersStatus.success,
+            banners: response.data,
+          ),
+        );
+      },
+    );
+  }
 }

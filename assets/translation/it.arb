@@ -43,8 +43,11 @@
   "authOrLoginWith": "Oppure accedi con",
   "authContinueWithGoogle": "Continua con Google",
   "authContinueWithApple": "Continua con Apple",
-  "authTravelAgencyPrompt": "Agenzia di viaggi? ",
-  "authJoinAsTripPartner": "Unisciti come partner di viaggio",
+  "authTravelAgencyPrompt": "Fornitore o agenzia di viaggi? ",
+  "authJoinAsTripPartner": "Unisciti come fornitore",
+  "authPartnerPortalTitle": "Portale partner",
+  "authWebViewLoadFailed": "Impossibile caricare questa pagina. Controlla la connessione e riprova.",
+  "authWebViewRetry": "Riprova",
 
   "authSignUpTitle": "Crea il tuo account",
   "authSignUpSubtitle": "Registrati per iniziare",
@@ -78,7 +81,7 @@
   "authResendNow": "Reinvia ora",
 
   "homeAppTitle": "TripMarche",
-  "homeSearchHint": "Sharm El Sheikh",
+  "homeSearchHint": "Cerca un viaggio",
   "homeLocationText": "Egitto, Il Cairo, New Cairo",
   "homeTrendingDestinations": "Destinazioni di tendenza",
   "homePopularTrips": "Viaggi popolari",
@@ -208,6 +211,10 @@
   "myTripsTabUpcoming": "In arrivo",
   "myTripsTabPast": "Passati",
   "myTripsSearchHint": "Cerca un viaggio",
+  "myTripsCatalogTripsOf": "Viaggi a",
+  "myTripsCatalogReviewCountInline": "({count})",
+  "myTripsCatalogSaveWishlist": "Aggiungi ai preferiti",
+  "myTripsCatalogRemoveWishlist": "Rimuovi dai preferiti",
   "myTripsTabActive": "Attivi",
   "myTripsTabPastNew": "Passati",
   "myTripsTabCanceled": "Annullati",
@@ -321,7 +328,19 @@
   "tripDetailsHeroByCompany": "Da Agenzia di Viaggi",
   "tripDetailsHeroFromLocation": "Da Il Cairo & Alessandria",
   "tripDetailsHeroDateRange": "27 nov → 4 dic",
+  "tripDetailsHeroFromPrefix": "Da ",
+  "@tripDetailsHeroFromPrefix": {
+    "description": "Prefix before pickup cities on trip details hero; cities follow in bold."
+  },
+  "tripDetailsHeroByCompanyLine": "Da {company}",
+  "@tripDetailsHeroByCompanyLine": {
+    "description": "Travel vendor line on trip details hero.",
+    "placeholders": {
+      "company": {"type": "String"}
+    }
+  },
   "tripDetailsGalleryMoreCount": "+{count}",
+  "imageGalleryPosition": "{current} di {total}",
   "tripDetailsOverviewTitle": "Panoramica viaggio",
   "tripDetailsOverviewBody": "Vivi la bellezza mozzafiato delle Alpi svizzere in questa avventura di 7 giorni. Visita destinazioni iconiche, goditi viaggi in treno panoramici e immergiti nella cultura svizzera. Perfetto per amanti della natura e della fotografia.",
   "tripDetailsWhatsIncludedTitle": "Cosa include",
@@ -380,9 +399,16 @@
   "tripDetailsDestinationParis": "Parigi",
   "tripDetailsStatCitiesLabel": "Numero di città",
   "tripDetailsStatCitiesValue": "7 città",
+  "tripDetailsStatCitiesCount": "{count} città",
+  "@tripDetailsStatCitiesCount": {
+    "description": "Stat grid value for how many cities the trip visits.",
+    "placeholders": {
+      "count": {"type": "int"}
+    }
+  },
   "tripDetailsPriceLabel": "Prezzo",
   "tripDetailsPerPersonSmall": "a persona",
-  "tripDetailsBookingPriceDisplay": "$1000.00",
+  "tripDetailsBookingPriceDisplay": "1000.00",
   "tripDetailsCompanyName": "Travel Egypt Co.",
   "tripDetailsCompanyTagline": "Agenzia di viaggi avventura",
   "tripDetailsFollow": "Segui",
@@ -565,6 +591,16 @@
   "authNewPasswordHint": "Inserisci nuova password",
   "authConfirmNewPasswordLabel": "Conferma nuova password",
   "authConfirmNewPasswordHint": "Conferma nuova password",
-  "authResetPasswordButton": "Reimposta password"
+  "authResetPasswordButton": "Reimposta password",
+
+  "tripDetailsDurationUnit": "Giorni",
+  "tripDetailsProgramDayPrefix": "Giorno",
+  "tripDetailsTypeDomestic": "Nazionale",
+  "tripDetailsPayOnArrival": "Paga all'arrivo",
+  "tripDetailsFailedToLoad": "Impossibile caricare i dettagli del viaggio.",
+  "tripDetailsTryAgain": "Riprova",
+  "tripDetailsNoFlights": "I dettagli del volo compariranno qui quando disponibili.",
+  "tripDetailsNoTransport": "I dettagli di trasporto via terra o mare compariranno qui quando disponibili.",
+  "tripDetailsVisaAndEntryTitle": "Visto e ingresso"
 }
 

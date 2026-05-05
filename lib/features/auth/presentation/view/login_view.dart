@@ -3,15 +3,19 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:trip_marche/core/config/app_icons.dart';
+import 'package:trip_marche/core/config/app_web_urls.dart';
 import 'package:trip_marche/core/config/styles/styles.dart';
 import 'package:trip_marche/core/extensions/localization.dart';
 import 'package:trip_marche/core/injection/injection_container.dart';
+import 'package:trip_marche/core/navigation/app_navigator.dart';
 import 'package:trip_marche/core/theme/app_colors.dart';
 import 'package:trip_marche/core/theme/app_text_styles.dart';
 import 'package:trip_marche/core/toast/app_toast.dart';
 import 'package:trip_marche/core/widgets/app_button.dart';
 import 'package:trip_marche/core/widgets/app_text_field.dart';
+import 'package:trip_marche/core/widgets/app_web_view_screen.dart';
 import 'package:trip_marche/core/widgets/social_login_button.dart';
+import 'package:iconsax/iconsax.dart';
 import '../widgets/auth_header.dart';
 import '../widgets/divider_with_text.dart';
 import '../cubit/login/login_cubit.dart';
@@ -229,22 +233,72 @@ class LoginView extends StatelessWidget {
                       ),
                       SizedBox(height: 18.h),
 
-                      // Travel Agency
+                      // Vendor / partner portal (opens in-app webview)
                       Center(
-                        child: RichText(
-                          text: TextSpan(
-                            style: AppTextStyles.bodyMedium(
-                              color: AppColors.greyText,
-                            ),
-                            children: [
-                              TextSpan(text: context.tr.authTravelAgencyPrompt),
-                              TextSpan(
-                                text: context.tr.authJoinAsTripPartner,
-                                style: AppTextStyles.bodyMedium(
-                                  color: AppColors.primary,
-                                ).copyWith(fontWeight: FontWeight.w700),
+                        child: Semantics(
+                          button: true,
+                          label:
+                              '${context.tr.authTravelAgencyPrompt}${context.tr.authJoinAsTripPartner}',
+                          child: Material(
+                            color: Colors.transparent,
+                            child: InkWell(
+                              onTap: () {
+                                sl<AppNavigator>().push(
+                                  screen: AppWebViewScreen(
+                                    title:
+                                        context.tr.authPartnerPortalTitle,
+                                    url: AppWebUrls.partnerPortalLogin,
+                                  ),
+                                );
+                              },
+                              borderRadius: BorderRadius.circular(14.r),
+                              splashColor:
+                                  AppColors.primary.withValues(alpha: 0.12),
+                              highlightColor:
+                                  AppColors.primary.withValues(alpha: 0.06),
+                              child: Padding(
+                                padding: EdgeInsetsDirectional.symmetric(
+                                  horizontal: 12.w,
+                                  vertical: 12.h,
+                                ),
+                                child: Row(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    Icon(
+                                      Iconsax.shop,
+                                      size: 22.sp,
+                                      color: AppColors.primary,
+                                    ),
+                                    SizedBox(width: 10.w),
+                                    Flexible(
+                                      child: RichText(
+                                        textAlign: TextAlign.center,
+                                        text: TextSpan(
+                                          style: AppTextStyles.bodyMedium(
+                                            color: AppColors.greyText,
+                                          ),
+                                          children: [
+                                            TextSpan(
+                                              text: context
+                                                  .tr.authTravelAgencyPrompt,
+                                            ),
+                                            TextSpan(
+                                              text: context
+                                                  .tr.authJoinAsTripPartner,
+                                              style: AppTextStyles.bodyMedium(
+                                                color: AppColors.primary,
+                                              ).copyWith(
+                                                fontWeight: FontWeight.w700,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
                               ),
-                            ],
+                            ),
                           ),
                         ),
                       ),

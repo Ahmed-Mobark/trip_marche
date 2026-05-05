@@ -4,17 +4,29 @@ import 'package:iconsax/iconsax.dart';
 import 'package:trip_marche/core/extensions/localization.dart';
 import 'package:trip_marche/core/theme/app_colors.dart';
 import 'package:trip_marche/core/theme/app_text_styles.dart';
+import 'package:trip_marche/features/trip_details/domain/entities/trip_details_entity.dart';
 import 'trip_details_info_card.dart';
 
 class TripDetailsPostStatsSections extends StatelessWidget {
-  const TripDetailsPostStatsSections({super.key});
+  const TripDetailsPostStatsSections({super.key, required this.trip});
+
+  final TripDetails trip;
 
   @override
   Widget build(BuildContext context) {
+    final inclusions = trip.inclusions.map((e) => e.label).where((s) => s.isNotEmpty).toList();
+
+    final overviewBorder =
+        AppColors.border.withValues(alpha: 0.42);
+
     return Column(
       children: [
-        SizedBox(height: 16.h),
+        SizedBox(height: 24.h),
         TripDetailsInfoCard(
+          padding: EdgeInsetsDirectional.all(24.w),
+          borderRadius: 18.r,
+          borderColor: overviewBorder,
+          withShadow: false,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -22,36 +34,57 @@ class TripDetailsPostStatsSections extends StatelessWidget {
                 context.tr.tripDetailsOverviewTitle,
                 style: AppTextStyles.body(
                   color: AppColors.darkText,
-                ).copyWith(fontWeight: FontWeight.w700),
+                ).copyWith(
+                  fontSize: 20.sp,
+                  fontWeight: FontWeight.w700,
+                  height: 1.2,
+                ),
               ),
-              SizedBox(height: 10.h),
+              SizedBox(height: 14.h),
               Text(
-                context.tr.tripDetailsOverviewBody,
+                trip.overview.isNotEmpty ? trip.overview : trip.description,
                 style: AppTextStyles.body(
-                  color: AppColors.greyText,
-                ).copyWith(height: 1.45),
+                  color: AppColors.tripDetailsSecondaryGrey,
+                ).copyWith(
+                  fontSize: 16.sp,
+                  fontWeight: FontWeight.w400,
+                  height: 1.5,
+                ),
               ),
             ],
           ),
         ),
         SizedBox(height: 20.h),
-        TripDetailsInfoCard(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                context.tr.tripDetailsWhatsIncludedTitle,
-                style: AppTextStyles.body(
-                  color: AppColors.darkText,
-                ).copyWith(fontWeight: FontWeight.w700),
-              ),
-              // SizedBox(height: 16.h),
-              const _IncludedGrid(),
-            ],
+        if (inclusions.isNotEmpty)
+          TripDetailsInfoCard(
+            padding: EdgeInsetsDirectional.all(24.w),
+            borderRadius: 26.r,
+            borderColor: AppColors.border.withValues(alpha: 0.32),
+            withShadow: true,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  context.tr.tripDetailsWhatsIncludedTitle,
+                  style: AppTextStyles.body(
+                    color: AppColors.darkText,
+                  ).copyWith(
+                    fontSize: 20.sp,
+                    fontWeight: FontWeight.w700,
+                    height: 1.2,
+                  ),
+                ),
+                SizedBox(height: 20.h),
+                _IncludedGrid(items: inclusions),
+              ],
+            ),
           ),
-        ),
-        SizedBox(height: 20.h),
+        if (inclusions.isNotEmpty) SizedBox(height: 20.h),
         TripDetailsInfoCard(
+          padding: EdgeInsetsDirectional.all(20.w),
+          borderRadius: 24.r,
+          borderColor: AppColors.border.withValues(alpha: 0.28),
+          withShadow: true,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -59,37 +92,43 @@ class TripDetailsPostStatsSections extends StatelessWidget {
                 context.tr.tripDetailsDepartureDetailsTitle,
                 style: AppTextStyles.body(
                   color: AppColors.darkText,
-                ).copyWith(fontWeight: FontWeight.w700),
+                ).copyWith(
+                  fontSize: 20.sp,
+                  fontWeight: FontWeight.w700,
+                  height: 1.2,
+                ),
               ),
-              SizedBox(height: 16.h),
+              SizedBox(height: 18.h),
               _LocationRow(
                 icon: Iconsax.location,
                 label: context.tr.tripDetailsMeetingLocationLabel,
-                value: context.tr.tripDetailsMeetingLocationValue,
-                trailing: _MapButton(onTap: () {}),
+                value: trip.meeting.location,
+                trailing: trip.meeting.lat != null && trip.meeting.lng != null
+                    ? _MapButton(onTap: () {})
+                    : null,
               ),
-              SizedBox(height: 18.h),
+              SizedBox(height: 20.h),
               _LocationRow(
                 icon: Iconsax.routing_2,
                 label: context.tr.tripDetailsReturnLocationLabel,
-                value: context.tr.tripDetailsReturnLocationValue,
+                value: trip.returnPoint.location,
               ),
-              SizedBox(height: 18.h),
+              SizedBox(height: 20.h),
               Row(
                 children: [
                   Expanded(
                     child: _TimeRow(
-                      icon: Iconsax.clock,
+                      icon: Iconsax.profile_2user,
                       label: context.tr.tripDetailsMeetingTimeLabel,
-                      value: context.tr.tripDetailsMeetingTimeValue,
+                      value: trip.meeting.time,
                     ),
                   ),
-                  SizedBox(width: 20.w),
+                  SizedBox(width: 24.w),
                   Expanded(
                     child: _TimeRow(
                       icon: Iconsax.clock,
                       label: context.tr.tripDetailsReturnTimeLabel,
-                      value: context.tr.tripDetailsReturnTimeValue,
+                      value: trip.returnPoint.time,
                     ),
                   ),
                 ],
@@ -103,26 +142,21 @@ class TripDetailsPostStatsSections extends StatelessWidget {
 }
 
 class _IncludedGrid extends StatelessWidget {
-  const _IncludedGrid();
+  const _IncludedGrid({required this.items});
+
+  final List<String> items;
 
   @override
   Widget build(BuildContext context) {
-    final items = [
-      context.tr.tripDetailsIncludedFlightTickets,
-      context.tr.tripDetailsIncludedHotelStay,
-      context.tr.tripDetailsIncludedBreakfast,
-      context.tr.tripDetailsIncludedAirportTransfer,
-    ];
-
     return GridView.builder(
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
       itemCount: items.length,
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 2,
-        mainAxisSpacing: 10.h,
-        crossAxisSpacing: 19.w,
-        childAspectRatio: 3.0,
+        mainAxisSpacing: 16.h,
+        crossAxisSpacing: 28.w,
+        childAspectRatio: 3.15,
       ),
       itemBuilder: (context, i) {
         return _IncludedItem(text: items[i]);
@@ -139,16 +173,24 @@ class _IncludedItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        Icon(Icons.check, size: 22.sp, color: AppColors.success),
-        SizedBox(width: 12.w),
+        Icon(
+          Icons.check_outlined,
+          size: 17.sp,
+          color: AppColors.tripDetailsInclusionCheck,
+        ),
+        SizedBox(width: 10.w),
         Expanded(
           child: Text(
             text,
-            style: AppTextStyles.bodyMedium(
+            style: AppTextStyles.body(
               color: AppColors.darkText,
-            ).copyWith(fontWeight: FontWeight.w500, fontSize: 15.sp),
+            ).copyWith(
+              fontSize: 16.sp,
+              fontWeight: FontWeight.w400,
+              height: 1.35,
+            ),
             maxLines: 2,
             softWrap: true,
             overflow: TextOverflow.ellipsis,
@@ -175,17 +217,40 @@ class _LocationRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        Icon(icon, color: AppColors.primary, size: 24.sp),
+        Icon(
+          icon,
+          color: AppColors.tripDetailsDepartureIconPurple,
+          size: 24.sp,
+        ),
         SizedBox(width: 12.w),
         Expanded(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisSize: MainAxisSize.min,
             children: [
-              Text(label, style: AppTextStyles.body(color: AppColors.greyText)),
+              Text(
+                label,
+                style: AppTextStyles.caption(
+                  color: AppColors.tripDetailsSecondaryGrey,
+                ).copyWith(
+                  fontSize: 13.sp,
+                  fontWeight: FontWeight.w400,
+                  height: 1.25,
+                ),
+              ),
               SizedBox(height: 4.h),
-              Text(value, style: AppTextStyles.body(color: AppColors.darkText)),
+              Text(
+                value,
+                style: AppTextStyles.bodyMedium(
+                  color: AppColors.darkText,
+                ).copyWith(
+                  fontSize: 15.sp,
+                  fontWeight: FontWeight.w500,
+                  height: 1.35,
+                ),
+              ),
             ],
           ),
         ),
@@ -209,17 +274,40 @@ class _TimeRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        Icon(icon, color: AppColors.primary, size: 24.sp),
+        Icon(
+          icon,
+          color: AppColors.tripDetailsDepartureIconPurple,
+          size: 24.sp,
+        ),
         SizedBox(width: 12.w),
         Expanded(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisSize: MainAxisSize.min,
             children: [
-              Text(label, style: AppTextStyles.body(color: AppColors.greyText)),
+              Text(
+                label,
+                style: AppTextStyles.caption(
+                  color: AppColors.tripDetailsSecondaryGrey,
+                ).copyWith(
+                  fontSize: 13.sp,
+                  fontWeight: FontWeight.w400,
+                  height: 1.25,
+                ),
+              ),
               SizedBox(height: 4.h),
-              Text(value, style: AppTextStyles.body(color: AppColors.darkText)),
+              Text(
+                value,
+                style: AppTextStyles.bodyMedium(
+                  color: AppColors.darkText,
+                ).copyWith(
+                  fontSize: 15.sp,
+                  fontWeight: FontWeight.w500,
+                  height: 1.35,
+                ),
+              ),
             ],
           ),
         ),
@@ -236,26 +324,26 @@ class _MapButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Material(
-      color: AppColors.cardBg,
-      borderRadius: BorderRadius.circular(12.r),
+      color: AppColors.transparent,
+      borderRadius: BorderRadius.circular(10.r),
       child: InkWell(
         onTap: onTap,
-        borderRadius: BorderRadius.circular(12.r),
+        borderRadius: BorderRadius.circular(10.r),
         child: Container(
-          width: 44.r,
-          height: 44.r,
+          width: 40.r,
+          height: 40.r,
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(12.r),
-            border: Border.all(color: AppColors.border.withValues(alpha: 0.6)),
-            boxShadow: [
-              BoxShadow(
-                color: AppColors.shadow.withValues(alpha: 0.06),
-                blurRadius: 12.r,
-                offset: Offset(0, 6.h),
-              ),
-            ],
+            color: AppColors.tripDetailsMapButtonBg,
+            borderRadius: BorderRadius.circular(10.r),
+            border: Border.all(
+              color: AppColors.border.withValues(alpha: 0.18),
+            ),
           ),
-          child: Icon(Iconsax.map_1, color: AppColors.primary, size: 22.sp),
+          child: Icon(
+            Icons.map_rounded,
+            color: AppColors.tripDetailsMapIconBlue,
+            size: 22.sp,
+          ),
         ),
       ),
     );

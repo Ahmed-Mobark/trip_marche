@@ -71,7 +71,7 @@ class ActivityItem extends StatelessWidget {
             ),
             const SizedBox(width: 8),
             Text(
-              '+\$${price.toStringAsFixed(0)}',
+              '+${price.toStringAsFixed(0)}',
               style: AppTextStyles.bodyMedium(color: AppColors.primary),
             ),
             const SizedBox(width: 8),

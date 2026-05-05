@@ -1,16 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:iconsax/iconsax.dart';
-import '../../../../core/config/styles/styles.dart';
-import '../../../../core/extensions/localization.dart';
-import '../../../../core/theme/app_colors.dart';
+import 'package:trip_marche/core/config/styles/styles.dart';
+import 'package:trip_marche/core/extensions/localization.dart';
+import 'package:trip_marche/core/theme/app_colors.dart';
+import 'package:trip_marche/features/trip_details/domain/entities/trip_details_entity.dart';
 import 'trip_details_info_card.dart';
 
 class TripDetailsDestinationDetailsSection extends StatelessWidget {
-  const TripDetailsDestinationDetailsSection({super.key});
+  const TripDetailsDestinationDetailsSection({super.key, required this.trip});
+
+  final TripDetails trip;
 
   @override
   Widget build(BuildContext context) {
+    final visa = trip.visaDetails?.trim();
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -19,6 +24,28 @@ class TripDetailsDestinationDetailsSection extends StatelessWidget {
           style: TextStyles.textViewBold14,
         ),
         SizedBox(height: 14.h),
+        if (visa != null && visa.isNotEmpty) ...[
+          TripDetailsInfoCard(
+            withShadow: false,
+            borderRadius: 16.r,
+            padding: EdgeInsetsDirectional.all(16.r),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  context.tr.tripDetailsVisaAndEntryTitle,
+                  style: AppTextStyles.subtitle(color: AppColors.darkText),
+                ),
+                SizedBox(height: 10.h),
+                SelectableText(
+                  visa,
+                  style: AppTextStyles.body(color: AppColors.secondaryText),
+                ),
+              ],
+            ),
+          ),
+          SizedBox(height: 14.h),
+        ],
         const _DestinationDetailsCard(),
       ],
     );

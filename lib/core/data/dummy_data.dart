@@ -203,7 +203,7 @@ abstract class DummyData {
   static const List<ActivityItem> recentActivity = [
     ActivityItem(
       title: 'Expense added',
-      subtitle: 'Groceries • \$62.75',
+      subtitle: 'Groceries • 62.75',
       time: 'Today',
       icon: Icons.shopping_bag_outlined,
       iconBgColor: AppColors.primary,

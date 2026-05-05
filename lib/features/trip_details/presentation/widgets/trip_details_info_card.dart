@@ -33,7 +33,9 @@ class TripDetailsInfoCard extends StatelessWidget {
         color: backgroundColor ?? AppColors.cardBg,
         borderRadius: BorderRadius.circular(radius),
         border: Border.all(
-          color: (borderColor ?? AppColors.border).withValues(alpha: 0.6),
+          color: borderColor != null
+              ? borderColor!
+              : AppColors.border.withValues(alpha: 0.6),
         ),
         boxShadow: withShadow
             ? [

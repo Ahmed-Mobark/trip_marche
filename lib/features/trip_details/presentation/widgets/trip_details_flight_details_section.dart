@@ -1,16 +1,50 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:iconsax/iconsax.dart';
-import '../../../../core/config/styles/styles.dart';
-import '../../../../core/extensions/localization.dart';
-import '../../../../core/theme/app_colors.dart';
+import 'package:trip_marche/core/config/styles/styles.dart';
+import 'package:trip_marche/core/extensions/localization.dart';
+import 'package:trip_marche/core/theme/app_colors.dart';
+import 'package:trip_marche/features/trip_details/domain/entities/trip_details_entity.dart';
+import 'package:trip_marche/features/trip_details/presentation/trip_details_ui_formatters.dart';
 import 'trip_details_travel_leg_card.dart';
 
 class TripDetailsFlightDetailsSection extends StatelessWidget {
-  const TripDetailsFlightDetailsSection({super.key});
+  const TripDetailsFlightDetailsSection({super.key, required this.trip});
+
+  final TripDetails trip;
+
+  int _flightSort(TripFlightLeg a, TripFlightLeg b) {
+    if (a.direction == 'outbound' && b.direction != 'outbound') {
+      return -1;
+    }
+    if (a.direction != 'outbound' && b.direction == 'outbound') {
+      return 1;
+    }
+    return a.departAt.compareTo(b.departAt);
+  }
 
   @override
   Widget build(BuildContext context) {
+    final flights = [...trip.flights]..sort(_flightSort);
+    if (flights.isEmpty) {
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            context.tr.tripDetailsFlightDetailsTitle,
+            style: TextStyles.textViewBold14,
+          ),
+          SizedBox(height: 12.h),
+          Text(
+            context.tr.tripDetailsNoFlights,
+            style: TextStyles.textViewRegular14.copyWith(color: AppColors.greyText),
+          ),
+        ],
+      );
+    }
+
+    final primaryAirline = flights.first.airline.name;
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -21,28 +55,20 @@ class TripDetailsFlightDetailsSection extends StatelessWidget {
         SizedBox(height: 14.h),
         _AirlineRow(
           label: context.tr.tripDetailsAirlineLabel,
-          name: context.tr.tripDetailsAirlineName,
+          name: primaryAirline,
         ),
-        SizedBox(height: 12.h),
-        TripDetailsTravelLegCard(
-          leftCity: context.tr.tripDetailsFlightLeg1FromCity,
-          leftTime: context.tr.tripDetailsFlightLeg1FromTime,
-          centerIcon: Iconsax.airplane,
-          centerDate: context.tr.tripDetailsFlightLeg1Date,
-          rightCity: context.tr.tripDetailsFlightLeg1ToCity,
-          rightTime: context.tr.tripDetailsFlightLeg1ToTime,
-          flipIcon: false,
-        ),
-        SizedBox(height: 12.h),
-        TripDetailsTravelLegCard(
-          leftCity: context.tr.tripDetailsFlightLeg2FromCity,
-          leftTime: context.tr.tripDetailsFlightLeg2FromTime,
-          centerIcon: Iconsax.airplane,
-          centerDate: context.tr.tripDetailsFlightLeg2Date,
-          rightCity: context.tr.tripDetailsFlightLeg2ToCity,
-          rightTime: context.tr.tripDetailsFlightLeg2ToTime,
-          flipIcon: true,
-        ),
+        for (var i = 0; i < flights.length; i++) ...[
+          SizedBox(height: i == 0 ? 12.h : 12.h),
+          TripDetailsTravelLegCard(
+            leftCity: flights[i].fromCity,
+            leftTime: TripDetailsUiFormatters.timeOfDay(context, flights[i].departAt),
+            centerIcon: Iconsax.airplane,
+            centerDate: TripDetailsUiFormatters.monthDay(context, flights[i].departAt),
+            rightCity: flights[i].toCity,
+            rightTime: TripDetailsUiFormatters.timeOfDay(context, flights[i].arriveAt),
+            flipIcon: flights[i].direction == 'return',
+          ),
+        ],
       ],
     );
   }

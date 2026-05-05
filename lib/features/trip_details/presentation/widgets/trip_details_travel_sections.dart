@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:trip_marche/features/trip_details/domain/entities/trip_details_entity.dart';
 import 'trip_details_accommodation_section.dart';
 import 'trip_details_destination_details_section.dart';
 import 'trip_details_flight_details_section.dart';
 import 'trip_details_transportation_section.dart';
 
 class TripDetailsTravelSections extends StatelessWidget {
-  const TripDetailsTravelSections({super.key});
+  const TripDetailsTravelSections({super.key, required this.trip});
+
+  final TripDetails trip;
 
   @override
   Widget build(BuildContext context) {
@@ -15,13 +18,13 @@ class TripDetailsTravelSections extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const TripDetailsFlightDetailsSection(),
+          TripDetailsFlightDetailsSection(trip: trip),
           SizedBox(height: 24.h),
-          const TripDetailsTransportationSection(),
+          TripDetailsTransportationSection(trip: trip),
           SizedBox(height: 24.h),
-          const TripDetailsDestinationDetailsSection(),
+          TripDetailsDestinationDetailsSection(trip: trip),
           SizedBox(height: 24.h),
-          const TripDetailsAccommodationSection(),
+          TripDetailsAccommodationSection(trip: trip),
           SizedBox(height: 120.h),
         ],
       ),

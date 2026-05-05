@@ -238,7 +238,7 @@ class WishlistTripCard extends StatelessWidget {
                     children: [
                       if (trip.discountPrice != null) ...[
                         Text(
-                          '\$${trip.discountPrice!.toStringAsFixed(0)}',
+                          trip.discountPrice!.toStringAsFixed(0),
                           style: AppTextStyles.heading3(
                             color: AppColors.darkText,
                           ).copyWith(fontWeight: FontWeight.w900),
@@ -247,7 +247,7 @@ class WishlistTripCard extends StatelessWidget {
                         ),
                         SizedBox(width: 8.w),
                         Text(
-                          '\$${trip.price.toStringAsFixed(0)}',
+                          trip.price.toStringAsFixed(0),
                           style: AppTextStyles.bodyMedium(
                             color: AppColors.greyText,
                           ).copyWith(decoration: TextDecoration.lineThrough),
@@ -256,7 +256,7 @@ class WishlistTripCard extends StatelessWidget {
                         ),
                       ] else
                         Text(
-                          '\$${trip.price.toStringAsFixed(0)}',
+                          trip.price.toStringAsFixed(0),
                           style: AppTextStyles.heading3(
                             color: AppColors.darkText,
                           ).copyWith(fontWeight: FontWeight.w900),

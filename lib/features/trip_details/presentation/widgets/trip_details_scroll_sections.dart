@@ -707,8 +707,8 @@ class _PolicyList extends StatelessWidget {
                         ),
                       ),
                       Icon(
-                        Iconsax.arrow_right_3,
-                        size: 16.sp,
+                        Icons.chevron_right,
+                        size: 22.sp,
                         color: AppColors.greyText,
                       ),
                     ],

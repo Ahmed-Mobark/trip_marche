@@ -52,7 +52,7 @@ class _TripOptionsViewState extends State<TripOptionsView> {
         backgroundColor: AppColors.background,
         elevation: 0,
         leading: IconButton(
-          icon: Icon(Iconsax.arrow_left, color: AppColors.darkText),
+          icon: Icon(Icons.arrow_back_ios_new_rounded, color: AppColors.darkText),
           onPressed: () => Navigator.pop(context),
         ),
         title: Text(
@@ -70,7 +70,7 @@ class _TripOptionsViewState extends State<TripOptionsView> {
               title: 'Dahab Trip',
               subtitle: '7 Days | 20 Person | Mixed',
               trailing: Text(
-                '\$699/Person',
+                '699/Person',
                 style: AppTextStyles.bodyMedium(color: AppColors.primary),
               ),
             ),
@@ -104,7 +104,7 @@ class _TripOptionsViewState extends State<TripOptionsView> {
         const SizedBox(height: 12),
         RadioOption(
           value: 'Single',
-          label: 'Single Room (+\$100)',
+          label: 'Single Room (+100)',
           groupValue: _roomType,
           onChanged: (v) => setState(() => _roomType = v!),
         ),
@@ -116,7 +116,7 @@ class _TripOptionsViewState extends State<TripOptionsView> {
         ),
         RadioOption(
           value: 'Triple',
-          label: 'Triple Room (-\$50)',
+          label: 'Triple Room (-50)',
           groupValue: _roomType,
           onChanged: (v) => setState(() => _roomType = v!),
         ),
@@ -135,7 +135,7 @@ class _TripOptionsViewState extends State<TripOptionsView> {
         const SizedBox(height: 12),
         RadioOption(
           value: 'Front',
-          label: 'Front Seat (+\$20)',
+          label: 'Front Seat (+20)',
           groupValue: _busSeat,
           onChanged: (v) => setState(() => _busSeat = v!),
         ),
@@ -266,7 +266,7 @@ class _TripOptionsViewState extends State<TripOptionsView> {
             style: AppTextStyles.subtitle(color: AppColors.darkText),
           ),
           Text(
-            '\$${_totalPrice.toStringAsFixed(0)}',
+            _totalPrice.toStringAsFixed(0),
             style: Theme.of(context).textTheme.bodyMedium!.copyWith(
               fontSize: 24,
               fontWeight: FontWeight.w700,
