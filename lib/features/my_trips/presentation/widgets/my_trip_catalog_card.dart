@@ -55,7 +55,7 @@ class MyTripCatalogCard extends StatelessWidget {
     final imageCornerRadius = 20.r;
 
     final metaStyle = TextStyle(
-      fontSize: 13.sp,
+      fontSize: 12.sp,
       fontWeight: FontWeight.w400,
       color: AppColors.catalogMetaMuted(context),
       height: 1.3,
@@ -123,7 +123,7 @@ class MyTripCatalogCard extends StatelessWidget {
                                   maxLines: 2,
                                   overflow: TextOverflow.ellipsis,
                                   style: TextStyle(
-                                    fontSize: 18.sp,
+                                    fontSize: 17.sp,
                                     fontWeight: FontWeight.w700,
                                     color: AppColors.darkText(context),
                                     height: 1.25,
@@ -142,7 +142,7 @@ class MyTripCatalogCard extends StatelessWidget {
                                     Text(
                                       trip.rating.toStringAsFixed(1),
                                       style: TextStyle(
-                                        fontSize: 14.sp,
+                                        fontSize: 13.sp,
                                         fontWeight: FontWeight.w700,
                                         color: AppColors.darkText(context),
                                         height: 1.2,
@@ -211,48 +211,59 @@ class MyTripCatalogCard extends StatelessWidget {
                                   textBaseline: TextBaseline.alphabetic,
                                   children: [
                                     if (hasDiscount) ...[
-                                      Text(
-                                        _priceWithCurrency(
-                                          originalPrice,
-                                          trip.currency,
-                                        ),
-                                        style: TextStyle(
-                                          fontSize: 13.sp,
-                                          fontWeight: FontWeight.w400,
-                                          color: AppColors.catalogMetaMuted(context),
-                                          height: 1.2,
-                                          decoration:
-                                              TextDecoration.lineThrough,
-                                          decorationColor:
-                                              AppColors.catalogMetaMuted(context),
+                                      Flexible(
+                                        flex: 2,
+                                        child: Text(
+                                          _priceWithCurrency(
+                                            originalPrice,
+                                            trip.currency,
+                                          ),
+                                          maxLines: 1,
+                                          overflow: TextOverflow.ellipsis,
+                                          style: TextStyle(
+                                            fontSize: 12.sp,
+                                            fontWeight: FontWeight.w400,
+                                            color:
+                                                AppColors.catalogMetaMuted(context),
+                                            height: 1.2,
+                                            decoration:
+                                                TextDecoration.lineThrough,
+                                            decorationColor:
+                                                AppColors.catalogMetaMuted(context),
+                                          ),
                                         ),
                                       ),
                                       SizedBox(width: 6.w),
                                     ],
-
-                                    Text(
-                                      _priceWithCurrency(
-                                        currentPrice,
-                                        trip.currency,
-                                      ),
-                                      style: TextStyle(
-                                        fontSize: 19.sp,
-                                        fontWeight: FontWeight.w800,
-                                        color: AppColors.darkText(context),
-                                        height: 1.15,
+                                    Flexible(
+                                      flex: 3,
+                                      child: Text(
+                                        _priceWithCurrency(
+                                          currentPrice,
+                                          trip.currency,
+                                        ),
+                                        maxLines: 1,
+                                        overflow: TextOverflow.ellipsis,
+                                        style: TextStyle(
+                                          fontSize: 17.sp,
+                                          fontWeight: FontWeight.w700,
+                                          color: AppColors.darkText(context),
+                                          height: 1.15,
+                                        ),
                                       ),
                                     ),
                                     SizedBox(width: 3.w),
-
                                     Flexible(
+                                      flex: 2,
                                       child: Text(
                                         context.tr.tripDetailsPerPerson,
                                         maxLines: 1,
                                         overflow: TextOverflow.ellipsis,
                                         style: TextStyle(
-                                          fontSize: 12.sp,
+                                          fontSize: 11.sp,
                                           fontWeight: FontWeight.w400,
-                                          color: AppColors.catalogMetaMuted(context),
+                                          color:
+                                              AppColors.catalogMetaMuted(context),
                                           height: 1.2,
                                         ),
                                       ),

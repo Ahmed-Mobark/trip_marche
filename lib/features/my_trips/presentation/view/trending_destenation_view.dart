@@ -846,7 +846,7 @@ class _BrowseCatalogHero extends StatelessWidget {
                       child: Text(
                         country.trim(),
                         style: AppTextStyles.bodyMedium(
-                          color: AppColors.darkText(context),
+                          color: AppColors.textColorLight,
                         ).copyWith(fontWeight: FontWeight.w600),
                       ),
                     ),

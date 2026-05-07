@@ -93,7 +93,9 @@ abstract class AppColors {
 
   /// Accordion day header — light grey in light mode, elevated surface in dark.
   static Color tripDetailsProgramHeaderBg(BuildContext context) =>
-      isDark(context) ? const Color(0xFF2C2C2C) : tripDetailsProgramDayHeaderBar;
+      isDark(context)
+      ? const Color(0xFF2C2C2C)
+      : tripDetailsProgramDayHeaderBar;
 
   /// Hairlines inside trip-details cards (light divider vs dark border).
   static Color tripDetailsHairline(BuildContext context) =>
@@ -179,8 +181,7 @@ abstract class AppColors {
   static Color inputBg(BuildContext context) =>
       isDark(context) ? inputBgDark : inputBgLight;
 
-  static Color lightBg(BuildContext context) =>
-      inputBg(context);
+  static Color lightBg(BuildContext context) => inputBg(context);
 
   static Color disabled(BuildContext context) =>
       isDark(context) ? disableColorDark : disableColorLight;
@@ -208,7 +209,7 @@ abstract class AppColors {
       isDark(context) ? borderColorDark : catalogSheetBorderLight;
 
   static Color catalogMetaMuted(BuildContext context) =>
-      isDark(context) ? greyTextColorDark : catalogMetaMutedLight;
+      isDark(context) ? const Color(0xFFCCCCCC) : catalogMetaMutedLight;
 
   // --- My Trips (Figma / design QA — light reference; dark fallbacks) ---
   /// Header gradient top (Figma ref #8E24AA).
