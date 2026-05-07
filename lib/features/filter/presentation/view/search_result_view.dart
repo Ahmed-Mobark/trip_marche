@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:trip_marche/core/config/styles/styles.dart';
 import 'package:trip_marche/core/extensions/localization.dart';
 import 'package:trip_marche/core/theme/app_colors.dart';
@@ -40,9 +41,23 @@ class _MyTripsViewBody extends StatelessWidget {
                   ),
                   child: Align(
                     alignment: AlignmentDirectional.centerStart,
-                    child: Text(
-                      context.tr.searchResultTitle,
-                      style: AppTextStyles.heading3(color: AppColors.onImage),
+                    child: Row(
+                      children: [
+                        IconButton(
+                          onPressed: () => Navigator.pop(context),
+                          icon: Icon(
+                            Icons.arrow_back_ios_new_rounded,
+                            color: AppColors.onImage,
+                            size: 20.sp,
+                          ),
+                        ),
+                        Text(
+                          context.tr.searchResultTitle,
+                          style: AppTextStyles.heading3(
+                            color: AppColors.onImage,
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                 ),

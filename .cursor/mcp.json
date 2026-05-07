@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "Figma Flutter MCP": {
+      "command": "npx",
+      "args": ["-y", "figma-flutter-mcp", "--figd_3OmCYmbG166MTCejLUUh6aGJgeqf_4WS6t16gZ_v", "--stdio"]
+    }
+  }
+}
