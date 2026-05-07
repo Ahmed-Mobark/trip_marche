@@ -1,5 +1,5 @@
-import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:trip_marche/core/extensions/localization.dart';
@@ -7,27 +7,28 @@ import 'package:trip_marche/core/injection/injection_container.dart';
 import 'package:trip_marche/core/navigation/app_navigator.dart';
 import 'package:trip_marche/core/theme/app_colors.dart';
 import 'package:trip_marche/core/theme/app_text_styles.dart';
-import 'package:trip_marche/core/widgets/custom_loading.dart';
 import 'package:trip_marche/core/toast/app_toast.dart';
-import '../../data/models/home_section_response.dart';
-import '../cubit/home_sections_cubit.dart';
-import '../cubit/home_sections_state.dart';
-import '../cubit/home_banners_cubit.dart';
-import '../cubit/home_banners_state.dart';
-import '../../data/models/home_banner_model.dart';
-import '../cubit/home_categories_cubit.dart';
-import '../cubit/home_categories_state.dart';
-import '../cubit/special_trips_cubit.dart';
-import '../cubit/special_trips_state.dart';
-import '../widgets/home_header.dart';
-import '../widgets/trending_destination_card.dart';
-import '../widgets/popular_trip_grid_card.dart';
-import '../widgets/promo_banner_item.dart';
-import '../widgets/category_chip.dart';
-import '../widgets/special_trip_wide_card.dart';
+import 'package:trip_marche/core/widgets/custom_loading.dart';
+
+import '../../../my_trips/presentation/view/trending_destenation_view.dart';
 import '../../../trip_details/presentation/trip_wishlist_pop_result.dart';
 import '../../../trip_details/presentation/view/trip_details_view.dart';
-import '../../../my_trips/presentation/view/trending_destenation_view.dart';
+import '../../data/models/home_banner_model.dart';
+import '../../data/models/home_section_response.dart';
+import '../cubit/home_banners_cubit.dart';
+import '../cubit/home_banners_state.dart';
+import '../cubit/home_categories_cubit.dart';
+import '../cubit/home_categories_state.dart';
+import '../cubit/home_sections_cubit.dart';
+import '../cubit/home_sections_state.dart';
+import '../cubit/special_trips_cubit.dart';
+import '../cubit/special_trips_state.dart';
+import '../widgets/category_chip.dart';
+import '../widgets/home_header.dart';
+import '../widgets/popular_trip_grid_card.dart';
+import '../widgets/promo_banner_item.dart';
+import '../widgets/special_trip_wide_card.dart';
+import '../widgets/trending_destination_card.dart';
 
 class HomeView extends StatefulWidget {
   const HomeView({super.key});
@@ -263,6 +264,8 @@ class _HomeViewState extends State<HomeView> {
       children: [
         // ── Trending Destinations ──
         if (trendingSection != null) ...[
+          SizedBox(height: 12.h),
+
           Text(trendingSection.title, style: sectionTitleStyle),
           SizedBox(height: 12.h),
           SizedBox(
@@ -465,8 +468,8 @@ class _HomeViewState extends State<HomeView> {
                       },
                     ),
                   ),
-                  SizedBox(height: 14.h),
-                  // ── Special Trips Horizontal Paginated List ──
+                  SizedBox(height: 12.h),
+                  // ── Special Trips Vertical List ──
                   BlocBuilder<SpecialTripsCubit, SpecialTripsState>(
                     builder: (context, tripState) {
                       if (tripState.status == SpecialTripsStatus.loading) {
@@ -490,7 +493,7 @@ class _HomeViewState extends State<HomeView> {
                             ),
                           );
                         }
-                        return _SpecialTripsHorizontalList(
+                        return _SpecialTripsVerticalList(
                           trips: tripState.trips,
                           isLoadingMore:
                               tripState.status ==
@@ -607,7 +610,7 @@ class _TripHorizontalList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 340.h,
+      height: 346.h,
       child: ListView.separated(
         scrollDirection: Axis.horizontal,
         itemCount: trips.length,
@@ -647,14 +650,13 @@ class _PromoBanner extends StatefulWidget {
 }
 
 class _PromoBannerState extends State<_PromoBanner> {
-  int _currentIndex = 0;
-
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
         CarouselSlider.builder(
           itemCount: widget.banners.length,
+
           itemBuilder: (context, index, _) {
             final promo = widget.banners[index];
             return PromoBannerItem(
@@ -673,29 +675,9 @@ class _PromoBannerState extends State<_PromoBanner> {
             viewportFraction: 1,
             enlargeCenterPage: false,
             autoPlay: true,
+
             autoPlayInterval: const Duration(seconds: 4),
-            onPageChanged: (index, _) {
-              setState(() => _currentIndex = index);
-            },
-          ),
-        ),
-        SizedBox(height: 10.h),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: List.generate(
-            widget.banners.length,
-            (i) => AnimatedContainer(
-              duration: const Duration(milliseconds: 250),
-              width: _currentIndex == i ? 18.w : 6.w,
-              height: 6.w,
-              margin: EdgeInsets.symmetric(horizontal: 3.w),
-              decoration: BoxDecoration(
-                color: _currentIndex == i
-                    ? AppColors.primary
-                    : AppColors.border,
-                borderRadius: BorderRadius.circular(999),
-              ),
-            ),
+            onPageChanged: (_, __) {},
           ),
         ),
       ],
@@ -703,8 +685,8 @@ class _PromoBannerState extends State<_PromoBanner> {
   }
 }
 
-class _SpecialTripsHorizontalList extends StatefulWidget {
-  const _SpecialTripsHorizontalList({
+class _SpecialTripsVerticalList extends StatelessWidget {
+  const _SpecialTripsVerticalList({
     required this.trips,
     required this.isLoadingMore,
     required this.hasMore,
@@ -721,73 +703,40 @@ class _SpecialTripsHorizontalList extends StatefulWidget {
   final void Function(TripWishlistPopResult? result) onReturnedFromTripDetails;
 
   @override
-  State<_SpecialTripsHorizontalList> createState() =>
-      _SpecialTripsHorizontalListState();
-}
-
-class _SpecialTripsHorizontalListState
-    extends State<_SpecialTripsHorizontalList> {
-  late final ScrollController _scrollController;
-
-  @override
-  void initState() {
-    super.initState();
-    _scrollController = ScrollController()..addListener(_onScroll);
-  }
-
-  @override
-  void dispose() {
-    _scrollController.dispose();
-    super.dispose();
-  }
-
-  void _onScroll() {
-    if (!_scrollController.hasClients) return;
-    final maxScroll = _scrollController.position.maxScrollExtent;
-    final currentScroll = _scrollController.position.pixels;
-    // Trigger load more when user is within 200px of the end
-    if (currentScroll >= maxScroll - 200 &&
-        widget.hasMore &&
-        !widget.isLoadingMore) {
-      widget.onLoadMore();
-    }
-  }
-
-  @override
   Widget build(BuildContext context) {
-    final itemCount = widget.trips.length + (widget.hasMore ? 1 : 0);
+    final itemCount = trips.length + (hasMore ? 1 : 0);
 
-    return SizedBox(
-      height: 224.h,
-      child: ListView.separated(
-        controller: _scrollController,
-        scrollDirection: Axis.horizontal,
-        itemCount: itemCount,
-        separatorBuilder: (_, __) => SizedBox(width: 14.w),
-        itemBuilder: (context, index) {
-          if (index >= widget.trips.length) {
-            return Center(child: CustomLoading(size: 24, strokeWidth: 2));
+    return ListView.separated(
+      shrinkWrap: true,
+      physics: const NeverScrollableScrollPhysics(),
+      padding: EdgeInsets.zero,
+      itemCount: itemCount,
+      separatorBuilder: (_, __) => SizedBox(height: 12.h),
+      itemBuilder: (context, index) {
+        if (index >= trips.length) {
+          if (!isLoadingMore) {
+            onLoadMore();
           }
-          final trip = widget.trips[index];
-          return SizedBox(
-            width: 350.w,
-            child: SpecialTripWideCard(
-              trip: trip,
-              onTap: () async {
-                final result = await sl<AppNavigator>()
-                    .push<TripWishlistPopResult>(
-                      screen: TripDetailsView(
-                        tripId: trip.id,
-                        initialIsWishlisted: trip.isWishlisted,
-                      ),
-                    );
-                widget.onReturnedFromTripDetails(result);
-              },
-              onFavoriteTap: () => widget.onFavoriteTap(trip),
-            ),
+          return Padding(
+            padding: EdgeInsets.symmetric(vertical: 8.h),
+            child: Center(child: CustomLoading(size: 24, strokeWidth: 2)),
           );
-        },
-      ),
+        }
+        final trip = trips[index];
+        return SpecialTripWideCard(
+          trip: trip,
+          onTap: () async {
+            final result = await sl<AppNavigator>().push<TripWishlistPopResult>(
+              screen: TripDetailsView(
+                tripId: trip.id,
+                initialIsWishlisted: trip.isWishlisted,
+              ),
+            );
+            onReturnedFromTripDetails(result);
+          },
+          onFavoriteTap: () => onFavoriteTap(trip),
+        );
+      },
     );
   }
 }

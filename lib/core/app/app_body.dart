@@ -1,6 +1,7 @@
 import 'package:adaptive_theme/adaptive_theme.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:trip_marche/core/app/app_state.dart';
 import 'package:trip_marche/core/injection/injection_container.dart';
 import 'package:trip_marche/core/navigation/app_navigator.dart';
@@ -78,7 +79,21 @@ class MyAppState extends State<MyApp> {
           navigatorKey: sl<AppNavigator>().navigatorKey,
           builder: (context, child) {
             AppColors.brightness = Theme.of(context).brightness;
-            return child ?? const SizedBox.shrink();
+            return AnnotatedRegion<SystemUiOverlayStyle>(
+              value: const SystemUiOverlayStyle(
+                statusBarColor: Colors.transparent,
+                statusBarIconBrightness: Brightness.light,
+                statusBarBrightness: Brightness.dark,
+              ),
+              child: DecoratedBox(
+                decoration: const BoxDecoration(gradient: AppColors.primaryGradient),
+                child: SafeArea(
+                  top: true,
+                  bottom: false,
+                  child: child ?? const SizedBox.shrink(),
+                ),
+              ),
+            );
           },
           home: AppState.currentScreen(),
         ),

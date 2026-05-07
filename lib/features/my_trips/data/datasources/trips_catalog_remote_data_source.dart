@@ -23,20 +23,20 @@ class TripsCatalogRemoteDataSourceImpl implements TripsCatalogRemoteDataSource {
     String? search,
     int? destinationId,
   }) async {
-    final query = <String, dynamic>{
+    final body = <String, dynamic>{
       'page': page,
       'per_page': perPage,
     };
     if (search != null && search.trim().isNotEmpty) {
-      query['search'] = search.trim();
+      body['search'] = search.trim();
     }
     if (destinationId != null) {
-      query['destination_id'] = destinationId;
+      body['destination_id'] = destinationId;
     }
 
-    final response = await _api.get<Map<String, dynamic>>(
+    final response = await _api.post<Map<String, dynamic>>(
       url: AppEndpoints.trips,
-      queryParameters: query,
+      body: body,
     );
     return WishlistTripsPageModel.fromJson(response);
   }

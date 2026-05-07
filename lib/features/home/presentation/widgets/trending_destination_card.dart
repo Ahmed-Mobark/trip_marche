@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+
 import '../../../../core/config/app_icons.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_text_styles.dart';
 import '../../../../core/widgets/app_cached_network_image.dart';
+
+extension _PxExtension on num {
+  double get px => toDouble();
+}
 
 class TrendingDestinationCard extends StatelessWidget {
   const TrendingDestinationCard({
@@ -24,8 +29,9 @@ class TrendingDestinationCard extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        width: 118.w,
-        margin: EdgeInsetsDirectional.only(end: 12.w),
+        width: 108.px,
+        height: 128.px,
+        margin: EdgeInsetsDirectional.only(end: 10.px),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(16.r),
           color: AppColors.inputBg,

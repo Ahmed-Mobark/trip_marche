@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
+
+import '../../../../core/data/dummy_data.dart';
+import '../../../../core/extensions/localization.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_text_styles.dart';
-import '../../../../core/data/dummy_data.dart';
 import '../widgets/destination_grid_item.dart';
 import '../widgets/recent_search_chip.dart';
-import '../../../../core/extensions/localization.dart';
 
 class DestinationView extends StatelessWidget {
   const DestinationView({super.key});
@@ -18,7 +19,10 @@ class DestinationView extends StatelessWidget {
         backgroundColor: AppColors.background,
         elevation: 0,
         leading: IconButton(
-          icon: Icon(Icons.arrow_back_ios_new_rounded, color: AppColors.darkText),
+          icon: Icon(
+            Icons.arrow_back_ios_new_rounded,
+            color: AppColors.darkText,
+          ),
           onPressed: () => Navigator.pop(context),
         ),
         centerTitle: true,

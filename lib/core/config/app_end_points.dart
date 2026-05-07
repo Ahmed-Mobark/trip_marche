@@ -15,7 +15,7 @@ class AppEndpoints {
   static const String homeCategories = "home/categories";
   static const String homeSpecialTrips = "home/special-trips";
 
-  /// GET — paginated trips catalog (query: page, per_page, search?, destination_id?).
+  /// POST — paginated trips catalog (body: page, per_page, search?, destination_id?).
   static const String trips = 'trips';
 
   /// POST — trip detail by id (body may be empty `{}`).

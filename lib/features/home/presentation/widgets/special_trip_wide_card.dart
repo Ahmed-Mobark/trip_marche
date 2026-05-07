@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:iconsax/iconsax.dart';
-import '../../data/models/home_section_response.dart';
+
+import '../../../../core/extensions/localization.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_text_styles.dart';
 import '../../../../core/widgets/app_cached_network_image.dart';
-import '../../../../core/extensions/localization.dart';
+import '../../data/models/home_section_response.dart';
 
 class SpecialTripWideCard extends StatelessWidget {
   const SpecialTripWideCard({
@@ -37,7 +38,7 @@ class SpecialTripWideCard extends StatelessWidget {
                 children: [
                   SizedBox(
                     width: 150.w,
-                    height: 200.h,
+                    height: 180.h,
                     child: AppCachedNetworkImage(
                       imageUrl: trip.coverImage,
                       fit: BoxFit.cover,
