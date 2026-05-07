@@ -322,6 +322,7 @@
 
   "searchTripsFound": "تم العثور على {count} رحلة",
   "searchQueryExample": "شرم الشيخ",
+  "searchResultTitle": "نتائج البحث",
 
   "tripDetailsTitle": "رحلة دهب",
   "tripDetailsHeroCountryTag": "إندونيسيا",

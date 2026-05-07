@@ -1,279 +1,421 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:iconsax/iconsax.dart';
-import '../../../../core/theme/app_colors.dart';
-import '../../../../core/theme/app_text_styles.dart';
-import '../widgets/price_range_slider.dart';
-import '../widgets/filter_chip_option.dart';
-import '../../../../core/extensions/localization.dart';
+import 'package:trip_marche/core/extensions/localization.dart';
+import 'package:trip_marche/core/injection/injection_container.dart';
+import 'package:trip_marche/core/navigation/app_navigator.dart';
+import 'package:trip_marche/core/theme/app_colors.dart';
+import 'package:trip_marche/core/theme/app_text_styles.dart';
+import 'package:trip_marche/features/filter/presentation/cubit/filter_cubit.dart';
+import 'package:trip_marche/features/filter/presentation/cubit/filter_state.dart';
+import 'package:trip_marche/features/filter/presentation/view/search_result_view.dart';
+import 'package:trip_marche/features/filter/presentation/widgets/filter_view_sections.dart';
 
-class FilterView extends StatefulWidget {
+class FilterView extends StatelessWidget {
   const FilterView({super.key});
 
   @override
-  State<FilterView> createState() => _FilterViewState();
+  Widget build(BuildContext context) {
+    return BlocProvider(
+      create: (_) => FilterCubit(),
+      child: const _FilterBody(),
+    );
+  }
 }
 
-class _FilterViewState extends State<FilterView> {
-  RangeValues _priceRange = const RangeValues(50, 500);
-  String _selectedDuration = '';
-  final Set<String> _selectedTripTypes = {};
-  int _selectedRating = 0;
-  String _selectedCity = '';
-
-  final List<String> _durations = ['1-3 days', '3-7 days', '7+ days'];
-  final List<String> _tripTypes = [
-    'Beach',
-    'Adventure',
-    'Cultural',
-    'Safari',
-    'Mountain',
-    'City Tour',
-    'Cruise',
-    'Religious',
-  ];
-  final List<String> _cities = [
-    'Cairo',
-    'Alexandria',
-    'Hurghada',
-    'Sharm El Sheikh',
-    'Luxor',
-    'Aswan',
-  ];
-
-  void _resetFilters() {
-    setState(() {
-      _priceRange = const RangeValues(50, 500);
-      _selectedDuration = '';
-      _selectedTripTypes.clear();
-      _selectedRating = 0;
-      _selectedCity = '';
-    });
-  }
+class _FilterBody extends StatelessWidget {
+  const _FilterBody();
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: AppColors.background,
-      appBar: AppBar(
-        backgroundColor: AppColors.background,
-        elevation: 0,
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back_ios_new_rounded, color: AppColors.darkText),
-          onPressed: () => Navigator.pop(context),
-        ),
-        title: Text(context.tr.filterTitle, style: AppTextStyles.subtitle()),
-        centerTitle: true,
-        actions: [
-          TextButton(
-            onPressed: _resetFilters,
-            child: Text(
-              context.tr.filterReset,
-              style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                fontSize: 14,
-                fontWeight: FontWeight.w500,
-                color: AppColors.primary,
+    return BlocBuilder<FilterCubit, FilterState>(
+      builder: (context, state) {
+        final cubit = context.read<FilterCubit>();
+        return Scaffold(
+          backgroundColor: AppColors.background,
+          appBar: PreferredSize(
+            preferredSize: Size.fromHeight(112.h),
+            child: SafeArea(
+              bottom: false,
+              child: Padding(
+                padding: EdgeInsetsDirectional.fromSTEB(8.w, 18.h, 12.w, 10.h),
+                child: Stack(
+                  alignment: AlignmentDirectional.center,
+                  children: [
+                    Align(
+                      alignment: AlignmentDirectional.centerStart,
+                      child: IconButton(
+                        onPressed: () => Navigator.pop(context),
+                        icon: Icon(
+                          Icons.arrow_back_ios_new_rounded,
+                          color: AppColors.darkText,
+                          size: 20.sp,
+                        ),
+                      ),
+                    ),
+                    Text(
+                      context.tr.wishlistFiltersTitle,
+                      style: AppTextStyles.heading2(
+                        color: AppColors.darkText,
+                      ).copyWith(fontSize: 20.sp, fontWeight: FontWeight.w600),
+                    ),
+                    Align(
+                      alignment: AlignmentDirectional.centerEnd,
+                      child: TextButton(
+                        onPressed: cubit.resetFilters,
+                        style: TextButton.styleFrom(
+                          padding: EdgeInsetsDirectional.symmetric(
+                            horizontal: 8.w,
+                            vertical: 8.h,
+                          ),
+                          minimumSize: Size.zero,
+                          tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                        ),
+                        child: Text(
+                          context.tr.wishlistFiltersClearAll,
+                          style: AppTextStyles.bodyMedium(
+                            color: AppColors.error,
+                          ).copyWith(fontWeight: FontWeight.w500),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
           ),
-        ],
-      ),
-      body: Column(
-        children: [
-          Expanded(
-            child: SingleChildScrollView(
-              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  // Price Range
-                  PriceRangeSlider(
-                    values: _priceRange,
-                    min: 0,
-                    max: 1000,
-                    divisions: 20,
-                    onChanged: (values) {
-                      setState(() {
-                        _priceRange = values;
-                      });
+          body: SingleChildScrollView(
+            padding: EdgeInsetsDirectional.fromSTEB(
+              20.w,
+              18.h,
+              20.w,
+              26.h + MediaQuery.paddingOf(context).bottom,
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                FilterSection(
+                  title: context.tr.wishlistFiltersDestination,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      SelectField(value: context.tr.wishlistFiltersSelectCity),
+                      SizedBox(height: 12.h),
+                      Wrap(
+                        spacing: 12.w,
+                        children: [
+                          SelectedDestinationChip(
+                            label: context.tr.tripDetailsFlightLeg1FromCity,
+                          ),
+                          SelectedDestinationChip(
+                            label: context.tr.tripDetailsDestinationParis,
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+                SizedBox(height: 28.h),
+                FilterSection(
+                  title: context.tr.wishlistFiltersPriceRange,
+                  child: Column(
+                    children: [
+                      PriceHistogram(range: state.priceRange),
+                      SliderTheme(
+                        data: SliderTheme.of(context).copyWith(
+                          activeTrackColor: AppColors.primary,
+                          inactiveTrackColor: AppColors.border,
+                          thumbColor: AppColors.primary,
+                          overlayColor: AppColors.primary.withValues(
+                            alpha: 0.12,
+                          ),
+                          trackHeight: 2.h,
+                          rangeThumbShape: RoundRangeSliderThumbShape(
+                            enabledThumbRadius: 6.r,
+                          ),
+                        ),
+                        child: RangeSlider(
+                          values: state.priceRange,
+                          min: 0,
+                          max: 10000,
+                          divisions: 100,
+                          labels: RangeLabels(
+                            state.priceRange.start.round().toString(),
+                            state.priceRange.end.round().toString(),
+                          ),
+                          onChanged: cubit.setPriceRange,
+                        ),
+                      ),
+                      Row(
+                        children: [
+                          Expanded(
+                            child: PriceValueField(
+                              label: context.tr.wishlistFiltersPriceRange,
+                              value: '${state.priceRange.start.round()} EG',
+                            ),
+                          ),
+                          SizedBox(width: 16.w),
+                          Expanded(
+                            child: PriceValueField(
+                              label: context.tr.wishlistFiltersPriceRange,
+                              value: '${state.priceRange.end.round()} EG',
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+                SizedBox(height: 28.h),
+                FilterSection(
+                  title: context.tr.wishlistFiltersTripType,
+                  child: ButtonRow(
+                    options: [
+                      context.tr.wishlistFiltersDomestic,
+                      context.tr.wishlistFiltersInternational,
+                    ],
+                    isSelected: (value) =>
+                        (value == context.tr.wishlistFiltersDomestic &&
+                            state.tripType == 'domestic') ||
+                        (value == context.tr.wishlistFiltersInternational &&
+                            state.tripType == 'international'),
+                    onTap: (value) => cubit.setTripType(
+                      value == context.tr.wishlistFiltersDomestic
+                          ? 'domestic'
+                          : 'international',
+                    ),
+                  ),
+                ),
+                SizedBox(height: 24.h),
+                FilterSection(
+                  title: context.tr.wishlistFiltersDepartureCountry,
+                  child: SelectField(
+                    value: context.tr.wishlistFiltersSelectCountry,
+                  ),
+                ),
+                SizedBox(height: 24.h),
+                FilterSection(
+                  title: context.tr.wishlistFiltersDepartureCity,
+                  child: SelectField(
+                    value: context.tr.tripDetailsFlightLeg1FromCity,
+                  ),
+                ),
+                SizedBox(height: 24.h),
+                FilterSection(
+                  title: context.tr.wishlistFiltersTripMonth,
+                  child: SelectField(
+                    value: context.tr.wishlistFiltersSelectMonth,
+                  ),
+                ),
+                SizedBox(height: 24.h),
+                FilterSection(
+                  title: context.tr.tripDetailsAirlineLabel,
+                  child: SelectField(value: context.tr.tripDetailsAirlineName),
+                ),
+                SizedBox(height: 24.h),
+                FilterSection(
+                  title: context.tr.wishlistFiltersTravelAgency,
+                  child: SelectField(
+                    value: context.tr.wishlistFiltersAgencyNameHint,
+                  ),
+                ),
+                SizedBox(height: 24.h),
+                FilterSection(
+                  title: context.tr.wishlistFiltersAgencyRating,
+                  child: NumberRow(
+                    selected: state.agencyRating,
+                    onTap: cubit.setAgencyRating,
+                  ),
+                ),
+                SizedBox(height: 24.h),
+                FilterSection(
+                  title: context.tr.wishlistFiltersOtherCountries,
+                  child: SelectField(
+                    value: context.tr.wishlistFiltersSelectCountries,
+                  ),
+                ),
+                SizedBox(height: 24.h),
+                FilterSection(
+                  title: context.tr.wishlistFiltersOtherCities,
+                  child: SelectField(
+                    value: context.tr.wishlistFiltersSelectCities,
+                  ),
+                ),
+                SizedBox(height: 24.h),
+                FilterSection(
+                  title: context.tr.wishlistFiltersNumberOfCities,
+                  child: NumberRow(
+                    selected: state.citiesCount,
+                    onTap: cubit.setCitiesCount,
+                  ),
+                ),
+                SizedBox(height: 24.h),
+                FilterSection(
+                  title: context.tr.wishlistFiltersNumberOfCountries,
+                  child: NumberRow(
+                    selected: state.countriesCount,
+                    onTap: cubit.setCountriesCount,
+                  ),
+                ),
+                SizedBox(height: 24.h),
+                FilterSection(
+                  title: context.tr.wishlistFiltersDuration,
+                  child: ButtonRow(
+                    options: const ['1-3 Days', 'Up to 5 Days', '5+ Days'],
+                    labelBuilder: (value) {
+                      if (value == '1-3 Days') {
+                        return context.tr.wishlistFiltersDurationUpTo3;
+                      }
+                      if (value == 'Up to 5 Days') {
+                        return context.tr.wishlistFiltersDurationUpTo7;
+                      }
+                      return context.tr.wishlistFiltersDuration7Plus;
+                    },
+                    isSelected: state.selectedDurations.contains,
+                    onTap: cubit.toggleDuration,
+                  ),
+                ),
+                SizedBox(height: 24.h),
+                FilterSection(
+                  title: context.tr.wishlistFiltersGroupSize,
+                  child: ButtonRow(
+                    options: const ['5-10', 'Up to 25', '25+'],
+                    labelBuilder: (value) {
+                      if (value == '5-10') {
+                        return context.tr.wishlistFiltersGroupSizeSmall;
+                      }
+                      if (value == 'Up to 25') {
+                        return context.tr.wishlistFiltersGroupSizeUpTo20;
+                      }
+                      return context.tr.wishlistFiltersGroupSize20Plus;
+                    },
+                    isSelected: state.selectedGroupSizes.contains,
+                    onTap: cubit.toggleGroupSize,
+                  ),
+                ),
+                SizedBox(height: 24.h),
+                FilterSection(
+                  title: context.tr.wishlistFiltersTripSeason,
+                  child: ButtonRow(
+                    options: [
+                      context.tr.wishlistFiltersSeasonSpring,
+                      context.tr.wishlistFiltersSeasonHajj,
+                      context.tr.wishlistFiltersSeasonNewYear,
+                    ],
+                    isSelected: (value) =>
+                        (value == context.tr.wishlistFiltersSeasonSpring &&
+                            state.tripSeason == 'spring') ||
+                        (value == context.tr.wishlistFiltersSeasonHajj &&
+                            state.tripSeason == 'hajj') ||
+                        (value == context.tr.wishlistFiltersSeasonNewYear &&
+                            state.tripSeason == 'newYear'),
+                    onTap: (value) {
+                      if (value == context.tr.wishlistFiltersSeasonSpring) {
+                        cubit.setTripSeason('spring');
+                      } else if (value ==
+                          context.tr.wishlistFiltersSeasonHajj) {
+                        cubit.setTripSeason('hajj');
+                      } else {
+                        cubit.setTripSeason('newYear');
+                      }
                     },
                   ),
-                  const SizedBox(height: 24),
-
-                  // Duration
-                  Text(
-                    context.tr.filterDuration,
-                    style: AppTextStyles.subtitle(),
+                ),
+                SizedBox(height: 24.h),
+                TripFeaturesSection(
+                  selectedKeys: state.tripFeatures,
+                  onChanged: cubit.toggleTripFeature,
+                ),
+                SizedBox(height: 24.h),
+                FilterSection(
+                  title: context.tr.wishlistFiltersTripRating,
+                  child: NumberRow(
+                    selected: state.tripRating,
+                    onTap: cubit.setTripRating,
                   ),
-                  const SizedBox(height: 12),
-                  Wrap(
-                    spacing: 10,
-                    runSpacing: 10,
-                    children: _durations.map((duration) {
-                      final isSelected = _selectedDuration == duration;
-                      return FilterChipOption(
-                        label: duration,
-                        isSelected: isSelected,
-                        onTap: () {
-                          setState(() {
-                            _selectedDuration = isSelected ? '' : duration;
-                          });
-                        },
-                      );
-                    }).toList(),
+                ),
+                SizedBox(height: 24.h),
+                ToggleRow(
+                  icon: Iconsax.ticket_discount,
+                  label: context.tr.wishlistFiltersDiscountCode,
+                  value: state.hasDiscountCode,
+                  onChanged: cubit.setHasDiscountCode,
+                ),
+                SizedBox(height: 24.h),
+                ToggleRow(
+                  icon: Iconsax.close_circle,
+                  label: context.tr.wishlistFiltersFreeCancellation,
+                  value: state.freeCancellation,
+                  onChanged: cubit.setFreeCancellation,
+                ),
+              ],
+            ),
+          ),
+          bottomNavigationBar: SafeArea(
+            top: false,
+            child: Container(
+              padding: EdgeInsetsDirectional.fromSTEB(16.w, 10.h, 16.w, 14.h),
+              decoration: BoxDecoration(
+                color: AppColors.cardBg,
+                border: Border(
+                  top: BorderSide(
+                    color: AppColors.border.withValues(alpha: 0.7),
                   ),
-                  const SizedBox(height: 24),
-
-                  // Trip Type
-                  Text(
-                    context.tr.filterTripType,
-                    style: AppTextStyles.subtitle(),
-                  ),
-                  const SizedBox(height: 12),
-                  Wrap(
-                    spacing: 10,
-                    runSpacing: 10,
-                    children: _tripTypes.map((type) {
-                      final isSelected = _selectedTripTypes.contains(type);
-                      return FilterChipOption(
-                        label: type,
-                        isSelected: isSelected,
-                        showCheckmark: true,
-                        onTap: () {
-                          setState(() {
-                            if (isSelected) {
-                              _selectedTripTypes.remove(type);
-                            } else {
-                              _selectedTripTypes.add(type);
-                            }
-                          });
-                        },
-                      );
-                    }).toList(),
-                  ),
-                  const SizedBox(height: 24),
-
-                  // Rating Filter
-                  Text(
-                    context.tr.filterRating,
-                    style: AppTextStyles.subtitle(),
-                  ),
-                  const SizedBox(height: 12),
-                  Wrap(
-                    spacing: 10,
-                    runSpacing: 10,
-                    children: [4, 3, 2, 1].map((rating) {
-                      final isSelected = _selectedRating == rating;
-                      return FilterChipOption(
-                        label: '$rating+',
-                        isSelected: isSelected,
-                        leading: Icon(
-                          Icons.star,
-                          size: 16,
-                          color: isSelected
-                              ? AppColors.onImage
-                              : AppColors.yellow,
+                ),
+              ),
+              child: Row(
+                children: [
+                  SizedBox(
+                    width: 89.w,
+                    height: 48.h,
+                    child: OutlinedButton(
+                      onPressed: () => Navigator.pop(context),
+                      style: OutlinedButton.styleFrom(
+                        foregroundColor: AppColors.darkText,
+                        side: BorderSide(color: AppColors.secondaryText),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(50.r),
                         ),
-                        onTap: () {
-                          setState(() {
-                            _selectedRating = isSelected ? 0 : rating;
-                          });
-                        },
-                      );
-                    }).toList(),
-                  ),
-                  const SizedBox(height: 24),
-
-                  // Departure City
-                  Text(
-                    context.tr.filterDepartureCity,
-                    style: AppTextStyles.subtitle(),
-                  ),
-                  const SizedBox(height: 8),
-                  Container(
-                    width: double.infinity,
-                    padding: const EdgeInsets.symmetric(horizontal: 16),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(12),
-                      border: Border.all(color: AppColors.border),
-                    ),
-                    child: DropdownButtonHideUnderline(
-                      child: DropdownButton<String>(
-                        value: _selectedCity.isEmpty ? null : _selectedCity,
-                        hint: Text(
-                          context.tr.filterSelectCity,
-                          style: Theme.of(context).textTheme.bodyMedium!
-                              .copyWith(
-                                fontSize: 14,
-                                fontWeight: FontWeight.w400,
-                                color: AppColors.greyText,
-                              ),
-                        ),
-                        isExpanded: true,
-                        icon: Icon(
-                          Iconsax.arrow_down_1,
-                          color: AppColors.greyText,
-                          size: 18,
-                        ),
-                        style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                          fontSize: 14,
-                          fontWeight: FontWeight.w500,
-                          color: AppColors.darkText,
-                        ),
-                        items: _cities
-                            .map(
-                              (city) => DropdownMenuItem(
-                                value: city,
-                                child: Text(city),
-                              ),
-                            )
-                            .toList(),
-                        onChanged: (value) {
-                          setState(() {
-                            _selectedCity = value ?? '';
-                          });
-                        },
+                      ),
+                      child: Icon(
+                        Icons.arrow_back_ios_new_rounded,
+                        size: 18.sp,
                       ),
                     ),
                   ),
-                  const SizedBox(height: 24),
+                  SizedBox(width: 8.w),
+                  Expanded(
+                    child: SizedBox(
+                      height: 48.h,
+                      child: FilledButton(
+                        onPressed: () {
+                          sl<AppNavigator>().push(
+                            screen: const SearchResultView(),
+                          );
+                        },
+                        style: FilledButton.styleFrom(
+                          backgroundColor: AppColors.primary,
+                          foregroundColor: AppColors.onImage,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(50.r),
+                          ),
+                        ),
+                        child: Text(
+                          context.tr.wishlistFiltersSeeResults,
+                          style: AppTextStyles.button(
+                            color: AppColors.onImage,
+                          ).copyWith(fontSize: 16.sp),
+                        ),
+                      ),
+                    ),
+                  ),
                 ],
               ),
             ),
           ),
-
-          // Apply Button
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
-            child: SizedBox(
-              width: double.infinity,
-              height: 56,
-              child: DecoratedBox(
-                decoration: BoxDecoration(
-                  gradient: AppColors.primaryGradient,
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                child: ElevatedButton(
-                  onPressed: () {
-                    // Apply filters and pop
-                    Navigator.pop(context);
-                  },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: AppColors.transparent,
-                    shadowColor: AppColors.transparent,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                  ),
-                  child: Text(
-                    context.tr.filterApply,
-                    style: AppTextStyles.button(),
-                  ),
-                ),
-              ),
-            ),
-          ),
-        ],
-      ),
+        );
+      },
     );
   }
 }

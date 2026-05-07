@@ -322,6 +322,7 @@
 
   "searchTripsFound": "{count} voyages trouvés",
   "searchQueryExample": "Sharm El Sheikh",
+  "searchResultTitle": "Résultats de recherche",
 
   "tripDetailsTitle": "Voyage à Dahab",
   "tripDetailsHeroCountryTag": "Indonésie",

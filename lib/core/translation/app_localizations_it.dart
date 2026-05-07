@@ -954,6 +954,9 @@ class AppLocalizationsIt extends AppLocalizations {
   String get searchQueryExample => 'Sharm El Sheikh';
 
   @override
+  String get searchResultTitle => 'Risultati di ricerca';
+
+  @override
   String get tripDetailsTitle => 'Viaggio a Dahab';
 
   @override

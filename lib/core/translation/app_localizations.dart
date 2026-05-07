@@ -1906,6 +1906,12 @@ abstract class AppLocalizations {
   /// **'Sharm El Sheikh'**
   String get searchQueryExample;
 
+  /// No description provided for @searchResultTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Search Result'**
+  String get searchResultTitle;
+
   /// No description provided for @tripDetailsTitle.
   ///
   /// In en, this message translates to:

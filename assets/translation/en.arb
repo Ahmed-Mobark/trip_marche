@@ -327,6 +327,7 @@
 
   "searchTripsFound": "{count} trips found",
   "searchQueryExample": "Sharm El Sheikh",
+  "searchResultTitle": "Search Result",
 
   "tripDetailsTitle": "Dahab Trip",
   "tripDetailsHeroCountryTag": "Indonesia",

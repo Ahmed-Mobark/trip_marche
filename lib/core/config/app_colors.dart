@@ -12,6 +12,11 @@ abstract class AppColors {
   // ---------------------------------------------------------------------------
   static const Color primary = Color(0xFF9B36D5);
   static const Color accent = purpleColor;
+  static const Color searchResultHeaderStart = Color(0xFF511C6F);
+  static const Color searchResultCardInk = Color(0xFF28282A);
+  static const Color searchResultMetaSlate = Color(0xFF556371);
+  static const Color searchResultRecommendedOrange = Color(0xFFF9830D);
+  static const Color searchResultBestPriceGreen = Color(0xFF10A94B);
 
   static const Color scaffoldColorLight = Color(0xFFF8F8F8);
   static const Color cardColorLight = Color(0xFFffffff);
