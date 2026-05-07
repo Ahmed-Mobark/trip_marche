@@ -957,6 +957,48 @@ class AppLocalizationsIt extends AppLocalizations {
   String get searchResultTitle => 'Risultati di ricerca';
 
   @override
+  String get searchResultSearchHint => 'Cerca un viaggio';
+
+  @override
+  String get searchResultSortBy => 'Ordina per';
+
+  @override
+  String get searchResultFilters => 'Filtri';
+
+  @override
+  String get searchResultRating => '4.9';
+
+  @override
+  String get searchResultReviews => '(112)';
+
+  @override
+  String get searchResultFromCity => 'Da Il Cairo';
+
+  @override
+  String get searchResultDateFrom => '27 Nov';
+
+  @override
+  String get searchResultDateTo => '4 Dic';
+
+  @override
+  String get searchResultLabelNew => 'Nuovo su TripMarche';
+
+  @override
+  String get searchResultLabelRecommended => 'Consigliato';
+
+  @override
+  String get searchResultLabelBestPrice => 'Miglior prezzo';
+
+  @override
+  String get searchResultOldPrice => '\$1000';
+
+  @override
+  String get searchResultDiscountPrice => '\$699';
+
+  @override
+  String get searchResultPerPerson => '/Persona';
+
+  @override
   String get tripDetailsTitle => 'Viaggio a Dahab';
 
   @override

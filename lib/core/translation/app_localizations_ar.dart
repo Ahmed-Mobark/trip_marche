@@ -949,6 +949,48 @@ class AppLocalizationsAr extends AppLocalizations {
   String get searchResultTitle => 'نتائج البحث';
 
   @override
+  String get searchResultSearchHint => 'ابحث عن رحلة';
+
+  @override
+  String get searchResultSortBy => 'الترتيب حسب';
+
+  @override
+  String get searchResultFilters => 'الفلاتر';
+
+  @override
+  String get searchResultRating => '4.9';
+
+  @override
+  String get searchResultReviews => '(112)';
+
+  @override
+  String get searchResultFromCity => 'من القاهرة';
+
+  @override
+  String get searchResultDateFrom => '27 نوفمبر';
+
+  @override
+  String get searchResultDateTo => '4 ديسمبر';
+
+  @override
+  String get searchResultLabelNew => 'جديد في TripMarche';
+
+  @override
+  String get searchResultLabelRecommended => 'موصى به';
+
+  @override
+  String get searchResultLabelBestPrice => 'أفضل سعر';
+
+  @override
+  String get searchResultOldPrice => '\$1000';
+
+  @override
+  String get searchResultDiscountPrice => '\$699';
+
+  @override
+  String get searchResultPerPerson => '/للفرد';
+
+  @override
   String get tripDetailsTitle => 'رحلة دهب';
 
   @override

@@ -955,6 +955,48 @@ class AppLocalizationsEn extends AppLocalizations {
   String get searchResultTitle => 'Search Result';
 
   @override
+  String get searchResultSearchHint => 'Search for a trip';
+
+  @override
+  String get searchResultSortBy => 'Sort By';
+
+  @override
+  String get searchResultFilters => 'Filters';
+
+  @override
+  String get searchResultRating => '4.9';
+
+  @override
+  String get searchResultReviews => '(112)';
+
+  @override
+  String get searchResultFromCity => 'From Cairo';
+
+  @override
+  String get searchResultDateFrom => '27 Nov';
+
+  @override
+  String get searchResultDateTo => '4 Dec';
+
+  @override
+  String get searchResultLabelNew => 'New in TripMarche';
+
+  @override
+  String get searchResultLabelRecommended => 'Recommended';
+
+  @override
+  String get searchResultLabelBestPrice => 'Best Price';
+
+  @override
+  String get searchResultOldPrice => '\$1000';
+
+  @override
+  String get searchResultDiscountPrice => '\$699';
+
+  @override
+  String get searchResultPerPerson => '/Person';
+
+  @override
   String get tripDetailsTitle => 'Dahab Trip';
 
   @override

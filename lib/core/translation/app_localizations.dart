@@ -1912,6 +1912,90 @@ abstract class AppLocalizations {
   /// **'Search Result'**
   String get searchResultTitle;
 
+  /// No description provided for @searchResultSearchHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Search for a trip'**
+  String get searchResultSearchHint;
+
+  /// No description provided for @searchResultSortBy.
+  ///
+  /// In en, this message translates to:
+  /// **'Sort By'**
+  String get searchResultSortBy;
+
+  /// No description provided for @searchResultFilters.
+  ///
+  /// In en, this message translates to:
+  /// **'Filters'**
+  String get searchResultFilters;
+
+  /// No description provided for @searchResultRating.
+  ///
+  /// In en, this message translates to:
+  /// **'4.9'**
+  String get searchResultRating;
+
+  /// No description provided for @searchResultReviews.
+  ///
+  /// In en, this message translates to:
+  /// **'(112)'**
+  String get searchResultReviews;
+
+  /// No description provided for @searchResultFromCity.
+  ///
+  /// In en, this message translates to:
+  /// **'From Cairo'**
+  String get searchResultFromCity;
+
+  /// No description provided for @searchResultDateFrom.
+  ///
+  /// In en, this message translates to:
+  /// **'27 Nov'**
+  String get searchResultDateFrom;
+
+  /// No description provided for @searchResultDateTo.
+  ///
+  /// In en, this message translates to:
+  /// **'4 Dec'**
+  String get searchResultDateTo;
+
+  /// No description provided for @searchResultLabelNew.
+  ///
+  /// In en, this message translates to:
+  /// **'New in TripMarche'**
+  String get searchResultLabelNew;
+
+  /// No description provided for @searchResultLabelRecommended.
+  ///
+  /// In en, this message translates to:
+  /// **'Recommended'**
+  String get searchResultLabelRecommended;
+
+  /// No description provided for @searchResultLabelBestPrice.
+  ///
+  /// In en, this message translates to:
+  /// **'Best Price'**
+  String get searchResultLabelBestPrice;
+
+  /// No description provided for @searchResultOldPrice.
+  ///
+  /// In en, this message translates to:
+  /// **'\$1000'**
+  String get searchResultOldPrice;
+
+  /// No description provided for @searchResultDiscountPrice.
+  ///
+  /// In en, this message translates to:
+  /// **'\$699'**
+  String get searchResultDiscountPrice;
+
+  /// No description provided for @searchResultPerPerson.
+  ///
+  /// In en, this message translates to:
+  /// **'/Person'**
+  String get searchResultPerPerson;
+
   /// No description provided for @tripDetailsTitle.
   ///
   /// In en, this message translates to:
