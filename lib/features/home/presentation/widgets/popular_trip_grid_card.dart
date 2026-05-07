@@ -92,7 +92,9 @@ class PopularTripGridCard extends StatelessWidget {
                                   ? Iconsax.heart5
                                   : Iconsax.heart,
                               size: 18.sp,
-                              color: AppColors.onImage,
+                              color: trip.isWishlisted
+                                  ? AppColors.error
+                                  : AppColors.onImage,
                             ),
                           ),
                         ),
