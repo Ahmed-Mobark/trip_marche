@@ -11,14 +11,11 @@ import 'package:trip_marche/core/widgets/app_cached_network_image.dart';
 import 'package:trip_marche/features/trip_details/presentation/trip_wishlist_pop_result.dart';
 import 'package:trip_marche/features/trip_details/presentation/view/trip_details_view.dart';
 import 'package:trip_marche/features/wishlist/domain/entities/wishlist_entities.dart';
+
 import '../cubit/wishlist_cubit.dart';
 
 class WishlistTripCard extends StatelessWidget {
-  const WishlistTripCard({
-    super.key,
-    required this.trip,
-    this.onFavoriteTap,
-  });
+  const WishlistTripCard({super.key, required this.trip, this.onFavoriteTap});
 
   final WishlistTripItem trip;
   final VoidCallback? onFavoriteTap;
@@ -31,7 +28,10 @@ class WishlistTripCard extends StatelessWidget {
       return (text: context.tr.wishlistRecommended, color: AppColors.warning);
     }
     if (trip.flags.sponsored) {
-      return (text: context.tr.wishlistNewInTripMarche, color: AppColors.primary);
+      return (
+        text: context.tr.wishlistNewInTripMarche,
+        color: AppColors.primary,
+      );
     }
     if (trip.flags.special) {
       return (text: context.tr.wishlistBestPrice, color: AppColors.success);
@@ -120,11 +120,15 @@ class WishlistTripCard extends StatelessWidget {
                       Expanded(
                         child: Text(
                           trip.title,
-                          maxLines: 1,
+                          maxLines: 2,
                           overflow: TextOverflow.ellipsis,
-                          style: AppTextStyles.bodySmall(
-                            color: AppColors.darkText,
-                          ).copyWith(fontWeight: FontWeight.w800, fontSize: 18.sp),
+                          style:
+                              AppTextStyles.bodySmall(
+                                color: AppColors.darkText,
+                              ).copyWith(
+                                fontWeight: FontWeight.w700,
+                                fontSize: 16.sp,
+                              ),
                         ),
                       ),
                       InkWell(
@@ -239,9 +243,13 @@ class WishlistTripCard extends StatelessWidget {
                       if (trip.discountPrice != null) ...[
                         Text(
                           trip.discountPrice!.toStringAsFixed(0),
-                          style: AppTextStyles.heading3(
-                            color: AppColors.darkText,
-                          ).copyWith(fontWeight: FontWeight.w900, fontSize: 18.sp),
+                          style:
+                              AppTextStyles.heading3(
+                                color: AppColors.darkText,
+                              ).copyWith(
+                                fontWeight: FontWeight.w900,
+                                fontSize: 18.sp,
+                              ),
                           maxLines: 2,
                           overflow: TextOverflow.ellipsis,
                         ),
@@ -257,9 +265,13 @@ class WishlistTripCard extends StatelessWidget {
                       ] else
                         Text(
                           trip.price.toStringAsFixed(0),
-                          style: AppTextStyles.heading3(
-                            color: AppColors.darkText,
-                          ).copyWith(fontWeight: FontWeight.w900, fontSize: 18.sp),
+                          style:
+                              AppTextStyles.heading3(
+                                color: AppColors.darkText,
+                              ).copyWith(
+                                fontWeight: FontWeight.w900,
+                                fontSize: 18.sp,
+                              ),
                           maxLines: 2,
                           overflow: TextOverflow.ellipsis,
                         ),

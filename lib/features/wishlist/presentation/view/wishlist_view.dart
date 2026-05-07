@@ -10,7 +10,6 @@ import 'package:trip_marche/core/widgets/custom_loading.dart';
 import 'package:trip_marche/core/toast/app_toast.dart';
 import 'package:trip_marche/features/wishlist/presentation/cubit/wishlist_cubit.dart';
 import 'package:trip_marche/features/wishlist/presentation/cubit/wishlist_state.dart';
-import 'package:trip_marche/features/wishlist/presentation/view/wishlist_filter_view.dart';
 import '../widgets/wishlist_trip_card.dart';
 
 class WishlistView extends StatefulWidget {
@@ -199,34 +198,7 @@ class _WishlistViewState extends State<WishlistView> {
                                           ),
                                         ),
                                         SizedBox(height: 14.h),
-                                        Row(
-                                          children: [
-                                            Expanded(
-                                              child: _TopActionPill(
-                                                icon: Iconsax.arrow_down_1,
-                                                text: context.tr.wishlistSortBy,
-                                                onTap: () {},
-                                              ),
-                                            ),
-                                            SizedBox(width: 10.w),
-                                            Expanded(
-                                              child: _TopActionPill(
-                                                icon: Iconsax.filter,
-                                                text: context.tr.wishlistFilters,
-                                                onTap: () async {
-                                                  await Navigator.push(
-                                                    context,
-                                                    MaterialPageRoute<void>(
-                                                      builder: (_) =>
-                                                          const WishlistFilterView(),
-                                                    ),
-                                                  );
-                                                },
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                        SizedBox(height: 12.h),
+                                        SizedBox(height: 4.h),
                                       ],
                                     ),
                                   ),
@@ -363,50 +335,6 @@ class _ErrorBody extends StatelessWidget {
               child: const Text('Retry'),
             ),
           ],
-        ),
-      ),
-    );
-  }
-}
-
-class _TopActionPill extends StatelessWidget {
-  const _TopActionPill({
-    required this.icon,
-    required this.text,
-    required this.onTap,
-  });
-
-  final IconData icon;
-  final String text;
-  final VoidCallback onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    return Material(
-      color: AppColors.transparent,
-      child: InkWell(
-        onTap: onTap,
-        borderRadius: BorderRadius.circular(999.r),
-        child: Container(
-          height: 44.h,
-          decoration: BoxDecoration(
-            color: AppColors.background,
-            borderRadius: BorderRadius.circular(999.r),
-            border: Border.all(color: AppColors.border),
-          ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Icon(icon, size: 16.sp, color: AppColors.bodyText),
-              SizedBox(width: 8.w),
-              Text(
-                text,
-                style: AppTextStyles.bodyMedium(
-                  color: AppColors.bodyText,
-                ).copyWith(fontWeight: FontWeight.w500),
-              ),
-            ],
-          ),
         ),
       ),
     );
