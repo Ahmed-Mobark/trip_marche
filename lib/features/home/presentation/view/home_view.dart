@@ -34,10 +34,20 @@ class HomeView extends StatefulWidget {
   const HomeView({super.key});
 
   @override
-  State<HomeView> createState() => _HomeViewState();
+  State<HomeView> createState() => HomeViewState();
 }
 
-class _HomeViewState extends State<HomeView> {
+class HomeViewState extends State<HomeView> {
+  BuildContext? _refreshContext;
+
+  Future<void> refreshFromNavBarTap() async {
+    final ctx = _refreshContext;
+    if (ctx == null) {
+      return;
+    }
+    await _refreshHome(ctx);
+  }
+
   Future<void> _onPopularTripHeartTap(
     BuildContext context,
     TripModel trip,
@@ -113,86 +123,86 @@ class _HomeViewState extends State<HomeView> {
       providers: [
         BlocProvider(create: (_) => sl<HomeSectionsCubit>()..loadSections()),
         BlocProvider(create: (_) => sl<HomeBannersCubit>()..loadBanners()),
-        BlocProvider(
-          create: (_) => sl<HomeCategoriesCubit>()..loadCategories(),
-        ),
+        BlocProvider(create: (_) => sl<HomeCategoriesCubit>()..loadCategories()),
         BlocProvider(create: (_) => sl<SpecialTripsCubit>()),
       ],
-      child: MultiBlocListener(
-        listeners: [
-          BlocListener<HomeSectionsCubit, HomeSectionsState>(
-            listenWhen: (p, n) =>
-                n.wishlistErrorMessage != null &&
-                n.wishlistErrorMessage != p.wishlistErrorMessage,
-            listener: (context, state) {
-              final msg = state.wishlistErrorMessage;
-              if (msg == null) {
-                return;
-              }
-              appToast(context: context, type: ToastType.error, message: msg);
-              context.read<HomeSectionsCubit>().clearWishlistError();
-            },
-          ),
-          BlocListener<SpecialTripsCubit, SpecialTripsState>(
-            listenWhen: (p, n) =>
-                n.wishlistErrorMessage != null &&
-                n.wishlistErrorMessage != p.wishlistErrorMessage,
-            listener: (context, state) {
-              final msg = state.wishlistErrorMessage;
-              if (msg == null) {
-                return;
-              }
-              appToast(context: context, type: ToastType.error, message: msg);
-              context.read<SpecialTripsCubit>().clearWishlistError();
-            },
-          ),
-        ],
-        child: Scaffold(
-          backgroundColor: AppColors.scaffoldBg,
-          body: Builder(
-            builder: (scrollContext) {
-              return RefreshIndicator(
-                color: AppColors.primary,
-                edgeOffset: MediaQuery.paddingOf(scrollContext).top + 8,
-                onRefresh: () => _refreshHome(scrollContext),
-                child: CustomScrollView(
-                  physics: const AlwaysScrollableScrollPhysics(
-                    parent: ClampingScrollPhysics(),
-                  ),
-                  slivers: [
-                    SliverToBoxAdapter(
-                      child: HomeHeader(
-                        searchHint: scrollContext.tr.homeSearchHint,
-                        locationText: scrollContext.tr.homeLocationText,
-                        onNotificationsTap: () {},
+      child: Builder(
+        builder: (innerContext) {
+          _refreshContext = innerContext;
+          return MultiBlocListener(
+            listeners: [
+              BlocListener<HomeSectionsCubit, HomeSectionsState>(
+                listenWhen: (p, n) =>
+                    n.wishlistErrorMessage != null &&
+                    n.wishlistErrorMessage != p.wishlistErrorMessage,
+                listener: (context, state) {
+                  final msg = state.wishlistErrorMessage;
+                  if (msg == null) {
+                    return;
+                  }
+                  appToast(context: context, type: ToastType.error, message: msg);
+                  context.read<HomeSectionsCubit>().clearWishlistError();
+                },
+              ),
+              BlocListener<SpecialTripsCubit, SpecialTripsState>(
+                listenWhen: (p, n) =>
+                    n.wishlistErrorMessage != null &&
+                    n.wishlistErrorMessage != p.wishlistErrorMessage,
+                listener: (context, state) {
+                  final msg = state.wishlistErrorMessage;
+                  if (msg == null) {
+                    return;
+                  }
+                  appToast(context: context, type: ToastType.error, message: msg);
+                  context.read<SpecialTripsCubit>().clearWishlistError();
+                },
+              ),
+            ],
+            child: Scaffold(
+              backgroundColor: AppColors.scaffoldBg,
+              body: Builder(
+                builder: (scrollContext) {
+                  return RefreshIndicator(
+                    color: AppColors.primary,
+                    edgeOffset: MediaQuery.paddingOf(scrollContext).top + 8,
+                    onRefresh: () => _refreshHome(scrollContext),
+                    child: CustomScrollView(
+                      physics: const AlwaysScrollableScrollPhysics(
+                        parent: ClampingScrollPhysics(),
                       ),
-                    ),
-                    SliverToBoxAdapter(
-                      child: Transform.translate(
-                        offset: Offset(0, -sheetOverlap),
-                        child: Container(
-                          width: double.infinity,
-                          padding: EdgeInsetsDirectional.only(
-                            start: horizontalPadding,
-                            end: horizontalPadding,
-                            top: 18.h,
-                            bottom: 24.h,
+                      slivers: [
+                        SliverToBoxAdapter(
+                          child: HomeHeader(
+                            searchHint: scrollContext.tr.homeSearchHint,
+                            locationText: scrollContext.tr.homeLocationText,
+                            onNotificationsTap: () {},
                           ),
-                          decoration: BoxDecoration(
-                            color: AppColors.scaffoldBg,
-                            borderRadius: BorderRadius.vertical(
-                              top: Radius.circular(sheetTopRadius),
-                            ),
-                            boxShadow: [
-                              BoxShadow(
-                                color: AppColors.shadow.withValues(alpha: 0.04),
-                                blurRadius: 18.r,
-                                offset: Offset(0, 10.h),
+                        ),
+                        SliverToBoxAdapter(
+                          child: Transform.translate(
+                            offset: Offset(0, -sheetOverlap),
+                            child: Container(
+                              width: double.infinity,
+                              padding: EdgeInsetsDirectional.only(
+                                start: horizontalPadding,
+                                end: horizontalPadding,
+                                top: 18.h,
+                                bottom: 24.h,
                               ),
-                            ],
-                          ),
-                          child:
-                              BlocBuilder<HomeSectionsCubit, HomeSectionsState>(
+                              decoration: BoxDecoration(
+                                color: AppColors.scaffoldBg,
+                                borderRadius: BorderRadius.vertical(
+                                  top: Radius.circular(sheetTopRadius),
+                                ),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: AppColors.shadow.withValues(alpha: 0.04),
+                                    blurRadius: 18.r,
+                                    offset: Offset(0, 10.h),
+                                  ),
+                                ],
+                              ),
+                              child: BlocBuilder<HomeSectionsCubit, HomeSectionsState>(
                                 builder: (context, state) {
                                   if (state.status ==
                                           HomeSectionsStatus.loading ||
@@ -205,8 +215,7 @@ class _HomeViewState extends State<HomeView> {
                                       HomeSectionsStatus.failure) {
                                     return _buildError(
                                       context,
-                                      state.errorMessage ??
-                                          'Something went wrong',
+                                      state.errorMessage ?? 'Something went wrong',
                                     );
                                   }
 
@@ -218,16 +227,18 @@ class _HomeViewState extends State<HomeView> {
                                   );
                                 },
                               ),
+                            ),
+                          ),
                         ),
-                      ),
+                        SliverToBoxAdapter(child: SizedBox(height: sheetOverlap)),
+                      ],
                     ),
-                    SliverToBoxAdapter(child: SizedBox(height: sheetOverlap)),
-                  ],
-                ),
-              );
-            },
-          ),
-        ),
+                  );
+                },
+              ),
+            ),
+          );
+        },
       ),
     );
   }

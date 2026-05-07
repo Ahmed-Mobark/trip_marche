@@ -16,13 +16,17 @@ class WishlistView extends StatefulWidget {
   const WishlistView({super.key});
 
   @override
-  State<WishlistView> createState() => _WishlistViewState();
+  State<WishlistView> createState() => WishlistViewState();
 }
 
-class _WishlistViewState extends State<WishlistView> {
+class WishlistViewState extends State<WishlistView> {
   late final WishlistCubit _cubit;
   late final ScrollController _scroll;
   String _searchQuery = '';
+
+  Future<void> refreshFromNavBarTap() async {
+    await _cubit.refresh();
+  }
 
   @override
   void initState() {

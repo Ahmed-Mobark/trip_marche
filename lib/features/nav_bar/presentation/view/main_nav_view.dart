@@ -16,11 +16,14 @@ class MainNavView extends StatefulWidget {
 
 class _MainNavViewState extends State<MainNavView> {
   int _currentIndex = 0;
+  final GlobalKey<HomeViewState> _homeKey = GlobalKey<HomeViewState>();
+  final GlobalKey<WishlistViewState> _wishlistKey =
+      GlobalKey<WishlistViewState>();
 
-  final List<Widget> _pages = [
-    const HomeView(),
+  late final List<Widget> _pages = [
+    HomeView(key: _homeKey),
     const MyTripsView(),
-    const WishlistView(),
+    WishlistView(key: _wishlistKey),
     const ProfileView(),
   ];
 
@@ -49,10 +52,16 @@ class _MainNavViewState extends State<MainNavView> {
                 ),
                 child: BottomNavigationBar(
                   currentIndex: _currentIndex,
-                  onTap: (index) {
+                  onTap: (index) async {
                     setState(() {
                       _currentIndex = index;
                     });
+                    if (index == 0) {
+                      await _homeKey.currentState?.refreshFromNavBarTap();
+                    }
+                    if (index == 2) {
+                      await _wishlistKey.currentState?.refreshFromNavBarTap();
+                    }
                   },
                   type: BottomNavigationBarType.fixed,
                   backgroundColor: AppColors.cardBg,
