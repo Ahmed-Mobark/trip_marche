@@ -7,17 +7,17 @@ import 'package:trip_marche/core/config/styles/font_utils.dart';
 abstract final class MyTripsFigmaTokens {
   // --- Screen rhythm ---
   static double get padH => 16.w;
-  static double get headerPadTop => 8.h;
-  static double get headerPadBottom => 24.h;
-  static double get sheetTopRadius => 32.r;
+  static double get headerPadTop => 6.h;
+  static double get headerPadBottom => 20.h;
+  static double get sheetTopRadius => 20.r;
   static double get sheetOverlapUp => 16.h;
   static double get searchBlockTop => 16.h;
-  static double get tabRowTop => 12.h;
-  static double get tabGap => 12.w;
-  static double get tabHeight => 38.h;
+  static double get tabRowTop => 10.h;
+  static double get tabGap => 10.w;
+  static double get tabHeight => 34.h;
   static double get listPadTop => 12.h;
   static double get listPadBottom => 20.h;
-  static double get cardSeparator => 16.h;
+  static double get cardSeparator => 12.h;
 
   // --- Header title ---
   static double get headerTitleSize => 24.sp;
@@ -111,55 +111,55 @@ abstract final class MyTripsFigmaTokens {
 
 /// Trip card on My Trips shell — scaled tokens (was `_Px`).
 abstract final class MyTripsTripCardTokens {
-  static double get cardRadius => 24.r;
+  static double get cardRadius => 16.r;
   static double get cardBorderWidth => 1.w;
-  static double get shadowBlur => 6.r;
+  static double get shadowBlur => 4.r;
   static double get shadowY => 1.h;
-  static const double shadowAlpha = 0.06;
+  static const double shadowAlpha = 0.04;
 
   /// Unitless fraction of card width for leading strip.
-  static const double imageStripWidthFactor = 0.365;
+  static const double imageStripWidthFactor = 0.42;
 
-  static double get imageStripMinW => 76.w;
-  static double get imageStripMaxW => 148.w;
+  static double get imageStripMinW => 110.w;
+  static double get imageStripMaxW => 132.w;
 
-  static double get contentPad => 16.w;
+  static double get contentPad => 10.w;
 
-  static double get badgeInset => 12.w;
-  static double get badgePadH => 8.w;
+  static double get badgeInset => 8.w;
+  static double get badgePadH => 7.w;
   static double get badgePadV => 3.h;
-  static double get badgeFont => 11.sp;
+  static double get badgeFont => 10.sp;
 
-  static double get titleFont => 18.sp;
+  static double get titleFont => 16.sp;
 
-  static double get metaFont => 14.sp;
+  static double get metaFont => 12.sp;
 
   static double get rowTight => 4.h;
-  static double get beforeActions => 12.h;
-  static double get belowTwinRow => 8.h;
+  static double get beforeActions => 8.h;
+  static double get belowTwinRow => 6.h;
 
-  static double get starSize => 16.sp;
+  static double get starSize => 14.sp;
   static double get starToText => 3.w;
-  static double get metaIcon => 16.sp;
+  static double get metaIcon => 14.sp;
   static double get metaIconGap => 4.w;
 
-  static double get favoriteSize => 30.w;
-  static double get favoriteIcon => 16.sp;
+  static double get favoriteSize => 34.w;
+  static double get favoriteIcon => 18.sp;
   static double get favoriteStartPad => 6.w;
   static double get favoriteShadowBlur => 4.r;
   static double get favoriteShadowY => 2.h;
   static const double favoriteShadowAlpha = 0.1;
 
-  static double get twinH => 36.h;
+  static double get twinH => 30.h;
   static double get twinRadius => 8.r;
-  static double get twinFont => 11.sp;
-  static double get twinGap => 8.w;
-  static double get twinPadH => 10.w;
+  static double get twinFont => 12.sp;
+  static double get twinGap => 6.w;
+  static double get twinPadH => 8.w;
 
-  static double get footerH => 40.h;
+  static double get footerH => 30.h;
   static double get footerRadius => 8.r;
   static double get footerFont => 12.sp;
-  static double get pdfSize => 16.sp;
+  static double get pdfSize => 14.sp;
   static double get pdfGap => 6.w;
   static double get footerPadH => 12.w;
 

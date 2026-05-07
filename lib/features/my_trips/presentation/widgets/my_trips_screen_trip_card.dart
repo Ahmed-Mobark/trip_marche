@@ -76,10 +76,6 @@ class MyTripsScreenTripCard extends StatelessWidget {
             borderRadius: BorderRadius.circular(
               MyTripsTripCardTokens.cardRadius,
             ),
-            border: Border.all(
-              color: AppColors.myTripsTripCardBorder,
-              width: MyTripsTripCardTokens.cardBorderWidth,
-            ),
             boxShadow: [
               BoxShadow(
                 color: AppColors.shadow.withValues(
@@ -96,8 +92,8 @@ class MyTripsScreenTripCard extends StatelessWidget {
             children: [
               PositionedDirectional(
                 start: 0,
-                top: 0,
-                bottom: 0,
+                top: 6.h,
+                bottom: 6.h,
                 width: imageW,
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(
@@ -181,21 +177,7 @@ class MyTripsScreenTripCard extends StatelessWidget {
                                 height: MyTripsTripCardTokens.favoriteSize,
                                 decoration: BoxDecoration(
                                   shape: BoxShape.circle,
-                                  color: AppColors.white,
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: AppColors.shadow.withValues(
-                                        alpha: MyTripsTripCardTokens
-                                            .favoriteShadowAlpha,
-                                      ),
-                                      blurRadius: MyTripsTripCardTokens
-                                          .favoriteShadowBlur,
-                                      offset: Offset(
-                                        0,
-                                        MyTripsTripCardTokens.favoriteShadowY,
-                                      ),
-                                    ),
-                                  ],
+                                  color: AppColors.greyTextColorDarkOpacity50,
                                 ),
                                 alignment: Alignment.center,
                                 child: Icon(

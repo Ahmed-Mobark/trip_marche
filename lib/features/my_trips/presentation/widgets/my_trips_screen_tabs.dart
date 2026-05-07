@@ -21,6 +21,7 @@ class MyTripsScreenTabs extends StatelessWidget {
           padding: EdgeInsetsDirectional.only(
             start: MyTripsFigmaTokens.padH,
             end: MyTripsFigmaTokens.padH,
+            bottom: MyTripsFigmaTokens.tabRowTop,
             top: MyTripsFigmaTokens.tabRowTop,
           ),
           child: Row(
@@ -73,7 +74,9 @@ class _TabPill extends StatelessWidget {
       color: AppColors.transparent,
       child: InkWell(
         onTap: onTap,
-        borderRadius: BorderRadius.circular(MyTripsFigmaTokens.searchRadiusPill),
+        borderRadius: BorderRadius.circular(
+          MyTripsFigmaTokens.searchRadiusPill,
+        ),
         child: Container(
           height: MyTripsFigmaTokens.tabHeight,
           alignment: Alignment.center,
@@ -81,7 +84,9 @@ class _TabPill extends StatelessWidget {
             color: selected
                 ? AppColors.myTripsPrimary
                 : AppColors.myTripsOutlineButtonFill,
-            borderRadius: BorderRadius.circular(MyTripsFigmaTokens.searchRadiusPill),
+            borderRadius: BorderRadius.circular(
+              MyTripsFigmaTokens.searchRadiusPill,
+            ),
             border: Border.all(
               color: selected
                   ? AppColors.myTripsPrimary

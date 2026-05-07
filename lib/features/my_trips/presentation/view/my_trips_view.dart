@@ -65,9 +65,13 @@ class _MyTripsViewBody extends StatelessWidget {
                         alignment: AlignmentDirectional.centerStart,
                         child: Text(
                           context.tr.myTripsTitle,
-                          style: AppTextStyles.heading3(
-                            color: AppColors.onImage,
-                          ),
+                          style:
+                              AppTextStyles.heading2(
+                                color: AppColors.onImage,
+                              ).copyWith(
+                                fontSize: 20.sp,
+                                fontWeight: FontWeight.w600,
+                              ),
                         ),
                       ),
                     ),
@@ -82,32 +86,29 @@ class _MyTripsViewBody extends StatelessWidget {
                           ),
                         ),
                       ),
-                      child: CustomScrollView(
-                        physics: const AlwaysScrollableScrollPhysics(
-                          parent: ClampingScrollPhysics(),
-                        ),
-                        slivers: [
-                          SliverToBoxAdapter(
-                            child: Padding(
-                              padding: EdgeInsetsDirectional.only(
-                                start: MyTripsFigmaTokens.padH,
-                                end: MyTripsFigmaTokens.padH,
-                                top: MyTripsFigmaTokens.searchBlockTop,
-                              ),
-                              child: _SearchField(
-                                onChanged: cubit.setSearchQuery,
-                              ),
-                            ),
-                          ),
-                          const SliverToBoxAdapter(child: MyTripsScreenTabs()),
-                          SliverPadding(
+                      child: Column(
+                        children: [
+                          Padding(
                             padding: EdgeInsetsDirectional.only(
                               start: MyTripsFigmaTokens.padH,
                               end: MyTripsFigmaTokens.padH,
-                              top: MyTripsFigmaTokens.listPadTop,
-                              bottom: MyTripsFigmaTokens.listPadBottom,
+                              top: MyTripsFigmaTokens.searchBlockTop,
                             ),
-                            sliver: SliverList.separated(
+                            child: _SearchField(
+                              onChanged: cubit.setSearchQuery,
+                            ),
+                          ),
+                          const MyTripsScreenTabs(),
+
+                          Expanded(
+                            child: ListView.separated(
+                              physics: const BouncingScrollPhysics(),
+                              padding: EdgeInsetsDirectional.only(
+                                start: MyTripsFigmaTokens.padH,
+                                end: MyTripsFigmaTokens.padH,
+                                top: MyTripsFigmaTokens.listPadTop,
+                                bottom: MyTripsFigmaTokens.listPadBottom,
+                              ),
                               itemCount: trips.length,
                               separatorBuilder: (_, __) => SizedBox(
                                 height: MyTripsFigmaTokens.cardSeparator,

@@ -10,6 +10,7 @@ import 'package:trip_marche/core/widgets/custom_loading.dart';
 import 'package:trip_marche/core/toast/app_toast.dart';
 import 'package:trip_marche/features/wishlist/presentation/cubit/wishlist_cubit.dart';
 import 'package:trip_marche/features/wishlist/presentation/cubit/wishlist_state.dart';
+import 'package:trip_marche/features/wishlist/presentation/view/wishlist_filter_view.dart';
 import '../widgets/wishlist_trip_card.dart';
 
 class WishlistView extends StatefulWidget {
@@ -22,6 +23,7 @@ class WishlistView extends StatefulWidget {
 class _WishlistViewState extends State<WishlistView> {
   late final WishlistCubit _cubit;
   late final ScrollController _scroll;
+  String _searchQuery = '';
 
   @override
   void initState() {
@@ -51,8 +53,7 @@ class _WishlistViewState extends State<WishlistView> {
 
   @override
   Widget build(BuildContext context) {
-    final headerHeight = 120.h;
-    final sheetRadius = 32.r;
+    final sheetRadius = 20.r;
 
     return BlocProvider.value(
       value: _cubit,
@@ -71,132 +72,227 @@ class _WishlistViewState extends State<WishlistView> {
         child: Scaffold(
           backgroundColor: AppColors.primary,
           body: Stack(
+            fit: StackFit.expand,
             children: [
-              Positioned.fill(
-                child: Container(
-                  decoration: const BoxDecoration(
-                    gradient: AppColors.primaryGradient,
-                  ),
-                ),
+              const DecoratedBox(
+                decoration: BoxDecoration(gradient: AppColors.primaryGradient),
               ),
-              PositionedDirectional(
-                top: 0,
-                start: 0,
-                end: 0,
-                child: SafeArea(
-                  bottom: false,
-                  child: Padding(
-                    padding: EdgeInsetsDirectional.only(
-                      start: 16.w,
-                      end: 16.w,
-                      top: 12.h,
-                    ),
-                    child: Text(
-                      context.tr.wishlistTitle,
-                      style: AppTextStyles.heading3(color: AppColors.onImage),
-                    ),
-                  ),
-                ),
-              ),
-              Positioned.fill(
-                top: headerHeight,
-                child: Container(
-                  width: double.infinity,
-                  decoration: BoxDecoration(
-                    color: AppColors.cardBg,
-                    borderRadius: BorderRadius.vertical(
-                      top: Radius.circular(sheetRadius),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  SafeArea(
+                    bottom: false,
+                    child: Padding(
+                      padding: EdgeInsetsDirectional.only(
+                        start: 16.w,
+                        end: 16.w,
+                        top: 6.h,
+                        bottom: 20.h,
+                      ),
+                      child: Text(
+                        context.tr.wishlistTitle,
+                        style: AppTextStyles.heading2(
+                          color: AppColors.onImage,
+                        ).copyWith(fontSize: 20.sp, fontWeight: FontWeight.w600),
+                      ),
                     ),
                   ),
-                  child: BlocBuilder<WishlistCubit, WishlistState>(
-                    builder: (context, state) {
-                      if (state.status == WishlistPageStatus.loading &&
-                          state.trips.isEmpty) {
-                        return SizedBox(
-                          height: 280.h,
-                          child: CustomLoading(
-                            top: 48.h,
-                            size: 36,
-                            strokeWidth: 2.5,
-                          ),
-                        );
-                      }
+                  Expanded(
+                    child: Container(
+                      width: double.infinity,
+                      decoration: BoxDecoration(
+                        color: AppColors.cardBg,
+                        borderRadius: BorderRadius.vertical(
+                          top: Radius.circular(sheetRadius),
+                        ),
+                      ),
+                      child: BlocBuilder<WishlistCubit, WishlistState>(
+                        builder: (context, state) {
+                          if (state.status == WishlistPageStatus.loading &&
+                              state.trips.isEmpty) {
+                            return SizedBox(
+                              height: 280.h,
+                              child: CustomLoading(
+                                top: 48.h,
+                                size: 36,
+                                strokeWidth: 2.5,
+                              ),
+                            );
+                          }
 
-                      if (state.status == WishlistPageStatus.failure &&
-                          state.trips.isEmpty) {
-                        return _ErrorBody(
-                          message: state.errorMessage ?? 'Unknown error',
-                          onRetry: () =>
-                              context.read<WishlistCubit>().loadInitial(),
-                        );
-                      }
+                          if (state.status == WishlistPageStatus.failure &&
+                              state.trips.isEmpty) {
+                            return _ErrorBody(
+                              message: state.errorMessage ?? 'Unknown error',
+                              onRetry: () =>
+                                  context.read<WishlistCubit>().loadInitial(),
+                            );
+                          }
 
-                      if (state.trips.isEmpty) {
-                        return Padding(
-                          padding: EdgeInsetsDirectional.only(
-                            start: 16.w,
-                            end: 16.w,
-                            top: 16.h,
-                            bottom: 16.h,
-                          ),
-                          child: _buildEmptyState(context),
-                        );
-                      }
-
-                      return RefreshIndicator(
-                        color: AppColors.primary,
-                        onRefresh: () =>
-                            context.read<WishlistCubit>().refresh(),
-                        child: CustomScrollView(
-                          controller: _scroll,
-                          physics: const AlwaysScrollableScrollPhysics(
-                            parent: ClampingScrollPhysics(),
-                          ),
-                          slivers: [
-                            SliverPadding(
+                          if (state.trips.isEmpty) {
+                            return Padding(
                               padding: EdgeInsetsDirectional.only(
                                 start: 16.w,
                                 end: 16.w,
                                 top: 16.h,
+                                bottom: 16.h,
                               ),
-                              sliver: SliverList.separated(
-                                itemCount:
-                                    state.trips.length +
-                                    (state.hasMore &&
-                                            state.status ==
-                                                WishlistPageStatus.loadingMore
-                                        ? 1
-                                        : 0),
-                                separatorBuilder: (_, __) =>
-                                    SizedBox(height: 14.h),
-                                itemBuilder: (context, index) {
-                                  if (index >= state.trips.length) {
-                                    return Padding(
-                                      padding: EdgeInsets.symmetric(
-                                        vertical: 16.h,
-                                      ),
-                                      child: CustomLoading(
-                                        size: 24,
-                                        strokeWidth: 2,
-                                      ),
-                                    );
-                                  }
-                                  final trip = state.trips[index];
-                                  return WishlistTripCard(
-                                    trip: trip,
-                                    onFavoriteTap: () => context
-                                        .read<WishlistCubit>()
-                                        .toggleTripWishlist(trip.id),
-                                  );
-                                },
+                              child: _buildEmptyState(context),
+                            );
+                          }
+
+                          return RefreshIndicator(
+                            color: AppColors.primary,
+                            onRefresh: () => context.read<WishlistCubit>().refresh(),
+                            child: CustomScrollView(
+                              controller: _scroll,
+                              physics: const AlwaysScrollableScrollPhysics(
+                                parent: ClampingScrollPhysics(),
                               ),
+                              slivers: [
+                                SliverPadding(
+                                  padding: EdgeInsetsDirectional.only(
+                                    start: 16.w,
+                                    end: 16.w,
+                                    top: 16.h,
+                                  ),
+                                  sliver: SliverToBoxAdapter(
+                                    child: Column(
+                                      children: [
+                                        TextField(
+                                          onChanged: (value) => setState(
+                                            () => _searchQuery = value.trim(),
+                                          ),
+                                          decoration: InputDecoration(
+                                            hintText: context.tr.wishlistSearchHint,
+                                            prefixIcon: Icon(
+                                              Iconsax.search_normal_1,
+                                              size: 20.sp,
+                                              color: AppColors.greyText,
+                                            ),
+                                            filled: true,
+                                            fillColor: AppColors.background,
+                                            border: OutlineInputBorder(
+                                              borderRadius: BorderRadius.circular(
+                                                999.r,
+                                              ),
+                                              borderSide: BorderSide(
+                                                color: AppColors.border,
+                                              ),
+                                            ),
+                                            enabledBorder: OutlineInputBorder(
+                                              borderRadius: BorderRadius.circular(
+                                                999.r,
+                                              ),
+                                              borderSide: BorderSide(
+                                                color: AppColors.border,
+                                              ),
+                                            ),
+                                            focusedBorder: OutlineInputBorder(
+                                              borderRadius: BorderRadius.circular(
+                                                999.r,
+                                              ),
+                                              borderSide: BorderSide(
+                                                color: AppColors.border,
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                        SizedBox(height: 14.h),
+                                        Row(
+                                          children: [
+                                            Expanded(
+                                              child: _TopActionPill(
+                                                icon: Iconsax.arrow_down_1,
+                                                text: context.tr.wishlistSortBy,
+                                                onTap: () {},
+                                              ),
+                                            ),
+                                            SizedBox(width: 10.w),
+                                            Expanded(
+                                              child: _TopActionPill(
+                                                icon: Iconsax.filter,
+                                                text: context.tr.wishlistFilters,
+                                                onTap: () async {
+                                                  await Navigator.push(
+                                                    context,
+                                                    MaterialPageRoute<void>(
+                                                      builder: (_) =>
+                                                          const WishlistFilterView(),
+                                                    ),
+                                                  );
+                                                },
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                        SizedBox(height: 12.h),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                                SliverPadding(
+                                  padding: EdgeInsetsDirectional.only(
+                                    start: 16.w,
+                                    end: 16.w,
+                                  ),
+                                  sliver: SliverList.separated(
+                                    itemCount:
+                                        state.trips
+                                            .where(
+                                              (t) =>
+                                                  _searchQuery.isEmpty ||
+                                                  t.title.toLowerCase().contains(
+                                                    _searchQuery.toLowerCase(),
+                                                  ),
+                                            )
+                                            .length +
+                                        (state.hasMore &&
+                                                state.status ==
+                                                    WishlistPageStatus.loadingMore
+                                            ? 1
+                                            : 0),
+                                    separatorBuilder: (_, __) =>
+                                        SizedBox(height: 14.h),
+                                    itemBuilder: (context, index) {
+                                      final filteredTrips = state.trips
+                                          .where(
+                                            (t) =>
+                                                _searchQuery.isEmpty ||
+                                                t.title.toLowerCase().contains(
+                                                  _searchQuery.toLowerCase(),
+                                                ),
+                                          )
+                                          .toList();
+                                      if (index >= filteredTrips.length) {
+                                        return Padding(
+                                          padding: EdgeInsets.symmetric(
+                                            vertical: 16.h,
+                                          ),
+                                          child: CustomLoading(
+                                            size: 24,
+                                            strokeWidth: 2,
+                                          ),
+                                        );
+                                      }
+                                      final trip = filteredTrips[index];
+                                      return WishlistTripCard(
+                                        trip: trip,
+                                        onFavoriteTap: () => context
+                                            .read<WishlistCubit>()
+                                            .toggleTripWishlist(trip.id),
+                                      );
+                                    },
+                                  ),
+                                ),
+                              ],
                             ),
-                          ],
-                        ),
-                      );
-                    },
+                          );
+                        },
+                      ),
+                    ),
                   ),
-                ),
+                ],
               ),
             ],
           ),
@@ -267,6 +363,50 @@ class _ErrorBody extends StatelessWidget {
               child: const Text('Retry'),
             ),
           ],
+        ),
+      ),
+    );
+  }
+}
+
+class _TopActionPill extends StatelessWidget {
+  const _TopActionPill({
+    required this.icon,
+    required this.text,
+    required this.onTap,
+  });
+
+  final IconData icon;
+  final String text;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    return Material(
+      color: AppColors.transparent,
+      child: InkWell(
+        onTap: onTap,
+        borderRadius: BorderRadius.circular(999.r),
+        child: Container(
+          height: 44.h,
+          decoration: BoxDecoration(
+            color: AppColors.background,
+            borderRadius: BorderRadius.circular(999.r),
+            border: Border.all(color: AppColors.border),
+          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(icon, size: 16.sp, color: AppColors.bodyText),
+              SizedBox(width: 8.w),
+              Text(
+                text,
+                style: AppTextStyles.bodyMedium(
+                  color: AppColors.bodyText,
+                ).copyWith(fontWeight: FontWeight.w500),
+              ),
+            ],
+          ),
         ),
       ),
     );

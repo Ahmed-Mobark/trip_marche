@@ -29,6 +29,12 @@ abstract class AppColors {
   static const Color cardColorDark = Color(0xFF1E1E1E);
   static const Color textColorDark = Color(0xFFFFFFFF);
   static const Color greyTextColorDark = Color(0xFFB3B3B3);
+  static const Color greyTextColorDarkOpacity50 = Color.fromARGB(
+    212,
+    251,
+    250,
+    247,
+  );
   static const Color hintColorDark = Color(0xFF8C8C8C);
   static const Color borderColorDark = Color(0xFF333333);
   static const Color disableColorDark = Color(0xFF556E73);

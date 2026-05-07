@@ -60,20 +60,20 @@ class WishlistTripCard extends StatelessWidget {
         );
       },
       child: Container(
-        padding: EdgeInsetsDirectional.all(12.w),
+        padding: EdgeInsetsDirectional.all(10.w),
         decoration: BoxDecoration(
           color: AppColors.cardBg,
-          borderRadius: BorderRadius.circular(18.r),
+          borderRadius: BorderRadius.circular(16.r),
         ),
         child: Row(
           children: [
             ClipRRect(
-              borderRadius: BorderRadius.circular(16.r),
+              borderRadius: BorderRadius.circular(14.r),
               child: Stack(
                 children: [
                   SizedBox(
-                    width: 150.w,
-                    height: 200.h,
+                    width: 135.w,
+                    height: 170.h,
                     child: AppCachedNetworkImage(
                       imageUrl: trip.coverImage,
                       fit: BoxFit.cover,
@@ -110,7 +110,7 @@ class WishlistTripCard extends StatelessWidget {
                 ],
               ),
             ),
-            SizedBox(width: 14.w),
+            SizedBox(width: 10.w),
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -124,17 +124,17 @@ class WishlistTripCard extends StatelessWidget {
                           overflow: TextOverflow.ellipsis,
                           style: AppTextStyles.bodySmall(
                             color: AppColors.darkText,
-                          ).copyWith(fontWeight: FontWeight.w800),
+                          ).copyWith(fontWeight: FontWeight.w800, fontSize: 18.sp),
                         ),
                       ),
                       InkWell(
                         onTap: onFavoriteTap,
                         borderRadius: BorderRadius.circular(999),
                         child: Container(
-                          width: 36.w,
-                          height: 36.w,
+                          width: 40.w,
+                          height: 40.w,
                           decoration: BoxDecoration(
-                            color: AppColors.inputBg,
+                            color: AppColors.background,
                             shape: BoxShape.circle,
                           ),
                           child: Icon(
@@ -171,7 +171,7 @@ class WishlistTripCard extends StatelessWidget {
                       ),
                     ],
                   ),
-                  SizedBox(height: 10.h),
+                  SizedBox(height: 8.h),
                   Row(
                     children: [
                       Icon(
@@ -192,7 +192,7 @@ class WishlistTripCard extends StatelessWidget {
                       ),
                     ],
                   ),
-                  SizedBox(height: 8.h),
+                  SizedBox(height: 6.h),
                   Row(
                     children: [
                       Icon(
@@ -214,15 +214,15 @@ class WishlistTripCard extends StatelessWidget {
                     ],
                   ),
                   if (flagBadge != null) ...[
-                    SizedBox(height: 10.h),
+                    SizedBox(height: 8.h),
                     Container(
                       padding: EdgeInsetsDirectional.symmetric(
-                        horizontal: 12.w,
+                        horizontal: 10.w,
                         vertical: 4.h,
                       ),
                       decoration: BoxDecoration(
                         color: flagBadge.color,
-                        borderRadius: BorderRadius.circular(8.r),
+                        borderRadius: BorderRadius.circular(7.r),
                       ),
                       child: Text(
                         flagBadge.text,
@@ -232,7 +232,7 @@ class WishlistTripCard extends StatelessWidget {
                       ),
                     ),
                   ],
-                  SizedBox(height: 12.h),
+                  SizedBox(height: 10.h),
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
@@ -241,7 +241,7 @@ class WishlistTripCard extends StatelessWidget {
                           trip.discountPrice!.toStringAsFixed(0),
                           style: AppTextStyles.heading3(
                             color: AppColors.darkText,
-                          ).copyWith(fontWeight: FontWeight.w900),
+                          ).copyWith(fontWeight: FontWeight.w900, fontSize: 18.sp),
                           maxLines: 2,
                           overflow: TextOverflow.ellipsis,
                         ),
@@ -259,7 +259,7 @@ class WishlistTripCard extends StatelessWidget {
                           trip.price.toStringAsFixed(0),
                           style: AppTextStyles.heading3(
                             color: AppColors.darkText,
-                          ).copyWith(fontWeight: FontWeight.w900),
+                          ).copyWith(fontWeight: FontWeight.w900, fontSize: 18.sp),
                           maxLines: 2,
                           overflow: TextOverflow.ellipsis,
                         ),
