@@ -308,6 +308,7 @@ class TripDetails extends Equatable {
     required this.returnPoint,
     required this.price,
     this.discountPrice,
+    this.currency = 'EGP',
     this.depositAmount,
     this.payOnArrivalAmount,
     required this.rating,
@@ -351,6 +352,7 @@ class TripDetails extends Equatable {
   final TripMeetingInfo returnPoint;
   final double price;
   final double? discountPrice;
+  final String currency;
   final double? depositAmount;
   final double? payOnArrivalAmount;
   final double rating;
@@ -423,6 +425,7 @@ class TripDetails extends Equatable {
         returnPoint,
         price,
         discountPrice,
+        currency,
         depositAmount,
         payOnArrivalAmount,
         rating,

@@ -5,6 +5,7 @@ import 'package:iconsax/iconsax.dart';
 import '../../../../core/extensions/localization.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_text_styles.dart';
+import '../../../../core/utils/price_formatter.dart';
 import '../../../../core/widgets/app_cached_network_image.dart';
 import '../../data/models/home_section_response.dart';
 
@@ -179,43 +180,45 @@ class SpecialTripWideCard extends StatelessWidget {
                     ],
                   ),
                   SizedBox(height: 12.h),
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.end,
+                  Wrap(
+                    spacing: 8.w,
+                    runSpacing: 4.h,
+                    crossAxisAlignment: WrapCrossAlignment.end,
                     children: [
                       if (trip.discountPrice != null) ...[
                         Text(
-                          trip.discountPrice!.toStringAsFixed(0),
+                          PriceFormatter.format(
+                            trip.discountPrice!,
+                            currency: trip.currency,
+                          ),
                           style: AppTextStyles.heading3(
                             color: AppColors.darkText,
-                          ).copyWith(fontWeight: FontWeight.w900),
-                          maxLines: 2,
-                          overflow: TextOverflow.ellipsis,
+                          ).copyWith(fontWeight: FontWeight.w800, fontSize: 20.sp),
                         ),
-                        SizedBox(width: 8.w),
                         Text(
-                          trip.price.toStringAsFixed(0),
-                          style: AppTextStyles.bodyMedium(
+                          PriceFormatter.format(
+                            trip.price,
+                            currency: trip.currency,
+                          ),
+                          style: AppTextStyles.bodySmall(
                             color: AppColors.greyText,
                           ).copyWith(decoration: TextDecoration.lineThrough),
-                          maxLines: 2,
-                          overflow: TextOverflow.ellipsis,
                         ),
                       ] else
                         Text(
-                          trip.price.toStringAsFixed(0),
+                          PriceFormatter.format(
+                            trip.price,
+                            currency: trip.currency,
+                          ),
                           style: AppTextStyles.heading3(
                             color: AppColors.darkText,
-                          ).copyWith(fontWeight: FontWeight.w900),
-                          maxLines: 2,
-                          overflow: TextOverflow.ellipsis,
+                          ).copyWith(fontWeight: FontWeight.w800, fontSize: 20.sp),
                         ),
                       Text(
-                        ' /${context.tr.homePerPerson}',
+                        '/${context.tr.homePerPerson}',
                         style: AppTextStyles.bodySmall(
                           color: AppColors.greyText,
                         ),
-                        maxLines: 2,
-                        overflow: TextOverflow.ellipsis,
                       ),
                     ],
                   ),

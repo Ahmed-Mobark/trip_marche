@@ -164,12 +164,14 @@ class _TripDetailsBody extends StatelessWidget {
 
               final displayPrice = TripDetailsUiFormatters.formatAmount(
                 trip.discountPrice ?? trip.price,
+                currency: trip.currency,
               );
               final payExtra =
                   trip.payOnArrivalAmount != null &&
                       trip.payOnArrivalAmount! > 0
                   ? TripDetailsUiFormatters.formatAmount(
                       trip.payOnArrivalAmount!,
+                      currency: trip.currency,
                     )
                   : null;
 

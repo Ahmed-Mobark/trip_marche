@@ -6,6 +6,7 @@ import 'package:trip_marche/core/extensions/localization.dart';
 import 'package:trip_marche/core/injection/injection_container.dart';
 import 'package:trip_marche/core/navigation/app_navigator.dart';
 import 'package:trip_marche/core/theme/app_colors.dart';
+import 'package:trip_marche/core/utils/price_formatter.dart';
 import 'package:trip_marche/core/widgets/app_cached_network_image.dart';
 import 'package:trip_marche/features/trip_details/presentation/trip_wishlist_pop_result.dart';
 import 'package:trip_marche/features/trip_details/presentation/view/trip_details_view.dart';
@@ -25,8 +26,8 @@ class MyTripCatalogCard extends StatelessWidget {
   final VoidCallback onFavoriteTap;
   final void Function(TripWishlistPopResult? result)? onReturnedFromTripDetails;
 
-  static String _usdInt(num value) =>
-      '\$${NumberFormat('#,###', 'en_US').format(value.round())}';
+  static String _priceWithCurrency(num value, String currency) =>
+      PriceFormatter.format(value, currency: currency);
 
   static String _dateArrowRange(BuildContext context, WishlistTripItem trip) {
     try {
@@ -211,7 +212,10 @@ class MyTripCatalogCard extends StatelessWidget {
                                   children: [
                                     if (hasDiscount) ...[
                                       Text(
-                                        _usdInt(originalPrice),
+                                        _priceWithCurrency(
+                                          originalPrice,
+                                          trip.currency,
+                                        ),
                                         style: TextStyle(
                                           fontSize: 13.sp,
                                           fontWeight: FontWeight.w400,
@@ -227,7 +231,10 @@ class MyTripCatalogCard extends StatelessWidget {
                                     ],
 
                                     Text(
-                                      _usdInt(currentPrice),
+                                      _priceWithCurrency(
+                                        currentPrice,
+                                        trip.currency,
+                                      ),
                                       style: TextStyle(
                                         fontSize: 19.sp,
                                         fontWeight: FontWeight.w800,

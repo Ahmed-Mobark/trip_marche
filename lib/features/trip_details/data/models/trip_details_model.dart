@@ -90,6 +90,7 @@ class TripDetailsModel {
           : const TripMeetingInfo(location: '', time: ''),
       price: _JsonParse.asDouble(json['price']),
       discountPrice: _JsonParse.asNullableDouble(json['discount_price']),
+      currency: _JsonParse.asCurrencyCode(json['currency']),
       depositAmount: _JsonParse.asNullableDouble(json['deposit_amount']),
       payOnArrivalAmount:
           _JsonParse.asNullableDouble(json['pay_on_arrival_amount']),
@@ -447,5 +448,10 @@ abstract final class _JsonParse {
     }
     final s = v.toString().trim();
     return s.isEmpty ? null : s;
+  }
+
+  static String asCurrencyCode(dynamic v, [String fallback = 'EGP']) {
+    final parsed = asNullableString(v);
+    return parsed ?? fallback;
   }
 }

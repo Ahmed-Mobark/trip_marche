@@ -79,6 +79,7 @@ class WishlistTripItemModel {
     required this.endDate,
     required this.price,
     this.discountPrice,
+    this.currency = 'EGP',
     required this.rating,
     required this.reviewsCount,
     this.badge,
@@ -95,6 +96,7 @@ class WishlistTripItemModel {
   final String endDate;
   final double price;
   final double? discountPrice;
+  final String currency;
   final double rating;
   final int reviewsCount;
   final String? badge;
@@ -112,6 +114,9 @@ class WishlistTripItemModel {
       endDate: json['end_date'] as String? ?? '',
       price: (json['price'] as num?)?.toDouble() ?? 0.0,
       discountPrice: (json['discount_price'] as num?)?.toDouble(),
+      currency: (json['currency'] as String?)?.trim().isNotEmpty == true
+          ? (json['currency'] as String).trim()
+          : 'EGP',
       rating: (json['rating'] as num?)?.toDouble() ?? 0.0,
       reviewsCount: json['reviews_count'] as int? ?? 0,
       badge: json['badge'] as String?,
@@ -132,6 +137,7 @@ class WishlistTripItemModel {
         endDate: endDate,
         price: price,
         discountPrice: discountPrice,
+        currency: currency,
         rating: rating,
         reviewsCount: reviewsCount,
         badge: badge,

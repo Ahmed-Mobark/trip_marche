@@ -54,6 +54,7 @@ class WishlistTripItem extends Equatable {
     required this.endDate,
     required this.price,
     this.discountPrice,
+    this.currency = 'EGP',
     required this.rating,
     required this.reviewsCount,
     this.badge,
@@ -70,6 +71,7 @@ class WishlistTripItem extends Equatable {
   final String endDate;
   final double price;
   final double? discountPrice;
+  final String currency;
   final double rating;
   final int reviewsCount;
   final String? badge;
@@ -88,6 +90,7 @@ class WishlistTripItem extends Equatable {
     String? endDate,
     double? price,
     double? discountPrice,
+    String? currency,
     double? rating,
     int? reviewsCount,
     String? badge,
@@ -104,6 +107,7 @@ class WishlistTripItem extends Equatable {
       endDate: endDate ?? this.endDate,
       price: price ?? this.price,
       discountPrice: discountPrice ?? this.discountPrice,
+      currency: currency ?? this.currency,
       rating: rating ?? this.rating,
       reviewsCount: reviewsCount ?? this.reviewsCount,
       badge: badge ?? this.badge,
@@ -123,6 +127,7 @@ class WishlistTripItem extends Equatable {
         endDate,
         price,
         discountPrice,
+        currency,
         rating,
         reviewsCount,
         badge,

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:trip_marche/core/utils/price_formatter.dart';
 
 abstract final class TripDetailsUiFormatters {
   static String timeOfDay(BuildContext context, DateTime utc) {
@@ -12,8 +13,8 @@ abstract final class TripDetailsUiFormatters {
     return DateFormat.yMMMd(loc).format(utc.toLocal());
   }
 
-  static String formatAmount(num value) {
-    return NumberFormat('#,###', 'en').format(value.round());
+  static String formatAmount(num value, {String currency = 'EGP'}) {
+    return PriceFormatter.format(value, currency: currency);
   }
 
   static String transportTypeLabel(String type) {

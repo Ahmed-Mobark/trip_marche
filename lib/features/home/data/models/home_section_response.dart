@@ -91,6 +91,7 @@ class TripModel {
   final String endDate;
   final double price;
   final double? discountPrice;
+  final String currency;
   final double rating;
   final int reviewsCount;
   final String? badge;
@@ -107,6 +108,7 @@ class TripModel {
     required this.endDate,
     required this.price,
     this.discountPrice,
+    this.currency = 'EGP',
     required this.rating,
     required this.reviewsCount,
     this.badge,
@@ -126,6 +128,7 @@ class TripModel {
     String? endDate,
     double? price,
     double? discountPrice,
+    String? currency,
     double? rating,
     int? reviewsCount,
     String? badge,
@@ -142,6 +145,7 @@ class TripModel {
       endDate: endDate ?? this.endDate,
       price: price ?? this.price,
       discountPrice: discountPrice ?? this.discountPrice,
+      currency: currency ?? this.currency,
       rating: rating ?? this.rating,
       reviewsCount: reviewsCount ?? this.reviewsCount,
       badge: badge ?? this.badge,
@@ -161,6 +165,9 @@ class TripModel {
       endDate: json['end_date'] as String? ?? '',
       price: (json['price'] as num?)?.toDouble() ?? 0.0,
       discountPrice: (json['discount_price'] as num?)?.toDouble(),
+      currency: (json['currency'] as String?)?.trim().isNotEmpty == true
+          ? (json['currency'] as String).trim()
+          : 'EGP',
       rating: (json['rating'] as num?)?.toDouble() ?? 0.0,
       reviewsCount: json['reviews_count'] as int? ?? 0,
       badge: json['badge'] as String?,
