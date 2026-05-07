@@ -14,6 +14,7 @@ import 'package:trip_marche/core/widgets/app_cached_network_image.dart';
 import 'package:trip_marche/core/widgets/app_image_gallery_screen.dart';
 import 'package:trip_marche/features/trip_details/domain/entities/trip_details_entity.dart';
 import 'trip_details_info_card.dart';
+import 'trip_details_reviews_section.dart';
 
 // Accommodation card — Figma-fixed typography (no .sp on these styles).
 const Color _kAccommodationTitleValueLight = Color(0xFF000000);
@@ -179,19 +180,8 @@ class TripDetailsAccommodationSection extends StatelessWidget {
           ),
         ),
         SizedBox(height: 24.h),
-        if (trip.reviewsCount > 0) ...[
-          _SectionHeader(
-            title: context.tr.tripDetailsReviewsTitle,
-            actionText: context.tr.tripDetailsReviewsCount(trip.reviewsCount),
-            onAction: () {},
-          ),
-          SizedBox(height: 8.h),
-          Text(
-            '${trip.rating.toStringAsFixed(2)} · ${context.tr.tripDetailsReviewsCount(trip.reviewsCount)}',
-            style: AppTextStyles.body(color: AppColors.greyText),
-          ),
-          SizedBox(height: 24.h),
-        ],
+        TripDetailsReviewsSection(trip: trip),
+        SizedBox(height: 24.h),
         Text(
           context.tr.tripDetailsCompanySectionTitle,
           style: TextStyles.textViewBold14,
@@ -203,41 +193,6 @@ class TripDetailsAccommodationSection extends StatelessWidget {
           ratingCount: context.tr.tripDetailsReviewsCount(trip.reviewsCount),
           avatarUrl: trip.vendor.avatar,
           onFollow: () {},
-        ),
-      ],
-    );
-  }
-}
-
-class _SectionHeader extends StatelessWidget {
-  const _SectionHeader({
-    required this.title,
-    required this.actionText,
-    required this.onAction,
-  });
-
-  final String title;
-  final String actionText;
-  final VoidCallback onAction;
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Expanded(
-          child: Text(
-            title,
-            style: AppTextStyles.subtitle(color: AppColors.darkText),
-          ),
-        ),
-        TextButton(
-          onPressed: onAction,
-          child: Text(
-            actionText,
-            style: AppTextStyles.bodyMedium(
-              color: AppColors.primary,
-            ).copyWith(fontWeight: FontWeight.w600),
-          ),
         ),
       ],
     );

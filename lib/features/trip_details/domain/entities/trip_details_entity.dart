@@ -250,6 +250,44 @@ class TripActivityRate extends Equatable {
   List<Object?> get props => [key, label, value];
 }
 
+class TripReviewer extends Equatable {
+  const TripReviewer({
+    required this.name,
+    this.avatar,
+    required this.country,
+    required this.countryCode,
+  });
+
+  final String name;
+  final String? avatar;
+  final String country;
+  final String countryCode;
+
+  @override
+  List<Object?> get props => [name, avatar, country, countryCode];
+}
+
+class TripReview extends Equatable {
+  const TripReview({
+    required this.id,
+    required this.reviewer,
+    required this.rating,
+    required this.comment,
+    required this.images,
+    required this.createdAt,
+  });
+
+  final int id;
+  final TripReviewer reviewer;
+  final double rating;
+  final String comment;
+  final List<String> images;
+  final DateTime createdAt;
+
+  @override
+  List<Object?> get props => [id, reviewer, rating, comment, images, createdAt];
+}
+
 class TripDetails extends Equatable {
   const TripDetails({
     required this.id,
@@ -286,6 +324,7 @@ class TripDetails extends Equatable {
     required this.transports,
     required this.accommodations,
     required this.activityRates,
+    required this.reviews,
     this.visaDetails,
     this.tripInstructions,
     this.safetyProcedures,
@@ -328,6 +367,7 @@ class TripDetails extends Equatable {
   final List<TripTransportLeg> transports;
   final List<TripAccommodation> accommodations;
   final List<TripActivityRate> activityRates;
+  final List<TripReview> reviews;
   final String? visaDetails;
   final String? tripInstructions;
   final String? safetyProcedures;
@@ -399,6 +439,7 @@ class TripDetails extends Equatable {
         transports,
         accommodations,
         activityRates,
+        reviews,
         visaDetails,
         tripInstructions,
         safetyProcedures,

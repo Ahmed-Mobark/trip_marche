@@ -133,6 +133,7 @@ class TripDetailsModel {
       transports: _parseTransports(json['transports']),
       accommodations: _parseAccommodations(json['accommodations']),
       activityRates: _parseActivityRates(json['activity_rates']),
+      reviews: _parseReviews(json['reviews']),
       visaDetails: _normalizeMultiline(
         _JsonParse.asNullableString(json['visa_details']),
       ),
@@ -332,6 +333,34 @@ class TripDetailsModel {
           ),
         )
         .toList();
+  }
+
+  static List<TripReview> _parseReviews(dynamic raw) {
+    if (raw is! List) {
+      return [];
+    }
+    return raw.whereType<Map<String, dynamic>>().map((e) {
+      final reviewerRaw = e['reviewer'];
+      final reviewer = reviewerRaw is Map<String, dynamic>
+          ? TripReviewer(
+              name: _JsonParse.asString(reviewerRaw['name']),
+              avatar: _JsonParse.asNullableString(reviewerRaw['avatar']),
+              country: _JsonParse.asString(reviewerRaw['country']),
+              countryCode: _JsonParse.asString(reviewerRaw['country_code']),
+            )
+          : const TripReviewer(name: '', country: '', countryCode: '');
+
+      return TripReview(
+        id: _JsonParse.asInt(e['id']),
+        reviewer: reviewer,
+        rating: _JsonParse.asDouble(e['rating']),
+        comment: _JsonParse.asString(e['comment']),
+        images: _stringList(e['images']),
+        createdAt:
+            DateTime.tryParse(_JsonParse.asString(e['created_at'])) ??
+            DateTime.fromMillisecondsSinceEpoch(0, isUtc: true),
+      );
+    }).toList();
   }
 }
 
