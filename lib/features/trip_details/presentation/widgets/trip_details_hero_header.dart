@@ -28,7 +28,7 @@ class TripDetailsHeroHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final topPad = MediaQuery.paddingOf(context).top;
-    final heroHeight = 428.h;
+    final heroHeight = 404.h;
     final bottomRadius = 40.r;
     final thumbInner = 72.r;
     final framePad = 3.r;
@@ -189,11 +189,11 @@ class TripDetailsHeroHeader extends StatelessWidget {
                               AppTextStyles.heading1(
                                 color: AppColors.onImage,
                               ).copyWith(
-                                fontSize: 34.sp,
+                                fontSize: 20.sp,
                                 height: 1.08,
                                 letterSpacing: -0.35,
                               ),
-                          maxLines: 2,
+                          maxLines: 3,
                           overflow: TextOverflow.ellipsis,
                         ),
                         if (showCompany) ...[

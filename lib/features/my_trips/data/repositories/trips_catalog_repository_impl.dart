@@ -1,6 +1,7 @@
 import 'package:dartz/dartz.dart';
 import 'package:trip_marche/core/network/network_service/failures.dart';
 import 'package:trip_marche/core/network/network_service/repository_helper.dart';
+import 'package:trip_marche/features/my_trips/domain/entities/trips_catalog_filters.dart';
 import 'package:trip_marche/features/wishlist/domain/entities/wishlist_entities.dart';
 import '../datasources/trips_catalog_remote_data_source.dart';
 import '../../domain/repositories/trips_catalog_repository.dart';
@@ -16,15 +17,13 @@ class TripsCatalogRepositoryImpl
   Future<Either<Failure, WishlistTripsPage>> fetchTrips({
     required int page,
     int perPage = 10,
-    String? search,
-    int? destinationId,
+    TripsCatalogFilters? filters,
   }) {
     return handleEither(() async {
       final model = await _remote.fetchTrips(
         page: page,
         perPage: perPage,
-        search: search,
-        destinationId: destinationId,
+        filters: filters,
       );
       return model.toEntity();
     });

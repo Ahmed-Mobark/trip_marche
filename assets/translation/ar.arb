@@ -151,7 +151,7 @@
   "wishlistFiltersTripRating": "تقييم الرحلة",
   "wishlistFiltersDiscountCode": "الرحلة تطبق كود خصم",
   "wishlistFiltersFreeCancellation": "إلغاء مجاني",
-  "wishlistFiltersSeeResults": "عرض +500 نتيجة",
+  "filterSeeResults": "عرض النتائج",
 
   "settingsTitle": "الإعدادات",
   "settingsNotificationSetting": "إعدادات الإشعارات",

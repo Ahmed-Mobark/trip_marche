@@ -31,34 +31,62 @@ class FilterSection extends StatelessWidget {
 }
 
 class SelectField extends StatelessWidget {
-  const SelectField({required this.value, super.key});
+  const SelectField({
+    required this.value,
+    this.onTap,
+    this.isLoading = false,
+    super.key,
+  });
 
   final String value;
+  final VoidCallback? onTap;
+  final bool isLoading;
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 44.h,
-      padding: EdgeInsetsDirectional.symmetric(horizontal: 12.w),
-      decoration: BoxDecoration(
-        color: AppColors.cardBg,
+    return Material(
+      color: AppColors.transparent,
+      child: InkWell(
+        onTap: onTap,
         borderRadius: BorderRadius.circular(12.r),
-        border: Border.all(color: AppColors.border),
-      ),
-      child: Row(
-        children: [
-          Expanded(
-            child: Text(
-              value,
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-              style: AppTextStyles.bodyMedium(
-                color: AppColors.secondaryText,
-              ).copyWith(fontWeight: FontWeight.w400),
-            ),
+        child: Container(
+          height: 44.h,
+          padding: EdgeInsetsDirectional.symmetric(horizontal: 12.w),
+          decoration: BoxDecoration(
+            color: AppColors.cardBg,
+            borderRadius: BorderRadius.circular(12.r),
+            border: Border.all(color: AppColors.border),
           ),
-          Icon(Iconsax.arrow_down_1, size: 16.sp, color: AppColors.greyText),
-        ],
+          child: Row(
+            children: [
+              Expanded(
+                child: Text(
+                  value,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: AppTextStyles.bodyMedium(
+                    color: AppColors.secondaryText,
+                  ).copyWith(fontWeight: FontWeight.w400),
+                ),
+              ),
+              if (isLoading)
+                SizedBox(
+                  width: 16.w,
+                  height: 16.w,
+                  child: CircularProgressIndicator(
+                    strokeWidth: 2,
+                    color: AppColors.primary,
+                  ),
+                )
+              else
+                Icon(
+                  Iconsax.arrow_down_1,
+                  size: 16.sp,
+                  color: AppColors.greyText,
+                ),
+            ],
+          ),
+        ),
       ),
     );
   }

@@ -151,7 +151,7 @@
   "wishlistFiltersTripRating": "Valoración del viaje",
   "wishlistFiltersDiscountCode": "El viaje aplica código de descuento",
   "wishlistFiltersFreeCancellation": "Cancelación gratuita",
-  "wishlistFiltersSeeResults": "Ver +500 resultados",
+  "filterSeeResults": "Ver resultados",
 
   "settingsTitle": "Ajustes",
   "settingsNotificationSetting": "Ajustes de notificaciones",

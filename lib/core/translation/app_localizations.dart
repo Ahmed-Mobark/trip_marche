@@ -964,11 +964,11 @@ abstract class AppLocalizations {
   /// **'Free cancellation'**
   String get wishlistFiltersFreeCancellation;
 
-  /// No description provided for @wishlistFiltersSeeResults.
+  /// No description provided for @filterSeeResults.
   ///
   /// In en, this message translates to:
-  /// **'See +500 Results'**
-  String get wishlistFiltersSeeResults;
+  /// **'See Results'**
+  String get filterSeeResults;
 
   /// No description provided for @settingsTitle.
   ///

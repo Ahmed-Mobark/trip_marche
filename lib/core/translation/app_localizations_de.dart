@@ -455,7 +455,7 @@ class AppLocalizationsDe extends AppLocalizations {
   String get wishlistFiltersFreeCancellation => 'Kostenlose Stornierung';
 
   @override
-  String get wishlistFiltersSeeResults => 'See +500 Results';
+  String get filterSeeResults => 'Ergebnisse anzeigen';
 
   @override
   String get settingsTitle => 'Einstellungen';

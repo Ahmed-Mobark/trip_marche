@@ -452,7 +452,7 @@ class _WishlistFilterBody extends StatelessWidget {
             radius: 14.r,
             gradient: AppColors.primaryGradient,
             onTap: () => Navigator.pop(context),
-            text: context.tr.wishlistFiltersSeeResults,
+            text: '',
           ),
         ),
       ),

@@ -453,7 +453,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get wishlistFiltersFreeCancellation => 'Free cancellation';
 
   @override
-  String get wishlistFiltersSeeResults => 'See +500 Results';
+  String get filterSeeResults => 'See Results';
 
   @override
   String get settingsTitle => 'Settings';

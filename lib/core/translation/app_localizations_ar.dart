@@ -448,7 +448,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get wishlistFiltersFreeCancellation => 'إلغاء مجاني';
 
   @override
-  String get wishlistFiltersSeeResults => 'عرض +500 نتيجة';
+  String get filterSeeResults => 'عرض النتائج';
 
   @override
   String get settingsTitle => 'الإعدادات';

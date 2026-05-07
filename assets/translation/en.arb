@@ -151,7 +151,7 @@
   "wishlistFiltersTripRating": "Trip Rating",
   "wishlistFiltersDiscountCode": "Trip applies discount code",
   "wishlistFiltersFreeCancellation": "Free cancellation",
-  "wishlistFiltersSeeResults": "See +500 Results",
+  "filterSeeResults": "See Results",
 
   "settingsTitle": "Settings",
   "settingsNotificationSetting": "Notification Setting",

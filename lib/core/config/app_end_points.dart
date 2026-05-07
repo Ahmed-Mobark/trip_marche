@@ -14,9 +14,11 @@ class AppEndpoints {
   static const String homeBanners = "home/banners";
   static const String homeCategories = "home/categories";
   static const String homeSpecialTrips = "home/special-trips";
+  static const String destinations = "destinations";
 
   /// POST — paginated trips catalog (body: page, per_page, search?, destination_id?).
   static const String trips = 'trips';
+  static const String tripsFilters = 'trips/filters';
 
   /// POST — trip detail by id (body may be empty `{}`).
   static String tripById(int tripId) => 'trips/$tripId';
