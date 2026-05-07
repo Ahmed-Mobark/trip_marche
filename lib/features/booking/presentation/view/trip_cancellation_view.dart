@@ -10,17 +10,17 @@ class TripCancellationView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.background,
+      backgroundColor: AppColors.background(context),
       appBar: AppBar(
-        backgroundColor: AppColors.background,
+        backgroundColor: AppColors.background(context),
         elevation: 0,
         leading: IconButton(
-          icon: Icon(Icons.arrow_back_ios_new_rounded, color: AppColors.darkText),
+          icon: Icon(Icons.arrow_back_ios_new_rounded, color: AppColors.darkText(context)),
           onPressed: () => Navigator.pop(context),
         ),
         title: Text(
           'Cancellation Policy',
-          style: AppTextStyles.subtitle(color: AppColors.darkText),
+          style: AppTextStyles.subtitle(color: AppColors.darkText(context)),
         ),
         centerTitle: true,
       ),
@@ -79,7 +79,7 @@ class TripCancellationView extends StatelessWidget {
             const SizedBox(height: 24),
             Text(
               'Additional Information',
-              style: AppTextStyles.subtitle(color: AppColors.darkText),
+              style: AppTextStyles.subtitle(color: AppColors.darkText(context)),
             ),
             const SizedBox(height: 12),
             Text(
@@ -95,7 +95,7 @@ class TripCancellationView extends StatelessWidget {
             const SizedBox(height: 24),
             Text(
               'How to Cancel',
-              style: AppTextStyles.subtitle(color: AppColors.darkText),
+              style: AppTextStyles.subtitle(color: AppColors.darkText(context)),
             ),
             const SizedBox(height: 12),
             _buildStep('1', 'Go to "My Bookings" in the app'),

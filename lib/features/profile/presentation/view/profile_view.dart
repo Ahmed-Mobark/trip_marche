@@ -106,7 +106,7 @@ class ProfileView extends StatelessWidget {
             top: headerHeight,
             child: Container(
               decoration: BoxDecoration(
-                color: AppColors.scaffoldBg,
+                color: AppColors.scaffoldBg(context),
                 borderRadius: BorderRadius.vertical(
                   top: Radius.circular(sheetRadius),
                 ),
@@ -275,7 +275,7 @@ class _SectionCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: AppColors.cardBg,
+        color: AppColors.cardBg(context),
         borderRadius: BorderRadius.circular(18.r),
         boxShadow: [
           BoxShadow(
@@ -299,7 +299,7 @@ class _SectionCard extends StatelessWidget {
               child: Text(
                 title,
                 style: AppTextStyles.bodyMedium(
-                  color: AppColors.greyText,
+                  color: AppColors.greyText(context),
                 ).copyWith(fontWeight: FontWeight.w600),
               ),
             ),
@@ -316,7 +316,7 @@ class _CardDivider extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsetsDirectional.only(start: 18.w, end: 18.w),
-      child: Divider(height: 1.h, color: AppColors.border),
+      child: Divider(height: 1.h, color: AppColors.border(context)),
     );
   }
 }
@@ -334,8 +334,8 @@ class _LogoutButton extends StatelessWidget {
       child: OutlinedButton(
         onPressed: onTap,
         style: OutlinedButton.styleFrom(
-          backgroundColor: AppColors.cardBg,
-          side: BorderSide(color: AppColors.border),
+          backgroundColor: AppColors.cardBg(context),
+          side: BorderSide(color: AppColors.border(context)),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(14.r),
           ),

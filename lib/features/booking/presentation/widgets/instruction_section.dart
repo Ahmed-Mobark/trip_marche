@@ -20,9 +20,9 @@ class InstructionSection extends StatelessWidget {
       width: double.infinity,
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: AppColors.lightBg,
+        color: AppColors.lightBg(context),
         borderRadius: BorderRadius.circular(14),
-        border: Border.all(color: AppColors.border),
+        border: Border.all(color: AppColors.border(context)),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -33,7 +33,7 @@ class InstructionSection extends StatelessWidget {
               const SizedBox(width: 10),
               Text(
                 title,
-                style: AppTextStyles.subtitle(color: AppColors.darkText),
+                style: AppTextStyles.subtitle(color: AppColors.darkText(context)),
               ),
             ],
           ),

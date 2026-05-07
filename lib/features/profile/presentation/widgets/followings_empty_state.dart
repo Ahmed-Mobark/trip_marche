@@ -16,12 +16,12 @@ class FollowingsEmptyState extends StatelessWidget {
           Icon(
             Iconsax.building,
             size: 64,
-            color: AppColors.greyText.withValues(alpha: 0.4),
+            color: AppColors.greyText(context).withValues(alpha: 0.4),
           ),
           const SizedBox(height: 16),
           Text(
             context.tr.followingsEmptyTitle,
-            style: AppTextStyles.subtitle(color: AppColors.greyText),
+            style: AppTextStyles.subtitle(color: AppColors.greyText(context)),
           ),
           const SizedBox(height: 8),
           Text(
@@ -30,7 +30,7 @@ class FollowingsEmptyState extends StatelessWidget {
             style: Theme.of(context).textTheme.bodyMedium!.copyWith(
               fontSize: 14,
               fontWeight: FontWeight.w400,
-              color: AppColors.greyText,
+              color: AppColors.greyText(context),
             ),
           ),
         ],

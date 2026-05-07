@@ -21,20 +21,20 @@ class _NotificationSettingsViewState extends State<NotificationSettingsView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.background,
+      backgroundColor: AppColors.background(context),
       appBar: AppBar(
-        backgroundColor: AppColors.background,
+        backgroundColor: AppColors.background(context),
         elevation: 0,
         leading: IconButton(
           icon: Icon(
             Icons.arrow_back_ios_new_rounded,
-            color: AppColors.darkText,
+            color: AppColors.darkText(context),
           ),
           onPressed: () => Navigator.pop(context),
         ),
         title: Text(
           context.tr.notificationSettingsTitle,
-          style: AppTextStyles.subtitle(color: AppColors.darkText),
+          style: AppTextStyles.subtitle(color: AppColors.darkText(context)),
         ),
         centerTitle: true,
       ),
@@ -47,7 +47,7 @@ class _NotificationSettingsViewState extends State<NotificationSettingsView> {
               padding: EdgeInsetsDirectional.only(top: 6.h, bottom: 18.h),
               child: Text(
                 context.tr.notificationSettingsIntro,
-                style: AppTextStyles.bodySmall(color: AppColors.greyText),
+                style: AppTextStyles.bodySmall(color: AppColors.greyText(context)),
               ),
             ),
             _ToggleTile(
@@ -112,13 +112,13 @@ class _ToggleTile extends StatelessWidget {
                 Text(
                   title,
                   style: AppTextStyles.bodyMedium(
-                    color: AppColors.darkText,
+                    color: AppColors.darkText(context),
                   ).copyWith(fontWeight: FontWeight.w700),
                 ),
                 SizedBox(height: 8.h),
                 Text(
                   subtitle,
-                  style: AppTextStyles.bodySmall(color: AppColors.greyText),
+                  style: AppTextStyles.bodySmall(color: AppColors.greyText(context)),
                 ),
               ],
             ),
@@ -128,7 +128,7 @@ class _ToggleTile extends StatelessWidget {
             value: value,
             onChanged: onChanged,
             activeTrackColor: AppColors.primary,
-            inactiveTrackColor: AppColors.border,
+            inactiveTrackColor: AppColors.border(context),
             thumbColor: WidgetStateProperty.resolveWith<Color>(
               (_) => AppColors.onImage,
             ),
@@ -142,6 +142,6 @@ class _ToggleTile extends StatelessWidget {
 class _DividerLine extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Container(height: 1.h, color: AppColors.border);
+    return Container(height: 1.h, color: AppColors.border(context));
   }
 }

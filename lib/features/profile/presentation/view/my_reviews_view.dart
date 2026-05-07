@@ -19,20 +19,20 @@ class MyReviewsView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.background,
+      backgroundColor: AppColors.background(context),
       appBar: AppBar(
-        backgroundColor: AppColors.background,
+        backgroundColor: AppColors.background(context),
         elevation: 0,
         leading: IconButton(
           icon: Icon(
             Icons.arrow_back_ios_new_rounded,
-            color: AppColors.darkText,
+            color: AppColors.darkText(context),
           ),
           onPressed: () => Navigator.pop(context),
         ),
         title: Text(
           context.tr.profileMyReviews,
-          style: AppTextStyles.subtitle(color: AppColors.darkText),
+          style: AppTextStyles.subtitle(color: AppColors.darkText(context)),
         ),
         centerTitle: true,
       ),
@@ -122,7 +122,7 @@ class _HeroTripCard extends StatelessWidget {
         return Container(
           padding: EdgeInsetsDirectional.all(14.r),
           decoration: BoxDecoration(
-            color: AppColors.cardBg,
+            color: AppColors.cardBg(context),
             borderRadius: BorderRadius.circular(18.r),
           ),
           child: Row(
@@ -146,7 +146,7 @@ class _HeroTripCard extends StatelessWidget {
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                       style: AppTextStyles.bodyMedium(
-                        color: AppColors.darkText,
+                        color: AppColors.darkText(context),
                       ).copyWith(fontWeight: FontWeight.w800, fontSize: 16.sp),
                     ),
                     SizedBox(height: 6.h),
@@ -162,7 +162,7 @@ class _HeroTripCard extends StatelessWidget {
                         Text(
                           ratingValue,
                           style: AppTextStyles.bodySmall(
-                            color: AppColors.darkText,
+                            color: AppColors.darkText(context),
                           ).copyWith(fontWeight: FontWeight.w700),
                         ),
                         SizedBox(width: 2.w),
@@ -172,7 +172,7 @@ class _HeroTripCard extends StatelessWidget {
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                             style: AppTextStyles.bodySmall(
-                              color: AppColors.greyText,
+                              color: AppColors.greyText(context),
                             ),
                           ),
                         ),
@@ -261,9 +261,9 @@ class _ReviewTripCard extends StatelessWidget {
         return Container(
           padding: EdgeInsetsDirectional.all(14.r),
           decoration: BoxDecoration(
-            color: AppColors.cardBg,
+            color: AppColors.cardBg(context),
             borderRadius: BorderRadius.circular(18.r),
-            border: Border.all(color: AppColors.border),
+            border: Border.all(color: AppColors.border(context)),
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -290,7 +290,7 @@ class _ReviewTripCard extends StatelessWidget {
                           overflow: TextOverflow.ellipsis,
                           style:
                               AppTextStyles.bodyMedium(
-                                color: AppColors.darkText,
+                                color: AppColors.darkText(context),
                               ).copyWith(
                                 fontWeight: FontWeight.w800,
                                 fontSize: 16.sp,
@@ -312,7 +312,7 @@ class _ReviewTripCard extends StatelessWidget {
               Text(
                 reviewLabel,
                 style: AppTextStyles.bodySmall(
-                  color: AppColors.darkText,
+                  color: AppColors.darkText(context),
                 ).copyWith(fontWeight: FontWeight.w700),
               ),
               SizedBox(height: 10.h),
@@ -323,7 +323,7 @@ class _ReviewTripCard extends StatelessWidget {
                       productRatingLabel,
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
-                      style: AppTextStyles.caption(color: AppColors.greyText),
+                      style: AppTextStyles.caption(color: AppColors.greyText(context)),
                     ),
                   ),
                   Icon(Iconsax.star1, size: 14.sp, color: AppColors.starYellow),
@@ -331,7 +331,7 @@ class _ReviewTripCard extends StatelessWidget {
                   Text(
                     ratingValue,
                     style: AppTextStyles.bodySmall(
-                      color: AppColors.darkText,
+                      color: AppColors.darkText(context),
                     ).copyWith(fontWeight: FontWeight.w700),
                   ),
                   SizedBox(width: 2.w),
@@ -340,7 +340,7 @@ class _ReviewTripCard extends StatelessWidget {
                       '($ratingCount)',
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
-                      style: AppTextStyles.bodySmall(color: AppColors.greyText),
+                      style: AppTextStyles.bodySmall(color: AppColors.greyText(context)),
                     ),
                   ),
                 ],
@@ -348,7 +348,7 @@ class _ReviewTripCard extends StatelessWidget {
               SizedBox(height: 8.h),
               Text(
                 reviewBody,
-                style: AppTextStyles.bodySmall(color: AppColors.secondaryText),
+                style: AppTextStyles.bodySmall(color: AppColors.secondaryText(context)),
               ),
             ],
           ),
@@ -367,14 +367,14 @@ class _InfoLine extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        Icon(icon, size: 14.sp, color: AppColors.greyText),
+        Icon(icon, size: 14.sp, color: AppColors.greyText(context)),
         SizedBox(width: 8.w),
         Expanded(
           child: Text(
             text,
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
-            style: AppTextStyles.bodySmall(color: AppColors.greyText),
+            style: AppTextStyles.bodySmall(color: AppColors.greyText(context)),
           ),
         ),
       ],

@@ -24,9 +24,9 @@ class TripSummaryCard extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(14),
       decoration: BoxDecoration(
-        color: AppColors.lightBg,
+        color: AppColors.lightBg(context),
         borderRadius: BorderRadius.circular(14),
-        border: Border.all(color: AppColors.border),
+        border: Border.all(color: AppColors.border(context)),
       ),
       child: Row(
         children: [
@@ -42,8 +42,8 @@ class TripSummaryCard extends StatelessWidget {
                 : Container(
                     width: 70,
                     height: 70,
-                    color: AppColors.border,
-                    child: Icon(Iconsax.image, color: AppColors.greyText),
+                    color: AppColors.border(context),
+                    child: Icon(Iconsax.image, color: AppColors.greyText(context)),
                   ),
           ),
           const SizedBox(width: 12),
@@ -53,7 +53,7 @@ class TripSummaryCard extends StatelessWidget {
               children: [
                 Text(
                   title,
-                  style: AppTextStyles.bodyMedium(color: AppColors.darkText),
+                  style: AppTextStyles.bodyMedium(color: AppColors.darkText(context)),
                 ),
                 const SizedBox(height: 4),
                 Text(subtitle, style: AppTextStyles.bodySmall()),

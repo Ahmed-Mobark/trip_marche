@@ -13,8 +13,6 @@ class TripDetailsDestinationDetailsSection extends StatelessWidget {
 
   final TripDetails trip;
 
-  static final Color _cardBorder = AppColors.border.withValues(alpha: 0.35);
-
   List<_CarouselDestination> _carouselDestinations() {
     final out = <_CarouselDestination>[];
     final seen = <int>{};
@@ -32,6 +30,7 @@ class TripDetailsDestinationDetailsSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final cardBorder = AppColors.border(context).withValues(alpha: 0.35);
     final visa = trip.visaDetails?.trim();
     final carousel = _carouselDestinations();
 
@@ -44,7 +43,7 @@ class TripDetailsDestinationDetailsSection extends StatelessWidget {
         if (carousel.isNotEmpty) ...[
           Text(
             context.tr.tripDetailsDestinationsTitle,
-            style: AppTextStyles.heading3(color: AppColors.darkText).copyWith(
+            style: AppTextStyles.heading3(color: AppColors.darkText(context)).copyWith(
               height: 1.1,
               letterSpacing: 0,
             ),
@@ -75,13 +74,13 @@ class TripDetailsDestinationDetailsSection extends StatelessWidget {
             withShadow: false,
             borderRadius: 16.r,
             padding: EdgeInsetsDirectional.all(16.w),
-            borderColor: _cardBorder,
+            borderColor: cardBorder,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
                   context.tr.tripDetailsVisaAndEntryTitle,
-                  style: AppTextStyles.subtitle(color: AppColors.darkText)
+                  style: AppTextStyles.subtitle(color: AppColors.darkText(context))
                       .copyWith(
                     fontSize: 16.sp,
                     fontWeight: FontWeight.w700,
@@ -92,7 +91,7 @@ class TripDetailsDestinationDetailsSection extends StatelessWidget {
                 SelectableText(
                   visa,
                   style: AppTextStyles.caption(
-                    color: AppColors.tripDetailsSecondaryGrey,
+                    color: AppColors.tripDetailsSecondaryGrey(context),
                   ).copyWith(
                     fontSize: 13.sp,
                     fontWeight: FontWeight.w400,
@@ -194,10 +193,9 @@ class _DestinationPhotoCard extends StatelessWidget {
 class _DestinationDetailsGridCard extends StatelessWidget {
   const _DestinationDetailsGridCard();
 
-  static final Color _cardBorder = AppColors.border.withValues(alpha: 0.35);
-
   @override
   Widget build(BuildContext context) {
+    final cardBorder = AppColors.border(context).withValues(alpha: 0.35);
     final items = <_DestinationDetailsItemData>[
       _DestinationDetailsItemData(
         icon: Iconsax.global,
@@ -245,14 +243,14 @@ class _DestinationDetailsGridCard extends StatelessWidget {
       withShadow: true,
       borderRadius: 24.r,
       padding: EdgeInsetsDirectional.all(16.w),
-      borderColor: _cardBorder,
+      borderColor: cardBorder,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.min,
         children: [
           Text(
             context.tr.tripDetailsDestinationDetailsTitle,
-            style: AppTextStyles.heading3(color: AppColors.darkText).copyWith(
+            style: AppTextStyles.heading3(color: AppColors.darkText(context)).copyWith(
               height: 1.1,
               letterSpacing: 0,
             ),
@@ -305,14 +303,14 @@ class _DestinationDetailsItem extends StatelessWidget {
           height: 32.w,
           child: DecoratedBox(
             decoration: BoxDecoration(
-              color: AppColors.tripDetailsDestinationIconTileBg,
+              color: AppColors.tripDetailsDestinationIconTileBg(context),
               borderRadius: BorderRadius.circular(8.r),
             ),
             child: Center(
               child: Icon(
                 data.icon,
                 size: 16.sp,
-                color: AppColors.tripDetailsDestinationIconPurple,
+                color: AppColors.tripDetailsDestinationIconPurple(context),
               ),
             ),
           ),
@@ -328,7 +326,7 @@ class _DestinationDetailsItem extends StatelessWidget {
                 data.title,
                 maxLines: 2,
                 overflow: TextOverflow.ellipsis,
-                style: AppTextStyles.caption(color: AppColors.darkText).copyWith(
+                style: AppTextStyles.caption(color: AppColors.darkText(context)).copyWith(
                   fontSize: 13.sp,
                   fontWeight: FontWeight.w700,
                   height: 1.2,
@@ -341,7 +339,7 @@ class _DestinationDetailsItem extends StatelessWidget {
                 maxLines: 2,
                 overflow: TextOverflow.ellipsis,
                 style:
-                    AppTextStyles.caption(color: AppColors.greyText).copyWith(
+                    AppTextStyles.caption(color: AppColors.greyText(context)).copyWith(
                   fontSize: 12.sp,
                   fontWeight: FontWeight.w400,
                   height: 1.2,

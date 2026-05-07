@@ -221,7 +221,7 @@ class _TrendingDestinationViewState extends State<TrendingDestinationView> {
       ),
       _ => (
         context.tr.myTripsStatusCanceled,
-        AppColors.greyText,
+        AppColors.greyText(context),
         context.tr.myTripsViewDetails,
         context.tr.myTripsDownloadPdf,
       ),
@@ -271,7 +271,7 @@ class _TrendingDestinationViewState extends State<TrendingDestinationView> {
     );
 
     return Scaffold(
-      backgroundColor: AppColors.cardBg,
+      backgroundColor: AppColors.cardBg(context),
       body: BlocBuilder<MyTripsListCubit, MyTripsListState>(
         builder: (context, listState) {
           final media = MediaQuery.of(context);
@@ -304,7 +304,7 @@ class _TrendingDestinationViewState extends State<TrendingDestinationView> {
                     offset: Offset(0, -overlap),
                     child: DecoratedBox(
                       decoration: BoxDecoration(
-                        color: AppColors.cardBg,
+                        color: AppColors.cardBg(context),
                         borderRadius: sheetTopOnly,
                         border: Border.all(
                           color: AppColors.onImage.withValues(alpha: 0.42),
@@ -314,7 +314,7 @@ class _TrendingDestinationViewState extends State<TrendingDestinationView> {
                       child: ClipRRect(
                         borderRadius: sheetTopOnly,
                         child: ColoredBox(
-                          color: AppColors.cardBg,
+                          color: AppColors.cardBg(context),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.stretch,
                             children: [
@@ -420,7 +420,7 @@ class _TrendingDestinationViewState extends State<TrendingDestinationView> {
                 bottom: 24.h + bottomInset,
               ),
               decoration: BoxDecoration(
-                color: AppColors.scaffoldBg,
+                color: AppColors.scaffoldBg(context),
                 borderRadius: BorderRadius.vertical(
                   top: Radius.circular(sheetRadius),
                 ),
@@ -498,12 +498,12 @@ class _TrendingDestinationViewState extends State<TrendingDestinationView> {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                Icon(Iconsax.warning_2, size: 40, color: AppColors.greyText),
+                Icon(Iconsax.warning_2, size: 40, color: AppColors.greyText(context)),
                 SizedBox(height: 12.h),
                 Text(
                   state.errorMessage ?? 'Unknown error',
                   style: AppTextStyles.bodyMedium(
-                    color: AppColors.secondaryText,
+                    color: AppColors.secondaryText(context),
                   ),
                   textAlign: TextAlign.center,
                 ),
@@ -669,20 +669,20 @@ class _TrendingDestinationViewState extends State<TrendingDestinationView> {
           width: 80.w,
           height: 80.h,
           decoration: BoxDecoration(
-            color: AppColors.lightBg,
+            color: AppColors.lightBg(context),
             shape: BoxShape.circle,
           ),
-          child: Icon(Iconsax.map, size: 36.sp, color: AppColors.greyText),
+          child: Icon(Iconsax.map, size: 36.sp, color: AppColors.greyText(context)),
         ),
         SizedBox(height: 16.h),
         Text(
           context.tr.myTripsEmptyTitle,
-          style: AppTextStyles.heading3(color: AppColors.secondaryText),
+          style: AppTextStyles.heading3(color: AppColors.secondaryText(context)),
         ),
         SizedBox(height: 8.h),
         Text(
           context.tr.myTripsEmptyDescription,
-          style: AppTextStyles.bodyMedium(color: AppColors.greyText),
+          style: AppTextStyles.bodyMedium(color: AppColors.greyText(context)),
           textAlign: TextAlign.center,
         ),
         SizedBox(height: 20.h),
@@ -846,7 +846,7 @@ class _BrowseCatalogHero extends StatelessWidget {
                       child: Text(
                         country.trim(),
                         style: AppTextStyles.bodyMedium(
-                          color: AppColors.darkText,
+                          color: AppColors.darkText(context),
                         ).copyWith(fontWeight: FontWeight.w600),
                       ),
                     ),
@@ -897,17 +897,17 @@ class _CatalogSortChip extends StatelessWidget {
   Widget build(BuildContext context) {
     return OutlinedButton.icon(
       onPressed: () {},
-      icon: Icon(Iconsax.arrow_down_1, size: 16.sp, color: AppColors.darkText),
+      icon: Icon(Iconsax.arrow_down_1, size: 16.sp, color: AppColors.darkText(context)),
       label: Text(
         context.tr.wishlistSortBy,
         style: AppTextStyles.bodyMedium(
-          color: AppColors.darkText,
+          color: AppColors.darkText(context),
         ).copyWith(fontWeight: FontWeight.w600),
       ),
       style: OutlinedButton.styleFrom(
-        foregroundColor: AppColors.darkText,
-        backgroundColor: AppColors.cardBg,
-        side: BorderSide(color: AppColors.catalogSheetBorder, width: 1),
+        foregroundColor: AppColors.darkText(context),
+        backgroundColor: AppColors.cardBg(context),
+        side: BorderSide(color: AppColors.catalogSheetBorder(context), width: 1),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(999)),
         padding: EdgeInsetsDirectional.symmetric(
           horizontal: 14.w,
@@ -982,14 +982,14 @@ class _MyTripsSearchFieldState extends State<_MyTripsSearchField> {
       height: fieldHeight,
       padding: EdgeInsetsDirectional.only(start: startPad, end: endPad),
       decoration: BoxDecoration(
-        color: AppColors.cardBg,
+        color: AppColors.cardBg(context),
         borderRadius: BorderRadius.circular(radius),
         border: Border.all(
           color: focused
               ? AppColors.primary
               : (browse
-                    ? AppColors.catalogSheetBorder
-                    : AppColors.border.withValues(alpha: 0.65)),
+                    ? AppColors.catalogSheetBorder(context)
+                    : AppColors.border(context).withValues(alpha: 0.65)),
           width: focused ? 1.5 : 1,
         ),
         boxShadow: browse
@@ -1007,7 +1007,7 @@ class _MyTripsSearchFieldState extends State<_MyTripsSearchField> {
           Icon(
             Iconsax.search_normal,
             size: browse ? 19.sp : 20.sp,
-            color: browse ? AppColors.catalogMetaMuted : AppColors.greyText,
+            color: browse ? AppColors.catalogMetaMuted(context) : AppColors.greyText(context),
           ),
           SizedBox(width: browse ? 12.w : 10.w),
           Expanded(
@@ -1031,20 +1031,20 @@ class _MyTripsSearchFieldState extends State<_MyTripsSearchField> {
                 hintText: widget.hint,
                 hintStyle: browse
                     ? AppTextStyles.body(
-                        color: AppColors.catalogMetaMuted,
+                        color: AppColors.catalogMetaMuted(context),
                       ).copyWith(
                         fontSize: 15.sp,
                         fontWeight: FontWeight.w400,
                         height: 1.2,
                       )
-                    : AppTextStyles.bodyMedium(color: AppColors.greyText),
+                    : AppTextStyles.bodyMedium(color: AppColors.greyText(context)),
                 contentPadding: EdgeInsets.zero,
               ),
               style: browse
                   ? AppTextStyles.bodyMedium(
-                      color: AppColors.darkText,
+                      color: AppColors.darkText(context),
                     ).copyWith(fontSize: 15.sp, height: 1.2)
-                  : AppTextStyles.bodyMedium(color: AppColors.darkText),
+                  : AppTextStyles.bodyMedium(color: AppColors.darkText(context)),
             ),
           ),
           if (showClear)
@@ -1053,7 +1053,7 @@ class _MyTripsSearchFieldState extends State<_MyTripsSearchField> {
               icon: Icon(
                 Iconsax.close_circle,
                 size: 20.sp,
-                color: AppColors.greyText,
+                color: AppColors.greyText(context),
               ),
               padding: EdgeInsets.zero,
               constraints: BoxConstraints(minWidth: 36.w, minHeight: 36.w),
@@ -1131,17 +1131,17 @@ class _TabPill extends StatelessWidget {
       child: Container(
         height: 38.h,
         decoration: BoxDecoration(
-          color: isSelected ? AppColors.primary : AppColors.cardBg,
+          color: isSelected ? AppColors.primary : AppColors.cardBg(context),
           borderRadius: BorderRadius.circular(20.r),
           border: isSelected
               ? null
-              : Border.all(color: AppColors.border.withValues(alpha: 0.75)),
+              : Border.all(color: AppColors.border(context).withValues(alpha: 0.75)),
         ),
         alignment: Alignment.center,
         child: Text(
           text,
           style: AppTextStyles.bodyMedium(
-            color: isSelected ? AppColors.onImage : AppColors.greyText,
+            color: isSelected ? AppColors.onImage : AppColors.greyText(context),
           ).copyWith(fontWeight: FontWeight.w700),
         ),
       ),

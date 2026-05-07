@@ -8,12 +8,12 @@ class TermsView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.background,
+      backgroundColor: AppColors.background(context),
       appBar: AppBar(
-        backgroundColor: AppColors.background,
+        backgroundColor: AppColors.background(context),
         elevation: 0,
         leading: IconButton(
-          icon: Icon(Icons.arrow_back_ios_new_rounded, color: AppColors.darkText),
+          icon: Icon(Icons.arrow_back_ios_new_rounded, color: AppColors.darkText(context)),
           onPressed: () => Navigator.pop(context),
         ),
         title: Text('Terms and condition', style: AppTextStyles.subtitle()),
@@ -75,7 +75,7 @@ class TermsView extends StatelessWidget {
               style: Theme.of(context).textTheme.bodyMedium!.copyWith(
                 fontSize: 12,
                 fontWeight: FontWeight.w400,
-                color: AppColors.greyText,
+                color: AppColors.greyText(context),
               ),
             ),
             const SizedBox(height: 32),
@@ -96,7 +96,7 @@ class TermsView extends StatelessWidget {
             style: Theme.of(context).textTheme.bodyMedium!.copyWith(
               fontSize: 16,
               fontWeight: FontWeight.w600,
-              color: AppColors.darkText,
+              color: AppColors.darkText(context),
             ),
           ),
           const SizedBox(height: 8),
@@ -105,7 +105,7 @@ class TermsView extends StatelessWidget {
             style: Theme.of(context).textTheme.bodyMedium!.copyWith(
               fontSize: 14,
               fontWeight: FontWeight.w400,
-              color: AppColors.secondaryText,
+              color: AppColors.secondaryText(context),
               height: 1.6,
             ),
           ),

@@ -10,17 +10,17 @@ class TripSafetyView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.background,
+      backgroundColor: AppColors.background(context),
       appBar: AppBar(
-        backgroundColor: AppColors.background,
+        backgroundColor: AppColors.background(context),
         elevation: 0,
         leading: IconButton(
-          icon: Icon(Icons.arrow_back_ios_new_rounded, color: AppColors.darkText),
+          icon: Icon(Icons.arrow_back_ios_new_rounded, color: AppColors.darkText(context)),
           onPressed: () => Navigator.pop(context),
         ),
         title: Text(
           context.tr.bookingTripSafetyTitle,
-          style: AppTextStyles.subtitle(color: AppColors.darkText),
+          style: AppTextStyles.subtitle(color: AppColors.darkText(context)),
         ),
         centerTitle: true,
       ),
@@ -51,7 +51,7 @@ class TripSafetyView extends StatelessWidget {
                     child: Text(
                       context.tr.bookingTripSafetyBanner,
                       style: AppTextStyles.bodySmall(
-                        color: AppColors.secondaryText,
+                        color: AppColors.secondaryText(context),
                       ),
                     ),
                   ),
@@ -70,6 +70,7 @@ class TripSafetyView extends StatelessWidget {
             ),
             const SizedBox(height: 24),
             _buildSafetySection(
+              context,
               title: context.tr.bookingTripSafetyWaterTitle,
               content:
                   'All water activities are supervised by certified instructors and lifeguards. Life jackets are mandatory for all boat trips and snorkeling excursions. '
@@ -78,6 +79,7 @@ class TripSafetyView extends StatelessWidget {
             ),
             const SizedBox(height: 16),
             _buildSafetySection(
+              context,
               title: context.tr.bookingTripSafetyDesertTitle,
               content:
                   'Desert excursions are conducted with experienced local guides who know the terrain. All vehicles are equipped with GPS, '
@@ -86,6 +88,7 @@ class TripSafetyView extends StatelessWidget {
             ),
             const SizedBox(height: 16),
             _buildSafetySection(
+              context,
               title: context.tr.bookingTripSafetyHealthTitle,
               content:
                   'A first aid kit is available at all times during the trip. Our guides are trained in basic first aid and CPR. '
@@ -94,6 +97,7 @@ class TripSafetyView extends StatelessWidget {
             ),
             const SizedBox(height: 16),
             _buildSafetySection(
+              context,
               title: context.tr.bookingTripSafetyEmergencyTitle,
               content:
                   'Trip Coordinator: +20 100 123 4567 (available 24/7)\n'
@@ -105,6 +109,7 @@ class TripSafetyView extends StatelessWidget {
             ),
             const SizedBox(height: 16),
             _buildSafetySection(
+              context,
               title: context.tr.bookingTripSafetyGeneralTipsTitle,
               content:
                   'Always stay with the group during organized activities. Do not wander off alone, especially at night. '
@@ -119,19 +124,23 @@ class TripSafetyView extends StatelessWidget {
     );
   }
 
-  Widget _buildSafetySection({required String title, required String content}) {
+  Widget _buildSafetySection(
+    BuildContext context, {
+    required String title,
+    required String content,
+  }) {
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: AppColors.lightBg,
+        color: AppColors.lightBg(context),
         borderRadius: BorderRadius.circular(14),
-        border: Border.all(color: AppColors.border),
+        border: Border.all(color: AppColors.border(context)),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(title, style: AppTextStyles.subtitle(color: AppColors.darkText)),
+          Text(title, style: AppTextStyles.subtitle(color: AppColors.darkText(context))),
           const SizedBox(height: 10),
           Text(content, style: AppTextStyles.body()),
         ],

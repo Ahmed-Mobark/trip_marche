@@ -29,11 +29,11 @@ class AuthPhoneNumberField extends StatelessWidget {
       hintText: hint,
       keyboardType: TextInputType.phone,
       validator: validator,
-      cardColor: AppColors.inputBg,
+      cardColor: AppColors.inputBg(context),
       hintStyle: AppTextStyles.body(
-        color: AppColors.captionText,
+        color: AppColors.captionText(context),
       ).copyWith(fontSize: 14.sp),
-      borderColor: AppColors.border,
+      borderColor: AppColors.border(context),
       focusedBorderColor: AppColors.primary.withValues(alpha: 0.95),
       errorBorderColor: AppColors.error.withValues(alpha: 0.9),
       borderRadius: 18.r,
@@ -65,7 +65,7 @@ class _CountryPrefix extends StatelessWidget {
         children: [
           Theme(
             data: Theme.of(context).copyWith(
-              canvasColor: AppColors.cardBg,
+              canvasColor: AppColors.cardBg(context),
               dialogTheme: CalendarTheme.getCalendarTheme(context).dialogTheme,
             ),
             child: CountryCodePicker(
@@ -81,21 +81,21 @@ class _CountryPrefix extends StatelessWidget {
               padding: EdgeInsets.zero,
               dialogSize: Size(340.w, 520.h),
               textStyle: AppTextStyles.bodyMedium(
-                color: AppColors.darkText,
+                color: AppColors.darkText(context),
               ).copyWith(fontSize: 14.sp),
               dialogTextStyle: AppTextStyles.body(
-                color: AppColors.darkText,
+                color: AppColors.darkText(context),
               ).copyWith(fontSize: 14.sp),
               searchDecoration: InputDecoration(
                 hintText: 'Search',
                 hintStyle: AppTextStyles.body(
-                  color: AppColors.captionText,
+                  color: AppColors.captionText(context),
                 ).copyWith(fontSize: 13.sp),
                 filled: true,
-                fillColor: AppColors.inputBg,
+                fillColor: AppColors.inputBg(context),
                 prefixIcon: Icon(
                   Icons.search_rounded,
-                  color: AppColors.greyText,
+                  color: AppColors.greyText(context),
                   size: 18.sp,
                 ),
                 contentPadding: EdgeInsets.symmetric(
@@ -105,7 +105,7 @@ class _CountryPrefix extends StatelessWidget {
                 enabledBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(14.r),
                   borderSide: BorderSide(
-                    color: AppColors.border.withValues(alpha: 0.85),
+                    color: AppColors.border(context).withValues(alpha: 0.85),
                   ),
                 ),
                 focusedBorder: OutlineInputBorder(
@@ -120,21 +120,21 @@ class _CountryPrefix extends StatelessWidget {
               barrierColor: AppColors.shadow.withValues(alpha: 0.25),
               closeIcon: Icon(
                 Icons.close_rounded,
-                color: AppColors.darkText,
+                color: AppColors.darkText(context),
                 size: 18.sp,
               ),
             ),
           ),
           Icon(
             Icons.keyboard_arrow_down_rounded,
-            color: AppColors.greyText,
+            color: AppColors.greyText(context),
             size: 16.sp,
           ),
           Container(
             width: 1.w,
             height: 30.h,
             margin: EdgeInsetsDirectional.only(start: 4.w),
-            color: AppColors.border,
+            color: AppColors.border(context),
           ),
         ],
       ),

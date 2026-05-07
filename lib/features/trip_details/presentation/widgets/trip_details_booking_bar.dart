@@ -34,11 +34,13 @@ class TripDetailsBookingBar extends StatelessWidget {
         bottom: MediaQuery.paddingOf(context).bottom + 16.h,
       ),
       decoration: BoxDecoration(
-        color: AppColors.scaffoldBg,
+        color: AppColors.scaffoldBg(context),
         boxShadow: [
           BoxShadow(
             color: AppColors.shadow.withValues(
-              alpha: AppColors.brightness == Brightness.dark ? 0.35 : 0.08,
+              alpha: Theme.of(context).brightness == Brightness.dark
+                  ? 0.35
+                  : 0.08,
             ),
             blurRadius: 10.r,
             offset: Offset(0, -4.h),
@@ -53,14 +55,18 @@ class TripDetailsBookingBar extends StatelessWidget {
               Expanded(
                 child: Text(
                   priceLabel,
-                  style: AppTextStyles.bodySmall(color: AppColors.darkText),
+                  style: AppTextStyles.bodySmall(color: AppColors.darkText(context)),
                 ),
               ),
               Text(
                 priceText,
-                style: AppTextStyles.heading3(
-                  color: AppColors.darkText,
-                ).copyWith(fontWeight: FontWeight.w800),
+                style: AppTextStyles.body(
+                  color: AppColors.darkText(context),
+                ).copyWith(
+                  fontWeight: FontWeight.w700,
+                  fontSize: 18.sp,
+                  height: 1.2,
+                ),
               ),
             ],
           ),
@@ -71,7 +77,7 @@ class TripDetailsBookingBar extends StatelessWidget {
                 Expanded(
                   child: Text(
                     secondaryLabel ?? '',
-                    style: AppTextStyles.bodySmall(color: AppColors.darkText),
+                    style: AppTextStyles.bodySmall(color: AppColors.darkText(context)),
                   ),
                 ),
                 if (secondaryBadgeText != null)
@@ -100,7 +106,7 @@ class TripDetailsBookingBar extends StatelessWidget {
               alignment: AlignmentDirectional.centerStart,
               child: Text(
                 perPersonLine!,
-                style: AppTextStyles.caption(color: AppColors.greyText),
+                style: AppTextStyles.caption(color: AppColors.greyText(context)),
               ),
             ),
           ],

@@ -9,17 +9,17 @@ class TripTermsView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.background,
+      backgroundColor: AppColors.background(context),
       appBar: AppBar(
-        backgroundColor: AppColors.background,
+        backgroundColor: AppColors.background(context),
         elevation: 0,
         leading: IconButton(
-          icon: Icon(Icons.arrow_back_ios_new_rounded, color: AppColors.darkText),
+          icon: Icon(Icons.arrow_back_ios_new_rounded, color: AppColors.darkText(context)),
           onPressed: () => Navigator.pop(context),
         ),
         title: Text(
           context.tr.bookingTripTermsTitle,
-          style: AppTextStyles.subtitle(color: AppColors.darkText),
+          style: AppTextStyles.subtitle(color: AppColors.darkText(context)),
         ),
         centerTitle: true,
       ),
@@ -35,34 +35,41 @@ class TripTermsView extends StatelessWidget {
             const SizedBox(height: 8),
             Text(
               context.tr.bookingTripTermsLastUpdated('January 2026'),
-              style: AppTextStyles.bodySmall(color: AppColors.greyText),
+              style: AppTextStyles.bodySmall(color: AppColors.greyText(context)),
             ),
             const SizedBox(height: 20),
             _buildSection(
+              context,
               context.tr.bookingTripTermsSection1Title,
               context.tr.bookingTripTermsSection1Body,
             ),
             _buildSection(
+              context,
               context.tr.bookingTripTermsSection2Title,
               context.tr.bookingTripTermsSection2Body,
             ),
             _buildSection(
+              context,
               context.tr.bookingTripTermsSection3Title,
               context.tr.bookingTripTermsSection3Body,
             ),
             _buildSection(
+              context,
               context.tr.bookingTripTermsSection4Title,
               context.tr.bookingTripTermsSection4Body,
             ),
             _buildSection(
+              context,
               context.tr.bookingTripTermsSection5Title,
               context.tr.bookingTripTermsSection5Body,
             ),
             _buildSection(
+              context,
               context.tr.bookingTripTermsSection6Title,
               context.tr.bookingTripTermsSection6Body,
             ),
             _buildSection(
+              context,
               context.tr.bookingTripTermsSection7Title,
               context.tr.bookingTripTermsSection7Body,
             ),
@@ -73,13 +80,13 @@ class TripTermsView extends StatelessWidget {
     );
   }
 
-  Widget _buildSection(String title, String content) {
+  Widget _buildSection(BuildContext context, String title, String content) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 20),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(title, style: AppTextStyles.subtitle(color: AppColors.darkText)),
+          Text(title, style: AppTextStyles.subtitle(color: AppColors.darkText(context))),
           const SizedBox(height: 8),
           Text(content, style: AppTextStyles.body()),
         ],

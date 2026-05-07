@@ -20,7 +20,7 @@ class TripDetailsPostStatsSections extends StatelessWidget {
         .where((s) => s.isNotEmpty)
         .toList();
 
-    final overviewBorder = AppColors.border.withValues(alpha: 0.35);
+    final overviewBorder = AppColors.border(context).withValues(alpha: 0.35);
 
     return Column(
       children: [
@@ -35,7 +35,7 @@ class TripDetailsPostStatsSections extends StatelessWidget {
             children: [
               Text(
                 context.tr.tripDetailsOverviewTitle,
-                style: AppTextStyles.body(color: AppColors.darkText).copyWith(
+                style: AppTextStyles.body(color: AppColors.darkText(context)).copyWith(
                   fontSize: 18.sp,
                   fontWeight: FontWeight.w700,
                   height: 1.1,
@@ -46,7 +46,7 @@ class TripDetailsPostStatsSections extends StatelessWidget {
                 trip.overview.isNotEmpty ? trip.overview : trip.description,
                 style:
                     AppTextStyles.body(
-                      color: AppColors.tripDetailsSecondaryGrey,
+                      color: AppColors.tripDetailsSecondaryGrey(context),
                     ).copyWith(
                       fontSize: 14.sp,
                       fontWeight: FontWeight.w400,
@@ -66,7 +66,7 @@ class TripDetailsPostStatsSections extends StatelessWidget {
               bottom: 20,
             ),
             borderRadius: 24,
-            borderColor: AppColors.border.withValues(alpha: 0.32),
+            borderColor: AppColors.border(context).withValues(alpha: 0.32),
             withShadow: true,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -80,7 +80,7 @@ class TripDetailsPostStatsSections extends StatelessWidget {
                     fontWeight: FontWeight.w700,
                     height: 1.0,
                     letterSpacing: 0,
-                    color: AppColors.darkText,
+                    color: AppColors.darkText(context),
                   ),
                 ),
                 const SizedBox(height: 8),
@@ -97,7 +97,7 @@ class TripDetailsPostStatsSections extends StatelessWidget {
             bottom: 16,
           ),
           borderRadius: 14,
-          borderColor: AppColors.tripDetailsFigmaDivider,
+          borderColor: AppColors.tripDetailsHairline(context),
           withShadow: false,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -111,7 +111,7 @@ class TripDetailsPostStatsSections extends StatelessWidget {
                   fontWeight: FontWeight.w700,
                   height: 1.0,
                   letterSpacing: 0,
-                  color: AppColors.darkText,
+                  color: AppColors.darkText(context),
                 ),
               ),
               const SizedBox(height: 12),
@@ -216,7 +216,7 @@ class _IncludedItem extends StatelessWidget {
               fontWeight: FontWeight.w400,
               height: 1.2,
               letterSpacing: 0,
-              color: AppColors.darkText,
+              color: AppColors.darkText(context),
             ),
             maxLines: 2,
             softWrap: true,
@@ -265,7 +265,7 @@ class _LocationRow extends StatelessWidget {
                   fontWeight: FontWeight.w400,
                   height: 1.15,
                   letterSpacing: 0,
-                  color: AppColors.greyText,
+                  color: AppColors.greyText(context),
                 ),
               ),
               const SizedBox(height: 2),
@@ -277,7 +277,7 @@ class _LocationRow extends StatelessWidget {
                   fontWeight: FontWeight.w500,
                   height: 1.2,
                   letterSpacing: 0,
-                  color: AppColors.darkText,
+                  color: AppColors.darkText(context),
                 ),
               ),
             ],
@@ -324,7 +324,7 @@ class _TimeRow extends StatelessWidget {
                   fontWeight: FontWeight.w400,
                   height: 1.15,
                   letterSpacing: 0,
-                  color: AppColors.greyText,
+                  color: AppColors.greyText(context),
                 ),
               ),
               const SizedBox(height: 2),
@@ -336,7 +336,7 @@ class _TimeRow extends StatelessWidget {
                   fontWeight: FontWeight.w500,
                   height: 1.2,
                   letterSpacing: 0,
-                  color: AppColors.darkText,
+                  color: AppColors.darkText(context),
                 ),
               ),
             ],
@@ -365,11 +365,13 @@ class _MapButton extends StatelessWidget {
           height: 36,
           alignment: Alignment.center,
           decoration: BoxDecoration(
-            color: AppColors.tripDetailsMapButtonBg,
+            color: AppColors.isDark(context)
+                ? AppColors.inputBg(context)
+                : AppColors.tripDetailsMapButtonBg,
             borderRadius: BorderRadius.circular(6),
-            border: Border.all(color: AppColors.tripDetailsFigmaDivider),
+            border: Border.all(color: AppColors.tripDetailsHairline(context)),
           ),
-          child: const Icon(
+          child: Icon(
             Icons.map_rounded,
             color: AppColors.tripDetailsMapIconBlue,
             size: 18,

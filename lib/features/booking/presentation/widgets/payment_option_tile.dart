@@ -30,10 +30,10 @@ class PaymentOptionTile extends StatelessWidget {
         decoration: BoxDecoration(
           color: isSelected
               ? AppColors.primary.withValues(alpha: 0.05)
-              : AppColors.lightBg,
+              : AppColors.lightBg(context),
           borderRadius: BorderRadius.circular(14),
           border: Border.all(
-            color: isSelected ? AppColors.primary : AppColors.border,
+            color: isSelected ? AppColors.primary : AppColors.border(context),
             width: isSelected ? 1.5 : 1,
           ),
         ),
@@ -45,12 +45,12 @@ class PaymentOptionTile extends StatelessWidget {
               decoration: BoxDecoration(
                 color: isSelected
                     ? AppColors.primary.withValues(alpha: 0.1)
-                    : AppColors.border.withValues(alpha: 0.5),
+                    : AppColors.border(context).withValues(alpha: 0.5),
                 borderRadius: BorderRadius.circular(10),
               ),
               child: Icon(
                 icon,
-                color: isSelected ? AppColors.primary : AppColors.greyText,
+                color: isSelected ? AppColors.primary : AppColors.greyText(context),
                 size: 22,
               ),
             ),
@@ -61,12 +61,12 @@ class PaymentOptionTile extends StatelessWidget {
                 children: [
                   Text(
                     title,
-                    style: AppTextStyles.bodyMedium(color: AppColors.darkText),
+                    style: AppTextStyles.bodyMedium(color: AppColors.darkText(context)),
                   ),
                   const SizedBox(height: 2),
                   Text(
                     subtitle,
-                    style: AppTextStyles.bodySmall(color: AppColors.greyText),
+                    style: AppTextStyles.bodySmall(color: AppColors.greyText(context)),
                   ),
                 ],
               ),

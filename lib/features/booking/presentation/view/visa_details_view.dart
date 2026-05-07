@@ -9,17 +9,17 @@ class VisaDetailsView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.background,
+      backgroundColor: AppColors.background(context),
       appBar: AppBar(
-        backgroundColor: AppColors.background,
+        backgroundColor: AppColors.background(context),
         elevation: 0,
         leading: IconButton(
-          icon: Icon(Icons.arrow_back_ios_new_rounded, color: AppColors.darkText),
+          icon: Icon(Icons.arrow_back_ios_new_rounded, color: AppColors.darkText(context)),
           onPressed: () => Navigator.pop(context),
         ),
         title: Text(
           'Visa Details',
-          style: AppTextStyles.subtitle(color: AppColors.darkText),
+          style: AppTextStyles.subtitle(color: AppColors.darkText(context)),
         ),
         centerTitle: true,
       ),
@@ -50,7 +50,7 @@ class VisaDetailsView extends StatelessWidget {
                     child: Text(
                       'Please ensure your travel documents are up to date before the trip.',
                       style: AppTextStyles.bodySmall(
-                        color: AppColors.secondaryText,
+                        color: AppColors.secondaryText(context),
                       ),
                     ),
                   ),
@@ -68,7 +68,7 @@ class VisaDetailsView extends StatelessWidget {
             const SizedBox(height: 20),
             Text(
               'Required Documents',
-              style: AppTextStyles.subtitle(color: AppColors.darkText),
+              style: AppTextStyles.subtitle(color: AppColors.darkText(context)),
             ),
             const SizedBox(height: 12),
             _buildRequirement(
@@ -87,7 +87,7 @@ class VisaDetailsView extends StatelessWidget {
             const SizedBox(height: 20),
             Text(
               'Important Notes',
-              style: AppTextStyles.subtitle(color: AppColors.darkText),
+              style: AppTextStyles.subtitle(color: AppColors.darkText(context)),
             ),
             const SizedBox(height: 12),
             Text(

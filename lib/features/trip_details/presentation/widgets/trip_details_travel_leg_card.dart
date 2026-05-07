@@ -55,7 +55,7 @@ class TripDetailsTravelLegCard extends StatelessWidget {
                   flipX: flipIcon,
                   child: Icon(
                     centerIcon,
-                    color: AppColors.greyText,
+                    color: AppColors.greyText(context),
                     size: 20.sp,
                   ),
                 ),
@@ -64,7 +64,7 @@ class TripDetailsTravelLegCard extends StatelessWidget {
                   Text(
                     centerLabel!,
                     style: AppTextStyles.caption(
-                      color: AppColors.greyText,
+                      color: AppColors.greyText(context),
                     ).copyWith(fontSize: 12.sp),
                   ),
                 ],
@@ -72,7 +72,7 @@ class TripDetailsTravelLegCard extends StatelessWidget {
                 Text(
                   centerDate,
                   style: AppTextStyles.bodyMedium(
-                    color: AppColors.darkText,
+                    color: AppColors.darkText(context),
                   ).copyWith(fontWeight: FontWeight.w700, fontSize: 15.sp),
                 ),
               ],

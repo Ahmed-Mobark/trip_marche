@@ -79,7 +79,7 @@ class _MyTripsViewBody extends StatelessWidget {
                   Expanded(
                     child: DecoratedBox(
                       decoration: BoxDecoration(
-                        color: AppColors.cardBg,
+                        color: AppColors.cardBg(context),
                         borderRadius: BorderRadius.vertical(
                           top: Radius.circular(
                             MyTripsFigmaTokens.sheetTopRadius,
@@ -158,7 +158,7 @@ class _SearchField extends StatelessWidget {
           fontSize: MyTripsFigmaTokens.searchFontSize,
           fontWeight: FontWeight.w400,
           height: MyTripsFigmaTokens.searchLineHeight,
-          color: AppColors.darkText,
+          color: AppColors.darkText(context),
         ),
         cursorColor: AppColors.myTripsPrimary,
         decoration: InputDecoration(
@@ -168,12 +168,12 @@ class _SearchField extends StatelessWidget {
             fontSize: MyTripsFigmaTokens.searchFontSize,
             fontWeight: FontWeight.w400,
             height: MyTripsFigmaTokens.searchLineHeight,
-            color: AppColors.catalogMetaMuted,
+            color: AppColors.catalogMetaMuted(context),
           ),
           prefixIcon: Icon(
             Iconsax.search_normal_1,
             size: MyTripsFigmaTokens.searchIconSize,
-            color: AppColors.catalogMetaMuted,
+            color: AppColors.catalogMetaMuted(context),
           ),
           filled: true,
           fillColor: AppColors.white,

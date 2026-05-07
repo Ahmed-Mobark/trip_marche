@@ -21,12 +21,12 @@ class TripFavoriteCircleButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final iconData = isFavorite ? Iconsax.heart5 : Iconsax.heart;
-    final iconColor = isFavorite ? AppColors.error : AppColors.greyText;
+    final iconColor = isFavorite ? AppColors.error : AppColors.greyText(context);
     final d = diameter.w;
     final s = iconSize.sp;
 
     return Material(
-      color: AppColors.inputBg,
+      color: AppColors.inputBg(context),
       shape: const CircleBorder(),
       elevation: 0,
       shadowColor: Colors.transparent,

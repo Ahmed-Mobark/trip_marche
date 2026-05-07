@@ -36,7 +36,7 @@ class LocationTopBar extends StatelessWidget {
                 Icon(
                   Iconsax.arrow_down_1,
                   size: 16,
-                  color: AppColors.secondaryText,
+                  color: AppColors.secondaryText(context),
                 ),
               ],
             ),
@@ -48,12 +48,12 @@ class LocationTopBar extends StatelessWidget {
               width: 40,
               height: 40,
               decoration: BoxDecoration(
-                color: AppColors.lightBg,
+                color: AppColors.lightBg(context),
                 borderRadius: BorderRadius.circular(12),
               ),
               child: Icon(
                 Iconsax.notification,
-                color: AppColors.secondaryText,
+                color: AppColors.secondaryText(context),
                 size: 22,
               ),
             ),

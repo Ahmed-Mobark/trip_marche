@@ -34,7 +34,7 @@ class TrendingDestinationCard extends StatelessWidget {
         margin: EdgeInsetsDirectional.only(end: 10.px),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(16.r),
-          color: AppColors.inputBg,
+          color: AppColors.inputBg(context),
         ),
         child: ClipRRect(
           borderRadius: BorderRadius.circular(16.r),

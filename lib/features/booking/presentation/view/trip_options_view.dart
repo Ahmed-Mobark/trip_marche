@@ -47,17 +47,17 @@ class _TripOptionsViewState extends State<TripOptionsView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.background,
+      backgroundColor: AppColors.background(context),
       appBar: AppBar(
-        backgroundColor: AppColors.background,
+        backgroundColor: AppColors.background(context),
         elevation: 0,
         leading: IconButton(
-          icon: Icon(Icons.arrow_back_ios_new_rounded, color: AppColors.darkText),
+          icon: Icon(Icons.arrow_back_ios_new_rounded, color: AppColors.darkText(context)),
           onPressed: () => Navigator.pop(context),
         ),
         title: Text(
           'Trip Options',
-          style: AppTextStyles.subtitle(color: AppColors.darkText),
+          style: AppTextStyles.subtitle(color: AppColors.darkText(context)),
         ),
         centerTitle: true,
       ),
@@ -99,7 +99,7 @@ class _TripOptionsViewState extends State<TripOptionsView> {
       children: [
         Text(
           'Room Type',
-          style: AppTextStyles.subtitle(color: AppColors.darkText),
+          style: AppTextStyles.subtitle(color: AppColors.darkText(context)),
         ),
         const SizedBox(height: 12),
         RadioOption(
@@ -130,7 +130,7 @@ class _TripOptionsViewState extends State<TripOptionsView> {
       children: [
         Text(
           'Bus Seat',
-          style: AppTextStyles.subtitle(color: AppColors.darkText),
+          style: AppTextStyles.subtitle(color: AppColors.darkText(context)),
         ),
         const SizedBox(height: 12),
         RadioOption(
@@ -161,22 +161,22 @@ class _TripOptionsViewState extends State<TripOptionsView> {
       children: [
         Text(
           'Number of Travelers',
-          style: AppTextStyles.subtitle(color: AppColors.darkText),
+          style: AppTextStyles.subtitle(color: AppColors.darkText(context)),
         ),
         const SizedBox(height: 12),
         Container(
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
           decoration: BoxDecoration(
-            color: AppColors.lightBg,
+            color: AppColors.lightBg(context),
             borderRadius: BorderRadius.circular(12),
-            border: Border.all(color: AppColors.border),
+            border: Border.all(color: AppColors.border(context)),
           ),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
                 'Travelers',
-                style: AppTextStyles.bodyMedium(color: AppColors.darkText),
+                style: AppTextStyles.bodyMedium(color: AppColors.darkText(context)),
               ),
               Row(
                 children: [
@@ -190,7 +190,7 @@ class _TripOptionsViewState extends State<TripOptionsView> {
                     padding: const EdgeInsets.symmetric(horizontal: 16),
                     child: Text(
                       '$_travelers',
-                      style: AppTextStyles.subtitle(color: AppColors.darkText),
+                      style: AppTextStyles.subtitle(color: AppColors.darkText(context)),
                     ),
                   ),
                   CounterButton(
@@ -212,7 +212,7 @@ class _TripOptionsViewState extends State<TripOptionsView> {
       children: [
         Text(
           'Special Requests',
-          style: AppTextStyles.subtitle(color: AppColors.darkText),
+          style: AppTextStyles.subtitle(color: AppColors.darkText(context)),
         ),
         const SizedBox(height: 12),
         TextFormField(
@@ -221,23 +221,23 @@ class _TripOptionsViewState extends State<TripOptionsView> {
           style: Theme.of(context).textTheme.bodyMedium!.copyWith(
             fontSize: 14,
             fontWeight: FontWeight.w500,
-            color: AppColors.darkText,
+            color: AppColors.darkText(context),
           ),
           decoration: InputDecoration(
             hintText: 'Any special requests or dietary requirements...',
             hintStyle: Theme.of(context).textTheme.bodyMedium!.copyWith(
               fontSize: 14,
-              color: AppColors.greyText,
+              color: AppColors.greyText(context),
             ),
             filled: true,
-            fillColor: AppColors.lightBg,
+            fillColor: AppColors.lightBg(context),
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(12),
-              borderSide: BorderSide(color: AppColors.border),
+              borderSide: BorderSide(color: AppColors.border(context)),
             ),
             enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(12),
-              borderSide: BorderSide(color: AppColors.border),
+              borderSide: BorderSide(color: AppColors.border(context)),
             ),
             focusedBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(12),
@@ -263,7 +263,7 @@ class _TripOptionsViewState extends State<TripOptionsView> {
         children: [
           Text(
             'Total Price',
-            style: AppTextStyles.subtitle(color: AppColors.darkText),
+            style: AppTextStyles.subtitle(color: AppColors.darkText(context)),
           ),
           Text(
             _totalPrice.toStringAsFixed(0),

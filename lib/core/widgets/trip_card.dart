@@ -19,9 +19,9 @@ class TripCard extends StatelessWidget {
         width: 170,
         margin: const EdgeInsetsDirectional.only(end: 12),
         decoration: BoxDecoration(
-          color: AppColors.cardBg,
+          color: AppColors.cardBg(context),
           borderRadius: BorderRadius.circular(16),
-          border: Border.all(color: AppColors.border),
+          border: Border.all(color: AppColors.border(context)),
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -46,14 +46,14 @@ class TripCard extends StatelessWidget {
                     trip.title,
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
-                    style: AppTextStyles.subtitle(color: AppColors.darkText),
+                    style: AppTextStyles.subtitle(color: AppColors.darkText(context)),
                   ),
                   const SizedBox(height: 4),
                   Text(
                     trip.location,
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
-                    style: AppTextStyles.bodySmall(color: AppColors.greyText),
+                    style: AppTextStyles.bodySmall(color: AppColors.greyText(context)),
                   ),
                   const SizedBox(height: 8),
                   Row(
@@ -63,7 +63,7 @@ class TripCard extends StatelessWidget {
                       Text(
                         trip.rating.toStringAsFixed(1),
                         style: AppTextStyles.bodySmall(
-                          color: AppColors.darkText,
+                          color: AppColors.darkText(context),
                         ),
                       ),
                       const Spacer(),
@@ -99,9 +99,9 @@ class TripCardWide extends StatelessWidget {
         margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
         padding: const EdgeInsets.all(12),
         decoration: BoxDecoration(
-          color: AppColors.cardBg,
+          color: AppColors.cardBg(context),
           borderRadius: BorderRadius.circular(16),
-          border: Border.all(color: AppColors.border),
+          border: Border.all(color: AppColors.border(context)),
         ),
         child: Row(
           children: [
@@ -123,14 +123,14 @@ class TripCardWide extends StatelessWidget {
                     trip.title,
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
-                    style: AppTextStyles.subtitle(color: AppColors.darkText),
+                    style: AppTextStyles.subtitle(color: AppColors.darkText(context)),
                   ),
                   const SizedBox(height: 4),
                   Text(
                     trip.location,
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
-                    style: AppTextStyles.bodySmall(color: AppColors.greyText),
+                    style: AppTextStyles.bodySmall(color: AppColors.greyText(context)),
                   ),
                   const SizedBox(height: 8),
                   Text(

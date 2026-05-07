@@ -23,9 +23,9 @@ class ReviewItemDisplay extends StatelessWidget {
     return Container(
       padding: EdgeInsetsDirectional.all(14.r),
       decoration: BoxDecoration(
-        color: AppColors.lightBg,
+        color: AppColors.lightBg(context),
         borderRadius: BorderRadius.circular(12.r),
-        border: Border.all(color: AppColors.border),
+        border: Border.all(color: AppColors.border(context)),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -48,10 +48,12 @@ class ReviewItemDisplay extends StatelessWidget {
                     Text(
                       name,
                       style: AppTextStyles.bodyMedium(
-                        color: AppColors.darkText,
+                        color: AppColors.darkText(context),
                       ),
                     ),
-                    Text(date, style: AppTextStyles.caption()),
+                    Text(date, style: AppTextStyles.caption(
+                  color: AppColors.greyText(context),
+                )),
                   ],
                 ),
               ),
@@ -69,7 +71,9 @@ class ReviewItemDisplay extends StatelessWidget {
           SizedBox(height: 8.h),
           Text(
             comment,
-            style: AppTextStyles.body(color: AppColors.secondaryText),
+            style: AppTextStyles.body(
+              color: AppColors.greyText(context),
+            ),
           ),
         ],
       ),

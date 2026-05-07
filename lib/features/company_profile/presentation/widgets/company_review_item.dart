@@ -26,7 +26,7 @@ class CompanyReviewItem extends StatelessWidget {
         padding: const EdgeInsets.all(12),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(12),
-          border: Border.all(color: AppColors.border),
+          border: Border.all(color: AppColors.border(context)),
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -35,11 +35,11 @@ class CompanyReviewItem extends StatelessWidget {
               children: [
                 CircleAvatar(
                   radius: 18,
-                  backgroundColor: AppColors.lightBg,
+                  backgroundColor: AppColors.lightBg(context),
                   child: Icon(
                     Iconsax.user,
                     size: 18,
-                    color: AppColors.greyText,
+                    color: AppColors.greyText(context),
                   ),
                 ),
                 const SizedBox(width: 10),
@@ -52,7 +52,7 @@ class CompanyReviewItem extends StatelessWidget {
                         style: Theme.of(context).textTheme.bodyMedium!.copyWith(
                           fontSize: 14,
                           fontWeight: FontWeight.w600,
-                          color: AppColors.darkText,
+                          color: AppColors.darkText(context),
                         ),
                       ),
                       Row(
@@ -73,7 +73,7 @@ class CompanyReviewItem extends StatelessWidget {
                   style: Theme.of(context).textTheme.bodyMedium!.copyWith(
                     fontSize: 11,
                     fontWeight: FontWeight.w400,
-                    color: AppColors.greyText,
+                    color: AppColors.greyText(context),
                   ),
                 ),
               ],
@@ -84,7 +84,7 @@ class CompanyReviewItem extends StatelessWidget {
               style: Theme.of(context).textTheme.bodyMedium!.copyWith(
                 fontSize: 13,
                 fontWeight: FontWeight.w400,
-                color: AppColors.secondaryText,
+                color: AppColors.secondaryText(context),
                 height: 1.4,
               ),
             ),

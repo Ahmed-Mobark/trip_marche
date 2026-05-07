@@ -28,14 +28,14 @@ class TripDetailsInfoCard extends StatelessWidget {
       width: double.infinity,
       padding: padding ?? EdgeInsetsDirectional.all(20.r),
       decoration: BoxDecoration(
-        // Use surface color so [AppColors.darkText] / body text stay readable in
+        // Use surface color so [AppColors.darkText(context)] / body text stay readable in
         // dark mode (onImage is always light and was washing out labels).
-        color: backgroundColor ?? AppColors.cardBg,
+        color: backgroundColor ?? AppColors.cardBg(context),
         borderRadius: BorderRadius.circular(radius),
         border: Border.all(
           color: borderColor != null
               ? borderColor!
-              : AppColors.border.withValues(alpha: 0.6),
+              : AppColors.border(context).withValues(alpha: 0.6),
         ),
         boxShadow: withShadow
             ? [

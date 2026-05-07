@@ -104,7 +104,7 @@ class WishlistViewState extends State<WishlistView> {
                     child: Container(
                       width: double.infinity,
                       decoration: BoxDecoration(
-                        color: AppColors.cardBg,
+                        color: AppColors.cardBg(context),
                         borderRadius: BorderRadius.vertical(
                           top: Radius.circular(sheetRadius),
                         ),
@@ -171,16 +171,16 @@ class WishlistViewState extends State<WishlistView> {
                                             prefixIcon: Icon(
                                               Iconsax.search_normal_1,
                                               size: 20.sp,
-                                              color: AppColors.greyText,
+                                              color: AppColors.greyText(context),
                                             ),
                                             filled: true,
-                                            fillColor: AppColors.background,
+                                            fillColor: AppColors.background(context),
                                             border: OutlineInputBorder(
                                               borderRadius: BorderRadius.circular(
                                                 999.r,
                                               ),
                                               borderSide: BorderSide(
-                                                color: AppColors.border,
+                                                color: AppColors.border(context),
                                               ),
                                             ),
                                             enabledBorder: OutlineInputBorder(
@@ -188,7 +188,7 @@ class WishlistViewState extends State<WishlistView> {
                                                 999.r,
                                               ),
                                               borderSide: BorderSide(
-                                                color: AppColors.border,
+                                                color: AppColors.border(context),
                                               ),
                                             ),
                                             focusedBorder: OutlineInputBorder(
@@ -196,7 +196,7 @@ class WishlistViewState extends State<WishlistView> {
                                                 999.r,
                                               ),
                                               borderSide: BorderSide(
-                                                color: AppColors.border,
+                                                color: AppColors.border(context),
                                               ),
                                             ),
                                           ),
@@ -286,20 +286,20 @@ class WishlistViewState extends State<WishlistView> {
             width: 80,
             height: 80,
             decoration: BoxDecoration(
-              color: AppColors.lightBg,
+              color: AppColors.lightBg(context),
               shape: BoxShape.circle,
             ),
-            child: Icon(Iconsax.heart, size: 36, color: AppColors.greyText),
+            child: Icon(Iconsax.heart, size: 36, color: AppColors.greyText(context)),
           ),
           const SizedBox(height: 16),
           Text(
             context.tr.wishlistEmptyTitle,
-            style: AppTextStyles.heading3(color: AppColors.secondaryText),
+            style: AppTextStyles.heading3(color: AppColors.secondaryText(context)),
           ),
           const SizedBox(height: 8),
           Text(
             context.tr.wishlistEmptyDescription,
-            style: AppTextStyles.bodyMedium(color: AppColors.greyText),
+            style: AppTextStyles.bodyMedium(color: AppColors.greyText(context)),
             textAlign: TextAlign.center,
           ),
         ],
@@ -322,11 +322,11 @@ class _ErrorBody extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(Iconsax.warning_2, size: 48, color: AppColors.greyText),
+            Icon(Iconsax.warning_2, size: 48, color: AppColors.greyText(context)),
             SizedBox(height: 16.h),
             Text(
               message,
-              style: AppTextStyles.bodyMedium(color: AppColors.secondaryText),
+              style: AppTextStyles.bodyMedium(color: AppColors.secondaryText(context)),
               textAlign: TextAlign.center,
             ),
             SizedBox(height: 20.h),

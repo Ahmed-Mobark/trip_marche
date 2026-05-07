@@ -27,7 +27,7 @@ class FilterChipOption extends StatelessWidget {
           color: isSelected ? AppColors.primary : AppColors.transparent,
           borderRadius: BorderRadius.circular(20),
           border: Border.all(
-            color: isSelected ? AppColors.primary : AppColors.border,
+            color: isSelected ? AppColors.primary : AppColors.border(context),
           ),
         ),
         child: Row(
@@ -43,7 +43,7 @@ class FilterChipOption extends StatelessWidget {
               style: Theme.of(context).textTheme.bodyMedium!.copyWith(
                 fontSize: 14,
                 fontWeight: FontWeight.w500,
-                color: isSelected ? AppColors.onImage : AppColors.secondaryText,
+                color: isSelected ? AppColors.onImage : AppColors.secondaryText(context),
               ),
             ),
           ],

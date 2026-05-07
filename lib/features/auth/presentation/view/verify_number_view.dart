@@ -39,7 +39,7 @@ class VerifyNumberView extends StatelessWidget {
       child: Builder(
         builder: (context) {
           return Scaffold(
-            backgroundColor: AppColors.background,
+            backgroundColor: AppColors.background(context),
             body: BlocListener<VerifyNumberCubit, VerifyNumberState>(
               listenWhen: (p, n) => p.status != n.status,
               listener: (context, state) {
@@ -71,7 +71,7 @@ class VerifyNumberView extends StatelessWidget {
                       const SizedBox(height: 6),
                       Text(
                         context.tr.authVerifyEmailSubtitle,
-                        style: AppTextStyles.body(color: AppColors.greyText),
+                        style: AppTextStyles.body(color: AppColors.greyText(context)),
                       ),
                       const SizedBox(height: 18),
 
@@ -99,7 +99,7 @@ class VerifyNumberView extends StatelessWidget {
                                 return RichText(
                                   text: TextSpan(
                                     style: AppTextStyles.bodySmall(
-                                      color: AppColors.greyText,
+                                      color: AppColors.greyText(context),
                                     ),
                                     children: [
                                       TextSpan(
@@ -121,7 +121,7 @@ class VerifyNumberView extends StatelessWidget {
                                             style: AppTextStyles.bodySmall(
                                               color: canResend
                                                   ? AppColors.primary
-                                                  : AppColors.greyText,
+                                                  : AppColors.greyText(context),
                                             ),
                                           ),
                                         ),

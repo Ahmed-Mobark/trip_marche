@@ -122,7 +122,7 @@ class _TripDetailsBody extends StatelessWidget {
           context.read<TripDetailsCubit>().clearWishlistFeedback();
         },
         child: Scaffold(
-          backgroundColor: AppColors.tripDetailsScreenBg,
+          backgroundColor: AppColors.tripDetailsScreenBg(context),
           body: BlocBuilder<TripDetailsCubit, TripDetailsState>(
             buildWhen: (p, n) =>
                 p.loadStatus != n.loadStatus ||
@@ -187,7 +187,7 @@ class _TripDetailsBody extends StatelessWidget {
                           offset: Offset(0, -sheetOverlap),
                           child: Container(
                             width: double.infinity,
-                            decoration: BoxDecoration(color: AppColors.cardBg),
+                            decoration: BoxDecoration(color: AppColors.cardBg(context)),
                             child: MediaQuery(
                               data: MediaQuery.of(context).copyWith(
                                 textScaler: TextScaler.noScaling,

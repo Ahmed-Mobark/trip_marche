@@ -30,7 +30,7 @@ class _MainNavViewState extends State<MainNavView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.background,
+      backgroundColor: AppColors.background(context),
       body: IndexedStack(index: _currentIndex, children: _pages),
       bottomNavigationBar: LayoutBuilder(
         builder: (context, constraints) {
@@ -45,9 +45,9 @@ class _MainNavViewState extends State<MainNavView> {
             children: [
               Container(
                 decoration: BoxDecoration(
-                  color: AppColors.cardBg,
+                  color: AppColors.cardBg(context),
                   border: Border(
-                    top: BorderSide(color: AppColors.border, width: 0.5),
+                    top: BorderSide(color: AppColors.border(context), width: 0.5),
                   ),
                 ),
                 child: BottomNavigationBar(
@@ -64,10 +64,10 @@ class _MainNavViewState extends State<MainNavView> {
                     }
                   },
                   type: BottomNavigationBarType.fixed,
-                  backgroundColor: AppColors.cardBg,
+                  backgroundColor: AppColors.cardBg(context),
                   elevation: 0,
                   selectedItemColor: AppColors.primary,
-                  unselectedItemColor: AppColors.greyText,
+                  unselectedItemColor: AppColors.greyText(context),
                   selectedLabelStyle: Theme.of(context).textTheme.bodyMedium!
                       .copyWith(fontSize: 14, fontWeight: FontWeight.w600),
                   unselectedLabelStyle: Theme.of(context).textTheme.bodyMedium!

@@ -33,7 +33,7 @@ class ResetPasswordView extends StatelessWidget {
       child: Builder(
         builder: (context) {
           return Scaffold(
-            backgroundColor: AppColors.background,
+            backgroundColor: AppColors.background(context),
             body: BlocListener<ResetPasswordCubit, ResetPasswordState>(
               listenWhen: (p, n) => p.status != n.status,
               listener: (context, state) {
@@ -74,14 +74,14 @@ class ResetPasswordView extends StatelessWidget {
                       const SizedBox(height: 8),
                       Text(
                         context.tr.authResetPasswordSubtitle,
-                        style: AppTextStyles.body(color: AppColors.greyText),
+                        style: AppTextStyles.body(color: AppColors.greyText(context)),
                       ),
                       const SizedBox(height: 32),
 
                       Text(
                         context.tr.authNewPasswordLabel,
                         style: AppTextStyles.bodyMedium(
-                          color: AppColors.darkText,
+                          color: AppColors.darkText(context),
                         ).copyWith(fontWeight: FontWeight.w700, fontSize: 14),
                       ),
                       const SizedBox(height: 8),
@@ -102,7 +102,7 @@ class ResetPasswordView extends StatelessWidget {
                                 width: 20,
                                 height: 20,
                                 colorFilter: ColorFilter.mode(
-                                  AppColors.greyText,
+                                  AppColors.greyText(context),
                                   BlendMode.srcIn,
                                 ),
                               ),
@@ -112,7 +112,7 @@ class ResetPasswordView extends StatelessWidget {
                                 state.obscurePassword
                                     ? Icons.visibility_off_outlined
                                     : Icons.visibility_outlined,
-                                color: AppColors.greyText,
+                                color: AppColors.greyText(context),
                                 size: 20,
                               ),
                               onPressed: context
@@ -127,7 +127,7 @@ class ResetPasswordView extends StatelessWidget {
                       Text(
                         context.tr.authConfirmNewPasswordLabel,
                         style: AppTextStyles.bodyMedium(
-                          color: AppColors.darkText,
+                          color: AppColors.darkText(context),
                         ).copyWith(fontWeight: FontWeight.w700, fontSize: 14),
                       ),
                       const SizedBox(height: 8),
@@ -149,7 +149,7 @@ class ResetPasswordView extends StatelessWidget {
                                 width: 20,
                                 height: 20,
                                 colorFilter: ColorFilter.mode(
-                                  AppColors.greyText,
+                                  AppColors.greyText(context),
                                   BlendMode.srcIn,
                                 ),
                               ),
@@ -159,7 +159,7 @@ class ResetPasswordView extends StatelessWidget {
                                 state.obscureConfirmPassword
                                     ? Icons.visibility_off_outlined
                                     : Icons.visibility_outlined,
-                                color: AppColors.greyText,
+                                color: AppColors.greyText(context),
                                 size: 20,
                               ),
                               onPressed: context

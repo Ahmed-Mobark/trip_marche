@@ -24,7 +24,7 @@ class SectionHeader extends StatelessWidget {
           Expanded(
             child: Text(
               title,
-              style: AppTextStyles.heading3(color: AppColors.darkText),
+              style: AppTextStyles.heading3(color: AppColors.darkText(context)),
             ),
           ),
           if (actionText != null)

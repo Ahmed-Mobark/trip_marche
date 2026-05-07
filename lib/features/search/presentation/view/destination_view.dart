@@ -14,14 +14,14 @@ class DestinationView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.background,
+      backgroundColor: AppColors.background(context),
       appBar: AppBar(
-        backgroundColor: AppColors.background,
+        backgroundColor: AppColors.background(context),
         elevation: 0,
         leading: IconButton(
           icon: Icon(
             Icons.arrow_back_ios_new_rounded,
-            color: AppColors.darkText,
+            color: AppColors.darkText(context),
           ),
           onPressed: () => Navigator.pop(context),
         ),
@@ -43,7 +43,7 @@ class DestinationView extends StatelessWidget {
               child: Container(
                 height: 48,
                 decoration: BoxDecoration(
-                  color: AppColors.inputBg,
+                  color: AppColors.inputBg(context),
                   borderRadius: BorderRadius.circular(12),
                 ),
                 child: Row(
@@ -51,7 +51,7 @@ class DestinationView extends StatelessWidget {
                     const SizedBox(width: 14),
                     Icon(
                       Iconsax.search_normal,
-                      color: AppColors.greyText,
+                      color: AppColors.greyText(context),
                       size: 20,
                     ),
                     const SizedBox(width: 10),
@@ -60,7 +60,7 @@ class DestinationView extends StatelessWidget {
                         decoration: InputDecoration(
                           hintText: context.tr.destinationSearchHint,
                           hintStyle: AppTextStyles.bodyMedium(
-                            color: AppColors.greyText,
+                            color: AppColors.greyText(context),
                           ),
                           border: InputBorder.none,
                           contentPadding: EdgeInsets.zero,

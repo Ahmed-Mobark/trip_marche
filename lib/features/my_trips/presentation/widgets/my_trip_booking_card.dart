@@ -106,7 +106,7 @@ class MyTripBookingCard extends StatelessWidget {
       child: Container(
         padding: EdgeInsetsDirectional.all(12.w),
         decoration: BoxDecoration(
-          color: AppColors.cardBg,
+          color: AppColors.cardBg(context),
           borderRadius: BorderRadius.circular(20.r),
           boxShadow: [
             BoxShadow(
@@ -168,7 +168,7 @@ class MyTripBookingCard extends StatelessWidget {
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                           style: AppTextStyles.subtitle(
-                            color: AppColors.darkText,
+                            color: AppColors.darkText(context),
                           ).copyWith(fontWeight: FontWeight.w700),
                         ),
                       ),
@@ -190,13 +190,13 @@ class MyTripBookingCard extends StatelessWidget {
                       Text(
                         _rating.toStringAsFixed(1),
                         style: AppTextStyles.bodySmall(
-                          color: AppColors.darkText,
+                          color: AppColors.darkText(context),
                         ).copyWith(fontWeight: FontWeight.w700),
                       ),
                       Text(
                         ' ($_reviewsCount)',
                         style: AppTextStyles.bodySmall(
-                          color: AppColors.greyText,
+                          color: AppColors.greyText(context),
                         ),
                       ),
                     ],
@@ -207,7 +207,7 @@ class MyTripBookingCard extends StatelessWidget {
                       Icon(
                         Iconsax.location,
                         size: 14.sp,
-                        color: AppColors.greyText,
+                        color: AppColors.greyText(context),
                       ),
                       SizedBox(width: 6.w),
                       Expanded(
@@ -216,7 +216,7 @@ class MyTripBookingCard extends StatelessWidget {
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                           style: AppTextStyles.bodySmall(
-                            color: AppColors.greyText,
+                            color: AppColors.greyText(context),
                           ),
                         ),
                       ),
@@ -228,7 +228,7 @@ class MyTripBookingCard extends StatelessWidget {
                       Icon(
                         Iconsax.calendar_1,
                         size: 14.sp,
-                        color: AppColors.greyText,
+                        color: AppColors.greyText(context),
                       ),
                       SizedBox(width: 6.w),
                       Expanded(
@@ -237,7 +237,7 @@ class MyTripBookingCard extends StatelessWidget {
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                           style: AppTextStyles.bodySmall(
-                            color: AppColors.greyText,
+                            color: AppColors.greyText(context),
                           ),
                         ),
                       ),
@@ -258,9 +258,9 @@ class MyTripBookingCard extends StatelessWidget {
                       Expanded(
                         child: _ActionPill(
                           text: secondaryActionText,
-                          backgroundColor: AppColors.inputBg,
-                          textColor: AppColors.darkText,
-                          borderColor: AppColors.border,
+                          backgroundColor: AppColors.inputBg(context),
+                          textColor: AppColors.darkText(context),
+                          borderColor: AppColors.border(context),
                           onTap: onSecondaryActionTap,
                         ),
                       ),
@@ -334,10 +334,10 @@ class _BottomAction extends StatelessWidget {
       child: Container(
         height: 42.h,
         decoration: BoxDecoration(
-          color: AppColors.cardBg,
+          color: AppColors.cardBg(context),
           borderRadius: BorderRadius.circular(12.r),
           border: Border.all(
-            color: AppColors.border.withValues(alpha: 0.75),
+            color: AppColors.border(context).withValues(alpha: 0.75),
           ),
         ),
         padding: EdgeInsetsDirectional.symmetric(horizontal: 12.w),
@@ -355,7 +355,7 @@ class _BottomAction extends StatelessWidget {
                 text,
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
-                style: AppTextStyles.bodyMedium(color: AppColors.darkText),
+                style: AppTextStyles.bodyMedium(color: AppColors.darkText(context)),
               ),
             ),
           ],

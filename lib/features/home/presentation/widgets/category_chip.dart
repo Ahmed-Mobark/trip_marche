@@ -27,17 +27,17 @@ class CategoryChip extends StatelessWidget {
             vertical: 8.h,
           ),
           decoration: BoxDecoration(
-            color: isSelected ? AppColors.primary : AppColors.background,
+            color: isSelected ? AppColors.primary : AppColors.background(context),
             borderRadius: BorderRadius.circular(999.r),
             border: Border.all(
-              color: isSelected ? AppColors.primary : AppColors.border,
+              color: isSelected ? AppColors.primary : AppColors.border(context),
             ),
           ),
           child: Center(
             child: Text(
               label,
               style: AppTextStyles.bodySmall(
-                color: isSelected ? AppColors.onImage : AppColors.greyText,
+                color: isSelected ? AppColors.onImage : AppColors.greyText(context),
               ).copyWith(fontWeight: FontWeight.w600),
             ),
           ),

@@ -28,12 +28,12 @@ class ItineraryDay extends StatelessWidget {
         decoration: BoxDecoration(
           color: isExpanded
               ? AppColors.primary.withValues(alpha: 0.05)
-              : AppColors.lightBg,
+              : AppColors.lightBg(context),
           borderRadius: BorderRadius.circular(12.r),
           border: Border.all(
             color: isExpanded
                 ? AppColors.primary.withValues(alpha: 0.3)
-                : AppColors.border,
+                : AppColors.border(context),
           ),
         ),
         child: Column(
@@ -45,13 +45,13 @@ class ItineraryDay extends StatelessWidget {
                 Text(
                   title,
                   style: AppTextStyles.bodyMedium(
-                    color: isExpanded ? AppColors.primary : AppColors.darkText,
+                    color: isExpanded ? AppColors.primary : AppColors.darkText(context),
                   ),
                 ),
                 Icon(
                   isExpanded ? Iconsax.arrow_up_2 : Iconsax.arrow_down_1,
                   size: 18.sp,
-                  color: isExpanded ? AppColors.primary : AppColors.greyText,
+                  color: isExpanded ? AppColors.primary : AppColors.greyText(context),
                 ),
               ],
             ),
@@ -59,7 +59,7 @@ class ItineraryDay extends StatelessWidget {
               SizedBox(height: 8.h),
               Text(
                 description,
-                style: AppTextStyles.body(color: AppColors.secondaryText),
+                style: AppTextStyles.body(color: AppColors.secondaryText(context)),
               ),
             ],
           ],

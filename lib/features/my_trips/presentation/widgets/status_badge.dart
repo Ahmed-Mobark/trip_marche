@@ -8,7 +8,7 @@ class StatusBadge extends StatelessWidget {
 
   const StatusBadge({super.key, required this.status});
 
-  Color _statusColor() {
+  Color _statusColor(BuildContext context) {
     switch (status) {
       case 'Confirmed':
         return AppColors.success;
@@ -17,11 +17,11 @@ class StatusBadge extends StatelessWidget {
       case 'Cancelled':
         return AppColors.error;
       default:
-        return AppColors.greyText;
+        return AppColors.greyText(context);
     }
   }
 
-  Color _statusBgColor() {
+  Color _statusBgColor(BuildContext context) {
     switch (status) {
       case 'Confirmed':
         return AppColors.success.withValues(alpha: 0.1);
@@ -30,7 +30,7 @@ class StatusBadge extends StatelessWidget {
       case 'Cancelled':
         return AppColors.error.withValues(alpha: 0.1);
       default:
-        return AppColors.lightBg;
+        return AppColors.lightBg(context);
     }
   }
 
@@ -39,13 +39,13 @@ class StatusBadge extends StatelessWidget {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 4.h),
       decoration: BoxDecoration(
-        color: _statusBgColor(),
+        color: _statusBgColor(context),
         borderRadius: BorderRadius.circular(6.r),
       ),
       child: Text(
         status,
         style: AppTextStyles.caption(
-          color: _statusColor(),
+          color: _statusColor(context),
         ).copyWith(fontWeight: FontWeight.w600),
       ),
     );

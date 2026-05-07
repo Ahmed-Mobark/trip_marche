@@ -55,9 +55,9 @@ class SearchResultTripCard extends StatelessWidget {
     return Container(
       padding: EdgeInsetsDirectional.all(10.w),
       decoration: BoxDecoration(
-        color: AppColors.cardBg,
+        color: AppColors.cardBg(context),
         borderRadius: BorderRadius.circular(16.r),
-        border: Border.all(color: AppColors.border),
+        border: Border.all(color: AppColors.border(context)),
         boxShadow: [
           BoxShadow(
             color: AppColors.shadow.withValues(alpha: 0.06),
@@ -104,7 +104,7 @@ class SearchResultTripCard extends StatelessWidget {
                           height: 38.r,
                           decoration: BoxDecoration(
                             shape: BoxShape.circle,
-                            color: AppColors.myTripsFavoriteCircleFill,
+                            color: AppColors.myTripsFavoriteCircleFill(context),
                           ),
                           child: Icon(
                             data.isFavorite

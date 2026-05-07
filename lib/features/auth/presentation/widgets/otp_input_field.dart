@@ -129,7 +129,7 @@ class _OtpInputFieldState extends State<OtpInputField> {
           margin: EdgeInsets.symmetric(horizontal: widget.spacing / 2),
           height: widget.boxSize,
           decoration: BoxDecoration(
-            color: AppColors.inputBg,
+            color: AppColors.inputBg(context),
             borderRadius: BorderRadius.circular(12),
           ),
           child: Center(
@@ -141,7 +141,7 @@ class _OtpInputFieldState extends State<OtpInputField> {
               style: Theme.of(context).textTheme.bodyMedium!.copyWith(
                 fontSize: 24,
                 fontWeight: FontWeight.w700,
-                color: AppColors.darkText,
+                color: AppColors.darkText(context),
               ),
               inputFormatters: [FilteringTextInputFormatter.digitsOnly],
               decoration: const InputDecoration(

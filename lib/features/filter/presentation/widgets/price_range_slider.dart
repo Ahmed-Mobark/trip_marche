@@ -52,7 +52,7 @@ class PriceRangeSlider extends StatelessWidget {
           max: max,
           divisions: divisions,
           activeColor: AppColors.primary,
-          inactiveColor: AppColors.border,
+          inactiveColor: AppColors.border(context),
           labels: RangeLabels(
             '${values.start.round()}',
             '${values.end.round()}',

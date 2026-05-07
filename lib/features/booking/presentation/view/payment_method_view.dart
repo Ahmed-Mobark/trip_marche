@@ -24,17 +24,17 @@ class _PaymentMethodViewState extends State<PaymentMethodView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.background,
+      backgroundColor: AppColors.background(context),
       appBar: AppBar(
-        backgroundColor: AppColors.background,
+        backgroundColor: AppColors.background(context),
         elevation: 0,
         leading: IconButton(
-          icon: Icon(Icons.arrow_back_ios_new_rounded, color: AppColors.darkText),
+          icon: Icon(Icons.arrow_back_ios_new_rounded, color: AppColors.darkText(context)),
           onPressed: () => Navigator.pop(context),
         ),
         title: Text(
           context.tr.bookingPaymentMethodTitle,
-          style: AppTextStyles.bodyMedium(color: AppColors.darkText),
+          style: AppTextStyles.bodyMedium(color: AppColors.darkText(context)),
         ),
         centerTitle: true,
       ),
@@ -73,7 +73,7 @@ class _PaymentMethodViewState extends State<PaymentMethodView> {
               const SizedBox(height: 24),
               Text(
                 context.tr.bookingSavedCards,
-                style: AppTextStyles.bodyMedium(color: AppColors.darkText),
+                style: AppTextStyles.bodyMedium(color: AppColors.darkText(context)),
               ),
               const SizedBox(height: 12),
               ..._buildSavedCards(),
@@ -102,15 +102,15 @@ class _PaymentMethodViewState extends State<PaymentMethodView> {
             gradient: isSelected
                 ? LinearGradient(colors: [AppColors.primary, AppColors.primary])
                 : null,
-            color: isSelected ? null : AppColors.inputBg,
+            color: isSelected ? null : AppColors.inputBg(context),
             borderRadius: BorderRadius.circular(14),
-            border: isSelected ? null : Border.all(color: AppColors.border),
+            border: isSelected ? null : Border.all(color: AppColors.border(context)),
           ),
           child: Row(
             children: [
               Icon(
                 Iconsax.card,
-                color: isSelected ? AppColors.onImage : AppColors.greyText,
+                color: isSelected ? AppColors.onImage : AppColors.greyText(context),
                 size: 24,
               ),
               const SizedBox(width: 14),
@@ -123,7 +123,7 @@ class _PaymentMethodViewState extends State<PaymentMethodView> {
                       style: AppTextStyles.bodyMedium(
                         color: isSelected
                             ? AppColors.onImage
-                            : AppColors.darkText,
+                            : AppColors.darkText(context),
                       ),
                     ),
                     Text(
@@ -131,7 +131,7 @@ class _PaymentMethodViewState extends State<PaymentMethodView> {
                       style: AppTextStyles.bodyMedium(
                         color: isSelected
                             ? AppColors.onImage.withValues(alpha: 0.70)
-                            : AppColors.greyText,
+                            : AppColors.greyText(context),
                       ),
                     ),
                   ],
@@ -143,7 +143,7 @@ class _PaymentMethodViewState extends State<PaymentMethodView> {
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
                   border: Border.all(
-                    color: isSelected ? AppColors.onImage : AppColors.greyText,
+                    color: isSelected ? AppColors.onImage : AppColors.greyText(context),
                     width: 2,
                   ),
                   color: isSelected ? AppColors.onImage : AppColors.transparent,
@@ -175,7 +175,7 @@ class _PaymentMethodViewState extends State<PaymentMethodView> {
         padding: const EdgeInsets.all(16),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(14),
-          border: Border.all(color: AppColors.border, style: BorderStyle.solid),
+          border: Border.all(color: AppColors.border(context), style: BorderStyle.solid),
         ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,

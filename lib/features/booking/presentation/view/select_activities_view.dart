@@ -87,17 +87,17 @@ class _SelectActivitiesViewState extends State<SelectActivitiesView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.background,
+      backgroundColor: AppColors.background(context),
       appBar: AppBar(
-        backgroundColor: AppColors.background,
+        backgroundColor: AppColors.background(context),
         elevation: 0,
         leading: IconButton(
-          icon: Icon(Icons.arrow_back_ios_new_rounded, color: AppColors.darkText),
+          icon: Icon(Icons.arrow_back_ios_new_rounded, color: AppColors.darkText(context)),
           onPressed: () => Navigator.pop(context),
         ),
         title: Text(
           'Select Activities',
-          style: AppTextStyles.subtitle(color: AppColors.darkText),
+          style: AppTextStyles.subtitle(color: AppColors.darkText(context)),
         ),
         centerTitle: true,
       ),
@@ -138,7 +138,7 @@ class _SelectActivitiesViewState extends State<SelectActivitiesView> {
         bottom: MediaQuery.of(context).padding.bottom + 16,
       ),
       decoration: BoxDecoration(
-        color: AppColors.background,
+        color: AppColors.background(context),
         boxShadow: [
           BoxShadow(
             color: AppColors.shadow.withValues(alpha: 0.06),
@@ -155,7 +155,7 @@ class _SelectActivitiesViewState extends State<SelectActivitiesView> {
             children: [
               Text(
                 'Activities Total',
-                style: AppTextStyles.bodyMedium(color: AppColors.greyText),
+                style: AppTextStyles.bodyMedium(color: AppColors.greyText(context)),
               ),
               Text(
                 '+${_totalActivitiesPrice.toStringAsFixed(0)}',

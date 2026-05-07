@@ -63,7 +63,7 @@ class WishlistTripCard extends StatelessWidget {
       child: Container(
         padding: EdgeInsetsDirectional.all(10.w),
         decoration: BoxDecoration(
-          color: AppColors.cardBg,
+          color: AppColors.cardBg(context),
           borderRadius: BorderRadius.circular(16.r),
         ),
         child: Row(
@@ -125,7 +125,7 @@ class WishlistTripCard extends StatelessWidget {
                           overflow: TextOverflow.ellipsis,
                           style:
                               AppTextStyles.bodySmall(
-                                color: AppColors.darkText,
+                                color: AppColors.darkText(context),
                               ).copyWith(
                                 fontWeight: FontWeight.w700,
                                 fontSize: 16.sp,
@@ -139,7 +139,7 @@ class WishlistTripCard extends StatelessWidget {
                           width: 40.w,
                           height: 40.w,
                           decoration: BoxDecoration(
-                            color: AppColors.background,
+                            color: AppColors.background(context),
                             shape: BoxShape.circle,
                           ),
                           child: Icon(
@@ -147,7 +147,7 @@ class WishlistTripCard extends StatelessWidget {
                             size: 18.sp,
                             color: trip.isWishlisted
                                 ? AppColors.error
-                                : AppColors.greyText,
+                                : AppColors.greyText(context),
                           ),
                         ),
                       ),
@@ -165,13 +165,13 @@ class WishlistTripCard extends StatelessWidget {
                       Text(
                         trip.rating.toStringAsFixed(1),
                         style: AppTextStyles.bodySmall(
-                          color: AppColors.darkText,
+                          color: AppColors.darkText(context),
                         ).copyWith(fontWeight: FontWeight.w700),
                       ),
                       Text(
                         ' (${trip.reviewsCount})',
                         style: AppTextStyles.bodySmall(
-                          color: AppColors.greyText,
+                          color: AppColors.greyText(context),
                         ),
                       ),
                     ],
@@ -182,7 +182,7 @@ class WishlistTripCard extends StatelessWidget {
                       Icon(
                         Iconsax.location,
                         size: 14.sp,
-                        color: AppColors.greyText,
+                        color: AppColors.greyText(context),
                       ),
                       SizedBox(width: 6.w),
                       Expanded(
@@ -191,7 +191,7 @@ class WishlistTripCard extends StatelessWidget {
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                           style: AppTextStyles.bodySmall(
-                            color: AppColors.greyText,
+                            color: AppColors.greyText(context),
                           ),
                         ),
                       ),
@@ -203,7 +203,7 @@ class WishlistTripCard extends StatelessWidget {
                       Icon(
                         Iconsax.calendar_1,
                         size: 14.sp,
-                        color: AppColors.greyText,
+                        color: AppColors.greyText(context),
                       ),
                       SizedBox(width: 6.w),
                       Expanded(
@@ -212,7 +212,7 @@ class WishlistTripCard extends StatelessWidget {
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                           style: AppTextStyles.bodySmall(
-                            color: AppColors.greyText,
+                            color: AppColors.greyText(context),
                           ),
                         ),
                       ),
@@ -251,7 +251,7 @@ class WishlistTripCard extends StatelessWidget {
                           ),
                           style:
                               AppTextStyles.heading3(
-                                color: AppColors.darkText,
+                                color: AppColors.darkText(context),
                               ).copyWith(
                                 fontWeight: FontWeight.w800,
                                 fontSize: 17.sp,
@@ -263,7 +263,7 @@ class WishlistTripCard extends StatelessWidget {
                             currency: trip.currency,
                           ),
                           style: AppTextStyles.bodySmall(
-                            color: AppColors.greyText,
+                            color: AppColors.greyText(context),
                           ).copyWith(decoration: TextDecoration.lineThrough),
                         ),
                       ] else
@@ -274,7 +274,7 @@ class WishlistTripCard extends StatelessWidget {
                           ),
                           style:
                               AppTextStyles.heading3(
-                                color: AppColors.darkText,
+                                color: AppColors.darkText(context),
                               ).copyWith(
                                 fontWeight: FontWeight.w800,
                                 fontSize: 17.sp,
@@ -283,7 +283,7 @@ class WishlistTripCard extends StatelessWidget {
                       Text(
                         '/${context.tr.homePerPerson}',
                         style: AppTextStyles.bodySmall(
-                          color: AppColors.greyText,
+                          color: AppColors.greyText(context),
                         ),
                       ),
                     ],

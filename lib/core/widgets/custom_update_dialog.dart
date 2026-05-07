@@ -16,7 +16,7 @@ class CustomUpdateDialog extends StatelessWidget {
     return PopScope(
       canPop: isMandatory ? false : true,
       child: Dialog(
-        backgroundColor: AppColors.cardBg,
+        backgroundColor: AppColors.cardBg(context),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(20.0),
         ),
@@ -33,7 +33,7 @@ class CustomUpdateDialog extends StatelessWidget {
               const SizedBox(height: 20),
               Text(
                 context.tr.updateAvailableTitle,
-                style: AppTextStyles.heading2(color: AppColors.bodyText),
+                style: AppTextStyles.heading2(color: AppColors.bodyText(context)),
               ),
               const SizedBox(height: 20),
               Text(
@@ -41,7 +41,7 @@ class CustomUpdateDialog extends StatelessWidget {
                     ? context.tr.updateMandatoryMessage
                     : context.tr.updateOptionalMessage,
                 textAlign: TextAlign.center,
-                style: AppTextStyles.body(color: AppColors.bodyText),
+                style: AppTextStyles.body(color: AppColors.bodyText(context)),
               ),
               const SizedBox(height: 30),
               Row(
@@ -81,7 +81,7 @@ class CustomUpdateDialog extends StatelessWidget {
                       child: Text(
                         context.tr.updateNow,
                         style: AppTextStyles.bodyMedium(
-                          color: AppColors.onPrimary,
+                          color: AppColors.onPrimary(context),
                         ),
                       ),
                     ),

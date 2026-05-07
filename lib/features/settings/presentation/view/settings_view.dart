@@ -17,17 +17,14 @@ class SettingsView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Rebuild on theme change so the toggle and surfaces update on the same
-    // frame as `setThemeMode`. Brightness itself is owned by `MyApp` (single
-    // source of truth) — we only READ via Theme.of here.
     return ValueListenableBuilder<AdaptiveThemeMode>(
       valueListenable: AdaptiveTheme.of(context).modeChangeNotifier,
       builder: (context, _, __) {
         final isDark = Theme.of(context).brightness == Brightness.dark;
-        final pageBg = AppColors.background;
-        final titleColor = AppColors.bodyText;
-        final muted = AppColors.greyText;
-        final borderTone = AppColors.border;
+        final pageBg = AppColors.background(context);
+        final titleColor = AppColors.bodyText(context);
+        final muted = AppColors.greyText(context);
+        final borderTone = AppColors.border(context);
 
         return Scaffold(
           backgroundColor: pageBg,

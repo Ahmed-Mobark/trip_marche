@@ -23,9 +23,9 @@ class TripDetailItem extends StatelessWidget {
         vertical: 12.h,
       ),
       decoration: BoxDecoration(
-        color: AppColors.lightBg,
+        color: AppColors.lightBg(context),
         borderRadius: BorderRadius.circular(12.r),
-        border: Border.all(color: AppColors.border),
+        border: Border.all(color: AppColors.border(context)),
       ),
       child: Column(
         children: [
@@ -33,10 +33,10 @@ class TripDetailItem extends StatelessWidget {
           SizedBox(height: 6.h),
           Text(
             value,
-            style: AppTextStyles.bodyMedium(color: AppColors.darkText),
+            style: AppTextStyles.bodyMedium(color: AppColors.darkText(context)),
           ),
           SizedBox(height: 2.h),
-          Text(label, style: AppTextStyles.caption(color: AppColors.greyText)),
+          Text(label, style: AppTextStyles.caption(color: AppColors.greyText(context))),
         ],
       ),
     );

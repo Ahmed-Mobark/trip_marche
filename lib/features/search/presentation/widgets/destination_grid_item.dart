@@ -23,10 +23,10 @@ class DestinationGridItem extends StatelessWidget {
               imageUrl: destination.imageUrl,
               fit: BoxFit.cover,
               placeholder: (context, url) =>
-                  Container(color: AppColors.inputBg),
+                  Container(color: AppColors.inputBg(context)),
               errorWidget: (context, url, error) => Container(
-                color: AppColors.inputBg,
-                child: Icon(Icons.image, color: AppColors.greyText),
+                color: AppColors.inputBg(context),
+                child: Icon(Icons.image, color: AppColors.greyText(context)),
               ),
             ),
             Container(

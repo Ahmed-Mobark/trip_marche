@@ -57,7 +57,7 @@ class MyTripCatalogCard extends StatelessWidget {
     final metaStyle = TextStyle(
       fontSize: 13.sp,
       fontWeight: FontWeight.w400,
-      color: AppColors.catalogMetaMuted,
+      color: AppColors.catalogMetaMuted(context),
       height: 1.3,
     );
 
@@ -80,7 +80,7 @@ class MyTripCatalogCard extends StatelessWidget {
           borderRadius: BorderRadius.circular(cardRadius),
           child: Ink(
             decoration: BoxDecoration(
-              color: AppColors.cardBg,
+              color: AppColors.cardBg(context),
               borderRadius: BorderRadius.circular(cardRadius),
             ),
             child: ClipRRect(
@@ -125,7 +125,7 @@ class MyTripCatalogCard extends StatelessWidget {
                                   style: TextStyle(
                                     fontSize: 18.sp,
                                     fontWeight: FontWeight.w700,
-                                    color: AppColors.darkText,
+                                    color: AppColors.darkText(context),
                                     height: 1.25,
                                   ),
                                 ),
@@ -144,7 +144,7 @@ class MyTripCatalogCard extends StatelessWidget {
                                       style: TextStyle(
                                         fontSize: 14.sp,
                                         fontWeight: FontWeight.w700,
-                                        color: AppColors.darkText,
+                                        color: AppColors.darkText(context),
                                         height: 1.2,
                                       ),
                                     ),
@@ -170,7 +170,7 @@ class MyTripCatalogCard extends StatelessWidget {
                                     Icon(
                                       Iconsax.location,
                                       size: 14.sp,
-                                      color: AppColors.catalogMetaMuted,
+                                      color: AppColors.catalogMetaMuted(context),
                                     ),
                                     SizedBox(width: 5.w),
                                     Expanded(
@@ -190,7 +190,7 @@ class MyTripCatalogCard extends StatelessWidget {
                                     Icon(
                                       Iconsax.calendar_1,
                                       size: 14.sp,
-                                      color: AppColors.catalogMetaMuted,
+                                      color: AppColors.catalogMetaMuted(context),
                                     ),
                                     SizedBox(width: 5.w),
                                     Expanded(
@@ -219,12 +219,12 @@ class MyTripCatalogCard extends StatelessWidget {
                                         style: TextStyle(
                                           fontSize: 13.sp,
                                           fontWeight: FontWeight.w400,
-                                          color: AppColors.catalogMetaMuted,
+                                          color: AppColors.catalogMetaMuted(context),
                                           height: 1.2,
                                           decoration:
                                               TextDecoration.lineThrough,
                                           decorationColor:
-                                              AppColors.catalogMetaMuted,
+                                              AppColors.catalogMetaMuted(context),
                                         ),
                                       ),
                                       SizedBox(width: 6.w),
@@ -238,7 +238,7 @@ class MyTripCatalogCard extends StatelessWidget {
                                       style: TextStyle(
                                         fontSize: 19.sp,
                                         fontWeight: FontWeight.w800,
-                                        color: AppColors.darkText,
+                                        color: AppColors.darkText(context),
                                         height: 1.15,
                                       ),
                                     ),
@@ -252,7 +252,7 @@ class MyTripCatalogCard extends StatelessWidget {
                                         style: TextStyle(
                                           fontSize: 12.sp,
                                           fontWeight: FontWeight.w400,
-                                          color: AppColors.catalogMetaMuted,
+                                          color: AppColors.catalogMetaMuted(context),
                                           height: 1.2,
                                         ),
                                       ),
@@ -299,7 +299,7 @@ class _CatalogFavoriteButton extends StatelessWidget {
           ? context.tr.myTripsCatalogRemoveWishlist
           : context.tr.myTripsCatalogSaveWishlist,
       child: Material(
-        color: AppColors.cardBg,
+        color: AppColors.cardBg(context),
         shape: const CircleBorder(),
         elevation: 2,
         shadowColor: AppColors.shadow.withValues(alpha: 0.12),
@@ -317,7 +317,7 @@ class _CatalogFavoriteButton extends StatelessWidget {
                   size: 18.sp,
                   color: isFavorite
                       ? AppColors.error
-                      : AppColors.catalogMetaMuted,
+                      : AppColors.catalogMetaMuted(context),
                 ),
               ),
             ),

@@ -54,20 +54,20 @@ class _MyFollowingsViewState extends State<MyFollowingsView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.background,
+      backgroundColor: AppColors.background(context),
       appBar: AppBar(
-        backgroundColor: AppColors.background,
+        backgroundColor: AppColors.background(context),
         elevation: 0,
         leading: IconButton(
           icon: Icon(
             Icons.arrow_back_ios_new_rounded,
-            color: AppColors.darkText,
+            color: AppColors.darkText(context),
           ),
           onPressed: () => Navigator.pop(context),
         ),
         title: Text(
           context.tr.followingsTitle,
-          style: AppTextStyles.subtitle(color: AppColors.darkText),
+          style: AppTextStyles.subtitle(color: AppColors.darkText(context)),
         ),
         centerTitle: true,
       ),
@@ -88,7 +88,7 @@ class _MyFollowingsViewState extends State<MyFollowingsView> {
                   return Text(
                     context.tr.followingsCountTitle(_companies.length),
                     style: AppTextStyles.bodyMedium(
-                      color: AppColors.darkText,
+                      color: AppColors.darkText(context),
                     ).copyWith(fontWeight: FontWeight.w700),
                   );
                 }
@@ -142,10 +142,10 @@ class _FollowingCompanyCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final borderColor = AppColors.border.withValues(alpha: 0.8);
+    final borderColor = AppColors.border(context).withValues(alpha: 0.8);
 
     return Material(
-      color: AppColors.cardBg,
+      color: AppColors.cardBg(context),
       borderRadius: BorderRadius.circular(18.r),
       child: InkWell(
         borderRadius: BorderRadius.circular(18.r),
@@ -162,9 +162,9 @@ class _FollowingCompanyCard extends StatelessWidget {
                 width: 54.r,
                 height: 54.r,
                 decoration: BoxDecoration(
-                  color: AppColors.lightBg,
+                  color: AppColors.lightBg(context),
                   borderRadius: BorderRadius.circular(14.r),
-                  border: Border.all(color: AppColors.border),
+                  border: Border.all(color: AppColors.border(context)),
                 ),
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(14.r),
@@ -173,7 +173,7 @@ class _FollowingCompanyCard extends StatelessWidget {
                     fit: BoxFit.cover,
                     errorBuilder: (_, __, ___) => Icon(
                       Iconsax.building,
-                      color: AppColors.greyText,
+                      color: AppColors.greyText(context),
                       size: 22.sp,
                     ),
                   ),
@@ -189,7 +189,7 @@ class _FollowingCompanyCard extends StatelessWidget {
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                       style: AppTextStyles.bodyMedium(
-                        color: AppColors.darkText,
+                        color: AppColors.darkText(context),
                       ).copyWith(fontWeight: FontWeight.w800, fontSize: 16.sp),
                     ),
                     SizedBox(height: 6.h),
@@ -204,13 +204,13 @@ class _FollowingCompanyCard extends StatelessWidget {
                         Text(
                           ratingValue,
                           style: AppTextStyles.bodySmall(
-                            color: AppColors.darkText,
+                            color: AppColors.darkText(context),
                           ).copyWith(fontWeight: FontWeight.w700),
                         ),
                         Text(
                           '($ratingCount)',
                           style: AppTextStyles.bodySmall(
-                            color: AppColors.greyText,
+                            color: AppColors.greyText(context),
                           ),
                         ),
                       ],

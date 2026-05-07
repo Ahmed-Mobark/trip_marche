@@ -32,17 +32,17 @@ class _ContactInfoViewState extends State<ContactInfoView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.background,
+      backgroundColor: AppColors.background(context),
       appBar: AppBar(
-        backgroundColor: AppColors.background,
+        backgroundColor: AppColors.background(context),
         elevation: 0,
         leading: IconButton(
-          icon: Icon(Icons.arrow_back_ios_new_rounded, color: AppColors.darkText),
+          icon: Icon(Icons.arrow_back_ios_new_rounded, color: AppColors.darkText(context)),
           onPressed: () => Navigator.pop(context),
         ),
         title: Text(
           context.tr.bookingContactInfoTitle,
-          style: AppTextStyles.bodyMedium(color: AppColors.darkText),
+          style: AppTextStyles.bodyMedium(color: AppColors.darkText(context)),
         ),
         centerTitle: true,
       ),
@@ -120,7 +120,7 @@ class _ContactInfoViewState extends State<ContactInfoView> {
           style: Theme.of(context).textTheme.bodyMedium!.copyWith(
             fontSize: 14,
             fontWeight: FontWeight.w500,
-            color: AppColors.darkText,
+            color: AppColors.darkText(context),
           ),
           validator: (value) {
             if (value == null || value.isEmpty) {
@@ -132,18 +132,18 @@ class _ContactInfoViewState extends State<ContactInfoView> {
             hintText: hint,
             hintStyle: Theme.of(context).textTheme.bodyMedium!.copyWith(
               fontSize: 14,
-              color: AppColors.greyText,
+              color: AppColors.greyText(context),
             ),
-            prefixIcon: Icon(icon, color: AppColors.greyText, size: 20),
+            prefixIcon: Icon(icon, color: AppColors.greyText(context), size: 20),
             filled: true,
-            fillColor: AppColors.inputBg,
+            fillColor: AppColors.inputBg(context),
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(12),
-              borderSide: BorderSide(color: AppColors.border),
+              borderSide: BorderSide(color: AppColors.border(context)),
             ),
             enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(12),
-              borderSide: BorderSide(color: AppColors.border),
+              borderSide: BorderSide(color: AppColors.border(context)),
             ),
             focusedBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(12),

@@ -37,7 +37,7 @@ class _WishlistFilterBody extends StatelessWidget {
     final bottomCtaHeight = 56.h;
 
     return Scaffold(
-      backgroundColor: AppColors.background,
+      backgroundColor: AppColors.background(context),
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(kToolbarHeight + 10.h),
         child: SafeArea(
@@ -53,10 +53,10 @@ class _WishlistFilterBody extends StatelessWidget {
                   bottom: 6.h,
                 ),
                 decoration: BoxDecoration(
-                  color: AppColors.background,
+                  color: AppColors.background(context),
                   border: Border(
                     bottom: BorderSide(
-                      color: AppColors.border.withValues(alpha: 0.7),
+                      color: AppColors.border(context).withValues(alpha: 0.7),
                     ),
                   ),
                 ),
@@ -65,7 +65,7 @@ class _WishlistFilterBody extends StatelessWidget {
                     IconButton(
                       onPressed: () => Navigator.pop(context),
                       icon: Icon(Iconsax.close_circle, size: 22.sp),
-                      color: AppColors.greyText,
+                      color: AppColors.greyText(context),
                       padding: EdgeInsetsDirectional.zero,
                       constraints: const BoxConstraints(),
                     ),
@@ -74,7 +74,7 @@ class _WishlistFilterBody extends StatelessWidget {
                       child: Text(
                         context.tr.wishlistFiltersTitle,
                         style: AppTextStyles.heading3(
-                          color: AppColors.darkText,
+                          color: AppColors.darkText(context),
                         ),
                       ),
                     ),
@@ -144,7 +144,7 @@ class _WishlistFilterBody extends StatelessWidget {
                 SliderTheme(
                   data: SliderTheme.of(context).copyWith(
                     activeTrackColor: AppColors.primary,
-                    inactiveTrackColor: AppColors.border,
+                    inactiveTrackColor: AppColors.border(context),
                     thumbColor: AppColors.primary,
                     overlayColor: AppColors.primary.withValues(alpha: 0.12),
                     rangeThumbShape: const RoundRangeSliderThumbShape(
@@ -438,7 +438,7 @@ class _WishlistFilterBody extends StatelessWidget {
             14.h,
           ),
           decoration: BoxDecoration(
-            color: AppColors.cardBg,
+            color: AppColors.cardBg(context),
             boxShadow: [
               BoxShadow(
                 color: AppColors.shadow.withValues(alpha: 0.08),
@@ -467,7 +467,7 @@ class _WishlistFilterBody extends StatelessWidget {
   }) async {
     return showModalBottomSheet<String>(
       context: context,
-      backgroundColor: AppColors.cardBg,
+      backgroundColor: AppColors.cardBg(context),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(top: Radius.circular(18.r)),
       ),
@@ -490,14 +490,14 @@ class _WishlistFilterBody extends StatelessWidget {
                       child: Text(
                         title,
                         style: AppTextStyles.heading3(
-                          color: AppColors.darkText,
+                          color: AppColors.darkText(context),
                         ),
                       ),
                     ),
                     IconButton(
                       onPressed: () => Navigator.pop(context),
                       icon: Icon(Iconsax.close_circle, size: 22.sp),
-                      color: AppColors.greyText,
+                      color: AppColors.greyText(context),
                     ),
                   ],
                 ),
@@ -508,7 +508,7 @@ class _WishlistFilterBody extends StatelessWidget {
                     title: Text(
                       o,
                       style: AppTextStyles.bodyMedium(
-                        color: AppColors.darkText,
+                        color: AppColors.darkText(context),
                       ),
                     ),
                     trailing: selected == o

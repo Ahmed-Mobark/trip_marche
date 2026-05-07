@@ -92,7 +92,7 @@ class PromoBannerItem extends StatelessWidget {
                             child: Text(
                               buttonText,
                               style: AppTextStyles.bodyMedium(
-                                color: AppColors.darkText,
+                                color: AppColors.darkText(context),
                               ),
                             ),
                           ),

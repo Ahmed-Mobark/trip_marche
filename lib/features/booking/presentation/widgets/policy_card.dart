@@ -41,11 +41,11 @@ class PolicyCard extends StatelessWidget {
                   children: [
                     Text(
                       title,
-                      style: AppTextStyles.subtitle(color: AppColors.darkText),
+                      style: AppTextStyles.subtitle(color: AppColors.darkText(context)),
                     ),
                     Text(
                       subtitle,
-                      style: AppTextStyles.bodySmall(color: AppColors.greyText),
+                      style: AppTextStyles.bodySmall(color: AppColors.greyText(context)),
                     ),
                   ],
                 ),

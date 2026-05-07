@@ -28,7 +28,7 @@ class TripDetailsReviewsSection extends StatelessWidget {
               child: Text(
                 context.tr.tripDetailsReviewsTitle,
                 style: AppTextStyles.body(
-                  color: AppColors.darkText,
+                  color: AppColors.darkText(context),
                 ).copyWith(fontSize: 16.sp, fontWeight: FontWeight.w500),
               ),
             ),
@@ -60,7 +60,7 @@ class TripDetailsReviewsSection extends StatelessWidget {
       isScrollControlled: true,
       isDismissible: true,
       enableDrag: true,
-      backgroundColor: AppColors.cardBg,
+      backgroundColor: AppColors.cardBg(context),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(top: Radius.circular(20.r)),
       ),
@@ -75,7 +75,7 @@ class TripDetailsReviewsSection extends StatelessWidget {
                   width: 40.w,
                   height: 4.h,
                   decoration: BoxDecoration(
-                    color: AppColors.border,
+                    color: AppColors.border(context),
                     borderRadius: BorderRadius.circular(999.r),
                   ),
                 ),
@@ -85,7 +85,7 @@ class TripDetailsReviewsSection extends StatelessWidget {
                     Expanded(
                       child: Text(
                         context.tr.tripDetailsReviewsTitle,
-                        style: AppTextStyles.heading3(color: AppColors.darkText)
+                        style: AppTextStyles.heading3(color: AppColors.darkText(context))
                             .copyWith(
                               fontSize: 16.sp,
                               fontWeight: FontWeight.w700,
@@ -98,7 +98,7 @@ class TripDetailsReviewsSection extends StatelessWidget {
                       icon: Icon(
                         Icons.close_rounded,
                         size: 20.sp,
-                        color: AppColors.darkText,
+                        color: AppColors.darkText(context),
                       ),
                     ),
                   ],
@@ -135,7 +135,7 @@ class TripDetailsReviewCard extends StatelessWidget {
     return TripDetailsInfoCard(
       withShadow: false,
       borderRadius: 16.r,
-      borderColor: AppColors.border.withValues(alpha: 0.75),
+      borderColor: AppColors.border(context).withValues(alpha: 0.75),
       padding: EdgeInsetsDirectional.fromSTEB(14.w, 14.h, 14.w, 14.h),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -162,7 +162,7 @@ class TripDetailsReviewCard extends StatelessWidget {
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                       style: AppTextStyles.heading3(
-                        color: AppColors.darkText,
+                        color: AppColors.darkText(context),
                       ).copyWith(fontSize: 15.sp, fontWeight: FontWeight.w700),
                     ),
                     SizedBox(height: 2.h),
@@ -179,7 +179,7 @@ class TripDetailsReviewCard extends StatelessWidget {
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                             style: AppTextStyles.body(
-                              color: AppColors.searchResultMetaSlate,
+                              color: AppColors.greyText(context),
                             ).copyWith(fontSize: 12.sp),
                           ),
                         ),
@@ -196,7 +196,7 @@ class TripDetailsReviewCard extends StatelessWidget {
                             size: 14.sp,
                             color: i < stars
                                 ? AppColors.starYellow
-                                : AppColors.border,
+                                : AppColors.border(context),
                           ),
                         ),
                       ),
@@ -212,7 +212,7 @@ class TripDetailsReviewCard extends StatelessWidget {
             maxLines: 4,
             overflow: TextOverflow.ellipsis,
             style: AppTextStyles.body(
-              color: AppColors.searchResultMetaSlate,
+              color: AppColors.greyText(context),
             ).copyWith(fontSize: 13.sp, height: 1.35),
           ),
           if (review.images.isNotEmpty) ...[

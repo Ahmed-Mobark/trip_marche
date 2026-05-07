@@ -50,9 +50,9 @@ class SearchResultSearchBar extends StatelessWidget {
       height: 56.h,
       padding: EdgeInsetsDirectional.symmetric(horizontal: 16.w),
       decoration: BoxDecoration(
-        color: AppColors.cardBg,
+        color: AppColors.cardBg(context),
         borderRadius: BorderRadius.circular(999.r),
-        border: Border.all(color: AppColors.border),
+        border: Border.all(color: AppColors.border(context)),
       ),
       child: Row(
         children: [
@@ -118,9 +118,9 @@ class _ActionPill extends StatelessWidget {
       height: 44.h,
       padding: EdgeInsetsDirectional.symmetric(horizontal: 14.w),
       decoration: BoxDecoration(
-        color: AppColors.cardBg,
+        color: AppColors.cardBg(context),
         borderRadius: BorderRadius.circular(999.r),
-        border: Border.all(color: AppColors.border),
+        border: Border.all(color: AppColors.border(context)),
       ),
       child: Row(
         children: [
@@ -134,7 +134,7 @@ class _ActionPill extends StatelessWidget {
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
               style: AppTextStyles.bodyMedium(
-                color: AppColors.darkText,
+                color: AppColors.darkText(context),
               ).copyWith(fontSize: 15.sp, fontWeight: FontWeight.w500),
               textAlign: iconLeading ? TextAlign.end : TextAlign.center,
             ),

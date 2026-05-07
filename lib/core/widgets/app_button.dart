@@ -76,14 +76,14 @@ class AppButton extends StatelessWidget {
                       style:
                           style ??
                           TextStyles.textViewSemiBold16.copyWith(
-                            color: textColor ?? AppColors.onPrimary,
+                            color: textColor ?? AppColors.onPrimary(context),
                           ),
                     ),
                     if (isBackIcon) SizedBox(width: 8.w),
                     if (isBackIcon)
                       Icon(
                         Icons.arrow_forward,
-                        color: textColor ?? AppColors.onPrimary,
+                        color: textColor ?? AppColors.onPrimary(context),
                         size: 16.w,
                       ),
                   ],

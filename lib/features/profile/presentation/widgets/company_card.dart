@@ -28,9 +28,9 @@ class CompanyCard extends StatelessWidget {
       child: Container(
         padding: const EdgeInsets.all(16),
         decoration: BoxDecoration(
-          color: AppColors.background,
+          color: AppColors.background(context),
           borderRadius: BorderRadius.circular(12),
-          border: Border.all(color: AppColors.border),
+          border: Border.all(color: AppColors.border(context)),
         ),
         child: Row(
           children: [
@@ -46,12 +46,12 @@ class CompanyCard extends StatelessWidget {
                   width: 50,
                   height: 50,
                   decoration: BoxDecoration(
-                    color: AppColors.lightBg,
+                    color: AppColors.lightBg(context),
                     borderRadius: BorderRadius.circular(8),
                   ),
                   child: Icon(
                     Iconsax.building,
-                    color: AppColors.greyText,
+                    color: AppColors.greyText(context),
                     size: 24,
                   ),
                 ),
@@ -75,7 +75,7 @@ class CompanyCard extends StatelessWidget {
                     style: Theme.of(context).textTheme.bodyMedium!.copyWith(
                       fontSize: 12,
                       fontWeight: FontWeight.w400,
-                      color: AppColors.greyText,
+                      color: AppColors.greyText(context),
                     ),
                   ),
                 ],
@@ -95,7 +95,7 @@ class CompanyCard extends StatelessWidget {
                       : AppColors.transparent,
                   borderRadius: BorderRadius.circular(20),
                   border: Border.all(
-                    color: isFollowing ? AppColors.primary : AppColors.border,
+                    color: isFollowing ? AppColors.primary : AppColors.border(context),
                   ),
                 ),
                 child: Text(

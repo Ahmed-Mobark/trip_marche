@@ -28,7 +28,7 @@ class SignUpView extends StatelessWidget {
       child: Builder(
         builder: (context) {
           return Scaffold(
-            backgroundColor: AppColors.background,
+            backgroundColor: AppColors.background(context),
             body: BlocListener<SignUpCubit, SignUpState>(
               listenWhen: (p, n) => p.status != n.status,
               listener: (context, state) {
@@ -65,7 +65,7 @@ class SignUpView extends StatelessWidget {
                       Text(
                         context.tr.authSignUpSubtitle,
                         style: AppTextStyles.heading2(
-                          color: AppColors.darkText,
+                          color: AppColors.darkText(context),
                         ).copyWith(fontWeight: FontWeight.w800),
                       ),
                       SizedBox(height: 18.h),
@@ -85,7 +85,7 @@ class SignUpView extends StatelessWidget {
                           child: Icon(
                             Icons.person_outline,
                             size: 22.sp,
-                            color: AppColors.greyText,
+                            color: AppColors.greyText(context),
                           ),
                         ),
                       ),
@@ -106,7 +106,7 @@ class SignUpView extends StatelessWidget {
                             width: 20,
                             height: 20,
                             colorFilter: ColorFilter.mode(
-                              AppColors.greyText,
+                              AppColors.greyText(context),
                               BlendMode.srcIn,
                             ),
                           ),
@@ -138,7 +138,7 @@ class SignUpView extends StatelessWidget {
                                 width: 20,
                                 height: 20,
                                 colorFilter: ColorFilter.mode(
-                                  AppColors.greyText,
+                                  AppColors.greyText(context),
                                   BlendMode.srcIn,
                                 ),
                               ),
@@ -148,7 +148,7 @@ class SignUpView extends StatelessWidget {
                                 state.obscurePassword
                                     ? Icons.visibility_off_outlined
                                     : Icons.visibility_outlined,
-                                color: AppColors.greyText,
+                                color: AppColors.greyText(context),
                                 size: 20.sp,
                               ),
                               onPressed: context
@@ -270,6 +270,6 @@ class _FieldTitle extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Text(text, style: AppTextStyles.subtitle(color: AppColors.darkText));
+    return Text(text, style: AppTextStyles.subtitle(color: AppColors.darkText(context)));
   }
 }

@@ -44,9 +44,6 @@ class TripDetailsStatCell extends StatelessWidget {
 
   final TripDetailsStatCellData data;
 
-  static final Color _cardBorder =
-      AppColors.border.withValues(alpha: 0.35);
-
   /// Figma: icon ~20, label 12 / w400, value 16 / w600, tight vertical rhythm.
   static const double _cardRadius = 14;
   static const double _cardPad = 14;
@@ -58,10 +55,11 @@ class TripDetailsStatCell extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final cardBorder = AppColors.border(context).withValues(alpha: 0.35);
     return TripDetailsInfoCard(
       padding: const EdgeInsetsDirectional.all(_cardPad),
       borderRadius: _cardRadius,
-      borderColor: _cardBorder,
+      borderColor: cardBorder,
       withShadow: false,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -81,7 +79,7 @@ class TripDetailsStatCell extends StatelessWidget {
               fontWeight: FontWeight.w400,
               height: 1.2,
               letterSpacing: 0,
-              color: AppColors.tripDetailsSecondaryGrey,
+              color: AppColors.tripDetailsSecondaryGrey(context),
             ),
           ),
           const SizedBox(height: _gapLabelToValue),
@@ -93,7 +91,7 @@ class TripDetailsStatCell extends StatelessWidget {
               fontWeight: FontWeight.w600,
               height: 1.15,
               letterSpacing: 0,
-              color: AppColors.darkText,
+              color: AppColors.darkText(context),
             ),
             maxLines: 2,
             overflow: TextOverflow.ellipsis,

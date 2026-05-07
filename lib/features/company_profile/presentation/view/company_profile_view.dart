@@ -19,14 +19,14 @@ class _CompanyProfileViewState extends State<CompanyProfileView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.background,
+      backgroundColor: AppColors.background(context),
       body: CustomScrollView(
         slivers: [
           // Cover Image + Back Button
           SliverAppBar(
             expandedHeight: 200,
             pinned: true,
-            backgroundColor: AppColors.background,
+            backgroundColor: AppColors.background(context),
             leading: Padding(
               padding: const EdgeInsets.all(8.0),
               child: CircleAvatar(
@@ -34,7 +34,7 @@ class _CompanyProfileViewState extends State<CompanyProfileView> {
                 child: IconButton(
                   icon: Icon(
                     Icons.arrow_back_ios_new_rounded,
-                    color: AppColors.darkText,
+                    color: AppColors.darkText(context),
                     size: 20,
                   ),
                   onPressed: () => Navigator.pop(context),
@@ -43,8 +43,8 @@ class _CompanyProfileViewState extends State<CompanyProfileView> {
             ),
             flexibleSpace: FlexibleSpaceBar(
               background: Container(
-                color: AppColors.lightBg,
-                child: Icon(Iconsax.image, size: 48, color: AppColors.greyText),
+                color: AppColors.lightBg(context),
+                child: Icon(Iconsax.image, size: 48, color: AppColors.greyText(context)),
               ),
             ),
           ),
@@ -63,13 +63,13 @@ class _CompanyProfileViewState extends State<CompanyProfileView> {
                         width: 60,
                         height: 60,
                         decoration: BoxDecoration(
-                          color: AppColors.lightBg,
+                          color: AppColors.lightBg(context),
                           borderRadius: BorderRadius.circular(12),
-                          border: Border.all(color: AppColors.border),
+                          border: Border.all(color: AppColors.border(context)),
                         ),
                         child: Icon(
                           Iconsax.building,
-                          color: AppColors.greyText,
+                          color: AppColors.greyText(context),
                           size: 28,
                         ),
                       ),
@@ -101,7 +101,7 @@ class _CompanyProfileViewState extends State<CompanyProfileView> {
                                       .copyWith(
                                         fontSize: 12,
                                         fontWeight: FontWeight.w400,
-                                        color: AppColors.greyText,
+                                        color: AppColors.greyText(context),
                                       ),
                                 ),
                               ],
@@ -130,7 +130,7 @@ class _CompanyProfileViewState extends State<CompanyProfileView> {
                         side: BorderSide(
                           color: _isFollowing
                               ? AppColors.primary
-                              : AppColors.border,
+                              : AppColors.border(context),
                         ),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(12),
@@ -160,12 +160,12 @@ class _CompanyProfileViewState extends State<CompanyProfileView> {
                         value: '24',
                         label: context.tr.companyProfileStatsTrips,
                       ),
-                      Container(width: 1, height: 40, color: AppColors.border),
+                      Container(width: 1, height: 40, color: AppColors.border(context)),
                       CompanyStatItem(
                         value: '120',
                         label: context.tr.companyProfileStatsReviews,
                       ),
-                      Container(width: 1, height: 40, color: AppColors.border),
+                      Container(width: 1, height: 40, color: AppColors.border(context)),
                       CompanyStatItem(
                         value: '1.2K',
                         label: context.tr.companyProfileStatsFollowers,
@@ -185,7 +185,7 @@ class _CompanyProfileViewState extends State<CompanyProfileView> {
                     style: Theme.of(context).textTheme.bodyMedium!.copyWith(
                       fontSize: 14,
                       fontWeight: FontWeight.w400,
-                      color: AppColors.secondaryText,
+                      color: AppColors.secondaryText(context),
                       height: 1.5,
                     ),
                   ),
@@ -288,9 +288,9 @@ class _CompanyProfileViewState extends State<CompanyProfileView> {
   Widget _buildTripCard() {
     return Container(
       decoration: BoxDecoration(
-        color: AppColors.background,
+        color: AppColors.background(context),
         borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: AppColors.border),
+        border: Border.all(color: AppColors.border(context)),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -300,14 +300,14 @@ class _CompanyProfileViewState extends State<CompanyProfileView> {
             flex: 3,
             child: Container(
               decoration: BoxDecoration(
-                color: AppColors.lightBg,
+                color: AppColors.lightBg(context),
                 borderRadius: const BorderRadius.only(
                   topLeft: Radius.circular(12),
                   topRight: Radius.circular(12),
                 ),
               ),
               child: Center(
-                child: Icon(Iconsax.image, color: AppColors.greyText, size: 32),
+                child: Icon(Iconsax.image, color: AppColors.greyText(context), size: 32),
               ),
             ),
           ),
@@ -324,7 +324,7 @@ class _CompanyProfileViewState extends State<CompanyProfileView> {
                     style: Theme.of(context).textTheme.bodyMedium!.copyWith(
                       fontSize: 13,
                       fontWeight: FontWeight.w600,
-                      color: AppColors.darkText,
+                      color: AppColors.darkText(context),
                     ),
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
@@ -339,7 +339,7 @@ class _CompanyProfileViewState extends State<CompanyProfileView> {
                         style: Theme.of(context).textTheme.bodyMedium!.copyWith(
                           fontSize: 11,
                           fontWeight: FontWeight.w500,
-                          color: AppColors.secondaryText,
+                          color: AppColors.secondaryText(context),
                         ),
                       ),
                     ],

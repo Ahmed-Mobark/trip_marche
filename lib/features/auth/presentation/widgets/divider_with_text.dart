@@ -10,7 +10,7 @@ class DividerWithText extends StatelessWidget {
   /// Optional text style override. Defaults to [AppTextStyles.bodySmall].
   final TextStyle? textStyle;
 
-  /// Color of the divider lines. Defaults to [AppColors.border].
+  /// Color of the divider lines. Defaults to [AppColors.border(context)].
   final Color? dividerColor;
 
   /// Horizontal padding around the text. Defaults to 16.
@@ -26,7 +26,7 @@ class DividerWithText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final color = dividerColor ?? AppColors.border;
+    final color = dividerColor ?? AppColors.border(context);
     return Row(
       children: [
         Expanded(child: Divider(color: color)),

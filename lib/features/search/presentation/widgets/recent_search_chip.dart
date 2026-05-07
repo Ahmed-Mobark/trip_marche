@@ -16,18 +16,18 @@ class RecentSearchChip extends StatelessWidget {
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
         decoration: BoxDecoration(
-          color: AppColors.lightBg,
+          color: AppColors.lightBg(context),
           borderRadius: BorderRadius.circular(20),
-          border: Border.all(color: AppColors.border),
+          border: Border.all(color: AppColors.border(context)),
         ),
         child: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Icon(Iconsax.clock, size: 14, color: AppColors.greyText),
+            Icon(Iconsax.clock, size: 14, color: AppColors.greyText(context)),
             const SizedBox(width: 6),
             Text(
               searchTerm,
-              style: AppTextStyles.bodySmall(color: AppColors.secondaryText),
+              style: AppTextStyles.bodySmall(color: AppColors.secondaryText(context)),
             ),
           ],
         ),

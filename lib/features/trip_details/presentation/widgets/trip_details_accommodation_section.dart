@@ -33,7 +33,7 @@ class TripDetailsAccommodationSection extends StatelessWidget {
     showModalBottomSheet<void>(
       context: context,
       isScrollControlled: true,
-      backgroundColor: AppColors.cardBg,
+      backgroundColor: AppColors.cardBg(context),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(top: Radius.circular(20.r)),
       ),
@@ -53,7 +53,7 @@ class TripDetailsAccommodationSection extends StatelessWidget {
               children: [
                 Text(
                   title,
-                  style: AppTextStyles.heading3(color: AppColors.darkText),
+                  style: AppTextStyles.heading3(color: AppColors.darkText(context)),
                 ),
                 SizedBox(height: 12.h),
                 ConstrainedBox(
@@ -61,7 +61,7 @@ class TripDetailsAccommodationSection extends StatelessWidget {
                   child: SingleChildScrollView(
                     child: SelectableText(
                       text,
-                      style: AppTextStyles.body(color: AppColors.secondaryText),
+                      style: AppTextStyles.body(color: AppColors.greyText(context)),
                     ),
                   ),
                 ),
@@ -93,7 +93,7 @@ class TripDetailsAccommodationSection extends StatelessWidget {
             withShadow: true,
             borderRadius: 20,
             padding: const EdgeInsetsDirectional.all(20),
-            borderColor: AppColors.border.withValues(alpha: 0.35),
+            borderColor: AppColors.border(context).withValues(alpha: 0.35),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -105,8 +105,8 @@ class TripDetailsAccommodationSection extends StatelessWidget {
                     fontWeight: FontWeight.w700,
                     height: 1.1,
                     letterSpacing: 0,
-                    color: AppColors.brightness == Brightness.dark
-                        ? AppColors.darkText
+                    color: AppColors.isDark(context)
+                        ? AppColors.darkText(context)
                         : _kAccommodationTitleValueLight,
                   ),
                 ),
@@ -184,7 +184,9 @@ class TripDetailsAccommodationSection extends StatelessWidget {
         SizedBox(height: 24.h),
         Text(
           context.tr.tripDetailsCompanySectionTitle,
-          style: TextStyles.textViewBold14,
+          style: TextStyles.textViewBold14.copyWith(
+            color: AppColors.darkText(context),
+          ),
         ),
         SizedBox(height: 12.h),
         _CompanyCard(
@@ -247,7 +249,7 @@ class _CompanyCard extends StatelessWidget {
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: AppTextStyles.bodyMedium(
-                    color: AppColors.darkText,
+                    color: AppColors.darkText(context),
                   ).copyWith(fontWeight: FontWeight.w700),
                 ),
                 SizedBox(height: 6.h),
@@ -262,12 +264,12 @@ class _CompanyCard extends StatelessWidget {
                     Text(
                       ratingValue,
                       style: AppTextStyles.caption(
-                        color: AppColors.darkText,
+                        color: AppColors.darkText(context),
                       ).copyWith(fontWeight: FontWeight.w700),
                     ),
                     Text(
                       ' ($ratingCount)',
-                      style: AppTextStyles.caption(color: AppColors.greyText),
+                      style: AppTextStyles.caption(color: AppColors.greyText(context)),
                     ),
                   ],
                 ),
@@ -317,7 +319,7 @@ class _ActivityRateCard extends StatelessWidget {
         children: [
           Text(
             context.tr.tripDetailsActivityRateTitle,
-            style: AppTextStyles.subtitle(color: AppColors.darkText),
+            style: AppTextStyles.subtitle(color: AppColors.darkText(context)),
           ),
           SizedBox(height: 8.h),
           ...rates.map(
@@ -350,9 +352,9 @@ class _RatePillRow extends StatelessWidget {
         vertical: 10.h,
       ),
       decoration: BoxDecoration(
-        color: AppColors.cardBg,
+        color: AppColors.cardBg(context),
         borderRadius: BorderRadius.circular(999.r),
-        border: Border.all(color: AppColors.border),
+        border: Border.all(color: AppColors.border(context)),
       ),
       child: Row(
         children: [
@@ -361,7 +363,7 @@ class _RatePillRow extends StatelessWidget {
               label,
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
-              style: AppTextStyles.bodySmall(color: AppColors.darkText),
+              style: AppTextStyles.bodySmall(color: AppColors.darkText(context)),
             ),
           ),
           SizedBox(width: 10.w),
@@ -429,7 +431,7 @@ class _QuickLinkTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Material(
-      color: AppColors.cardBg,
+      color: AppColors.cardBg(context),
       borderRadius: BorderRadius.circular(16.r),
       child: InkWell(
         borderRadius: BorderRadius.circular(16.r),
@@ -442,7 +444,7 @@ class _QuickLinkTile extends StatelessWidget {
           ),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(16.r),
-            border: Border.all(color: AppColors.border),
+            border: Border.all(color: AppColors.border(context)),
           ),
           child: Row(
             children: [
@@ -450,23 +452,23 @@ class _QuickLinkTile extends StatelessWidget {
                 width: 34.r,
                 height: 34.r,
                 decoration: BoxDecoration(
-                  color: AppColors.lightBg,
+                  color: AppColors.lightBg(context),
                   borderRadius: BorderRadius.circular(10.r),
-                  border: Border.all(color: AppColors.border),
+                  border: Border.all(color: AppColors.border(context)),
                 ),
-                child: Icon(icon, size: 18.sp, color: AppColors.darkText),
+                child: Icon(icon, size: 18.sp, color: AppColors.darkText(context)),
               ),
               SizedBox(width: 12.w),
               Expanded(
                 child: Text(
                   title,
-                  style: AppTextStyles.bodyMedium(color: AppColors.darkText),
+                  style: AppTextStyles.bodyMedium(color: AppColors.darkText(context)),
                 ),
               ),
               Icon(
                 Icons.chevron_right,
                 size: 22.sp,
-                color: AppColors.greyText,
+                color: AppColors.greyText(context),
               ),
             ],
           ),
@@ -489,19 +491,19 @@ class _AccommodationHotelBlock extends StatelessWidget {
   final List<String> imageUrls;
   final VoidCallback onMapTap;
 
-  static Color _metaLabelColor() =>
-      AppColors.brightness == Brightness.dark
-          ? AppColors.greyText
+  Color _metaLabelColor(BuildContext context) =>
+      AppColors.isDark(context)
+          ? AppColors.greyText(context)
           : _kAccommodationLabelLight;
 
-  static Color _valueColor() =>
-      AppColors.brightness == Brightness.dark
-          ? AppColors.darkText
+  Color _valueColor(BuildContext context) =>
+      AppColors.isDark(context)
+          ? AppColors.darkText(context)
           : _kAccommodationTitleValueLight;
 
-  static Color _mapChipBg() =>
-      AppColors.brightness == Brightness.dark
-          ? AppColors.inputBg
+  Color _mapChipBg(BuildContext context) =>
+      AppColors.isDark(context)
+          ? AppColors.inputBg(context)
           : AppColors.tripDetailsMapButtonBg;
 
   @override
@@ -512,7 +514,7 @@ class _AccommodationHotelBlock extends StatelessWidget {
       fontWeight: FontWeight.w400,
       height: 1.15,
       letterSpacing: 0,
-      color: _metaLabelColor(),
+      color: _metaLabelColor(context),
     );
     final hotelNameStyle = TextStyle(
       fontFamily: AppFont.fontFamily,
@@ -520,7 +522,7 @@ class _AccommodationHotelBlock extends StatelessWidget {
       fontWeight: FontWeight.w600,
       height: 1.15,
       letterSpacing: 0,
-      color: _valueColor(),
+      color: _valueColor(context),
     );
     final locationStyle = TextStyle(
       fontFamily: AppFont.fontFamily,
@@ -528,7 +530,7 @@ class _AccommodationHotelBlock extends StatelessWidget {
       fontWeight: FontWeight.w600,
       height: 1.15,
       letterSpacing: 0,
-      color: _valueColor(),
+      color: _valueColor(context),
     );
 
     final thumbs = imageUrls.length;
@@ -572,7 +574,7 @@ class _AccommodationHotelBlock extends StatelessWidget {
             ),
             const SizedBox(width: 8),
             Material(
-              color: _mapChipBg(),
+              color: _mapChipBg(context),
               borderRadius: BorderRadius.circular(8),
               clipBehavior: Clip.antiAlias,
               child: InkWell(

@@ -20,7 +20,7 @@ class FilterSection extends StatelessWidget {
         Text(
           title,
           style: AppTextStyles.bodyMedium(
-            color: AppColors.darkText,
+            color: AppColors.darkText(context),
           ).copyWith(fontSize: 16.sp, fontWeight: FontWeight.w500),
         ),
         SizedBox(height: 16.h),
@@ -53,9 +53,9 @@ class SelectField extends StatelessWidget {
           height: 44.h,
           padding: EdgeInsetsDirectional.symmetric(horizontal: 12.w),
           decoration: BoxDecoration(
-            color: AppColors.cardBg,
+            color: AppColors.cardBg(context),
             borderRadius: BorderRadius.circular(12.r),
-            border: Border.all(color: AppColors.border),
+            border: Border.all(color: AppColors.border(context)),
           ),
           child: Row(
             children: [
@@ -65,7 +65,7 @@ class SelectField extends StatelessWidget {
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: AppTextStyles.bodyMedium(
-                    color: AppColors.secondaryText,
+                    color: AppColors.secondaryText(context),
                   ).copyWith(fontWeight: FontWeight.w400),
                 ),
               ),
@@ -82,7 +82,7 @@ class SelectField extends StatelessWidget {
                 Icon(
                   Iconsax.arrow_down_1,
                   size: 16.sp,
-                  color: AppColors.greyText,
+                  color: AppColors.greyText(context),
                 ),
             ],
           ),
@@ -170,7 +170,7 @@ class PriceHistogram extends StatelessWidget {
                 decoration: BoxDecoration(
                   color: selected
                       ? AppColors.primary.withValues(alpha: 0.55)
-                      : AppColors.border,
+                      : AppColors.border(context),
                   borderRadius: BorderRadius.circular(2.r),
                 ),
               ),
@@ -196,7 +196,7 @@ class PriceValueField extends StatelessWidget {
         Text(
           label,
           style: AppTextStyles.body(
-            color: AppColors.catalogMetaMuted,
+            color: AppColors.catalogMetaMuted(context),
           ).copyWith(fontSize: 14.sp),
         ),
         SizedBox(height: 7.h),
@@ -207,12 +207,12 @@ class PriceValueField extends StatelessWidget {
           alignment: AlignmentDirectional.centerStart,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(8.r),
-            border: Border.all(color: AppColors.border),
+            border: Border.all(color: AppColors.border(context)),
           ),
           child: Text(
             value,
             style: AppTextStyles.bodyMedium(
-              color: AppColors.darkText,
+              color: AppColors.darkText(context),
             ).copyWith(fontSize: 14.sp),
           ),
         ),
@@ -306,10 +306,10 @@ class OutlinedOption extends StatelessWidget {
           height: 48.h,
           alignment: Alignment.center,
           decoration: BoxDecoration(
-            color: AppColors.cardBg,
+            color: AppColors.cardBg(context),
             borderRadius: BorderRadius.circular(12.r),
             border: Border.all(
-              color: selected ? AppColors.primary : AppColors.border,
+              color: selected ? AppColors.primary : AppColors.border(context),
               width: selected ? 2 : 1,
             ),
           ),
@@ -318,7 +318,7 @@ class OutlinedOption extends StatelessWidget {
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
             style: AppTextStyles.body(
-              color: selected ? AppColors.primary : AppColors.secondaryText,
+              color: selected ? AppColors.primary : AppColors.secondaryText(context),
             ).copyWith(fontSize: 14.sp),
           ),
         ),
@@ -355,11 +355,11 @@ class TripFeaturesSection extends StatelessWidget {
               child: Text(
                 context.tr.wishlistFiltersTripFeatures,
                 style: AppTextStyles.bodyMedium(
-                  color: AppColors.darkText,
+                  color: AppColors.darkText(context),
                 ).copyWith(fontSize: 16.sp, fontWeight: FontWeight.w500),
               ),
             ),
-            Icon(Icons.keyboard_arrow_up_rounded, color: AppColors.greyText),
+            Icon(Icons.keyboard_arrow_up_rounded, color: AppColors.greyText(context)),
           ],
         ),
         SizedBox(height: 16.h),
@@ -375,7 +375,7 @@ class TripFeaturesSection extends StatelessWidget {
                     child: Text(
                       item.$2,
                       style: AppTextStyles.bodyMedium(
-                        color: AppColors.secondaryText,
+                        color: AppColors.secondaryText(context),
                       ).copyWith(fontSize: 14.sp),
                     ),
                   ),
@@ -386,7 +386,7 @@ class TripFeaturesSection extends StatelessWidget {
                       value: selected,
                       onChanged: (_) => onChanged(item.$1),
                       activeColor: AppColors.primary,
-                      side: BorderSide(color: AppColors.border),
+                      side: BorderSide(color: AppColors.border(context)),
                       materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
                     ),
                   ),
@@ -424,13 +424,13 @@ class ToggleRow extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        Icon(icon, size: 22.sp, color: AppColors.secondaryText),
+        Icon(icon, size: 22.sp, color: AppColors.secondaryText(context)),
         SizedBox(width: 8.w),
         Expanded(
           child: Text(
             label,
             style: AppTextStyles.bodyMedium(
-              color: AppColors.darkText,
+              color: AppColors.darkText(context),
             ).copyWith(fontSize: 14.sp, fontWeight: FontWeight.w500),
           ),
         ),

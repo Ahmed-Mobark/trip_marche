@@ -117,7 +117,7 @@ class AppTextFormField extends StatelessWidget {
       maxLengthEnforcement: MaxLengthEnforcement.none,
       decoration: InputDecoration(
         filled: true,
-        fillColor: cardColor ?? AppColors.inputBg,
+        fillColor: cardColor ?? AppColors.inputBg(context),
         hintText: hintText,
         hintStyle: hintStyle,
         labelText: label,
@@ -147,7 +147,7 @@ class AppTextFormField extends StatelessWidget {
         prefix: prefix,
         suffix: suffix,
 
-        enabledBorder: buildBorder(borderColor ?? AppColors.border),
+        enabledBorder: buildBorder(borderColor ?? AppColors.border(context)),
         focusedBorder: buildBorder(
           focusedBorderColor ?? Theme.of(context).primaryColor,
         ),

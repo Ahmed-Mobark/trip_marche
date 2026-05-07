@@ -24,7 +24,7 @@ class ForgotPasswordView extends StatelessWidget {
       child: Builder(
         builder: (context) {
           return Scaffold(
-            backgroundColor: AppColors.background,
+            backgroundColor: AppColors.background(context),
             body: BlocListener<ForgotPasswordCubit, ForgotPasswordState>(
               listenWhen: (p, n) => p.status != n.status,
               listener: (context, state) {
@@ -55,7 +55,7 @@ class ForgotPasswordView extends StatelessWidget {
                       const SizedBox(height: 8),
                       Text(
                         context.tr.authForgotPasswordSubtitle,
-                        style: AppTextStyles.body(color: AppColors.greyText),
+                        style: AppTextStyles.body(color: AppColors.greyText(context)),
                       ),
                       const SizedBox(height: 32),
 
@@ -74,7 +74,7 @@ class ForgotPasswordView extends StatelessWidget {
                             width: 20,
                             height: 20,
                             colorFilter: ColorFilter.mode(
-                              AppColors.greyText,
+                              AppColors.greyText(context),
                               BlendMode.srcIn,
                             ),
                           ),
@@ -135,7 +135,7 @@ class _FieldTitle extends StatelessWidget {
     return Text(
       text,
       style: AppTextStyles.bodyMedium(
-        color: AppColors.darkText,
+        color: AppColors.darkText(context),
       ).copyWith(fontWeight: FontWeight.w700, fontSize: 14),
     );
   }

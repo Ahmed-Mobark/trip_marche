@@ -29,10 +29,10 @@ class ActivityItem extends StatelessWidget {
         decoration: BoxDecoration(
           color: isSelected
               ? AppColors.primary.withValues(alpha: 0.05)
-              : AppColors.lightBg,
+              : AppColors.lightBg(context),
           borderRadius: BorderRadius.circular(12),
           border: Border.all(
-            color: isSelected ? AppColors.primary : AppColors.border,
+            color: isSelected ? AppColors.primary : AppColors.border(context),
           ),
         ),
         child: Row(
@@ -43,12 +43,12 @@ class ActivityItem extends StatelessWidget {
               decoration: BoxDecoration(
                 color: isSelected
                     ? AppColors.primary.withValues(alpha: 0.1)
-                    : AppColors.border.withValues(alpha: 0.5),
+                    : AppColors.border(context).withValues(alpha: 0.5),
                 borderRadius: BorderRadius.circular(10),
               ),
               child: Icon(
                 icon,
-                color: isSelected ? AppColors.primary : AppColors.greyText,
+                color: isSelected ? AppColors.primary : AppColors.greyText(context),
                 size: 22,
               ),
             ),
@@ -59,12 +59,12 @@ class ActivityItem extends StatelessWidget {
                 children: [
                   Text(
                     name,
-                    style: AppTextStyles.bodyMedium(color: AppColors.darkText),
+                    style: AppTextStyles.bodyMedium(color: AppColors.darkText(context)),
                   ),
                   const SizedBox(height: 2),
                   Text(
                     description,
-                    style: AppTextStyles.bodySmall(color: AppColors.greyText),
+                    style: AppTextStyles.bodySmall(color: AppColors.greyText(context)),
                   ),
                 ],
               ),
@@ -82,7 +82,7 @@ class ActivityItem extends StatelessWidget {
                 color: isSelected ? AppColors.primary : AppColors.transparent,
                 borderRadius: BorderRadius.circular(4),
                 border: Border.all(
-                  color: isSelected ? AppColors.primary : AppColors.greyText,
+                  color: isSelected ? AppColors.primary : AppColors.greyText(context),
                   width: 1.5,
                 ),
               ),

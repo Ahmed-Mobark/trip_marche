@@ -22,12 +22,12 @@ class AppShimmer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (!enabled) return child;
-    final base = AppColors.greyText.withValues(alpha: 0.25);
+    final base = AppColors.greyText(context).withValues(alpha: 0.25);
 
     return Shimmer.fromColors(
       baseColor: baseColor ?? base,
       highlightColor:
-          highlightColor ?? AppColors.cardBg.withValues(alpha: 0.85),
+          highlightColor ?? AppColors.cardBg(context).withValues(alpha: 0.85),
       period: duration ?? const Duration(milliseconds: 1500),
       direction: ShimmerDirection.ltr,
       child: child,
@@ -61,7 +61,7 @@ class ShimmerContainer extends StatelessWidget {
       margin: margin,
       padding: padding,
       decoration: BoxDecoration(
-        color: color ?? AppColors.greyText.withValues(alpha: 0.25),
+        color: color ?? AppColors.greyText(context).withValues(alpha: 0.25),
         borderRadius: BorderRadius.circular(borderRadius ?? 8.r),
       ),
     );
@@ -89,7 +89,7 @@ class ShimmerText extends StatelessWidget {
       height: height ?? (fontSize != null ? fontSize! * 1.2 : 16.h),
       margin: margin,
       decoration: BoxDecoration(
-        color: AppColors.greyText.withValues(alpha: 0.25),
+        color: AppColors.greyText(context).withValues(alpha: 0.25),
         borderRadius: BorderRadius.circular(4.r),
       ),
     );
@@ -109,7 +109,7 @@ class ShimmerCircle extends StatelessWidget {
       height: size ?? 40.h,
       margin: margin,
       decoration: BoxDecoration(
-        color: AppColors.greyText.withValues(alpha: 0.25),
+        color: AppColors.greyText(context).withValues(alpha: 0.25),
         shape: BoxShape.circle,
       ),
     );

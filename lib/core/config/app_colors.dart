@@ -5,8 +5,8 @@ abstract class AppColors {
   // Brightness signal (kept in sync from MyApp via AdaptiveTheme/Theme.of)
   // ---------------------------------------------------------------------------
   static Brightness brightness = Brightness.light;
-  static bool get _isDark => brightness == Brightness.dark;
-
+  static bool isDark(BuildContext context) =>
+      Theme.of(context).brightness == Brightness.dark;
   // ---------------------------------------------------------------------------
   // Brand / fixed tokens
   // ---------------------------------------------------------------------------
@@ -69,9 +69,9 @@ abstract class AppColors {
   /// Trip details stat icons (reference Material purple ~#9C27B0).
   static const Color tripDetailsStatIconPurple = Color(0xFF9C27B0);
 
-  /// Trip details — secondary labels / overview body (reference #757575).
-  static Color get tripDetailsSecondaryGrey =>
-      _isDark ? greyTextColorDark : const Color(0xFF757575);
+  /// Trip details — secondary body / meta (readable on dark surfaces).
+  static Color tripDetailsSecondaryGrey(BuildContext context) =>
+      isDark(context) ? const Color(0xFFCECECE) : const Color(0xFF757575);
 
   /// Trip details "What's included" checkmark (reference #58C299).
   static const Color tripDetailsInclusionCheck = Color(0xFF58C299);
@@ -91,6 +91,14 @@ abstract class AppColors {
   /// Trip program day header bar (reference #F5F5F5).
   static const Color tripDetailsProgramDayHeaderBar = Color(0xFFF5F5F5);
 
+  /// Accordion day header — light grey in light mode, elevated surface in dark.
+  static Color tripDetailsProgramHeaderBg(BuildContext context) =>
+      isDark(context) ? const Color(0xFF2C2C2C) : tripDetailsProgramDayHeaderBar;
+
+  /// Hairlines inside trip-details cards (light divider vs dark border).
+  static Color tripDetailsHairline(BuildContext context) =>
+      isDark(context) ? borderColorDark : tripDetailsFigmaDivider;
+
   // --- Trip details: Figma screenshot tokens (Departure + Program) ---
   /// Secondary labels (Figma #8E8E93).
   static const Color tripDetailsFigmaLabel = Color(0xFF8E8E93);
@@ -102,12 +110,12 @@ abstract class AppColors {
   static const Color tripDetailsFigmaBlack = Color(0xFF000000);
 
   /// Destination details grid — icon glyph (reference #9C27B0; light tint in dark).
-  static Color get tripDetailsDestinationIconPurple =>
-      _isDark ? const Color(0xFFE1BEE7) : const Color(0xFF9C27B0);
+  static Color tripDetailsDestinationIconPurple(BuildContext context) =>
+      isDark(context) ? const Color(0xFFE1BEE7) : const Color(0xFF9C27B0);
 
   /// Destination details grid — 32×32 icon tile fill (reference #F3E5F5).
-  static Color get tripDetailsDestinationIconTileBg =>
-      _isDark ? const Color(0xFF332742) : const Color(0xFFF3E5F5);
+  static Color tripDetailsDestinationIconTileBg(BuildContext context) =>
+      isDark(context) ? const Color(0xFF332742) : const Color(0xFFF3E5F5);
 
   static const Color infoBlue = Color(0xFF5B7FFF);
   static const Color linkBlue = Color(0xFF1976D2);
@@ -138,30 +146,57 @@ abstract class AppColors {
   // These resolve based on [brightness] which is updated by MyApp on every
   // theme change, so screens repaint automatically when the toggle flips.
   // ---------------------------------------------------------------------------
-  static Color get darkText => _isDark ? textColorDark : textColorLight;
-  static Color get bodyText => _isDark ? textColorDark : textColorLight;
-  static Color get greyText => _isDark ? greyTextColorDark : greyTextColorLight;
-  static Color get secondaryText =>
-      _isDark ? greyTextColorDark : greyTextColorLight;
-  static Color get captionText => _isDark ? hintColorDark : hintColorLight;
-  static Color get lightGreyText => _isDark ? hintColorDark : hintColorLight;
-  static Color get tabInactive => _isDark ? hintColorDark : hintColorLight;
-  static Color get onPrimary => _isDark ? textColorDark : cardColorLight;
-  static Color get inverseText => _isDark ? textColorLight : textColorDark;
+  static Color darkText(BuildContext context) =>
+      isDark(context) ? textColorDark : textColorLight;
 
-  static Color get border => _isDark ? borderColorDark : borderColorLight;
-  static Color get inputBg => _isDark ? inputBgDark : inputBgLight;
-  static Color get lightBg => inputBg;
-  static Color get disabled => _isDark ? disableColorDark : disableColorLight;
+  static Color bodyText(BuildContext context) =>
+      isDark(context) ? textColorDark : textColorLight;
 
-  static Color get scaffoldBg =>
-      _isDark ? scaffoldColorDark : scaffoldColorLight;
-  static Color get background => _isDark ? cardColorDark : cardColorLight;
-  static Color get cardBg => _isDark ? cardColorDark : cardColorLight;
+  static Color greyText(BuildContext context) =>
+      isDark(context) ? greyTextColorDark : greyTextColorLight;
+
+  static Color secondaryText(BuildContext context) =>
+      isDark(context) ? greyTextColorDark : greyTextColorLight;
+
+  static Color captionText(BuildContext context) =>
+      isDark(context) ? hintColorDark : hintColorLight;
+
+  static Color lightGreyText(BuildContext context) =>
+      isDark(context) ? hintColorDark : hintColorLight;
+
+  static Color tabInactive(BuildContext context) =>
+      isDark(context) ? hintColorDark : hintColorLight;
+
+  static Color onPrimary(BuildContext context) =>
+      isDark(context) ? textColorDark : cardColorLight;
+
+  static Color inverseText(BuildContext context) =>
+      isDark(context) ? textColorLight : textColorDark;
+
+  static Color border(BuildContext context) =>
+      isDark(context) ? borderColorDark : borderColorLight;
+
+  static Color inputBg(BuildContext context) =>
+      isDark(context) ? inputBgDark : inputBgLight;
+
+  static Color lightBg(BuildContext context) =>
+      inputBg(context);
+
+  static Color disabled(BuildContext context) =>
+      isDark(context) ? disableColorDark : disableColorLight;
+
+  static Color scaffoldBg(BuildContext context) =>
+      isDark(context) ? scaffoldColorDark : scaffoldColorLight;
+
+  static Color background(BuildContext context) =>
+      isDark(context) ? cardColorDark : cardColorLight;
+
+  static Color cardBg(BuildContext context) =>
+      isDark(context) ? cardColorDark : cardColorLight;
 
   /// Trip details screen canvas (reference off-white #F8F9FA).
-  static Color get tripDetailsScreenBg =>
-      _isDark ? scaffoldColorDark : const Color(0xFFF8F9FA);
+  static Color tripDetailsScreenBg(BuildContext context) =>
+      isDark(context) ? scaffoldColorDark : const Color(0xFFF8F9FA);
 
   /// Trending destination sheet / catalog controls (reference #E0E0E0).
   static const Color catalogSheetBorderLight = Color(0xFFE0E0E0);
@@ -169,10 +204,11 @@ abstract class AppColors {
   /// Secondary lines, meta text, strikethrough prices (reference #9E9E9E).
   static const Color catalogMetaMutedLight = Color(0xFF9E9E9E);
 
-  static Color get catalogSheetBorder =>
-      _isDark ? borderColorDark : catalogSheetBorderLight;
-  static Color get catalogMetaMuted =>
-      _isDark ? greyTextColorDark : catalogMetaMutedLight;
+  static Color catalogSheetBorder(BuildContext context) =>
+      isDark(context) ? borderColorDark : catalogSheetBorderLight;
+
+  static Color catalogMetaMuted(BuildContext context) =>
+      isDark(context) ? greyTextColorDark : catalogMetaMutedLight;
 
   // --- My Trips (Figma / design QA — light reference; dark fallbacks) ---
   /// Header gradient top (Figma ref #8E24AA).
@@ -189,36 +225,38 @@ abstract class AppColors {
   static const Color myTripsPdfIcon = Color(0xFFD00416);
 
   /// List / canvas behind cards (Figma #F8F8F8).
-  static Color get myTripsListBackground =>
-      _isDark ? const Color(0xFF1A1A1A) : const Color(0xFFF8F8F8);
+  static Color myTripsListBackground(BuildContext context) =>
+      isDark(context) ? const Color(0xFF1A1A1A) : const Color(0xFFF8F8F8);
 
   /// Secondary outline button: white surface in light (Figma).
-  static Color get myTripsOutlineButtonFill => _isDark ? cardColorDark : white;
+  static Color myTripsOutlineButtonFill(BuildContext context) =>
+      isDark(context) ? cardColorDark : white;
 
-  static Color get myTripsOutlineButtonBorder =>
-      _isDark ? borderColorDark : black;
+  static Color myTripsOutlineButtonBorder(BuildContext context) =>
+      isDark(context) ? borderColorDark : black;
 
-  static Color get myTripsOutlineButtonText => _isDark ? textColorDark : black;
+  static Color myTripsOutlineButtonText(BuildContext context) =>
+      isDark(context) ? textColorDark : black;
 
   /// "View Receipt" — thin **grey** stroke in Figma (not black).
-  static Color get myTripsSecondaryButtonBorder =>
-      _isDark ? borderColorDark : myTripsBorderFigma;
+  static Color myTripsSecondaryButtonBorder(BuildContext context) =>
+      isDark(context) ? borderColorDark : myTripsBorderFigma;
 
   /// Favorite chip on card (Figma: light grey circle + shadow).
-  static Color get myTripsFavoriteCircleFill =>
-      _isDark ? cardColorDark : inputBgLight;
+  static Color myTripsFavoriteCircleFill(BuildContext context) =>
+      isDark(context) ? cardColorDark : inputBgLight;
 
   /// My Trips trip card — outer border (Figma #EEEEEE).
-  static Color get myTripsCardBorderHairline =>
-      _isDark ? borderColorDark : const Color(0xFFEEEEEE);
+  static Color myTripsCardBorderHairline(BuildContext context) =>
+      isDark(context) ? borderColorDark : const Color(0xFFEEEEEE);
 
   /// My Trips trip card — title + rating value (Figma #212121).
-  static Color get myTripsCardTitle =>
-      _isDark ? textColorDark : const Color(0xFF212121);
+  static Color myTripsCardTitle(BuildContext context) =>
+      isDark(context) ? textColorDark : const Color(0xFF212121);
 
   /// My Trips trip card — location, date, pin/calendar icons (Figma #546E7A).
-  static Color get myTripsCardSlate =>
-      _isDark ? greyTextColorDark : const Color(0xFF546E7A);
+  static Color myTripsCardSlate(BuildContext context) =>
+      isDark(context) ? greyTextColorDark : const Color(0xFF546E7A);
 
   /// My Trips trip card — favorite heart (Figma #E91E63).
   static const Color myTripsCardHeartPink = Color(0xFFE91E63);
@@ -227,8 +265,8 @@ abstract class AppColors {
   static const Color myTripsCardStarAmber = Color(0xFFFFB300);
 
   /// My Trips trip card — review count (Figma #9E9E9E).
-  static Color get myTripsCardReviewCount =>
-      _isDark ? greyTextColorDark : const Color(0xFF9E9E9E);
+  static Color myTripsCardReviewCount(BuildContext context) =>
+      isDark(context) ? greyTextColorDark : const Color(0xFF9E9E9E);
 
   // --- My Trips trip card — pixel Figma frame (tailwind-scale ref) ---
   /// Primary CTA fill (#9333EA).
@@ -244,18 +282,18 @@ abstract class AppColors {
   static const Color myTripsTripCardStar = Color(0xFFFBBF24);
 
   /// Secondary lines (location, date, review count) (#6B7280).
-  static Color get myTripsTripCardMuted =>
-      _isDark ? greyTextColorDark : const Color(0xFF6B7280);
+  static Color myTripsTripCardMuted(BuildContext context) =>
+      isDark(context) ? greyTextColorDark : const Color(0xFF6B7280);
 
   /// Card / outline stroke (#E5E7EB).
-  static Color get myTripsTripCardBorder =>
-      _isDark ? borderColorDark : const Color(0xFFE5E7EB);
+  static Color myTripsTripCardBorder(BuildContext context) =>
+      isDark(context) ? borderColorDark : const Color(0xFFE5E7EB);
 
   /// Title + rating value — black.
-  static Color get myTripsTripCardInk =>
-      _isDark ? textColorDark : const Color(0xFF000000);
+  static Color myTripsTripCardInk(BuildContext context) =>
+      isDark(context) ? textColorDark : const Color(0xFF000000);
 
   /// Favorite circle fill (off-white).
-  static Color get myTripsTripCardFavoriteFill =>
-      _isDark ? const Color(0xFF2C2C2C) : const Color(0xFFF3F4F6);
+  static Color myTripsTripCardFavoriteFill(BuildContext context) =>
+      isDark(context) ? const Color(0xFF2C2C2C) : const Color(0xFFF3F4F6);
 }

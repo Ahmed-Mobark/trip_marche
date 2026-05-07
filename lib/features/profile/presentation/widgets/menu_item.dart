@@ -37,14 +37,14 @@ class ProfileMenuItem extends StatelessWidget {
             Icon(
               icon,
               size: 22.sp,
-              color: iconColor ?? AppColors.secondaryText,
+              color: iconColor ?? AppColors.secondaryText(context),
             ),
             SizedBox(width: 14.w),
             Expanded(
               child: Text(
                 title,
                 style: AppTextStyles.bodyMedium(
-                  color: titleColor ?? AppColors.darkText,
+                  color: titleColor ?? AppColors.darkText(context),
                 ).copyWith(fontWeight: FontWeight.w500),
               ),
             ),
@@ -53,7 +53,7 @@ class ProfileMenuItem extends StatelessWidget {
               Icon(
                 Icons.chevron_right,
                 size: 20.sp,
-                color: AppColors.greyText,
+                color: AppColors.greyText(context),
               ),
           ],
         ),

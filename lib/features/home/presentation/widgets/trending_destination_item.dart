@@ -37,7 +37,7 @@ class TrendingDestinationItem extends StatelessWidget {
                       width: 64,
                       height: 64,
                       decoration: BoxDecoration(
-                        color: AppColors.inputBg,
+                        color: AppColors.inputBg(context),
                         shape: BoxShape.circle,
                       ),
                     ),
@@ -45,12 +45,12 @@ class TrendingDestinationItem extends StatelessWidget {
                       width: 64,
                       height: 64,
                       decoration: BoxDecoration(
-                        color: AppColors.inputBg,
+                        color: AppColors.inputBg(context),
                         shape: BoxShape.circle,
                       ),
                       child: Icon(
                         Icons.image,
-                        color: AppColors.greyText,
+                        color: AppColors.greyText(context),
                         size: 24,
                       ),
                     ),
@@ -86,7 +86,7 @@ class TrendingDestinationItem extends StatelessWidget {
               child: Text(
                 name,
                 style: AppTextStyles.caption(
-                  color: AppColors.darkText,
+                  color: AppColors.darkText(context),
                 ).copyWith(fontWeight: FontWeight.w500),
                 textAlign: TextAlign.center,
                 maxLines: 1,

@@ -72,7 +72,7 @@ class MyTripsScreenTripCard extends StatelessWidget {
             );
         return Container(
           decoration: BoxDecoration(
-            color: AppColors.cardBg,
+            color: AppColors.cardBg(context),
             borderRadius: BorderRadius.circular(
               MyTripsTripCardTokens.cardRadius,
             ),
@@ -157,7 +157,7 @@ class MyTripsScreenTripCard extends StatelessWidget {
                               fontWeight: FontWeight.w700,
                               height: MyTripsTripCardTokens.lh(18, 21),
                               letterSpacing: 0,
-                              color: AppColors.myTripsTripCardInk,
+                              color: AppColors.myTripsTripCardInk(context),
                             ),
                           ),
                         ),
@@ -212,7 +212,7 @@ class MyTripsScreenTripCard extends StatelessWidget {
                                   fontWeight: FontWeight.w700,
                                   height: MyTripsTripCardTokens.lh(14, 18),
                                   letterSpacing: 0,
-                                  color: AppColors.myTripsTripCardInk,
+                                  color: AppColors.myTripsTripCardInk(context),
                                 ),
                               ),
                               TextSpan(
@@ -222,7 +222,7 @@ class MyTripsScreenTripCard extends StatelessWidget {
                                   fontWeight: FontWeight.w400,
                                   height: MyTripsTripCardTokens.lh(14, 18),
                                   letterSpacing: 0,
-                                  color: AppColors.myTripsTripCardMuted,
+                                  color: AppColors.myTripsTripCardMuted(context),
                                 ),
                               ),
                             ],
@@ -297,7 +297,7 @@ class _MetaRow extends StatelessWidget {
         Icon(
           icon,
           size: MyTripsTripCardTokens.metaIcon,
-          color: AppColors.myTripsTripCardMuted,
+          color: AppColors.myTripsTripCardMuted(context),
         ),
         SizedBox(width: MyTripsTripCardTokens.metaIconGap),
         Expanded(
@@ -310,7 +310,7 @@ class _MetaRow extends StatelessWidget {
               fontWeight: FontWeight.w400,
               height: MyTripsTripCardTokens.lh(14, 18),
               letterSpacing: 0,
-              color: AppColors.myTripsTripCardMuted,
+              color: AppColors.myTripsTripCardMuted(context),
             ),
           ),
         ),
@@ -383,12 +383,12 @@ class _OutlineCta extends StatelessWidget {
             horizontal: MyTripsTripCardTokens.twinPadH,
           ),
           decoration: BoxDecoration(
-            color: AppColors.cardBg,
+            color: AppColors.cardBg(context),
             borderRadius: BorderRadius.circular(
               MyTripsTripCardTokens.twinRadius,
             ),
             border: Border.all(
-              color: AppColors.myTripsTripCardBorder,
+              color: AppColors.myTripsTripCardBorder(context),
               width: 1.w,
             ),
           ),
@@ -402,7 +402,7 @@ class _OutlineCta extends StatelessWidget {
               fontWeight: FontWeight.w600,
               height: MyTripsTripCardTokens.lh(14, 18),
               letterSpacing: 0,
-              color: AppColors.myTripsTripCardInk,
+              color: AppColors.myTripsTripCardInk(context),
             ),
           ),
         ),
@@ -428,12 +428,12 @@ class _FooterCta extends StatelessWidget {
           height: MyTripsTripCardTokens.footerH,
           alignment: Alignment.center,
           decoration: BoxDecoration(
-            color: AppColors.cardBg,
+            color: AppColors.cardBg(context),
             borderRadius: BorderRadius.circular(
               MyTripsTripCardTokens.footerRadius,
             ),
             border: Border.all(
-              color: AppColors.myTripsTripCardBorder,
+              color: AppColors.myTripsTripCardBorder(context),
               width: 1.w,
             ),
           ),
@@ -461,7 +461,7 @@ class _FooterCta extends StatelessWidget {
                     fontWeight: FontWeight.w600,
                     height: MyTripsTripCardTokens.lh(14, 18),
                     letterSpacing: 0,
-                    color: AppColors.myTripsTripCardInk,
+                    color: AppColors.myTripsTripCardInk(context),
                   ),
                 ),
               ),

@@ -24,10 +24,10 @@ class RadioOption extends StatelessWidget {
       decoration: BoxDecoration(
         color: isSelected
             ? AppColors.primary.withValues(alpha: 0.05)
-            : AppColors.lightBg,
+            : AppColors.lightBg(context),
         borderRadius: BorderRadius.circular(12),
         border: Border.all(
-          color: isSelected ? AppColors.primary : AppColors.border,
+          color: isSelected ? AppColors.primary : AppColors.border(context),
         ),
       ),
       child: RadioListTile<String>(
@@ -39,7 +39,7 @@ class RadioOption extends StatelessWidget {
         activeColor: AppColors.primary,
         title: Text(
           label,
-          style: AppTextStyles.bodyMedium(color: AppColors.darkText),
+          style: AppTextStyles.bodyMedium(color: AppColors.darkText(context)),
         ),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
         contentPadding: const EdgeInsets.symmetric(horizontal: 12),

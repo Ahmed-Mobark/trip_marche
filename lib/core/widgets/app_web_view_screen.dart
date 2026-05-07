@@ -31,7 +31,7 @@ class _AppWebViewScreenState extends State<AppWebViewScreen> {
     final uri = Uri.tryParse(widget.url);
     _controller = WebViewController()
       ..setJavaScriptMode(JavaScriptMode.unrestricted)
-      ..setBackgroundColor(AppColors.scaffoldBg)
+      ..setBackgroundColor(AppColors.scaffoldBg(context))
       ..setNavigationDelegate(
         NavigationDelegate(
           onPageStarted: (_) {
@@ -80,15 +80,15 @@ class _AppWebViewScreenState extends State<AppWebViewScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.scaffoldBg,
+      backgroundColor: AppColors.scaffoldBg(context),
       appBar: AppBar(
-        backgroundColor: AppColors.scaffoldBg,
+        backgroundColor: AppColors.scaffoldBg(context),
         surfaceTintColor: Colors.transparent,
-        foregroundColor: AppColors.darkText,
+        foregroundColor: AppColors.darkText(context),
         elevation: 0,
         title: Text(
           widget.title,
-          style: AppTextStyles.subtitle(color: AppColors.darkText),
+          style: AppTextStyles.subtitle(color: AppColors.darkText(context)),
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
         ),
@@ -108,7 +108,7 @@ class _AppWebViewScreenState extends State<AppWebViewScreen> {
                     Text(
                       context.tr.authWebViewLoadFailed,
                       textAlign: TextAlign.center,
-                      style: AppTextStyles.body(color: AppColors.greyText),
+                      style: AppTextStyles.body(color: AppColors.greyText(context)),
                     ),
                     SizedBox(height: 16.h),
                     FilledButton(
@@ -125,7 +125,7 @@ class _AppWebViewScreenState extends State<AppWebViewScreen> {
               child: LinearProgressIndicator(
                 minHeight: 2,
                 color: AppColors.primary,
-                backgroundColor: AppColors.border,
+                backgroundColor: AppColors.border(context),
               ),
             ),
         ],

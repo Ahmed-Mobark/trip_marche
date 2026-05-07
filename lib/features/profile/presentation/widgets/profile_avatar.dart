@@ -34,7 +34,7 @@ class ProfileAvatar extends StatelessWidget {
             width: size,
             height: size,
             decoration: BoxDecoration(
-              color: AppColors.lightBg,
+              color: AppColors.lightBg(context),
               image: DecorationImage(
                 image:
                     backgroundImage ??

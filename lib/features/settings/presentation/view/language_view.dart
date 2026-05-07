@@ -35,20 +35,20 @@ class _LanguageViewState extends State<LanguageView> {
     ];
 
     return Scaffold(
-      backgroundColor: AppColors.background,
+      backgroundColor: AppColors.background(context),
       appBar: AppBar(
-        backgroundColor: AppColors.background,
+        backgroundColor: AppColors.background(context),
         elevation: 0,
         leading: IconButton(
           icon: Icon(
             Icons.arrow_back_ios_new_rounded,
-            color: AppColors.darkText,
+            color: AppColors.darkText(context),
           ),
           onPressed: () => Navigator.pop(context),
         ),
         title: Text(
           context.tr.settingsLanguage,
-          style: AppTextStyles.subtitle(color: AppColors.darkText),
+          style: AppTextStyles.subtitle(color: AppColors.darkText(context)),
         ),
         centerTitle: true,
       ),
@@ -120,7 +120,7 @@ class _LanguageTile extends StatelessWidget {
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(18.r),
             border: Border.all(
-              color: selected ? AppColors.primary : AppColors.border,
+              color: selected ? AppColors.primary : AppColors.border(context),
               width: selected ? 1.4 : 1,
             ),
           ),
@@ -131,7 +131,7 @@ class _LanguageTile extends StatelessWidget {
               Expanded(
                 child: Text(
                   item.name,
-                  style: AppTextStyles.bodyMedium(color: AppColors.darkText),
+                  style: AppTextStyles.bodyMedium(color: AppColors.darkText(context)),
                 ),
               ),
               _RadioIndicator(selected: selected),
@@ -155,7 +155,7 @@ class _RadioIndicator extends StatelessWidget {
       decoration: BoxDecoration(
         shape: BoxShape.circle,
         border: Border.all(
-          color: selected ? AppColors.primary : AppColors.border,
+          color: selected ? AppColors.primary : AppColors.border(context),
           width: 2,
         ),
       ),

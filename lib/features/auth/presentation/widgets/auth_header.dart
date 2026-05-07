@@ -117,7 +117,7 @@ class AuthHeader extends StatelessWidget {
                           constraints: BoxConstraints(minHeight: minWhiteHeight),
                           child: Container(
                             width: double.infinity,
-                            color: AppColors.background,
+                            color: AppColors.background(context),
                             child: Padding(
                               padding: const EdgeInsets.only(top: 90),
                               child: child,
@@ -142,7 +142,7 @@ class AuthHeader extends StatelessWidget {
                         clipper: _AuthCurveClipper(),
                         child: Container(
                           width: double.infinity,
-                          color: AppColors.background,
+                          color: AppColors.background(context),
                         ),
                       ),
                       Padding(

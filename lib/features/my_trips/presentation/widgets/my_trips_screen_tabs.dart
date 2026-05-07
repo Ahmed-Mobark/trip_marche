@@ -83,7 +83,7 @@ class _TabPill extends StatelessWidget {
           decoration: BoxDecoration(
             color: selected
                 ? AppColors.myTripsPrimary
-                : AppColors.myTripsOutlineButtonFill,
+                : AppColors.myTripsOutlineButtonFill(context),
             borderRadius: BorderRadius.circular(
               MyTripsFigmaTokens.searchRadiusPill,
             ),

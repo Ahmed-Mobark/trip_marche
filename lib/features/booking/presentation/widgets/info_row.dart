@@ -28,13 +28,13 @@ class InfoRow extends StatelessWidget {
           Text(
             label,
             style: AppTextStyles.bodySmall(
-              color: labelColor ?? AppColors.greyText,
+              color: labelColor ?? AppColors.greyText(context),
             ),
           ),
           Text(
             value,
             style: AppTextStyles.bodyMedium(
-              color: valueColor ?? AppColors.darkText,
+              color: valueColor ?? AppColors.darkText(context),
             ),
           ),
         ],

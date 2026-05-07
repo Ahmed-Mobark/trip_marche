@@ -47,7 +47,7 @@ class TripDetailsProgramSection extends StatelessWidget {
           bottom: 16,
         ),
         borderRadius: 14,
-        borderColor: AppColors.tripDetailsFigmaDivider,
+        borderColor: AppColors.tripDetailsHairline(context),
         withShadow: false,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -61,7 +61,7 @@ class TripDetailsProgramSection extends StatelessWidget {
                 fontWeight: FontWeight.w700,
                 height: 1.0,
                 letterSpacing: 0,
-                color: AppColors.darkText,
+                color: AppColors.darkText(context),
               ),
             ),
             const SizedBox(height: 10),
@@ -129,13 +129,13 @@ class _DayCard extends StatelessWidget {
         top: 10,
         bottom: 10,
       ),
-      decoration: const BoxDecoration(
-        color: AppColors.tripDetailsProgramDayHeaderBar,
-        borderRadius: BorderRadius.vertical(
+      decoration: BoxDecoration(
+        color: AppColors.tripDetailsProgramHeaderBg(context),
+        borderRadius: const BorderRadius.vertical(
           top: Radius.circular(_radius),
         ),
         border: Border(
-          bottom: BorderSide(color: AppColors.tripDetailsFigmaDivider),
+          bottom: BorderSide(color: AppColors.tripDetailsHairline(context)),
         ),
       ),
       child: Row(
@@ -149,7 +149,7 @@ class _DayCard extends StatelessWidget {
                 fontWeight: FontWeight.w700,
                 height: 1.15,
                 letterSpacing: 0,
-                color: AppColors.darkText,
+                color: AppColors.darkText(context),
               ),
             ),
           ),
@@ -157,7 +157,7 @@ class _DayCard extends StatelessWidget {
             Icon(
               expanded ? Iconsax.arrow_up_2 : Iconsax.arrow_down_1,
               size: 16,
-              color: AppColors.tripDetailsFigmaLabel,
+              color: AppColors.greyText(context),
             ),
         ],
       ),
@@ -165,9 +165,9 @@ class _DayCard extends StatelessWidget {
 
     return Container(
       decoration: BoxDecoration(
-        color: AppColors.cardBg,
+        color: AppColors.cardBg(context),
         borderRadius: BorderRadius.circular(_radius),
-        border: Border.all(color: AppColors.tripDetailsFigmaDivider),
+        border: Border.all(color: AppColors.tripDetailsHairline(context)),
       ),
       child: Column(
         mainAxisSize: MainAxisSize.min,
@@ -207,7 +207,7 @@ class _DayCard extends StatelessWidget {
                             fontWeight: FontWeight.w700,
                             height: 1.15,
                             letterSpacing: 0,
-                            color: AppColors.darkText,
+                            color: AppColors.darkText(context),
                           ),
                         ),
                       ),
@@ -248,7 +248,7 @@ class _MealsBadgeRow extends StatelessWidget {
             bottom: 3,
           ),
           decoration: BoxDecoration(
-            color: AppColors.tripDetailsProgramDayHeaderBar,
+            color: AppColors.tripDetailsProgramHeaderBg(context),
             borderRadius: BorderRadius.circular(20),
           ),
           child: Text(
@@ -259,7 +259,7 @@ class _MealsBadgeRow extends StatelessWidget {
               fontWeight: FontWeight.w600,
               height: 1.15,
               letterSpacing: 0,
-              color: AppColors.darkText,
+              color: AppColors.darkText(context),
             ),
           ),
         ),
@@ -337,7 +337,7 @@ class _ChecklistRow extends StatelessWidget {
               fontWeight: FontWeight.w400,
               height: 1.2,
               letterSpacing: 0,
-              color: AppColors.darkText,
+              color: AppColors.darkText(context),
             ),
           ),
         ),

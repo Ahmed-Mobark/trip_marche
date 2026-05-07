@@ -92,7 +92,7 @@ class _SearchField extends StatelessWidget {
         height: 44.h,
         padding: EdgeInsetsDirectional.symmetric(horizontal: 14.w),
         decoration: BoxDecoration(
-          color: AppColors.cardBg,
+          color: AppColors.cardBg(context),
           borderRadius: BorderRadius.circular(14.r),
         ),
         child: Row(
@@ -100,7 +100,7 @@ class _SearchField extends StatelessWidget {
             Icon(
               Iconsax.search_normal,
               size: 20.sp,
-              color: AppColors.greyText.withValues(alpha: 0.85),
+              color: AppColors.greyText(context).withValues(alpha: 0.85),
             ),
             SizedBox(width: 10.w),
             Expanded(
@@ -109,7 +109,7 @@ class _SearchField extends StatelessWidget {
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
                 style: AppTextStyles.bodyMedium(
-                  color: AppColors.greyText.withValues(alpha: 0.9),
+                  color: AppColors.greyText(context).withValues(alpha: 0.9),
                 ),
               ),
             ),

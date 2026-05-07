@@ -50,7 +50,7 @@ class NotificationItem extends StatelessWidget {
                               .copyWith(
                                 fontSize: 14,
                                 fontWeight: FontWeight.w600,
-                                color: AppColors.darkText,
+                                color: AppColors.darkText(context),
                               ),
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
@@ -61,7 +61,7 @@ class NotificationItem extends StatelessWidget {
                         style: Theme.of(context).textTheme.bodyMedium!.copyWith(
                           fontSize: 11,
                           fontWeight: FontWeight.w400,
-                          color: AppColors.greyText,
+                          color: AppColors.greyText(context),
                         ),
                       ),
                     ],
@@ -72,7 +72,7 @@ class NotificationItem extends StatelessWidget {
                     style: Theme.of(context).textTheme.bodyMedium!.copyWith(
                       fontSize: 13,
                       fontWeight: FontWeight.w400,
-                      color: AppColors.secondaryText,
+                      color: AppColors.secondaryText(context),
                       height: 1.4,
                     ),
                     maxLines: 2,

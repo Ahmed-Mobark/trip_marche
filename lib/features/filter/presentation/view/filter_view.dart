@@ -40,7 +40,7 @@ class _FilterBody extends StatelessWidget {
             ? sliderMin + 1
             : sliderMaxCandidate;
         return Scaffold(
-          backgroundColor: AppColors.background,
+          backgroundColor: AppColors.background(context),
           appBar: PreferredSize(
             preferredSize: Size.fromHeight(112.h),
             child: SafeArea(
@@ -56,7 +56,7 @@ class _FilterBody extends StatelessWidget {
                         onPressed: () => Navigator.pop(context),
                         icon: Icon(
                           Icons.arrow_back_ios_new_rounded,
-                          color: AppColors.darkText,
+                          color: AppColors.darkText(context),
                           size: 20.sp,
                         ),
                       ),
@@ -64,7 +64,7 @@ class _FilterBody extends StatelessWidget {
                     Text(
                       context.tr.wishlistFiltersTitle,
                       style: AppTextStyles.heading2(
-                        color: AppColors.darkText,
+                        color: AppColors.darkText(context),
                       ).copyWith(fontSize: 20.sp, fontWeight: FontWeight.w600),
                     ),
                     Align(
@@ -128,7 +128,7 @@ class _FilterBody extends StatelessWidget {
                       SliderTheme(
                         data: SliderTheme.of(context).copyWith(
                           activeTrackColor: AppColors.primary,
-                          inactiveTrackColor: AppColors.border,
+                          inactiveTrackColor: AppColors.border(context),
                           thumbColor: AppColors.primary,
                           overlayColor: AppColors.primary.withValues(
                             alpha: 0.12,
@@ -218,7 +218,12 @@ class _FilterBody extends StatelessWidget {
                     onTap: () => _showSingleSelectBottomSheet(
                       context: context,
                       title: context.tr.wishlistFiltersDepartureCity,
-                      options: const ['Cairo', 'Alexandria', 'Giza', 'Mansoura'],
+                      options: const [
+                        'Cairo',
+                        'Alexandria',
+                        'Giza',
+                        'Mansoura',
+                      ],
                       selectedValue: state.departureCity,
                       onSelected: cubit.setDepartureCity,
                     ),
@@ -444,10 +449,10 @@ class _FilterBody extends StatelessWidget {
             child: Container(
               padding: EdgeInsetsDirectional.fromSTEB(16.w, 10.h, 16.w, 14.h),
               decoration: BoxDecoration(
-                color: AppColors.cardBg,
+                color: AppColors.cardBg(context),
                 border: Border(
                   top: BorderSide(
-                    color: AppColors.border.withValues(alpha: 0.7),
+                    color: AppColors.border(context).withValues(alpha: 0.7),
                   ),
                 ),
               ),
@@ -459,8 +464,8 @@ class _FilterBody extends StatelessWidget {
                     child: OutlinedButton(
                       onPressed: () => Navigator.pop(context),
                       style: OutlinedButton.styleFrom(
-                        foregroundColor: AppColors.darkText,
-                        side: BorderSide(color: AppColors.secondaryText),
+                        foregroundColor: AppColors.darkText(context),
+                        side: BorderSide(color: AppColors.secondaryText(context)),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(50.r),
                         ),
@@ -569,7 +574,7 @@ class _FilterBody extends StatelessWidget {
     showModalBottomSheet<void>(
       context: context,
       isScrollControlled: true,
-      backgroundColor: AppColors.cardBg,
+      backgroundColor: AppColors.cardBg(context),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(top: Radius.circular(20.r)),
       ),
@@ -589,7 +594,7 @@ class _FilterBody extends StatelessWidget {
                         width: 40.w,
                         height: 4.h,
                         decoration: BoxDecoration(
-                          color: AppColors.border,
+                          color: AppColors.border(context),
                           borderRadius: BorderRadius.circular(999.r),
                         ),
                       ),
@@ -600,7 +605,7 @@ class _FilterBody extends StatelessWidget {
                             child: Text(
                               context.tr.wishlistFiltersDestination,
                               style: AppTextStyles.heading3(
-                                color: AppColors.darkText,
+                                color: AppColors.darkText(context),
                               ),
                             ),
                           ),
@@ -609,7 +614,7 @@ class _FilterBody extends StatelessWidget {
                             icon: Icon(
                               Icons.close_rounded,
                               size: 20.sp,
-                              color: AppColors.darkText,
+                              color: AppColors.darkText(context),
                             ),
                           ),
                         ],
@@ -631,7 +636,7 @@ class _FilterBody extends StatelessWidget {
                             shrinkWrap: true,
                             itemCount: state.availableDestinations.length,
                             separatorBuilder: (_, __) => Divider(
-                              color: AppColors.border.withValues(alpha: 0.6),
+                              color: AppColors.border(context).withValues(alpha: 0.6),
                             ),
                             itemBuilder: (context, index) {
                               final destination =
@@ -648,7 +653,7 @@ class _FilterBody extends StatelessWidget {
                                 title: Text(
                                   destination.name,
                                   style: AppTextStyles.bodyMedium(
-                                    color: AppColors.darkText,
+                                    color: AppColors.darkText(context),
                                   ),
                                 ),
                                 subtitle: destination.country.isEmpty
@@ -656,7 +661,7 @@ class _FilterBody extends StatelessWidget {
                                     : Text(
                                         destination.country,
                                         style: AppTextStyles.caption(
-                                          color: AppColors.secondaryText,
+                                          color: AppColors.secondaryText(context),
                                         ),
                                       ),
                                 controlAffinity:
@@ -703,7 +708,7 @@ class _FilterBody extends StatelessWidget {
   }) {
     showModalBottomSheet<void>(
       context: context,
-      backgroundColor: AppColors.cardBg,
+      backgroundColor: AppColors.cardBg(context),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(top: Radius.circular(20.r)),
       ),
@@ -719,7 +724,7 @@ class _FilterBody extends StatelessWidget {
                   width: 40.w,
                   height: 4.h,
                   decoration: BoxDecoration(
-                    color: AppColors.border,
+                    color: AppColors.border(context),
                     borderRadius: BorderRadius.circular(999.r),
                   ),
                 ),
@@ -729,7 +734,9 @@ class _FilterBody extends StatelessWidget {
                     Expanded(
                       child: Text(
                         title,
-                        style: AppTextStyles.heading3(color: AppColors.darkText),
+                        style: AppTextStyles.heading3(
+                          color: AppColors.darkText(context),
+                        ),
                       ),
                     ),
                     IconButton(
@@ -737,7 +744,7 @@ class _FilterBody extends StatelessWidget {
                       icon: Icon(
                         Icons.close_rounded,
                         size: 20.sp,
-                        color: AppColors.darkText,
+                        color: AppColors.darkText(context),
                       ),
                     ),
                   ],
@@ -746,9 +753,8 @@ class _FilterBody extends StatelessWidget {
                   child: ListView.separated(
                     shrinkWrap: true,
                     itemCount: options.length + 1,
-                    separatorBuilder: (_, __) => Divider(
-                      color: AppColors.border.withValues(alpha: 0.6),
-                    ),
+                    separatorBuilder: (_, __) =>
+                        Divider(color: AppColors.border(context).withValues(alpha: 0.6)),
                     itemBuilder: (_, index) {
                       if (index == 0) {
                         return ListTile(
@@ -771,7 +777,9 @@ class _FilterBody extends StatelessWidget {
                         activeColor: AppColors.primary,
                         title: Text(
                           option,
-                          style: AppTextStyles.bodyMedium(color: AppColors.darkText),
+                          style: AppTextStyles.bodyMedium(
+                            color: AppColors.darkText(context),
+                          ),
                         ),
                         onChanged: (value) {
                           onSelected(value ?? '');
@@ -799,7 +807,7 @@ class _FilterBody extends StatelessWidget {
     final currentSelected = {...selectedValues};
     showModalBottomSheet<void>(
       context: context,
-      backgroundColor: AppColors.cardBg,
+      backgroundColor: AppColors.cardBg(context),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(top: Radius.circular(20.r)),
       ),
@@ -817,7 +825,7 @@ class _FilterBody extends StatelessWidget {
                       width: 40.w,
                       height: 4.h,
                       decoration: BoxDecoration(
-                        color: AppColors.border,
+                        color: AppColors.border(context),
                         borderRadius: BorderRadius.circular(999.r),
                       ),
                     ),
@@ -828,7 +836,7 @@ class _FilterBody extends StatelessWidget {
                           child: Text(
                             title,
                             style: AppTextStyles.heading3(
-                              color: AppColors.darkText,
+                              color: AppColors.darkText(context),
                             ),
                           ),
                         ),
@@ -841,7 +849,9 @@ class _FilterBody extends StatelessWidget {
                           },
                           child: Text(
                             context.tr.wishlistFiltersClearAll,
-                            style: AppTextStyles.bodyMedium(color: AppColors.error),
+                            style: AppTextStyles.bodyMedium(
+                              color: AppColors.error,
+                            ),
                           ),
                         ),
                         IconButton(
@@ -849,7 +859,7 @@ class _FilterBody extends StatelessWidget {
                           icon: Icon(
                             Icons.close_rounded,
                             size: 20.sp,
-                            color: AppColors.darkText,
+                            color: AppColors.darkText(context),
                           ),
                         ),
                       ],
@@ -859,7 +869,7 @@ class _FilterBody extends StatelessWidget {
                         shrinkWrap: true,
                         itemCount: options.length,
                         separatorBuilder: (_, __) => Divider(
-                          color: AppColors.border.withValues(alpha: 0.6),
+                          color: AppColors.border(context).withValues(alpha: 0.6),
                         ),
                         itemBuilder: (_, index) {
                           final option = options[index];
@@ -869,7 +879,7 @@ class _FilterBody extends StatelessWidget {
                             title: Text(
                               option,
                               style: AppTextStyles.bodyMedium(
-                                color: AppColors.darkText,
+                                color: AppColors.darkText(context),
                               ),
                             ),
                             onChanged: (_) {
@@ -967,7 +977,9 @@ class _FilterBody extends StatelessWidget {
       hotelsOnly: state.tripFeatures.contains('includeHotel') ? 1 : null,
       acceptsCoupons: state.hasDiscountCode ? 1 : null,
       freeCancellation: state.freeCancellation ? 1 : null,
-      country: state.otherCountries.isEmpty ? null : state.otherCountries.join(','),
+      country: state.otherCountries.isEmpty
+          ? null
+          : state.otherCountries.join(','),
       search: null,
       sort: null,
     );

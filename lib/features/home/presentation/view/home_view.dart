@@ -114,7 +114,7 @@ class HomeViewState extends State<HomeView> {
     final horizontalPadding = 16.w;
     final sheetTopRadius = 24.r;
     final sheetOverlap = 18.h;
-    final sectionTitleStyle = AppTextStyles.heading3(color: AppColors.darkText);
+    final sectionTitleStyle = AppTextStyles.heading3(color: AppColors.darkText(context));
     final actionStyle = AppTextStyles.bodySmall(
       color: AppColors.primaryDark,
     ).copyWith(fontWeight: FontWeight.w600);
@@ -159,7 +159,7 @@ class HomeViewState extends State<HomeView> {
               ),
             ],
             child: Scaffold(
-              backgroundColor: AppColors.scaffoldBg,
+              backgroundColor: AppColors.scaffoldBg(context),
               body: Builder(
                 builder: (scrollContext) {
                   return RefreshIndicator(
@@ -190,7 +190,7 @@ class HomeViewState extends State<HomeView> {
                                 bottom: 24.h,
                               ),
                               decoration: BoxDecoration(
-                                color: AppColors.scaffoldBg,
+                                color: AppColors.scaffoldBg(context),
                                 borderRadius: BorderRadius.vertical(
                                   top: Radius.circular(sheetTopRadius),
                                 ),
@@ -498,7 +498,7 @@ class HomeViewState extends State<HomeView> {
                               child: Text(
                                 'No trips available',
                                 style: AppTextStyles.bodyMedium(
-                                  color: AppColors.greyText,
+                                  color: AppColors.greyText(context),
                                 ),
                               ),
                             ),
@@ -547,12 +547,12 @@ class HomeViewState extends State<HomeView> {
         padding: EdgeInsets.symmetric(vertical: 60.h),
         child: Column(
           children: [
-            Icon(Icons.error_outline, size: 48.sp, color: AppColors.greyText),
+            Icon(Icons.error_outline, size: 48.sp, color: AppColors.greyText(context)),
             SizedBox(height: 12.h),
             Text(
               message,
               textAlign: TextAlign.center,
-              style: AppTextStyles.bodyMedium(color: AppColors.greyText),
+              style: AppTextStyles.bodyMedium(color: AppColors.greyText(context)),
             ),
             SizedBox(height: 16.h),
             ElevatedButton(
@@ -567,7 +567,7 @@ class HomeViewState extends State<HomeView> {
               ),
               child: Text(
                 'Retry',
-                style: AppTextStyles.bodyMedium(color: AppColors.onPrimary),
+                style: AppTextStyles.bodyMedium(color: AppColors.onPrimary(context)),
               ),
             ),
           ],

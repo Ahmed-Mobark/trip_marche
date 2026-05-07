@@ -15,7 +15,7 @@ class AuthLinkText extends StatelessWidget {
   final VoidCallback? onTap;
 
   /// Style for the leading text. Defaults to [AppTextStyles.bodyMedium]
-  /// with [AppColors.greyText].
+  /// with [AppColors.greyText(context)].
   final TextStyle? leadingStyle;
 
   /// Style for the action text. Defaults to Inter 14/w600/primary.
@@ -40,7 +40,7 @@ class AuthLinkText extends StatelessWidget {
             text: leadingText,
             style:
                 leadingStyle ??
-                AppTextStyles.bodyMedium(color: AppColors.greyText),
+                AppTextStyles.bodyMedium(color: AppColors.greyText(context)),
             children: [
               TextSpan(
                 text: actionText,

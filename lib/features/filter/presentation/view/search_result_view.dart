@@ -86,7 +86,7 @@ class _SearchResultViewState extends State<SearchResultView> {
                   Expanded(
                     child: DecoratedBox(
                       decoration: BoxDecoration(
-                        color: AppColors.cardBg,
+                        color: AppColors.cardBg(context),
                         borderRadius: BorderRadius.vertical(
                           top: Radius.circular(24.r),
                         ),
@@ -134,12 +134,12 @@ class _SearchResultViewState extends State<SearchResultView> {
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Icon(Iconsax.warning_2, size: 42.sp, color: AppColors.greyText),
+                  Icon(Iconsax.warning_2, size: 42.sp, color: AppColors.greyText(context)),
                   SizedBox(height: 10.h),
                   Text(
                     state.errorMessage ?? context.tr.tripDetailsFailedToLoad,
                     textAlign: TextAlign.center,
-                    style: AppTextStyles.bodyMedium(color: AppColors.secondaryText),
+                    style: AppTextStyles.bodyMedium(color: AppColors.secondaryText(context)),
                   ),
                   SizedBox(height: 14.h),
                   FilledButton(
@@ -162,7 +162,7 @@ class _SearchResultViewState extends State<SearchResultView> {
               padding: EdgeInsetsDirectional.symmetric(horizontal: 24.w),
               child: Text(
                 context.tr.nothingFound,
-                style: AppTextStyles.bodyMedium(color: AppColors.secondaryText),
+                style: AppTextStyles.bodyMedium(color: AppColors.secondaryText(context)),
               ),
             ),
           );

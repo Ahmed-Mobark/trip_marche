@@ -24,9 +24,9 @@ class ReviewCard extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: AppColors.background,
+        color: AppColors.background(context),
         borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: AppColors.border),
+        border: Border.all(color: AppColors.border(context)),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -44,10 +44,10 @@ class ReviewCard extends StatelessWidget {
                     width: 60,
                     height: 60,
                     decoration: BoxDecoration(
-                      color: AppColors.lightBg,
+                      color: AppColors.lightBg(context),
                       borderRadius: BorderRadius.circular(8),
                     ),
-                    child: Icon(Iconsax.image, color: AppColors.greyText),
+                    child: Icon(Iconsax.image, color: AppColors.greyText(context)),
                   ),
                 ),
               ),
@@ -68,7 +68,7 @@ class ReviewCard extends StatelessWidget {
                       style: Theme.of(context).textTheme.bodyMedium!.copyWith(
                         fontSize: 12,
                         fontWeight: FontWeight.w400,
-                        color: AppColors.greyText,
+                        color: AppColors.greyText(context),
                       ),
                     ),
                   ],
@@ -96,7 +96,7 @@ class ReviewCard extends StatelessWidget {
                 return Icon(
                   Icons.star_border,
                   size: 18,
-                  color: AppColors.greyText.withValues(alpha: 0.4),
+                  color: AppColors.greyText(context).withValues(alpha: 0.4),
                 );
               }
             }),
@@ -107,7 +107,7 @@ class ReviewCard extends StatelessWidget {
             style: Theme.of(context).textTheme.bodyMedium!.copyWith(
               fontSize: 14,
               fontWeight: FontWeight.w400,
-              color: AppColors.secondaryText,
+              color: AppColors.secondaryText(context),
             ),
           ),
         ],

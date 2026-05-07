@@ -12,14 +12,14 @@ class CompanyStatItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Text(value, style: AppTextStyles.subtitle(color: AppColors.darkText)),
+        Text(value, style: AppTextStyles.subtitle(color: AppColors.darkText(context))),
         const SizedBox(height: 4),
         Text(
           label,
           style: Theme.of(context).textTheme.bodyMedium!.copyWith(
             fontSize: 12,
             fontWeight: FontWeight.w400,
-            color: AppColors.greyText,
+            color: AppColors.greyText(context),
           ),
         ),
       ],

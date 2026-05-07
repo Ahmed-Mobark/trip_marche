@@ -80,7 +80,7 @@ class TripDetailsHeroHeader extends StatelessWidget {
           fit: StackFit.expand,
           children: [
             ColoredBox(
-              color: AppColors.lightBg,
+              color: AppColors.lightBg(context),
               child: GestureDetector(
                 behavior: HitTestBehavior.opaque,
                 onTap: () => AppImageGalleryScreen.open(
@@ -101,9 +101,9 @@ class TripDetailsHeroHeader extends StatelessWidget {
                   end: Alignment.bottomCenter,
                   stops: const [0.0, 0.42, 1.0],
                   colors: [
-                    AppColors.shadow.withValues(alpha: 0.1),
-                    AppColors.shadow.withValues(alpha: 0.28),
-                    AppColors.shadow.withValues(alpha: 0.74),
+                    AppColors.shadow.withValues(alpha: 0.18),
+                    AppColors.shadow.withValues(alpha: 0.4),
+                    AppColors.shadow.withValues(alpha: 0.82),
                   ],
                 ),
               ),
@@ -192,6 +192,13 @@ class TripDetailsHeroHeader extends StatelessWidget {
                                 fontSize: 20.sp,
                                 height: 1.08,
                                 letterSpacing: -0.35,
+                                shadows: [
+                                  Shadow(
+                                    offset: Offset(0, 1.h),
+                                    blurRadius: 14.r,
+                                    color: AppColors.scrim.withValues(alpha: 0.55),
+                                  ),
+                                ],
                               ),
                           maxLines: 3,
                           overflow: TextOverflow.ellipsis,

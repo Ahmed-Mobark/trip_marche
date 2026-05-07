@@ -11,18 +11,18 @@ class CalendarTheme {
   ) => Theme.of(context).copyWith(
     colorScheme: ColorScheme.dark(
       primary: Theme.of(context).primaryColor, // Selected date circle
-      onPrimary: AppColors.onPrimary, // Selected date text
+      onPrimary: AppColors.onPrimary(context), // Selected date text
       surface: Theme.of(context).scaffoldBackgroundColor, // Dialog background
       onSurface: Theme.of(context).colorScheme.onSurface, // General text color
     ),
     datePickerTheme: DatePickerThemeData(
       confirmButtonStyle: ButtonStyle(
         backgroundColor: WidgetStatePropertyAll(Theme.of(context).primaryColor),
-        foregroundColor: WidgetStatePropertyAll(AppColors.onPrimary),
+        foregroundColor: WidgetStatePropertyAll(AppColors.onPrimary(context)),
       ),
       cancelButtonStyle: ButtonStyle(
         backgroundColor: WidgetStatePropertyAll(Theme.of(context).primaryColor),
-        foregroundColor: WidgetStatePropertyAll(AppColors.onPrimary),
+        foregroundColor: WidgetStatePropertyAll(AppColors.onPrimary(context)),
       ),
       headerHelpStyle: TextStyles.textViewBold16.copyWith(
         color: Theme.of(context).primaryColor,
@@ -36,11 +36,11 @@ class CalendarTheme {
     timePickerTheme: TimePickerThemeData(
       confirmButtonStyle: ButtonStyle(
         backgroundColor: WidgetStatePropertyAll(Theme.of(context).primaryColor),
-        foregroundColor: WidgetStatePropertyAll(AppColors.onPrimary),
+        foregroundColor: WidgetStatePropertyAll(AppColors.onPrimary(context)),
       ),
       cancelButtonStyle: ButtonStyle(
         backgroundColor: WidgetStatePropertyAll(Theme.of(context).primaryColor),
-        foregroundColor: WidgetStatePropertyAll(AppColors.onPrimary),
+        foregroundColor: WidgetStatePropertyAll(AppColors.onPrimary(context)),
       ),
       dayPeriodShape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(10.r),

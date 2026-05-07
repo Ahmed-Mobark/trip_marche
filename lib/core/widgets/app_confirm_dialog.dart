@@ -26,10 +26,10 @@ class AppConfirmDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final radius = 18.r;
-    final bg = AppColors.cardBg;
-    final msgColor = AppColors.bodyText.withValues(alpha: 0.72);
+    final bg = AppColors.cardBg(context);
+    final msgColor = AppColors.bodyText(context).withValues(alpha: 0.72);
     final secondaryColor =
-        secondaryActionColor ?? AppColors.bodyText.withValues(alpha: 0.55);
+        secondaryActionColor ?? AppColors.bodyText(context).withValues(alpha: 0.55);
 
     return Dialog(
       backgroundColor: AppColors.transparent,

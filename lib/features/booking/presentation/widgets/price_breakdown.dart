@@ -39,6 +39,7 @@ class PriceBreakdown extends StatelessWidget {
         children: [
           ...items.map(
             (item) => _buildPriceRow(
+              context,
               item.label,
               item.value,
               isDiscount: item.isDiscount,
@@ -46,14 +47,14 @@ class PriceBreakdown extends StatelessWidget {
           ),
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 8),
-            child: Divider(color: AppColors.border),
+            child: Divider(color: AppColors.border(context)),
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
                 totalLabel,
-                style: AppTextStyles.subtitle(color: AppColors.darkText),
+                style: AppTextStyles.subtitle(color: AppColors.darkText(context)),
               ),
               Text(
                 totalValue,
@@ -70,17 +71,22 @@ class PriceBreakdown extends StatelessWidget {
     );
   }
 
-  Widget _buildPriceRow(String label, String value, {bool isDiscount = false}) {
+  Widget _buildPriceRow(
+    BuildContext context,
+    String label,
+    String value, {
+    bool isDiscount = false,
+  }) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 6),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text(label, style: AppTextStyles.body(color: AppColors.greyText)),
+          Text(label, style: AppTextStyles.body(color: AppColors.greyText(context))),
           Text(
             value,
             style: AppTextStyles.bodyMedium(
-              color: isDiscount ? AppColors.success : AppColors.darkText,
+              color: isDiscount ? AppColors.success : AppColors.darkText(context),
             ),
           ),
         ],

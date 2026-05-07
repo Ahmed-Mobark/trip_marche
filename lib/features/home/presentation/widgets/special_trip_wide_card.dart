@@ -28,7 +28,7 @@ class SpecialTripWideCard extends StatelessWidget {
       child: Container(
         padding: EdgeInsetsDirectional.all(12.w),
         decoration: BoxDecoration(
-          color: AppColors.cardBg,
+          color: AppColors.cardBg(context),
           borderRadius: BorderRadius.circular(18.r),
         ),
         child: Row(
@@ -89,7 +89,7 @@ class SpecialTripWideCard extends StatelessWidget {
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                           style: AppTextStyles.bodySmall(
-                            color: AppColors.darkText,
+                            color: AppColors.darkText(context),
                           ).copyWith(fontWeight: FontWeight.w800),
                         ),
                       ),
@@ -100,7 +100,7 @@ class SpecialTripWideCard extends StatelessWidget {
                           width: 36.w,
                           height: 36.w,
                           decoration: BoxDecoration(
-                            color: AppColors.inputBg,
+                            color: AppColors.inputBg(context),
                             shape: BoxShape.circle,
                           ),
                           child: Icon(
@@ -108,7 +108,7 @@ class SpecialTripWideCard extends StatelessWidget {
                             size: 18.sp,
                             color: trip.isWishlisted
                                 ? AppColors.error
-                                : AppColors.greyText,
+                                : AppColors.greyText(context),
                           ),
                         ),
                       ),
@@ -126,13 +126,13 @@ class SpecialTripWideCard extends StatelessWidget {
                       Text(
                         trip.rating.toStringAsFixed(1),
                         style: AppTextStyles.bodySmall(
-                          color: AppColors.darkText,
+                          color: AppColors.darkText(context),
                         ).copyWith(fontWeight: FontWeight.w700),
                       ),
                       Text(
                         ' (${trip.reviewsCount})',
                         style: AppTextStyles.bodySmall(
-                          color: AppColors.greyText,
+                          color: AppColors.greyText(context),
                         ),
                       ),
                     ],
@@ -143,7 +143,7 @@ class SpecialTripWideCard extends StatelessWidget {
                       Icon(
                         Iconsax.location,
                         size: 14.sp,
-                        color: AppColors.greyText,
+                        color: AppColors.greyText(context),
                       ),
                       SizedBox(width: 6.w),
                       Expanded(
@@ -152,7 +152,7 @@ class SpecialTripWideCard extends StatelessWidget {
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                           style: AppTextStyles.bodySmall(
-                            color: AppColors.greyText,
+                            color: AppColors.greyText(context),
                           ),
                         ),
                       ),
@@ -164,7 +164,7 @@ class SpecialTripWideCard extends StatelessWidget {
                       Icon(
                         Iconsax.calendar_1,
                         size: 14.sp,
-                        color: AppColors.greyText,
+                        color: AppColors.greyText(context),
                       ),
                       SizedBox(width: 6.w),
                       Expanded(
@@ -173,7 +173,7 @@ class SpecialTripWideCard extends StatelessWidget {
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                           style: AppTextStyles.bodySmall(
-                            color: AppColors.greyText,
+                            color: AppColors.greyText(context),
                           ),
                         ),
                       ),
@@ -192,7 +192,7 @@ class SpecialTripWideCard extends StatelessWidget {
                             currency: trip.currency,
                           ),
                           style: AppTextStyles.heading3(
-                            color: AppColors.darkText,
+                            color: AppColors.darkText(context),
                           ).copyWith(fontWeight: FontWeight.w800, fontSize: 20.sp),
                         ),
                         Text(
@@ -201,7 +201,7 @@ class SpecialTripWideCard extends StatelessWidget {
                             currency: trip.currency,
                           ),
                           style: AppTextStyles.bodySmall(
-                            color: AppColors.greyText,
+                            color: AppColors.greyText(context),
                           ).copyWith(decoration: TextDecoration.lineThrough),
                         ),
                       ] else
@@ -211,13 +211,13 @@ class SpecialTripWideCard extends StatelessWidget {
                             currency: trip.currency,
                           ),
                           style: AppTextStyles.heading3(
-                            color: AppColors.darkText,
+                            color: AppColors.darkText(context),
                           ).copyWith(fontWeight: FontWeight.w800, fontSize: 20.sp),
                         ),
                       Text(
                         '/${context.tr.homePerPerson}',
                         style: AppTextStyles.bodySmall(
-                          color: AppColors.greyText,
+                          color: AppColors.greyText(context),
                         ),
                       ),
                     ],

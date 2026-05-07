@@ -37,7 +37,7 @@ class TripDetailsFlightDetailsSection extends StatelessWidget {
           SizedBox(height: 8.h),
           Text(
             context.tr.tripDetailsNoFlights,
-            style: TextStyles.textViewRegular14.copyWith(color: AppColors.greyText),
+            style: TextStyles.textViewRegular14.copyWith(color: AppColors.greyText(context)),
           ),
         ],
       );
