@@ -8,8 +8,8 @@ enum FilterMetadataStatus { initial, loading, success, failure }
 
 class FilterState extends Equatable {
   const FilterState({
-    this.priceRange = const RangeValues(5000, 8000),
-    this.initialPriceRange = const RangeValues(5000, 8000),
+    this.priceRange = const RangeValues(0, 0),
+    this.initialPriceRange = const RangeValues(0, 0),
     this.tripType = '',
     this.departureCountry = '',
     this.departureCity = '',

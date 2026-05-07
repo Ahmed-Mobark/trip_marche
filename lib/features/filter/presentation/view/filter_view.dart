@@ -34,7 +34,7 @@ class _FilterBody extends StatelessWidget {
       builder: (context, state) {
         final cubit = context.read<FilterCubit>();
         final ctaLabel = _seeResultsLabel(context, state);
-        final sliderMin = state.metadata?.price.min ?? 0;
+        const sliderMin = 0.0;
         final sliderMaxCandidate = state.metadata?.price.max ?? 10000;
         final sliderMax = sliderMaxCandidate <= sliderMin
             ? sliderMin + 1
@@ -796,6 +796,7 @@ class _FilterBody extends StatelessWidget {
     required Set<String> selectedValues,
     required ValueChanged<String> onToggle,
   }) {
+    final currentSelected = {...selectedValues};
     showModalBottomSheet<void>(
       context: context,
       backgroundColor: AppColors.cardBg,
@@ -803,75 +804,93 @@ class _FilterBody extends StatelessWidget {
         borderRadius: BorderRadius.vertical(top: Radius.circular(20.r)),
       ),
       builder: (ctx) {
-        return SafeArea(
-          top: false,
-          child: Padding(
-            padding: EdgeInsetsDirectional.fromSTEB(16.w, 12.h, 16.w, 12.h),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Container(
-                  width: 40.w,
-                  height: 4.h,
-                  decoration: BoxDecoration(
-                    color: AppColors.border,
-                    borderRadius: BorderRadius.circular(999.r),
-                  ),
-                ),
-                SizedBox(height: 12.h),
-                Row(
+        return StatefulBuilder(
+          builder: (context, setModalState) {
+            return SafeArea(
+              top: false,
+              child: Padding(
+                padding: EdgeInsetsDirectional.fromSTEB(16.w, 12.h, 16.w, 12.h),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
                   children: [
-                    Expanded(
-                      child: Text(
-                        title,
-                        style: AppTextStyles.heading3(color: AppColors.darkText),
+                    Container(
+                      width: 40.w,
+                      height: 4.h,
+                      decoration: BoxDecoration(
+                        color: AppColors.border,
+                        borderRadius: BorderRadius.circular(999.r),
                       ),
                     ),
-                    TextButton(
-                      onPressed: () {
-                        for (final value in selectedValues.toList()) {
-                          onToggle(value);
-                        }
-                      },
-                      child: Text(
-                        context.tr.wishlistFiltersClearAll,
-                        style: AppTextStyles.bodyMedium(color: AppColors.error),
-                      ),
+                    SizedBox(height: 12.h),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: Text(
+                            title,
+                            style: AppTextStyles.heading3(
+                              color: AppColors.darkText,
+                            ),
+                          ),
+                        ),
+                        TextButton(
+                          onPressed: () {
+                            for (final value in currentSelected.toList()) {
+                              onToggle(value);
+                            }
+                            setModalState(currentSelected.clear);
+                          },
+                          child: Text(
+                            context.tr.wishlistFiltersClearAll,
+                            style: AppTextStyles.bodyMedium(color: AppColors.error),
+                          ),
+                        ),
+                        IconButton(
+                          onPressed: () => Navigator.pop(ctx),
+                          icon: Icon(
+                            Icons.close_rounded,
+                            size: 20.sp,
+                            color: AppColors.darkText,
+                          ),
+                        ),
+                      ],
                     ),
-                    IconButton(
-                      onPressed: () => Navigator.pop(ctx),
-                      icon: Icon(
-                        Icons.close_rounded,
-                        size: 20.sp,
-                        color: AppColors.darkText,
+                    Flexible(
+                      child: ListView.separated(
+                        shrinkWrap: true,
+                        itemCount: options.length,
+                        separatorBuilder: (_, __) => Divider(
+                          color: AppColors.border.withValues(alpha: 0.6),
+                        ),
+                        itemBuilder: (_, index) {
+                          final option = options[index];
+                          return CheckboxListTile(
+                            value: currentSelected.contains(option),
+                            activeColor: AppColors.primary,
+                            title: Text(
+                              option,
+                              style: AppTextStyles.bodyMedium(
+                                color: AppColors.darkText,
+                              ),
+                            ),
+                            onChanged: (_) {
+                              onToggle(option);
+                              setModalState(() {
+                                if (currentSelected.contains(option)) {
+                                  currentSelected.remove(option);
+                                } else {
+                                  currentSelected.add(option);
+                                }
+                              });
+                            },
+                          );
+                        },
                       ),
                     ),
                   ],
                 ),
-                Flexible(
-                  child: ListView.separated(
-                    shrinkWrap: true,
-                    itemCount: options.length,
-                    separatorBuilder: (_, __) => Divider(
-                      color: AppColors.border.withValues(alpha: 0.6),
-                    ),
-                    itemBuilder: (_, index) {
-                      final option = options[index];
-                      return CheckboxListTile(
-                        value: selectedValues.contains(option),
-                        activeColor: AppColors.primary,
-                        title: Text(
-                          option,
-                          style: AppTextStyles.bodyMedium(color: AppColors.darkText),
-                        ),
-                        onChanged: (_) => onToggle(option),
-                      );
-                    },
-                  ),
-                ),
-              ],
-            ),
-          ),
+              ),
+            );
+          },
         );
       },
     );
@@ -931,8 +950,8 @@ class _FilterBody extends StatelessWidget {
       destinations: state.selectedDestinationIds.isEmpty
           ? null
           : state.selectedDestinationIds.toList(),
-      minPrice: state.priceRange.start,
-      maxPrice: state.priceRange.end,
+      minPrice: state.priceRange.start > 0 ? state.priceRange.start : null,
+      maxPrice: state.priceRange.end > 0 ? state.priceRange.end : null,
       minVendorRating: state.agencyRating > 0 ? state.agencyRating : null,
       minRating: state.tripRating > 0 ? state.tripRating.toDouble() : null,
       duration: duration,

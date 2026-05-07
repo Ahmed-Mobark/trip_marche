@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:trip_marche/features/filter/domain/entities/filter_metadata.dart';
 import 'package:trip_marche/features/filter/domain/usecases/get_destinations_usecase.dart';
 import 'package:trip_marche/features/filter/domain/usecases/get_filter_metadata_usecase.dart';
 import 'package:trip_marche/features/filter/presentation/cubit/filter_state.dart';
@@ -175,13 +174,10 @@ class FilterCubit extends Cubit<FilterState> {
         );
       },
       (metadata) {
-        final defaultRange = _resolvePriceRange(metadata.price);
         emit(
           state.copyWith(
             metadataStatus: FilterMetadataStatus.success,
             metadata: metadata,
-            priceRange: defaultRange,
-            initialPriceRange: defaultRange,
             currencyCode: metadata.price.currency.isEmpty
                 ? state.currencyCode
                 : metadata.price.currency,
@@ -200,13 +196,6 @@ class FilterCubit extends Cubit<FilterState> {
       next.add(destinationId);
     }
     emit(state.copyWith(selectedDestinationIds: next));
-  }
-
-  RangeValues _resolvePriceRange(FilterPriceMetadata price) {
-    final min = price.min;
-    final max = price.max;
-    final resolvedMax = max < min ? min : max;
-    return RangeValues(min, resolvedMax);
   }
 
 }
