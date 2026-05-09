@@ -607,6 +607,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get commonDelete => 'Delete';
 
   @override
+  String get commonOk => 'OK';
+
+  @override
   String get followingsTitle => 'My Followings';
 
   @override

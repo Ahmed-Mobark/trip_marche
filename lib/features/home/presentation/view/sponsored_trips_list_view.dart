@@ -10,6 +10,8 @@ import 'package:trip_marche/core/navigation/app_navigator.dart';
 import 'package:trip_marche/core/theme/app_colors.dart';
 import 'package:trip_marche/core/theme/app_text_styles.dart';
 import 'package:trip_marche/core/toast/app_toast.dart';
+import 'package:trip_marche/core/widgets/app_trip_search_text_field.dart';
+import 'package:trip_marche/core/widgets/curved_gradient_sheet_layout.dart';
 import 'package:trip_marche/core/widgets/custom_loading.dart';
 import 'package:trip_marche/features/trip_details/presentation/trip_wishlist_pop_result.dart';
 import 'package:trip_marche/features/trip_details/presentation/view/trip_details_view.dart';
@@ -42,7 +44,8 @@ class _SponsoredTripsListScaffold extends StatefulWidget {
       _SponsoredTripsListScaffoldState();
 }
 
-class _SponsoredTripsListScaffoldState extends State<_SponsoredTripsListScaffold> {
+class _SponsoredTripsListScaffoldState
+    extends State<_SponsoredTripsListScaffold> {
   static const Duration _searchDebounce = Duration(milliseconds: 500);
 
   late final TextEditingController _searchCtrl;
@@ -52,14 +55,8 @@ class _SponsoredTripsListScaffoldState extends State<_SponsoredTripsListScaffold
   @override
   void initState() {
     super.initState();
-    _searchCtrl = TextEditingController()..addListener(_onSearchCtrlUpdate);
+    _searchCtrl = TextEditingController();
     _scroll = ScrollController()..addListener(_onScroll);
-  }
-
-  void _onSearchCtrlUpdate() {
-    if (mounted) {
-      setState(() {});
-    }
   }
 
   void _scheduleDebouncedSearch() {
@@ -147,60 +144,11 @@ class _SponsoredTripsListScaffoldState extends State<_SponsoredTripsListScaffold
   @override
   void dispose() {
     _searchDebounceTimer?.cancel();
-    _searchCtrl
-      ..removeListener(_onSearchCtrlUpdate)
-      ..dispose();
+    _searchCtrl.dispose();
     _scroll
       ..removeListener(_onScroll)
       ..dispose();
     super.dispose();
-  }
-
-  Widget _buildWishlistStyleSearch(BuildContext context) {
-    final showClear = _searchCtrl.text.isNotEmpty;
-    return TextField(
-      controller: _searchCtrl,
-      onChanged: _onSearchFieldChanged,
-      onSubmitted: (_) => _onSearchSubmitted(),
-      textInputAction: TextInputAction.search,
-      style: AppTextStyles.bodyMedium(color: AppColors.darkText(context)),
-      cursorColor: AppColors.primary,
-      decoration: InputDecoration(
-        hintText: context.tr.wishlistSearchHint,
-        hintStyle: AppTextStyles.bodyMedium(color: AppColors.greyText(context)),
-        prefixIcon: Icon(
-          Iconsax.search_normal_1,
-          size: 20.sp,
-          color: AppColors.greyText(context),
-        ),
-        suffixIcon: showClear
-            ? IconButton(
-                onPressed: _onSearchClear,
-                icon: Icon(
-                  Iconsax.close_circle,
-                  size: 20.sp,
-                  color: AppColors.greyText(context),
-                ),
-                tooltip: MaterialLocalizations.of(context).deleteButtonTooltip,
-              )
-            : null,
-        filled: true,
-        fillColor: AppColors.background(context),
-        contentPadding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 14.h),
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(999.r),
-          borderSide: BorderSide(color: AppColors.border(context)),
-        ),
-        enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(999.r),
-          borderSide: BorderSide(color: AppColors.border(context)),
-        ),
-        focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(999.r),
-          borderSide: BorderSide(color: AppColors.primary, width: 1.5),
-        ),
-      ),
-    );
   }
 
   @override
@@ -225,28 +173,34 @@ class _SponsoredTripsListScaffoldState extends State<_SponsoredTripsListScaffold
         builder: (context, state) {
           final title = _titleFromState(state);
           return Scaffold(
-            backgroundColor: AppColors.scaffoldBg(context),
-            appBar: AppBar(
-              backgroundColor: AppColors.scaffoldBg(context),
-              elevation: 0,
-              leading: IconButton(
-                icon: Icon(
-                  Icons.arrow_back_ios_new_rounded,
-                  color: AppColors.darkText(context),
+            backgroundColor: AppColors.primary,
+            body: CurvedGradientSheetLayout(
+              headerTitle: title,
+              sheetChild: Padding(
+                padding: EdgeInsetsDirectional.fromSTEB(16.w, 20.h, 16.w, 0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    AppTripSearchTextField(
+                      controller: _searchCtrl,
+                      onChanged: _onSearchFieldChanged,
+                      onSubmitted: (_) => _onSearchSubmitted(),
+                      onClear: _onSearchClear,
+                    ),
+                    // SizedBox(height: 16.h),
+                    // const CurvedSheetSortFilterRow(),
+                    SizedBox(height: 14.h),
+                    Expanded(
+                      child: RefreshIndicator(
+                        color: AppColors.primary,
+                        onRefresh: () =>
+                            context.read<SponsoredTripsItemsCubit>().refresh(),
+                        child: _buildBody(context, state),
+                      ),
+                    ),
+                  ],
                 ),
-                onPressed: () => Navigator.pop(context),
               ),
-              title: Text(
-                title,
-                style: AppTextStyles.subtitle(color: AppColors.darkText(context)),
-              ),
-              centerTitle: true,
-            ),
-            body: RefreshIndicator(
-              color: AppColors.primary,
-              onRefresh: () =>
-                  context.read<SponsoredTripsItemsCubit>().refresh(),
-              child: _buildBody(context, state),
             ),
           );
         },
@@ -296,7 +250,8 @@ class _SponsoredTripsListScaffoldState extends State<_SponsoredTripsListScaffold
       );
     }
 
-    final itemCount = state.trips.length +
+    final itemCount =
+        state.trips.length +
         (state.status == SponsoredTripsItemsStatus.loadingMore ? 1 : 0);
 
     return CustomScrollView(
@@ -305,10 +260,6 @@ class _SponsoredTripsListScaffoldState extends State<_SponsoredTripsListScaffold
         parent: ClampingScrollPhysics(),
       ),
       slivers: [
-        SliverPadding(
-          padding: EdgeInsetsDirectional.fromSTEB(16.w, 8.h, 16.w, 12.h),
-          sliver: SliverToBoxAdapter(child: _buildWishlistStyleSearch(context)),
-        ),
         if (state.trips.isEmpty)
           SliverFillRemaining(
             hasScrollBody: false,
@@ -342,11 +293,11 @@ class _SponsoredTripsListScaffoldState extends State<_SponsoredTripsListScaffold
                   onTap: () async {
                     final result = await sl<AppNavigator>()
                         .push<TripWishlistPopResult>(
-                      screen: TripDetailsView(
-                        tripId: trip.id,
-                        initialIsWishlisted: trip.isWishlisted,
-                      ),
-                    );
+                          screen: TripDetailsView(
+                            tripId: trip.id,
+                            initialIsWishlisted: trip.isWishlisted,
+                          ),
+                        );
                     if (!context.mounted || result == null) {
                       return;
                     }

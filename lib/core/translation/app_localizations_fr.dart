@@ -611,6 +611,9 @@ class AppLocalizationsFr extends AppLocalizations {
   String get commonDelete => 'Supprimer';
 
   @override
+  String get commonOk => 'OK';
+
+  @override
   String get followingsTitle => 'Mes abonnements';
 
   @override

@@ -603,6 +603,9 @@ class AppLocalizationsAr extends AppLocalizations {
   String get commonDelete => 'حذف';
 
   @override
+  String get commonOk => 'موافق';
+
+  @override
   String get followingsTitle => 'الشركات التي أتابعها';
 
   @override

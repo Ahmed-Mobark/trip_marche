@@ -1,75 +1,90 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:iconsax/iconsax.dart';
-import 'package:trip_marche/core/extensions/localization.dart';
-import 'package:trip_marche/core/theme/app_colors.dart';
-import 'package:trip_marche/core/theme/app_text_styles.dart';
+import 'dart:async';
 
-class SearchResultHeader extends StatelessWidget {
-  const SearchResultHeader({super.key});
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:trip_marche/core/widgets/app_trip_search_text_field.dart';
+import 'package:trip_marche/core/widgets/curved_sheet_sort_filter_row.dart';
+import 'package:trip_marche/features/my_trips/presentation/cubit/my_trips_list_cubit.dart';
+
+class SearchResultSearchBar extends StatefulWidget {
+  const SearchResultSearchBar({
+    super.key,
+    required this.initialQuery,
+    this.scrollController,
+  });
+
+  final String initialQuery;
+  final ScrollController? scrollController;
 
   @override
-  Widget build(BuildContext context) {
-    return SafeArea(
-      bottom: false,
-      child: Padding(
-        padding: EdgeInsetsDirectional.only(
-          start: 10.w,
-          end: 16.w,
-          top: 8.h,
-          bottom: 20.h,
-        ),
-        child: Row(
-          children: [
-            IconButton(
-              onPressed: () => Navigator.pop(context),
-              visualDensity: VisualDensity.compact,
-              style: IconButton.styleFrom(foregroundColor: AppColors.onImage),
-              icon: Icon(Icons.arrow_back_ios_new_rounded, size: 20.sp),
-            ),
-            SizedBox(width: 4.w),
-            Text(
-              context.tr.searchResultTitle,
-              style: AppTextStyles.heading2(
-                color: AppColors.onImage,
-              ).copyWith(fontSize: 20.sp, fontWeight: FontWeight.w600),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
+  State<SearchResultSearchBar> createState() => _SearchResultSearchBarState();
 }
 
-class SearchResultSearchBar extends StatelessWidget {
-  const SearchResultSearchBar({super.key});
+class _SearchResultSearchBarState extends State<SearchResultSearchBar> {
+  static const Duration _debounce = Duration(milliseconds: 500);
+
+  late final TextEditingController _controller;
+  Timer? _debounceTimer;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = TextEditingController(text: widget.initialQuery);
+  }
+
+  void _scrollToTop() {
+    final c = widget.scrollController;
+    if (c != null && c.hasClients) {
+      c.jumpTo(0);
+    }
+  }
+
+  void _runSearch() {
+    _debounceTimer?.cancel();
+    if (!mounted) {
+      return;
+    }
+    FocusScope.of(context).unfocus();
+    _scrollToTop();
+    context.read<MyTripsListCubit>().applySearchQuery(_controller.text);
+  }
+
+  void _scheduleDebouncedSearch() {
+    _debounceTimer?.cancel();
+    _debounceTimer = Timer(_debounce, () {
+      if (!mounted) {
+        return;
+      }
+      _scrollToTop();
+      context.read<MyTripsListCubit>().applySearchQuery(_controller.text);
+    });
+  }
+
+  void _onFieldChanged(String _) {
+    _scheduleDebouncedSearch();
+  }
+
+  void _onClear() {
+    _debounceTimer?.cancel();
+    _controller.clear();
+    _scrollToTop();
+    context.read<MyTripsListCubit>().applySearchQuery('');
+  }
+
+  @override
+  void dispose() {
+    _debounceTimer?.cancel();
+    _controller.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 56.h,
-      padding: EdgeInsetsDirectional.symmetric(horizontal: 16.w),
-      decoration: BoxDecoration(
-        color: AppColors.cardBg(context),
-        borderRadius: BorderRadius.circular(999.r),
-        border: Border.all(color: AppColors.border(context)),
-      ),
-      child: Row(
-        children: [
-          Icon(
-            Iconsax.search_normal,
-            size: 20.sp,
-            color: AppColors.searchResultMetaSlate,
-          ),
-          SizedBox(width: 10.w),
-          Text(
-            context.tr.searchResultSearchHint,
-            style: AppTextStyles.body(
-              color: AppColors.searchResultMetaSlate,
-            ).copyWith(fontSize: 15.sp),
-          ),
-        ],
-      ),
+    return AppTripSearchTextField(
+      controller: _controller,
+      onChanged: _onFieldChanged,
+      onSubmitted: (_) => _runSearch(),
+      onClear: _onClear,
     );
   }
 }
@@ -79,72 +94,6 @@ class SearchResultActionRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Expanded(
-          child: _ActionPill(
-            icon: Icons.keyboard_arrow_down_rounded,
-            label: context.tr.searchResultSortBy,
-            iconLeading: false,
-          ),
-        ),
-        SizedBox(width: 12.w),
-        Expanded(
-          child: _ActionPill(
-            icon: Icons.tune_rounded,
-            label: context.tr.searchResultFilters,
-            iconLeading: true,
-          ),
-        ),
-      ],
-    );
-  }
-}
-
-class _ActionPill extends StatelessWidget {
-  const _ActionPill({
-    required this.icon,
-    required this.label,
-    required this.iconLeading,
-  });
-
-  final IconData icon;
-  final String label;
-  final bool iconLeading;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      height: 44.h,
-      padding: EdgeInsetsDirectional.symmetric(horizontal: 14.w),
-      decoration: BoxDecoration(
-        color: AppColors.cardBg(context),
-        borderRadius: BorderRadius.circular(999.r),
-        border: Border.all(color: AppColors.border(context)),
-      ),
-      child: Row(
-        children: [
-          if (iconLeading) ...[
-            Icon(icon, color: AppColors.searchResultMetaSlate, size: 18.sp),
-            SizedBox(width: 10.w),
-          ],
-          Expanded(
-            child: Text(
-              label,
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-              style: AppTextStyles.bodyMedium(
-                color: AppColors.darkText(context),
-              ).copyWith(fontSize: 15.sp, fontWeight: FontWeight.w500),
-              textAlign: iconLeading ? TextAlign.end : TextAlign.center,
-            ),
-          ),
-          if (!iconLeading) ...[
-            SizedBox(width: 8.w),
-            Icon(icon, color: AppColors.searchResultMetaSlate, size: 20.sp),
-          ],
-        ],
-      ),
-    );
+    return const CurvedSheetSortFilterRow();
   }
 }

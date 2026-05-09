@@ -610,6 +610,9 @@ class AppLocalizationsDe extends AppLocalizations {
   String get commonDelete => 'Löschen';
 
   @override
+  String get commonOk => 'OK';
+
+  @override
   String get followingsTitle => 'Meine Abonnements';
 
   @override

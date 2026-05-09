@@ -202,6 +202,7 @@
   "profileLogoutConfirmMessage": "Êtes-vous sûr de vouloir vous déconnecter ?",
   "commonCancel": "Annuler",
   "commonDelete": "Supprimer",
+  "commonOk": "OK",
 
   "followingsTitle": "Mes abonnements",
   "followingsCountTitle": "{count} abonnements",

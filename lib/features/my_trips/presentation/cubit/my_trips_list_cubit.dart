@@ -109,6 +109,11 @@ class MyTripsListCubit extends Cubit<MyTripsListState> {
     await loadInitial();
   }
 
+  /// Updates only the search term (keeps all other active filters) and reloads.
+  Future<void> applySearchQuery(String raw) async {
+    await applyFilters(_filters.withSearch(raw));
+  }
+
   Future<void> resetFilters() async {
     _filters = const TripsCatalogFilters();
     await loadInitial();

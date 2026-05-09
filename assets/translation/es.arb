@@ -202,6 +202,7 @@
   "profileLogoutConfirmMessage": "¿Seguro que quieres cerrar sesión?",
   "commonCancel": "Cancelar",
   "commonDelete": "Eliminar",
+  "commonOk": "Aceptar",
 
   "followingsTitle": "Mis seguidos",
   "followingsCountTitle": "{count} seguidos",

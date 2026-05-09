@@ -202,6 +202,7 @@
   "profileLogoutConfirmMessage": "Are you sure you want to log out?",
   "commonCancel": "Cancel",
   "commonDelete": "Delete",
+  "commonOk": "OK",
 
   "followingsTitle": "My Followings",
   "followingsCountTitle": "{count} Following",

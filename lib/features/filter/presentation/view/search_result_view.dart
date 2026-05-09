@@ -7,6 +7,7 @@ import 'package:trip_marche/core/injection/injection_container.dart';
 import 'package:trip_marche/core/theme/app_colors.dart';
 import 'package:trip_marche/core/theme/app_text_styles.dart';
 import 'package:trip_marche/core/toast/app_toast.dart';
+import 'package:trip_marche/core/widgets/curved_gradient_sheet_layout.dart';
 import 'package:trip_marche/core/widgets/custom_loading.dart';
 import 'package:trip_marche/features/filter/presentation/widgets/search_result_sections.dart';
 import 'package:trip_marche/features/my_trips/domain/entities/trips_catalog_filters.dart';
@@ -73,46 +74,24 @@ class _SearchResultViewState extends State<SearchResultView> {
         },
         child: Scaffold(
           backgroundColor: AppColors.primary,
-          body: Stack(
-            fit: StackFit.expand,
-            children: [
-              const DecoratedBox(
-                decoration: BoxDecoration(gradient: AppColors.primaryGradient),
-              ),
-              Column(
+          body: CurvedGradientSheetLayout(
+            headerTitle: context.tr.searchResultTitle,
+            sheetChild: Padding(
+              padding: EdgeInsetsDirectional.fromSTEB(16.w, 20.h, 16.w, 0),
+              child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  const SearchResultHeader(),
-                  Expanded(
-                    child: DecoratedBox(
-                      decoration: BoxDecoration(
-                        color: AppColors.cardBg(context),
-                        borderRadius: BorderRadius.vertical(
-                          top: Radius.circular(24.r),
-                        ),
-                      ),
-                      child: Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(
-                          16.w,
-                          16.h,
-                          16.w,
-                          0,
-                        ),
-                        child: Column(
-                          children: [
-                            const SearchResultSearchBar(),
-                            SizedBox(height: 16.h),
-                            const SearchResultActionRow(),
-                            SizedBox(height: 14.h),
-                            Expanded(child: _buildBody()),
-                          ],
-                        ),
-                      ),
-                    ),
+                  SearchResultSearchBar(
+                    initialQuery: widget.filters.search ?? '',
+                    scrollController: _scrollController,
                   ),
+                  SizedBox(height: 16.h),
+                  const SearchResultActionRow(),
+                  SizedBox(height: 14.h),
+                  Expanded(child: _buildBody()),
                 ],
               ),
-            ],
+            ),
           ),
         ),
       ),
@@ -134,12 +113,18 @@ class _SearchResultViewState extends State<SearchResultView> {
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Icon(Iconsax.warning_2, size: 42.sp, color: AppColors.greyText(context)),
+                  Icon(
+                    Iconsax.warning_2,
+                    size: 42.sp,
+                    color: AppColors.greyText(context),
+                  ),
                   SizedBox(height: 10.h),
                   Text(
                     state.errorMessage ?? context.tr.tripDetailsFailedToLoad,
                     textAlign: TextAlign.center,
-                    style: AppTextStyles.bodyMedium(color: AppColors.secondaryText(context)),
+                    style: AppTextStyles.bodyMedium(
+                      color: AppColors.secondaryText(context),
+                    ),
                   ),
                   SizedBox(height: 14.h),
                   FilledButton(
@@ -162,7 +147,9 @@ class _SearchResultViewState extends State<SearchResultView> {
               padding: EdgeInsetsDirectional.symmetric(horizontal: 24.w),
               child: Text(
                 context.tr.nothingFound,
-                style: AppTextStyles.bodyMedium(color: AppColors.secondaryText(context)),
+                style: AppTextStyles.bodyMedium(
+                  color: AppColors.secondaryText(context),
+                ),
               ),
             ),
           );
@@ -170,11 +157,14 @@ class _SearchResultViewState extends State<SearchResultView> {
 
         final itemCount =
             state.trips.length +
-            (state.hasMore && state.status == MyTripsListStatus.loadingMore ? 1 : 0);
+            (state.hasMore && state.status == MyTripsListStatus.loadingMore
+                ? 1
+                : 0);
 
         return RefreshIndicator(
           color: AppColors.primary,
-          onRefresh: () => context.read<MyTripsListCubit>().refreshFilteredTrips(),
+          onRefresh: () =>
+              context.read<MyTripsListCubit>().refreshFilteredTrips(),
           child: ListView.separated(
             controller: _scrollController,
             padding: EdgeInsetsDirectional.only(
@@ -201,10 +191,12 @@ class _SearchResultViewState extends State<SearchResultView> {
                   if (result == null || !context.mounted) {
                     return;
                   }
-                  context.read<MyTripsListCubit>().applyWishlistStateFromDetails(
-                    result.tripId,
-                    result.isWishlisted,
-                  );
+                  context
+                      .read<MyTripsListCubit>()
+                      .applyWishlistStateFromDetails(
+                        result.tripId,
+                        result.isWishlisted,
+                      );
                 },
               );
             },

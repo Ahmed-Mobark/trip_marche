@@ -465,7 +465,9 @@ class _FilterBody extends StatelessWidget {
                       onPressed: () => Navigator.pop(context),
                       style: OutlinedButton.styleFrom(
                         foregroundColor: AppColors.darkText(context),
-                        side: BorderSide(color: AppColors.secondaryText(context)),
+                        side: BorderSide(
+                          color: AppColors.secondaryText(context),
+                        ),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(50.r),
                         ),
@@ -636,7 +638,9 @@ class _FilterBody extends StatelessWidget {
                             shrinkWrap: true,
                             itemCount: state.availableDestinations.length,
                             separatorBuilder: (_, __) => Divider(
-                              color: AppColors.border(context).withValues(alpha: 0.6),
+                              color: AppColors.border(
+                                context,
+                              ).withValues(alpha: 0.6),
                             ),
                             itemBuilder: (context, index) {
                               final destination =
@@ -661,7 +665,9 @@ class _FilterBody extends StatelessWidget {
                                     : Text(
                                         destination.country,
                                         style: AppTextStyles.caption(
-                                          color: AppColors.secondaryText(context),
+                                          color: AppColors.secondaryText(
+                                            context,
+                                          ),
                                         ),
                                       ),
                                 controlAffinity:
@@ -681,7 +687,7 @@ class _FilterBody extends StatelessWidget {
                             foregroundColor: AppColors.onImage,
                           ),
                           child: Text(
-                            context.tr.commonCancel,
+                            ctx.tr.commonOk,
                             style: TextStyles.textViewSemiBold16.copyWith(
                               color: AppColors.onImage,
                             ),
@@ -753,8 +759,9 @@ class _FilterBody extends StatelessWidget {
                   child: ListView.separated(
                     shrinkWrap: true,
                     itemCount: options.length + 1,
-                    separatorBuilder: (_, __) =>
-                        Divider(color: AppColors.border(context).withValues(alpha: 0.6)),
+                    separatorBuilder: (_, __) => Divider(
+                      color: AppColors.border(context).withValues(alpha: 0.6),
+                    ),
                     itemBuilder: (_, index) {
                       if (index == 0) {
                         return ListTile(
@@ -869,7 +876,9 @@ class _FilterBody extends StatelessWidget {
                         shrinkWrap: true,
                         itemCount: options.length,
                         separatorBuilder: (_, __) => Divider(
-                          color: AppColors.border(context).withValues(alpha: 0.6),
+                          color: AppColors.border(
+                            context,
+                          ).withValues(alpha: 0.6),
                         ),
                         itemBuilder: (_, index) {
                           final option = options[index];

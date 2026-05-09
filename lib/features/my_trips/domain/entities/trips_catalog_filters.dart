@@ -73,6 +73,49 @@ class TripsCatalogFilters {
   final String? flag;
   final String? sort;
 
+  /// Same filters with an updated search string. Whitespace-only clears search.
+  TripsCatalogFilters withSearch(String? raw) {
+    final trimmed = raw?.trim();
+    final newSearch = (trimmed == null || trimmed.isEmpty) ? null : trimmed;
+    return TripsCatalogFilters(
+      search: newSearch,
+      type: type,
+      country: country,
+      departureCountry: departureCountry,
+      departureCity: departureCity,
+      destinationId: destinationId,
+      destinations: destinations,
+      destinationCountry: destinationCountry,
+      categoryId: categoryId,
+      categories: categories,
+      airlineId: airlineId,
+      airlines: airlines,
+      vendorId: vendorId,
+      agencyId: agencyId,
+      minVendorRating: minVendorRating,
+      minPrice: minPrice,
+      maxPrice: maxPrice,
+      minRating: minRating,
+      duration: duration,
+      minDuration: minDuration,
+      maxDuration: maxDuration,
+      groupSize: groupSize,
+      citiesCount: citiesCount,
+      countriesCount: countriesCount,
+      season: season,
+      tripMonth: tripMonth,
+      tripYear: tripYear,
+      visaType: visaType,
+      includeFlight: includeFlight,
+      hotelsOnly: hotelsOnly,
+      fiveStarOnly: fiveStarOnly,
+      acceptsCoupons: acceptsCoupons,
+      freeCancellation: freeCancellation,
+      flag: flag,
+      sort: sort,
+    );
+  }
+
   Map<String, dynamic> toRequestBody() {
     final map = <String, dynamic>{};
 

@@ -1252,6 +1252,12 @@ abstract class AppLocalizations {
   /// **'Delete'**
   String get commonDelete;
 
+  /// No description provided for @commonOk.
+  ///
+  /// In en, this message translates to:
+  /// **'OK'**
+  String get commonOk;
+
   /// No description provided for @followingsTitle.
   ///
   /// In en, this message translates to:

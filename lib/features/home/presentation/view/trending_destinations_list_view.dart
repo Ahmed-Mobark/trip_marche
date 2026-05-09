@@ -9,6 +9,8 @@ import 'package:trip_marche/core/injection/injection_container.dart';
 import 'package:trip_marche/core/navigation/app_navigator.dart';
 import 'package:trip_marche/core/theme/app_colors.dart';
 import 'package:trip_marche/core/theme/app_text_styles.dart';
+import 'package:trip_marche/core/widgets/app_trip_search_text_field.dart';
+import 'package:trip_marche/core/widgets/curved_gradient_sheet_layout.dart';
 import 'package:trip_marche/core/widgets/custom_loading.dart';
 import 'package:trip_marche/features/my_trips/presentation/view/trending_destenation_view.dart';
 
@@ -48,14 +50,8 @@ class _TrendingDestinationsListScaffoldState
   @override
   void initState() {
     super.initState();
-    _searchCtrl = TextEditingController()..addListener(_onSearchTextChanged);
+    _searchCtrl = TextEditingController();
     _scroll = ScrollController()..addListener(_onScroll);
-  }
-
-  void _onSearchTextChanged() {
-    if (mounted) {
-      setState(() {});
-    }
   }
 
   void _scheduleDebouncedSearch() {
@@ -72,8 +68,8 @@ class _TrendingDestinationsListScaffoldState
       _scroll.jumpTo(0);
     }
     context.read<TrendingDestinationsItemsCubit>().flushSearchNow(
-          _searchCtrl.text,
-        );
+      _searchCtrl.text,
+    );
   }
 
   void _onSearchFieldChanged(String _) {
@@ -128,91 +124,51 @@ class _TrendingDestinationsListScaffoldState
   @override
   void dispose() {
     _searchDebounceTimer?.cancel();
-    _searchCtrl
-      ..removeListener(_onSearchTextChanged)
-      ..dispose();
+    _searchCtrl.dispose();
     _scroll
       ..removeListener(_onScroll)
       ..dispose();
     super.dispose();
   }
 
-  Widget _buildWishlistStyleSearch(BuildContext context) {
-    final showClear = _searchCtrl.text.isNotEmpty;
-    return TextField(
-      controller: _searchCtrl,
-      onChanged: _onSearchFieldChanged,
-      onSubmitted: (_) => _onSearchSubmitted(),
-      textInputAction: TextInputAction.search,
-      style: AppTextStyles.bodyMedium(color: AppColors.darkText(context)),
-      cursorColor: AppColors.primary,
-      decoration: InputDecoration(
-        hintText: context.tr.wishlistSearchHint,
-        hintStyle: AppTextStyles.bodyMedium(color: AppColors.greyText(context)),
-        prefixIcon: Icon(
-          Iconsax.search_normal_1,
-          size: 20.sp,
-          color: AppColors.greyText(context),
-        ),
-        suffixIcon: showClear
-            ? IconButton(
-                onPressed: _onSearchClear,
-                icon: Icon(
-                  Iconsax.close_circle,
-                  size: 20.sp,
-                  color: AppColors.greyText(context),
-                ),
-                tooltip: MaterialLocalizations.of(context).deleteButtonTooltip,
-              )
-            : null,
-        filled: true,
-        fillColor: AppColors.background(context),
-        contentPadding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 14.h),
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(999.r),
-          borderSide: BorderSide(color: AppColors.border(context)),
-        ),
-        enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(999.r),
-          borderSide: BorderSide(color: AppColors.border(context)),
-        ),
-        focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(999.r),
-          borderSide: BorderSide(color: AppColors.primary, width: 1.5),
-        ),
-      ),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<TrendingDestinationsItemsCubit,
-        TrendingDestinationsItemsState>(
+    return BlocBuilder<
+      TrendingDestinationsItemsCubit,
+      TrendingDestinationsItemsState
+    >(
       builder: (context, state) {
         final title = _titleFromState(state);
         return Scaffold(
-          backgroundColor: AppColors.scaffoldBg(context),
-          appBar: AppBar(
-            backgroundColor: AppColors.scaffoldBg(context),
-            elevation: 0,
-            leading: IconButton(
-              icon: Icon(
-                Icons.arrow_back_ios_new_rounded,
-                color: AppColors.darkText(context),
+          backgroundColor: AppColors.primary,
+          body: CurvedGradientSheetLayout(
+            headerTitle: title,
+            sheetChild: Padding(
+              padding: EdgeInsetsDirectional.fromSTEB(16.w, 20.h, 16.w, 0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  AppTripSearchTextField(
+                    controller: _searchCtrl,
+                    onChanged: _onSearchFieldChanged,
+                    onSubmitted: (_) => _onSearchSubmitted(),
+                    onClear: _onSearchClear,
+                  ),
+                  // SizedBox(height: 16.h),
+                  // const CurvedSheetSortFilterRow(),
+                  SizedBox(height: 14.h),
+                  Expanded(
+                    child: RefreshIndicator(
+                      color: AppColors.primary,
+                      onRefresh: () => context
+                          .read<TrendingDestinationsItemsCubit>()
+                          .refresh(),
+                      child: _buildBody(context, state),
+                    ),
+                  ),
+                ],
               ),
-              onPressed: () => Navigator.pop(context),
             ),
-            title: Text(
-              title,
-              style: AppTextStyles.subtitle(color: AppColors.darkText(context)),
-            ),
-            centerTitle: true,
-          ),
-          body: RefreshIndicator(
-            color: AppColors.primary,
-            onRefresh: () =>
-                context.read<TrendingDestinationsItemsCubit>().refresh(),
-            child: _buildBody(context, state),
           ),
         );
       },
@@ -272,10 +228,6 @@ class _TrendingDestinationsListScaffoldState
         parent: ClampingScrollPhysics(),
       ),
       slivers: [
-        SliverPadding(
-          padding: EdgeInsetsDirectional.fromSTEB(16.w, 8.h, 16.w, 12.h),
-          sliver: SliverToBoxAdapter(child: _buildWishlistStyleSearch(context)),
-        ),
         if (state.destinations.isEmpty)
           SliverFillRemaining(
             hasScrollBody: false,
@@ -329,9 +281,7 @@ class _TrendingDestinationsListScaffoldState
             SliverToBoxAdapter(
               child: Padding(
                 padding: EdgeInsets.symmetric(vertical: 16.h),
-                child: Center(
-                  child: CustomLoading(size: 28, strokeWidth: 2),
-                ),
+                child: Center(child: CustomLoading(size: 28, strokeWidth: 2)),
               ),
             ),
         ],

@@ -201,6 +201,7 @@
   "profileLogoutConfirmTitle": "تسجيل الخروج",
   "profileLogoutConfirmMessage": "هل أنت متأكد أنك تريد تسجيل الخروج؟",
   "commonCancel": "إلغاء",
+  "commonOk": "موافق",
   "commonDelete": "حذف",
 
   "followingsTitle": "الشركات التي أتابعها",
