@@ -84,6 +84,8 @@
   "homeSearchHint": "Search for a trip",
   "homeLocationText": "Egypt, Cairo, New Cairo",
   "homeTrendingDestinations": "Trending Destinations",
+  "homeTrendingDestinationsSearchHint": "Search destinations",
+  "homeViewAll": "View all",
   "homePopularTrips": "Popular Trips",
   "homeSponsoredTrips": "Sponsored Trips",
   "homeDomesticTripsInEgypt": "Domestic Trips In Egypt",

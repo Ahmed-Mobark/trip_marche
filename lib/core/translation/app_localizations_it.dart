@@ -255,6 +255,12 @@ class AppLocalizationsIt extends AppLocalizations {
   String get homeTrendingDestinations => 'Destinazioni di tendenza';
 
   @override
+  String get homeTrendingDestinationsSearchHint => 'Cerca destinazioni';
+
+  @override
+  String get homeViewAll => 'Vedi tutto';
+
+  @override
   String get homePopularTrips => 'Viaggi popolari';
 
   @override

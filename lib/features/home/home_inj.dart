@@ -8,6 +8,12 @@ import 'presentation/cubit/home_sections_cubit.dart';
 import 'presentation/cubit/home_banners_cubit.dart';
 import 'presentation/cubit/home_categories_cubit.dart';
 import 'presentation/cubit/special_trips_cubit.dart';
+import 'presentation/cubit/trending_destinations_items_cubit.dart';
+import 'presentation/cubit/popular_trips_items_cubit.dart';
+import 'presentation/cubit/sponsored_trips_items_cubit.dart';
+import 'presentation/cubit/domestic_trips_items_cubit.dart';
+import 'presentation/cubit/international_trips_items_cubit.dart';
+import 'presentation/cubit/recommended_for_you_items_cubit.dart';
 
 void initHomeInjection(GetIt sl) {
   // Data Sources
@@ -32,5 +38,38 @@ void initHomeInjection(GetIt sl) {
   );
   sl.registerFactory<SpecialTripsCubit>(
     () => SpecialTripsCubit(sl<HomeRepository>(), sl<TripWishlistRepository>()),
+  );
+  sl.registerFactory<TrendingDestinationsItemsCubit>(
+    () => TrendingDestinationsItemsCubit(sl<HomeRepository>()),
+  );
+  sl.registerFactory<PopularTripsItemsCubit>(
+    () => PopularTripsItemsCubit(
+      sl<HomeRepository>(),
+      sl<TripWishlistRepository>(),
+    ),
+  );
+  sl.registerFactory<SponsoredTripsItemsCubit>(
+    () => SponsoredTripsItemsCubit(
+      sl<HomeRepository>(),
+      sl<TripWishlistRepository>(),
+    ),
+  );
+  sl.registerFactory<DomesticTripsItemsCubit>(
+    () => DomesticTripsItemsCubit(
+      sl<HomeRepository>(),
+      sl<TripWishlistRepository>(),
+    ),
+  );
+  sl.registerFactory<InternationalTripsItemsCubit>(
+    () => InternationalTripsItemsCubit(
+      sl<HomeRepository>(),
+      sl<TripWishlistRepository>(),
+    ),
+  );
+  sl.registerFactory<RecommendedForYouItemsCubit>(
+    () => RecommendedForYouItemsCubit(
+      sl<HomeRepository>(),
+      sl<TripWishlistRepository>(),
+    ),
   );
 }

@@ -84,6 +84,8 @@
   "homeSearchHint": "Buscar un viaje",
   "homeLocationText": "Egipto, El Cairo, Nueva El Cairo",
   "homeTrendingDestinations": "Destinos en tendencia",
+  "homeTrendingDestinationsSearchHint": "Buscar destinos",
+  "homeViewAll": "Ver todo",
   "homePopularTrips": "Viajes populares",
   "homeSponsoredTrips": "Viajes patrocinados",
   "homeDomesticTripsInEgypt": "Viajes nacionales en Egipto",

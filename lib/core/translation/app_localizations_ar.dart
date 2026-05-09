@@ -252,6 +252,12 @@ class AppLocalizationsAr extends AppLocalizations {
   String get homeTrendingDestinations => 'الوجهات الرائجة';
 
   @override
+  String get homeTrendingDestinationsSearchHint => 'ابحث عن وجهة';
+
+  @override
+  String get homeViewAll => 'عرض الكل';
+
+  @override
   String get homePopularTrips => 'الرحلات الشائعة';
 
   @override

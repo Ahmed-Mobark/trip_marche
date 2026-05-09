@@ -17,21 +17,31 @@ class TrendingDestinationCard extends StatelessWidget {
     required this.imageUrl,
     required this.rank,
     this.onTap,
+    this.width,
+    this.height,
   });
 
   final String name;
   final String imageUrl;
   final int rank;
   final VoidCallback? onTap;
+  /// When set (e.g. grid), fills the cell; otherwise uses the home rail size.
+  final double? width;
+  final double? height;
 
   @override
   Widget build(BuildContext context) {
+    final w = width ?? 108.px;
+    final h = height ?? 128.px;
+    final useGridMargin = width != null;
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        width: 108.px,
-        height: 128.px,
-        margin: EdgeInsetsDirectional.only(end: 10.px),
+        width: w,
+        height: h,
+        margin: useGridMargin
+            ? EdgeInsets.zero
+            : EdgeInsetsDirectional.only(end: 10.px),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(16.r),
           color: AppColors.inputBg(context),
@@ -46,8 +56,8 @@ class TrendingDestinationCard extends StatelessWidget {
                   fit: BoxFit.cover,
                 ),
               ),
-              Positioned(
-                left: 10.w,
+              PositionedDirectional(
+                start: 10.w,
                 top: 0.h,
                 child: _RankRibbon(rank: rank),
               ),

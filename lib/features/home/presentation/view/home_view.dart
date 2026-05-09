@@ -10,7 +10,6 @@ import 'package:trip_marche/core/theme/app_text_styles.dart';
 import 'package:trip_marche/core/toast/app_toast.dart';
 import 'package:trip_marche/core/widgets/custom_loading.dart';
 
-import '../../../my_trips/presentation/view/trending_destenation_view.dart';
 import '../../../trip_details/presentation/trip_wishlist_pop_result.dart';
 import '../../../trip_details/presentation/view/trip_details_view.dart';
 import '../../data/models/home_banner_model.dart';
@@ -23,12 +22,18 @@ import '../cubit/home_sections_cubit.dart';
 import '../cubit/home_sections_state.dart';
 import '../cubit/special_trips_cubit.dart';
 import '../cubit/special_trips_state.dart';
+import '../cubit/trending_destinations_items_cubit.dart';
+import 'popular_trips_list_view.dart';
+import 'sponsored_trips_list_view.dart';
+import 'domestic_trips_list_view.dart';
+import 'international_trips_list_view.dart';
+import 'recommended_for_you_list_view.dart';
 import '../widgets/category_chip.dart';
 import '../widgets/home_header.dart';
+import '../widgets/home_trending_destinations_section.dart';
 import '../widgets/popular_trip_grid_card.dart';
 import '../widgets/promo_banner_item.dart';
 import '../widgets/special_trip_wide_card.dart';
-import '../widgets/trending_destination_card.dart';
 
 class HomeView extends StatefulWidget {
   const HomeView({super.key});
@@ -76,12 +81,14 @@ class HomeViewState extends State<HomeView> {
     final sections = context.read<HomeSectionsCubit>();
     final banners = context.read<HomeBannersCubit>();
     final categories = context.read<HomeCategoriesCubit>();
+    final trendingDestinations = context.read<TrendingDestinationsItemsCubit>();
     final special = context.read<SpecialTripsCubit>();
 
     await Future.wait([
       sections.refreshSections(),
       banners.refreshBanners(),
       categories.refreshCategories(),
+      trendingDestinations.refresh(),
     ]);
 
     final categoryId = categories.state.selectedId;
@@ -114,7 +121,9 @@ class HomeViewState extends State<HomeView> {
     final horizontalPadding = 16.w;
     final sheetTopRadius = 24.r;
     final sheetOverlap = 18.h;
-    final sectionTitleStyle = AppTextStyles.heading3(color: AppColors.darkText(context));
+    final sectionTitleStyle = AppTextStyles.heading3(
+      color: AppColors.darkText(context),
+    );
     final actionStyle = AppTextStyles.bodySmall(
       color: AppColors.primaryDark,
     ).copyWith(fontWeight: FontWeight.w600);
@@ -123,7 +132,12 @@ class HomeViewState extends State<HomeView> {
       providers: [
         BlocProvider(create: (_) => sl<HomeSectionsCubit>()..loadSections()),
         BlocProvider(create: (_) => sl<HomeBannersCubit>()..loadBanners()),
-        BlocProvider(create: (_) => sl<HomeCategoriesCubit>()..loadCategories()),
+        BlocProvider(
+          create: (_) => sl<HomeCategoriesCubit>()..loadCategories(),
+        ),
+        BlocProvider(
+          create: (_) => sl<TrendingDestinationsItemsCubit>()..loadInitial(),
+        ),
         BlocProvider(create: (_) => sl<SpecialTripsCubit>()),
       ],
       child: Builder(
@@ -140,7 +154,11 @@ class HomeViewState extends State<HomeView> {
                   if (msg == null) {
                     return;
                   }
-                  appToast(context: context, type: ToastType.error, message: msg);
+                  appToast(
+                    context: context,
+                    type: ToastType.error,
+                    message: msg,
+                  );
                   context.read<HomeSectionsCubit>().clearWishlistError();
                 },
               ),
@@ -153,7 +171,11 @@ class HomeViewState extends State<HomeView> {
                   if (msg == null) {
                     return;
                   }
-                  appToast(context: context, type: ToastType.error, message: msg);
+                  appToast(
+                    context: context,
+                    type: ToastType.error,
+                    message: msg,
+                  );
                   context.read<SpecialTripsCubit>().clearWishlistError();
                 },
               ),
@@ -196,41 +218,50 @@ class HomeViewState extends State<HomeView> {
                                 ),
                                 boxShadow: [
                                   BoxShadow(
-                                    color: AppColors.shadow.withValues(alpha: 0.04),
+                                    color: AppColors.shadow.withValues(
+                                      alpha: 0.04,
+                                    ),
                                     blurRadius: 18.r,
                                     offset: Offset(0, 10.h),
                                   ),
                                 ],
                               ),
-                              child: BlocBuilder<HomeSectionsCubit, HomeSectionsState>(
-                                builder: (context, state) {
-                                  if (state.status ==
-                                          HomeSectionsStatus.loading ||
-                                      state.status ==
-                                          HomeSectionsStatus.initial) {
-                                    return _buildHomeSectionsLoading();
-                                  }
+                              child:
+                                  BlocBuilder<
+                                    HomeSectionsCubit,
+                                    HomeSectionsState
+                                  >(
+                                    builder: (context, state) {
+                                      if (state.status ==
+                                              HomeSectionsStatus.loading ||
+                                          state.status ==
+                                              HomeSectionsStatus.initial) {
+                                        return _buildHomeSectionsLoading();
+                                      }
 
-                                  if (state.status ==
-                                      HomeSectionsStatus.failure) {
-                                    return _buildError(
-                                      context,
-                                      state.errorMessage ?? 'Something went wrong',
-                                    );
-                                  }
+                                      if (state.status ==
+                                          HomeSectionsStatus.failure) {
+                                        return _buildError(
+                                          context,
+                                          state.errorMessage ??
+                                              'Something went wrong',
+                                        );
+                                      }
 
-                                  return _buildContent(
-                                    context,
-                                    state,
-                                    sectionTitleStyle,
-                                    actionStyle,
-                                  );
-                                },
-                              ),
+                                      return _buildContent(
+                                        context,
+                                        state,
+                                        sectionTitleStyle,
+                                        actionStyle,
+                                      );
+                                    },
+                                  ),
                             ),
                           ),
                         ),
-                        SliverToBoxAdapter(child: SizedBox(height: sheetOverlap)),
+                        SliverToBoxAdapter(
+                          child: SizedBox(height: sheetOverlap),
+                        ),
                       ],
                     ),
                   );
@@ -249,7 +280,6 @@ class HomeViewState extends State<HomeView> {
     TextStyle sectionTitleStyle,
     TextStyle actionStyle,
   ) {
-    final trendingSection = state.sectionByKey('trending_destinations');
     final popularSection = state.sectionByKey('popular_trips');
     final sponsoredSection = state.sectionByKey('sponsored_trips');
     final domesticSection = state.sectionByKey('domestic_trips');
@@ -273,41 +303,11 @@ class HomeViewState extends State<HomeView> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        // ── Trending Destinations ──
-        if (trendingSection != null) ...[
-          SizedBox(height: 12.h),
-
-          Text(trendingSection.title, style: sectionTitleStyle),
-          SizedBox(height: 12.h),
-          SizedBox(
-            height: 110.h,
-            child: ListView.builder(
-              scrollDirection: Axis.horizontal,
-              itemCount: trendingSection.destinations.length,
-              itemBuilder: (context, index) {
-                final dest = trendingSection.destinations[index];
-                return TrendingDestinationCard(
-                  name: dest.name,
-                  imageUrl: dest.image,
-                  rank: dest.trendingRank,
-                  onTap: dest.id <= 0
-                      ? null
-                      : () {
-                          sl<AppNavigator>().push(
-                            screen: TrendingDestinationView(
-                              catalogDestinationId: dest.id,
-                              destinationBrowseTitle: dest.name,
-                              catalogDestinationImageUrl: dest.image,
-                              catalogDestinationCountry: dest.country,
-                            ),
-                          );
-                        },
-                );
-              },
-            ),
-          ),
-          SizedBox(height: 22.h),
-        ],
+        // ── Trending Destinations (paginated section items API) ──
+        HomeTrendingDestinationsSection(
+          sectionTitleStyle: sectionTitleStyle,
+          actionStyle: actionStyle,
+        ),
 
         // ── Popular Trips ──
         if (popularSection != null) ...[
@@ -316,7 +316,21 @@ class HomeViewState extends State<HomeView> {
             actionText: context.tr.homeSeeAll,
             titleStyle: sectionTitleStyle,
             actionStyle: actionStyle,
-            onAction: () {},
+            onAction: () {
+              sl<AppNavigator>().push(
+                screen: MultiBlocProvider(
+                  providers: [
+                    BlocProvider.value(
+                      value: context.read<HomeSectionsCubit>(),
+                    ),
+                    BlocProvider.value(
+                      value: context.read<SpecialTripsCubit>(),
+                    ),
+                  ],
+                  child: const PopularTripsListView(),
+                ),
+              );
+            },
           ),
           SizedBox(height: 14.h),
           _TripHorizontalList(
@@ -361,7 +375,21 @@ class HomeViewState extends State<HomeView> {
             actionText: context.tr.homeSeeAll,
             titleStyle: sectionTitleStyle,
             actionStyle: actionStyle,
-            onAction: () {},
+            onAction: () {
+              sl<AppNavigator>().push(
+                screen: MultiBlocProvider(
+                  providers: [
+                    BlocProvider.value(
+                      value: context.read<HomeSectionsCubit>(),
+                    ),
+                    BlocProvider.value(
+                      value: context.read<SpecialTripsCubit>(),
+                    ),
+                  ],
+                  child: const SponsoredTripsListView(),
+                ),
+              );
+            },
           ),
           SizedBox(height: 14.h),
           _TripHorizontalList(
@@ -379,7 +407,21 @@ class HomeViewState extends State<HomeView> {
             actionText: context.tr.homeSeeAll,
             titleStyle: sectionTitleStyle,
             actionStyle: actionStyle,
-            onAction: () {},
+            onAction: () {
+              sl<AppNavigator>().push(
+                screen: MultiBlocProvider(
+                  providers: [
+                    BlocProvider.value(
+                      value: context.read<HomeSectionsCubit>(),
+                    ),
+                    BlocProvider.value(
+                      value: context.read<SpecialTripsCubit>(),
+                    ),
+                  ],
+                  child: const DomesticTripsListView(),
+                ),
+              );
+            },
           ),
           SizedBox(height: 14.h),
           _TripHorizontalList(
@@ -397,7 +439,21 @@ class HomeViewState extends State<HomeView> {
             actionText: context.tr.homeSeeAll,
             titleStyle: sectionTitleStyle,
             actionStyle: actionStyle,
-            onAction: () {},
+            onAction: () {
+              sl<AppNavigator>().push(
+                screen: MultiBlocProvider(
+                  providers: [
+                    BlocProvider.value(
+                      value: context.read<HomeSectionsCubit>(),
+                    ),
+                    BlocProvider.value(
+                      value: context.read<SpecialTripsCubit>(),
+                    ),
+                  ],
+                  child: const InternationalTripsListView(),
+                ),
+              );
+            },
           ),
           SizedBox(height: 14.h),
           _TripHorizontalList(
@@ -415,7 +471,21 @@ class HomeViewState extends State<HomeView> {
             actionText: context.tr.homeSeeAll,
             titleStyle: sectionTitleStyle,
             actionStyle: actionStyle,
-            onAction: () {},
+            onAction: () {
+              sl<AppNavigator>().push(
+                screen: MultiBlocProvider(
+                  providers: [
+                    BlocProvider.value(
+                      value: context.read<HomeSectionsCubit>(),
+                    ),
+                    BlocProvider.value(
+                      value: context.read<SpecialTripsCubit>(),
+                    ),
+                  ],
+                  child: const RecommendedForYouListView(),
+                ),
+              );
+            },
           ),
           SizedBox(height: 14.h),
           _TripHorizontalList(
@@ -547,12 +617,18 @@ class HomeViewState extends State<HomeView> {
         padding: EdgeInsets.symmetric(vertical: 60.h),
         child: Column(
           children: [
-            Icon(Icons.error_outline, size: 48.sp, color: AppColors.greyText(context)),
+            Icon(
+              Icons.error_outline,
+              size: 48.sp,
+              color: AppColors.greyText(context),
+            ),
             SizedBox(height: 12.h),
             Text(
               message,
               textAlign: TextAlign.center,
-              style: AppTextStyles.bodyMedium(color: AppColors.greyText(context)),
+              style: AppTextStyles.bodyMedium(
+                color: AppColors.greyText(context),
+              ),
             ),
             SizedBox(height: 16.h),
             ElevatedButton(
@@ -567,7 +643,9 @@ class HomeViewState extends State<HomeView> {
               ),
               child: Text(
                 'Retry',
-                style: AppTextStyles.bodyMedium(color: AppColors.onPrimary(context)),
+                style: AppTextStyles.bodyMedium(
+                  color: AppColors.onPrimary(context),
+                ),
               ),
             ),
           ],

@@ -14,6 +14,18 @@ class AppEndpoints {
   static const String homeBanners = "home/banners";
   static const String homeCategories = "home/categories";
   static const String homeSpecialTrips = "home/special-trips";
+  static const String homeTrendingDestinationsItems =
+      "home/sections/trending_destinations/items";
+  static const String homePopularTripsItems =
+      "home/sections/popular_trips/items";
+  static const String homeSponsoredTripsItems =
+      "home/sections/sponsored_trips/items";
+  static const String homeDomesticTripsItems =
+      "home/sections/domestic_trips/items";
+  static const String homeInternationalTripsItems =
+      "home/sections/international_trips/items";
+  static const String homeRecommendedForYouItems =
+      "home/sections/recommended_for_you/items";
   static const String destinations = "destinations";
 
   /// POST — paginated trips catalog (body: page, per_page, search?, destination_id?).

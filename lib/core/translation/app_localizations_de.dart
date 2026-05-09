@@ -258,6 +258,12 @@ class AppLocalizationsDe extends AppLocalizations {
   String get homeTrendingDestinations => 'Trendziele';
 
   @override
+  String get homeTrendingDestinationsSearchHint => 'Reiseziele suchen';
+
+  @override
+  String get homeViewAll => 'Alle anzeigen';
+
+  @override
   String get homePopularTrips => 'Beliebte Reisen';
 
   @override

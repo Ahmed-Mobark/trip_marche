@@ -10,4 +10,34 @@ abstract class HomeRepository {
     int page = 1,
     int perPage = 5,
   });
+  Future<Either<Failure, Map<String, dynamic>>> getTrendingDestinationsItems({
+    int page = 1,
+    int perPage = 15,
+    String search = '',
+  });
+  Future<Either<Failure, Map<String, dynamic>>> getPopularTripsItems({
+    int page = 1,
+    int perPage = 15,
+    String search = '',
+  });
+  Future<Either<Failure, Map<String, dynamic>>> getSponsoredTripsItems({
+    int page = 1,
+    int perPage = 15,
+    String search = '',
+  });
+  Future<Either<Failure, Map<String, dynamic>>> getDomesticTripsItems({
+    int page = 1,
+    int perPage = 15,
+    String search = '',
+  });
+  Future<Either<Failure, Map<String, dynamic>>> getInternationalTripsItems({
+    int page = 1,
+    int perPage = 15,
+    String search = '',
+  });
+  Future<Either<Failure, Map<String, dynamic>>> getRecommendedForYouItems({
+    int page = 1,
+    int perPage = 15,
+    String search = '',
+  });
 }

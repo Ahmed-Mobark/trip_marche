@@ -574,6 +574,18 @@ abstract class AppLocalizations {
   /// **'Trending Destinations'**
   String get homeTrendingDestinations;
 
+  /// No description provided for @homeTrendingDestinationsSearchHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Search destinations'**
+  String get homeTrendingDestinationsSearchHint;
+
+  /// No description provided for @homeViewAll.
+  ///
+  /// In en, this message translates to:
+  /// **'View all'**
+  String get homeViewAll;
+
   /// No description provided for @homePopularTrips.
   ///
   /// In en, this message translates to:

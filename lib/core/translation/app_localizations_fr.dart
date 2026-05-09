@@ -257,6 +257,13 @@ class AppLocalizationsFr extends AppLocalizations {
   String get homeTrendingDestinations => 'Destinations tendances';
 
   @override
+  String get homeTrendingDestinationsSearchHint =>
+      'Rechercher des destinations';
+
+  @override
+  String get homeViewAll => 'Tout voir';
+
+  @override
   String get homePopularTrips => 'Voyages populaires';
 
   @override

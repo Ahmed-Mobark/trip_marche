@@ -38,4 +38,94 @@ class HomeRepositoryImpl with RepositoryHelper implements HomeRepository {
       ),
     );
   }
+
+  @override
+  Future<Either<Failure, Map<String, dynamic>>> getTrendingDestinationsItems({
+    int page = 1,
+    int perPage = 15,
+    String search = '',
+  }) {
+    return handleEither(
+      () => _remoteDataSource.getTrendingDestinationsItems(
+        page: page,
+        perPage: perPage,
+        search: search,
+      ),
+    );
+  }
+
+  @override
+  Future<Either<Failure, Map<String, dynamic>>> getPopularTripsItems({
+    int page = 1,
+    int perPage = 15,
+    String search = '',
+  }) {
+    return handleEither(
+      () => _remoteDataSource.getPopularTripsItems(
+        page: page,
+        perPage: perPage,
+        search: search,
+      ),
+    );
+  }
+
+  @override
+  Future<Either<Failure, Map<String, dynamic>>> getSponsoredTripsItems({
+    int page = 1,
+    int perPage = 15,
+    String search = '',
+  }) {
+    return handleEither(
+      () => _remoteDataSource.getSponsoredTripsItems(
+        page: page,
+        perPage: perPage,
+        search: search,
+      ),
+    );
+  }
+
+  @override
+  Future<Either<Failure, Map<String, dynamic>>> getDomesticTripsItems({
+    int page = 1,
+    int perPage = 15,
+    String search = '',
+  }) {
+    return handleEither(
+      () => _remoteDataSource.getDomesticTripsItems(
+        page: page,
+        perPage: perPage,
+        search: search,
+      ),
+    );
+  }
+
+  @override
+  Future<Either<Failure, Map<String, dynamic>>> getInternationalTripsItems({
+    int page = 1,
+    int perPage = 15,
+    String search = '',
+  }) {
+    return handleEither(
+      () => _remoteDataSource.getInternationalTripsItems(
+        page: page,
+        perPage: perPage,
+        search: search,
+      ),
+    );
+  }
+
+  @override
+  Future<Either<Failure, Map<String, dynamic>>> getRecommendedForYouItems({
+    int page = 1,
+    int perPage = 15,
+    String search = '',
+  }) {
+    return handleEither(
+      () => _remoteDataSource.getRecommendedForYouItems(
+        page: page,
+        perPage: perPage,
+        search: search,
+      ),
+    );
+  }
 }
