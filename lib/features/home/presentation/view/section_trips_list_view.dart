@@ -21,6 +21,7 @@ import '../cubit/home_sections_cubit.dart';
 import '../cubit/section_trips_items_cubit.dart';
 import '../cubit/section_trips_items_state.dart';
 import '../cubit/special_trips_cubit.dart';
+import '../../../../core/widgets/staggered_fade_slide.dart';
 import '../widgets/popular_trip_grid_card.dart';
 
 /// Generic "See all" view for any home section that lists trips.
@@ -284,46 +285,49 @@ class _SectionTripsListScaffoldState extends State<_SectionTripsListScaffold> {
                   );
                 }
                 final trip = state.trips[index];
-                return PopularTripGridCard(
-                  trip: trip,
-                  onTap: () async {
-                    final result = await sl<AppNavigator>()
-                        .push<TripWishlistPopResult>(
-                          screen: TripDetailsView(
-                            tripId: trip.id,
-                            initialIsWishlisted: trip.isWishlisted,
-                          ),
-                        );
-                    if (!context.mounted || result == null) return;
-                    context
-                        .read<SectionTripsItemsCubit>()
-                        .syncWishlistFromOtherList(
-                          result.tripId,
-                          result.isWishlisted,
-                        );
-                    _syncWishlistToParentShell(
-                      context,
-                      result.tripId,
-                      result.isWishlisted,
-                    );
-                  },
-                  onFavoriteTap: () async {
-                    await context
-                        .read<SectionTripsItemsCubit>()
-                        .toggleTripWishlist(trip.id);
-                    if (!context.mounted) return;
-                    final updated = _tripById(
-                      context.read<SectionTripsItemsCubit>().state,
-                      trip.id,
-                    );
-                    if (updated != null) {
+                return StaggeredFadeSlide(
+                  index: index,
+                  child: PopularTripGridCard(
+                    trip: trip,
+                    onTap: () async {
+                      final result = await sl<AppNavigator>()
+                          .push<TripWishlistPopResult>(
+                            screen: TripDetailsView(
+                              tripId: trip.id,
+                              initialIsWishlisted: trip.isWishlisted,
+                            ),
+                          );
+                      if (!context.mounted || result == null) return;
+                      context
+                          .read<SectionTripsItemsCubit>()
+                          .syncWishlistFromOtherList(
+                            result.tripId,
+                            result.isWishlisted,
+                          );
                       _syncWishlistToParentShell(
                         context,
-                        trip.id,
-                        updated.isWishlisted,
+                        result.tripId,
+                        result.isWishlisted,
                       );
-                    }
-                  },
+                    },
+                    onFavoriteTap: () async {
+                      await context
+                          .read<SectionTripsItemsCubit>()
+                          .toggleTripWishlist(trip.id);
+                      if (!context.mounted) return;
+                      final updated = _tripById(
+                        context.read<SectionTripsItemsCubit>().state,
+                        trip.id,
+                      );
+                      if (updated != null) {
+                        _syncWishlistToParentShell(
+                          context,
+                          trip.id,
+                          updated.isWishlisted,
+                        );
+                      }
+                    },
+                  ),
                 );
               }, childCount: itemCount),
             ),

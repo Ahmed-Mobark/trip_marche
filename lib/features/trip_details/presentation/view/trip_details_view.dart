@@ -187,11 +187,13 @@ class _TripDetailsBody extends StatelessWidget {
                           offset: Offset(0, -sheetOverlap),
                           child: Container(
                             width: double.infinity,
-                            decoration: BoxDecoration(color: AppColors.cardBg(context)),
+                            decoration: BoxDecoration(
+                              color: AppColors.cardBg(context),
+                            ),
                             child: MediaQuery(
-                              data: MediaQuery.of(context).copyWith(
-                                textScaler: TextScaler.noScaling,
-                              ),
+                              data: MediaQuery.of(
+                                context,
+                              ).copyWith(textScaler: TextScaler.noScaling),
                               child: Padding(
                                 padding: EdgeInsetsDirectional.only(
                                   start: horizontalPadding,
@@ -217,7 +219,7 @@ class _TripDetailsBody extends StatelessWidget {
                     ],
                   ),
                   PositionedDirectional(
-                    bottom: 0,
+                    bottom: -15,
                     start: 0,
                     end: 0,
                     child: TripDetailsBookingBar(

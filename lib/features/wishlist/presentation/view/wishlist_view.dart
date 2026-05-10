@@ -6,6 +6,7 @@ import 'package:trip_marche/core/config/styles/styles.dart';
 import 'package:trip_marche/core/extensions/localization.dart';
 import 'package:trip_marche/core/injection/injection_container.dart';
 import 'package:trip_marche/core/theme/app_colors.dart';
+import 'package:trip_marche/core/widgets/app_trip_search_text_field.dart';
 import 'package:trip_marche/core/widgets/custom_loading.dart';
 import 'package:trip_marche/core/toast/app_toast.dart';
 import 'package:trip_marche/features/wishlist/presentation/cubit/wishlist_cubit.dart';
@@ -22,6 +23,7 @@ class WishlistView extends StatefulWidget {
 class WishlistViewState extends State<WishlistView> {
   late final WishlistCubit _cubit;
   late final ScrollController _scroll;
+  late final TextEditingController _searchCtrl;
   String _searchQuery = '';
 
   Future<void> refreshFromNavBarTap() async {
@@ -33,6 +35,7 @@ class WishlistViewState extends State<WishlistView> {
     super.initState();
     _cubit = sl<WishlistCubit>()..loadInitial();
     _scroll = ScrollController()..addListener(_onScroll);
+    _searchCtrl = TextEditingController();
   }
 
   void _onScroll() {
@@ -47,6 +50,7 @@ class WishlistViewState extends State<WishlistView> {
 
   @override
   void dispose() {
+    _searchCtrl.dispose();
     _scroll
       ..removeListener(_onScroll)
       ..dispose();
@@ -162,44 +166,15 @@ class WishlistViewState extends State<WishlistView> {
                                   sliver: SliverToBoxAdapter(
                                     child: Column(
                                       children: [
-                                        TextField(
+                                        AppTripSearchTextField(
+                                          controller: _searchCtrl,
                                           onChanged: (value) => setState(
                                             () => _searchQuery = value.trim(),
                                           ),
-                                          decoration: InputDecoration(
-                                            hintText: context.tr.wishlistSearchHint,
-                                            prefixIcon: Icon(
-                                              Iconsax.search_normal_1,
-                                              size: 20.sp,
-                                              color: AppColors.greyText(context),
-                                            ),
-                                            filled: true,
-                                            fillColor: AppColors.background(context),
-                                            border: OutlineInputBorder(
-                                              borderRadius: BorderRadius.circular(
-                                                999.r,
-                                              ),
-                                              borderSide: BorderSide(
-                                                color: AppColors.border(context),
-                                              ),
-                                            ),
-                                            enabledBorder: OutlineInputBorder(
-                                              borderRadius: BorderRadius.circular(
-                                                999.r,
-                                              ),
-                                              borderSide: BorderSide(
-                                                color: AppColors.border(context),
-                                              ),
-                                            ),
-                                            focusedBorder: OutlineInputBorder(
-                                              borderRadius: BorderRadius.circular(
-                                                999.r,
-                                              ),
-                                              borderSide: BorderSide(
-                                                color: AppColors.border(context),
-                                              ),
-                                            ),
-                                          ),
+                                          onClear: () {
+                                            _searchCtrl.clear();
+                                            setState(() => _searchQuery = '');
+                                          },
                                         ),
                                         SizedBox(height: 14.h),
                                         SizedBox(height: 4.h),

@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(flutter analyze lib/core/widgets/staggered_fade_slide.dart lib/features/home/presentation/view/home_view.dart lib/features/home/presentation/view/section_trips_list_view.dart)",
+      "Bash(flutter analyze lib/core/widgets/app_trip_search_text_field.dart lib/features/home/presentation/widgets/home_header.dart lib/features/wishlist/presentation/view/wishlist_view.dart)",
+      "Bash(flutter analyze lib/features/my_trips/presentation/view/my_trips_view.dart lib/features/wishlist/presentation/view/wishlist_view.dart)"
+    ]
+  }
+}

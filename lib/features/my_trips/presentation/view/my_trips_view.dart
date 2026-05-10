@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:iconsax/iconsax.dart';
 import 'package:trip_marche/core/config/styles/styles.dart';
 import 'package:trip_marche/core/extensions/localization.dart';
 import 'package:trip_marche/core/injection/injection_container.dart';
 import 'package:trip_marche/core/theme/app_colors.dart';
+import 'package:trip_marche/core/widgets/app_trip_search_text_field.dart';
 import 'package:trip_marche/features/my_trips/presentation/cubit/my_trips_shell_cubit.dart';
 import 'package:trip_marche/features/my_trips/presentation/cubit/my_trips_shell_state.dart';
 import 'package:trip_marche/features/my_trips/presentation/my_trips_figma_tokens.dart';
@@ -24,10 +24,27 @@ class MyTripsView extends StatelessWidget {
   }
 }
 
-class _MyTripsViewBody extends StatelessWidget {
+class _MyTripsViewBody extends StatefulWidget {
   const _MyTripsViewBody();
 
-  static double get _searchBarHeight => 44.h;
+  @override
+  State<_MyTripsViewBody> createState() => _MyTripsViewBodyState();
+}
+
+class _MyTripsViewBodyState extends State<_MyTripsViewBody> {
+  late final TextEditingController _searchCtrl;
+
+  @override
+  void initState() {
+    super.initState();
+    _searchCtrl = TextEditingController();
+  }
+
+  @override
+  void dispose() {
+    _searchCtrl.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -94,8 +111,14 @@ class _MyTripsViewBody extends StatelessWidget {
                               end: MyTripsFigmaTokens.padH,
                               top: MyTripsFigmaTokens.searchBlockTop,
                             ),
-                            child: _SearchField(
+                            child: AppTripSearchTextField(
+                              controller: _searchCtrl,
+                              hintText: context.tr.myTripsSearchHint,
                               onChanged: cubit.setSearchQuery,
+                              onClear: () {
+                                _searchCtrl.clear();
+                                cubit.setSearchQuery('');
+                              },
                             ),
                           ),
                           const MyTripsScreenTabs(),
@@ -134,58 +157,6 @@ class _MyTripsViewBody extends StatelessWidget {
           ),
         );
       },
-    );
-  }
-}
-
-class _SearchField extends StatelessWidget {
-  const _SearchField({required this.onChanged});
-
-  final ValueChanged<String> onChanged;
-
-  @override
-  Widget build(BuildContext context) {
-    final border = OutlineInputBorder(
-      borderRadius: BorderRadius.circular(MyTripsFigmaTokens.searchRadiusPill),
-      borderSide: BorderSide(color: AppColors.myTripsBorderFigma, width: 1.w),
-    );
-
-    return SizedBox(
-      height: _MyTripsViewBody._searchBarHeight,
-      child: TextField(
-        onChanged: onChanged,
-        style: MyTripsFigmaTokens.text(
-          fontSize: MyTripsFigmaTokens.searchFontSize,
-          fontWeight: FontWeight.w400,
-          height: MyTripsFigmaTokens.searchLineHeight,
-          color: AppColors.darkText(context),
-        ),
-        cursorColor: AppColors.myTripsPrimary,
-        decoration: InputDecoration(
-          isDense: true,
-          hintText: context.tr.myTripsSearchHint,
-          hintStyle: MyTripsFigmaTokens.text(
-            fontSize: MyTripsFigmaTokens.searchFontSize,
-            fontWeight: FontWeight.w400,
-            height: MyTripsFigmaTokens.searchLineHeight,
-            color: AppColors.catalogMetaMuted(context),
-          ),
-          prefixIcon: Icon(
-            Iconsax.search_normal_1,
-            size: MyTripsFigmaTokens.searchIconSize,
-            color: AppColors.catalogMetaMuted(context),
-          ),
-          filled: true,
-          fillColor: AppColors.white,
-          contentPadding: EdgeInsets.symmetric(
-            horizontal: MyTripsFigmaTokens.searchContentPadH,
-            vertical: MyTripsFigmaTokens.searchContentPadV,
-          ),
-          border: border,
-          enabledBorder: border,
-          focusedBorder: border,
-        ),
-      ),
     );
   }
 }

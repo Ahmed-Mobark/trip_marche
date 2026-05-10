@@ -33,6 +33,7 @@ import '../widgets/home_trending_destinations_section.dart';
 import '../widgets/popular_trip_grid_card.dart';
 import '../widgets/promo_banner_item.dart';
 import '../widgets/special_trip_wide_card.dart';
+import '../../../../core/widgets/staggered_fade_slide.dart';
 
 class HomeView extends StatefulWidget {
   const HomeView({super.key});
@@ -735,7 +736,9 @@ class _TripHorizontalList extends StatelessWidget {
         separatorBuilder: (_, __) => SizedBox(width: 14.w),
         itemBuilder: (context, index) {
           final trip = trips[index];
-          return SizedBox(
+          return StaggeredFadeSlide(
+            index: index,
+            child: SizedBox(
             width: 190.w,
             child: PopularTripGridCard(
               trip: trip,
@@ -751,6 +754,7 @@ class _TripHorizontalList extends StatelessWidget {
               },
               onFavoriteTap: () => onFavoriteTap(trip),
             ),
+          ),
           );
         },
       ),
@@ -841,18 +845,21 @@ class _SpecialTripsVerticalList extends StatelessWidget {
           );
         }
         final trip = trips[index];
-        return SpecialTripWideCard(
-          trip: trip,
-          onTap: () async {
-            final result = await sl<AppNavigator>().push<TripWishlistPopResult>(
-              screen: TripDetailsView(
-                tripId: trip.id,
-                initialIsWishlisted: trip.isWishlisted,
-              ),
-            );
-            onReturnedFromTripDetails(result);
-          },
-          onFavoriteTap: () => onFavoriteTap(trip),
+        return StaggeredFadeSlide(
+          index: index,
+          child: SpecialTripWideCard(
+            trip: trip,
+            onTap: () async {
+              final result = await sl<AppNavigator>().push<TripWishlistPopResult>(
+                screen: TripDetailsView(
+                  tripId: trip.id,
+                  initialIsWishlisted: trip.isWishlisted,
+                ),
+              );
+              onReturnedFromTripDetails(result);
+            },
+            onFavoriteTap: () => onFavoriteTap(trip),
+          ),
         );
       },
     );

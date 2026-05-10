@@ -3,9 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:trip_marche/core/extensions/localization.dart';
 import 'package:trip_marche/core/theme/app_colors.dart';
-import 'package:trip_marche/core/theme/app_text_styles.dart';
 
-/// Pill search field used on trip catalog / section list screens (wishlist hint, Iconsax, 999 radius).
 class AppTripSearchTextField extends StatefulWidget {
   const AppTripSearchTextField({
     super.key,
@@ -20,9 +18,12 @@ class AppTripSearchTextField extends StatefulWidget {
   final ValueChanged<String> onChanged;
   final ValueChanged<String>? onSubmitted;
   final VoidCallback onClear;
-
-  /// Defaults to [AppLocalizations.wishlistSearchHint].
   final String? hintText;
+
+  static const double _fontSize = 14;
+  static const double _iconSize = 20;
+  static const double _fieldHeight = 48;
+  static const double _radius = 999;
 
   @override
   State<AppTripSearchTextField> createState() => _AppTripSearchTextFieldState();
@@ -45,9 +46,7 @@ class _AppTripSearchTextFieldState extends State<AppTripSearchTextField> {
   }
 
   void _onControllerTick() {
-    if (mounted) {
-      setState(() {});
-    }
+    if (mounted) setState(() {});
   }
 
   @override
@@ -60,46 +59,65 @@ class _AppTripSearchTextFieldState extends State<AppTripSearchTextField> {
   Widget build(BuildContext context) {
     final showClear = widget.controller.text.isNotEmpty;
     final hint = widget.hintText ?? context.tr.wishlistSearchHint;
-    return TextField(
-      controller: widget.controller,
-      onChanged: widget.onChanged,
-      onSubmitted: widget.onSubmitted,
-      textInputAction: TextInputAction.search,
-      style: AppTextStyles.bodyMedium(color: AppColors.darkText(context)),
-      cursorColor: AppColors.primary,
-      decoration: InputDecoration(
-        hintText: hint,
-        hintStyle: AppTextStyles.bodyMedium(color: AppColors.greyText(context)),
-        prefixIcon: Icon(
-          Iconsax.search_normal_1,
-          size: 20.sp,
-          color: AppColors.greyText(context),
-        ),
-        suffixIcon: showClear
-            ? IconButton(
-                onPressed: widget.onClear,
-                icon: Icon(
-                  Iconsax.close_circle,
-                  size: 20.sp,
-                  color: AppColors.greyText(context),
-                ),
-                tooltip: MaterialLocalizations.of(context).deleteButtonTooltip,
-              )
-            : null,
-        filled: true,
-        fillColor: AppColors.background(context),
-        contentPadding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 14.h),
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(999.r),
-          borderSide: BorderSide(color: AppColors.border(context)),
-        ),
-        enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(999.r),
-          borderSide: BorderSide(color: AppColors.border(context)),
-        ),
-        focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(999.r),
-          borderSide: BorderSide(color: AppColors.primary, width: 1.5),
+
+    final textStyle = TextStyle(
+      fontSize: AppTripSearchTextField._fontSize.sp,
+      fontWeight: FontWeight.w400,
+      color: AppColors.darkText(context),
+    );
+    final hintStyle = TextStyle(
+      fontSize: AppTripSearchTextField._fontSize.sp,
+      fontWeight: FontWeight.w400,
+      color: AppColors.greyText(context),
+    );
+    final iconSize = AppTripSearchTextField._iconSize.sp;
+    final radius = BorderRadius.circular(AppTripSearchTextField._radius.r);
+
+    return SizedBox(
+      height: AppTripSearchTextField._fieldHeight.h,
+      child: TextField(
+        controller: widget.controller,
+        onChanged: widget.onChanged,
+        onSubmitted: widget.onSubmitted,
+        textInputAction: TextInputAction.search,
+        style: textStyle,
+        cursorColor: AppColors.primary,
+        decoration: InputDecoration(
+          hintText: hint,
+          hintStyle: hintStyle,
+          prefixIcon: Icon(
+            Iconsax.search_normal_1,
+            size: iconSize,
+            color: AppColors.greyText(context),
+          ),
+          suffixIcon: showClear
+              ? IconButton(
+                  onPressed: widget.onClear,
+                  icon: Icon(
+                    Iconsax.close_circle,
+                    size: iconSize,
+                    color: AppColors.greyText(context),
+                  ),
+                  tooltip:
+                      MaterialLocalizations.of(context).deleteButtonTooltip,
+                )
+              : null,
+          filled: true,
+          fillColor: AppColors.background(context),
+          contentPadding:
+              EdgeInsets.symmetric(horizontal: 12.w, vertical: 0),
+          border: OutlineInputBorder(
+            borderRadius: radius,
+            borderSide: BorderSide(color: AppColors.border(context)),
+          ),
+          enabledBorder: OutlineInputBorder(
+            borderRadius: radius,
+            borderSide: BorderSide(color: AppColors.border(context)),
+          ),
+          focusedBorder: OutlineInputBorder(
+            borderRadius: radius,
+            borderSide: BorderSide(color: AppColors.primary, width: 1.5),
+          ),
         ),
       ),
     );

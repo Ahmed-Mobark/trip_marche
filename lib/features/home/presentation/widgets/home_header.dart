@@ -89,16 +89,16 @@ class _SearchField extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        height: 44.h,
+        height: 48.h,
         padding: EdgeInsetsDirectional.symmetric(horizontal: 14.w),
         decoration: BoxDecoration(
           color: AppColors.cardBg(context),
-          borderRadius: BorderRadius.circular(14.r),
+          borderRadius: BorderRadius.circular(999.r),
         ),
         child: Row(
           children: [
             Icon(
-              Iconsax.search_normal,
+              Iconsax.search_normal_1,
               size: 20.sp,
               color: AppColors.greyText(context).withValues(alpha: 0.85),
             ),
@@ -108,7 +108,9 @@ class _SearchField extends StatelessWidget {
                 hint,
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
-                style: AppTextStyles.bodyMedium(
+                style: TextStyle(
+                  fontSize: 14.sp,
+                  fontWeight: FontWeight.w400,
                   color: AppColors.greyText(context).withValues(alpha: 0.9),
                 ),
               ),
