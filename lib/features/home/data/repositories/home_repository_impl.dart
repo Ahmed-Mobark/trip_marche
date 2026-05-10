@@ -29,12 +29,14 @@ class HomeRepositoryImpl with RepositoryHelper implements HomeRepository {
     required int categoryId,
     int page = 1,
     int perPage = 5,
+    String search = '',
   }) {
     return handleEither(
       () => _remoteDataSource.getSpecialTrips(
         categoryId: categoryId,
         page: page,
         perPage: perPage,
+        search: search,
       ),
     );
   }

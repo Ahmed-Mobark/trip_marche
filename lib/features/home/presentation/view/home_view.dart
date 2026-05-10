@@ -97,6 +97,36 @@ class HomeViewState extends State<HomeView> {
     }
   }
 
+  void _openSpecialTripsSeeAll(
+    BuildContext context, {
+    required int categoryId,
+  }) {
+    final homeRepo = sl<HomeRepository>();
+    final wishlistRepo = sl<TripWishlistRepository>();
+
+    sl<AppNavigator>().push(
+      screen: MultiBlocProvider(
+        providers: [
+          BlocProvider.value(value: context.read<HomeSectionsCubit>()),
+          BlocProvider.value(value: context.read<SpecialTripsCubit>()),
+        ],
+        child: SectionTripsListView(
+          fallbackTitle: context.tr.homeSpecialTrips,
+          cubitFactory: () => SectionTripsItemsCubit(
+            ({int page = 1, int perPage = 15, String search = ''}) =>
+                homeRepo.getSpecialTrips(
+                  categoryId: categoryId,
+                  page: page,
+                  perPage: perPage,
+                  search: search,
+                ),
+            wishlistRepo,
+          ),
+        ),
+      ),
+    );
+  }
+
   Future<void> _onSpecialTripHeartTap(
     BuildContext context,
     TripModel trip,
@@ -554,7 +584,14 @@ class HomeViewState extends State<HomeView> {
                     actionText: context.tr.homeSeeAll,
                     titleStyle: sectionTitleStyle,
                     actionStyle: actionStyle,
-                    onAction: () {},
+                    onAction: () {
+                      final selectedId = catState.selectedId;
+                      if (selectedId == null) return;
+                      _openSpecialTripsSeeAll(
+                        context,
+                        categoryId: selectedId,
+                      );
+                    },
                   ),
                   SizedBox(height: 12.h),
                   SizedBox(

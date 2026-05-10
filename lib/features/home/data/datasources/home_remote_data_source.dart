@@ -9,6 +9,7 @@ abstract class HomeRemoteDataSource {
     required int categoryId,
     int page = 1,
     int perPage = 5,
+    String search = '',
   });
   Future<Map<String, dynamic>> getTrendingDestinationsItems({
     int page = 1,
@@ -76,6 +77,7 @@ class HomeRemoteDataSourceImpl implements HomeRemoteDataSource {
     required int categoryId,
     int page = 1,
     int perPage = 5,
+    String search = '',
   }) async {
     final response = await _apiHelper.get<Map<String, dynamic>>(
       url: AppEndpoints.homeSpecialTrips,
@@ -83,6 +85,7 @@ class HomeRemoteDataSourceImpl implements HomeRemoteDataSource {
         'category_id': categoryId,
         'page': page,
         'per_page': perPage,
+        'search': search,
       },
     );
     return response;

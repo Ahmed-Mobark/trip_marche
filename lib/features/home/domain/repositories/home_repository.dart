@@ -9,6 +9,7 @@ abstract class HomeRepository {
     required int categoryId,
     int page = 1,
     int perPage = 5,
+    String search = '',
   });
   Future<Either<Failure, Map<String, dynamic>>> getTrendingDestinationsItems({
     int page = 1,

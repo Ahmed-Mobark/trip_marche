@@ -34,7 +34,7 @@ class AuthHeader extends StatelessWidget {
       return Column(
         children: [
           Image.asset(AppIcons.lloPng, width: 160),
-          const SizedBox(height: 12),
+          const SizedBox(height: 30),
           SizedBox(
             height: 140,
             child: illustration != null
@@ -78,14 +78,28 @@ class AuthHeader extends StatelessWidget {
     return const SizedBox(height: 30);
   }
 
-  double _heightAboveWhiteSheet(BuildContext context) {
+  /// Extra breathing room placed *between* the OS safe-area inset and the
+  /// purple header content. Keeps the logo / illustration / compact bar from
+  /// hugging the status bar or Dynamic Island on modern iPhones.
+  double _topBreathingRoom(BuildContext context) {
     if (showIllustration) {
-      return 160 + 12 + 140;
+      return 16.h;
     }
     if (compactTopBar) {
-      return 44 + 12.h;
+      return 8.h;
     }
-    return 30;
+    return 0;
+  }
+
+  double _heightAboveWhiteSheet(BuildContext context) {
+    final gap = _topBreathingRoom(context);
+    if (showIllustration) {
+      return 160 + 12 + 140 + gap;
+    }
+    if (compactTopBar) {
+      return 44 + 12.h + gap;
+    }
+    return 30 + gap;
   }
 
   @override
@@ -101,20 +115,24 @@ class AuthHeader extends StatelessWidget {
           ? LayoutBuilder(
               builder: (context, constraints) {
                 final media = MediaQuery.of(context);
-                final minWhiteHeight = (media.size.height -
-                        media.padding.top -
-                        _heightAboveWhiteSheet(context))
-                    .clamp(240.0, double.infinity);
+                final topGap = _topBreathingRoom(context);
+                final minWhiteHeight =
+                    (media.size.height -
+                            media.padding.top -
+                            _heightAboveWhiteSheet(context))
+                        .clamp(240.0, double.infinity);
                 return SingleChildScrollView(
                   physics: const ClampingScrollPhysics(),
                   child: Column(
                     children: [
-                      SizedBox(height: media.padding.top),
+                      SizedBox(height: media.padding.top + topGap + 10),
                       _buildTop(context),
                       ClipPath(
                         clipper: _AuthCurveClipper(),
                         child: ConstrainedBox(
-                          constraints: BoxConstraints(minHeight: minWhiteHeight),
+                          constraints: BoxConstraints(
+                            minHeight: minWhiteHeight,
+                          ),
                           child: Container(
                             width: double.infinity,
                             color: AppColors.background(context),
@@ -132,7 +150,11 @@ class AuthHeader extends StatelessWidget {
             )
           : Column(
               children: [
-                SizedBox(height: MediaQuery.of(context).padding.top),
+                SizedBox(
+                  height:
+                      MediaQuery.of(context).padding.top +
+                      _topBreathingRoom(context),
+                ),
                 _buildTop(context),
                 // Content area with Figma curve
                 Expanded(

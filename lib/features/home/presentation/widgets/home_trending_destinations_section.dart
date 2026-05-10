@@ -70,7 +70,7 @@ class HomeTrendingDestinationsSection extends StatelessWidget {
           onTap: _onViewAllTap,
           child: Padding(
             padding: EdgeInsetsDirectional.only(start: 8.w, top: 2.h),
-            child: Text(context.tr.homeViewAll, style: actionStyle),
+            child: Text(context.tr.homeSeeAll, style: actionStyle),
           ),
         ),
       ],
@@ -79,15 +79,17 @@ class HomeTrendingDestinationsSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<TrendingDestinationsItemsCubit,
-        TrendingDestinationsItemsState>(
+    return BlocBuilder<
+      TrendingDestinationsItemsCubit,
+      TrendingDestinationsItemsState
+    >(
       builder: (context, state) {
         final title = _titleWithContext(context, state);
 
         final showLoadingShell =
             state.status == TrendingDestinationsItemsStatus.initial ||
-                (state.status == TrendingDestinationsItemsStatus.loading &&
-                    state.destinations.isEmpty);
+            (state.status == TrendingDestinationsItemsStatus.loading &&
+                state.destinations.isEmpty);
 
         if (showLoadingShell) {
           return Column(
@@ -161,7 +163,8 @@ class HomeTrendingDestinationsSection extends StatelessWidget {
           );
         }
 
-        final itemCount = state.destinations.length +
+        final itemCount =
+            state.destinations.length +
             (state.status == TrendingDestinationsItemsStatus.loadingMore
                 ? 1
                 : 0);
