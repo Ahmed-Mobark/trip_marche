@@ -1,25 +1,25 @@
 import 'home_section_response.dart';
 
-class SponsoredTripsItemsResponse {
+class SectionTripsItemsResponse {
   final List<TripModel> trips;
-  final SponsoredTripsItemsMeta meta;
+  final SectionTripsItemsMeta meta;
 
-  const SponsoredTripsItemsResponse({required this.trips, required this.meta});
+  const SectionTripsItemsResponse({required this.trips, required this.meta});
 
-  factory SponsoredTripsItemsResponse.fromJson(Map<String, dynamic> json) {
+  factory SectionTripsItemsResponse.fromJson(Map<String, dynamic> json) {
     final data = json['data'] as List<dynamic>? ?? [];
-    return SponsoredTripsItemsResponse(
+    return SectionTripsItemsResponse(
       trips: data
           .map((e) => TripModel.fromJson(e as Map<String, dynamic>))
           .toList(),
-      meta: SponsoredTripsItemsMeta.fromJson(
+      meta: SectionTripsItemsMeta.fromJson(
         json['meta'] as Map<String, dynamic>? ?? {},
       ),
     );
   }
 }
 
-class SponsoredTripsItemsMeta {
+class SectionTripsItemsMeta {
   final int currentPage;
   final int lastPage;
   final int perPage;
@@ -28,7 +28,7 @@ class SponsoredTripsItemsMeta {
   final String? sectionKey;
   final String? sectionTitle;
 
-  const SponsoredTripsItemsMeta({
+  const SectionTripsItemsMeta({
     required this.currentPage,
     required this.lastPage,
     required this.perPage,
@@ -40,8 +40,8 @@ class SponsoredTripsItemsMeta {
 
   bool get hasMore => currentPage < lastPage;
 
-  factory SponsoredTripsItemsMeta.fromJson(Map<String, dynamic> json) {
-    return SponsoredTripsItemsMeta(
+  factory SectionTripsItemsMeta.fromJson(Map<String, dynamic> json) {
+    return SectionTripsItemsMeta(
       currentPage: json['current_page'] as int? ?? 1,
       lastPage: json['last_page'] as int? ?? 1,
       perPage: json['per_page'] as int? ?? 15,

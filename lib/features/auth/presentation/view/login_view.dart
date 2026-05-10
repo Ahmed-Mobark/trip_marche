@@ -245,17 +245,18 @@ class LoginView extends StatelessWidget {
                               onTap: () {
                                 sl<AppNavigator>().push(
                                   screen: AppWebViewScreen(
-                                    title:
-                                        context.tr.authPartnerPortalTitle,
+                                    title: context.tr.authPartnerPortalTitle,
                                     url: AppWebUrls.partnerPortalLogin,
                                   ),
                                 );
                               },
                               borderRadius: BorderRadius.circular(14.r),
-                              splashColor:
-                                  AppColors.primary.withValues(alpha: 0.12),
-                              highlightColor:
-                                  AppColors.primary.withValues(alpha: 0.06),
+                              splashColor: AppColors.primary.withValues(
+                                alpha: 0.12,
+                              ),
+                              highlightColor: AppColors.primary.withValues(
+                                alpha: 0.06,
+                              ),
                               child: Padding(
                                 padding: EdgeInsetsDirectional.symmetric(
                                   horizontal: 12.w,
@@ -280,16 +281,19 @@ class LoginView extends StatelessWidget {
                                           children: [
                                             TextSpan(
                                               text: context
-                                                  .tr.authTravelAgencyPrompt,
+                                                  .tr
+                                                  .authTravelAgencyPrompt,
                                             ),
                                             TextSpan(
                                               text: context
-                                                  .tr.authJoinAsTripPartner,
-                                              style: AppTextStyles.bodyMedium(
-                                                color: AppColors.primary,
-                                              ).copyWith(
-                                                fontWeight: FontWeight.w700,
-                                              ),
+                                                  .tr
+                                                  .authJoinAsTripPartner,
+                                              style:
+                                                  AppTextStyles.bodyMedium(
+                                                    color: AppColors.primary,
+                                                  ).copyWith(
+                                                    fontWeight: FontWeight.w700,
+                                                  ),
                                             ),
                                           ],
                                         ),

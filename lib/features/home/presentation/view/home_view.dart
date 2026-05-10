@@ -23,11 +23,10 @@ import '../cubit/home_sections_state.dart';
 import '../cubit/special_trips_cubit.dart';
 import '../cubit/special_trips_state.dart';
 import '../cubit/trending_destinations_items_cubit.dart';
-import 'popular_trips_list_view.dart';
-import 'sponsored_trips_list_view.dart';
-import 'domestic_trips_list_view.dart';
-import 'international_trips_list_view.dart';
-import 'recommended_for_you_list_view.dart';
+import '../cubit/section_trips_items_cubit.dart';
+import '../../domain/repositories/home_repository.dart';
+import '../../../wishlist/domain/repositories/trip_wishlist_repository.dart';
+import 'section_trips_list_view.dart';
 import '../widgets/category_chip.dart';
 import '../widgets/home_header.dart';
 import '../widgets/home_trending_destinations_section.dart';
@@ -327,7 +326,13 @@ class HomeViewState extends State<HomeView> {
                       value: context.read<SpecialTripsCubit>(),
                     ),
                   ],
-                  child: const PopularTripsListView(),
+                  child: SectionTripsListView(
+                    fallbackTitle: context.tr.homePopularTrips,
+                    cubitFactory: () => SectionTripsItemsCubit(
+                      sl<HomeRepository>().getPopularTripsItems,
+                      sl<TripWishlistRepository>(),
+                    ),
+                  ),
                 ),
               );
             },
@@ -386,7 +391,13 @@ class HomeViewState extends State<HomeView> {
                       value: context.read<SpecialTripsCubit>(),
                     ),
                   ],
-                  child: const SponsoredTripsListView(),
+                  child: SectionTripsListView(
+                    fallbackTitle: context.tr.homeSponsoredTrips,
+                    cubitFactory: () => SectionTripsItemsCubit(
+                      sl<HomeRepository>().getSponsoredTripsItems,
+                      sl<TripWishlistRepository>(),
+                    ),
+                  ),
                 ),
               );
             },
@@ -418,7 +429,13 @@ class HomeViewState extends State<HomeView> {
                       value: context.read<SpecialTripsCubit>(),
                     ),
                   ],
-                  child: const DomesticTripsListView(),
+                  child: SectionTripsListView(
+                    fallbackTitle: context.tr.homeDomesticTripsInEgypt,
+                    cubitFactory: () => SectionTripsItemsCubit(
+                      sl<HomeRepository>().getDomesticTripsItems,
+                      sl<TripWishlistRepository>(),
+                    ),
+                  ),
                 ),
               );
             },
@@ -450,7 +467,13 @@ class HomeViewState extends State<HomeView> {
                       value: context.read<SpecialTripsCubit>(),
                     ),
                   ],
-                  child: const InternationalTripsListView(),
+                  child: SectionTripsListView(
+                    fallbackTitle: context.tr.homeInternationalTripsFromEgypt,
+                    cubitFactory: () => SectionTripsItemsCubit(
+                      sl<HomeRepository>().getInternationalTripsItems,
+                      sl<TripWishlistRepository>(),
+                    ),
+                  ),
                 ),
               );
             },
@@ -482,7 +505,13 @@ class HomeViewState extends State<HomeView> {
                       value: context.read<SpecialTripsCubit>(),
                     ),
                   ],
-                  child: const RecommendedForYouListView(),
+                  child: SectionTripsListView(
+                    fallbackTitle: context.tr.homeRecommendedForYou,
+                    cubitFactory: () => SectionTripsItemsCubit(
+                      sl<HomeRepository>().getRecommendedForYouItems,
+                      sl<TripWishlistRepository>(),
+                    ),
+                  ),
                 ),
               );
             },

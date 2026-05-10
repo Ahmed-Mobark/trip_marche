@@ -1,9 +1,9 @@
 import 'package:equatable/equatable.dart';
 
-import '../../data/models/domestic_trips_items_response.dart';
 import '../../data/models/home_section_response.dart';
+import '../../data/models/section_trips_items_response.dart';
 
-enum DomesticTripsItemsStatus {
+enum SectionTripsItemsStatus {
   initial,
   loading,
   loadingMore,
@@ -11,9 +11,9 @@ enum DomesticTripsItemsStatus {
   failure,
 }
 
-class DomesticTripsItemsState extends Equatable {
-  const DomesticTripsItemsState({
-    this.status = DomesticTripsItemsStatus.initial,
+class SectionTripsItemsState extends Equatable {
+  const SectionTripsItemsState({
+    this.status = SectionTripsItemsStatus.initial,
     this.trips = const [],
     this.meta,
     this.appliedSearchQuery = '',
@@ -21,9 +21,9 @@ class DomesticTripsItemsState extends Equatable {
     this.wishlistErrorMessage,
   });
 
-  final DomesticTripsItemsStatus status;
+  final SectionTripsItemsStatus status;
   final List<TripModel> trips;
-  final DomesticTripsItemsMeta? meta;
+  final SectionTripsItemsMeta? meta;
   final String appliedSearchQuery;
   final String? errorMessage;
   final String? wishlistErrorMessage;
@@ -32,16 +32,16 @@ class DomesticTripsItemsState extends Equatable {
 
   int get nextPage => (meta?.currentPage ?? 0) + 1;
 
-  DomesticTripsItemsState copyWith({
-    DomesticTripsItemsStatus? status,
+  SectionTripsItemsState copyWith({
+    SectionTripsItemsStatus? status,
     List<TripModel>? trips,
-    DomesticTripsItemsMeta? meta,
+    SectionTripsItemsMeta? meta,
     String? appliedSearchQuery,
     String? errorMessage,
     String? wishlistErrorMessage,
     bool clearWishlistError = false,
   }) {
-    return DomesticTripsItemsState(
+    return SectionTripsItemsState(
       status: status ?? this.status,
       trips: trips ?? this.trips,
       meta: meta ?? this.meta,

@@ -17,35 +17,51 @@ import 'package:trip_marche/features/trip_details/presentation/trip_wishlist_pop
 import 'package:trip_marche/features/trip_details/presentation/view/trip_details_view.dart';
 
 import '../../data/models/home_section_response.dart';
-import '../cubit/domestic_trips_items_cubit.dart';
-import '../cubit/domestic_trips_items_state.dart';
 import '../cubit/home_sections_cubit.dart';
+import '../cubit/section_trips_items_cubit.dart';
+import '../cubit/section_trips_items_state.dart';
 import '../cubit/special_trips_cubit.dart';
 import '../widgets/popular_trip_grid_card.dart';
 
-/// Domestic trips from [AppEndpoints.homeDomesticTripsItems] — opened via Home "See all".
-class DomesticTripsListView extends StatelessWidget {
-  const DomesticTripsListView({super.key});
+/// Generic "See all" view for any home section that lists trips.
+///
+/// Usage:
+/// ```dart
+/// SectionTripsListView(
+///   fallbackTitle: context.tr.homePopularTrips,
+///   cubitFactory: () => sl<SectionTripsItemsCubit>(instanceName: 'popular'),
+/// )
+/// ```
+class SectionTripsListView extends StatelessWidget {
+  const SectionTripsListView({
+    super.key,
+    required this.fallbackTitle,
+    required this.cubitFactory,
+  });
+
+  final String fallbackTitle;
+  final SectionTripsItemsCubit Function() cubitFactory;
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (_) => sl<DomesticTripsItemsCubit>()..loadInitial(),
-      child: const _DomesticTripsListScaffold(),
+      create: (_) => cubitFactory()..loadInitial(),
+      child: _SectionTripsListScaffold(fallbackTitle: fallbackTitle),
     );
   }
 }
 
-class _DomesticTripsListScaffold extends StatefulWidget {
-  const _DomesticTripsListScaffold();
+class _SectionTripsListScaffold extends StatefulWidget {
+  const _SectionTripsListScaffold({required this.fallbackTitle});
+
+  final String fallbackTitle;
 
   @override
-  State<_DomesticTripsListScaffold> createState() =>
-      _DomesticTripsListScaffoldState();
+  State<_SectionTripsListScaffold> createState() =>
+      _SectionTripsListScaffoldState();
 }
 
-class _DomesticTripsListScaffoldState
-    extends State<_DomesticTripsListScaffold> {
+class _SectionTripsListScaffoldState extends State<_SectionTripsListScaffold> {
   static const Duration _searchDebounce = Duration(milliseconds: 500);
 
   late final TextEditingController _searchCtrl;
@@ -66,18 +82,12 @@ class _DomesticTripsListScaffoldState
 
   void _applySearchFromField() {
     _searchDebounceTimer?.cancel();
-    if (!mounted) {
-      return;
-    }
-    if (_scroll.hasClients) {
-      _scroll.jumpTo(0);
-    }
-    context.read<DomesticTripsItemsCubit>().flushSearchNow(_searchCtrl.text);
+    if (!mounted) return;
+    if (_scroll.hasClients) _scroll.jumpTo(0);
+    context.read<SectionTripsItemsCubit>().flushSearchNow(_searchCtrl.text);
   }
 
-  void _onSearchFieldChanged(String _) {
-    _scheduleDebouncedSearch();
-  }
+  void _onSearchFieldChanged(String _) => _scheduleDebouncedSearch();
 
   void _onSearchSubmitted() {
     FocusScope.of(context).unfocus();
@@ -88,31 +98,23 @@ class _DomesticTripsListScaffoldState
   void _onSearchClear() {
     _searchDebounceTimer?.cancel();
     _searchCtrl.clear();
-    if (!mounted) {
-      return;
-    }
-    if (_scroll.hasClients) {
-      _scroll.jumpTo(0);
-    }
-    context.read<DomesticTripsItemsCubit>().flushSearchNow('');
+    if (!mounted) return;
+    if (_scroll.hasClients) _scroll.jumpTo(0);
+    context.read<SectionTripsItemsCubit>().flushSearchNow('');
   }
 
   void _onScroll() {
-    if (!_scroll.hasClients) {
-      return;
-    }
+    if (!_scroll.hasClients) return;
     final pos = _scroll.position;
     if (pos.pixels >= pos.maxScrollExtent - 280) {
-      context.read<DomesticTripsItemsCubit>().loadMore();
+      context.read<SectionTripsItemsCubit>().loadMore();
     }
   }
 
-  String _titleFromState(DomesticTripsItemsState state) {
+  String _titleFromState(SectionTripsItemsState state) {
     final fromApi = state.meta?.sectionTitle?.trim() ?? '';
-    if (fromApi.isNotEmpty) {
-      return fromApi;
-    }
-    return context.tr.homeDomesticTripsInEgypt;
+    if (fromApi.isNotEmpty) return fromApi;
+    return widget.fallbackTitle;
   }
 
   void _syncWishlistToParentShell(
@@ -132,11 +134,9 @@ class _DomesticTripsListScaffoldState
     special?.syncWishlistFromOtherList(tripId, isWishlisted);
   }
 
-  TripModel? _tripById(DomesticTripsItemsState state, int tripId) {
+  TripModel? _tripById(SectionTripsItemsState state, int tripId) {
     for (final t in state.trips) {
-      if (t.id == tripId) {
-        return t;
-      }
+      if (t.id == tripId) return t;
     }
     return null;
   }
@@ -155,21 +155,19 @@ class _DomesticTripsListScaffoldState
   Widget build(BuildContext context) {
     return MultiBlocListener(
       listeners: [
-        BlocListener<DomesticTripsItemsCubit, DomesticTripsItemsState>(
+        BlocListener<SectionTripsItemsCubit, SectionTripsItemsState>(
           listenWhen: (p, n) =>
               n.wishlistErrorMessage != null &&
               n.wishlistErrorMessage != p.wishlistErrorMessage,
           listener: (context, state) {
             final msg = state.wishlistErrorMessage;
-            if (msg == null) {
-              return;
-            }
+            if (msg == null) return;
             appToast(context: context, type: ToastType.error, message: msg);
-            context.read<DomesticTripsItemsCubit>().clearWishlistError();
+            context.read<SectionTripsItemsCubit>().clearWishlistError();
           },
         ),
       ],
-      child: BlocBuilder<DomesticTripsItemsCubit, DomesticTripsItemsState>(
+      child: BlocBuilder<SectionTripsItemsCubit, SectionTripsItemsState>(
         builder: (context, state) {
           final title = _titleFromState(state);
           return Scaffold(
@@ -187,14 +185,12 @@ class _DomesticTripsListScaffoldState
                       onSubmitted: (_) => _onSearchSubmitted(),
                       onClear: _onSearchClear,
                     ),
-                    // SizedBox(height: 16.h),
-                    // const CurvedSheetSortFilterRow(),
                     SizedBox(height: 14.h),
                     Expanded(
                       child: RefreshIndicator(
                         color: AppColors.primary,
                         onRefresh: () =>
-                            context.read<DomesticTripsItemsCubit>().refresh(),
+                            context.read<SectionTripsItemsCubit>().refresh(),
                         child: _buildBody(context, state),
                       ),
                     ),
@@ -208,9 +204,9 @@ class _DomesticTripsListScaffoldState
     );
   }
 
-  Widget _buildBody(BuildContext context, DomesticTripsItemsState state) {
-    if (state.status == DomesticTripsItemsStatus.initial ||
-        (state.status == DomesticTripsItemsStatus.loading &&
+  Widget _buildBody(BuildContext context, SectionTripsItemsState state) {
+    if (state.status == SectionTripsItemsStatus.initial ||
+        (state.status == SectionTripsItemsStatus.loading &&
             state.trips.isEmpty)) {
       return ListView(
         physics: const AlwaysScrollableScrollPhysics(),
@@ -221,7 +217,7 @@ class _DomesticTripsListScaffoldState
       );
     }
 
-    if (state.status == DomesticTripsItemsStatus.failure &&
+    if (state.status == SectionTripsItemsStatus.failure &&
         state.trips.isEmpty) {
       return ListView(
         physics: const AlwaysScrollableScrollPhysics(),
@@ -239,7 +235,7 @@ class _DomesticTripsListScaffoldState
           SizedBox(height: 16.h),
           FilledButton(
             onPressed: () =>
-                context.read<DomesticTripsItemsCubit>().loadInitial(),
+                context.read<SectionTripsItemsCubit>().loadInitial(),
             style: FilledButton.styleFrom(
               backgroundColor: AppColors.primary,
               foregroundColor: AppColors.onImage,
@@ -250,9 +246,8 @@ class _DomesticTripsListScaffoldState
       );
     }
 
-    final itemCount =
-        state.trips.length +
-        (state.status == DomesticTripsItemsStatus.loadingMore ? 1 : 0);
+    final itemCount = state.trips.length +
+        (state.status == SectionTripsItemsStatus.loadingMore ? 1 : 0);
 
     return CustomScrollView(
       controller: _scroll,
@@ -274,17 +269,18 @@ class _DomesticTripsListScaffoldState
           )
         else
           SliverPadding(
-            padding: EdgeInsetsDirectional.fromSTEB(16.w, 0, 16.w, 8.h),
-            sliver: SliverList.separated(
-              itemCount: itemCount,
-              separatorBuilder: (_, __) => SizedBox(height: 12.h),
-              itemBuilder: (context, index) {
+            padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 8.h),
+            sliver: SliverGrid(
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2,
+                mainAxisSpacing: 12.h,
+                crossAxisSpacing: 12.w,
+                childAspectRatio: 0.55,
+              ),
+              delegate: SliverChildBuilderDelegate((context, index) {
                 if (index >= state.trips.length) {
-                  return Padding(
-                    padding: EdgeInsets.symmetric(vertical: 16.h),
-                    child: Center(
-                      child: CustomLoading(size: 28, strokeWidth: 2),
-                    ),
+                  return Center(
+                    child: CustomLoading(size: 28, strokeWidth: 2),
                   );
                 }
                 final trip = state.trips[index];
@@ -298,11 +294,9 @@ class _DomesticTripsListScaffoldState
                             initialIsWishlisted: trip.isWishlisted,
                           ),
                         );
-                    if (!context.mounted || result == null) {
-                      return;
-                    }
+                    if (!context.mounted || result == null) return;
                     context
-                        .read<DomesticTripsItemsCubit>()
+                        .read<SectionTripsItemsCubit>()
                         .syncWishlistFromOtherList(
                           result.tripId,
                           result.isWishlisted,
@@ -315,13 +309,11 @@ class _DomesticTripsListScaffoldState
                   },
                   onFavoriteTap: () async {
                     await context
-                        .read<DomesticTripsItemsCubit>()
+                        .read<SectionTripsItemsCubit>()
                         .toggleTripWishlist(trip.id);
-                    if (!context.mounted) {
-                      return;
-                    }
+                    if (!context.mounted) return;
                     final updated = _tripById(
-                      context.read<DomesticTripsItemsCubit>().state,
+                      context.read<SectionTripsItemsCubit>().state,
                       trip.id,
                     );
                     if (updated != null) {
@@ -333,7 +325,7 @@ class _DomesticTripsListScaffoldState
                     }
                   },
                 );
-              },
+              }, childCount: itemCount),
             ),
           ),
         SliverToBoxAdapter(child: SizedBox(height: 24.h)),

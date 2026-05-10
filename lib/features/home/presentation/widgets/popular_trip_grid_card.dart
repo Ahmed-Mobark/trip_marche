@@ -27,80 +27,82 @@ class PopularTripGridCard extends StatelessWidget {
         decoration: BoxDecoration(
           color: AppColors.cardBg(context),
           borderRadius: BorderRadius.circular(20.r),
-          border: Border.all(color: AppColors.border(context).withValues(alpha: 0.4)),
+          border: Border.all(
+            color: AppColors.border(context).withValues(alpha: 0.4),
+          ),
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            ClipRRect(
-              borderRadius: BorderRadius.circular(20.r),
-              child: SizedBox(
-                height: 220.h,
-                width: double.infinity,
-                child: Stack(
-                  children: [
-                    Positioned.fill(
-                      child: AppCachedNetworkImage(
+            Expanded(
+              flex: 3,
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(20.r),
+                child: SizedBox(
+                  width: double.infinity,
+                  child: Stack(
+                    fit: StackFit.expand,
+                    children: [
+                      AppCachedNetworkImage(
                         imageUrl: trip.coverImage,
                         fit: BoxFit.cover,
                       ),
-                    ),
-                    if (trip.badge != null && trip.badge!.isNotEmpty)
-                      PositionedDirectional(
-                        top: 10.h,
-                        start: 10.w,
-                        child: Container(
-                          padding: EdgeInsets.symmetric(
-                            horizontal: 6.w,
-                            vertical: 3.h,
-                          ),
-                          decoration: BoxDecoration(
-                            color: AppColors.error.withValues(alpha: 0.9),
-                            borderRadius: BorderRadius.circular(6.r),
-                          ),
-                          child: Text(
-                            trip.badge!,
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                            style:
-                                AppTextStyles.bodySmall(
-                                  color: AppColors.onImage,
-                                ).copyWith(
-                                  fontSize: 9.sp,
-                                  fontWeight: FontWeight.w700,
-                                ),
-                          ),
-                        ),
-                      ),
-                    PositionedDirectional(
-                      top: 12.h,
-                      end: 12.w,
-                      child: Material(
-                        color: AppColors.transparent,
-                        child: InkWell(
-                          onTap: onFavoriteTap,
-                          borderRadius: BorderRadius.circular(999),
+                      if (trip.badge != null && trip.badge!.isNotEmpty)
+                        PositionedDirectional(
+                          top: 10.h,
+                          start: 10.w,
                           child: Container(
-                            width: 36.w,
-                            height: 36.w,
-                            decoration: BoxDecoration(
-                              color: AppColors.white.withValues(alpha: 0.45),
-                              shape: BoxShape.circle,
+                            padding: EdgeInsets.symmetric(
+                              horizontal: 6.w,
+                              vertical: 3.h,
                             ),
-                            child: Icon(
-                              trip.isWishlisted
-                                  ? Iconsax.heart5
-                                  : Iconsax.heart,
-                              size: 18.sp,
-                              color: trip.isWishlisted
-                                  ? AppColors.error
-                                  : AppColors.onImage,
+                            decoration: BoxDecoration(
+                              color: AppColors.error.withValues(alpha: 0.9),
+                              borderRadius: BorderRadius.circular(6.r),
+                            ),
+                            child: Text(
+                              trip.badge!,
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                              style: AppTextStyles.bodySmall(
+                                color: AppColors.onImage,
+                              ).copyWith(
+                                fontSize: 9.sp,
+                                fontWeight: FontWeight.w700,
+                              ),
+                            ),
+                          ),
+                        ),
+                      PositionedDirectional(
+                        top: 12.h,
+                        end: 12.w,
+                        child: Material(
+                          color: AppColors.transparent,
+                          child: InkWell(
+                            onTap: onFavoriteTap,
+                            borderRadius: BorderRadius.circular(999),
+                            child: Container(
+                              width: 36.w,
+                              height: 36.w,
+                              decoration: BoxDecoration(
+                                color: AppColors.white.withValues(alpha: 0.45),
+                                shape: BoxShape.circle,
+                              ),
+                              child: Icon(
+                                trip.isWishlisted
+                                    ? Iconsax.heart5
+                                    : Iconsax.heart,
+                                size: 18.sp,
+                                color: trip.isWishlisted
+                                    ? AppColors.error
+                                    : AppColors.onImage,
+                              ),
                             ),
                           ),
                         ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
             ),
@@ -131,7 +133,9 @@ class PopularTripGridCard extends StatelessWidget {
                   ),
                   Text(
                     '(${trip.reviewsCount})',
-                    style: AppTextStyles.bodySmall(color: AppColors.greyText(context)),
+                    style: AppTextStyles.bodySmall(
+                      color: AppColors.greyText(context),
+                    ),
                   ),
                 ],
               ),
@@ -152,7 +156,9 @@ class PopularTripGridCard extends StatelessWidget {
                       trip.fromLocation,
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
-                      style: AppTextStyles.body(color: AppColors.greyText(context)),
+                      style: AppTextStyles.body(
+                        color: AppColors.greyText(context),
+                      ),
                     ),
                   ),
                 ],
@@ -178,7 +184,9 @@ class PopularTripGridCard extends StatelessWidget {
                       trip.dateRange,
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
-                      style: AppTextStyles.body(color: AppColors.greyText(context)),
+                      style: AppTextStyles.body(
+                        color: AppColors.greyText(context),
+                      ),
                     ),
                   ),
                 ],
