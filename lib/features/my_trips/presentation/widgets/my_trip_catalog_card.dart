@@ -50,9 +50,9 @@ class MyTripCatalogCard extends StatelessWidget {
     final currentPrice = hasDiscount ? trip.discountPrice! : trip.price;
     final originalPrice = trip.price;
 
-    final cardRadius = 18.r;
+    final cardRadius = 16.r;
 
-    final imageCornerRadius = 20.r;
+    final imageCornerRadius = 14.r;
 
     final metaStyle = TextStyle(
       fontSize: 12.sp,
@@ -89,13 +89,13 @@ class MyTripCatalogCard extends StatelessWidget {
                 clipBehavior: Clip.none,
                 children: [
                   Padding(
-                    padding: EdgeInsets.all(12.r),
+                    padding: EdgeInsets.all(10.w),
                     child: Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         SizedBox(
-                          width: 155.w,
-                          height: 155.w,
+                          width: 135.w,
+                          height: 170.h,
                           child: ClipRRect(
                             borderRadius: BorderRadius.circular(
                               imageCornerRadius,
@@ -106,7 +106,7 @@ class MyTripCatalogCard extends StatelessWidget {
                             ),
                           ),
                         ),
-                        SizedBox(width: 14.w),
+                        SizedBox(width: 10.w),
 
                         Expanded(
                           child: Padding(

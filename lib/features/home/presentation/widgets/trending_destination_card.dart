@@ -6,10 +6,6 @@ import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_text_styles.dart';
 import '../../../../core/widgets/app_cached_network_image.dart';
 
-extension _PxExtension on num {
-  double get px => toDouble();
-}
-
 class TrendingDestinationCard extends StatelessWidget {
   const TrendingDestinationCard({
     super.key,
@@ -31,8 +27,8 @@ class TrendingDestinationCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final w = width ?? 108.px;
-    final h = height ?? 128.px;
+    final w = width ?? 100.w;
+    final h = height ?? 120.h;
     final useGridMargin = width != null;
     return GestureDetector(
       onTap: onTap,
@@ -41,7 +37,7 @@ class TrendingDestinationCard extends StatelessWidget {
         height: h,
         margin: useGridMargin
             ? EdgeInsets.zero
-            : EdgeInsetsDirectional.only(end: 10.px),
+            : EdgeInsetsDirectional.only(end: 6.w),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(16.r),
           color: AppColors.inputBg(context),
@@ -67,9 +63,9 @@ class TrendingDestinationCard extends StatelessWidget {
                 bottom: 0,
                 child: Container(
                   padding: EdgeInsetsDirectional.only(
-                    start: 12.w,
-                    end: 12.w,
-                    top: 18.h,
+                    start: 10.w,
+                    end: 10.w,
+                    top: 14.h,
                     bottom: 10.h,
                   ),
                   decoration: BoxDecoration(
@@ -84,12 +80,17 @@ class TrendingDestinationCard extends StatelessWidget {
                   ),
                   child: Text(
                     name,
-                    maxLines: 1,
+                    maxLines: 2,
+                    softWrap: true,
                     overflow: TextOverflow.ellipsis,
                     textAlign: TextAlign.center,
                     style: AppTextStyles.subtitle(
                       color: AppColors.onImage,
-                    ).copyWith(fontSize: 14.sp, fontWeight: FontWeight.w700),
+                    ).copyWith(
+                      fontSize: 13.sp,
+                      fontWeight: FontWeight.w700,
+                      height: 1.2,
+                    ),
                   ),
                 ),
               ),

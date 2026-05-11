@@ -13,6 +13,7 @@ class CurvedGradientSheetLayout extends StatelessWidget {
     required this.sheetChild,
     this.onBack,
     this.curveRadius,
+    this.alignHeaderTitleStart = false,
   });
 
   final String headerTitle;
@@ -21,6 +22,9 @@ class CurvedGradientSheetLayout extends StatelessWidget {
 
   /// Top corner radius of the white sheet; defaults to ~30 logical px (scaled).
   final double? curveRadius;
+
+  /// Aligns the title beside the back button instead of centering it.
+  final bool alignHeaderTitleStart;
 
   @override
   Widget build(BuildContext context) {
@@ -39,6 +43,7 @@ class CurvedGradientSheetLayout extends StatelessWidget {
               _CurvedSheetHeader(
                 title: headerTitle,
                 onBack: onBack ?? () => Navigator.maybePop(context),
+                alignTitleStart: alignHeaderTitleStart,
               ),
               Expanded(
                 child: _CurvedSheetSurface(radius: r, child: sheetChild),
@@ -52,10 +57,15 @@ class CurvedGradientSheetLayout extends StatelessWidget {
 }
 
 class _CurvedSheetHeader extends StatelessWidget {
-  const _CurvedSheetHeader({required this.title, required this.onBack});
+  const _CurvedSheetHeader({
+    required this.title,
+    required this.onBack,
+    required this.alignTitleStart,
+  });
 
   final String title;
   final VoidCallback onBack;
+  final bool alignTitleStart;
 
   @override
   Widget build(BuildContext context) {
@@ -65,34 +75,66 @@ class _CurvedSheetHeader extends StatelessWidget {
         padding: EdgeInsetsDirectional.fromSTEB(2.w, 6.h, 8.w, 8.h),
         child: SizedBox(
           height: 48.h,
-          child: Stack(
-            alignment: Alignment.center,
-            children: [
-              Align(
-                alignment: AlignmentDirectional.centerStart,
-                child: IconButton(
-                  onPressed: onBack,
-                  visualDensity: VisualDensity.compact,
-                  style: IconButton.styleFrom(
-                    foregroundColor: AppColors.onImage,
-                  ),
-                  icon: Icon(Icons.arrow_back_ios_new_rounded, size: 20.sp),
+          child: alignTitleStart
+              ? Row(
+                  children: [
+                    IconButton(
+                      onPressed: onBack,
+                      visualDensity: VisualDensity.compact,
+                      style: IconButton.styleFrom(
+                        foregroundColor: AppColors.onImage,
+                      ),
+                      icon: Icon(Icons.arrow_back_ios_new_rounded, size: 20.sp),
+                    ),
+                    SizedBox(width: 6.w),
+                    Expanded(
+                      child: Text(
+                        title,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        textAlign: TextAlign.start,
+                        style: AppTextStyles.heading2(color: AppColors.onImage)
+                            .copyWith(
+                              fontSize: 20.sp,
+                              fontWeight: FontWeight.w600,
+                            ),
+                      ),
+                    ),
+                  ],
+                )
+              : Stack(
+                  alignment: Alignment.center,
+                  children: [
+                    Align(
+                      alignment: AlignmentDirectional.centerStart,
+                      child: IconButton(
+                        onPressed: onBack,
+                        visualDensity: VisualDensity.compact,
+                        style: IconButton.styleFrom(
+                          foregroundColor: AppColors.onImage,
+                        ),
+                        icon: Icon(
+                          Icons.arrow_back_ios_new_rounded,
+                          size: 20.sp,
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 56.w),
+                      child: Text(
+                        title,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        textAlign: TextAlign.center,
+                        style: AppTextStyles.heading2(color: AppColors.onImage)
+                            .copyWith(
+                              fontSize: 20.sp,
+                              fontWeight: FontWeight.w600,
+                            ),
+                      ),
+                    ),
+                  ],
                 ),
-              ),
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: 56.w),
-                child: Text(
-                  title,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  textAlign: TextAlign.center,
-                  style: AppTextStyles.heading2(
-                    color: AppColors.onImage,
-                  ).copyWith(fontSize: 20.sp, fontWeight: FontWeight.w600),
-                ),
-              ),
-            ],
-          ),
         ),
       ),
     );

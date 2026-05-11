@@ -161,46 +161,38 @@ class _SearchResultViewState extends State<SearchResultView> {
                 ? 1
                 : 0);
 
-        return RefreshIndicator(
-          color: AppColors.primary,
-          onRefresh: () =>
-              context.read<MyTripsListCubit>().refreshFilteredTrips(),
-          child: ListView.separated(
-            controller: _scrollController,
-            padding: EdgeInsetsDirectional.only(
-              bottom: 20.h + MediaQuery.paddingOf(context).bottom,
-            ),
-            itemCount: itemCount,
-            separatorBuilder: (_, __) => SizedBox(height: 12.h),
-            itemBuilder: (context, index) {
-              if (index >= state.trips.length) {
-                return Padding(
-                  padding: EdgeInsetsDirectional.symmetric(vertical: 12.h),
-                  child: CustomLoading(size: 22, strokeWidth: 2),
-                );
-              }
-              final trip = state.trips[index];
-              final location = _locationText(context, trip);
-              return MyTripCatalogCard(
-                trip: trip,
-                locationLabel: location,
-                onFavoriteTap: () => context
-                    .read<MyTripsListCubit>()
-                    .toggleTripWishlist(trip.id),
-                onReturnedFromTripDetails: (result) {
-                  if (result == null || !context.mounted) {
-                    return;
-                  }
-                  context
-                      .read<MyTripsListCubit>()
-                      .applyWishlistStateFromDetails(
-                        result.tripId,
-                        result.isWishlisted,
-                      );
-                },
-              );
-            },
+        return ListView.separated(
+          controller: _scrollController,
+          padding: EdgeInsetsDirectional.only(
+            bottom: 20.h + MediaQuery.paddingOf(context).bottom,
           ),
+          itemCount: itemCount,
+          separatorBuilder: (_, __) => SizedBox(height: 12.h),
+          itemBuilder: (context, index) {
+            if (index >= state.trips.length) {
+              return Padding(
+                padding: EdgeInsetsDirectional.symmetric(vertical: 12.h),
+                child: CustomLoading(size: 22, strokeWidth: 2),
+              );
+            }
+            final trip = state.trips[index];
+            final location = _locationText(context, trip);
+            return MyTripCatalogCard(
+              trip: trip,
+              locationLabel: location,
+              onFavoriteTap: () =>
+                  context.read<MyTripsListCubit>().toggleTripWishlist(trip.id),
+              onReturnedFromTripDetails: (result) {
+                if (result == null || !context.mounted) {
+                  return;
+                }
+                context.read<MyTripsListCubit>().applyWishlistStateFromDetails(
+                  result.tripId,
+                  result.isWishlisted,
+                );
+              },
+            );
+          },
         );
       },
     );

@@ -23,8 +23,8 @@ ThemeMode _materialThemeMode(AdaptiveThemeMode mode) {
   }
 }
 
-class _NoOverScrollBehavior extends ScrollBehavior {
-  const _NoOverScrollBehavior();
+class _AppScrollBehavior extends ScrollBehavior {
+  const _AppScrollBehavior();
 
   @override
   ScrollPhysics getScrollPhysics(BuildContext context) {
@@ -37,7 +37,10 @@ class _NoOverScrollBehavior extends ScrollBehavior {
     Widget child,
     ScrollableDetails details,
   ) {
-    return child;
+    return StretchingOverscrollIndicator(
+      axisDirection: details.direction,
+      child: child,
+    );
   }
 }
 
@@ -78,14 +81,14 @@ class MyAppState extends State<MyApp> {
         dark: AppTheme.appDarkTheme,
         initial: widget.initialThemeMode,
         debugShowFloatingThemeButton: false,
-       builder: (light, dark) => Builder(
+        builder: (light, dark) => Builder(
           builder: (context) {
             final themeMode = _materialThemeMode(
               AdaptiveTheme.of(context).mode,
             );
             return MaterialApp(
               debugShowCheckedModeBanner: false,
-              scrollBehavior: const _NoOverScrollBehavior(),
+              scrollBehavior: const _AppScrollBehavior(),
               theme: AppTheme.appLightTheme,
               darkTheme: AppTheme.appDarkTheme,
               themeMode: themeMode,

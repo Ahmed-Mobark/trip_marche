@@ -143,6 +143,7 @@ class _TrendingDestinationsListScaffoldState
           backgroundColor: AppColors.primary,
           body: CurvedGradientSheetLayout(
             headerTitle: title,
+            alignHeaderTitleStart: true,
             sheetChild: Padding(
               padding: EdgeInsetsDirectional.fromSTEB(16.w, 20.h, 16.w, 0),
               child: Column(
@@ -157,15 +158,7 @@ class _TrendingDestinationsListScaffoldState
                   // SizedBox(height: 16.h),
                   // const CurvedSheetSortFilterRow(),
                   SizedBox(height: 14.h),
-                  Expanded(
-                    child: RefreshIndicator(
-                      color: AppColors.primary,
-                      onRefresh: () => context
-                          .read<TrendingDestinationsItemsCubit>()
-                          .refresh(),
-                      child: _buildBody(context, state),
-                    ),
-                  ),
+                  Expanded(child: _buildBody(context, state)),
                 ],
               ),
             ),

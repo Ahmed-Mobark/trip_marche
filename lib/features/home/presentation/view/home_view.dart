@@ -214,86 +214,79 @@ class HomeViewState extends State<HomeView> {
               backgroundColor: AppColors.scaffoldBg(context),
               body: Builder(
                 builder: (scrollContext) {
-                  return RefreshIndicator(
-                    color: AppColors.primary,
-                    edgeOffset: MediaQuery.paddingOf(scrollContext).top + 8,
-                    onRefresh: () => _refreshHome(scrollContext),
-                    child: CustomScrollView(
-                      physics: const AlwaysScrollableScrollPhysics(
-                        parent: ClampingScrollPhysics(),
-                      ),
-                      slivers: [
-                        SliverToBoxAdapter(
-                          child: HomeHeader(
-                            searchHint: scrollContext.tr.homeSearchHint,
-                            locationText: scrollContext.tr.homeLocationText,
-                            onNotificationsTap: () {},
-                          ),
-                        ),
-                        SliverToBoxAdapter(
-                          child: Transform.translate(
-                            offset: Offset(0, -sheetOverlap),
-                            child: Container(
-                              width: double.infinity,
-                              padding: EdgeInsetsDirectional.only(
-                                start: horizontalPadding,
-                                end: horizontalPadding,
-                                top: 18.h,
-                                bottom: 24.h,
-                              ),
-                              decoration: BoxDecoration(
-                                color: AppColors.scaffoldBg(context),
-                                borderRadius: BorderRadius.vertical(
-                                  top: Radius.circular(sheetTopRadius),
-                                ),
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: AppColors.shadow.withValues(
-                                      alpha: 0.04,
-                                    ),
-                                    blurRadius: 18.r,
-                                    offset: Offset(0, 10.h),
-                                  ),
-                                ],
-                              ),
-                              child:
-                                  BlocBuilder<
-                                    HomeSectionsCubit,
-                                    HomeSectionsState
-                                  >(
-                                    builder: (context, state) {
-                                      if (state.status ==
-                                              HomeSectionsStatus.loading ||
-                                          state.status ==
-                                              HomeSectionsStatus.initial) {
-                                        return _buildHomeSectionsLoading();
-                                      }
-
-                                      if (state.status ==
-                                          HomeSectionsStatus.failure) {
-                                        return _buildError(
-                                          context,
-                                          state.errorMessage ??
-                                              'Something went wrong',
-                                        );
-                                      }
-
-                                      return _buildContent(
-                                        context,
-                                        state,
-                                        sectionTitleStyle,
-                                        actionStyle,
-                                      );
-                                    },
-                                  ),
-                            ),
-                          ),
-                        ),
-                        SliverToBoxAdapter(
-                          child: SizedBox(height: sheetOverlap),
-                        ),
-                      ],
+                  return CustomScrollView(
+                    physics: const AlwaysScrollableScrollPhysics(
+                      parent: ClampingScrollPhysics(),
                     ),
+                    slivers: [
+                      SliverToBoxAdapter(
+                        child: HomeHeader(
+                          searchHint: scrollContext.tr.homeSearchHint,
+                          locationText: scrollContext.tr.homeLocationText,
+                          onNotificationsTap: () {},
+                        ),
+                      ),
+                      SliverToBoxAdapter(
+                        child: Transform.translate(
+                          offset: Offset(0, -sheetOverlap),
+                          child: Container(
+                            width: double.infinity,
+                            padding: EdgeInsetsDirectional.only(
+                              start: horizontalPadding,
+                              end: horizontalPadding,
+                              top: 18.h,
+                              bottom: 24.h,
+                            ),
+                            decoration: BoxDecoration(
+                              color: AppColors.scaffoldBg(context),
+                              borderRadius: BorderRadius.vertical(
+                                top: Radius.circular(sheetTopRadius),
+                              ),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: AppColors.shadow.withValues(
+                                    alpha: 0.04,
+                                  ),
+                                  blurRadius: 18.r,
+                                  offset: Offset(0, 10.h),
+                                ),
+                              ],
+                            ),
+                            child:
+                                BlocBuilder<
+                                  HomeSectionsCubit,
+                                  HomeSectionsState
+                                >(
+                                  builder: (context, state) {
+                                    if (state.status ==
+                                            HomeSectionsStatus.loading ||
+                                        state.status ==
+                                            HomeSectionsStatus.initial) {
+                                      return _buildHomeSectionsLoading();
+                                    }
+
+                                    if (state.status ==
+                                        HomeSectionsStatus.failure) {
+                                      return _buildError(
+                                        context,
+                                        state.errorMessage ??
+                                            'Something went wrong',
+                                      );
+                                    }
+
+                                    return _buildContent(
+                                      context,
+                                      state,
+                                      sectionTitleStyle,
+                                      actionStyle,
+                                    );
+                                  },
+                                ),
+                          ),
+                        ),
+                      ),
+                      SliverToBoxAdapter(child: SizedBox(height: sheetOverlap)),
+                    ],
                   );
                 },
               ),
@@ -587,10 +580,7 @@ class HomeViewState extends State<HomeView> {
                     onAction: () {
                       final selectedId = catState.selectedId;
                       if (selectedId == null) return;
-                      _openSpecialTripsSeeAll(
-                        context,
-                        categoryId: selectedId,
-                      );
+                      _openSpecialTripsSeeAll(context, categoryId: selectedId);
                     },
                   ),
                   SizedBox(height: 12.h),
@@ -776,22 +766,22 @@ class _TripHorizontalList extends StatelessWidget {
           return StaggeredFadeSlide(
             index: index,
             child: SizedBox(
-            width: 190.w,
-            child: PopularTripGridCard(
-              trip: trip,
-              onTap: () async {
-                final result = await sl<AppNavigator>()
-                    .push<TripWishlistPopResult>(
-                      screen: TripDetailsView(
-                        tripId: trip.id,
-                        initialIsWishlisted: trip.isWishlisted,
-                      ),
-                    );
-                onReturnedFromTripDetails(result);
-              },
-              onFavoriteTap: () => onFavoriteTap(trip),
+              width: 190.w,
+              child: PopularTripGridCard(
+                trip: trip,
+                onTap: () async {
+                  final result = await sl<AppNavigator>()
+                      .push<TripWishlistPopResult>(
+                        screen: TripDetailsView(
+                          tripId: trip.id,
+                          initialIsWishlisted: trip.isWishlisted,
+                        ),
+                      );
+                  onReturnedFromTripDetails(result);
+                },
+                onFavoriteTap: () => onFavoriteTap(trip),
+              ),
             ),
-          ),
           );
         },
       ),
@@ -887,12 +877,13 @@ class _SpecialTripsVerticalList extends StatelessWidget {
           child: SpecialTripWideCard(
             trip: trip,
             onTap: () async {
-              final result = await sl<AppNavigator>().push<TripWishlistPopResult>(
-                screen: TripDetailsView(
-                  tripId: trip.id,
-                  initialIsWishlisted: trip.isWishlisted,
-                ),
-              );
+              final result = await sl<AppNavigator>()
+                  .push<TripWishlistPopResult>(
+                    screen: TripDetailsView(
+                      tripId: trip.id,
+                      initialIsWishlisted: trip.isWishlisted,
+                    ),
+                  );
               onReturnedFromTripDetails(result);
             },
             onFavoriteTap: () => onFavoriteTap(trip),

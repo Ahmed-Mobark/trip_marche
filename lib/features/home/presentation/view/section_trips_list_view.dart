@@ -175,6 +175,7 @@ class _SectionTripsListScaffoldState extends State<_SectionTripsListScaffold> {
             backgroundColor: AppColors.primary,
             body: CurvedGradientSheetLayout(
               headerTitle: title,
+              alignHeaderTitleStart: true,
               sheetChild: Padding(
                 padding: EdgeInsetsDirectional.fromSTEB(16.w, 20.h, 16.w, 0),
                 child: Column(
@@ -187,14 +188,7 @@ class _SectionTripsListScaffoldState extends State<_SectionTripsListScaffold> {
                       onClear: _onSearchClear,
                     ),
                     SizedBox(height: 14.h),
-                    Expanded(
-                      child: RefreshIndicator(
-                        color: AppColors.primary,
-                        onRefresh: () =>
-                            context.read<SectionTripsItemsCubit>().refresh(),
-                        child: _buildBody(context, state),
-                      ),
-                    ),
+                    Expanded(child: _buildBody(context, state)),
                   ],
                 ),
               ),
@@ -247,7 +241,8 @@ class _SectionTripsListScaffoldState extends State<_SectionTripsListScaffold> {
       );
     }
 
-    final itemCount = state.trips.length +
+    final itemCount =
+        state.trips.length +
         (state.status == SectionTripsItemsStatus.loadingMore ? 1 : 0);
 
     return CustomScrollView(
@@ -280,9 +275,7 @@ class _SectionTripsListScaffoldState extends State<_SectionTripsListScaffold> {
               ),
               delegate: SliverChildBuilderDelegate((context, index) {
                 if (index >= state.trips.length) {
-                  return Center(
-                    child: CustomLoading(size: 28, strokeWidth: 2),
-                  );
+                  return Center(child: CustomLoading(size: 28, strokeWidth: 2));
                 }
                 final trip = state.trips[index];
                 return StaggeredFadeSlide(

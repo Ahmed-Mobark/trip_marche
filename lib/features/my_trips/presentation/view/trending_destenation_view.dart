@@ -279,85 +279,80 @@ class _TrendingDestinationViewState extends State<TrendingDestinationView> {
           final rating = _heroRatingFromTrips(listState.trips);
           final bottomSafe = MediaQuery.paddingOf(context).bottom;
 
-          return RefreshIndicator(
-            color: AppColors.primary,
-            onRefresh: () => context.read<MyTripsListCubit>().refresh(),
-            child: SingleChildScrollView(
-              controller: _scroll,
-              physics: const AlwaysScrollableScrollPhysics(),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  SizedBox(
-                    height: heroH,
-                    child: _BrowseCatalogHero(
-                      imageUrl: widget.catalogDestinationImageUrl,
-                      country: widget.catalogDestinationCountry ?? '',
-                      destinationName:
-                          widget.destinationBrowseTitle?.trim() ?? '',
-                      rating: rating,
-                      onBack: () => sl<AppNavigator>().pop(),
-                      tripsOfLabel: context.tr.myTripsCatalogTripsOf,
-                    ),
+          return SingleChildScrollView(
+            controller: _scroll,
+            physics: const AlwaysScrollableScrollPhysics(),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                SizedBox(
+                  height: heroH,
+                  child: _BrowseCatalogHero(
+                    imageUrl: widget.catalogDestinationImageUrl,
+                    country: widget.catalogDestinationCountry ?? '',
+                    destinationName:
+                        widget.destinationBrowseTitle?.trim() ?? '',
+                    rating: rating,
+                    onBack: () => sl<AppNavigator>().pop(),
+                    tripsOfLabel: context.tr.myTripsCatalogTripsOf,
                   ),
-                  Transform.translate(
-                    offset: Offset(0, -overlap),
-                    child: DecoratedBox(
-                      decoration: BoxDecoration(
+                ),
+                Transform.translate(
+                  offset: Offset(0, -overlap),
+                  child: DecoratedBox(
+                    decoration: BoxDecoration(
+                      color: AppColors.cardBg(context),
+                      borderRadius: sheetTopOnly,
+                      border: Border.all(
+                        color: AppColors.onImage.withValues(alpha: 0.42),
+                        width: 1,
+                      ),
+                    ),
+                    child: ClipRRect(
+                      borderRadius: sheetTopOnly,
+                      child: ColoredBox(
                         color: AppColors.cardBg(context),
-                        borderRadius: sheetTopOnly,
-                        border: Border.all(
-                          color: AppColors.onImage.withValues(alpha: 0.42),
-                          width: 1,
-                        ),
-                      ),
-                      child: ClipRRect(
-                        borderRadius: sheetTopOnly,
-                        child: ColoredBox(
-                          color: AppColors.cardBg(context),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.stretch,
-                            children: [
-                              Padding(
-                                padding: EdgeInsetsDirectional.fromSTEB(
-                                  padH,
-                                  24.h,
-                                  padH,
-                                  0,
-                                ),
-                                child: Column(
-                                  crossAxisAlignment:
-                                      CrossAxisAlignment.stretch,
-                                  children: [
-                                    // _MyTripsSearchField(
-                                    //   controller: _searchCtrl,
-                                    //   hint: context.tr.myTripsSearchHint,
-                                    //   onChanged: _onSearchTextChanged,
-                                    //   onSubmitted: _flushSearchImmediate,
-                                    //   onClear: _clearSearchField,
-                                    //   catalogBrowseStyle: true,
-                                    // ),
-                                    SizedBox(height: 16.h),
-                                  ],
-                                ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                          children: [
+                            Padding(
+                              padding: EdgeInsetsDirectional.fromSTEB(
+                                padH,
+                                24.h,
+                                padH,
+                                0,
                               ),
-                              SizedBox(height: 12.h),
-                              _buildActiveTabBody(
-                                context,
-                                browseStatus,
-                                catalogListLayout: true,
-                                catalogViewportBottomCompensation:
-                                    overlap + bottomSafe,
-                                catalogEmbedInOuterScroll: true,
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.stretch,
+                                children: [
+                                  // _MyTripsSearchField(
+                                  //   controller: _searchCtrl,
+                                  //   hint: context.tr.myTripsSearchHint,
+                                  //   onChanged: _onSearchTextChanged,
+                                  //   onSubmitted: _flushSearchImmediate,
+                                  //   onClear: _clearSearchField,
+                                  //   catalogBrowseStyle: true,
+                                  // ),
+                                  SizedBox(height: 16.h),
+                                ],
                               ),
-                            ],
-                          ),
+                            ),
+                            SizedBox(height: 12.h),
+                            _buildActiveTabBody(
+                              context,
+                              browseStatus,
+                              catalogListLayout: true,
+                              catalogViewportBottomCompensation:
+                                  overlap + bottomSafe,
+                              catalogEmbedInOuterScroll: true,
+                            ),
+                          ],
                         ),
                       ),
                     ),
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
           );
         },
@@ -619,11 +614,7 @@ class _TrendingDestinationViewState extends State<TrendingDestinationView> {
           return list;
         }
 
-        return RefreshIndicator(
-          color: AppColors.primary,
-          onRefresh: () => context.read<MyTripsListCubit>().refresh(),
-          child: list,
-        );
+        return list;
       },
     );
   }

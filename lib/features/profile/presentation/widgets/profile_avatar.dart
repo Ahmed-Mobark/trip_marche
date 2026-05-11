@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 import '../../../../core/theme/app_colors.dart';
-import '../../../../core/config/app_images.dart';
 
 class ProfileAvatar extends StatelessWidget {
   final double radius;
@@ -26,6 +25,8 @@ class ProfileAvatar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final size = radius * 2;
+    final hasImage = backgroundImage != null;
+
     return Stack(
       children: [
         ClipRRect(
@@ -35,13 +36,21 @@ class ProfileAvatar extends StatelessWidget {
             height: size,
             decoration: BoxDecoration(
               color: AppColors.lightBg(context),
-              image: DecorationImage(
-                image:
-                    backgroundImage ??
-                    const AssetImage(AppImages.avatarPlaceholder),
-                fit: BoxFit.cover,
-              ),
+              image: hasImage
+                  ? DecorationImage(
+                      image: backgroundImage!,
+                      fit: BoxFit.cover,
+                    )
+                  : null,
             ),
+            alignment: Alignment.center,
+            child: hasImage
+                ? null
+                : Icon(
+                    Iconsax.user,
+                    size: radius * 0.95,
+                    color: AppColors.greyText(context),
+                  ),
           ),
         ),
         PositionedDirectional(

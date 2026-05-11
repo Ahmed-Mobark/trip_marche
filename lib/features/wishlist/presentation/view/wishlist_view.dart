@@ -98,9 +98,11 @@ class WishlistViewState extends State<WishlistView> {
                       ),
                       child: Text(
                         context.tr.wishlistTitle,
-                        style: AppTextStyles.heading2(
-                          color: AppColors.onImage,
-                        ).copyWith(fontSize: 20.sp, fontWeight: FontWeight.w600),
+                        style: AppTextStyles.heading2(color: AppColors.onImage)
+                            .copyWith(
+                              fontSize: 20.sp,
+                              fontWeight: FontWeight.w600,
+                            ),
                       ),
                     ),
                   ),
@@ -148,65 +150,45 @@ class WishlistViewState extends State<WishlistView> {
                             );
                           }
 
-                          return RefreshIndicator(
-                            color: AppColors.primary,
-                            onRefresh: () => context.read<WishlistCubit>().refresh(),
-                            child: CustomScrollView(
-                              controller: _scroll,
-                              physics: const AlwaysScrollableScrollPhysics(
-                                parent: ClampingScrollPhysics(),
-                              ),
-                              slivers: [
-                                SliverPadding(
-                                  padding: EdgeInsetsDirectional.only(
-                                    start: 16.w,
-                                    end: 16.w,
-                                    top: 16.h,
-                                  ),
-                                  sliver: SliverToBoxAdapter(
-                                    child: Column(
-                                      children: [
-                                        AppTripSearchTextField(
-                                          controller: _searchCtrl,
-                                          onChanged: (value) => setState(
-                                            () => _searchQuery = value.trim(),
-                                          ),
-                                          onClear: () {
-                                            _searchCtrl.clear();
-                                            setState(() => _searchQuery = '');
-                                          },
+                          return CustomScrollView(
+                            controller: _scroll,
+                            physics: const AlwaysScrollableScrollPhysics(
+                              parent: ClampingScrollPhysics(),
+                            ),
+                            slivers: [
+                              SliverPadding(
+                                padding: EdgeInsetsDirectional.only(
+                                  start: 16.w,
+                                  end: 16.w,
+                                  top: 16.h,
+                                ),
+                                sliver: SliverToBoxAdapter(
+                                  child: Column(
+                                    children: [
+                                      AppTripSearchTextField(
+                                        controller: _searchCtrl,
+                                        onChanged: (value) => setState(
+                                          () => _searchQuery = value.trim(),
                                         ),
-                                        SizedBox(height: 14.h),
-                                        SizedBox(height: 4.h),
-                                      ],
-                                    ),
+                                        onClear: () {
+                                          _searchCtrl.clear();
+                                          setState(() => _searchQuery = '');
+                                        },
+                                      ),
+                                      SizedBox(height: 14.h),
+                                      SizedBox(height: 4.h),
+                                    ],
                                   ),
                                 ),
-                                SliverPadding(
-                                  padding: EdgeInsetsDirectional.only(
-                                    start: 16.w,
-                                    end: 16.w,
-                                  ),
-                                  sliver: SliverList.separated(
-                                    itemCount:
-                                        state.trips
-                                            .where(
-                                              (t) =>
-                                                  _searchQuery.isEmpty ||
-                                                  t.title.toLowerCase().contains(
-                                                    _searchQuery.toLowerCase(),
-                                                  ),
-                                            )
-                                            .length +
-                                        (state.hasMore &&
-                                                state.status ==
-                                                    WishlistPageStatus.loadingMore
-                                            ? 1
-                                            : 0),
-                                    separatorBuilder: (_, __) =>
-                                        SizedBox(height: 14.h),
-                                    itemBuilder: (context, index) {
-                                      final filteredTrips = state.trips
+                              ),
+                              SliverPadding(
+                                padding: EdgeInsetsDirectional.only(
+                                  start: 16.w,
+                                  end: 16.w,
+                                ),
+                                sliver: SliverList.separated(
+                                  itemCount:
+                                      state.trips
                                           .where(
                                             (t) =>
                                                 _searchQuery.isEmpty ||
@@ -214,30 +196,46 @@ class WishlistViewState extends State<WishlistView> {
                                                   _searchQuery.toLowerCase(),
                                                 ),
                                           )
-                                          .toList();
-                                      if (index >= filteredTrips.length) {
-                                        return Padding(
-                                          padding: EdgeInsets.symmetric(
-                                            vertical: 16.h,
-                                          ),
-                                          child: CustomLoading(
-                                            size: 24,
-                                            strokeWidth: 2,
-                                          ),
-                                        );
-                                      }
-                                      final trip = filteredTrips[index];
-                                      return WishlistTripCard(
-                                        trip: trip,
-                                        onFavoriteTap: () => context
-                                            .read<WishlistCubit>()
-                                            .toggleTripWishlist(trip.id),
+                                          .length +
+                                      (state.hasMore &&
+                                              state.status ==
+                                                  WishlistPageStatus.loadingMore
+                                          ? 1
+                                          : 0),
+                                  separatorBuilder: (_, __) =>
+                                      SizedBox(height: 14.h),
+                                  itemBuilder: (context, index) {
+                                    final filteredTrips = state.trips
+                                        .where(
+                                          (t) =>
+                                              _searchQuery.isEmpty ||
+                                              t.title.toLowerCase().contains(
+                                                _searchQuery.toLowerCase(),
+                                              ),
+                                        )
+                                        .toList();
+                                    if (index >= filteredTrips.length) {
+                                      return Padding(
+                                        padding: EdgeInsets.symmetric(
+                                          vertical: 16.h,
+                                        ),
+                                        child: CustomLoading(
+                                          size: 24,
+                                          strokeWidth: 2,
+                                        ),
                                       );
-                                    },
-                                  ),
+                                    }
+                                    final trip = filteredTrips[index];
+                                    return WishlistTripCard(
+                                      trip: trip,
+                                      onFavoriteTap: () => context
+                                          .read<WishlistCubit>()
+                                          .toggleTripWishlist(trip.id),
+                                    );
+                                  },
                                 ),
-                              ],
-                            ),
+                              ),
+                            ],
                           );
                         },
                       ),
@@ -264,12 +262,18 @@ class WishlistViewState extends State<WishlistView> {
               color: AppColors.lightBg(context),
               shape: BoxShape.circle,
             ),
-            child: Icon(Iconsax.heart, size: 36, color: AppColors.greyText(context)),
+            child: Icon(
+              Iconsax.heart,
+              size: 36,
+              color: AppColors.greyText(context),
+            ),
           ),
           const SizedBox(height: 16),
           Text(
             context.tr.wishlistEmptyTitle,
-            style: AppTextStyles.heading3(color: AppColors.secondaryText(context)),
+            style: AppTextStyles.heading3(
+              color: AppColors.secondaryText(context),
+            ),
           ),
           const SizedBox(height: 8),
           Text(
@@ -297,11 +301,17 @@ class _ErrorBody extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(Iconsax.warning_2, size: 48, color: AppColors.greyText(context)),
+            Icon(
+              Iconsax.warning_2,
+              size: 48,
+              color: AppColors.greyText(context),
+            ),
             SizedBox(height: 16.h),
             Text(
               message,
-              style: AppTextStyles.bodyMedium(color: AppColors.secondaryText(context)),
+              style: AppTextStyles.bodyMedium(
+                color: AppColors.secondaryText(context),
+              ),
               textAlign: TextAlign.center,
             ),
             SizedBox(height: 20.h),
