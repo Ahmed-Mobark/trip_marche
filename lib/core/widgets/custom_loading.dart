@@ -23,14 +23,11 @@ class CustomLoading extends StatelessWidget {
   Widget build(BuildContext context) {
     final outerSize = size?.w ?? 68.w;
     final logoSize = outerSize * 0.55;
-    final stroke = strokeWidth?.r ?? 2.5.r;
+    final stroke = strokeWidth?.r ?? 4.r;
     final indicatorColor = color ?? AppColors.primary;
 
     return Padding(
-      padding: EdgeInsets.only(
-        top: top?.h ?? 0,
-        bottom: bottom?.h ?? 0,
-      ),
+      padding: EdgeInsets.only(top: top?.h ?? 0, bottom: bottom?.h ?? 0),
       child: Center(
         child: SizedBox(
           width: outerSize,
@@ -44,7 +41,6 @@ class CustomLoading extends StatelessWidget {
                 child: CircularProgressIndicator(
                   color: indicatorColor,
                   strokeWidth: stroke,
-                  strokeCap: StrokeCap.round,
                 ),
               ),
               Image.asset(

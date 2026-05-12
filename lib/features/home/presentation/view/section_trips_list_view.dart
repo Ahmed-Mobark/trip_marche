@@ -203,13 +203,7 @@ class _SectionTripsListScaffoldState extends State<_SectionTripsListScaffold> {
     if (state.status == SectionTripsItemsStatus.initial ||
         (state.status == SectionTripsItemsStatus.loading &&
             state.trips.isEmpty)) {
-      return ListView(
-        physics: const AlwaysScrollableScrollPhysics(),
-        children: [
-          SizedBox(height: 120.h),
-          Center(child: CustomLoading(strokeWidth: 2.5)),
-        ],
-      );
+      return const Center(child: CustomLoading());
     }
 
     if (state.status == SectionTripsItemsStatus.failure &&
