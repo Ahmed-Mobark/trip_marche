@@ -221,6 +221,7 @@ class TripDetailsReviewCard extends StatelessWidget {
               height: 72.h,
               child: ListView.separated(
                 scrollDirection: Axis.horizontal,
+                reverse: Directionality.of(context) == TextDirection.rtl,
                 itemCount: review.images.length > 5 ? 5 : review.images.length,
                 separatorBuilder: (_, __) => SizedBox(width: 8.w),
                 itemBuilder: (_, i) {

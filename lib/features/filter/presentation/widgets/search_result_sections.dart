@@ -90,10 +90,20 @@ class _SearchResultSearchBarState extends State<SearchResultSearchBar> {
 }
 
 class SearchResultActionRow extends StatelessWidget {
-  const SearchResultActionRow({super.key});
+  const SearchResultActionRow({
+    super.key,
+    this.onSortTap,
+    this.onFilterTap,
+  });
+
+  final VoidCallback? onSortTap;
+  final VoidCallback? onFilterTap;
 
   @override
   Widget build(BuildContext context) {
-    return const CurvedSheetSortFilterRow();
+    return CurvedSheetSortFilterRow(
+      onSortTap: onSortTap,
+      onFilterTap: onFilterTap,
+    );
   }
 }

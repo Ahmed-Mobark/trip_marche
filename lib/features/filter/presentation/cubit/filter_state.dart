@@ -18,13 +18,13 @@ class FilterState extends Equatable {
     this.travelAgency = '',
     this.otherCountries = const {},
     this.otherCities = const {},
-    this.agencyRating = 0,
-    this.citiesCount = 0,
-    this.countriesCount = 0,
-    this.tripRating = 0,
+    this.agencyRatings = const {},
+    this.citiesCounts = const {},
+    this.countriesCounts = const {},
+    this.tripRatings = const {},
     this.selectedDurations = const {},
     this.selectedGroupSizes = const {},
-    this.tripSeason = '',
+    this.tripSeasons = const {},
     this.tripFeatures = const {},
     this.hasDiscountCode = false,
     this.freeCancellation = false,
@@ -36,6 +36,7 @@ class FilterState extends Equatable {
     this.metadata,
     this.metadataErrorMessage,
     this.currencyCode = 'EGP',
+    this.priceHistogram = const [],
   });
 
   final RangeValues priceRange;
@@ -48,13 +49,25 @@ class FilterState extends Equatable {
   final String travelAgency;
   final Set<String> otherCountries;
   final Set<String> otherCities;
-  final int agencyRating;
-  final int citiesCount;
-  final int countriesCount;
-  final int tripRating;
+
+  /// Multi-select rating thresholds for the tourism company (1..5).
+  final Set<int> agencyRatings;
+
+  /// Multi-select number-of-cities options (1..5).
+  final Set<int> citiesCounts;
+
+  /// Multi-select number-of-countries options (1..5).
+  final Set<int> countriesCounts;
+
+  /// Multi-select trip rating options (1..5).
+  final Set<int> tripRatings;
+
   final Set<String> selectedDurations;
   final Set<String> selectedGroupSizes;
-  final String tripSeason;
+
+  /// Multi-select trip seasons (spring | hajj | newYear).
+  final Set<String> tripSeasons;
+
   final Set<String> tripFeatures;
   final bool hasDiscountCode;
   final bool freeCancellation;
@@ -66,6 +79,11 @@ class FilterState extends Equatable {
   final FilterMetadata? metadata;
   final String? metadataErrorMessage;
   final String currencyCode;
+
+  /// Optional histogram of trip counts across [bucketCount] equal price
+  /// buckets, derived from the caller's currently loaded result set. When
+  /// empty, the filter view falls back to a deterministic synthetic curve.
+  final List<int> priceHistogram;
 
   int get activeFilterSectionsCount {
     var count = 0;
@@ -99,13 +117,13 @@ class FilterState extends Equatable {
     if (otherCities.isNotEmpty) {
       count++;
     }
-    if (agencyRating > 0) {
+    if (agencyRatings.isNotEmpty) {
       count++;
     }
-    if (citiesCount > 0) {
+    if (citiesCounts.isNotEmpty) {
       count++;
     }
-    if (countriesCount > 0) {
+    if (countriesCounts.isNotEmpty) {
       count++;
     }
     if (selectedDurations.isNotEmpty) {
@@ -114,13 +132,13 @@ class FilterState extends Equatable {
     if (selectedGroupSizes.isNotEmpty) {
       count++;
     }
-    if (tripSeason.isNotEmpty) {
+    if (tripSeasons.isNotEmpty) {
       count++;
     }
     if (tripFeatures.isNotEmpty) {
       count++;
     }
-    if (tripRating > 0) {
+    if (tripRatings.isNotEmpty) {
       count++;
     }
     if (hasDiscountCode) {
@@ -143,13 +161,13 @@ class FilterState extends Equatable {
     String? travelAgency,
     Set<String>? otherCountries,
     Set<String>? otherCities,
-    int? agencyRating,
-    int? citiesCount,
-    int? countriesCount,
-    int? tripRating,
+    Set<int>? agencyRatings,
+    Set<int>? citiesCounts,
+    Set<int>? countriesCounts,
+    Set<int>? tripRatings,
     Set<String>? selectedDurations,
     Set<String>? selectedGroupSizes,
-    String? tripSeason,
+    Set<String>? tripSeasons,
     Set<String>? tripFeatures,
     bool? hasDiscountCode,
     bool? freeCancellation,
@@ -163,6 +181,7 @@ class FilterState extends Equatable {
     String? metadataErrorMessage,
     bool clearMetadataError = false,
     String? currencyCode,
+    List<int>? priceHistogram,
   }) {
     return FilterState(
       priceRange: priceRange ?? this.priceRange,
@@ -175,13 +194,13 @@ class FilterState extends Equatable {
       travelAgency: travelAgency ?? this.travelAgency,
       otherCountries: otherCountries ?? this.otherCountries,
       otherCities: otherCities ?? this.otherCities,
-      agencyRating: agencyRating ?? this.agencyRating,
-      citiesCount: citiesCount ?? this.citiesCount,
-      countriesCount: countriesCount ?? this.countriesCount,
-      tripRating: tripRating ?? this.tripRating,
+      agencyRatings: agencyRatings ?? this.agencyRatings,
+      citiesCounts: citiesCounts ?? this.citiesCounts,
+      countriesCounts: countriesCounts ?? this.countriesCounts,
+      tripRatings: tripRatings ?? this.tripRatings,
       selectedDurations: selectedDurations ?? this.selectedDurations,
       selectedGroupSizes: selectedGroupSizes ?? this.selectedGroupSizes,
-      tripSeason: tripSeason ?? this.tripSeason,
+      tripSeasons: tripSeasons ?? this.tripSeasons,
       tripFeatures: tripFeatures ?? this.tripFeatures,
       hasDiscountCode: hasDiscountCode ?? this.hasDiscountCode,
       freeCancellation: freeCancellation ?? this.freeCancellation,
@@ -197,6 +216,7 @@ class FilterState extends Equatable {
           ? null
           : metadataErrorMessage ?? this.metadataErrorMessage,
       currencyCode: currencyCode ?? this.currencyCode,
+      priceHistogram: priceHistogram ?? this.priceHistogram,
     );
   }
 
@@ -212,13 +232,13 @@ class FilterState extends Equatable {
         travelAgency,
         otherCountries,
         otherCities,
-        agencyRating,
-        citiesCount,
-        countriesCount,
-        tripRating,
+        agencyRatings,
+        citiesCounts,
+        countriesCounts,
+        tripRatings,
         selectedDurations,
         selectedGroupSizes,
-        tripSeason,
+        tripSeasons,
         tripFeatures,
         hasDiscountCode,
         freeCancellation,
@@ -230,6 +250,7 @@ class FilterState extends Equatable {
         metadata,
         metadataErrorMessage,
         currencyCode,
+        priceHistogram,
       ];
 
   static bool _isSameRange(RangeValues a, RangeValues b) {

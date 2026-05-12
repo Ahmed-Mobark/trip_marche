@@ -24,11 +24,13 @@ import '../cubit/home_sections_state.dart';
 import '../cubit/special_trips_cubit.dart';
 import '../cubit/special_trips_state.dart';
 import '../cubit/trending_destinations_items_cubit.dart';
+import '../cubit/trending_destinations_items_state.dart';
 import '../cubit/section_trips_items_cubit.dart';
 import '../../domain/repositories/home_repository.dart';
 import '../../../wishlist/domain/repositories/trip_wishlist_repository.dart';
 import 'section_trips_list_view.dart';
 import '../widgets/category_chip.dart';
+import '../widgets/category_icons.dart';
 import '../widgets/home_header.dart';
 import '../widgets/home_trending_destinations_section.dart';
 import '../widgets/popular_trip_grid_card.dart';
@@ -138,6 +140,15 @@ class HomeViewState extends State<HomeView> {
                 ),
             wishlistRepo,
           ),
+          // Mirror the home preview's visual style (SpecialTripWideCard)
+          // on the See All page — feedback #64.
+          cardBuilder: (context, trip, {required onTap, required onFavoriteTap}) {
+            return SpecialTripWideCard(
+              trip: trip,
+              onTap: onTap,
+              onFavoriteTap: onFavoriteTap,
+            );
+          },
         ),
       ),
     );
@@ -225,6 +236,22 @@ class HomeViewState extends State<HomeView> {
                   context.read<SpecialTripsCubit>().clearWishlistError();
                 },
               ),
+              // Hide a category tab as soon as we learn it has no trips
+              // (client feedback #61). The cubit auto-jumps to the next
+              // visible category, which retriggers the existing
+              // `HomeCategoriesCubit` listener and loads it.
+              BlocListener<SpecialTripsCubit, SpecialTripsState>(
+                listenWhen: (p, n) =>
+                    n.status == SpecialTripsStatus.success &&
+                    p.status != SpecialTripsStatus.success &&
+                    n.trips.isEmpty &&
+                    n.categoryId != null,
+                listener: (context, state) {
+                  final id = state.categoryId;
+                  if (id == null) return;
+                  context.read<HomeCategoriesCubit>().markCategoryAsEmpty(id);
+                },
+              ),
             ],
             child: Scaffold(
               backgroundColor: AppColors.scaffoldBg(context),
@@ -235,17 +262,33 @@ class HomeViewState extends State<HomeView> {
                       parent: ClampingScrollPhysics(),
                     ),
                     slivers: [
-                      SliverPersistentHeader(
-                        pinned: true,
-                        delegate: HomeHeaderDelegate(
-                          searchHint: scrollContext.tr.homeSearchHint,
-                          locationText: _locationText.isNotEmpty
-                              ? _locationText
-                              : scrollContext.tr.homeLocationText,
-                          topPadding: MediaQuery.paddingOf(scrollContext).top,
-                          onNotificationsTap: () {},
+                      BlocBuilder<
+                        TrendingDestinationsItemsCubit,
+                        TrendingDestinationsItemsState
+                      >(
+                        buildWhen: (p, n) => p.destinations != n.destinations,
+                        builder: (context, trendingState) {
+                          final destinationNames = trendingState.destinations
+                              .map((destination) => destination.name.trim())
+                              .where((name) => name.isNotEmpty)
+                              .toList(growable: false);
+
+                          return SliverPersistentHeader(
+                            pinned: true,
+                            delegate: HomeHeaderDelegate(
+                              searchHint: scrollContext.tr.homeSearchHint,
+                              searchHintDestinations: destinationNames,
+                              locationText: _locationText.isNotEmpty
+                                  ? _locationText
+                                  : scrollContext.tr.homeLocationText,
+                              topPadding: MediaQuery.paddingOf(
+                                scrollContext,
+                              ).top,
+                              onNotificationsTap: () {},
+                            ),
+                          );
+                        },
                         ),
-                      ),
                       SliverToBoxAdapter(
                         child: Transform.translate(
                           offset: Offset(0, -sheetOverlap),
@@ -587,88 +630,106 @@ class HomeViewState extends State<HomeView> {
                 child: CustomLoading(size: 26, strokeWidth: 2),
               );
             }
-            if (catState.status == HomeCategoriesStatus.success &&
-                catState.categories.isNotEmpty) {
-              return Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  _SectionHeader(
-                    title: context.tr.homeSpecialTrips,
-                    actionText: context.tr.homeSeeAll,
-                    titleStyle: sectionTitleStyle,
-                    actionStyle: actionStyle,
-                    onAction: () {
-                      final selectedId = catState.selectedId;
-                      if (selectedId == null) return;
-                      _openSpecialTripsSeeAll(context, categoryId: selectedId);
+            if (catState.status != HomeCategoriesStatus.success) {
+              return const SizedBox.shrink();
+            }
+            final visibleCats = catState.visibleCategories;
+            if (visibleCats.isEmpty) {
+              return const SizedBox.shrink();
+            }
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                _SectionHeader(
+                  title: context.tr.homeSpecialTrips,
+                  actionText: context.tr.homeSeeAll,
+                  titleStyle: sectionTitleStyle,
+                  actionStyle: actionStyle,
+                  onAction: () {
+                    final selectedId = catState.selectedId;
+                    if (selectedId == null) return;
+                    _openSpecialTripsSeeAll(context, categoryId: selectedId);
+                  },
+                ),
+                SizedBox(height: 12.h),
+                SizedBox(
+                  height: 40.h,
+                  child: ListView.builder(
+                    scrollDirection: Axis.horizontal,
+                    reverse: Directionality.of(context) == TextDirection.rtl,
+                    itemCount: visibleCats.length,
+                    itemBuilder: (context, index) {
+                      final cat = visibleCats[index];
+                      final isSelected = cat.slug == catState.selectedSlug;
+                      return CategoryChip(
+                        label: cat.name,
+                        isSelected: isSelected,
+                        iconUrl: cat.iconUrl,
+                        icon: categoryIconForSlug(cat.slug),
+                        onTap: () {
+                          context.read<HomeCategoriesCubit>().selectCategory(
+                            cat.slug,
+                            cat.id,
+                          );
+                          context.read<SpecialTripsCubit>().loadTrips(cat.id);
+                        },
+                      );
                     },
                   ),
-                  SizedBox(height: 12.h),
-                  SizedBox(
-                    height: 40.h,
-                    child: ListView.builder(
-                      scrollDirection: Axis.horizontal,
-                      itemCount: catState.categories.length,
-                      itemBuilder: (context, index) {
-                        final cat = catState.categories[index];
-                        final isSelected = cat.slug == catState.selectedSlug;
-                        return CategoryChip(
-                          label: cat.name,
-                          isSelected: isSelected,
-                          onTap: () {
-                            context.read<HomeCategoriesCubit>().selectCategory(
-                              cat.slug,
-                              cat.id,
-                            );
-                            context.read<SpecialTripsCubit>().loadTrips(cat.id);
-                          },
+                ),
+                SizedBox(height: 12.h),
+                // ── Special Trips Vertical List (min height prevents jump on tab switch) ──
+                ConstrainedBox(
+                  constraints: BoxConstraints(minHeight: 280.h),
+                  child: BlocBuilder<SpecialTripsCubit, SpecialTripsState>(
+                    builder: (context, tripState) {
+                      if (tripState.status == SpecialTripsStatus.loading) {
+                        return Center(
+                          child: CustomLoading(size: 32, strokeWidth: 2.5),
                         );
-                      },
-                    ),
-                  ),
-                  SizedBox(height: 12.h),
-                  // ── Special Trips Vertical List (min height prevents jump on tab switch) ──
-                  ConstrainedBox(
-                    constraints: BoxConstraints(minHeight: 280.h),
-                    child: BlocBuilder<SpecialTripsCubit, SpecialTripsState>(
-                      builder: (context, tripState) {
-                        if (tripState.status == SpecialTripsStatus.loading) {
-                          return Center(
-                            child: CustomLoading(size: 32, strokeWidth: 2.5),
-                          );
+                      }
+                      if (tripState.status == SpecialTripsStatus.success ||
+                          tripState.status ==
+                              SpecialTripsStatus.loadingMore) {
+                        if (tripState.trips.isEmpty) {
+                          // Empty tabs are auto-hidden via the
+                          // BlocListener above; we still render a
+                          // tiny placeholder to bridge the transition
+                          // while the cubit jumps to the next tab.
+                          return const SizedBox.shrink();
                         }
-                        if (tripState.status == SpecialTripsStatus.success ||
-                            tripState.status ==
-                                SpecialTripsStatus.loadingMore) {
-                          if (tripState.trips.isEmpty) {
-                            return SizedBox(
-                              height: 100.h,
-                              child: Center(
-                                child: Text(
-                                  'No trips available',
-                                  style: AppTextStyles.bodyMedium(
-                                    color: AppColors.greyText(context),
-                                  ),
-                                ),
-                              ),
-                            );
-                          }
-                          return _SpecialTripsVerticalList(
-                            trips: tripState.trips,
-                            onFavoriteTap: (trip) =>
-                                _onSpecialTripHeartTap(context, trip),
-                            onReturnedFromTripDetails:
-                                syncWishlistAfterTripDetails,
-                          );
-                        }
-                        return const SizedBox.shrink();
-                      },
-                    ),
+                        return Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            _SpecialTripsVerticalList(
+                              trips: tripState.trips,
+                              onFavoriteTap: (trip) =>
+                                  _onSpecialTripHeartTap(context, trip),
+                              onReturnedFromTripDetails:
+                                  syncWishlistAfterTripDetails,
+                            ),
+                            SizedBox(height: 14.h),
+                            _SpecialTripsSeeMoreButton(
+                              label: context.tr.homeSeeAll,
+                              onTap: () {
+                                final selectedId = catState.selectedId;
+                                if (selectedId == null) return;
+                                _openSpecialTripsSeeAll(
+                                  context,
+                                  categoryId: selectedId,
+                                );
+                              },
+                            ),
+                          ],
+                        );
+                      }
+                      return const SizedBox.shrink();
+                    },
                   ),
-                ],
-              );
-            }
-            return const SizedBox.shrink();
+                ),
+              ],
+            );
           },
         ),
         SizedBox(height: 10.h),
@@ -775,6 +836,7 @@ class _TripHorizontalList extends StatelessWidget {
       height: 346.h,
       child: ListView.separated(
         scrollDirection: Axis.horizontal,
+        reverse: Directionality.of(context) == TextDirection.rtl,
         itemCount: trips.length,
         separatorBuilder: (_, __) => SizedBox(width: 14.w),
         itemBuilder: (context, index) {
@@ -897,6 +959,60 @@ class _SpecialTripsVerticalList extends StatelessWidget {
           ),
         );
       },
+    );
+  }
+}
+
+/// Pill-shaped "See more" affordance rendered under the special-trips preview
+/// list (client feedback #62). Tapping it opens the full `SectionTripsListView`
+/// for the currently selected category.
+class _SpecialTripsSeeMoreButton extends StatelessWidget {
+  const _SpecialTripsSeeMoreButton({
+    required this.label,
+    required this.onTap,
+  });
+
+  final String label;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Material(
+        color: AppColors.transparent,
+        borderRadius: BorderRadius.circular(999.r),
+        child: InkWell(
+          onTap: onTap,
+          borderRadius: BorderRadius.circular(999.r),
+          child: Container(
+            padding: EdgeInsetsDirectional.symmetric(
+              horizontal: 22.w,
+              vertical: 10.h,
+            ),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(999.r),
+              border: Border.all(color: AppColors.primary, width: 1.2),
+            ),
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(
+                  label,
+                  style: AppTextStyles.bodyMedium(
+                    color: AppColors.primary,
+                  ).copyWith(fontWeight: FontWeight.w700),
+                ),
+                SizedBox(width: 4.w),
+                Icon(
+                  Icons.arrow_forward_rounded,
+                  size: 16.sp,
+                  color: AppColors.primary,
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
     );
   }
 }

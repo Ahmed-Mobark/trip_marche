@@ -398,6 +398,7 @@ class _DestinationsRow extends StatelessWidget {
       height: 120.h,
       child: ListView.separated(
         scrollDirection: Axis.horizontal,
+        reverse: Directionality.of(context) == TextDirection.rtl,
         itemCount: _kDestinationImageUrls.length,
         separatorBuilder: (_, __) => SizedBox(width: 12.w),
         itemBuilder: (context, i) {
@@ -521,6 +522,7 @@ class _HorizontalImageRow extends StatelessWidget {
       height: 88.h,
       child: ListView.separated(
         scrollDirection: Axis.horizontal,
+        reverse: Directionality.of(context) == TextDirection.rtl,
         itemCount: urls.length,
         separatorBuilder: (_, __) => SizedBox(width: 10.w),
         itemBuilder: (_, i) => ClipRRect(

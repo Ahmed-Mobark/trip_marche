@@ -154,7 +154,7 @@
 
 45. [DONE] Rename "destinations" section to "Journey Highlights"
 46. [DONE] Max 8 photos shown side by side horizontally — each photo has the place name on it
-47. [PENDING] Below each photo: max 2 lines description of the place
+47. [DONE] Below each photo: max 2 lines description of the place
 48. [DONE] On tapping a photo, it zooms in (inline, not a new page)
 49. [DONE] Remove "visa and entry" section below destination photos (it's a duplicate)
 
@@ -162,25 +162,25 @@
 
 ## Search & Filter
 
-50. [PENDING] Tapping the search bar should allow typing a destination name
-51. [PENDING] After typing and searching, show search results with sort/filter row below the search box
-52. [PENDING] Tapping filter opens the filter page
-53. [PENDING] Filter page: price chart should animate with price changes and reflect actual trip counts at each price point (not a static graph)
-54. [PENDING] Filter page: allow selecting multiple ratings for the tourism company
-55. [PENDING] Filter page: allow multiple selections in cities count, countries count, duration, group size, season, and trip rating
-56. [PENDING] Filter page: allow deselecting options (1 to 5) that are currently selected
+50. [DONE] Tapping the search bar should allow typing a destination name
+51. [DONE] After typing and searching, show search results with sort/filter row below the search box
+52. [DONE] Tapping filter opens the filter page
+53. [DONE] Filter page: price chart should animate with price changes and reflect actual trip counts at each price point (not a static graph)
+54. [DONE] Filter page: allow selecting multiple ratings for the tourism company
+55. [DONE] Filter page: allow multiple selections in cities count, countries count, duration, group size, season, and trip rating
+56. [DONE] Filter page: allow deselecting options (1 to 5) that are currently selected
 
 ---
 
 ## Search Bar Animation
 
-57. [PENDING] Search bar hint text should animate through destination names: "search for a trip to ……"
+57. [DONE] Search bar hint text should animate through destination names: "search for a trip to ……"
 
 ---
 
 ## RTL / Arabic
 
-58. [PENDING] In Arabic version, some trip lists scroll left-to-right and others right-to-left — should be consistent
+58. [DONE] In Arabic version, some trip lists scroll left-to-right and others right-to-left — should be consistent
 
 ---
 
@@ -193,11 +193,11 @@
 ## Special Trips Section
 
 60. [DONE] Special trips section height should be fixed when switching between tabs
-61. [PENDING] Empty tabs should not be shown in special trips
-62. [PENDING] Add "see more" at the end after the 2 trips
-63. [PENDING] After tapping "see more", the title should be on the left side
-64. [PENDING] "See all" page for special trips should show trips in the same display style as this section in the home screen
-65. [PENDING] Add an icon for each category in the special trips section tab bar
+61. [DONE] Empty tabs should not be shown in special trips
+62. [DONE] Add "see more" at the end after the 2 trips
+63. [DONE] After tapping "see more", the title should be on the left side
+64. [DONE] "See all" page for special trips should show trips in the same display style as this section in the home screen
+65. [DONE] Add an icon for each category in the special trips section tab bar
 
 ---
 

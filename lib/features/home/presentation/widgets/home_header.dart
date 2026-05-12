@@ -1,12 +1,16 @@
+import 'dart:async';
+
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:trip_marche/core/config/app_icons.dart';
+import 'package:trip_marche/core/extensions/localization.dart';
 import 'package:trip_marche/core/injection/injection_container.dart';
 import 'package:trip_marche/core/navigation/app_navigator.dart';
 import 'package:trip_marche/core/theme/app_colors.dart';
-import 'package:trip_marche/features/filter/presentation/view/filter_view.dart';
+import 'package:trip_marche/features/search/presentation/view/destination_search_view.dart';
 
 /// Collapsing home header used as a [SliverPersistentHeader].
 ///
@@ -15,6 +19,7 @@ import 'package:trip_marche/features/filter/presentation/view/filter_view.dart';
 class HomeHeaderDelegate extends SliverPersistentHeaderDelegate {
   HomeHeaderDelegate({
     required this.searchHint,
+    this.searchHintDestinations = const [],
     required this.locationText,
     required this.topPadding,
     this.onNotificationsTap,
@@ -22,6 +27,7 @@ class HomeHeaderDelegate extends SliverPersistentHeaderDelegate {
   });
 
   final String searchHint;
+  final List<String> searchHintDestinations;
   final String locationText;
   final double topPadding;
   final VoidCallback? onNotificationsTap;
@@ -42,6 +48,7 @@ class HomeHeaderDelegate extends SliverPersistentHeaderDelegate {
   @override
   bool shouldRebuild(covariant HomeHeaderDelegate oldDelegate) =>
       searchHint != oldDelegate.searchHint ||
+      !listEquals(searchHintDestinations, oldDelegate.searchHintDestinations) ||
       locationText != oldDelegate.locationText ||
       topPadding != oldDelegate.topPadding ||
       hasNotification != oldDelegate.hasNotification;
@@ -98,8 +105,11 @@ class HomeHeaderDelegate extends SliverPersistentHeaderDelegate {
                       opacity: 1.0 - (t * 0.75),
                       child: GestureDetector(
                         onTap: () => sl<AppNavigator>()
-                            .push(screen: const FilterView()),
-                        child: _SearchField(hint: searchHint),
+                            .push(screen: const DestinationSearchView()),
+                        child: _SearchField(
+                          hint: searchHint,
+                          destinations: searchHintDestinations,
+                        ),
                       ),
                     ),
                   ),
@@ -154,13 +164,80 @@ class HomeHeaderDelegate extends SliverPersistentHeaderDelegate {
   }
 }
 
-class _SearchField extends StatelessWidget {
-  const _SearchField({required this.hint});
+class _SearchField extends StatefulWidget {
+  const _SearchField({
+    required this.hint,
+    required this.destinations,
+  });
 
   final String hint;
+  final List<String> destinations;
+
+  @override
+  State<_SearchField> createState() => _SearchFieldState();
+}
+
+class _SearchFieldState extends State<_SearchField> {
+  static const Duration _swapEvery = Duration(milliseconds: 2400);
+  static const Duration _transitionDuration = Duration(milliseconds: 420);
+
+  Timer? _timer;
+  int _index = 0;
+
+  List<String> get _destinations => widget.destinations
+      .map((name) => name.trim())
+      .where((name) => name.isNotEmpty)
+      .toSet()
+      .take(8)
+      .toList(growable: false);
+
+  @override
+  void initState() {
+    super.initState();
+    _syncTimer();
+  }
+
+  @override
+  void didUpdateWidget(covariant _SearchField oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (!listEquals(oldWidget.destinations, widget.destinations)) {
+      _index = 0;
+      _syncTimer();
+    }
+  }
+
+  void _syncTimer() {
+    _timer?.cancel();
+    final destinations = _destinations;
+    if (destinations.length <= 1) {
+      return;
+    }
+    _timer = Timer.periodic(_swapEvery, (_) {
+      if (!mounted) return;
+      setState(() {
+        _index = (_index + 1) % _destinations.length;
+      });
+    });
+  }
+
+  @override
+  void dispose() {
+    _timer?.cancel();
+    super.dispose();
+  }
+
+  String _currentHint(BuildContext context) {
+    final destinations = _destinations;
+    if (destinations.isEmpty) {
+      return widget.hint;
+    }
+    final safeIndex = _index.clamp(0, destinations.length - 1);
+    return context.tr.homeSearchHintDestination(destinations[safeIndex]);
+  }
 
   @override
   Widget build(BuildContext context) {
+    final hint = _currentHint(context);
     return Container(
       height: 42.h,
       padding: EdgeInsetsDirectional.symmetric(horizontal: 14.w),
@@ -177,14 +254,32 @@ class _SearchField extends StatelessWidget {
           ),
           SizedBox(width: 10.w),
           Expanded(
-            child: Text(
-              hint,
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-              style: TextStyle(
-                fontSize: 14.sp,
-                fontWeight: FontWeight.w400,
-                color: AppColors.greyText(context).withValues(alpha: 0.9),
+            child: ClipRect(
+              child: AnimatedSwitcher(
+                duration: _transitionDuration,
+                switchInCurve: Curves.easeOutCubic,
+                switchOutCurve: Curves.easeInCubic,
+                transitionBuilder: (child, animation) {
+                  final slide = Tween<Offset>(
+                    begin: const Offset(0, 0.35),
+                    end: Offset.zero,
+                  ).animate(animation);
+                  return FadeTransition(
+                    opacity: animation,
+                    child: SlideTransition(position: slide, child: child),
+                  );
+                },
+                child: Text(
+                  hint,
+                  key: ValueKey<String>(hint),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(
+                    fontSize: 14.sp,
+                    fontWeight: FontWeight.w400,
+                    color: AppColors.greyText(context).withValues(alpha: 0.9),
+                  ),
+                ),
               ),
             ),
           ),

@@ -55,14 +55,16 @@ class TripDestinationRef extends Equatable {
     required this.id,
     required this.name,
     this.coverImage,
+    this.description = '',
   });
 
   final int id;
   final String name;
   final String? coverImage;
+  final String description;
 
   @override
-  List<Object?> get props => [id, name, coverImage];
+  List<Object?> get props => [id, name, coverImage, description];
 }
 
 /// Trip taxonomy tags from API [`categories`].

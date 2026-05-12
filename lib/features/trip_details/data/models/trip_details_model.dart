@@ -191,9 +191,25 @@ class TripDetailsModel {
             id: _JsonParse.asInt(e['id']),
             name: _JsonParse.asString(e['name']),
             coverImage: _JsonParse.asNullableString(e['cover_image']),
+            description: _firstString([
+              e['description'],
+              e['overview'],
+              e['short_description'],
+              e['summary'],
+            ]),
           ),
         )
         .toList();
+  }
+
+  static String _firstString(List<dynamic> values) {
+    for (final value in values) {
+      final parsed = _JsonParse.asString(value).trim();
+      if (parsed.isNotEmpty) {
+        return parsed;
+      }
+    }
+    return '';
   }
 
   static List<TripInclusion> _parseInclusions(dynamic raw) {

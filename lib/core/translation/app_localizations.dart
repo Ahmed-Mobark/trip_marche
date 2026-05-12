@@ -562,6 +562,12 @@ abstract class AppLocalizations {
   /// **'Search for a trip'**
   String get homeSearchHint;
 
+  /// No description provided for @homeSearchHintDestination.
+  ///
+  /// In en, this message translates to:
+  /// **'Search for a trip to {destination}'**
+  String homeSearchHintDestination(Object destination);
+
   /// No description provided for @homeLocationText.
   ///
   /// In en, this message translates to:

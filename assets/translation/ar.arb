@@ -82,6 +82,7 @@
 
   "homeAppTitle": "TripMarche",
   "homeSearchHint": "ابحث عن رحلة",
+  "homeSearchHintDestination": "ابحث عن رحلة إلى {destination}",
   "homeLocationText": "مصر، القاهرة، القاهرة الجديدة",
   "homeTrendingDestinations": "الوجهات الرائجة",
   "homeTrendingDestinationsSearchHint": "ابحث عن وجهة",
