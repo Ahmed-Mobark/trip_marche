@@ -304,7 +304,7 @@ class _ItineraryDayCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<TripDetailsCubit, TripDetailsState>(
       builder: (context, state) {
-        final expanded = state.expandedDayIndex == dayIndex;
+        final expanded = state.expandedDayIndices.contains(dayIndex);
         return Material(
           color: AppColors.lightBg(context),
           borderRadius: BorderRadius.circular(14.r),

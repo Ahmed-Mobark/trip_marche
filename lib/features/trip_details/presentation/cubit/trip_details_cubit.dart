@@ -60,7 +60,7 @@ class TripDetailsCubit extends Cubit<TripDetailsState> {
             isFavorite: trip.isWishlisted,
             clearTrip: false,
             clearLoadError: true,
-            expandedDayIndex: trip.days.isEmpty ? -1 : 0,
+            expandedDayIndices: trip.days.isEmpty ? const <int>{} : const {0},
           ),
         );
       },
@@ -120,11 +120,13 @@ class TripDetailsCubit extends Cubit<TripDetailsState> {
   }
 
   void toggleExpandedDay(int index) {
-    emit(
-      state.copyWith(
-        expandedDayIndex: state.expandedDayIndex == index ? -1 : index,
-      ),
-    );
+    final next = Set<int>.from(state.expandedDayIndices);
+    if (next.contains(index)) {
+      next.remove(index);
+    } else {
+      next.add(index);
+    }
+    emit(state.copyWith(expandedDayIndices: next));
   }
 
   void toggleActivity(String id) {

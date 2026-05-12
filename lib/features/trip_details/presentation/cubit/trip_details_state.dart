@@ -13,7 +13,7 @@ class TripDetailsState extends Equatable {
     this.isFavorite = false,
     this.wishlistToggling = false,
     this.wishlistFeedback,
-    this.expandedDayIndex = -1,
+    this.expandedDayIndices = const <int>{0},
     this.addedActivityIds = const <String>{},
   });
 
@@ -23,7 +23,7 @@ class TripDetailsState extends Equatable {
   final bool isFavorite;
   final bool wishlistToggling;
   final WishlistFeedback? wishlistFeedback;
-  final int expandedDayIndex;
+  final Set<int> expandedDayIndices;
   final Set<String> addedActivityIds;
 
   TripDetailsState copyWith({
@@ -35,7 +35,7 @@ class TripDetailsState extends Equatable {
     bool? wishlistToggling,
     WishlistFeedback? wishlistFeedback,
     bool clearWishlistFeedback = false,
-    int? expandedDayIndex,
+    Set<int>? expandedDayIndices,
     Set<String>? addedActivityIds,
     bool clearLoadError = false,
   }) {
@@ -48,7 +48,7 @@ class TripDetailsState extends Equatable {
       wishlistFeedback: clearWishlistFeedback
           ? null
           : (wishlistFeedback ?? this.wishlistFeedback),
-      expandedDayIndex: expandedDayIndex ?? this.expandedDayIndex,
+      expandedDayIndices: expandedDayIndices ?? this.expandedDayIndices,
       addedActivityIds: addedActivityIds ?? this.addedActivityIds,
     );
   }
@@ -61,7 +61,7 @@ class TripDetailsState extends Equatable {
         isFavorite,
         wishlistToggling,
         wishlistFeedback,
-        expandedDayIndex,
+        expandedDayIndices,
         addedActivityIds,
       ];
 }

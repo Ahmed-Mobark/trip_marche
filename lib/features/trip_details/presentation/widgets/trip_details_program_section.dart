@@ -66,7 +66,7 @@ class TripDetailsProgramSection extends StatelessWidget {
             ),
             const SizedBox(height: 10),
             BlocBuilder<TripDetailsCubit, TripDetailsState>(
-              buildWhen: (p, n) => p.expandedDayIndex != n.expandedDayIndex,
+              buildWhen: (p, n) => p.expandedDayIndices != n.expandedDayIndices,
               builder: (context, state) {
                 return Column(
                   mainAxisSize: MainAxisSize.min,
@@ -80,7 +80,7 @@ class TripDetailsProgramSection extends StatelessWidget {
                         city: days[i].title,
                         mealCodes: _mealCodes(days[i].meals),
                         items: days[i].items,
-                        expanded: state.expandedDayIndex == i,
+                        expanded: state.expandedDayIndices.contains(i),
                         collapsible: collapsible,
                         onHeaderTap: () => context
                             .read<TripDetailsCubit>()
@@ -163,7 +163,7 @@ class _DayCard extends StatelessWidget {
       ),
     );
 
-    return Container(
+    final card = Container(
       decoration: BoxDecoration(
         color: AppColors.cardBg(context),
         borderRadius: BorderRadius.circular(_radius),
@@ -173,16 +173,7 @@ class _DayCard extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          if (collapsible)
-            InkWell(
-              onTap: onHeaderTap,
-              borderRadius: const BorderRadius.vertical(
-                top: Radius.circular(_radius),
-              ),
-              child: header,
-            )
-          else
-            header,
+          header,
           if (expanded || !collapsible)
             Padding(
               padding: const EdgeInsetsDirectional.only(
@@ -226,6 +217,9 @@ class _DayCard extends StatelessWidget {
         ],
       ),
     );
+
+    if (!collapsible) return card;
+    return GestureDetector(onTap: onHeaderTap, child: card);
   }
 }
 
