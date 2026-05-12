@@ -220,8 +220,8 @@
 
 ## App Bar (Header) - Scroll Down Behavior
 
-75. [PENDING] On scroll down, the gradient header height should shrink
-76. [PENDING] Logo should disappear on scroll
-77. [PENDING] Location row should disappear on scroll
-78. [PENDING] Search box opacity should drop to ~25%
-79. [PENDING] Search box width should shrink, with notification bell moved to its right side
+75. [DONE] On scroll down, the gradient header height should shrink
+76. [DONE] Logo should disappear on scroll
+77. [DONE] Location row should disappear on scroll
+78. [DONE] Search box opacity should drop to ~25%
+79. [DONE] Search box width should shrink, with notification bell moved to its right side

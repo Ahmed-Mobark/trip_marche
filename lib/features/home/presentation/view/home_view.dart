@@ -219,10 +219,12 @@ class HomeViewState extends State<HomeView> {
                       parent: ClampingScrollPhysics(),
                     ),
                     slivers: [
-                      SliverToBoxAdapter(
-                        child: HomeHeader(
+                      SliverPersistentHeader(
+                        pinned: true,
+                        delegate: HomeHeaderDelegate(
                           searchHint: scrollContext.tr.homeSearchHint,
                           locationText: scrollContext.tr.homeLocationText,
+                          topPadding: MediaQuery.paddingOf(scrollContext).top,
                           onNotificationsTap: () {},
                         ),
                       ),
