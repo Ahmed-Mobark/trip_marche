@@ -33,7 +33,7 @@ class TripDetailsReviewsSection extends StatelessWidget {
               ),
             ),
             TextButton(
-              onPressed: () => _openAllReviewsSheet(context, trip.reviews),
+              onPressed: () => openAllReviews(context, trip.reviews),
               style: TextButton.styleFrom(
                 padding: EdgeInsetsDirectional.zero,
                 minimumSize: Size.zero,
@@ -54,7 +54,7 @@ class TripDetailsReviewsSection extends StatelessWidget {
     );
   }
 
-  void _openAllReviewsSheet(BuildContext context, List<TripReview> reviews) {
+  static void openAllReviews(BuildContext context, List<TripReview> reviews) {
     showModalBottomSheet<void>(
       context: context,
       isScrollControlled: true,
@@ -218,7 +218,7 @@ class TripDetailsReviewCard extends StatelessWidget {
           if (review.images.isNotEmpty) ...[
             SizedBox(height: 12.h),
             SizedBox(
-              height: 56.h,
+              height: 72.h,
               child: ListView.separated(
                 scrollDirection: Axis.horizontal,
                 itemCount: review.images.length > 5 ? 5 : review.images.length,

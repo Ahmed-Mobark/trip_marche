@@ -106,6 +106,27 @@ class TripDetailsAccommodationSection extends StatelessWidget {
         ],
         if (trip.activityRates.isNotEmpty) ...[
           _ActivityRateCard(rates: trip.activityRates),
+          if (trip.reviews.isNotEmpty)
+            Align(
+              alignment: AlignmentDirectional.centerEnd,
+              child: TextButton(
+                onPressed: () => TripDetailsReviewsSection.openAllReviews(
+                  context,
+                  trip.reviews,
+                ),
+                style: TextButton.styleFrom(
+                  padding: EdgeInsetsDirectional.zero,
+                  minimumSize: Size.zero,
+                  tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                ),
+                child: Text(
+                  context.tr.tripDetailsViewAll,
+                  style: AppTextStyles.bodyMedium(
+                    color: AppColors.primary,
+                  ).copyWith(fontSize: 12.sp),
+                ),
+              ),
+            ),
           SizedBox(height: 14.h),
         ],
         _TripDetailsQuickLinks(

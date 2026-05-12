@@ -1459,7 +1459,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get tripDetailsTrainLegSummary => 'عودة · القاهرة · 8س 30د';
 
   @override
-  String get tripDetailsDestinationsTitle => 'الوجهات';
+  String get tripDetailsDestinationsTitle => 'أبرز المحطات';
 
   @override
   String get tripDetailsDestinationDahab => 'دهب';

@@ -52,7 +52,7 @@ class TripDetailsDestinationDetailsSection extends StatelessWidget {
             child: ListView.separated(
               scrollDirection: Axis.horizontal,
               padding: EdgeInsets.zero,
-              itemCount: carousel.length,
+              itemCount: carousel.length > 8 ? 8 : carousel.length,
               separatorBuilder: (_, __) => SizedBox(width: 12.w),
               itemBuilder: (context, i) {
                 final d = carousel[i];
@@ -95,7 +95,25 @@ class _DestinationPhotoCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ClipRRect(
+    return GestureDetector(
+      onTap: () {
+        if (imageUrl == null) return;
+        showDialog<void>(
+          context: context,
+          builder: (_) => GestureDetector(
+            onTap: () => Navigator.pop(context),
+            child: InteractiveViewer(
+              child: Center(
+                child: AppCachedNetworkImage(
+                  imageUrl: imageUrl,
+                  fit: BoxFit.contain,
+                ),
+              ),
+            ),
+          ),
+        );
+      },
+      child: ClipRRect(
       borderRadius: BorderRadius.circular(borderRadius),
       child: SizedBox(
         width: size,
@@ -149,6 +167,7 @@ class _DestinationPhotoCard extends StatelessWidget {
           ],
         ),
       ),
+    ),
     );
   }
 }

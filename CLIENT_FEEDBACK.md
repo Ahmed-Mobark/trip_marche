@@ -102,8 +102,8 @@
 
 ## Trip Details Page - Reviews
 
-32. [PENDING] Add "show more" link under activity rate — on tap opens all reviews
-33. [PENDING] Show all 5 user photos in the review fully visible (not cropped)
+32. [DONE] Add "show more" link under activity rate — on tap opens all reviews
+33. [DONE] Show all 5 user photos in the review fully visible (not cropped)
 
 ---
 
@@ -150,10 +150,10 @@
 
 ## Trip Details Page - Journey Highlights (Destinations)
 
-45. [PENDING] Rename "destinations" section to "Journey Highlights"
-46. [PENDING] Max 8 photos shown side by side horizontally — each photo has the place name on it
+45. [DONE] Rename "destinations" section to "Journey Highlights"
+46. [DONE] Max 8 photos shown side by side horizontally — each photo has the place name on it
 47. [PENDING] Below each photo: max 2 lines description of the place
-48. [PENDING] On tapping a photo, it zooms in (inline, not a new page)
+48. [DONE] On tapping a photo, it zooms in (inline, not a new page)
 49. [DONE] Remove "visa and entry" section below destination photos (it's a duplicate)
 
 ---
