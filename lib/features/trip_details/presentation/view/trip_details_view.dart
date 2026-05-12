@@ -48,8 +48,38 @@ class TripDetailsView extends StatelessWidget {
   }
 }
 
-class _TripDetailsBody extends StatelessWidget {
+class _TripDetailsBody extends StatefulWidget {
   const _TripDetailsBody();
+
+  @override
+  State<_TripDetailsBody> createState() => _TripDetailsBodyState();
+}
+
+class _TripDetailsBodyState extends State<_TripDetailsBody> {
+  final ScrollController _scrollController = ScrollController();
+  bool _bookingExpanded = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _scrollController.addListener(_onScroll);
+  }
+
+  void _onScroll() {
+    if (!_scrollController.hasClients) return;
+    final pos = _scrollController.position;
+    final nearBottom = pos.pixels >= pos.maxScrollExtent - 150;
+    if (nearBottom != _bookingExpanded) {
+      setState(() => _bookingExpanded = nearBottom);
+    }
+  }
+
+  @override
+  void dispose() {
+    _scrollController.removeListener(_onScroll);
+    _scrollController.dispose();
+    super.dispose();
+  }
 
   Widget _buildStatGrid(BuildContext context, TripDetails trip) {
     final typeValue = trip.flags.international
@@ -178,6 +208,7 @@ class _TripDetailsBody extends StatelessWidget {
               return Stack(
                 children: [
                   CustomScrollView(
+                    controller: _scrollController,
                     slivers: [
                       SliverToBoxAdapter(
                         child: TripDetailsHeroHeader(trip: trip),
@@ -231,6 +262,7 @@ class _TripDetailsBody extends StatelessWidget {
                       secondaryBadgeText: payExtra,
                       bookNowText: context.tr.tripDetailsBookNow,
                       onBookNow: () {},
+                      expanded: _bookingExpanded,
                     ),
                   ),
                 ],

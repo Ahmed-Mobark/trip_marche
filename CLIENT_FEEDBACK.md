@@ -137,7 +137,7 @@
 ## Trip Details Page - Booking Button
 
 41. [DONE] Booking button should not stick to the very bottom — add spacing
-42. [PENDING] Booking button should be small by default and grow bigger when user scrolls to bottom of page
+42. [DONE] Booking button should be small by default and grow bigger when user scrolls to bottom of page
 
 ---
 
