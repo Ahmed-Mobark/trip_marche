@@ -1,3 +1,5 @@
+
+
 # Client Feedback - Numbered Tasks
 
 > DONE = implemented | PENDING = not yet started | BLOCKED = needs client input/assets
@@ -81,11 +83,11 @@
 
 ## Trip Details Page - Images & Photo Tap
 
-21. [PENDING] Tapping photos in trip details page is slow — the effect shows only after the image loads
+21. [DONE] Tapping photos in trip details page is slow — the effect shows only after the image loads
 22. [PENDING] Top photos should auto-scroll with slow zoom-in for 3 seconds, then move to next photo
-23. [PENDING] On tapping photos, open a screen with all photos in small size, 2-column grid (like Get Your Guide)
-24. [PENDING] On tapping a single photo from that grid, open the current full-screen viewer
-25. [PENDING] Photo viewer: close button should be in a circle, bigger size, top-left
+23. [DONE] On tapping photos, open a screen with all photos in small size, 2-column grid (like Get Your Guide)
+24. [DONE] On tapping a single photo from that grid, open the current full-screen viewer
+25. [DONE] Photo viewer: close button should be in a circle, bigger size, top-left
 
 ---
 
@@ -198,6 +200,7 @@
 65. [PENDING] Add an icon for each category in the special trips section tab bar
 
 ---
+
 
 ## Customer Service Screen
 

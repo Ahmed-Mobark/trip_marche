@@ -6,7 +6,7 @@ import 'package:trip_marche/core/extensions/localization.dart';
 import 'package:trip_marche/core/theme/app_colors.dart';
 import 'package:trip_marche/core/theme/app_text_styles.dart';
 import 'package:trip_marche/core/widgets/app_cached_network_image.dart';
-import 'package:trip_marche/core/widgets/app_image_gallery_screen.dart';
+import 'package:trip_marche/core/widgets/app_photo_grid_screen.dart';
 import 'package:trip_marche/features/trip_details/domain/entities/trip_details_entity.dart';
 import 'package:trip_marche/features/trip_details/presentation/trip_details_ui_formatters.dart';
 import '../cubit/trip_details_cubit.dart';
@@ -86,10 +86,9 @@ class TripDetailsHeroHeader extends StatelessWidget {
               color: AppColors.lightBg(context),
               child: GestureDetector(
                 behavior: HitTestBehavior.opaque,
-                onTap: () => AppImageGalleryScreen.open(
+                onTap: () => AppPhotoGridScreen.open(
                   context,
                   imageUrls: viewerUrls,
-                  initialIndex: 0,
                 ),
                 child: AppCachedNetworkImage(
                   imageUrl: heroUrl,
@@ -305,10 +304,9 @@ class TripDetailsHeroHeader extends StatelessWidget {
                             moreLabel: context.tr.tripDetailsGalleryMoreCount(
                               '$extraCount',
                             ),
-                            onTap: () => AppImageGalleryScreen.open(
+                            onTap: () => AppPhotoGridScreen.open(
                               context,
                               imageUrls: viewerUrls,
-                              initialIndex: i + 1,
                             ),
                           ),
                         ],

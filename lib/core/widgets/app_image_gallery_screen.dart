@@ -74,7 +74,6 @@ class _AppImageGalleryScreenState extends State<AppImageGalleryScreen> {
   @override
   Widget build(BuildContext context) {
     final total = widget.imageUrls.length;
-    final closeLabel = MaterialLocalizations.of(context).closeButtonTooltip;
 
     return AnnotatedRegion<SystemUiOverlayStyle>(
       value: SystemUiOverlayStyle.light.copyWith(
@@ -128,11 +127,25 @@ class _AppImageGalleryScreenState extends State<AppImageGalleryScreen> {
               ),
             SafeArea(
               child: Align(
-                alignment: AlignmentDirectional.topEnd,
-                child: IconButton(
-                  onPressed: () => Navigator.of(context).pop(),
-                  tooltip: closeLabel,
-                  icon: const Icon(Icons.close, color: Colors.white, size: 26),
+                alignment: AlignmentDirectional.topStart,
+                child: Padding(
+                  padding: const EdgeInsetsDirectional.only(start: 16, top: 8),
+                  child: GestureDetector(
+                    onTap: () => Navigator.of(context).pop(),
+                    child: Container(
+                      width: 44,
+                      height: 44,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: Colors.black.withValues(alpha: 0.5),
+                      ),
+                      child: const Icon(
+                        Icons.close_rounded,
+                        color: Colors.white,
+                        size: 24,
+                      ),
+                    ),
+                  ),
                 ),
               ),
             ),
