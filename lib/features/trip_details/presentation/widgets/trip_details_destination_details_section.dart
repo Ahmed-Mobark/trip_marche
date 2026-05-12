@@ -16,14 +16,31 @@ class TripDetailsDestinationDetailsSection extends StatelessWidget {
   List<_CarouselDestination> _carouselDestinations() {
     final out = <_CarouselDestination>[];
     final seen = <int>{};
+    final fallbackDescription = trip.overview.isNotEmpty
+        ? trip.overview
+        : trip.description;
     for (final d in trip.destinations) {
       if (seen.add(d.id)) {
-        out.add(_CarouselDestination(name: d.name, imageUrl: d.coverImage));
+        out.add(
+          _CarouselDestination(
+            name: d.name,
+            description: d.description.isNotEmpty
+                ? d.description
+                : fallbackDescription,
+            imageUrl: d.coverImage,
+          ),
+        );
       }
     }
     if (out.isEmpty && trip.destination != null) {
       final p = trip.destination!;
-      out.add(_CarouselDestination(name: p.name, imageUrl: p.image));
+      out.add(
+        _CarouselDestination(
+          name: p.name,
+          description: fallbackDescription,
+          imageUrl: p.image,
+        ),
+      );
     }
     return out;
   }
@@ -33,6 +50,7 @@ class TripDetailsDestinationDetailsSection extends StatelessWidget {
     final carousel = _carouselDestinations();
 
     final destCardSize = 132.w;
+    final destCardHeight = destCardSize + 48.h;
     final destCardRadius = 16.r;
 
     return Column(
@@ -48,9 +66,10 @@ class TripDetailsDestinationDetailsSection extends StatelessWidget {
           ),
           SizedBox(height: 8.h),
           SizedBox(
-            height: destCardSize,
+            height: destCardHeight,
             child: ListView.separated(
               scrollDirection: Axis.horizontal,
+              reverse: Directionality.of(context) == TextDirection.rtl,
               padding: EdgeInsets.zero,
               itemCount: carousel.length > 8 ? 8 : carousel.length,
               separatorBuilder: (_, __) => SizedBox(width: 12.w),
@@ -58,6 +77,7 @@ class TripDetailsDestinationDetailsSection extends StatelessWidget {
                 final d = carousel[i];
                 return _DestinationPhotoCard(
                   name: d.name,
+                  description: d.description,
                   imageUrl: d.imageUrl,
                   size: destCardSize,
                   borderRadius: destCardRadius,
@@ -74,21 +94,28 @@ class TripDetailsDestinationDetailsSection extends StatelessWidget {
 }
 
 class _CarouselDestination {
-  const _CarouselDestination({required this.name, this.imageUrl});
+  const _CarouselDestination({
+    required this.name,
+    this.description = '',
+    this.imageUrl,
+  });
 
   final String name;
+  final String description;
   final String? imageUrl;
 }
 
 class _DestinationPhotoCard extends StatelessWidget {
   const _DestinationPhotoCard({
     required this.name,
+    required this.description,
     required this.imageUrl,
     required this.size,
     required this.borderRadius,
   });
 
   final String name;
+  final String description;
   final String? imageUrl;
   final double size;
   final double borderRadius;
@@ -113,61 +140,84 @@ class _DestinationPhotoCard extends StatelessWidget {
           ),
         );
       },
-      child: ClipRRect(
-      borderRadius: BorderRadius.circular(borderRadius),
       child: SizedBox(
         width: size,
-        height: size,
-        child: Stack(
-          fit: StackFit.expand,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            AppCachedNetworkImage(
-              imageUrl: imageUrl,
-              fit: BoxFit.cover,
-              width: size,
-              height: size,
-            ),
-            DecoratedBox(
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter,
-                  colors: [
-                    AppColors.scrim.withValues(alpha: 0),
-                    AppColors.scrim.withValues(alpha: 0.55),
-                  ],
-                ),
-              ),
-            ),
-            PositionedDirectional(
-              start: 12.w,
-              end: 12.w,
-              bottom: 12.h,
-              child: Text(
-                name,
-                textAlign: TextAlign.center,
-                maxLines: 2,
-                overflow: TextOverflow.ellipsis,
-                style: AppTextStyles.bodyMedium(color: AppColors.onImage)
-                    .copyWith(
-                  fontSize: 14.sp,
-                  fontWeight: FontWeight.w700,
-                  height: 1.2,
-                  letterSpacing: 0,
-                  shadows: [
-                    Shadow(
-                      color: AppColors.scrim.withValues(alpha: 0.4),
-                      blurRadius: 8.r,
-                      offset: Offset(0, 1.h),
+            ClipRRect(
+              borderRadius: BorderRadius.circular(borderRadius),
+              child: SizedBox(
+                width: size,
+                height: size,
+                child: Stack(
+                  fit: StackFit.expand,
+                  children: [
+                    AppCachedNetworkImage(
+                      imageUrl: imageUrl,
+                      fit: BoxFit.cover,
+                      width: size,
+                      height: size,
+                    ),
+                    DecoratedBox(
+                      decoration: BoxDecoration(
+                        gradient: LinearGradient(
+                          begin: Alignment.topCenter,
+                          end: Alignment.bottomCenter,
+                          colors: [
+                            AppColors.scrim.withValues(alpha: 0),
+                            AppColors.scrim.withValues(alpha: 0.55),
+                          ],
+                        ),
+                      ),
+                    ),
+                    PositionedDirectional(
+                      start: 12.w,
+                      end: 12.w,
+                      bottom: 12.h,
+                      child: Text(
+                        name,
+                        textAlign: TextAlign.center,
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                        style:
+                            AppTextStyles.bodyMedium(color: AppColors.onImage)
+                                .copyWith(
+                          fontSize: 14.sp,
+                          fontWeight: FontWeight.w700,
+                          height: 1.2,
+                          letterSpacing: 0,
+                          shadows: [
+                            Shadow(
+                              color: AppColors.scrim.withValues(alpha: 0.4),
+                              blurRadius: 8.r,
+                              offset: Offset(0, 1.h),
+                            ),
+                          ],
+                        ),
+                      ),
                     ),
                   ],
                 ),
               ),
             ),
+            SizedBox(height: 8.h),
+            Text(
+              description.trim(),
+              maxLines: 2,
+              overflow: TextOverflow.ellipsis,
+              style: AppTextStyles.caption(
+                color: AppColors.secondaryText(context),
+              ).copyWith(
+                fontSize: 12.sp,
+                height: 1.25,
+                fontWeight: FontWeight.w400,
+                letterSpacing: 0,
+              ),
+            ),
           ],
         ),
       ),
-    ),
     );
   }
 }

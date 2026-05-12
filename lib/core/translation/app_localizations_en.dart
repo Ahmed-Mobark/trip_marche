@@ -250,6 +250,11 @@ class AppLocalizationsEn extends AppLocalizations {
   String get homeSearchHint => 'Search for a trip';
 
   @override
+  String homeSearchHintDestination(Object destination) {
+    return 'Search for a trip to $destination';
+  }
+
+  @override
   String get homeLocationText => 'Egypt, Cairo, New Cairo';
 
   @override

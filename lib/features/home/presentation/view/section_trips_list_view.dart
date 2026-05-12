@@ -22,7 +22,7 @@ import '../cubit/section_trips_items_cubit.dart';
 import '../cubit/section_trips_items_state.dart';
 import '../cubit/special_trips_cubit.dart';
 import '../../../../core/widgets/staggered_fade_slide.dart';
-import '../widgets/popular_trip_grid_card.dart';
+import '../widgets/section_trip_horizontal_card.dart';
 
 /// Generic "See all" view for any home section that lists trips.
 ///
@@ -33,29 +33,53 @@ import '../widgets/popular_trip_grid_card.dart';
 ///   cubitFactory: () => sl<SectionTripsItemsCubit>(instanceName: 'popular'),
 /// )
 /// ```
+/// Signature for a custom trip card builder used inside
+/// [SectionTripsListView]. Callbacks are wired by the scaffold so cards can
+/// stay presentational.
+typedef SectionTripCardBuilder = Widget Function(
+  BuildContext context,
+  TripModel trip, {
+  required VoidCallback onTap,
+  required VoidCallback onFavoriteTap,
+});
+
 class SectionTripsListView extends StatelessWidget {
   const SectionTripsListView({
     super.key,
     required this.fallbackTitle,
     required this.cubitFactory,
+    this.cardBuilder,
   });
 
   final String fallbackTitle;
   final SectionTripsItemsCubit Function() cubitFactory;
 
+  /// Optional card builder. When provided, overrides the default
+  /// [SectionTripHorizontalCard] used by the See All list. Useful for sections
+  /// whose home preview uses a distinct visual style (e.g. Special Trips uses
+  /// `SpecialTripWideCard`) — feedback #64.
+  final SectionTripCardBuilder? cardBuilder;
+
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (_) => cubitFactory()..loadInitial(),
-      child: _SectionTripsListScaffold(fallbackTitle: fallbackTitle),
+      child: _SectionTripsListScaffold(
+        fallbackTitle: fallbackTitle,
+        cardBuilder: cardBuilder,
+      ),
     );
   }
 }
 
 class _SectionTripsListScaffold extends StatefulWidget {
-  const _SectionTripsListScaffold({required this.fallbackTitle});
+  const _SectionTripsListScaffold({
+    required this.fallbackTitle,
+    this.cardBuilder,
+  });
 
   final String fallbackTitle;
+  final SectionTripCardBuilder? cardBuilder;
 
   @override
   State<_SectionTripsListScaffold> createState() =>
@@ -260,60 +284,76 @@ class _SectionTripsListScaffoldState extends State<_SectionTripsListScaffold> {
         else
           SliverPadding(
             padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 8.h),
-            sliver: SliverGrid(
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2,
-                mainAxisSpacing: 12.h,
-                crossAxisSpacing: 12.w,
-                childAspectRatio: 0.55,
-              ),
+            sliver: SliverList(
               delegate: SliverChildBuilderDelegate((context, index) {
                 if (index >= state.trips.length) {
-                  return Center(child: CustomLoading(size: 28, strokeWidth: 2));
+                  return Padding(
+                    padding: EdgeInsets.symmetric(vertical: 16.h),
+                    child: Center(
+                      child: CustomLoading(size: 28, strokeWidth: 2),
+                    ),
+                  );
                 }
                 final trip = state.trips[index];
-                return StaggeredFadeSlide(
-                  index: index,
-                  child: PopularTripGridCard(
-                    trip: trip,
-                    onTap: () async {
-                      final result = await sl<AppNavigator>()
-                          .push<TripWishlistPopResult>(
-                            screen: TripDetailsView(
-                              tripId: trip.id,
-                              initialIsWishlisted: trip.isWishlisted,
-                            ),
-                          );
-                      if (!context.mounted || result == null) return;
-                      context
-                          .read<SectionTripsItemsCubit>()
-                          .syncWishlistFromOtherList(
-                            result.tripId,
-                            result.isWishlisted,
-                          );
-                      _syncWishlistToParentShell(
-                        context,
+
+                Future<void> handleTap() async {
+                  final result = await sl<AppNavigator>()
+                      .push<TripWishlistPopResult>(
+                        screen: TripDetailsView(
+                          tripId: trip.id,
+                          initialIsWishlisted: trip.isWishlisted,
+                        ),
+                      );
+                  if (!context.mounted || result == null) return;
+                  context
+                      .read<SectionTripsItemsCubit>()
+                      .syncWishlistFromOtherList(
                         result.tripId,
                         result.isWishlisted,
                       );
-                    },
-                    onFavoriteTap: () async {
-                      await context
-                          .read<SectionTripsItemsCubit>()
-                          .toggleTripWishlist(trip.id);
-                      if (!context.mounted) return;
-                      final updated = _tripById(
-                        context.read<SectionTripsItemsCubit>().state,
-                        trip.id,
+                  _syncWishlistToParentShell(
+                    context,
+                    result.tripId,
+                    result.isWishlisted,
+                  );
+                }
+
+                Future<void> handleFavoriteTap() async {
+                  await context
+                      .read<SectionTripsItemsCubit>()
+                      .toggleTripWishlist(trip.id);
+                  if (!context.mounted) return;
+                  final updated = _tripById(
+                    context.read<SectionTripsItemsCubit>().state,
+                    trip.id,
+                  );
+                  if (updated != null) {
+                    _syncWishlistToParentShell(
+                      context,
+                      trip.id,
+                      updated.isWishlisted,
+                    );
+                  }
+                }
+
+                final card = widget.cardBuilder != null
+                    ? widget.cardBuilder!(
+                        context,
+                        trip,
+                        onTap: handleTap,
+                        onFavoriteTap: handleFavoriteTap,
+                      )
+                    : SectionTripHorizontalCard(
+                        trip: trip,
+                        onTap: handleTap,
+                        onFavoriteTap: handleFavoriteTap,
                       );
-                      if (updated != null) {
-                        _syncWishlistToParentShell(
-                          context,
-                          trip.id,
-                          updated.isWishlisted,
-                        );
-                      }
-                    },
+
+                return Padding(
+                  padding: EdgeInsetsDirectional.only(bottom: 12.h),
+                  child: StaggeredFadeSlide(
+                    index: index,
+                    child: RepaintBoundary(child: card),
                   ),
                 );
               }, childCount: itemCount),

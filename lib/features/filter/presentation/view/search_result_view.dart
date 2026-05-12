@@ -4,11 +4,13 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:trip_marche/core/extensions/localization.dart';
 import 'package:trip_marche/core/injection/injection_container.dart';
+import 'package:trip_marche/core/navigation/app_navigator.dart';
 import 'package:trip_marche/core/theme/app_colors.dart';
 import 'package:trip_marche/core/theme/app_text_styles.dart';
 import 'package:trip_marche/core/toast/app_toast.dart';
 import 'package:trip_marche/core/widgets/curved_gradient_sheet_layout.dart';
 import 'package:trip_marche/core/widgets/custom_loading.dart';
+import 'package:trip_marche/features/filter/presentation/view/filter_view.dart';
 import 'package:trip_marche/features/filter/presentation/widgets/search_result_sections.dart';
 import 'package:trip_marche/features/my_trips/domain/entities/trips_catalog_filters.dart';
 import 'package:trip_marche/features/my_trips/presentation/cubit/my_trips_list_cubit.dart';
@@ -26,6 +28,8 @@ class SearchResultView extends StatefulWidget {
 }
 
 class _SearchResultViewState extends State<SearchResultView> {
+  static const int _histogramBuckets = 22;
+
   late final MyTripsListCubit _listCubit;
   late final ScrollController _scrollController;
 
@@ -54,6 +58,56 @@ class _SearchResultViewState extends State<SearchResultView> {
     if (pos.pixels >= pos.maxScrollExtent - 220) {
       _listCubit.loadMoreFilteredTrips();
     }
+  }
+
+  /// Builds a [_histogramBuckets]-sized array of trip counts per equal price
+  /// bucket so the filter chart can reflect the currently loaded results
+  /// (#53). Returns an empty list when there's nothing to count.
+  List<int> _buildPriceHistogram(List<WishlistTripItem> trips) {
+    if (trips.isEmpty) {
+      return const [];
+    }
+    final prices = trips
+        .map((t) => (t.discountPrice ?? t.price).abs())
+        .where((p) => p.isFinite && p > 0)
+        .toList();
+    if (prices.isEmpty) {
+      return const [];
+    }
+    final maxPrice = prices.reduce((a, b) => a > b ? a : b);
+    if (maxPrice <= 0) {
+      return const [];
+    }
+    final buckets = List<int>.filled(_histogramBuckets, 0);
+    final step = maxPrice / _histogramBuckets;
+    for (final p in prices) {
+      var idx = (p / step).floor();
+      if (idx >= _histogramBuckets) {
+        idx = _histogramBuckets - 1;
+      }
+      if (idx < 0) {
+        idx = 0;
+      }
+      buckets[idx]++;
+    }
+    return buckets;
+  }
+
+  Future<void> _openFilters() async {
+    final currentFilters = _listCubit.activeFilters;
+    final histogram = _buildPriceHistogram(_listCubit.state.trips);
+    final result = await sl<AppNavigator>().push<TripsCatalogFilters>(
+      screen: FilterView(
+        returnFilters: true,
+        priceHistogramHint: histogram,
+      ),
+    );
+    if (!mounted || result == null) {
+      return;
+    }
+    // Preserve the active search query when applying filter changes so users
+    // don't lose their typed destination after tweaking filters (#52).
+    await _listCubit.applyFilters(result.withSearch(currentFilters.search));
   }
 
   @override
@@ -87,7 +141,9 @@ class _SearchResultViewState extends State<SearchResultView> {
                     scrollController: _scrollController,
                   ),
                   SizedBox(height: 16.h),
-                  const SearchResultActionRow(),
+                  SearchResultActionRow(
+                    onFilterTap: _openFilters,
+                  ),
                   SizedBox(height: 14.h),
                   Expanded(child: _buildBody()),
                 ],

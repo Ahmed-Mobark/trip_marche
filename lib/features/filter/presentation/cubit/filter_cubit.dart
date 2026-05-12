@@ -12,6 +12,9 @@ class FilterCubit extends Cubit<FilterState> {
   final GetFilterMetadataUseCase _getFilterMetadataUseCase;
 
   void resetFilters() {
+    if (isClosed) {
+      return;
+    }
     emit(const FilterState());
     loadInitialData();
   }
@@ -64,24 +67,54 @@ class FilterCubit extends Cubit<FilterState> {
     emit(state.copyWith(otherCities: next));
   }
 
-  void setAgencyRating(int value) {
-    emit(state.copyWith(agencyRating: value));
+  void toggleAgencyRating(int value) {
+    final next = {...state.agencyRatings};
+    if (next.contains(value)) {
+      next.remove(value);
+    } else {
+      next.add(value);
+    }
+    emit(state.copyWith(agencyRatings: next));
   }
 
-  void setCitiesCount(int value) {
-    emit(state.copyWith(citiesCount: value));
+  void toggleCitiesCount(int value) {
+    final next = {...state.citiesCounts};
+    if (next.contains(value)) {
+      next.remove(value);
+    } else {
+      next.add(value);
+    }
+    emit(state.copyWith(citiesCounts: next));
   }
 
-  void setCountriesCount(int value) {
-    emit(state.copyWith(countriesCount: value));
+  void toggleCountriesCount(int value) {
+    final next = {...state.countriesCounts};
+    if (next.contains(value)) {
+      next.remove(value);
+    } else {
+      next.add(value);
+    }
+    emit(state.copyWith(countriesCounts: next));
   }
 
-  void setTripRating(int value) {
-    emit(state.copyWith(tripRating: value));
+  void toggleTripRating(int value) {
+    final next = {...state.tripRatings};
+    if (next.contains(value)) {
+      next.remove(value);
+    } else {
+      next.add(value);
+    }
+    emit(state.copyWith(tripRatings: next));
   }
 
-  void setTripSeason(String value) {
-    emit(state.copyWith(tripSeason: value));
+  void toggleTripSeason(String value) {
+    final next = {...state.tripSeasons};
+    if (next.contains(value)) {
+      next.remove(value);
+    } else {
+      next.add(value);
+    }
+    emit(state.copyWith(tripSeasons: next));
   }
 
   void setHasDiscountCode(bool value) {
@@ -122,11 +155,27 @@ class FilterCubit extends Cubit<FilterState> {
     emit(state.copyWith(tripFeatures: next));
   }
 
+  /// Updates the visualised price histogram (counts per price bucket).
+  /// Callers (e.g. SearchResultView) pass this when opening FilterView so
+  /// the chart reflects the current result set instead of a static curve.
+  void setPriceHistogram(List<int> counts) {
+    if (isClosed) {
+      return;
+    }
+    emit(state.copyWith(priceHistogram: counts));
+  }
+
   Future<void> loadInitialData() async {
+    if (isClosed) {
+      return;
+    }
     await Future.wait([loadFilterMetadata(), loadDestinations()]);
   }
 
   Future<void> loadDestinations() async {
+    if (isClosed) {
+      return;
+    }
     emit(
       state.copyWith(
         destinationsStatus: FilterDestinationsStatus.loading,
@@ -134,6 +183,9 @@ class FilterCubit extends Cubit<FilterState> {
       ),
     );
     final result = await _getDestinationsUseCase();
+    if (isClosed) {
+      return;
+    }
     result.fold(
       (failure) {
         emit(
@@ -157,6 +209,9 @@ class FilterCubit extends Cubit<FilterState> {
   }
 
   Future<void> loadFilterMetadata() async {
+    if (isClosed) {
+      return;
+    }
     emit(
       state.copyWith(
         metadataStatus: FilterMetadataStatus.loading,
@@ -164,6 +219,9 @@ class FilterCubit extends Cubit<FilterState> {
       ),
     );
     final result = await _getFilterMetadataUseCase();
+    if (isClosed) {
+      return;
+    }
     result.fold(
       (failure) {
         emit(
@@ -197,5 +255,4 @@ class FilterCubit extends Cubit<FilterState> {
     }
     emit(state.copyWith(selectedDestinationIds: next));
   }
-
 }

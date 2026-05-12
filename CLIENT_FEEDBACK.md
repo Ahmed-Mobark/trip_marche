@@ -24,7 +24,7 @@
 
 ## Profile / Account
 
-7. [PENDING] Show a profile picture placeholder instead of the logo next to the username — it should take the full image area even if no photo is set
+7. [DONE] Show a profile picture placeholder instead of the logo next to the username — it should take the full image area even if no photo is set
 
 ---
 
@@ -36,8 +36,8 @@
 
 ## Scrolling & Pull-to-Refresh
 
-9. [PENDING] Scroll on first and last pages should be simple stretch, not a heavy refresh indicator
-10. [PENDING] Home screen scroll is a bit slow
+9. [DONE] Scroll on first and last pages should be simple stretch, not a heavy refresh indicator
+10. [DONE] Home screen scroll is a bit slow
 
 ---
 
@@ -49,16 +49,16 @@
 
 ## Trending Destinations
 
-12. [PENDING] Cards inside trending destinations links should be the same size as cards in Wishlist and Trips
-13. [PENDING] City name inside trending destination card should be fully visible — stacked vertically (not side by side)
-14. [PENDING] Reduce spacing between trending destinations so part of the 4th image is visible
+12. [DONE] Cards inside trending destinations links should be the same size as cards in Wishlist and Trips
+13. [DONE] City name inside trending destination card should be fully visible — stacked vertically (not side by side)
+14. [DONE] Reduce spacing between trending destinations so part of the 4th image is visible
 
 ---
 
 ## Bottom Navigation Bar
 
-15. [PENDING] Change the "trips" icon in the bottom bar (matches Figma currently but it changes to a different shape when active — needs fix)
-16. [PENDING] Account icon in bottom bar doesn't fully color when active
+15. [Done] Change the "trips" icon in the bottom bar (matches Figma currently but it changes to a different shape when active — needs fix)
+16. [Done] Account icon in bottom bar doesn't fully color when active
 
 ---
 
@@ -70,7 +70,7 @@
 
 ## "See All" Pages
 
-18. [PENDING] When tapping "See all" on any row, trips should be listed vertically with the detail card on the right
+18. [DONE] When tapping "See all" on any row, trips should be listed vertically with the detail card on the right
 
 ---
 
@@ -84,7 +84,7 @@
 ## Trip Details Page - Images & Photo Tap
 
 21. [DONE] Tapping photos in trip details page is slow — the effect shows only after the image loads
-22. [PENDING] Top photos should auto-scroll with slow zoom-in for 3 seconds, then move to next photo
+22. [DONE] Top photos should auto-scroll with slow zoom-in for 3 seconds, then move to next photo
 23. [DONE] On tapping photos, open a screen with all photos in small size, 2-column grid (like Get Your Guide)
 24. [DONE] On tapping a single photo from that grid, open the current full-screen viewer
 25. [DONE] Photo viewer: close button should be in a circle, bigger size, top-left
@@ -94,7 +94,7 @@
 ## Trip Details Page - Info & Layout
 
 26. [DONE] Make the first 4 info squares (days, group size, etc.) smaller
-27. [PENDING] Add Google Maps logo (square) as clickable link next to hotel names and departure details (like Figma)
+27. [DONE] Add Google Maps logo (square) as clickable link next to hotel names and departure details (like Figma)
 28. [DONE] Move rating directly under the trip name, with review count next to it
 29. [DONE] Make the company name box smaller
 30. [DONE] Remove hotel star count
@@ -154,7 +154,7 @@
 
 45. [DONE] Rename "destinations" section to "Journey Highlights"
 46. [DONE] Max 8 photos shown side by side horizontally — each photo has the place name on it
-47. [PENDING] Below each photo: max 2 lines description of the place
+47. [DONE] Below each photo: max 2 lines description of the place
 48. [DONE] On tapping a photo, it zooms in (inline, not a new page)
 49. [DONE] Remove "visa and entry" section below destination photos (it's a duplicate)
 
@@ -162,25 +162,25 @@
 
 ## Search & Filter
 
-50. [PENDING] Tapping the search bar should allow typing a destination name
-51. [PENDING] After typing and searching, show search results with sort/filter row below the search box
-52. [PENDING] Tapping filter opens the filter page
-53. [PENDING] Filter page: price chart should animate with price changes and reflect actual trip counts at each price point (not a static graph)
-54. [PENDING] Filter page: allow selecting multiple ratings for the tourism company
-55. [PENDING] Filter page: allow multiple selections in cities count, countries count, duration, group size, season, and trip rating
-56. [PENDING] Filter page: allow deselecting options (1 to 5) that are currently selected
+50. [DONE] Tapping the search bar should allow typing a destination name
+51. [DONE] After typing and searching, show search results with sort/filter row below the search box
+52. [DONE] Tapping filter opens the filter page
+53. [DONE] Filter page: price chart should animate with price changes and reflect actual trip counts at each price point (not a static graph)
+54. [DONE] Filter page: allow selecting multiple ratings for the tourism company
+55. [DONE] Filter page: allow multiple selections in cities count, countries count, duration, group size, season, and trip rating
+56. [DONE] Filter page: allow deselecting options (1 to 5) that are currently selected
 
 ---
 
 ## Search Bar Animation
 
-57. [PENDING] Search bar hint text should animate through destination names: "search for a trip to ……"
+57. [DONE] Search bar hint text should animate through destination names: "search for a trip to ……"
 
 ---
 
 ## RTL / Arabic
 
-58. [PENDING] In Arabic version, some trip lists scroll left-to-right and others right-to-left — should be consistent
+58. [DONE] In Arabic version, some trip lists scroll left-to-right and others right-to-left — should be consistent
 
 ---
 
@@ -193,11 +193,11 @@
 ## Special Trips Section
 
 60. [DONE] Special trips section height should be fixed when switching between tabs
-61. [PENDING] Empty tabs should not be shown in special trips
-62. [PENDING] Add "see more" at the end after the 2 trips
-63. [PENDING] After tapping "see more", the title should be on the left side
-64. [PENDING] "See all" page for special trips should show trips in the same display style as this section in the home screen
-65. [PENDING] Add an icon for each category in the special trips section tab bar
+61. [DONE] Empty tabs should not be shown in special trips
+62. [DONE] Add "see more" at the end after the 2 trips
+63. [DONE] After tapping "see more", the title should be on the left side
+64. [DONE] "See all" page for special trips should show trips in the same display style as this section in the home screen
+65. [DONE] Add an icon for each category in the special trips section tab bar
 
 ---
 

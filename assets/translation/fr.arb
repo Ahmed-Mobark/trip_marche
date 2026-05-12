@@ -82,6 +82,7 @@
 
   "homeAppTitle": "TripMarche",
   "homeSearchHint": "Rechercher un voyage",
+  "homeSearchHintDestination": "Rechercher un voyage à {destination}",
   "homeLocationText": "Égypte, Le Caire, New Cairo",
   "homeTrendingDestinations": "Destinations tendances",
   "homeTrendingDestinationsSearchHint": "Rechercher des destinations",

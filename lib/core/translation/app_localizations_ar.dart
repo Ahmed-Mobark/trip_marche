@@ -246,6 +246,11 @@ class AppLocalizationsAr extends AppLocalizations {
   String get homeSearchHint => 'ابحث عن رحلة';
 
   @override
+  String homeSearchHintDestination(Object destination) {
+    return 'ابحث عن رحلة إلى $destination';
+  }
+
+  @override
   String get homeLocationText => 'مصر، القاهرة، القاهرة الجديدة';
 
   @override

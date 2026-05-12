@@ -32,6 +32,7 @@ class HomeCategoriesCubit extends Cubit<HomeCategoriesState> {
             categories: categories,
             selectedSlug: categories.isNotEmpty ? categories.first.slug : null,
             selectedId: categories.isNotEmpty ? categories.first.id : null,
+            emptyCategoryIds: const <int>{},
           ),
         );
       },
@@ -40,6 +41,48 @@ class HomeCategoriesCubit extends Cubit<HomeCategoriesState> {
 
   void selectCategory(String slug, int id) {
     emit(state.copyWith(selectedSlug: slug, selectedId: id));
+  }
+
+  /// Marks a category as known-empty so it is hidden from the tab bar.
+  /// If the marked category is the currently selected one, jumps to the next
+  /// visible category (or clears the selection if no visible ones remain).
+  void markCategoryAsEmpty(int id) {
+    if (state.emptyCategoryIds.contains(id)) {
+      return;
+    }
+    final updatedEmpty = <int>{...state.emptyCategoryIds, id};
+    final wasSelected = state.selectedId == id;
+
+    if (!wasSelected) {
+      emit(state.copyWith(emptyCategoryIds: updatedEmpty));
+      return;
+    }
+
+    HomeCategoryModel? nextVisible;
+    for (final c in state.categories) {
+      if (c.id != id && !updatedEmpty.contains(c.id)) {
+        nextVisible = c;
+        break;
+      }
+    }
+
+    if (nextVisible == null) {
+      emit(
+        state.copyWith(
+          emptyCategoryIds: updatedEmpty,
+          clearSelection: true,
+        ),
+      );
+      return;
+    }
+
+    emit(
+      state.copyWith(
+        emptyCategoryIds: updatedEmpty,
+        selectedSlug: nextVisible.slug,
+        selectedId: nextVisible.id,
+      ),
+    );
   }
 
   /// Reload categories while preserving the selected chip when it still exists.
@@ -82,6 +125,7 @@ class HomeCategoriesCubit extends Cubit<HomeCategoriesState> {
             categories: categories,
             selectedSlug: selected.slug,
             selectedId: selected.id,
+            emptyCategoryIds: const <int>{},
           ),
         );
       },

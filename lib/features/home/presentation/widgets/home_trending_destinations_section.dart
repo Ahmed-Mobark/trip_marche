@@ -184,6 +184,7 @@ class HomeTrendingDestinationsSection extends StatelessWidget {
                 },
                 child: ListView.builder(
                   scrollDirection: Axis.horizontal,
+                  reverse: Directionality.of(context) == TextDirection.rtl,
                   itemCount: itemCount,
                   itemBuilder: (context, index) {
                     if (index >= state.destinations.length) {

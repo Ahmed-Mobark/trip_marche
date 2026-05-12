@@ -123,61 +123,161 @@ class SelectedDestinationChip extends StatelessWidget {
   }
 }
 
+/// Animated price histogram. Bar heights are derived from real trip counts
+/// when provided ([counts]) and otherwise fall back to a deterministic
+/// synthetic curve so the chart still looks alive on first open.
+///
+/// Bars within the current [range] highlight in the primary colour. Height
+/// and colour transitions are animated to give the chart a sense of motion
+/// as the user drags the price slider or as new counts arrive.
 class PriceHistogram extends StatelessWidget {
-  const PriceHistogram({required this.range, super.key});
+  const PriceHistogram({
+    required this.range,
+    required this.priceMin,
+    required this.priceMax,
+    this.counts = const [],
+    this.bucketCount = 22,
+    super.key,
+  });
 
+  /// Current selected price range (in the same units as [priceMin]/[priceMax]).
   final RangeValues range;
+
+  /// Lower bound of the slider's domain. Bar `i` represents the bucket
+  /// `[priceMin + i*step, priceMin + (i+1)*step)`.
+  final double priceMin;
+
+  /// Upper bound of the slider's domain.
+  final double priceMax;
+
+  /// Optional per-bucket trip counts. When empty (or all-zero) the histogram
+  /// falls back to a synthetic curve.
+  final List<int> counts;
+
+  /// Number of bars. Used both for layout and to size the synthetic curve.
+  final int bucketCount;
 
   @override
   Widget build(BuildContext context) {
-    const heights = [
-      22.0,
-      18.0,
-      28.0,
-      20.0,
-      32.0,
-      36.0,
-      26.0,
-      44.0,
-      58.0,
-      70.0,
-      48.0,
-      80.0,
-      62.0,
-      74.0,
-      70.0,
-      78.0,
-      72.0,
-      76.0,
-      50.0,
-      30.0,
-      24.0,
-      22.0,
-    ];
+    final heights = _resolveBarHeights();
+    final domain = (priceMax - priceMin).abs() < 0.0001
+        ? 1.0
+        : (priceMax - priceMin);
+    final step = domain / heights.length;
 
     return SizedBox(
       height: 88.h,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.end,
         children: List.generate(heights.length, (index) {
-          final value = index / (heights.length - 1) * 10000;
-          final selected = value >= range.start && value <= range.end;
+          final bucketStart = priceMin + index * step;
+          final bucketEnd = bucketStart + step;
+          final selected = bucketEnd >= range.start && bucketStart <= range.end;
+          final heightFactor = heights[index].clamp(0.06, 1.0);
           return Expanded(
             child: Padding(
               padding: EdgeInsetsDirectional.symmetric(horizontal: 1.5.w),
-              child: Container(
-                height: heights[index].h,
-                decoration: BoxDecoration(
-                  color: selected
-                      ? AppColors.primary.withValues(alpha: 0.55)
-                      : AppColors.border(context),
-                  borderRadius: BorderRadius.circular(2.r),
-                ),
+              child: _AnimatedHistogramBar(
+                heightFactor: heightFactor,
+                maxHeight: 88.h,
+                selected: selected,
+                activeColor: AppColors.primary.withValues(alpha: 0.55),
+                inactiveColor: AppColors.border(context),
               ),
             ),
           );
         }),
       ),
+    );
+  }
+
+  /// Converts [counts] to normalised heights (0..1). Falls back to a
+  /// deterministic synthetic curve when no real data is available.
+  List<double> _resolveBarHeights() {
+    if (counts.isNotEmpty) {
+      final clamped = counts.length >= bucketCount
+          ? counts.sublist(0, bucketCount)
+          : [...counts, ...List<int>.filled(bucketCount - counts.length, 0)];
+      final maxCount = clamped.fold<int>(0, (m, v) => v > m ? v : m);
+      if (maxCount > 0) {
+        return clamped.map((c) => c / maxCount).toList(growable: false);
+      }
+    }
+    return _syntheticCurve(bucketCount);
+  }
+
+  /// Bell-ish, slightly skewed distribution that mimics a realistic price
+  /// histogram (low at edges, peak around the cheaper mid-range).
+  List<double> _syntheticCurve(int n) {
+    // Cached pattern (peak around index 10–15 of 22, gently sloping).
+    const seed = <double>[
+      0.22,
+      0.18,
+      0.28,
+      0.20,
+      0.32,
+      0.36,
+      0.26,
+      0.44,
+      0.58,
+      0.70,
+      0.48,
+      0.80,
+      0.62,
+      0.74,
+      0.70,
+      0.78,
+      0.72,
+      0.76,
+      0.50,
+      0.30,
+      0.24,
+      0.22,
+    ];
+    if (n == seed.length) {
+      return seed;
+    }
+    return List.generate(n, (i) {
+      final t = i / (n - 1);
+      final idx = (t * (seed.length - 1)).round();
+      return seed[idx];
+    });
+  }
+}
+
+class _AnimatedHistogramBar extends StatelessWidget {
+  const _AnimatedHistogramBar({
+    required this.heightFactor,
+    required this.maxHeight,
+    required this.selected,
+    required this.activeColor,
+    required this.inactiveColor,
+  });
+
+  final double heightFactor;
+  final double maxHeight;
+  final bool selected;
+  final Color activeColor;
+  final Color inactiveColor;
+
+  @override
+  Widget build(BuildContext context) {
+    final targetHeight = maxHeight * heightFactor;
+    return TweenAnimationBuilder<double>(
+      duration: const Duration(milliseconds: 450),
+      curve: Curves.easeOutCubic,
+      tween: Tween<double>(begin: 0, end: targetHeight),
+      builder: (context, value, _) {
+        return AnimatedContainer(
+          duration: const Duration(milliseconds: 220),
+          curve: Curves.easeOut,
+          height: value,
+          decoration: BoxDecoration(
+            color: selected ? activeColor : inactiveColor,
+            borderRadius: BorderRadius.circular(2.r),
+          ),
+        );
+      },
     );
   }
 }
@@ -257,10 +357,15 @@ class ButtonRow extends StatelessWidget {
   }
 }
 
+/// Row of 1..5 (+) chips with multi-select + tap-to-deselect semantics.
+///
+/// [selected] is a Set; tapping a chip calls [onTap] with that value and the
+/// owner is expected to toggle it (add if missing, remove if present). This
+/// satisfies both multi-select (#54, #55) and deselect-on-tap (#56).
 class NumberRow extends StatelessWidget {
   const NumberRow({required this.selected, required this.onTap, super.key});
 
-  final int selected;
+  final Set<int> selected;
   final ValueChanged<int> onTap;
 
   @override
@@ -273,7 +378,7 @@ class NumberRow extends StatelessWidget {
             padding: EdgeInsetsDirectional.only(end: value == 5 ? 0 : 11.w),
             child: OutlinedOption(
               label: label,
-              selected: selected == value,
+              selected: selected.contains(value),
               onTap: () => onTap(value),
             ),
           ),
@@ -318,7 +423,9 @@ class OutlinedOption extends StatelessWidget {
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
             style: AppTextStyles.body(
-              color: selected ? AppColors.primary : AppColors.secondaryText(context),
+              color: selected
+                  ? AppColors.primary
+                  : AppColors.secondaryText(context),
             ).copyWith(fontSize: 14.sp),
           ),
         ),
@@ -359,7 +466,10 @@ class TripFeaturesSection extends StatelessWidget {
                 ).copyWith(fontSize: 16.sp, fontWeight: FontWeight.w500),
               ),
             ),
-            Icon(Icons.keyboard_arrow_up_rounded, color: AppColors.greyText(context)),
+            Icon(
+              Icons.keyboard_arrow_up_rounded,
+              color: AppColors.greyText(context),
+            ),
           ],
         ),
         SizedBox(height: 16.h),

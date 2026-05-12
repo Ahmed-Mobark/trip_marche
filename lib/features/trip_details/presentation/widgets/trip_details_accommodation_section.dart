@@ -3,7 +3,6 @@ import 'dart:math' show min;
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:trip_marche/core/config/app_images.dart';
 import 'package:trip_marche/core/config/styles/font_utils.dart';
@@ -13,6 +12,7 @@ import 'package:trip_marche/core/theme/app_colors.dart';
 import 'package:trip_marche/core/widgets/app_cached_network_image.dart';
 import 'package:trip_marche/core/widgets/app_image_gallery_screen.dart';
 import 'package:trip_marche/features/trip_details/domain/entities/trip_details_entity.dart';
+import 'google_maps_link_button.dart';
 import 'trip_details_info_card.dart';
 import 'trip_details_reviews_section.dart';
 
@@ -73,7 +73,8 @@ class TripDetailsAccommodationSection extends StatelessWidget {
                     hotelName: accommodations[i].name,
                     hotelLocation: accommodations[i].address,
                     imageUrls: accommodations[i].images,
-                    onMapTap: () {},
+                    lat: accommodations[i].lat,
+                    lng: accommodations[i].lng,
                   ),
                 ],
                 const SizedBox(height: 20),
@@ -460,13 +461,15 @@ class _AccommodationHotelBlock extends StatelessWidget {
     required this.hotelName,
     required this.hotelLocation,
     required this.imageUrls,
-    required this.onMapTap,
+    this.lat,
+    this.lng,
   });
 
   final String hotelName;
   final String hotelLocation;
   final List<String> imageUrls;
-  final VoidCallback onMapTap;
+  final double? lat;
+  final double? lng;
 
   Color _metaLabelColor(BuildContext context) =>
       AppColors.isDark(context)
@@ -477,11 +480,6 @@ class _AccommodationHotelBlock extends StatelessWidget {
       AppColors.isDark(context)
           ? AppColors.darkText(context)
           : _kAccommodationTitleValueLight;
-
-  Color _mapChipBg(BuildContext context) =>
-      AppColors.isDark(context)
-          ? AppColors.inputBg(context)
-          : AppColors.tripDetailsMapButtonBg;
 
   @override
   Widget build(BuildContext context) {
@@ -512,51 +510,66 @@ class _AccommodationHotelBlock extends StatelessWidget {
 
     final thumbs = imageUrls.length;
     final visible = min(3, thumbs);
+    final hasMapTarget =
+        (lat != null && lng != null) || hotelLocation.trim().isNotEmpty;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         if (hotelLocation.isNotEmpty) ...[
-          Text(
-            hotelLocation,
-            maxLines: 2,
-            overflow: TextOverflow.ellipsis,
-            style: locationStyle,
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Expanded(
+                child: Text(
+                  hotelLocation,
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                  style: locationStyle,
+                ),
+              ),
+              if (hasMapTarget) ...[
+                const SizedBox(width: 8),
+                GoogleMapsLinkButton(
+                  label: hotelLocation.isNotEmpty ? hotelLocation : hotelName,
+                  lat: lat,
+                  lng: lng,
+                ),
+              ],
+            ],
           ),
           const SizedBox(height: 4),
         ],
-        Text(
-          context.tr.tripDetailsAccommodationHotelNameLabel,
-          style: labelStyle,
-        ),
-        const SizedBox(height: 3),
-        Text(
-          hotelName,
-          maxLines: 2,
-          overflow: TextOverflow.ellipsis,
-          style: hotelNameStyle,
-        ),
-        const SizedBox(height: 12),
         Row(
-          crossAxisAlignment: CrossAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.end,
           children: [
-            const Spacer(),
-            const SizedBox(width: 8),
-            Material(
-              color: _mapChipBg(context),
-              borderRadius: BorderRadius.circular(8),
-              clipBehavior: Clip.antiAlias,
-              child: InkWell(
-                onTap: onMapTap,
-                child: const SizedBox(
-                  width: 36,
-                  height: 36,
-                  child: Center(
-                    child: _AccommodationMapGlyph(),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(
+                    context.tr.tripDetailsAccommodationHotelNameLabel,
+                    style: labelStyle,
                   ),
-                ),
+                  const SizedBox(height: 3),
+                  Text(
+                    hotelName,
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                    style: hotelNameStyle,
+                  ),
+                ],
               ),
             ),
+            if (hotelLocation.isEmpty && hasMapTarget) ...[
+              const SizedBox(width: 8),
+              GoogleMapsLinkButton(
+                label: hotelName,
+                lat: lat,
+                lng: lng,
+              ),
+            ],
           ],
         ),
         if (visible > 0) ...[
@@ -578,20 +591,6 @@ class _AccommodationHotelBlock extends StatelessWidget {
           ),
         ],
       ],
-    );
-  }
-}
-
-class _AccommodationMapGlyph extends StatelessWidget {
-  const _AccommodationMapGlyph();
-
-  @override
-  Widget build(BuildContext context) {
-    return SvgPicture.asset(
-      AppImages.tripDetailsMapMarker,
-      width: 20,
-      height: 20,
-      fit: BoxFit.contain,
     );
   }
 }

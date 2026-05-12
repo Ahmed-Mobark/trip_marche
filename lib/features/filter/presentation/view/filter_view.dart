@@ -1,3 +1,5 @@
+import 'dart:math' as math;
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -15,19 +17,41 @@ import 'package:trip_marche/features/filter/presentation/widgets/filter_view_sec
 import 'package:trip_marche/features/my_trips/domain/entities/trips_catalog_filters.dart';
 
 class FilterView extends StatelessWidget {
-  const FilterView({super.key});
+  const FilterView({
+    super.key,
+    this.returnFilters = false,
+    this.priceHistogramHint = const [],
+  });
+
+  /// When `true`, tapping "See Results" pops the view and returns the
+  /// resolved [TripsCatalogFilters] to the caller instead of pushing a new
+  /// [SearchResultView]. Used when opened from within results.
+  final bool returnFilters;
+
+  /// Optional per-bucket trip counts used to draw a realistic price chart.
+  /// Callers (e.g. [SearchResultView]) compute this from their loaded result
+  /// set so the histogram reflects real data (#53).
+  final List<int> priceHistogramHint;
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (_) => sl<FilterCubit>()..loadInitialData(),
-      child: const _FilterBody(),
+      create: (_) {
+        final cubit = sl<FilterCubit>()..loadInitialData();
+        if (priceHistogramHint.isNotEmpty) {
+          cubit.setPriceHistogram(priceHistogramHint);
+        }
+        return cubit;
+      },
+      child: _FilterBody(returnFilters: returnFilters),
     );
   }
 }
 
 class _FilterBody extends StatelessWidget {
-  const _FilterBody();
+  const _FilterBody({required this.returnFilters});
+
+  final bool returnFilters;
 
   @override
   Widget build(BuildContext context) {
@@ -40,6 +64,7 @@ class _FilterBody extends StatelessWidget {
         final sliderMax = sliderMaxCandidate <= sliderMin
             ? sliderMin + 1
             : sliderMaxCandidate;
+        final effectivePriceRange = _resolvePriceRange(state, sliderMin, sliderMax);
         return Scaffold(
           backgroundColor: AppColors.background(context),
           appBar: PreferredSize(
@@ -125,7 +150,12 @@ class _FilterBody extends StatelessWidget {
                   title: context.tr.wishlistFiltersPriceRange,
                   child: Column(
                     children: [
-                      PriceHistogram(range: state.priceRange),
+                      PriceHistogram(
+                        range: effectivePriceRange,
+                        priceMin: sliderMin,
+                        priceMax: sliderMax,
+                        counts: state.priceHistogram,
+                      ),
                       SliderTheme(
                         data: SliderTheme.of(context).copyWith(
                           activeTrackColor: AppColors.primary,
@@ -140,13 +170,13 @@ class _FilterBody extends StatelessWidget {
                           ),
                         ),
                         child: RangeSlider(
-                          values: state.priceRange,
+                          values: effectivePriceRange,
                           min: sliderMin,
                           max: sliderMax,
                           divisions: sliderMax > sliderMin ? 100 : null,
                           labels: RangeLabels(
-                            state.priceRange.start.round().toString(),
-                            state.priceRange.end.round().toString(),
+                            effectivePriceRange.start.round().toString(),
+                            effectivePriceRange.end.round().toString(),
                           ),
                           onChanged: cubit.setPriceRange,
                         ),
@@ -157,7 +187,7 @@ class _FilterBody extends StatelessWidget {
                             child: PriceValueField(
                               label: context.tr.wishlistFiltersPriceRange,
                               value:
-                                  '${state.priceRange.start.round()} ${state.currencyCode}',
+                                  '${effectivePriceRange.start.round()} ${state.currencyCode}',
                             ),
                           ),
                           SizedBox(width: 16.w),
@@ -165,7 +195,7 @@ class _FilterBody extends StatelessWidget {
                             child: PriceValueField(
                               label: context.tr.wishlistFiltersPriceRange,
                               value:
-                                  '${state.priceRange.end.round()} ${state.currencyCode}',
+                                  '${effectivePriceRange.end.round()} ${state.currencyCode}',
                             ),
                           ),
                         ],
@@ -186,11 +216,14 @@ class _FilterBody extends StatelessWidget {
                             state.tripType == 'domestic') ||
                         (value == context.tr.wishlistFiltersInternational &&
                             state.tripType == 'international'),
-                    onTap: (value) => cubit.setTripType(
-                      value == context.tr.wishlistFiltersDomestic
-                          ? 'domestic'
-                          : 'international',
-                    ),
+                    onTap: (value) {
+                      final mapped =
+                          value == context.tr.wishlistFiltersDomestic
+                              ? 'domestic'
+                              : 'international';
+                      // Tap-to-deselect: tapping the active option clears it (#56).
+                      cubit.setTripType(state.tripType == mapped ? '' : mapped);
+                    },
                   ),
                 ),
                 SizedBox(height: 24.h),
@@ -299,8 +332,8 @@ class _FilterBody extends StatelessWidget {
                 FilterSection(
                   title: context.tr.wishlistFiltersAgencyRating,
                   child: NumberRow(
-                    selected: state.agencyRating,
-                    onTap: cubit.setAgencyRating,
+                    selected: state.agencyRatings,
+                    onTap: cubit.toggleAgencyRating,
                   ),
                 ),
                 SizedBox(height: 24.h),
@@ -339,16 +372,16 @@ class _FilterBody extends StatelessWidget {
                 FilterSection(
                   title: context.tr.wishlistFiltersNumberOfCities,
                   child: NumberRow(
-                    selected: state.citiesCount,
-                    onTap: cubit.setCitiesCount,
+                    selected: state.citiesCounts,
+                    onTap: cubit.toggleCitiesCount,
                   ),
                 ),
                 SizedBox(height: 24.h),
                 FilterSection(
                   title: context.tr.wishlistFiltersNumberOfCountries,
                   child: NumberRow(
-                    selected: state.countriesCount,
-                    onTap: cubit.setCountriesCount,
+                    selected: state.countriesCounts,
+                    onTap: cubit.toggleCountriesCount,
                   ),
                 ),
                 SizedBox(height: 24.h),
@@ -396,21 +429,14 @@ class _FilterBody extends StatelessWidget {
                       context.tr.wishlistFiltersSeasonHajj,
                       context.tr.wishlistFiltersSeasonNewYear,
                     ],
-                    isSelected: (value) =>
-                        (value == context.tr.wishlistFiltersSeasonSpring &&
-                            state.tripSeason == 'spring') ||
-                        (value == context.tr.wishlistFiltersSeasonHajj &&
-                            state.tripSeason == 'hajj') ||
-                        (value == context.tr.wishlistFiltersSeasonNewYear &&
-                            state.tripSeason == 'newYear'),
+                    isSelected: (value) {
+                      final key = _seasonKeyForLabel(context, value);
+                      return key != null && state.tripSeasons.contains(key);
+                    },
                     onTap: (value) {
-                      if (value == context.tr.wishlistFiltersSeasonSpring) {
-                        cubit.setTripSeason('spring');
-                      } else if (value ==
-                          context.tr.wishlistFiltersSeasonHajj) {
-                        cubit.setTripSeason('hajj');
-                      } else {
-                        cubit.setTripSeason('newYear');
+                      final key = _seasonKeyForLabel(context, value);
+                      if (key != null) {
+                        cubit.toggleTripSeason(key);
                       }
                     },
                   ),
@@ -424,8 +450,8 @@ class _FilterBody extends StatelessWidget {
                 FilterSection(
                   title: context.tr.wishlistFiltersTripRating,
                   child: NumberRow(
-                    selected: state.tripRating,
-                    onTap: cubit.setTripRating,
+                    selected: state.tripRatings,
+                    onTap: cubit.toggleTripRating,
                   ),
                 ),
                 SizedBox(height: 24.h),
@@ -486,9 +512,16 @@ class _FilterBody extends StatelessWidget {
                       child: FilledButton(
                         onPressed: () {
                           final filters = _toTripsCatalogFilters(state);
-                          sl<AppNavigator>().push(
-                            screen: SearchResultView(filters: filters),
-                          );
+                          if (returnFilters) {
+                            Navigator.pop<TripsCatalogFilters>(
+                              context,
+                              filters,
+                            );
+                          } else {
+                            sl<AppNavigator>().push(
+                              screen: SearchResultView(filters: filters),
+                            );
+                          }
                         },
                         style: FilledButton.styleFrom(
                           backgroundColor: AppColors.primary,
@@ -521,6 +554,35 @@ class _FilterBody extends StatelessWidget {
         );
       },
     );
+  }
+
+  /// Slider widget requires `min <= start <= end <= max`; when the cubit was
+  /// reset to an unset state (start=end=0) we map it to the full available
+  /// span so the chart and slider stay in sync.
+  RangeValues _resolvePriceRange(
+    FilterState state,
+    double sliderMin,
+    double sliderMax,
+  ) {
+    if (state.priceRange.start == 0 && state.priceRange.end == 0) {
+      return RangeValues(sliderMin, sliderMax);
+    }
+    final start = state.priceRange.start.clamp(sliderMin, sliderMax);
+    final end = state.priceRange.end.clamp(sliderMin, sliderMax);
+    return RangeValues(start, end < start ? start : end);
+  }
+
+  String? _seasonKeyForLabel(BuildContext context, String label) {
+    if (label == context.tr.wishlistFiltersSeasonSpring) {
+      return 'spring';
+    }
+    if (label == context.tr.wishlistFiltersSeasonHajj) {
+      return 'hajj';
+    }
+    if (label == context.tr.wishlistFiltersSeasonNewYear) {
+      return 'newYear';
+    }
+    return null;
   }
 
   String _seeResultsLabel(BuildContext context, FilterState state) {
@@ -935,21 +997,22 @@ class _FilterBody extends StatelessWidget {
     }
 
     String? duration;
-    if (state.selectedDurations.contains('1-3 Days')) {
-      duration = '1_3';
+    // Prioritise the most-restrictive option when multiple are selected.
+    if (state.selectedDurations.contains('5+ Days')) {
+      duration = '5_plus';
     } else if (state.selectedDurations.contains('Up to 5 Days')) {
       duration = 'up_to_5';
-    } else if (state.selectedDurations.contains('5+ Days')) {
-      duration = '5_plus';
+    } else if (state.selectedDurations.contains('1-3 Days')) {
+      duration = '1_3';
     }
 
     String? groupSize;
-    if (state.selectedGroupSizes.contains('5-10')) {
-      groupSize = '5_10';
+    if (state.selectedGroupSizes.contains('25+')) {
+      groupSize = '25_plus';
     } else if (state.selectedGroupSizes.contains('Up to 25')) {
       groupSize = 'up_to_25';
-    } else if (state.selectedGroupSizes.contains('25+')) {
-      groupSize = '25_plus';
+    } else if (state.selectedGroupSizes.contains('5-10')) {
+      groupSize = '5_10';
     }
 
     String? visaType;
@@ -958,6 +1021,18 @@ class _FilterBody extends StatelessWidget {
     } else if (state.tripFeatures.contains('noVisa')) {
       visaType = 'none';
     }
+
+    // The API exposes a single threshold per field. With multi-select UIs
+    // (#54, #55) we map the set to its strictest value — see the user's
+    // explicit "max" preference in the planning step.
+    int? maxOfSet(Set<int> values) {
+      if (values.isEmpty) {
+        return null;
+      }
+      return values.reduce(math.max);
+    }
+
+    final apiSeason = _resolveApiSeason(state.tripSeasons);
 
     return TripsCatalogFilters(
       type: state.tripType.isEmpty ? null : state.tripType,
@@ -970,15 +1045,15 @@ class _FilterBody extends StatelessWidget {
           : state.selectedDestinationIds.toList(),
       minPrice: state.priceRange.start > 0 ? state.priceRange.start : null,
       maxPrice: state.priceRange.end > 0 ? state.priceRange.end : null,
-      minVendorRating: state.agencyRating > 0 ? state.agencyRating : null,
-      minRating: state.tripRating > 0 ? state.tripRating.toDouble() : null,
+      minVendorRating: maxOfSet(state.agencyRatings),
+      minRating: state.tripRatings.isEmpty
+          ? null
+          : state.tripRatings.reduce(math.max).toDouble(),
       duration: duration,
       groupSize: groupSize,
-      citiesCount: state.citiesCount > 0 ? state.citiesCount : null,
-      countriesCount: state.countriesCount > 0 ? state.countriesCount : null,
-      season: state.tripSeason == 'newYear'
-          ? 'new_year'
-          : (state.tripSeason.isEmpty ? null : state.tripSeason),
+      citiesCount: maxOfSet(state.citiesCounts),
+      countriesCount: maxOfSet(state.countriesCounts),
+      season: apiSeason,
       tripMonth: month,
       visaType: visaType,
       includeFlight: state.tripFeatures.contains('includeFlight') ? 1 : null,
@@ -991,5 +1066,16 @@ class _FilterBody extends StatelessWidget {
       search: null,
       sort: null,
     );
+  }
+
+  /// Picks a single season for the API request. The backend currently accepts
+  /// only one value; we pick the first selected key to keep behaviour
+  /// predictable while the UI still allows multi-select.
+  String? _resolveApiSeason(Set<String> seasons) {
+    if (seasons.isEmpty) {
+      return null;
+    }
+    final first = seasons.first;
+    return first == 'newYear' ? 'new_year' : first;
   }
 }
