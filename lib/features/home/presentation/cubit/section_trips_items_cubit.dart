@@ -26,10 +26,18 @@ class SectionTripsItemsCubit extends Cubit<SectionTripsItemsState> {
   SectionTripsItemsCubit(this._fetcher, this._wishlistRepository)
       : super(const SectionTripsItemsState());
 
-  final SectionFetcher _fetcher;
+  SectionFetcher _fetcher;
   final TripWishlistRepository _wishlistRepository;
   final Set<int> _wishlistBusy = {};
   Timer? _searchDebounce;
+
+  SectionFetcher get fetcher => _fetcher;
+
+  /// Replaces the data fetcher and reloads from page 1.
+  void replaceFetcher(SectionFetcher newFetcher) {
+    _fetcher = newFetcher;
+    loadInitial();
+  }
 
   static const Duration _searchDebounceDuration = Duration(milliseconds: 500);
   static const int _defaultPerPage = 15;

@@ -16,26 +16,17 @@ import 'package:trip_marche/core/widgets/custom_loading.dart';
 import 'package:trip_marche/features/trip_details/presentation/trip_wishlist_pop_result.dart';
 import 'package:trip_marche/features/trip_details/presentation/view/trip_details_view.dart';
 
+import '../../data/models/home_category_model.dart';
 import '../../data/models/home_section_response.dart';
 import '../cubit/home_sections_cubit.dart';
 import '../cubit/section_trips_items_cubit.dart';
 import '../cubit/section_trips_items_state.dart';
 import '../cubit/special_trips_cubit.dart';
 import '../../../../core/widgets/staggered_fade_slide.dart';
+import '../widgets/category_chip.dart';
+import '../widgets/category_icons.dart';
 import '../widgets/section_trip_horizontal_card.dart';
 
-/// Generic "See all" view for any home section that lists trips.
-///
-/// Usage:
-/// ```dart
-/// SectionTripsListView(
-///   fallbackTitle: context.tr.homePopularTrips,
-///   cubitFactory: () => sl<SectionTripsItemsCubit>(instanceName: 'popular'),
-/// )
-/// ```
-/// Signature for a custom trip card builder used inside
-/// [SectionTripsListView]. Callbacks are wired by the scaffold so cards can
-/// stay presentational.
 typedef SectionTripCardBuilder = Widget Function(
   BuildContext context,
   TripModel trip, {
@@ -43,12 +34,28 @@ typedef SectionTripCardBuilder = Widget Function(
   required VoidCallback onFavoriteTap,
 });
 
+/// Data needed to render category tabs on the See All page.
+class SectionCategoryTabsConfig {
+  const SectionCategoryTabsConfig({
+    required this.categories,
+    required this.initialSelectedSlug,
+    required this.fetcherForCategory,
+  });
+
+  final List<HomeCategoryModel> categories;
+  final String? initialSelectedSlug;
+
+  /// Creates a [SectionFetcher] for the given category ID.
+  final SectionFetcher Function(int categoryId) fetcherForCategory;
+}
+
 class SectionTripsListView extends StatelessWidget {
   const SectionTripsListView({
     super.key,
     required this.fallbackTitle,
     required this.cubitFactory,
     this.cardBuilder,
+    this.categoryTabsConfig,
   });
 
   final String fallbackTitle;
@@ -60,6 +67,9 @@ class SectionTripsListView extends StatelessWidget {
   /// `SpecialTripWideCard`) — feedback #64.
   final SectionTripCardBuilder? cardBuilder;
 
+  /// When provided, renders category tabs above the trip list.
+  final SectionCategoryTabsConfig? categoryTabsConfig;
+
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
@@ -67,6 +77,7 @@ class SectionTripsListView extends StatelessWidget {
       child: _SectionTripsListScaffold(
         fallbackTitle: fallbackTitle,
         cardBuilder: cardBuilder,
+        categoryTabsConfig: categoryTabsConfig,
       ),
     );
   }
@@ -76,10 +87,12 @@ class _SectionTripsListScaffold extends StatefulWidget {
   const _SectionTripsListScaffold({
     required this.fallbackTitle,
     this.cardBuilder,
+    this.categoryTabsConfig,
   });
 
   final String fallbackTitle;
   final SectionTripCardBuilder? cardBuilder;
+  final SectionCategoryTabsConfig? categoryTabsConfig;
 
   @override
   State<_SectionTripsListScaffold> createState() =>
@@ -92,12 +105,14 @@ class _SectionTripsListScaffoldState extends State<_SectionTripsListScaffold> {
   late final TextEditingController _searchCtrl;
   late final ScrollController _scroll;
   Timer? _searchDebounceTimer;
+  String? _selectedSlug;
 
   @override
   void initState() {
     super.initState();
     _searchCtrl = TextEditingController();
     _scroll = ScrollController()..addListener(_onScroll);
+    _selectedSlug = widget.categoryTabsConfig?.initialSelectedSlug;
   }
 
   void _scheduleDebouncedSearch() {
@@ -135,6 +150,7 @@ class _SectionTripsListScaffoldState extends State<_SectionTripsListScaffold> {
       context.read<SectionTripsItemsCubit>().loadMore();
     }
   }
+
 
   String _titleFromState(SectionTripsItemsState state) {
     final fromApi = state.meta?.sectionTitle?.trim() ?? '';
@@ -211,6 +227,10 @@ class _SectionTripsListScaffoldState extends State<_SectionTripsListScaffold> {
                       onSubmitted: (_) => _onSearchSubmitted(),
                       onClear: _onSearchClear,
                     ),
+                    if (widget.categoryTabsConfig != null) ...[
+                      SizedBox(height: 12.h),
+                      _buildCategoryTabs(),
+                    ],
                     SizedBox(height: 14.h),
                     Expanded(child: _buildBody(context, state)),
                   ],
@@ -220,6 +240,48 @@ class _SectionTripsListScaffoldState extends State<_SectionTripsListScaffold> {
           );
         },
       ),
+    );
+  }
+
+  Widget _buildCategoryTabs() {
+    final config = widget.categoryTabsConfig!;
+    final cats = config.categories;
+    if (cats.isEmpty) return const SizedBox.shrink();
+
+    return SizedBox(
+      height: 40.h,
+      child: ListView.builder(
+        scrollDirection: Axis.horizontal,
+        reverse: Directionality.of(context) == TextDirection.rtl,
+        itemCount: cats.length,
+        itemBuilder: (context, index) {
+          final cat = cats[index];
+          final isSelected = cat.slug == _selectedSlug;
+          return CategoryChip(
+            label: cat.name,
+            isSelected: isSelected,
+            iconUrl: cat.iconUrl,
+            icon: categoryIconForSlug(cat.slug),
+            onTap: () => _switchCategory(cat),
+          );
+        },
+      ),
+    );
+  }
+
+  void _switchCategory(HomeCategoryModel cat) {
+    final config = widget.categoryTabsConfig;
+    if (config == null || cat.slug == _selectedSlug) return;
+
+    setState(() => _selectedSlug = cat.slug);
+
+    // Reset scroll position
+    if (_scroll.hasClients) _scroll.jumpTo(0);
+
+    // Replace the cubit's fetcher by creating a new one and swapping
+    final cubit = context.read<SectionTripsItemsCubit>();
+    cubit.replaceFetcher(
+      config.fetcherForCategory(cat.id),
     );
   }
 

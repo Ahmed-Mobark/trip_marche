@@ -10,10 +10,10 @@ import 'package:trip_marche/core/theme/app_colors.dart';
 import 'package:trip_marche/core/theme/app_text_styles.dart';
 import 'package:trip_marche/core/toast/app_toast.dart';
 import 'package:trip_marche/core/widgets/custom_loading.dart';
-
 import '../../../trip_details/presentation/trip_wishlist_pop_result.dart';
 import '../../../trip_details/presentation/view/trip_details_view.dart';
 import '../../data/models/home_banner_model.dart';
+import '../../data/models/home_category_model.dart';
 import '../../data/models/home_section_response.dart';
 import '../cubit/home_banners_cubit.dart';
 import '../cubit/home_banners_state.dart';
@@ -115,9 +115,21 @@ class HomeViewState extends State<HomeView> {
     }
   }
 
+  SectionFetcher _specialTripsFetcher(HomeRepository repo, int categoryId) {
+    return ({int page = 1, int perPage = 15, String search = ''}) =>
+        repo.getSpecialTrips(
+          categoryId: categoryId,
+          page: page,
+          perPage: perPage,
+          search: search,
+        );
+  }
+
   void _openSpecialTripsSeeAll(
     BuildContext context, {
     required int categoryId,
+    required List<HomeCategoryModel> categories,
+    required String? selectedSlug,
   }) {
     final homeRepo = sl<HomeRepository>();
     final wishlistRepo = sl<TripWishlistRepository>();
@@ -131,24 +143,23 @@ class HomeViewState extends State<HomeView> {
         child: SectionTripsListView(
           fallbackTitle: context.tr.homeSpecialTrips,
           cubitFactory: () => SectionTripsItemsCubit(
-            ({int page = 1, int perPage = 15, String search = ''}) =>
-                homeRepo.getSpecialTrips(
-                  categoryId: categoryId,
-                  page: page,
-                  perPage: perPage,
-                  search: search,
-                ),
+            _specialTripsFetcher(homeRepo, categoryId),
             wishlistRepo,
           ),
-          // Mirror the home preview's visual style (SpecialTripWideCard)
-          // on the See All page — feedback #64.
-          cardBuilder: (context, trip, {required onTap, required onFavoriteTap}) {
-            return SpecialTripWideCard(
-              trip: trip,
-              onTap: onTap,
-              onFavoriteTap: onFavoriteTap,
-            );
-          },
+          categoryTabsConfig: SectionCategoryTabsConfig(
+            categories: categories,
+            initialSelectedSlug: selectedSlug,
+            fetcherForCategory: (catId) =>
+                _specialTripsFetcher(homeRepo, catId),
+          ),
+          cardBuilder:
+              (context, trip, {required onTap, required onFavoriteTap}) {
+                return SpecialTripWideCard(
+                  trip: trip,
+                  onTap: onTap,
+                  onFavoriteTap: onFavoriteTap,
+                );
+              },
         ),
       ),
     );
@@ -288,7 +299,7 @@ class HomeViewState extends State<HomeView> {
                             ),
                           );
                         },
-                        ),
+                      ),
                       SliverToBoxAdapter(
                         child: Transform.translate(
                           offset: Offset(0, -sheetOverlap),
@@ -648,7 +659,12 @@ class HomeViewState extends State<HomeView> {
                   onAction: () {
                     final selectedId = catState.selectedId;
                     if (selectedId == null) return;
-                    _openSpecialTripsSeeAll(context, categoryId: selectedId);
+                    _openSpecialTripsSeeAll(
+                      context,
+                      categoryId: selectedId,
+                      categories: catState.visibleCategories,
+                      selectedSlug: catState.selectedSlug,
+                    );
                   },
                 ),
                 SizedBox(height: 12.h),
@@ -689,8 +705,7 @@ class HomeViewState extends State<HomeView> {
                         );
                       }
                       if (tripState.status == SpecialTripsStatus.success ||
-                          tripState.status ==
-                              SpecialTripsStatus.loadingMore) {
+                          tripState.status == SpecialTripsStatus.loadingMore) {
                         if (tripState.trips.isEmpty) {
                           // Empty tabs are auto-hidden via the
                           // BlocListener above; we still render a
@@ -718,6 +733,8 @@ class HomeViewState extends State<HomeView> {
                                 _openSpecialTripsSeeAll(
                                   context,
                                   categoryId: selectedId,
+                                  categories: catState.visibleCategories,
+                                  selectedSlug: catState.selectedSlug,
                                 );
                               },
                             ),
@@ -963,14 +980,8 @@ class _SpecialTripsVerticalList extends StatelessWidget {
   }
 }
 
-/// Pill-shaped "See more" affordance rendered under the special-trips preview
-/// list (client feedback #62). Tapping it opens the full `SectionTripsListView`
-/// for the currently selected category.
 class _SpecialTripsSeeMoreButton extends StatelessWidget {
-  const _SpecialTripsSeeMoreButton({
-    required this.label,
-    required this.onTap,
-  });
+  const _SpecialTripsSeeMoreButton({required this.label, required this.onTap});
 
   final String label;
   final VoidCallback onTap;

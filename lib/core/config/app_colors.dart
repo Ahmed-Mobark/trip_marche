@@ -47,6 +47,7 @@ abstract class AppColors {
 
   static const Color red = Color(0xFFD00416);
   static const Color yellow = Color(0xFFFFD43B);
+  static const Color yellow2 = Color(0xFFFFD43B);
   static const Color green = Color(0xFF1FC16B);
 
   static const Color transparent = Colors.transparent;

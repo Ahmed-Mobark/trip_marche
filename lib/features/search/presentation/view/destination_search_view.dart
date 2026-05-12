@@ -85,7 +85,6 @@ class _DestinationSearchScaffoldState
   void _openDestination(FilterDestination destination) {
     _openSearchResults(
       TripsCatalogFilters(
-        destinations: [destination.id],
         search: destination.name,
       ),
     );

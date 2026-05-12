@@ -83,7 +83,7 @@ class HomeHeaderDelegate extends SliverPersistentHeaderDelegate {
                     height: (40.h * (1.0 - t)).clamp(0.0, 40.h),
                     child: Row(
                       children: [
-                        Image.asset(AppIcons.lloPng, width: 90.w),
+                        Image.asset(AppIcons.llo2Png, width: 90.w),
                         const Spacer(),
                         if (t < 0.5)
                           _NotificationButton(
@@ -104,8 +104,9 @@ class HomeHeaderDelegate extends SliverPersistentHeaderDelegate {
                     child: Opacity(
                       opacity: 1.0 - (t * 0.75),
                       child: GestureDetector(
-                        onTap: () => sl<AppNavigator>()
-                            .push(screen: const DestinationSearchView()),
+                        onTap: () => sl<AppNavigator>().push(
+                          screen: const DestinationSearchView(),
+                        ),
                         child: _SearchField(
                           hint: searchHint,
                           destinations: searchHintDestinations,
@@ -130,7 +131,7 @@ class HomeHeaderDelegate extends SliverPersistentHeaderDelegate {
 
               // Location row — fades out
               if (t < 1.0) ...[
-                SizedBox(height: (6.h * (1.0 - t)).clamp(0.0, 6.h)),
+                SizedBox(height: (7.h * (1.0 - t)).clamp(0.0, 6.h)),
                 Opacity(
                   opacity: (1.0 - t * 2.5).clamp(0.0, 1.0),
                   child: SizedBox(
@@ -140,7 +141,7 @@ class HomeHeaderDelegate extends SliverPersistentHeaderDelegate {
                         Icon(
                           Iconsax.location,
                           size: 16.sp,
-                          color: AppColors.onImage.withValues(alpha: 0.6),
+                          color: AppColors.yellow2,
                         ),
                         SizedBox(width: 6.w),
                         Text(
@@ -148,7 +149,7 @@ class HomeHeaderDelegate extends SliverPersistentHeaderDelegate {
                           style: TextStyle(
                             fontSize: 12.sp,
                             fontWeight: FontWeight.w400,
-                            color: AppColors.onImage.withValues(alpha: 0.6),
+                            color: AppColors.yellow2,
                           ),
                         ),
                       ],
@@ -165,10 +166,7 @@ class HomeHeaderDelegate extends SliverPersistentHeaderDelegate {
 }
 
 class _SearchField extends StatefulWidget {
-  const _SearchField({
-    required this.hint,
-    required this.destinations,
-  });
+  const _SearchField({required this.hint, required this.destinations});
 
   final String hint;
   final List<String> destinations;
@@ -306,11 +304,7 @@ class _NotificationButton extends StatelessWidget {
         child: Stack(
           alignment: Alignment.center,
           children: [
-            Icon(
-              Iconsax.notification,
-              size: 22.sp,
-              color: AppColors.onImage,
-            ),
+            Icon(Iconsax.notification, size: 22.sp, color: AppColors.onImage),
             if (hasNotification)
               PositionedDirectional(
                 top: 8.w,

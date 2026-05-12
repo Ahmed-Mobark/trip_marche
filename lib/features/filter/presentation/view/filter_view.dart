@@ -64,7 +64,11 @@ class _FilterBody extends StatelessWidget {
         final sliderMax = sliderMaxCandidate <= sliderMin
             ? sliderMin + 1
             : sliderMaxCandidate;
-        final effectivePriceRange = _resolvePriceRange(state, sliderMin, sliderMax);
+        final effectivePriceRange = _resolvePriceRange(
+          state,
+          sliderMin,
+          sliderMax,
+        );
         return Scaffold(
           backgroundColor: AppColors.background(context),
           appBar: PreferredSize(
@@ -217,10 +221,9 @@ class _FilterBody extends StatelessWidget {
                         (value == context.tr.wishlistFiltersInternational &&
                             state.tripType == 'international'),
                     onTap: (value) {
-                      final mapped =
-                          value == context.tr.wishlistFiltersDomestic
-                              ? 'domestic'
-                              : 'international';
+                      final mapped = value == context.tr.wishlistFiltersDomestic
+                          ? 'domestic'
+                          : 'international';
                       // Tap-to-deselect: tapping the active option clears it (#56).
                       cubit.setTripType(state.tripType == mapped ? '' : mapped);
                     },

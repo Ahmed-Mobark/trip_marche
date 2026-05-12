@@ -15,6 +15,7 @@ class AppIcons {
   static const String icLogo = '${_path}ic_logo.svg';
 
   static const String lloPng = '${_path}llo.png';
+  static const String llo2Png = '${_path}llog2.png';
   static const String logoPng = '${_path}logo.png';
 
   static const String unseen = '${_path}unseen.svg';
@@ -40,7 +41,6 @@ class AppIcons {
   static const String wishlistIconSvg = '${_path}wishlist_icon.svg';
   static const String accountIconSvg = '${_path}account_icon.svg';
   static const String googleMapsIcon = '${_path}google-map-icon.svg';
-
 
   // Method to render SVG as a widget
   static Widget icon({required String icon, double size = 24, Color? color}) {
