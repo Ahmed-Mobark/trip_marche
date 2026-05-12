@@ -76,6 +76,7 @@ class _SearchResultViewState extends State<SearchResultView> {
           backgroundColor: AppColors.primary,
           body: CurvedGradientSheetLayout(
             headerTitle: context.tr.searchResultTitle,
+            alignHeaderTitleStart: true,
             sheetChild: Padding(
               padding: EdgeInsetsDirectional.fromSTEB(16.w, 20.h, 16.w, 0),
               child: Column(

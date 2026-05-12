@@ -13,7 +13,7 @@ class CurvedGradientSheetLayout extends StatelessWidget {
     required this.sheetChild,
     this.onBack,
     this.curveRadius,
-    this.alignHeaderTitleStart = false,
+    this.alignHeaderTitleStart = true,
   });
 
   final String headerTitle;
