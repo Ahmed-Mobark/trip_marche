@@ -5,7 +5,6 @@ import 'package:trip_marche/core/config/app_icons.dart';
 import 'package:trip_marche/core/injection/injection_container.dart';
 import 'package:trip_marche/core/navigation/app_navigator.dart';
 import 'package:trip_marche/core/theme/app_colors.dart';
-import 'package:trip_marche/core/theme/app_text_styles.dart';
 import 'package:trip_marche/features/filter/presentation/view/filter_view.dart';
 
 class HomeHeader extends StatelessWidget {
@@ -35,16 +34,15 @@ class HomeHeader extends StatelessWidget {
           padding: EdgeInsetsDirectional.only(
             start: 16.w,
             end: 16.w,
-            top: 10.h,
-            bottom: 14.h,
+            top: 4.h,
+            bottom: 8.h,
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Row(
                 children: [
-                  Image.asset(AppIcons.lloPng, width: 80.w),
-
+                  Image.asset(AppIcons.lloPng, width: 90.w),
                   const Spacer(),
                   _NotificationButton(
                     onTap: onNotificationsTap,
@@ -52,21 +50,25 @@ class HomeHeader extends StatelessWidget {
                   ),
                 ],
               ),
-              SizedBox(height: 12.h),
+              SizedBox(height: 8.h),
               GestureDetector(
                 onTap: () {
                   sl<AppNavigator>().push(screen: const FilterView());
                 },
                 child: _SearchField(hint: searchHint, onTap: onSearchTap),
               ),
-              SizedBox(height: 10.h),
+              SizedBox(height: 6.h),
               Row(
                 children: [
-                  Icon(Iconsax.location, size: 18.sp, color: AppColors.yellow),
-                  SizedBox(width: 8.w),
+                  Icon(Iconsax.location, size: 16.sp, color: AppColors.onImage.withValues(alpha: 0.6)),
+                  SizedBox(width: 6.w),
                   Text(
                     locationText,
-                    style: AppTextStyles.bodyMedium(color: AppColors.yellow),
+                    style: TextStyle(
+                      fontSize: 12.sp,
+                      fontWeight: FontWeight.w400,
+                      color: AppColors.onImage.withValues(alpha: 0.6),
+                    ),
                   ),
                 ],
               ),
@@ -89,7 +91,7 @@ class _SearchField extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        height: 48.h,
+        height: 42.h,
         padding: EdgeInsetsDirectional.symmetric(horizontal: 14.w),
         decoration: BoxDecoration(
           color: AppColors.cardBg(context),
@@ -134,31 +136,23 @@ class _NotificationButton extends StatelessWidget {
       onTap: onTap,
       borderRadius: BorderRadius.circular(999),
       child: SizedBox(
-        width: 44.w,
-        height: 44.w,
+        width: 40.w,
+        height: 40.w,
         child: Stack(
           alignment: Alignment.center,
           children: [
-            Container(
-              width: 38.w,
-              height: 38.w,
-              decoration: BoxDecoration(
-                color: AppColors.onImage.withValues(alpha: 0.18),
-                shape: BoxShape.circle,
-              ),
-              child: Icon(
-                Iconsax.notification,
-                size: 20.sp,
-                color: AppColors.onImage,
-              ),
+            Icon(
+              Iconsax.notification,
+              size: 22.sp,
+              color: AppColors.onImage,
             ),
             if (hasNotification)
               PositionedDirectional(
-                top: 10.w,
-                end: 10.w,
+                top: 8.w,
+                end: 8.w,
                 child: Container(
-                  width: 10.w,
-                  height: 10.w,
+                  width: 9.w,
+                  height: 9.w,
                   decoration: BoxDecoration(
                     color: AppColors.error,
                     shape: BoxShape.circle,
