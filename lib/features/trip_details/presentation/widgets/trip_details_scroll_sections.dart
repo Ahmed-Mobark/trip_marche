@@ -235,23 +235,6 @@ class _AccommodationCard extends StatelessWidget {
                         color: AppColors.darkText(context),
                       ).copyWith(fontWeight: FontWeight.w700),
                     ),
-                    SizedBox(height: 4.h),
-                    Row(
-                      children: [
-                        Icon(
-                          Iconsax.star1,
-                          color: AppColors.starYellow,
-                          size: 14.sp,
-                        ),
-                        SizedBox(width: 4.w),
-                        Text(
-                          context.tr.tripDetailsHotelRatingStars,
-                          style: AppTextStyles.caption(
-                            color: AppColors.darkText(context),
-                          ),
-                        ),
-                      ],
-                    ),
                     SizedBox(height: 6.h),
                     Text(
                       context.tr.tripDetailsHotelAddress,
