@@ -607,12 +607,13 @@ class HomeViewState extends State<HomeView> {
                     ),
                   ),
                   SizedBox(height: 12.h),
-                  // ── Special Trips Vertical List ──
-                  BlocBuilder<SpecialTripsCubit, SpecialTripsState>(
+                  // ── Special Trips Vertical List (fixed height across tabs) ──
+                  SizedBox(
+                    height: 280.h,
+                    child: BlocBuilder<SpecialTripsCubit, SpecialTripsState>(
                     builder: (context, tripState) {
                       if (tripState.status == SpecialTripsStatus.loading) {
-                        return SizedBox(
-                          height: 224.h,
+                        return Center(
                           child: CustomLoading(size: 32, strokeWidth: 2.5),
                         );
                       }
@@ -648,6 +649,7 @@ class HomeViewState extends State<HomeView> {
                       }
                       return const SizedBox.shrink();
                     },
+                  ),
                   ),
                 ],
               );
