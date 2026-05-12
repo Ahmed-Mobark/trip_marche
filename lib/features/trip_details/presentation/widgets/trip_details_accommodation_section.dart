@@ -539,6 +539,15 @@ class _AccommodationHotelBlock extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+        if (hotelLocation.isNotEmpty) ...[
+          Text(
+            hotelLocation,
+            maxLines: 2,
+            overflow: TextOverflow.ellipsis,
+            style: locationStyle,
+          ),
+          const SizedBox(height: 4),
+        ],
         Text(
           context.tr.tripDetailsAccommodationHotelNameLabel,
           style: labelStyle,
@@ -554,24 +563,7 @@ class _AccommodationHotelBlock extends StatelessWidget {
         Row(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    context.tr.tripDetailsAccommodationHotelLocationLabel,
-                    style: labelStyle,
-                  ),
-                  const SizedBox(height: 3),
-                  Text(
-                    hotelLocation,
-                    maxLines: 3,
-                    overflow: TextOverflow.ellipsis,
-                    style: locationStyle,
-                  ),
-                ],
-              ),
-            ),
+            const Spacer(),
             const SizedBox(width: 8),
             Material(
               color: _mapChipBg(context),

@@ -206,8 +206,27 @@ class TripDetailsHeroHeader extends StatelessWidget {
                           maxLines: 3,
                           overflow: TextOverflow.ellipsis,
                         ),
+                        SizedBox(height: 6.h),
+                        Row(
+                          children: [
+                            Icon(Iconsax.star1, size: 14.sp, color: AppColors.starYellow),
+                            SizedBox(width: 4.w),
+                            Text(
+                              ratingText,
+                              style: AppTextStyles.bodySmall(color: AppColors.onImage)
+                                  .copyWith(fontWeight: FontWeight.w700),
+                            ),
+                            SizedBox(width: 4.w),
+                            Text(
+                              '(${trip.reviewsCount})',
+                              style: AppTextStyles.bodySmall(
+                                color: AppColors.onImage.withValues(alpha: 0.7),
+                              ),
+                            ),
+                          ],
+                        ),
                         if (showCompany) ...[
-                          SizedBox(height: 10.h),
+                          SizedBox(height: 8.h),
                           _CompanyPill(
                             label: context.tr.tripDetailsHeroByCompanyLine(
                               companyName,
@@ -337,7 +356,7 @@ class _CompanyPill extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsetsDirectional.symmetric(horizontal: 14.w, vertical: 5.h),
+      padding: EdgeInsetsDirectional.symmetric(horizontal: 10.w, vertical: 4.h),
       decoration: BoxDecoration(
         color: AppColors.shadow.withValues(alpha: 0.42),
         borderRadius: BorderRadius.circular(999.r),
@@ -346,7 +365,7 @@ class _CompanyPill extends StatelessWidget {
         label,
         style: AppTextStyles.caption(
           color: AppColors.tripDetailsHeroCompanyAccent,
-        ).copyWith(fontSize: 13.sp, fontWeight: FontWeight.w600, height: 1.15),
+        ).copyWith(fontSize: 11.sp, fontWeight: FontWeight.w600, height: 1.15),
       ),
     );
   }

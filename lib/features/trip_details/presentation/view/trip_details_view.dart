@@ -219,7 +219,7 @@ class _TripDetailsBody extends StatelessWidget {
                     ],
                   ),
                   PositionedDirectional(
-                    bottom: -15,
+                    bottom: 0,
                     start: 0,
                     end: 0,
                     child: TripDetailsBookingBar(

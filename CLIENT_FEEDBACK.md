@@ -91,12 +91,12 @@
 
 ## Trip Details Page - Info & Layout
 
-26. [PENDING] Make the first 4 info squares (days, group size, etc.) smaller
+26. [DONE] Make the first 4 info squares (days, group size, etc.) smaller
 27. [PENDING] Add Google Maps logo (square) as clickable link next to hotel names and departure details (like Figma)
-28. [PENDING] Move rating directly under the trip name, with review count next to it
-29. [PENDING] Make the company name box smaller
+28. [DONE] Move rating directly under the trip name, with review count next to it
+29. [DONE] Make the company name box smaller
 30. [DONE] Remove hotel star count
-31. [PENDING] Put city name before hotel name
+31. [DONE] Put city name before hotel name
 
 ---
 
@@ -109,7 +109,7 @@
 
 ## Trip Details Page - Destination Details & What's Included
 
-34. [PENDING] Reduce spacing in "destination details" and "what's included" sections
+34. [DONE] Reduce spacing in "destination details" and "what's included" sections
 35. [DONE] In "what's included", also show excluded items with a grey X mark next to main items not included
 
 ---
@@ -136,7 +136,7 @@
 
 ## Trip Details Page - Booking Button
 
-41. [PENDING] Booking button should not stick to the very bottom — add spacing
+41. [DONE] Booking button should not stick to the very bottom — add spacing
 42. [PENDING] Booking button should be small by default and grow bigger when user scrolls to bottom of page
 
 ---
@@ -144,7 +144,7 @@
 ## Trip Details Page - Visa & Sections
 
 43. [PENDING] The last section(s) starting with "visa details" — each one should be a full separate page
-44. [PENDING] Add a separator between flight and transportation sections
+44. [DONE] Add a separator between flight and transportation sections
 
 ---
 
@@ -154,7 +154,7 @@
 46. [PENDING] Max 8 photos shown side by side horizontally — each photo has the place name on it
 47. [PENDING] Below each photo: max 2 lines description of the place
 48. [PENDING] On tapping a photo, it zooms in (inline, not a new page)
-49. [PENDING] Remove "visa and entry" section below destination photos (it's a duplicate)
+49. [DONE] Remove "visa and entry" section below destination photos (it's a duplicate)
 
 ---
 

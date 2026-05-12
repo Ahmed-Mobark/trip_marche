@@ -30,8 +30,6 @@ class TripDetailsDestinationDetailsSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final cardBorder = AppColors.border(context).withValues(alpha: 0.35);
-    final visa = trip.visaDetails?.trim();
     final carousel = _carouselDestinations();
 
     final destCardSize = 132.w;
@@ -65,41 +63,6 @@ class TripDetailsDestinationDetailsSection extends StatelessWidget {
                   borderRadius: destCardRadius,
                 );
               },
-            ),
-          ),
-          SizedBox(height: 24.h),
-        ],
-        if (visa != null && visa.isNotEmpty) ...[
-          TripDetailsInfoCard(
-            withShadow: false,
-            borderRadius: 16.r,
-            padding: EdgeInsetsDirectional.all(16.w),
-            borderColor: cardBorder,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  context.tr.tripDetailsVisaAndEntryTitle,
-                  style: AppTextStyles.subtitle(color: AppColors.darkText(context))
-                      .copyWith(
-                    fontSize: 16.sp,
-                    fontWeight: FontWeight.w700,
-                    height: 1.1,
-                  ),
-                ),
-                SizedBox(height: 6.h),
-                SelectableText(
-                  visa,
-                  style: AppTextStyles.caption(
-                    color: AppColors.tripDetailsSecondaryGrey(context),
-                  ).copyWith(
-                    fontSize: 13.sp,
-                    fontWeight: FontWeight.w400,
-                    height: 1.45,
-                    letterSpacing: 0,
-                  ),
-                ),
-              ],
             ),
           ),
           SizedBox(height: 24.h),
@@ -262,8 +225,8 @@ class _DestinationDetailsGridCard extends StatelessWidget {
             padding: EdgeInsets.zero,
             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: 2,
-              crossAxisSpacing: 16.w,
-              mainAxisSpacing: 24.h,
+              crossAxisSpacing: 12.w,
+              mainAxisSpacing: 14.h,
               mainAxisExtent: 60.h,
             ),
             itemCount: items.length,

@@ -9,8 +9,8 @@ class TripDetailsStatGrid extends StatelessWidget {
 
   final List<TripDetailsStatCellData> cells;
 
-  static const double _gridGap = 10;
-  static const double _aspect = 1.56;
+  static const double _gridGap = 8;
+  static const double _aspect = 1.9;
 
   @override
   Widget build(BuildContext context) {
@@ -45,13 +45,13 @@ class TripDetailsStatCell extends StatelessWidget {
   final TripDetailsStatCellData data;
 
   /// Figma: icon ~20, label 12 / w400, value 16 / w600, tight vertical rhythm.
-  static const double _cardRadius = 14;
-  static const double _cardPad = 14;
-  static const double _iconSize = 20;
-  static const double _gapIconToLabel = 6;
+  static const double _cardRadius = 12;
+  static const double _cardPad = 10;
+  static const double _iconSize = 18;
+  static const double _gapIconToLabel = 4;
   static const double _gapLabelToValue = 2;
-  static const double _labelSize = 12;
-  static const double _valueSize = 16;
+  static const double _labelSize = 11;
+  static const double _valueSize = 13;
 
   @override
   Widget build(BuildContext context) {
