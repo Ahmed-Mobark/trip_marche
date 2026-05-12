@@ -627,9 +627,9 @@ class HomeViewState extends State<HomeView> {
                     ),
                   ),
                   SizedBox(height: 12.h),
-                  // ── Special Trips Vertical List (fixed height across tabs) ──
-                  SizedBox(
-                    height: 280.h,
+                  // ── Special Trips Vertical List (min height prevents jump on tab switch) ──
+                  ConstrainedBox(
+                    constraints: BoxConstraints(minHeight: 280.h),
                     child: BlocBuilder<SpecialTripsCubit, SpecialTripsState>(
                     builder: (context, tripState) {
                       if (tripState.status == SpecialTripsStatus.loading) {
