@@ -448,84 +448,62 @@ class _IncludesExcludes extends StatelessWidget {
       context.tr.tripDetailsExcludeVisa,
       context.tr.tripDetailsExcludeAlcohol,
     ];
-    return Row(
+    return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Expanded(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                context.tr.tripDetailsIncludesTitle,
-                style: AppTextStyles.bodyMedium(
-                  color: AppColors.darkText(context),
-                ).copyWith(fontWeight: FontWeight.w700),
-              ),
-              SizedBox(height: 10.h),
-              ...inc.map(
-                (t) => Padding(
-                  padding: EdgeInsetsDirectional.only(bottom: 8.h),
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Icon(
-                        Iconsax.tick_circle,
-                        color: AppColors.primary,
-                        size: 18.sp,
-                      ),
-                      SizedBox(width: 8.w),
-                      Expanded(
-                        child: Text(
-                          t,
-                          style: AppTextStyles.bodySmall(
-                            color: AppColors.darkText(context),
-                          ),
-                        ),
-                      ),
-                    ],
+        Text(
+          context.tr.tripDetailsIncludesTitle,
+          style: AppTextStyles.bodyMedium(
+            color: AppColors.darkText(context),
+          ).copyWith(fontWeight: FontWeight.w700),
+        ),
+        SizedBox(height: 10.h),
+        ...inc.map(
+          (t) => Padding(
+            padding: EdgeInsetsDirectional.only(bottom: 8.h),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Icon(
+                  Iconsax.tick_circle,
+                  color: AppColors.primary,
+                  size: 18.sp,
+                ),
+                SizedBox(width: 8.w),
+                Expanded(
+                  child: Text(
+                    t,
+                    style: AppTextStyles.bodySmall(
+                      color: AppColors.darkText(context),
+                    ),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
-        SizedBox(width: 16.w),
-        Expanded(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                context.tr.tripDetailsExcludesTitle,
-                style: AppTextStyles.bodyMedium(
-                  color: AppColors.darkText(context),
-                ).copyWith(fontWeight: FontWeight.w700),
-              ),
-              SizedBox(height: 10.h),
-              ...exc.map(
-                (t) => Padding(
-                  padding: EdgeInsetsDirectional.only(bottom: 8.h),
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Icon(
-                        Iconsax.close_circle,
-                        color: AppColors.error,
-                        size: 18.sp,
-                      ),
-                      SizedBox(width: 8.w),
-                      Expanded(
-                        child: Text(
-                          t,
-                          style: AppTextStyles.bodySmall(
-                            color: AppColors.darkText(context),
-                          ),
-                        ),
-                      ),
-                    ],
+        ...exc.map(
+          (t) => Padding(
+            padding: EdgeInsetsDirectional.only(bottom: 8.h),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Icon(
+                  Iconsax.close_circle,
+                  color: AppColors.greyText(context),
+                  size: 18.sp,
+                ),
+                SizedBox(width: 8.w),
+                Expanded(
+                  child: Text(
+                    t,
+                    style: AppTextStyles.bodySmall(
+                      color: AppColors.greyText(context),
+                    ),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ],

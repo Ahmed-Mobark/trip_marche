@@ -60,9 +60,7 @@ class TripDetailsTransportationSection extends StatelessWidget {
             leftCity: sorted[i].fromCity,
             leftTime: TripDetailsUiFormatters.timeOfDay(context, sorted[i].departAt),
             centerIcon: _iconForType(sorted[i].type),
-            centerLabel: sorted[i].company.name.isNotEmpty
-                ? sorted[i].company.name
-                : TripDetailsUiFormatters.transportTypeLabel(sorted[i].type),
+            centerLabel: TripDetailsUiFormatters.transportTypeLabel(sorted[i].type),
             centerDate: TripDetailsUiFormatters.monthDay(context, sorted[i].departAt),
             rightCity: sorted[i].toCity,
             rightTime: TripDetailsUiFormatters.timeOfDay(context, sorted[i].arriveAt),
