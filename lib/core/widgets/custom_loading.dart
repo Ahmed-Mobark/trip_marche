@@ -44,7 +44,7 @@ class _CustomLoadingState extends State<CustomLoading>
 
   @override
   Widget build(BuildContext context) {
-    final outerSize = widget.size?.w ?? 36.w;
+    final outerSize = widget.size?.w ?? 48.w;
     final logoSize = outerSize * 0.52;
     final stroke = widget.strokeWidth?.r ?? 2.5.r;
     final indicatorColor = widget.color ?? AppColors.primary;
