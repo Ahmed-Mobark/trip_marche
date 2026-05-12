@@ -28,9 +28,7 @@ class TripDetailsBookingBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return AnimatedContainer(
-      duration: const Duration(milliseconds: 250),
-      curve: Curves.easeOutCubic,
+    return Container(
       padding: EdgeInsetsDirectional.only(
         start: expanded ? 20.w : 24.w,
         end: expanded ? 20.w : 24.w,
