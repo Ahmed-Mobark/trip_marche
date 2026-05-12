@@ -24,7 +24,7 @@
 
 ## Profile / Account
 
-7. [PENDING] Show a profile picture placeholder instead of the logo next to the username — it should take the full image area even if no photo is set
+7. [DONE] Show a profile picture placeholder instead of the logo next to the username — it should take the full image area even if no photo is set
 
 ---
 
@@ -36,8 +36,8 @@
 
 ## Scrolling & Pull-to-Refresh
 
-9. [PENDING] Scroll on first and last pages should be simple stretch, not a heavy refresh indicator
-10. [PENDING] Home screen scroll is a bit slow
+9. [DONE] Scroll on first and last pages should be simple stretch, not a heavy refresh indicator
+10. [DONE] Home screen scroll is a bit slow
 
 ---
 
@@ -49,16 +49,16 @@
 
 ## Trending Destinations
 
-12. [PENDING] Cards inside trending destinations links should be the same size as cards in Wishlist and Trips
-13. [PENDING] City name inside trending destination card should be fully visible — stacked vertically (not side by side)
-14. [PENDING] Reduce spacing between trending destinations so part of the 4th image is visible
+12. [DONE] Cards inside trending destinations links should be the same size as cards in Wishlist and Trips
+13. [DONE] City name inside trending destination card should be fully visible — stacked vertically (not side by side)
+14. [DONE] Reduce spacing between trending destinations so part of the 4th image is visible
 
 ---
 
 ## Bottom Navigation Bar
 
-15. [PENDING] Change the "trips" icon in the bottom bar (matches Figma currently but it changes to a different shape when active — needs fix)
-16. [PENDING] Account icon in bottom bar doesn't fully color when active
+15. [Done] Change the "trips" icon in the bottom bar (matches Figma currently but it changes to a different shape when active — needs fix)
+16. [Done] Account icon in bottom bar doesn't fully color when active
 
 ---
 
@@ -70,7 +70,7 @@
 
 ## "See All" Pages
 
-18. [PENDING] When tapping "See all" on any row, trips should be listed vertically with the detail card on the right
+18. [DONE] When tapping "See all" on any row, trips should be listed vertically with the detail card on the right
 
 ---
 
@@ -84,7 +84,7 @@
 ## Trip Details Page - Images & Photo Tap
 
 21. [DONE] Tapping photos in trip details page is slow — the effect shows only after the image loads
-22. [PENDING] Top photos should auto-scroll with slow zoom-in for 3 seconds, then move to next photo
+22. [DONE] Top photos should auto-scroll with slow zoom-in for 3 seconds, then move to next photo
 23. [DONE] On tapping photos, open a screen with all photos in small size, 2-column grid (like Get Your Guide)
 24. [DONE] On tapping a single photo from that grid, open the current full-screen viewer
 25. [DONE] Photo viewer: close button should be in a circle, bigger size, top-left
@@ -94,7 +94,7 @@
 ## Trip Details Page - Info & Layout
 
 26. [DONE] Make the first 4 info squares (days, group size, etc.) smaller
-27. [PENDING] Add Google Maps logo (square) as clickable link next to hotel names and departure details (like Figma)
+27. [DONE] Add Google Maps logo (square) as clickable link next to hotel names and departure details (like Figma)
 28. [DONE] Move rating directly under the trip name, with review count next to it
 29. [DONE] Make the company name box smaller
 30. [DONE] Remove hotel star count

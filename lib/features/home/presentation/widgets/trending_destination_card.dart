@@ -27,7 +27,7 @@ class TrendingDestinationCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final w = width ?? 100.w;
+    final w = width ?? 94.w;
     final h = height ?? 120.h;
     final useGridMargin = width != null;
     return GestureDetector(
@@ -37,7 +37,7 @@ class TrendingDestinationCard extends StatelessWidget {
         height: h,
         margin: useGridMargin
             ? EdgeInsets.zero
-            : EdgeInsetsDirectional.only(end: 6.w),
+            : EdgeInsetsDirectional.only(end: 4.w),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(16.r),
           color: AppColors.inputBg(context),
@@ -63,10 +63,10 @@ class TrendingDestinationCard extends StatelessWidget {
                 bottom: 0,
                 child: Container(
                   padding: EdgeInsetsDirectional.only(
-                    start: 10.w,
-                    end: 10.w,
-                    top: 14.h,
-                    bottom: 10.h,
+                    start: 8.w,
+                    end: 8.w,
+                    top: 18.h,
+                    bottom: 8.h,
                   ),
                   decoration: BoxDecoration(
                     gradient: LinearGradient(
@@ -74,13 +74,18 @@ class TrendingDestinationCard extends StatelessWidget {
                       end: Alignment.bottomCenter,
                       colors: [
                         AppColors.shadow.withValues(alpha: 0.0),
-                        AppColors.shadow.withValues(alpha: 0.55),
+                        AppColors.shadow.withValues(alpha: 0.45),
+                        AppColors.shadow.withValues(alpha: 0.7),
                       ],
+                      stops: const [0.0, 0.4, 1.0],
                     ),
                   ),
                   child: Text(
-                    name,
-                    maxLines: 2,
+                    // Force each word onto its own line so multi-word city
+                    // names (e.g. "New York", "Rio de Janeiro", "نيو يورك")
+                    // are fully visible stacked vertically.
+                    name.trim().split(RegExp(r'\s+')).join('\n'),
+                    maxLines: 3,
                     softWrap: true,
                     overflow: TextOverflow.ellipsis,
                     textAlign: TextAlign.center,
@@ -89,7 +94,7 @@ class TrendingDestinationCard extends StatelessWidget {
                     ).copyWith(
                       fontSize: 13.sp,
                       fontWeight: FontWeight.w700,
-                      height: 1.2,
+                      height: 1.15,
                     ),
                   ),
                 ),

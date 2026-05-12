@@ -35,6 +35,12 @@ class AppIcons {
   static const String verifyIcon = '${_path}verify_number.svg';
   static const String authIllustration = '${_path}auth_illustration.svg';
   static const String bookIcon = '${_path}book_icon.png';
+  static const String homeIconSvg = '${_path}home_icon.svg';
+  static const String tripsIconSvg = '${_path}trips_icon.svg';
+  static const String wishlistIconSvg = '${_path}wishlist_icon.svg';
+  static const String accountIconSvg = '${_path}account_icon.svg';
+  static const String googleMapsIcon = '${_path}google-map-icon.svg';
+
 
   // Method to render SVG as a widget
   static Widget icon({required String icon, double size = 24, Color? color}) {

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:iconsax/iconsax.dart';
+import '../../../../core/config/app_icons.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../home/presentation/view/home_view.dart';
 import '../../../my_trips/presentation/view/my_trips_view.dart';
@@ -27,6 +27,18 @@ class _MainNavViewState extends State<MainNavView> {
     const ProfileView(),
   ];
 
+  Widget _navIcon(
+    BuildContext context,
+    String asset, {
+    required bool selected,
+  }) {
+    return AppIcons.icon(
+      icon: asset,
+      size: selected ? 25 : 24,
+      color: selected ? AppColors.primary : AppColors.greyText(context),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -47,7 +59,10 @@ class _MainNavViewState extends State<MainNavView> {
                 decoration: BoxDecoration(
                   color: AppColors.cardBg(context),
                   border: Border(
-                    top: BorderSide(color: AppColors.border(context), width: 0.5),
+                    top: BorderSide(
+                      color: AppColors.border(context),
+                      width: 0.5,
+                    ),
                   ),
                 ),
                 child: BottomNavigationBar(
@@ -74,23 +89,55 @@ class _MainNavViewState extends State<MainNavView> {
                       .copyWith(fontSize: 14, fontWeight: FontWeight.w500),
                   items: [
                     BottomNavigationBarItem(
-                      icon: const Icon(Iconsax.home),
-                      activeIcon: const Icon(Iconsax.home_15),
+                      icon: _navIcon(
+                        context,
+                        AppIcons.homeIconSvg,
+                        selected: false,
+                      ),
+                      activeIcon: _navIcon(
+                        context,
+                        AppIcons.homeIconSvg,
+                        selected: true,
+                      ),
                       label: context.tr.navHome,
                     ),
                     BottomNavigationBarItem(
-                      icon: const Icon(Iconsax.map),
-                      activeIcon: const Icon(Iconsax.map5),
+                      icon: _navIcon(
+                        context,
+                        AppIcons.tripsIconSvg,
+                        selected: false,
+                      ),
+                      activeIcon: _navIcon(
+                        context,
+                        AppIcons.tripsIconSvg,
+                        selected: true,
+                      ),
                       label: context.tr.navTrips,
                     ),
                     BottomNavigationBarItem(
-                      icon: const Icon(Iconsax.heart),
-                      activeIcon: const Icon(Iconsax.heart5),
+                      icon: _navIcon(
+                        context,
+                        AppIcons.wishlistIconSvg,
+                        selected: false,
+                      ),
+                      activeIcon: _navIcon(
+                        context,
+                        AppIcons.wishlistIconSvg,
+                        selected: true,
+                      ),
                       label: context.tr.navWishlist,
                     ),
                     BottomNavigationBarItem(
-                      icon: const Icon(Iconsax.user),
-                      activeIcon: const Icon(Iconsax.user),
+                      icon: _navIcon(
+                        context,
+                        AppIcons.accountIconSvg,
+                        selected: false,
+                      ),
+                      activeIcon: _navIcon(
+                        context,
+                        AppIcons.accountIconSvg,
+                        selected: true,
+                      ),
                       label: context.tr.navAccount,
                     ),
                   ],

@@ -631,45 +631,39 @@ class HomeViewState extends State<HomeView> {
                   ConstrainedBox(
                     constraints: BoxConstraints(minHeight: 280.h),
                     child: BlocBuilder<SpecialTripsCubit, SpecialTripsState>(
-                    builder: (context, tripState) {
-                      if (tripState.status == SpecialTripsStatus.loading) {
-                        return Center(
-                          child: CustomLoading(size: 32, strokeWidth: 2.5),
-                        );
-                      }
-                      if (tripState.status == SpecialTripsStatus.success ||
-                          tripState.status == SpecialTripsStatus.loadingMore) {
-                        if (tripState.trips.isEmpty) {
-                          return SizedBox(
-                            height: 100.h,
-                            child: Center(
-                              child: Text(
-                                'No trips available',
-                                style: AppTextStyles.bodyMedium(
-                                  color: AppColors.greyText(context),
-                                ),
-                              ),
-                            ),
+                      builder: (context, tripState) {
+                        if (tripState.status == SpecialTripsStatus.loading) {
+                          return Center(
+                            child: CustomLoading(size: 32, strokeWidth: 2.5),
                           );
                         }
-                        return _SpecialTripsVerticalList(
-                          trips: tripState.trips,
-                          isLoadingMore:
-                              tripState.status ==
-                              SpecialTripsStatus.loadingMore,
-                          hasMore: tripState.hasMore,
-                          onLoadMore: () {
-                            context.read<SpecialTripsCubit>().loadMore();
-                          },
-                          onFavoriteTap: (trip) =>
-                              _onSpecialTripHeartTap(context, trip),
-                          onReturnedFromTripDetails:
-                              syncWishlistAfterTripDetails,
-                        );
-                      }
-                      return const SizedBox.shrink();
-                    },
-                  ),
+                        if (tripState.status == SpecialTripsStatus.success ||
+                            tripState.status ==
+                                SpecialTripsStatus.loadingMore) {
+                          if (tripState.trips.isEmpty) {
+                            return SizedBox(
+                              height: 100.h,
+                              child: Center(
+                                child: Text(
+                                  'No trips available',
+                                  style: AppTextStyles.bodyMedium(
+                                    color: AppColors.greyText(context),
+                                  ),
+                                ),
+                              ),
+                            );
+                          }
+                          return _SpecialTripsVerticalList(
+                            trips: tripState.trips,
+                            onFavoriteTap: (trip) =>
+                                _onSpecialTripHeartTap(context, trip),
+                            onReturnedFromTripDetails:
+                                syncWishlistAfterTripDetails,
+                          );
+                        }
+                        return const SizedBox.shrink();
+                      },
+                    ),
                   ),
                 ],
               );
@@ -787,21 +781,23 @@ class _TripHorizontalList extends StatelessWidget {
           final trip = trips[index];
           return StaggeredFadeSlide(
             index: index,
-            child: SizedBox(
-              width: 190.w,
-              child: PopularTripGridCard(
-                trip: trip,
-                onTap: () async {
-                  final result = await sl<AppNavigator>()
-                      .push<TripWishlistPopResult>(
-                        screen: TripDetailsView(
-                          tripId: trip.id,
-                          initialIsWishlisted: trip.isWishlisted,
-                        ),
-                      );
-                  onReturnedFromTripDetails(result);
-                },
-                onFavoriteTap: () => onFavoriteTap(trip),
+            child: RepaintBoundary(
+              child: SizedBox(
+                width: 190.w,
+                child: PopularTripGridCard(
+                  trip: trip,
+                  onTap: () async {
+                    final result = await sl<AppNavigator>()
+                        .push<TripWishlistPopResult>(
+                          screen: TripDetailsView(
+                            tripId: trip.id,
+                            initialIsWishlisted: trip.isWishlisted,
+                          ),
+                        );
+                    onReturnedFromTripDetails(result);
+                  },
+                  onFavoriteTap: () => onFavoriteTap(trip),
+                ),
               ),
             ),
           );
@@ -859,56 +855,45 @@ class _PromoBannerState extends State<_PromoBanner> {
 class _SpecialTripsVerticalList extends StatelessWidget {
   const _SpecialTripsVerticalList({
     required this.trips,
-    required this.isLoadingMore,
-    required this.hasMore,
-    required this.onLoadMore,
     required this.onFavoriteTap,
     required this.onReturnedFromTripDetails,
   });
 
+  static const int _homePreviewLimit = 2;
+
   final List<TripModel> trips;
-  final bool isLoadingMore;
-  final bool hasMore;
-  final VoidCallback onLoadMore;
   final void Function(TripModel trip) onFavoriteTap;
   final void Function(TripWishlistPopResult? result) onReturnedFromTripDetails;
 
   @override
   Widget build(BuildContext context) {
-    final itemCount = trips.length + (hasMore ? 1 : 0);
+    final visibleTrips = trips.take(_homePreviewLimit).toList(growable: false);
 
     return ListView.separated(
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
       padding: EdgeInsets.zero,
-      itemCount: itemCount,
+      itemCount: visibleTrips.length,
       separatorBuilder: (_, __) => SizedBox(height: 12.h),
       itemBuilder: (context, index) {
-        if (index >= trips.length) {
-          if (!isLoadingMore) {
-            onLoadMore();
-          }
-          return Padding(
-            padding: EdgeInsets.symmetric(vertical: 8.h),
-            child: Center(child: CustomLoading(size: 24, strokeWidth: 2)),
-          );
-        }
-        final trip = trips[index];
+        final trip = visibleTrips[index];
         return StaggeredFadeSlide(
           index: index,
-          child: SpecialTripWideCard(
-            trip: trip,
-            onTap: () async {
-              final result = await sl<AppNavigator>()
-                  .push<TripWishlistPopResult>(
-                    screen: TripDetailsView(
-                      tripId: trip.id,
-                      initialIsWishlisted: trip.isWishlisted,
-                    ),
-                  );
-              onReturnedFromTripDetails(result);
-            },
-            onFavoriteTap: () => onFavoriteTap(trip),
+          child: RepaintBoundary(
+            child: SpecialTripWideCard(
+              trip: trip,
+              onTap: () async {
+                final result = await sl<AppNavigator>()
+                    .push<TripWishlistPopResult>(
+                      screen: TripDetailsView(
+                        tripId: trip.id,
+                        initialIsWishlisted: trip.isWishlisted,
+                      ),
+                    );
+                onReturnedFromTripDetails(result);
+              },
+              onFavoriteTap: () => onFavoriteTap(trip),
+            ),
           ),
         );
       },

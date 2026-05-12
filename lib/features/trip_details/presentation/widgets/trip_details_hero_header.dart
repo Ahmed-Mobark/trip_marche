@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -84,15 +86,11 @@ class TripDetailsHeroHeader extends StatelessWidget {
           children: [
             ColoredBox(
               color: AppColors.lightBg(context),
-              child: GestureDetector(
-                behavior: HitTestBehavior.opaque,
+              child: _HeroAutoZoomCarousel(
+                imageUrls: viewerUrls,
                 onTap: () => AppPhotoGridScreen.open(
                   context,
                   imageUrls: viewerUrls,
-                ),
-                child: AppCachedNetworkImage(
-                  imageUrl: heroUrl,
-                  fit: BoxFit.cover,
                 ),
               ),
             ),
@@ -423,6 +421,157 @@ class _RatingPill extends StatelessWidget {
           ),
         ],
       ),
+    );
+  }
+}
+
+/// Auto-advancing hero carousel that cycles through the trip's top photos.
+///
+/// Each photo runs a slow zoom-in ("Ken-Burns") for [_perImage] (3s) and then
+/// cross-fades to the next photo. Tapping anywhere opens the photo grid.
+class _HeroAutoZoomCarousel extends StatefulWidget {
+  const _HeroAutoZoomCarousel({required this.imageUrls, required this.onTap});
+
+  final List<String> imageUrls;
+  final VoidCallback onTap;
+
+  static const Duration _perImage = Duration(seconds: 3);
+  static const Duration _crossFade = Duration(milliseconds: 600);
+  static const double _zoomFrom = 1.0;
+  static const double _zoomTo = 1.10;
+
+  @override
+  State<_HeroAutoZoomCarousel> createState() => _HeroAutoZoomCarouselState();
+}
+
+class _HeroAutoZoomCarouselState extends State<_HeroAutoZoomCarousel>
+    with SingleTickerProviderStateMixin {
+  late final AnimationController _zoom;
+  Timer? _advance;
+  int _index = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    _zoom = AnimationController(
+      vsync: this,
+      duration: _HeroAutoZoomCarousel._perImage,
+    );
+    _runCycle();
+  }
+
+  void _runCycle() {
+    _zoom.forward(from: 0);
+    _advance?.cancel();
+    if (widget.imageUrls.length <= 1) {
+      return;
+    }
+    _advance = Timer(_HeroAutoZoomCarousel._perImage, _moveNext);
+  }
+
+  void _moveNext() {
+    if (!mounted || widget.imageUrls.isEmpty) {
+      return;
+    }
+    setState(() {
+      _index = (_index + 1) % widget.imageUrls.length;
+    });
+    _runCycle();
+  }
+
+  @override
+  void didUpdateWidget(_HeroAutoZoomCarousel oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (!_sameList(oldWidget.imageUrls, widget.imageUrls)) {
+      _index = widget.imageUrls.isEmpty
+          ? 0
+          : _index.clamp(0, widget.imageUrls.length - 1);
+      _runCycle();
+    }
+  }
+
+  bool _sameList(List<String> a, List<String> b) {
+    if (identical(a, b)) return true;
+    if (a.length != b.length) return false;
+    for (var i = 0; i < a.length; i++) {
+      if (a[i] != b[i]) return false;
+    }
+    return true;
+  }
+
+  @override
+  void dispose() {
+    _advance?.cancel();
+    _zoom.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    if (widget.imageUrls.isEmpty) {
+      return GestureDetector(
+        behavior: HitTestBehavior.opaque,
+        onTap: widget.onTap,
+        child: const SizedBox.expand(),
+      );
+    }
+
+    return GestureDetector(
+      behavior: HitTestBehavior.opaque,
+      onTap: widget.onTap,
+      child: AnimatedSwitcher(
+        duration: _HeroAutoZoomCarousel._crossFade,
+        switchInCurve: Curves.easeOut,
+        switchOutCurve: Curves.easeIn,
+        layoutBuilder: (currentChild, previousChildren) {
+          return Stack(
+            fit: StackFit.expand,
+            children: <Widget>[
+              ...previousChildren,
+              if (currentChild != null) currentChild,
+            ],
+          );
+        },
+        child: _ZoomingHeroPhoto(
+          key: ValueKey<String>('$_index|${widget.imageUrls[_index]}'),
+          imageUrl: widget.imageUrls[_index],
+          animation: _zoom,
+          zoomFrom: _HeroAutoZoomCarousel._zoomFrom,
+          zoomTo: _HeroAutoZoomCarousel._zoomTo,
+        ),
+      ),
+    );
+  }
+}
+
+class _ZoomingHeroPhoto extends StatelessWidget {
+  const _ZoomingHeroPhoto({
+    super.key,
+    required this.imageUrl,
+    required this.animation,
+    required this.zoomFrom,
+    required this.zoomTo,
+  });
+
+  final String imageUrl;
+  final Animation<double> animation;
+  final double zoomFrom;
+  final double zoomTo;
+
+  @override
+  Widget build(BuildContext context) {
+    return AnimatedBuilder(
+      animation: animation,
+      builder: (context, child) {
+        final t = Curves.easeOut.transform(animation.value.clamp(0.0, 1.0));
+        final scale = zoomFrom + (zoomTo - zoomFrom) * t;
+        return Transform.scale(
+          scale: scale,
+          alignment: Alignment.center,
+          child: child,
+        );
+      },
+      child: AppCachedNetworkImage(imageUrl: imageUrl, fit: BoxFit.cover),
     );
   }
 }

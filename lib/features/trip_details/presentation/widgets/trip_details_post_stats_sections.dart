@@ -6,12 +6,22 @@ import 'package:trip_marche/core/extensions/localization.dart';
 import 'package:trip_marche/core/theme/app_colors.dart';
 import 'package:trip_marche/core/theme/app_text_styles.dart';
 import 'package:trip_marche/features/trip_details/domain/entities/trip_details_entity.dart';
+import 'google_maps_link_button.dart';
 import 'trip_details_info_card.dart';
 
 class TripDetailsPostStatsSections extends StatelessWidget {
   const TripDetailsPostStatsSections({super.key, required this.trip});
 
   final TripDetails trip;
+
+  Widget? _buildMapsButton(double? lat, double? lng, String location) {
+    final hasCoords = lat != null && lng != null;
+    final hasLabel = location.trim().isNotEmpty;
+    if (!hasCoords && !hasLabel) {
+      return null;
+    }
+    return GoogleMapsLinkButton(label: location, lat: lat, lng: lng);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -35,11 +45,12 @@ class TripDetailsPostStatsSections extends StatelessWidget {
             children: [
               Text(
                 context.tr.tripDetailsOverviewTitle,
-                style: AppTextStyles.body(color: AppColors.darkText(context)).copyWith(
-                  fontSize: 18.sp,
-                  fontWeight: FontWeight.w700,
-                  height: 1.1,
-                ),
+                style: AppTextStyles.body(color: AppColors.darkText(context))
+                    .copyWith(
+                      fontSize: 18.sp,
+                      fontWeight: FontWeight.w700,
+                      height: 1.1,
+                    ),
               ),
               SizedBox(height: 8.h),
               Text(
@@ -119,15 +130,22 @@ class TripDetailsPostStatsSections extends StatelessWidget {
                 icon: Iconsax.location,
                 label: context.tr.tripDetailsMeetingLocationLabel,
                 value: trip.meeting.location,
-                trailing: trip.meeting.lat != null && trip.meeting.lng != null
-                    ? _MapButton(onTap: () {})
-                    : null,
+                trailing: _buildMapsButton(
+                  trip.meeting.lat,
+                  trip.meeting.lng,
+                  trip.meeting.location,
+                ),
               ),
               const SizedBox(height: 12),
               _LocationRow(
                 icon: Iconsax.routing_2,
                 label: context.tr.tripDetailsReturnLocationLabel,
                 value: trip.returnPoint.location,
+                trailing: _buildMapsButton(
+                  trip.returnPoint.lat,
+                  trip.returnPoint.lng,
+                  trip.returnPoint.location,
+                ),
               ),
               const SizedBox(height: 12),
               Row(
@@ -165,6 +183,7 @@ class _IncludedGrid extends StatelessWidget {
   /// Figma: tight rows; gutter 8 vertical, 16 horizontal; flat cells (wide aspect).
   static const double _mainAxisSpacing = 6;
   static const double _crossAxisSpacing = 12;
+
   /// Wide cells; tall enough for two lines at 14px (Figma-tight rows via [mainAxisSpacing]).
   static const double _childAspectRatio = 3.45;
 
@@ -246,11 +265,7 @@ class _LocationRow extends StatelessWidget {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        Icon(
-          icon,
-          color: AppColors.tripDetailsDepartureIconPurple,
-          size: 20,
-        ),
+        Icon(icon, color: AppColors.tripDetailsDepartureIconPurple, size: 20),
         const SizedBox(width: 10),
         Expanded(
           child: Column(
@@ -305,11 +320,7 @@ class _TimeRow extends StatelessWidget {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        Icon(
-          icon,
-          color: AppColors.tripDetailsDepartureIconPurple,
-          size: 20,
-        ),
+        Icon(icon, color: AppColors.tripDetailsDepartureIconPurple, size: 20),
         const SizedBox(width: 10),
         Expanded(
           child: Column(
@@ -343,41 +354,6 @@ class _TimeRow extends StatelessWidget {
           ),
         ),
       ],
-    );
-  }
-}
-
-class _MapButton extends StatelessWidget {
-  const _MapButton({required this.onTap});
-
-  final VoidCallback onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    return Material(
-      color: AppColors.transparent,
-      borderRadius: BorderRadius.circular(8),
-      child: InkWell(
-        onTap: onTap,
-        borderRadius: BorderRadius.circular(8),
-        child: Container(
-          width: 36,
-          height: 36,
-          alignment: Alignment.center,
-          decoration: BoxDecoration(
-            color: AppColors.isDark(context)
-                ? AppColors.inputBg(context)
-                : AppColors.tripDetailsMapButtonBg,
-            borderRadius: BorderRadius.circular(6),
-            border: Border.all(color: AppColors.tripDetailsHairline(context)),
-          ),
-          child: Icon(
-            Icons.map_rounded,
-            color: AppColors.tripDetailsMapIconBlue,
-            size: 18,
-          ),
-        ),
-      ),
     );
   }
 }

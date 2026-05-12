@@ -12,6 +12,9 @@ class FilterCubit extends Cubit<FilterState> {
   final GetFilterMetadataUseCase _getFilterMetadataUseCase;
 
   void resetFilters() {
+    if (isClosed) {
+      return;
+    }
     emit(const FilterState());
     loadInitialData();
   }
@@ -123,10 +126,16 @@ class FilterCubit extends Cubit<FilterState> {
   }
 
   Future<void> loadInitialData() async {
+    if (isClosed) {
+      return;
+    }
     await Future.wait([loadFilterMetadata(), loadDestinations()]);
   }
 
   Future<void> loadDestinations() async {
+    if (isClosed) {
+      return;
+    }
     emit(
       state.copyWith(
         destinationsStatus: FilterDestinationsStatus.loading,
@@ -134,6 +143,9 @@ class FilterCubit extends Cubit<FilterState> {
       ),
     );
     final result = await _getDestinationsUseCase();
+    if (isClosed) {
+      return;
+    }
     result.fold(
       (failure) {
         emit(
@@ -157,6 +169,9 @@ class FilterCubit extends Cubit<FilterState> {
   }
 
   Future<void> loadFilterMetadata() async {
+    if (isClosed) {
+      return;
+    }
     emit(
       state.copyWith(
         metadataStatus: FilterMetadataStatus.loading,
@@ -164,6 +179,9 @@ class FilterCubit extends Cubit<FilterState> {
       ),
     );
     final result = await _getFilterMetadataUseCase();
+    if (isClosed) {
+      return;
+    }
     result.fold(
       (failure) {
         emit(
