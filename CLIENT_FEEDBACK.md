@@ -143,7 +143,7 @@
 
 ## Trip Details Page - Visa & Sections
 
-43. [PENDING] The last section(s) starting with "visa details" — each one should be a full separate page
+43. [DONE] The last section(s) starting with "visa details" — each one should be a full separate page
 44. [DONE] Add a separator between flight and transportation sections
 
 ---
