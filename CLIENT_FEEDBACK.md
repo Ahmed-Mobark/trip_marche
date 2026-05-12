@@ -75,7 +75,7 @@
 ## Trip Cards (All)
 
 19. [DONE] Write "from" before the departure location on all trip cards
-20. [PENDING] Add price at the bottom of every trip card
+20. [DONE] Add price at the bottom of every trip card
 
 ---
 

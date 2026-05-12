@@ -5,6 +5,7 @@ import 'package:iconsax/iconsax.dart';
 
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_text_styles.dart';
+import '../../../../core/utils/price_formatter.dart';
 import '../../../../core/widgets/app_cached_network_image.dart';
 import '../../data/models/home_section_response.dart';
 
@@ -167,11 +168,7 @@ class PopularTripGridCard extends StatelessWidget {
             ),
             SizedBox(height: 6.h),
             Padding(
-              padding: EdgeInsetsDirectional.only(
-                start: 12.w,
-                end: 12.w,
-                bottom: 12.h,
-              ),
+              padding: EdgeInsetsDirectional.only(start: 12.w, end: 12.w),
               child: Row(
                 children: [
                   Icon(
@@ -190,6 +187,39 @@ class PopularTripGridCard extends StatelessWidget {
                       ),
                     ),
                   ),
+                ],
+              ),
+            ),
+            SizedBox(height: 8.h),
+            Padding(
+              padding: EdgeInsetsDirectional.only(
+                start: 12.w,
+                end: 12.w,
+                bottom: 12.h,
+              ),
+              child: Row(
+                children: [
+                  if (trip.discountPrice != null) ...[
+                    Text(
+                      PriceFormatter.format(trip.discountPrice!, currency: trip.currency),
+                      style: AppTextStyles.bodyMedium(
+                        color: AppColors.primary,
+                      ).copyWith(fontWeight: FontWeight.w700),
+                    ),
+                    SizedBox(width: 6.w),
+                    Text(
+                      PriceFormatter.format(trip.price, currency: trip.currency),
+                      style: AppTextStyles.bodySmall(
+                        color: AppColors.greyText(context),
+                      ).copyWith(decoration: TextDecoration.lineThrough),
+                    ),
+                  ] else
+                    Text(
+                      PriceFormatter.format(trip.price, currency: trip.currency),
+                      style: AppTextStyles.bodyMedium(
+                        color: AppColors.primary,
+                      ).copyWith(fontWeight: FontWeight.w700),
+                    ),
                 ],
               ),
             ),
