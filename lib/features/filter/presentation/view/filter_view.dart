@@ -7,6 +7,7 @@ import 'package:trip_marche/core/extensions/localization.dart';
 import 'package:trip_marche/core/injection/injection_container.dart';
 import 'package:trip_marche/core/navigation/app_navigator.dart';
 import 'package:trip_marche/core/theme/app_colors.dart';
+import 'package:trip_marche/core/widgets/custom_loading.dart';
 import 'package:trip_marche/features/filter/presentation/cubit/filter_cubit.dart';
 import 'package:trip_marche/features/filter/presentation/cubit/filter_state.dart';
 import 'package:trip_marche/features/filter/presentation/view/search_result_view.dart';
@@ -628,9 +629,7 @@ class _FilterBody extends StatelessWidget {
                             top: 24.h,
                             bottom: 24.h,
                           ),
-                          child: const Center(
-                            child: CircularProgressIndicator(),
-                          ),
+                          child: const CustomLoading(),
                         )
                       else
                         Flexible(

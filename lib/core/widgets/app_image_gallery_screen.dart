@@ -4,7 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:photo_view/photo_view.dart';
 import 'package:photo_view/photo_view_gallery.dart';
 import 'package:trip_marche/core/extensions/localization.dart';
-import 'package:trip_marche/core/theme/app_colors.dart';
+import 'package:trip_marche/core/widgets/custom_loading.dart';
 
 /// Full-screen gallery: swipe between photos, pinch / double-tap zoom.
 class AppImageGalleryScreen extends StatefulWidget {
@@ -95,17 +95,7 @@ class _AppImageGalleryScreenState extends State<AppImageGalleryScreen> {
                   setState(() => _displayIndex = index);
                 },
                 loadingBuilder: (context, event) => Center(
-                  child: SizedBox(
-                    width: 36,
-                    height: 36,
-                    child: CircularProgressIndicator(
-                      strokeWidth: 2.5,
-                      color: AppColors.primary.withValues(alpha: 0.9),
-                      value: event == null || event.expectedTotalBytes == null
-                          ? null
-                          : event.cumulativeBytesLoaded / event.expectedTotalBytes!,
-                    ),
-                  ),
+                  child: CustomLoading(size: 36, strokeWidth: 2.5),
                 ),
                 builder: (context, index) {
                   final url = widget.imageUrls[index];
