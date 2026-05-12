@@ -71,7 +71,9 @@ class VerifyNumberView extends StatelessWidget {
                       const SizedBox(height: 6),
                       Text(
                         context.tr.authVerifyEmailSubtitle,
-                        style: AppTextStyles.body(color: AppColors.greyText(context)),
+                        style: AppTextStyles.body(
+                          color: AppColors.greyText(context),
+                        ),
                       ),
                       const SizedBox(height: 18),
 
