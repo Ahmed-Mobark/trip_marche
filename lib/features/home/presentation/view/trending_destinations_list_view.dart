@@ -151,6 +151,7 @@ class _TrendingDestinationsListScaffoldState
                 children: [
                   AppTripSearchTextField(
                     controller: _searchCtrl,
+                    hintText: context.tr.destinationSearchHint,
                     onChanged: _onSearchFieldChanged,
                     onSubmitted: (_) => _onSearchSubmitted(),
                     onClear: _onSearchClear,
