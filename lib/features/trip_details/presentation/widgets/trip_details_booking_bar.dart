@@ -148,8 +148,7 @@ class TripDetailsBookingBar extends StatelessWidget {
                   ],
                 ),
                 const Spacer(),
-                SizedBox(
-                  height: 42.h,
+                IntrinsicWidth(
                   child: AppButton(
                     heigh: 42.h,
                     radius: 999.r,
