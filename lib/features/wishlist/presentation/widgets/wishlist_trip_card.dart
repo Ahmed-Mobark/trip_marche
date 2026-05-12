@@ -187,7 +187,7 @@ class WishlistTripCard extends StatelessWidget {
                       SizedBox(width: 6.w),
                       Expanded(
                         child: Text(
-                          trip.fromLocation,
+                          '${context.tr.myTripsFromPrefix} ${trip.fromLocation}',
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                           style: AppTextStyles.bodySmall(

@@ -58,8 +58,11 @@ class TripDetailsHeroHeader extends StatelessWidget {
         ? trip.vendor.company!.trim()
         : trip.vendor.name.trim();
     final showCompany = companyName.isNotEmpty;
-    final fromLine = trip.fromLocation.trim();
-    final showFrom = fromLine.isNotEmpty;
+    final rawFrom = trip.fromLocation.trim();
+    final fromLine = rawFrom.isNotEmpty
+        ? '${context.tr.myTripsFromPrefix} $rawFrom'
+        : '';
+    final showFrom = rawFrom.isNotEmpty;
     final ratingText = trip.rating.toStringAsFixed(1);
 
     final actionDiameter = 48.r;
