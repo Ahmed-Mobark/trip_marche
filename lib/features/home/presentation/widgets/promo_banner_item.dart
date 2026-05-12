@@ -38,7 +38,9 @@ class PromoBannerItem extends StatelessWidget {
             ? AppTextStyles.heading3(color: AppColors.onImage)
             : AppTextStyles.heading2(color: AppColors.onImage);
 
-        return Container(
+        return GestureDetector(
+          onTap: () async => await launchUrl(Uri.parse(urlLaunch)),
+          child: Container(
           width: double.infinity,
           margin: EdgeInsets.symmetric(horizontal: 4.w),
           decoration: BoxDecoration(
@@ -141,6 +143,7 @@ class PromoBannerItem extends StatelessWidget {
               ),
             ],
           ),
+        ),
         );
       },
     );
