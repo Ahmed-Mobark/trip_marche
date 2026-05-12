@@ -214,7 +214,7 @@
 71. [DONE] Remove the notification bell background circle
 72. [DONE] Reduce search bar height slightly
 73. [DONE] Change location row color to light grey
-74. [PENDING] Location should show only city name and country
+74. [DONE] Location should show only city name and country
 
 ---
 

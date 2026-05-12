@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:trip_marche/core/extensions/localization.dart';
 import 'package:trip_marche/core/injection/injection_container.dart';
+import 'package:trip_marche/core/services/location_service.dart';
 import 'package:trip_marche/core/navigation/app_navigator.dart';
 import 'package:trip_marche/core/theme/app_colors.dart';
 import 'package:trip_marche/core/theme/app_text_styles.dart';
@@ -44,6 +45,21 @@ class HomeView extends StatefulWidget {
 
 class HomeViewState extends State<HomeView> {
   BuildContext? _refreshContext;
+  String _locationText = '';
+
+  @override
+  void initState() {
+    super.initState();
+    _fetchLocation();
+  }
+
+  Future<void> _fetchLocation() async {
+    final locService = sl<LocationService>();
+    await locService.fetchCurrentLocation();
+    if (mounted && locService.currentLocation.isNotEmpty) {
+      setState(() => _locationText = locService.currentLocation);
+    }
+  }
 
   Future<void> refreshFromNavBarTap() async {
     final ctx = _refreshContext;
@@ -223,7 +239,9 @@ class HomeViewState extends State<HomeView> {
                         pinned: true,
                         delegate: HomeHeaderDelegate(
                           searchHint: scrollContext.tr.homeSearchHint,
-                          locationText: scrollContext.tr.homeLocationText,
+                          locationText: _locationText.isNotEmpty
+                              ? _locationText
+                              : scrollContext.tr.homeLocationText,
                           topPadding: MediaQuery.paddingOf(scrollContext).top,
                           onNotificationsTap: () {},
                         ),

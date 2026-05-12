@@ -1,5 +1,6 @@
 import '../navigation/navigation_inj.dart';
 import '../network/network_service_inj.dart';
+import '../services/location_service.dart';
 import '../services/media_service_inj.dart';
 import '../storage/storage_inj.dart';
 import '../../features/auth/auth_inj.dart';
@@ -15,6 +16,7 @@ GetIt sl = GetIt.instance;
 Future<void> init() async {
   await initStorageInjection(sl);
   initNavigationInjection(sl);
+  sl.registerLazySingleton<LocationService>(() => LocationService());
   initNetworkServiceInjection(sl);
   initMediaServiceInjection(sl);
   await initAuthInjection(sl);
