@@ -86,7 +86,7 @@ class SpecialTripWideCard extends StatelessWidget {
                       Expanded(
                         child: Text(
                           trip.title,
-                          maxLines: 1,
+                          maxLines: 2,
                           overflow: TextOverflow.ellipsis,
                           style: AppTextStyles.bodySmall(
                             color: AppColors.darkText(context),

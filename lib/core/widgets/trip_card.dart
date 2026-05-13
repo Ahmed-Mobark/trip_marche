@@ -44,7 +44,7 @@ class TripCard extends StatelessWidget {
                 children: [
                   Text(
                     trip.title,
-                    maxLines: 1,
+                    maxLines: 2,
                     overflow: TextOverflow.ellipsis,
                     style: AppTextStyles.subtitle(color: AppColors.darkText(context)),
                   ),
@@ -121,7 +121,7 @@ class TripCardWide extends StatelessWidget {
                 children: [
                   Text(
                     trip.title,
-                    maxLines: 1,
+                    maxLines: 2,
                     overflow: TextOverflow.ellipsis,
                     style: AppTextStyles.subtitle(color: AppColors.darkText(context)),
                   ),

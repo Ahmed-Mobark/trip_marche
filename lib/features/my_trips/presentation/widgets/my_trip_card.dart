@@ -68,7 +68,7 @@ class MyTripCard extends StatelessWidget {
                     Text(
                       trip.title,
                       style: AppTextStyles.subtitle().copyWith(fontSize: 15.sp),
-                      maxLines: 1,
+                      maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                     ),
                     SizedBox(height: 6.h),

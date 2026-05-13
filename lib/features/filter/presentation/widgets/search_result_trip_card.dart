@@ -89,7 +89,7 @@ class SearchResultTripCard extends StatelessWidget {
                         Expanded(
                           child: Text(
                             data.title,
-                            maxLines: 1,
+                            maxLines: 2,
                             overflow: TextOverflow.ellipsis,
                             style: AppTextStyles.heading3(
                               color: AppColors.searchResultCardInk,

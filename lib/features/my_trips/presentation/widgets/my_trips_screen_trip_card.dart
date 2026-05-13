@@ -150,7 +150,7 @@ class MyTripsScreenTripCard extends StatelessWidget {
                         Expanded(
                           child: Text(
                             trip.title,
-                            maxLines: 1,
+                            maxLines: 2,
                             overflow: TextOverflow.ellipsis,
                             style: MyTripsFigmaTokens.text(
                               fontSize: MyTripsTripCardTokens.titleFont,

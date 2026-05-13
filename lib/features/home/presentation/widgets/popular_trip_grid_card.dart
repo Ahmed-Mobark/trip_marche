@@ -113,7 +113,7 @@ class PopularTripGridCard extends StatelessWidget {
               padding: EdgeInsetsDirectional.only(start: 12.w, end: 12.w),
               child: Text(
                 trip.title,
-                maxLines: 1,
+                maxLines: 2,
                 overflow: TextOverflow.ellipsis,
                 style: AppTextStyles.subtitle(
                   color: AppColors.darkText(context),

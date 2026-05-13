@@ -165,7 +165,7 @@ class MyTripBookingCard extends StatelessWidget {
                       Expanded(
                         child: Text(
                           _title,
-                          maxLines: 1,
+                          maxLines: 2,
                           overflow: TextOverflow.ellipsis,
                           style: AppTextStyles.subtitle(
                             color: AppColors.darkText(context),
