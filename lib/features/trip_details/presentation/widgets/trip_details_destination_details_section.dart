@@ -59,10 +59,9 @@ class TripDetailsDestinationDetailsSection extends StatelessWidget {
         if (carousel.isNotEmpty) ...[
           Text(
             context.tr.tripDetailsDestinationsTitle,
-            style: AppTextStyles.heading3(color: AppColors.darkText(context)).copyWith(
-              height: 1.1,
-              letterSpacing: 0,
-            ),
+            style: AppTextStyles.heading3(
+              color: AppColors.darkText(context),
+            ).copyWith(height: 1.1, letterSpacing: 0),
           ),
           SizedBox(height: 8.h),
           SizedBox(
@@ -181,20 +180,21 @@ class _DestinationPhotoCard extends StatelessWidget {
                         maxLines: 2,
                         overflow: TextOverflow.ellipsis,
                         style:
-                            AppTextStyles.bodyMedium(color: AppColors.onImage)
-                                .copyWith(
-                          fontSize: 14.sp,
-                          fontWeight: FontWeight.w700,
-                          height: 1.2,
-                          letterSpacing: 0,
-                          shadows: [
-                            Shadow(
-                              color: AppColors.scrim.withValues(alpha: 0.4),
-                              blurRadius: 8.r,
-                              offset: Offset(0, 1.h),
+                            AppTextStyles.bodyMedium(
+                              color: AppColors.onImage,
+                            ).copyWith(
+                              fontSize: 14.sp,
+                              fontWeight: FontWeight.w700,
+                              height: 1.2,
+                              letterSpacing: 0,
+                              shadows: [
+                                Shadow(
+                                  color: AppColors.scrim.withValues(alpha: 0.4),
+                                  blurRadius: 8.r,
+                                  offset: Offset(0, 1.h),
+                                ),
+                              ],
                             ),
-                          ],
-                        ),
                       ),
                     ),
                   ],
@@ -206,14 +206,15 @@ class _DestinationPhotoCard extends StatelessWidget {
               description.trim(),
               maxLines: 2,
               overflow: TextOverflow.ellipsis,
-              style: AppTextStyles.caption(
-                color: AppColors.secondaryText(context),
-              ).copyWith(
-                fontSize: 12.sp,
-                height: 1.25,
-                fontWeight: FontWeight.w400,
-                letterSpacing: 0,
-              ),
+              style:
+                  AppTextStyles.caption(
+                    color: AppColors.secondaryText(context),
+                  ).copyWith(
+                    fontSize: 12.sp,
+                    height: 1.25,
+                    fontWeight: FontWeight.w400,
+                    letterSpacing: 0,
+                  ),
             ),
           ],
         ),
@@ -230,12 +231,12 @@ class _DestinationDetailsGridCard extends StatelessWidget {
     final cardBorder = AppColors.border(context).withValues(alpha: 0.35);
     final items = <_DestinationDetailsItemData>[
       _DestinationDetailsItemData(
-        icon: Iconsax.global,
+        icon: Iconsax.ticket,
         title: context.tr.tripDetailsDestinationVisaLabel,
         subtitle: context.tr.tripDetailsDestinationVisaValue,
       ),
       _DestinationDetailsItemData(
-        icon: Iconsax.health,
+        icon: Iconsax.health4,
         title: context.tr.tripDetailsDestinationRequiredVaccinesLabel,
         subtitle: context.tr.tripDetailsDestinationRequiredVaccinesValue,
       ),
@@ -245,7 +246,7 @@ class _DestinationDetailsGridCard extends StatelessWidget {
         subtitle: context.tr.tripDetailsDestinationTimeValue,
       ),
       _DestinationDetailsItemData(
-        icon: Iconsax.translate,
+        icon: Iconsax.global,
         title: context.tr.tripDetailsDestinationLanguageLabel,
         subtitle: context.tr.tripDetailsDestinationLanguageValue,
       ),
@@ -282,10 +283,9 @@ class _DestinationDetailsGridCard extends StatelessWidget {
         children: [
           Text(
             context.tr.tripDetailsDestinationDetailsTitle,
-            style: AppTextStyles.heading3(color: AppColors.darkText(context)).copyWith(
-              height: 1.1,
-              letterSpacing: 0,
-            ),
+            style: AppTextStyles.heading3(
+              color: AppColors.darkText(context),
+            ).copyWith(height: 1.1, letterSpacing: 0),
           ),
           SizedBox(height: 8.h),
           GridView.builder(
@@ -358,25 +358,26 @@ class _DestinationDetailsItem extends StatelessWidget {
                 data.title,
                 maxLines: 2,
                 overflow: TextOverflow.ellipsis,
-                style: AppTextStyles.caption(color: AppColors.darkText(context)).copyWith(
-                  fontSize: 13.sp,
-                  fontWeight: FontWeight.w700,
-                  height: 1.2,
-                  letterSpacing: 0,
-                ),
+                style: AppTextStyles.caption(color: AppColors.darkText(context))
+                    .copyWith(
+                      fontSize: 13.sp,
+                      fontWeight: FontWeight.w700,
+                      height: 1.2,
+                      letterSpacing: 0,
+                    ),
               ),
               SizedBox(height: 2.h),
               Text(
                 data.subtitle,
                 maxLines: 2,
                 overflow: TextOverflow.ellipsis,
-                style:
-                    AppTextStyles.caption(color: AppColors.greyText(context)).copyWith(
-                  fontSize: 12.sp,
-                  fontWeight: FontWeight.w400,
-                  height: 1.2,
-                  letterSpacing: 0,
-                ),
+                style: AppTextStyles.caption(color: AppColors.greyText(context))
+                    .copyWith(
+                      fontSize: 12.sp,
+                      fontWeight: FontWeight.w400,
+                      height: 1.2,
+                      letterSpacing: 0,
+                    ),
               ),
             ],
           ),
