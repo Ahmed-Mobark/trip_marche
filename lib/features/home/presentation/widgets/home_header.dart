@@ -268,7 +268,7 @@ class _SearchFieldState extends State<_SearchField> {
               clipBehavior: Clip.hardEdge,
               child: AnimatedSwitcher(
                 duration: _transitionDuration,
-                switchInCurve: Curves.easeOutCubic,
+                switchInCurve: Curves.easeInCubic,
                 switchOutCurve: Curves.easeInCubic,
                 transitionBuilder: (child, animation) {
                   final isIncoming =
