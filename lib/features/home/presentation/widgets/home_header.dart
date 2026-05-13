@@ -253,29 +253,45 @@ class _SearchFieldState extends State<_SearchField> {
           SizedBox(width: 10.w),
           Expanded(
             child: ClipRect(
+              clipBehavior: Clip.hardEdge,
               child: AnimatedSwitcher(
                 duration: _transitionDuration,
                 switchInCurve: Curves.easeOutCubic,
                 switchOutCurve: Curves.easeInCubic,
                 transitionBuilder: (child, animation) {
+                  final curved = CurvedAnimation(
+                    parent: animation,
+                    curve: Curves.easeOutCubic,
+                  );
                   final slide = Tween<Offset>(
-                    begin: const Offset(0, 0.35),
+                    begin: const Offset(0, 0.65),
                     end: Offset.zero,
-                  ).animate(animation);
+                  ).animate(curved);
                   return FadeTransition(
-                    opacity: animation,
-                    child: SlideTransition(position: slide, child: child),
+                    opacity: curved,
+                    child: SlideTransition(
+                      position: slide,
+                      child: child,
+                    ),
                   );
                 },
-                child: Text(
-                  hint,
+                child: SizedBox(
                   key: ValueKey<String>(hint),
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: TextStyle(
-                    fontSize: 14.sp,
-                    fontWeight: FontWeight.w400,
-                    color: AppColors.greyText(context).withValues(alpha: 0.9),
+                  width: double.infinity,
+                  child: Align(
+                    alignment: AlignmentDirectional.centerStart,
+                    child: Text(
+                      hint,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      // Start of line = beside the search icon in both LTR and RTL.
+                      textAlign: TextAlign.start,
+                      style: TextStyle(
+                        fontSize: 14.sp,
+                        fontWeight: FontWeight.w400,
+                        color: AppColors.greyText(context).withValues(alpha: 0.9),
+                      ),
+                    ),
                   ),
                 ),
               ),
