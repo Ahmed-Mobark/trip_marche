@@ -181,6 +181,7 @@ class _SearchField extends StatefulWidget {
 class _SearchFieldState extends State<_SearchField> {
   /// Time between rotating destination hints.
   static const Duration _swapEvery = Duration(milliseconds: 2600);
+
   /// Long enough to read; slide uses [Interval] so motion starts after a beat.
   static const Duration _transitionDuration = Duration(milliseconds: 560);
 
@@ -244,7 +245,7 @@ class _SearchFieldState extends State<_SearchField> {
     final t = widget.collapseProgress;
     final bgColor = Color.lerp(
       AppColors.cardBg(context),
-      Colors.white.withValues(alpha: 0.25),
+      Colors.white.withValues(alpha: 0.85),
       t,
     )!;
     return Container(
@@ -270,25 +271,26 @@ class _SearchFieldState extends State<_SearchField> {
                 switchInCurve: Curves.easeOutCubic,
                 switchOutCurve: Curves.easeInCubic,
                 transitionBuilder: (child, animation) {
-                  final isIncoming = animation.status == AnimationStatus.forward ||
+                  final isIncoming =
+                      animation.status == AnimationStatus.forward ||
                       animation.status == AnimationStatus.completed;
-                  final slide = Tween<Offset>(
-                    begin: Offset(0, isIncoming ? 0.55 : -0.55),
-                    end: Offset.zero,
-                  ).animate(CurvedAnimation(
-                    parent: animation,
-                    curve: Curves.easeOutCubic,
-                  ));
+                  final slide =
+                      Tween<Offset>(
+                        begin: Offset(0, isIncoming ? 0.55 : -0.55),
+                        end: Offset.zero,
+                      ).animate(
+                        CurvedAnimation(
+                          parent: animation,
+                          curve: Curves.easeOutCubic,
+                        ),
+                      );
                   final fade = CurvedAnimation(
                     parent: animation,
                     curve: Curves.easeOut,
                   );
                   return FadeTransition(
                     opacity: fade,
-                    child: SlideTransition(
-                      position: slide,
-                      child: child,
-                    ),
+                    child: SlideTransition(position: slide, child: child),
                   );
                 },
                 child: SizedBox(
@@ -305,7 +307,9 @@ class _SearchFieldState extends State<_SearchField> {
                       style: TextStyle(
                         fontSize: 14.sp,
                         fontWeight: FontWeight.w400,
-                        color: AppColors.greyText(context).withValues(alpha: 0.9),
+                        color: AppColors.greyText(
+                          context,
+                        ).withValues(alpha: 0.9),
                       ),
                     ),
                   ),
