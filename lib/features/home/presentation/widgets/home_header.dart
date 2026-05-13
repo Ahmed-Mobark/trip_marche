@@ -176,8 +176,10 @@ class _SearchField extends StatefulWidget {
 }
 
 class _SearchFieldState extends State<_SearchField> {
-  static const Duration _swapEvery = Duration(milliseconds: 2400);
-  static const Duration _transitionDuration = Duration(milliseconds: 420);
+  /// Time between rotating destination hints.
+  static const Duration _swapEvery = Duration(milliseconds: 2600);
+  /// Long enough to read; slide uses [Interval] so motion starts after a beat.
+  static const Duration _transitionDuration = Duration(milliseconds: 560);
 
   Timer? _timer;
   int _index = 0;
@@ -259,16 +261,18 @@ class _SearchFieldState extends State<_SearchField> {
                 switchInCurve: Curves.easeOutCubic,
                 switchOutCurve: Curves.easeInCubic,
                 transitionBuilder: (child, animation) {
-                  final curved = CurvedAnimation(
-                    parent: animation,
-                    curve: Curves.easeOutCubic,
-                  );
+                  // Hold briefly so users notice the motion (especially on cold open).
+                  const motionDelay = Interval(0.16, 1.0, curve: Curves.easeOutCubic);
                   final slide = Tween<Offset>(
-                    begin: const Offset(0, 0.65),
+                    begin: const Offset(0, 0.55),
                     end: Offset.zero,
-                  ).animate(curved);
+                  ).animate(CurvedAnimation(parent: animation, curve: motionDelay));
+                  final fade = CurvedAnimation(
+                    parent: animation,
+                    curve: Curves.easeOut,
+                  );
                   return FadeTransition(
-                    opacity: curved,
+                    opacity: fade,
                     child: SlideTransition(
                       position: slide,
                       child: child,
