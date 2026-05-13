@@ -176,8 +176,10 @@ class _SearchField extends StatefulWidget {
 }
 
 class _SearchFieldState extends State<_SearchField> {
-  static const Duration _swapEvery = Duration(milliseconds: 2400);
-  static const Duration _transitionDuration = Duration(milliseconds: 420);
+  /// Time between rotating destination hints.
+  static const Duration _swapEvery = Duration(milliseconds: 2600);
+  /// Long enough to read; slide uses [Interval] so motion starts after a beat.
+  static const Duration _transitionDuration = Duration(milliseconds: 560);
 
   Timer? _timer;
   int _index = 0;
@@ -253,29 +255,47 @@ class _SearchFieldState extends State<_SearchField> {
           SizedBox(width: 10.w),
           Expanded(
             child: ClipRect(
+              clipBehavior: Clip.hardEdge,
               child: AnimatedSwitcher(
                 duration: _transitionDuration,
                 switchInCurve: Curves.easeOutCubic,
                 switchOutCurve: Curves.easeInCubic,
                 transitionBuilder: (child, animation) {
+                  // Hold briefly so users notice the motion (especially on cold open).
+                  const motionDelay = Interval(0.16, 1.0, curve: Curves.easeOutCubic);
                   final slide = Tween<Offset>(
-                    begin: const Offset(0, 0.35),
+                    begin: const Offset(0, 0.55),
                     end: Offset.zero,
-                  ).animate(animation);
+                  ).animate(CurvedAnimation(parent: animation, curve: motionDelay));
+                  final fade = CurvedAnimation(
+                    parent: animation,
+                    curve: Curves.easeOut,
+                  );
                   return FadeTransition(
-                    opacity: animation,
-                    child: SlideTransition(position: slide, child: child),
+                    opacity: fade,
+                    child: SlideTransition(
+                      position: slide,
+                      child: child,
+                    ),
                   );
                 },
-                child: Text(
-                  hint,
+                child: SizedBox(
                   key: ValueKey<String>(hint),
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: TextStyle(
-                    fontSize: 14.sp,
-                    fontWeight: FontWeight.w400,
-                    color: AppColors.greyText(context).withValues(alpha: 0.9),
+                  width: double.infinity,
+                  child: Align(
+                    alignment: AlignmentDirectional.centerStart,
+                    child: Text(
+                      hint,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      // Start of line = beside the search icon in both LTR and RTL.
+                      textAlign: TextAlign.start,
+                      style: TextStyle(
+                        fontSize: 14.sp,
+                        fontWeight: FontWeight.w400,
+                        color: AppColors.greyText(context).withValues(alpha: 0.9),
+                      ),
+                    ),
                   ),
                 ),
               ),
