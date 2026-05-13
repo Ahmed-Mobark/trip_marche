@@ -3567,6 +3567,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Visa and entry'**
   String get tripDetailsVisaAndEntryTitle;
+
+  /// No description provided for @csLetsGetInTouch.
+  ///
+  /// In en, this message translates to:
+  /// **'Let\'s get in touch'**
+  String get csLetsGetInTouch;
+
+  /// No description provided for @csCall.
+  ///
+  /// In en, this message translates to:
+  /// **'Call'**
+  String get csCall;
+
+  /// No description provided for @csSendMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Send Message'**
+  String get csSendMessage;
+
+  /// No description provided for @csWhatsApp.
+  ///
+  /// In en, this message translates to:
+  /// **'WhatsApp'**
+  String get csWhatsApp;
 }
 
 class _AppLocalizationsDelegate

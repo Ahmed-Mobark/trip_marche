@@ -21,13 +21,14 @@ class TrendingDestinationCard extends StatelessWidget {
   final String imageUrl;
   final int rank;
   final VoidCallback? onTap;
+
   /// When set (e.g. grid), fills the cell; otherwise uses the home rail size.
   final double? width;
   final double? height;
 
   @override
   Widget build(BuildContext context) {
-    final w = width ?? 94.w;
+    final w = width ?? 102.w;
     final h = height ?? 120.h;
     final useGridMargin = width != null;
     return GestureDetector(
@@ -37,7 +38,7 @@ class TrendingDestinationCard extends StatelessWidget {
         height: h,
         margin: useGridMargin
             ? EdgeInsets.zero
-            : EdgeInsetsDirectional.only(end: 4.w),
+            : EdgeInsetsDirectional.only(end: 6.w),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(16.r),
           color: AppColors.inputBg(context),
@@ -63,8 +64,8 @@ class TrendingDestinationCard extends StatelessWidget {
                 bottom: 0,
                 child: Container(
                   padding: EdgeInsetsDirectional.only(
-                    start: 8.w,
-                    end: 8.w,
+                    start: 4.w,
+                    end: 4.w,
                     top: 18.h,
                     bottom: 8.h,
                   ),
@@ -84,18 +85,17 @@ class TrendingDestinationCard extends StatelessWidget {
                     // Force each word onto its own line so multi-word city
                     // names (e.g. "New York", "Rio de Janeiro", "نيو يورك")
                     // are fully visible stacked vertically.
-                    name.trim().split(RegExp(r'\s+')).join('\n'),
-                    maxLines: 3,
+                    name.trim(),
+                    maxLines: 2,
                     softWrap: true,
                     overflow: TextOverflow.ellipsis,
                     textAlign: TextAlign.center,
-                    style: AppTextStyles.subtitle(
-                      color: AppColors.onImage,
-                    ).copyWith(
-                      fontSize: 13.sp,
-                      fontWeight: FontWeight.w700,
-                      height: 1.15,
-                    ),
+                    style: AppTextStyles.subtitle(color: AppColors.onImage)
+                        .copyWith(
+                          fontSize: 12.sp,
+                          fontWeight: FontWeight.w700,
+                          height: 1.15,
+                        ),
                   ),
                 ),
               ),

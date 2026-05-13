@@ -24,7 +24,6 @@ import '../cubit/home_sections_state.dart';
 import '../cubit/special_trips_cubit.dart';
 import '../cubit/special_trips_state.dart';
 import '../cubit/trending_destinations_items_cubit.dart';
-import '../cubit/trending_destinations_items_state.dart';
 import '../cubit/section_trips_items_cubit.dart';
 import '../../domain/repositories/home_repository.dart';
 import '../../../wishlist/domain/repositories/trip_wishlist_repository.dart';
@@ -273,32 +272,26 @@ class HomeViewState extends State<HomeView> {
                       parent: ClampingScrollPhysics(),
                     ),
                     slivers: [
-                      BlocBuilder<
-                        TrendingDestinationsItemsCubit,
-                        TrendingDestinationsItemsState
-                      >(
-                        buildWhen: (p, n) => p.destinations != n.destinations,
-                        builder: (context, trendingState) {
-                          final destinationNames = trendingState.destinations
-                              .map((destination) => destination.name.trim())
-                              .where((name) => name.isNotEmpty)
-                              .toList(growable: false);
-
-                          return SliverPersistentHeader(
-                            pinned: true,
-                            delegate: HomeHeaderDelegate(
-                              searchHint: scrollContext.tr.homeSearchHint,
-                              searchHintDestinations: destinationNames,
-                              locationText: _locationText.isNotEmpty
-                                  ? _locationText
-                                  : scrollContext.tr.homeLocationText,
-                              topPadding: MediaQuery.paddingOf(
-                                scrollContext,
-                              ).top,
-                              onNotificationsTap: () {},
-                            ),
-                          );
-                        },
+                      SliverPersistentHeader(
+                        pinned: true,
+                        delegate: HomeHeaderDelegate(
+                          searchHint: scrollContext.tr.homeSearchHint,
+                          searchHintDestinations: const [
+                            'Sharm El Sheikh',
+                            'Hurghada',
+                            'Thailand',
+                            'Europe',
+                            'Southeast Asia',
+                            'Bali',
+                          ],
+                          locationText: _locationText.isNotEmpty
+                              ? _locationText
+                              : scrollContext.tr.homeLocationText,
+                          topPadding: MediaQuery.paddingOf(
+                            scrollContext,
+                          ).top,
+                          onNotificationsTap: () {},
+                        ),
                       ),
                       SliverToBoxAdapter(
                         child: Transform.translate(
@@ -699,12 +692,14 @@ class HomeViewState extends State<HomeView> {
                   constraints: BoxConstraints(minHeight: 280.h),
                   child: BlocBuilder<SpecialTripsCubit, SpecialTripsState>(
                     builder: (context, tripState) {
-                      if (tripState.status == SpecialTripsStatus.loading) {
+                      if (tripState.status == SpecialTripsStatus.loading &&
+                          tripState.trips.isEmpty) {
                         return Center(
                           child: CustomLoading(size: 32, strokeWidth: 2.5),
                         );
                       }
-                      if (tripState.status == SpecialTripsStatus.success ||
+                      if (tripState.status == SpecialTripsStatus.loading ||
+                          tripState.status == SpecialTripsStatus.success ||
                           tripState.status == SpecialTripsStatus.loadingMore) {
                         if (tripState.trips.isEmpty) {
                           // Empty tabs are auto-hidden via the
@@ -749,7 +744,6 @@ class HomeViewState extends State<HomeView> {
             );
           },
         ),
-        SizedBox(height: 10.h),
       ],
     );
   }
@@ -989,39 +983,24 @@ class _SpecialTripsSeeMoreButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: Material(
-        color: AppColors.transparent,
-        borderRadius: BorderRadius.circular(999.r),
-        child: InkWell(
-          onTap: onTap,
-          borderRadius: BorderRadius.circular(999.r),
-          child: Container(
-            padding: EdgeInsetsDirectional.symmetric(
-              horizontal: 22.w,
-              vertical: 10.h,
+      child: GestureDetector(
+        onTap: onTap,
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text(
+              label,
+              style: AppTextStyles.bodySmall(
+                color: AppColors.primary,
+              ).copyWith(fontWeight: FontWeight.w600),
             ),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(999.r),
-              border: Border.all(color: AppColors.primary, width: 1.2),
+            SizedBox(width: 4.w),
+            Icon(
+              Icons.arrow_forward_rounded,
+              size: 14.sp,
+              color: AppColors.primary,
             ),
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Text(
-                  label,
-                  style: AppTextStyles.bodyMedium(
-                    color: AppColors.primary,
-                  ).copyWith(fontWeight: FontWeight.w700),
-                ),
-                SizedBox(width: 4.w),
-                Icon(
-                  Icons.arrow_forward_rounded,
-                  size: 16.sp,
-                  color: AppColors.primary,
-                ),
-              ],
-            ),
-          ),
+          ],
         ),
       ),
     );

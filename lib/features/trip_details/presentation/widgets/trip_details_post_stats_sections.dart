@@ -185,7 +185,7 @@ class _IncludedGrid extends StatelessWidget {
   static const double _crossAxisSpacing = 12;
 
   /// Wide cells; tall enough for two lines at 14px (Figma-tight rows via [mainAxisSpacing]).
-  static const double _childAspectRatio = 3.45;
+  static const double _childAspectRatio = 4.5;
 
   @override
   Widget build(BuildContext context) {

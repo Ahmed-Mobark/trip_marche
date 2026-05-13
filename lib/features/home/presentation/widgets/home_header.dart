@@ -85,7 +85,7 @@ class HomeHeaderDelegate extends SliverPersistentHeaderDelegate {
                       children: [
                         Image.asset(AppIcons.llo2Png, width: 90.w),
                         const Spacer(),
-                        if (t < 0.5)
+                        if (t <= 0.3)
                           _NotificationButton(
                             onTap: onNotificationsTap,
                             hasNotification: hasNotification,
@@ -101,16 +101,14 @@ class HomeHeaderDelegate extends SliverPersistentHeaderDelegate {
               Row(
                 children: [
                   Expanded(
-                    child: Opacity(
-                      opacity: 1.0 - (t * 0.75),
-                      child: GestureDetector(
-                        onTap: () => sl<AppNavigator>().push(
-                          screen: const DestinationSearchView(),
-                        ),
-                        child: _SearchField(
-                          hint: searchHint,
-                          destinations: searchHintDestinations,
-                        ),
+                    child: GestureDetector(
+                      onTap: () => sl<AppNavigator>().push(
+                        screen: const DestinationSearchView(),
+                      ),
+                      child: _SearchField(
+                        hint: searchHint,
+                        destinations: searchHintDestinations,
+                        collapseProgress: t,
                       ),
                     ),
                   ),
@@ -166,10 +164,15 @@ class HomeHeaderDelegate extends SliverPersistentHeaderDelegate {
 }
 
 class _SearchField extends StatefulWidget {
-  const _SearchField({required this.hint, required this.destinations});
+  const _SearchField({
+    required this.hint,
+    required this.destinations,
+    this.collapseProgress = 0.0,
+  });
 
   final String hint;
   final List<String> destinations;
+  final double collapseProgress;
 
   @override
   State<_SearchField> createState() => _SearchFieldState();
@@ -238,11 +241,17 @@ class _SearchFieldState extends State<_SearchField> {
   @override
   Widget build(BuildContext context) {
     final hint = _currentHint(context);
+    final t = widget.collapseProgress;
+    final bgColor = Color.lerp(
+      AppColors.cardBg(context),
+      Colors.white.withValues(alpha: 0.25),
+      t,
+    )!;
     return Container(
       height: 42.h,
       padding: EdgeInsetsDirectional.symmetric(horizontal: 14.w),
       decoration: BoxDecoration(
-        color: AppColors.cardBg(context),
+        color: bgColor,
         borderRadius: BorderRadius.circular(999.r),
       ),
       child: Row(
@@ -261,12 +270,15 @@ class _SearchFieldState extends State<_SearchField> {
                 switchInCurve: Curves.easeOutCubic,
                 switchOutCurve: Curves.easeInCubic,
                 transitionBuilder: (child, animation) {
-                  // Hold briefly so users notice the motion (especially on cold open).
-                  const motionDelay = Interval(0.16, 1.0, curve: Curves.easeOutCubic);
+                  final isIncoming = animation.status == AnimationStatus.forward ||
+                      animation.status == AnimationStatus.completed;
                   final slide = Tween<Offset>(
-                    begin: const Offset(0, 0.55),
+                    begin: Offset(0, isIncoming ? 0.55 : -0.55),
                     end: Offset.zero,
-                  ).animate(CurvedAnimation(parent: animation, curve: motionDelay));
+                  ).animate(CurvedAnimation(
+                    parent: animation,
+                    curve: Curves.easeOutCubic,
+                  ));
                   final fade = CurvedAnimation(
                     parent: animation,
                     curve: Curves.easeOut,

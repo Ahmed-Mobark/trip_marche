@@ -30,7 +30,7 @@ class TripDetailsHeroHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final topPad = MediaQuery.paddingOf(context).top;
-    final heroHeight = 404.h;
+    final heroHeight = 380.h;
     final bottomRadius = 40.r;
     final thumbInner = 72.r;
     final framePad = 3.r;
@@ -88,10 +88,8 @@ class TripDetailsHeroHeader extends StatelessWidget {
               color: AppColors.lightBg(context),
               child: _HeroAutoZoomCarousel(
                 imageUrls: viewerUrls,
-                onTap: () => AppPhotoGridScreen.open(
-                  context,
-                  imageUrls: viewerUrls,
-                ),
+                onTap: () =>
+                    AppPhotoGridScreen.open(context, imageUrls: viewerUrls),
               ),
             ),
             DecoratedBox(
@@ -196,7 +194,9 @@ class TripDetailsHeroHeader extends StatelessWidget {
                                   Shadow(
                                     offset: Offset(0, 1.h),
                                     blurRadius: 14.r,
-                                    color: AppColors.scrim.withValues(alpha: 0.55),
+                                    color: AppColors.scrim.withValues(
+                                      alpha: 0.55,
+                                    ),
                                   ),
                                 ],
                               ),
@@ -206,12 +206,17 @@ class TripDetailsHeroHeader extends StatelessWidget {
                         SizedBox(height: 6.h),
                         Row(
                           children: [
-                            Icon(Iconsax.star1, size: 14.sp, color: AppColors.starYellow),
+                            Icon(
+                              Iconsax.star1,
+                              size: 14.sp,
+                              color: AppColors.starYellow,
+                            ),
                             SizedBox(width: 4.w),
                             Text(
                               ratingText,
-                              style: AppTextStyles.bodySmall(color: AppColors.onImage)
-                                  .copyWith(fontWeight: FontWeight.w700),
+                              style: AppTextStyles.bodySmall(
+                                color: AppColors.onImage,
+                              ).copyWith(fontWeight: FontWeight.w700),
                             ),
                             SizedBox(width: 4.w),
                             Text(
@@ -280,8 +285,6 @@ class TripDetailsHeroHeader extends StatelessWidget {
                             ),
                           ),
                         ],
-                        SizedBox(height: 16.h),
-                        _RatingPill(ratingText: ratingText),
                       ],
                     ),
                   ),
@@ -361,7 +364,7 @@ class _CompanyPill extends StatelessWidget {
         label,
         style: AppTextStyles.caption(
           color: AppColors.tripDetailsHeroCompanyAccent,
-        ).copyWith(fontSize: 11.sp, fontWeight: FontWeight.w600, height: 1.15),
+        ).copyWith(fontSize: 9.sp, fontWeight: FontWeight.w600, height: 1.15),
       ),
     );
   }

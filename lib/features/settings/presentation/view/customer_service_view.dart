@@ -1,12 +1,36 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:url_launcher/url_launcher.dart';
+import 'package:trip_marche/core/extensions/localization.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_text_styles.dart';
 
 class CustomerServiceView extends StatelessWidget {
   const CustomerServiceView({super.key});
 
+  static const _phone = '+201221314305';
+
+  Future<void> _launchCall() async {
+    final uri = Uri(scheme: 'tel', path: _phone);
+    if (await canLaunchUrl(uri)) await launchUrl(uri);
+  }
+
+  Future<void> _launchSms() async {
+    final uri = Uri(scheme: 'sms', path: _phone);
+    if (await canLaunchUrl(uri)) await launchUrl(uri);
+  }
+
+  Future<void> _launchWhatsApp() async {
+    final uri = Uri.parse('https://wa.me/201221314305');
+    if (await canLaunchUrl(uri)) {
+      await launchUrl(uri, mode: LaunchMode.externalApplication);
+    }
+  }
+
   @override
+
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.background(context),
@@ -14,134 +38,120 @@ class CustomerServiceView extends StatelessWidget {
         backgroundColor: AppColors.background(context),
         elevation: 0,
         leading: IconButton(
-          icon: Icon(Icons.arrow_back_ios_new_rounded, color: AppColors.darkText(context)),
+          icon: Icon(
+            Icons.arrow_back_ios_new_rounded,
+            color: AppColors.darkText(context),
+          ),
           onPressed: () => Navigator.pop(context),
         ),
-        title: Text('Customer Service', style: AppTextStyles.subtitle()),
+        title: Text(
+          context.tr.profileCustomerService,
+          style: AppTextStyles.subtitle(),
+        ),
         centerTitle: true,
       ),
       body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+        padding: EdgeInsets.symmetric(horizontal: 20.w),
         child: Column(
           children: [
-            _buildContactOption(
-              context,
-              icon: Iconsax.call,
-              title: 'Phone',
-              subtitle: '+20 123 456 7890',
-              actionText: 'Call',
-              onAction: () {
-                // Launch phone dialer
-              },
+            SizedBox(height: 24.h),
+            Image.asset('assets/images/servi.png', height: 260.h, width: 320.w),
+            SizedBox(height: 32.h),
+            Text(
+              context.tr.csLetsGetInTouch,
+              style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                fontWeight: FontWeight.w700,
+                color: AppColors.darkText(context),
+              ),
             ),
-            const SizedBox(height: 12),
-            _buildContactOption(
-              context,
-              icon: Iconsax.sms,
-              title: 'Email',
-              subtitle: 'support@tripmarche.com',
-              actionText: 'Send',
-              onAction: () {
-                // Launch email client
-              },
+            SizedBox(height: 24.h),
+            Row(
+              children: [
+                Expanded(
+                  child: _ContactButton(
+                    icon: Iconsax.call,
+                    label: context.tr.csCall,
+                    onTap: _launchCall,
+                  ),
+                ),
+                SizedBox(width: 12.w),
+                Expanded(
+                  child: _ContactButton(
+                    icon: Iconsax.message_2,
+                    label: context.tr.csSendMessage,
+                    onTap: _launchSms,
+                  ),
+                ),
+              ],
             ),
-            const SizedBox(height: 12),
-            _buildContactOption(
-              context,
-              icon: Iconsax.message,
-              title: 'WhatsApp',
-              subtitle: '+20 123 456 7890',
-              actionText: 'Chat',
-              onAction: () {
-                // Launch WhatsApp
-              },
+            SizedBox(height: 12.h),
+            SizedBox(
+              width: double.infinity,
+              height: 45.h,
+              child: ElevatedButton.icon(
+                onPressed: _launchWhatsApp,
+                icon: FaIcon(
+                  FontAwesomeIcons.whatsapp,
+                  color: Colors.white,
+                  size: 20.sp,
+                ),
+                label: Text(
+                  context.tr.csWhatsApp,
+                  style: TextStyle(
+                    fontSize: 12.sp,
+                    fontWeight: FontWeight.w600,
+                    color: Colors.white,
+                  ),
+                ),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: const Color(0xFF25D366),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12.r),
+                  ),
+                  elevation: 0,
+                ),
+              ),
             ),
-            const SizedBox(height: 12),
-            _buildContactOption(
-              context,
-              icon: Iconsax.messages_1,
-              title: 'Live Chat',
-              subtitle: 'Available 24/7',
-              actionText: 'Start',
-              onAction: () {
-                // Open live chat
-              },
-            ),
+            const Spacer(flex: 2),
           ],
         ),
       ),
     );
   }
+}
 
-  Widget _buildContactOption(
-    BuildContext context, {
-    required IconData icon,
-    required String title,
-    required String subtitle,
-    required String actionText,
-    required VoidCallback onAction,
-  }) {
-    return Container(
-      padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: AppColors.border(context)),
-      ),
-      child: Row(
-        children: [
-          Container(
-            width: 44,
-            height: 44,
-            decoration: BoxDecoration(
-              color: AppColors.primary.withValues(alpha: 0.1),
-              borderRadius: BorderRadius.circular(10),
-            ),
-            child: Icon(icon, color: AppColors.primary, size: 22),
+class _ContactButton extends StatelessWidget {
+  const _ContactButton({
+    required this.icon,
+    required this.label,
+    required this.onTap,
+  });
+
+  final IconData icon;
+  final String label;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      height: 45.h,
+      child: OutlinedButton.icon(
+        onPressed: onTap,
+        icon: Icon(icon, color: AppColors.primary, size: 20.sp),
+        label: Text(
+          label,
+          style: TextStyle(
+            fontSize: 12.sp,
+            fontWeight: FontWeight.w600,
+            color: AppColors.primary,
           ),
-          const SizedBox(width: 14),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  title,
-                  style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w600,
-                    color: AppColors.darkText(context),
-                  ),
-                ),
-                const SizedBox(height: 2),
-                Text(
-                  subtitle,
-                  style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                    fontSize: 13,
-                    fontWeight: FontWeight.w400,
-                    color: AppColors.greyText(context),
-                  ),
-                ),
-              ],
-            ),
+        ),
+        style: OutlinedButton.styleFrom(
+          side: BorderSide(color: AppColors.primary, width: 1),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(12.r),
           ),
-          GestureDetector(
-            onTap: onAction,
-            child: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-              decoration: BoxDecoration(
-                color: AppColors.primary,
-                borderRadius: BorderRadius.circular(20),
-              ),
-              child: Text(
-                actionText,
-                style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                  fontSize: 13,
-                  fontWeight: FontWeight.w600,
-                  color: AppColors.onImage,
-                ),
-              ),
-            ),
-          ),
-        ],
+        ),
       ),
     );
   }

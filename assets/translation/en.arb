@@ -632,5 +632,9 @@
   "tripDetailsTryAgain": "Try again",
   "tripDetailsNoFlights": "Flight details will appear here when available.",
   "tripDetailsNoTransport": "Ground or sea transport details will appear here when available.",
-  "tripDetailsVisaAndEntryTitle": "Visa and entry"
+  "tripDetailsVisaAndEntryTitle": "Visa and entry",
+  "csLetsGetInTouch": "Let's get in touch",
+  "csCall": "Call",
+  "csSendMessage": "Send Message",
+  "csWhatsApp": "WhatsApp"
 }

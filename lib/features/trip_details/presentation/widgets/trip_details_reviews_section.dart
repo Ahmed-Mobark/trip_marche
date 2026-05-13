@@ -217,25 +217,26 @@ class TripDetailsReviewCard extends StatelessWidget {
           ),
           if (review.images.isNotEmpty) ...[
             SizedBox(height: 12.h),
-            SizedBox(
-              height: 72.h,
-              child: ListView.separated(
-                scrollDirection: Axis.horizontal,
-                reverse: Directionality.of(context) == TextDirection.rtl,
-                itemCount: review.images.length > 5 ? 5 : review.images.length,
-                separatorBuilder: (_, __) => SizedBox(width: 8.w),
-                itemBuilder: (_, i) {
-                  return ClipRRect(
-                    borderRadius: BorderRadius.circular(10.r),
-                    child: SizedBox(
-                      width: 72.w,
-                      child: AppCachedNetworkImage(
-                        imageUrl: review.images[i],
-                        fit: BoxFit.cover,
+            Row(
+              children: List.generate(
+                review.images.length > 5 ? 5 : review.images.length,
+                (i) => Expanded(
+                  child: Padding(
+                    padding: EdgeInsetsDirectional.only(
+                      end: i < (review.images.length > 5 ? 4 : review.images.length - 1) ? 6.w : 0,
+                    ),
+                    child: AspectRatio(
+                      aspectRatio: 1,
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(10.r),
+                        child: AppCachedNetworkImage(
+                          imageUrl: review.images[i],
+                          fit: BoxFit.cover,
+                        ),
                       ),
                     ),
-                  );
-                },
+                  ),
+                ),
               ),
             ),
           ],

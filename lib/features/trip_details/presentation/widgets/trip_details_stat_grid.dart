@@ -10,7 +10,7 @@ class TripDetailsStatGrid extends StatelessWidget {
   final List<TripDetailsStatCellData> cells;
 
   static const double _gridGap = 8;
-  static const double _aspect = 1.9;
+  static const double _aspect = 2.3;
 
   @override
   Widget build(BuildContext context) {

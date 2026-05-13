@@ -31,7 +31,6 @@ class SpecialTripsCubit extends Cubit<SpecialTripsState> {
       state.copyWith(
         status: SpecialTripsStatus.loading,
         categoryId: categoryId,
-        trips: [],
       ),
     );
 

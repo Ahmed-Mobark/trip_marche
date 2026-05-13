@@ -65,6 +65,7 @@ class _TripDetailsBodyState extends State<_TripDetailsBody> {
     _scrollController.addListener(_onScroll);
   }
 
+
   void _onScroll() {
     if (!_scrollController.hasClients) return;
     final pos = _scrollController.position;

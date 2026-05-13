@@ -620,5 +620,9 @@
   "tripDetailsTryAgain": "إعادة المحاولة",
   "tripDetailsNoFlights": "ستظهر تفاصيل الرحلة الجوية هنا عند توفرها.",
   "tripDetailsNoTransport": "ستظهر تفاصيل النقل البري أو البحري هنا عند توفرها.",
-  "tripDetailsVisaAndEntryTitle": "التأشيرة والدخول"
+  "tripDetailsVisaAndEntryTitle": "التأشيرة والدخول",
+  "csLetsGetInTouch": "تواصل معنا",
+  "csCall": "اتصال",
+  "csSendMessage": "إرسال رسالة",
+  "csWhatsApp": "واتساب"
 }

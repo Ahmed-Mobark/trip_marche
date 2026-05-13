@@ -620,6 +620,10 @@
   "tripDetailsTryAgain": "Reintentar",
   "tripDetailsNoFlights": "Los detalles del vuelo aparecerán aquí cuando estén disponibles.",
   "tripDetailsNoTransport": "Los detalles de transporte terrestre o marítimo aparecerán aquí cuando estén disponibles.",
-  "tripDetailsVisaAndEntryTitle": "Visa e ingreso"
+  "tripDetailsVisaAndEntryTitle": "Visa e ingreso",
+  "csLetsGetInTouch": "Contáctanos",
+  "csCall": "Llamar",
+  "csSendMessage": "Enviar mensaje",
+  "csWhatsApp": "WhatsApp"
 }
 

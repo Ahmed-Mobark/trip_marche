@@ -295,8 +295,8 @@ class _DestinationDetailsGridCard extends StatelessWidget {
             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: 2,
               crossAxisSpacing: 12.w,
-              mainAxisSpacing: 14.h,
-              mainAxisExtent: 60.h,
+              mainAxisSpacing: 8.h,
+              mainAxisExtent: 50.h,
             ),
             itemCount: items.length,
             itemBuilder: (context, index) =>

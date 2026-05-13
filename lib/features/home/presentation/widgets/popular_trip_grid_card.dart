@@ -66,12 +66,13 @@ class PopularTripGridCard extends StatelessWidget {
                               trip.badge!,
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
-                              style: AppTextStyles.bodySmall(
-                                color: AppColors.onImage,
-                              ).copyWith(
-                                fontSize: 9.sp,
-                                fontWeight: FontWeight.w700,
-                              ),
+                              style:
+                                  AppTextStyles.bodySmall(
+                                    color: AppColors.onImage,
+                                  ).copyWith(
+                                    fontSize: 9.sp,
+                                    fontWeight: FontWeight.w700,
+                                  ),
                             ),
                           ),
                         ),
@@ -113,7 +114,7 @@ class PopularTripGridCard extends StatelessWidget {
               padding: EdgeInsetsDirectional.only(start: 12.w, end: 12.w),
               child: Text(
                 trip.title,
-                maxLines: 2,
+                maxLines: 1,
                 overflow: TextOverflow.ellipsis,
                 style: AppTextStyles.subtitle(
                   color: AppColors.darkText(context),
@@ -201,21 +202,30 @@ class PopularTripGridCard extends StatelessWidget {
                 children: [
                   if (trip.discountPrice != null) ...[
                     Text(
-                      PriceFormatter.format(trip.discountPrice!, currency: trip.currency),
+                      PriceFormatter.format(
+                        trip.discountPrice!,
+                        currency: trip.currency,
+                      ),
                       style: AppTextStyles.bodyMedium(
                         color: AppColors.primary,
                       ).copyWith(fontWeight: FontWeight.w700),
                     ),
                     SizedBox(width: 6.w),
                     Text(
-                      PriceFormatter.format(trip.price, currency: trip.currency),
+                      PriceFormatter.format(
+                        trip.price,
+                        currency: trip.currency,
+                      ),
                       style: AppTextStyles.bodySmall(
                         color: AppColors.greyText(context),
                       ).copyWith(decoration: TextDecoration.lineThrough),
                     ),
                   ] else
                     Text(
-                      PriceFormatter.format(trip.price, currency: trip.currency),
+                      PriceFormatter.format(
+                        trip.price,
+                        currency: trip.currency,
+                      ),
                       style: AppTextStyles.bodyMedium(
                         color: AppColors.primary,
                       ).copyWith(fontWeight: FontWeight.w700),

@@ -180,10 +180,9 @@ class SpecialTripWideCard extends StatelessWidget {
                     ],
                   ),
                   SizedBox(height: 12.h),
-                  Wrap(
-                    spacing: 8.w,
-                    runSpacing: 4.h,
-                    crossAxisAlignment: WrapCrossAlignment.end,
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.baseline,
+                    textBaseline: TextBaseline.alphabetic,
                     children: [
                       if (trip.discountPrice != null) ...[
                         Text(
@@ -191,10 +190,15 @@ class SpecialTripWideCard extends StatelessWidget {
                             trip.discountPrice!,
                             currency: trip.currency,
                           ),
-                          style: AppTextStyles.heading3(
-                            color: AppColors.darkText(context),
-                          ).copyWith(fontWeight: FontWeight.w800, fontSize: 20.sp),
+                          style:
+                              AppTextStyles.heading3(
+                                color: AppColors.darkText(context),
+                              ).copyWith(
+                                fontWeight: FontWeight.w800,
+                                fontSize: 16.sp,
+                              ),
                         ),
+                        SizedBox(width: 6.w),
                         Text(
                           PriceFormatter.format(
                             trip.price,
@@ -210,17 +214,21 @@ class SpecialTripWideCard extends StatelessWidget {
                             trip.price,
                             currency: trip.currency,
                           ),
-                          style: AppTextStyles.heading3(
-                            color: AppColors.darkText(context),
-                          ).copyWith(fontWeight: FontWeight.w800, fontSize: 20.sp),
+                          style:
+                              AppTextStyles.heading3(
+                                color: AppColors.darkText(context),
+                              ).copyWith(
+                                fontWeight: FontWeight.w800,
+                                fontSize: 16.sp,
+                              ),
                         ),
-                      Text(
-                        '/${context.tr.homePerPerson}',
-                        style: AppTextStyles.bodySmall(
-                          color: AppColors.greyText(context),
-                        ),
-                      ),
                     ],
+                  ),
+                  Text(
+                    '/${context.tr.homePerPerson}',
+                    style: AppTextStyles.bodySmall(
+                      color: AppColors.greyText(context),
+                    ),
                   ),
                 ],
               ),

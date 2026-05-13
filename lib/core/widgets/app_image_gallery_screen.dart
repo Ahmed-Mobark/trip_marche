@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:photo_view/photo_view.dart';
 import 'package:photo_view/photo_view_gallery.dart';
 import 'package:trip_marche/core/extensions/localization.dart';
@@ -23,7 +24,10 @@ class AppImageGalleryScreen extends StatefulWidget {
     required List<String> imageUrls,
     int initialIndex = 0,
   }) {
-    final urls = imageUrls.map((u) => u.trim()).where((u) => u.isNotEmpty).toList();
+    final urls = imageUrls
+        .map((u) => u.trim())
+        .where((u) => u.isNotEmpty)
+        .toList();
     if (urls.isEmpty) {
       return Future.value();
     }
@@ -87,39 +91,42 @@ class _AppImageGalleryScreenState extends State<AppImageGalleryScreen> {
           fit: StackFit.expand,
           children: [
             PhotoViewGallery.builder(
-                scrollPhysics: const ClampingScrollPhysics(),
-                pageController: _pageController,
-                itemCount: total,
-                backgroundDecoration: const BoxDecoration(color: Colors.black),
-                onPageChanged: (index) {
-                  setState(() => _displayIndex = index);
-                },
-                loadingBuilder: (context, event) => Center(
-                  child: CustomLoading(size: 36, strokeWidth: 2.5),
-                ),
-                builder: (context, index) {
-                  final url = widget.imageUrls[index];
-                  return PhotoViewGalleryPageOptions(
-                    imageProvider: CachedNetworkImageProvider(url),
-                    initialScale: PhotoViewComputedScale.contained,
-                    minScale: PhotoViewComputedScale.contained,
-                    maxScale: PhotoViewComputedScale.covered * 4,
-                    filterQuality: FilterQuality.high,
-                    errorBuilder: (context, error, stackTrace) => Center(
-                      child: Icon(
-                        Icons.broken_image_outlined,
-                        color: Colors.white.withValues(alpha: 0.5),
-                        size: 56,
-                      ),
+              scrollPhysics: const ClampingScrollPhysics(),
+              pageController: _pageController,
+              itemCount: total,
+              backgroundDecoration: const BoxDecoration(color: Colors.black),
+              onPageChanged: (index) {
+                setState(() => _displayIndex = index);
+              },
+              loadingBuilder: (context, event) =>
+                  Center(child: CustomLoading(size: 36, strokeWidth: 2.5)),
+              builder: (context, index) {
+                final url = widget.imageUrls[index];
+                return PhotoViewGalleryPageOptions(
+                  imageProvider: CachedNetworkImageProvider(url),
+                  initialScale: PhotoViewComputedScale.contained,
+                  minScale: PhotoViewComputedScale.contained,
+                  maxScale: PhotoViewComputedScale.covered * 4,
+                  filterQuality: FilterQuality.high,
+                  errorBuilder: (context, error, stackTrace) => Center(
+                    child: Icon(
+                      Icons.broken_image_outlined,
+                      color: Colors.white.withValues(alpha: 0.5),
+                      size: 56,
                     ),
-                  );
-                },
-              ),
+                  ),
+                );
+              },
+            ),
             SafeArea(
               child: Align(
                 alignment: AlignmentDirectional.topStart,
                 child: Padding(
-                  padding: const EdgeInsetsDirectional.only(start: 16, top: 8),
+                  padding: EdgeInsetsDirectional.only(
+                    start: 8.w,
+                    top: 8.h,
+                    end: 15.w,
+                  ),
                   child: GestureDetector(
                     onTap: () => Navigator.of(context).pop(),
                     child: Container(
@@ -127,7 +134,7 @@ class _AppImageGalleryScreenState extends State<AppImageGalleryScreen> {
                       height: 44,
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
-                        color: Colors.black.withValues(alpha: 0.5),
+                        color: Colors.white.withValues(alpha: 0.25),
                       ),
                       child: const Icon(
                         Icons.close_rounded,
@@ -151,10 +158,17 @@ class _AppImageGalleryScreenState extends State<AppImageGalleryScreen> {
                         borderRadius: BorderRadius.circular(20),
                       ),
                       child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 6),
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 14,
+                          vertical: 6,
+                        ),
                         child: Text(
-                          context.tr.imageGalleryPosition(_displayIndex + 1, total),
-                          style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                          context.tr.imageGalleryPosition(
+                            _displayIndex + 1,
+                            total,
+                          ),
+                          style: Theme.of(context).textTheme.bodyMedium
+                              ?.copyWith(
                                 color: Colors.white,
                                 fontWeight: FontWeight.w600,
                               ),

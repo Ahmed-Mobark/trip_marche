@@ -66,7 +66,8 @@
       "Bash(git add lib/features/search/presentation/view/destination_search_view.dart lib/features/home/presentation/cubit/section_trips_items_cubit.dart lib/features/home/presentation/view/section_trips_list_view.dart lib/features/home/presentation/view/home_view.dart lib/features/filter/presentation/view/filter_view.dart lib/core/config/app_colors.dart lib/core/config/app_icons.dart lib/features/home/presentation/widgets/home_header.dart assets/icons/llog2.png ios/Podfile.lock .claude/settings.json)",
       "Bash(git commit:*)",
       "Bash(git push origin feat/client-feedback-round1)",
-      "mcp__claude_ai_Supabase__list_projects"
+      "mcp__claude_ai_Supabase__list_projects",
+      "Bash(flutter pub add flutter_staggered_grid_view)"
     ]
   }
 }

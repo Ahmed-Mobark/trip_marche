@@ -222,7 +222,9 @@ class MyTripsScreenTripCard extends StatelessWidget {
                                   fontWeight: FontWeight.w400,
                                   height: MyTripsTripCardTokens.lh(14, 18),
                                   letterSpacing: 0,
-                                  color: AppColors.myTripsTripCardMuted(context),
+                                  color: AppColors.myTripsTripCardMuted(
+                                    context,
+                                  ),
                                 ),
                               ),
                             ],

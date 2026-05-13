@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:trip_marche/core/theme/app_colors.dart';
 import 'package:trip_marche/core/widgets/app_cached_network_image.dart';
 import 'package:trip_marche/core/widgets/app_image_gallery_screen.dart';
 
-/// 2-column photo grid (like Get Your Guide). Tapping any photo opens the
+/// 2-column masonry photo grid. Tapping any photo opens the
 /// full-screen swipe viewer at that index.
 class AppPhotoGridScreen extends StatelessWidget {
   const AppPhotoGridScreen({super.key, required this.imageUrls});
@@ -15,15 +16,23 @@ class AppPhotoGridScreen extends StatelessWidget {
     BuildContext context, {
     required List<String> imageUrls,
   }) {
-    final urls =
-        imageUrls.map((u) => u.trim()).where((u) => u.isNotEmpty).toList();
+    final urls = imageUrls
+        .map((u) => u.trim())
+        .where((u) => u.isNotEmpty)
+        .toList();
     if (urls.isEmpty) return Future.value();
     return Navigator.of(context).push<void>(
-      MaterialPageRoute(
-        builder: (_) => AppPhotoGridScreen(imageUrls: urls),
-      ),
+      MaterialPageRoute(builder: (_) => AppPhotoGridScreen(imageUrls: urls)),
     );
   }
+
+  /// Alternating height pattern to create the staggered look.
+  static const _extentPattern = [
+    260.0, 200.0, // row 1
+    200.0, 260.0, // row 2
+    300.0, 200.0, // row 3
+    200.0, 300.0, // row 4
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -34,10 +43,8 @@ class AppPhotoGridScreen extends StatelessWidget {
         elevation: 0,
         scrolledUnderElevation: 0.5,
         leading: Padding(
-          padding: EdgeInsetsDirectional.only(start: 8.w, top: 4.h),
-          child: _CircleCloseButton(
-            onTap: () => Navigator.pop(context),
-          ),
+          padding: EdgeInsetsDirectional.only(start: 8.w, top: 4.h, end: 8.w),
+          child: _CircleCloseButton(onTap: () => Navigator.pop(context)),
         ),
         title: Text(
           '${imageUrls.length} Photos',
@@ -48,16 +55,14 @@ class AppPhotoGridScreen extends StatelessWidget {
           ),
         ),
       ),
-      body: GridView.builder(
+      body: MasonryGridView.count(
         padding: EdgeInsetsDirectional.all(8.w),
-        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 2,
-          mainAxisSpacing: 8.h,
-          crossAxisSpacing: 8.w,
-          childAspectRatio: 1.0,
-        ),
+        crossAxisCount: 2,
+        mainAxisSpacing: 8.h,
+        crossAxisSpacing: 8.w,
         itemCount: imageUrls.length,
         itemBuilder: (context, index) {
+          final extent = _extentPattern[index % _extentPattern.length].h;
           return GestureDetector(
             onTap: () => AppImageGalleryScreen.open(
               context,
@@ -66,9 +71,12 @@ class AppPhotoGridScreen extends StatelessWidget {
             ),
             child: ClipRRect(
               borderRadius: BorderRadius.circular(12.r),
-              child: AppCachedNetworkImage(
-                imageUrl: imageUrls[index],
-                fit: BoxFit.cover,
+              child: SizedBox(
+                height: extent,
+                child: AppCachedNetworkImage(
+                  imageUrl: imageUrls[index],
+                  fit: BoxFit.cover,
+                ),
               ),
             ),
           );
@@ -88,8 +96,8 @@ class _CircleCloseButton extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        width: 36.r,
-        height: 36.r,
+        width: 26.r,
+        height: 26.r,
         decoration: BoxDecoration(
           shape: BoxShape.circle,
           color: AppColors.darkText(context).withValues(alpha: 0.08),

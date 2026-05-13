@@ -91,7 +91,7 @@ class TripDetailsAccommodationSection extends StatelessWidget {
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         fontFamily: AppFont.fontFamily,
-                        fontSize: 15,
+                        fontSize: 13.sp,
                         fontWeight: FontWeight.w500,
                         height: 1.2,
                         letterSpacing: 0,
@@ -107,27 +107,6 @@ class TripDetailsAccommodationSection extends StatelessWidget {
         ],
         if (trip.activityRates.isNotEmpty) ...[
           _ActivityRateCard(rates: trip.activityRates),
-          if (trip.reviews.isNotEmpty)
-            Align(
-              alignment: AlignmentDirectional.centerEnd,
-              child: TextButton(
-                onPressed: () => TripDetailsReviewsSection.openAllReviews(
-                  context,
-                  trip.reviews,
-                ),
-                style: TextButton.styleFrom(
-                  padding: EdgeInsetsDirectional.zero,
-                  minimumSize: Size.zero,
-                  tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                ),
-                child: Text(
-                  context.tr.tripDetailsViewAll,
-                  style: AppTextStyles.bodyMedium(
-                    color: AppColors.primary,
-                  ).copyWith(fontSize: 12.sp),
-                ),
-              ),
-            ),
           SizedBox(height: 14.h),
         ],
         _TripDetailsQuickLinks(
@@ -247,7 +226,9 @@ class _CompanyCard extends StatelessWidget {
                     ),
                     Text(
                       ' ($ratingCount)',
-                      style: AppTextStyles.caption(color: AppColors.greyText(context)),
+                      style: AppTextStyles.caption(
+                        color: AppColors.greyText(context),
+                      ),
                     ),
                   ],
                 ),
@@ -309,6 +290,30 @@ class _ActivityRateCard extends StatelessWidget {
               ),
             ),
           ),
+          SizedBox(height: 8.h),
+          Center(
+            child: TextButton(
+              onPressed: () =>
+                  TripDetailsReviewsSection.openAllReviews(context, []),
+              style: TextButton.styleFrom(
+                padding: EdgeInsets.zero,
+                minimumSize: Size.zero,
+                tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+              ),
+              child: Text(
+                context.tr.tripDetailsSeeAllActivities,
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontFamily: AppFont.fontFamily,
+                  fontSize: 13.sp,
+                  fontWeight: FontWeight.w500,
+                  height: 1.2,
+                  letterSpacing: 0,
+                  color: AppColors.tripDetailsDepartureIconPurple,
+                ),
+              ),
+            ),
+          ),
         ],
       ),
     );
@@ -325,10 +330,7 @@ class _RatePillRow extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      padding: EdgeInsetsDirectional.symmetric(
-        horizontal: 14.w,
-        vertical: 10.h,
-      ),
+      padding: EdgeInsetsDirectional.symmetric(horizontal: 14.w, vertical: 8.h),
       decoration: BoxDecoration(
         color: AppColors.cardBg(context),
         borderRadius: BorderRadius.circular(999.r),
@@ -341,7 +343,9 @@ class _RatePillRow extends StatelessWidget {
               label,
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
-              style: AppTextStyles.bodySmall(color: AppColors.darkText(context)),
+              style: AppTextStyles.bodySmall(
+                color: AppColors.darkText(context),
+              ),
             ),
           ),
           SizedBox(width: 10.w),
@@ -376,10 +380,22 @@ class _TripDetailsQuickLinks extends StatelessWidget {
   Widget build(BuildContext context) {
     final items = <(IconData, String, VoidCallback)>[
       (Iconsax.document_text, context.tr.tripDetailsVisaDetailsTitle, onVisa),
-      (Iconsax.clipboard_text, context.tr.tripDetailsTripInstructionsTitle, onInstructions),
-      (Iconsax.shield_tick, context.tr.tripDetailsSafetyProceduresTitle, onSafety),
+      (
+        Iconsax.clipboard_text,
+        context.tr.tripDetailsTripInstructionsTitle,
+        onInstructions,
+      ),
+      (
+        Iconsax.shield_tick,
+        context.tr.tripDetailsSafetyProceduresTitle,
+        onSafety,
+      ),
       (Iconsax.document, context.tr.tripDetailsPolicyTerms, onTerms),
-      (Iconsax.close_circle, context.tr.tripDetailsPolicyCancellation, onCancellation),
+      (
+        Iconsax.close_circle,
+        context.tr.tripDetailsPolicyCancellation,
+        onCancellation,
+      ),
     ];
 
     return Column(
@@ -418,7 +434,7 @@ class _QuickLinkTile extends StatelessWidget {
           width: double.infinity,
           padding: EdgeInsetsDirectional.symmetric(
             horizontal: 14.w,
-            vertical: 14.h,
+            vertical: 6.h,
           ),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(16.r),
@@ -434,13 +450,19 @@ class _QuickLinkTile extends StatelessWidget {
                   borderRadius: BorderRadius.circular(10.r),
                   border: Border.all(color: AppColors.border(context)),
                 ),
-                child: Icon(icon, size: 18.sp, color: AppColors.darkText(context)),
+                child: Icon(
+                  icon,
+                  size: 18.sp,
+                  color: AppColors.darkText(context),
+                ),
               ),
               SizedBox(width: 12.w),
               Expanded(
                 child: Text(
                   title,
-                  style: AppTextStyles.bodyMedium(color: AppColors.darkText(context)),
+                  style: AppTextStyles.bodyMedium(
+                    color: AppColors.darkText(context),
+                  ),
                 ),
               ),
               Icon(
@@ -471,15 +493,13 @@ class _AccommodationHotelBlock extends StatelessWidget {
   final double? lat;
   final double? lng;
 
-  Color _metaLabelColor(BuildContext context) =>
-      AppColors.isDark(context)
-          ? AppColors.greyText(context)
-          : _kAccommodationLabelLight;
+  Color _metaLabelColor(BuildContext context) => AppColors.isDark(context)
+      ? AppColors.greyText(context)
+      : _kAccommodationLabelLight;
 
-  Color _valueColor(BuildContext context) =>
-      AppColors.isDark(context)
-          ? AppColors.darkText(context)
-          : _kAccommodationTitleValueLight;
+  Color _valueColor(BuildContext context) => AppColors.isDark(context)
+      ? AppColors.darkText(context)
+      : _kAccommodationTitleValueLight;
 
   @override
   Widget build(BuildContext context) {
@@ -564,11 +584,7 @@ class _AccommodationHotelBlock extends StatelessWidget {
             ),
             if (hotelLocation.isEmpty && hasMapTarget) ...[
               const SizedBox(width: 8),
-              GoogleMapsLinkButton(
-                label: hotelName,
-                lat: lat,
-                lng: lng,
-              ),
+              GoogleMapsLinkButton(label: hotelName, lat: lat, lng: lng),
             ],
           ],
         ),
@@ -621,10 +637,7 @@ class _AccommodationGalleryThumb extends StatelessWidget {
           borderRadius: BorderRadius.circular(11),
           child: AspectRatio(
             aspectRatio: 4 / 3,
-            child: AppCachedNetworkImage(
-              imageUrl: imageUrl,
-              fit: BoxFit.cover,
-            ),
+            child: AppCachedNetworkImage(imageUrl: imageUrl, fit: BoxFit.cover),
           ),
         ),
       ),
@@ -661,9 +674,9 @@ class _FullTextPage extends StatelessWidget {
         ),
         child: SelectableText(
           body,
-          style: AppTextStyles.body(color: AppColors.greyText(context)).copyWith(
-            height: 1.6,
-          ),
+          style: AppTextStyles.body(
+            color: AppColors.greyText(context),
+          ).copyWith(height: 1.6),
         ),
       ),
     );

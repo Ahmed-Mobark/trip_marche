@@ -36,7 +36,10 @@ class TripDetailItem extends StatelessWidget {
             style: AppTextStyles.bodyMedium(color: AppColors.darkText(context)),
           ),
           SizedBox(height: 2.h),
-          Text(label, style: AppTextStyles.caption(color: AppColors.greyText(context))),
+          Text(
+            label,
+            style: AppTextStyles.caption(color: AppColors.greyText(context)),
+          ),
         ],
       ),
     );

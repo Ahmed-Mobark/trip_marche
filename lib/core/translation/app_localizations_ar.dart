@@ -1820,4 +1820,16 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get tripDetailsVisaAndEntryTitle => 'التأشيرة والدخول';
+
+  @override
+  String get csLetsGetInTouch => 'تواصل معنا';
+
+  @override
+  String get csCall => 'اتصال';
+
+  @override
+  String get csSendMessage => 'إرسال رسالة';
+
+  @override
+  String get csWhatsApp => 'واتساب';
 }

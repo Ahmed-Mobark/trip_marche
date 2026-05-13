@@ -26,7 +26,10 @@ class ProfileView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final headerHeight = 170.h;
+    final topPad = MediaQuery.paddingOf(context).top;
+    final avatarRadius = 48.r;
+    final avatarDiameter = avatarRadius * 2;
+    final headerGradientHeight = topPad + 80.h + avatarDiameter / 2;
     final sheetRadius = 32.r;
     final userJson = sl<Storage>().getUserJson();
     final name = (userJson?['name'] as String?)?.trim();
@@ -34,88 +37,36 @@ class ProfileView extends StatelessWidget {
     final tripsBooked = 14;
 
     return Scaffold(
-      backgroundColor: AppColors.primary,
+      backgroundColor: AppColors.scaffoldBg(context),
       body: Stack(
         children: [
-          Positioned.fill(
-            child: Container(
-              decoration: const BoxDecoration(
-                gradient: AppColors.primaryGradient,
-              ),
+          // Purple gradient header
+          Container(
+            height: headerGradientHeight,
+            width: double.infinity,
+            decoration: const BoxDecoration(
+              gradient: AppColors.primaryGradient,
             ),
           ),
-          PositionedDirectional(
-            top: 0,
-            start: 0,
-            end: 0,
-            child: SafeArea(
-              bottom: false,
-              child: Padding(
-                padding: EdgeInsetsDirectional.only(
-                  start: 18.w,
-                  end: 18.w,
-                  top: 16.h,
-                ),
-                child: Row(
-                  children: [
-                    ProfileAvatar(
-                      radius: 36.r,
-                      editIcon: Iconsax.camera,
-                      editButtonSize: 26.r,
-                      editIconSize: 14.sp,
-                      onEditTap: () {},
-                    ),
-                    SizedBox(width: 14.w),
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            (name == null || name.isEmpty) ? '—' : name,
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                            style: AppTextStyles.heading3(
-                              color: AppColors.onImage,
-                            ).copyWith(fontWeight: FontWeight.w800),
-                          ),
-                          SizedBox(height: 4.h),
-                          Text(
-                            (email == null || email.isEmpty) ? '—' : email,
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                            style: AppTextStyles.bodyMedium(
-                              color: AppColors.onImage.withValues(alpha: 0.85),
-                            ),
-                          ),
-                          SizedBox(height: 6.h),
-                          Text(
-                            context.tr.profileTripsBooked(tripsBooked),
-                            style: AppTextStyles.bodyMedium(
-                              color: AppColors.yellow,
-                            ).copyWith(fontWeight: FontWeight.w700),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-              ),
+
+          // Scrollable content
+          SingleChildScrollView(
+            padding: EdgeInsetsDirectional.only(
+              top: headerGradientHeight - sheetRadius,
             ),
-          ),
-          Positioned.fill(
-            top: headerHeight,
             child: Container(
+              width: double.infinity,
               decoration: BoxDecoration(
                 color: AppColors.scaffoldBg(context),
                 borderRadius: BorderRadius.vertical(
                   top: Radius.circular(sheetRadius),
                 ),
               ),
-              child: SingleChildScrollView(
+              child: Padding(
                 padding: EdgeInsetsDirectional.only(
                   start: 18.w,
                   end: 18.w,
-                  top: 18.h,
+                  top: avatarDiameter / 2 + 16.h,
                   bottom: 24.h,
                 ),
                 child: Column(
@@ -146,7 +97,7 @@ class ProfileView extends StatelessWidget {
                         ),
                         _CardDivider(),
                         ProfileMenuItem(
-                          icon: Iconsax.building,
+                          icon: Iconsax.tick_circle,
                           title: context.tr.profileFollowingCompanies,
                           onTap: () => sl<AppNavigator>().push(
                             screen: const MyFollowingsView(),
@@ -204,6 +155,59 @@ class ProfileView extends StatelessWidget {
                   ],
                 ),
               ),
+            ),
+          ),
+
+          // Avatar + info overlay (stacked on top of the boundary)
+          PositionedDirectional(
+            top: topPad + 24.h,
+            start: 18.w,
+            end: 18.w,
+            child: Row(
+              children: [
+                ProfileAvatar(
+                  radius: avatarRadius,
+                  editIcon: Iconsax.camera,
+                  editButtonSize: 28.r,
+                  editIconSize: 15.sp,
+                  onEditTap: () {},
+                ),
+                SizedBox(width: 14.w),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        (name == null || name.isEmpty) ? '—' : name,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: AppTextStyles.heading3(
+                          color: AppColors.onImage,
+                        ).copyWith(
+                          fontWeight: FontWeight.w800,
+                          fontSize: 20.sp,
+                        ),
+                      ),
+                      SizedBox(height: 4.h),
+                      Text(
+                        (email == null || email.isEmpty) ? '—' : email,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: AppTextStyles.bodyMedium(
+                          color: AppColors.onImage.withValues(alpha: 0.85),
+                        ),
+                      ),
+                      SizedBox(height: 6.h),
+                      Text(
+                        context.tr.profileTripsBooked(tripsBooked),
+                        style: AppTextStyles.bodyMedium(
+                          color: AppColors.yellow,
+                        ).copyWith(fontWeight: FontWeight.w700),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
             ),
           ),
         ],
@@ -341,15 +345,15 @@ class _LogoutButton extends StatelessWidget {
           ),
         ),
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            Icon(Iconsax.logout_1, size: 18.sp, color: AppColors.error),
+            Icon(Iconsax.logout_1, size: 18.sp, color: AppColors.red),
             SizedBox(width: 10.w),
             Text(
               context.tr.profileLogout,
-              style: AppTextStyles.bodyMedium(
-                color: AppColors.error,
-              ).copyWith(fontWeight: FontWeight.w700),
+              style: AppTextStyles.button(
+                color: AppColors.red,
+              ).copyWith(fontWeight: FontWeight.w500),
             ),
           ],
         ),

@@ -1841,4 +1841,16 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get tripDetailsVisaAndEntryTitle => 'Visa e ingreso';
+
+  @override
+  String get csLetsGetInTouch => 'Contáctanos';
+
+  @override
+  String get csCall => 'Llamar';
+
+  @override
+  String get csSendMessage => 'Enviar mensaje';
+
+  @override
+  String get csWhatsApp => 'WhatsApp';
 }

@@ -1834,4 +1834,16 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get tripDetailsVisaAndEntryTitle => 'Visto e ingresso';
+
+  @override
+  String get csLetsGetInTouch => 'Contattaci';
+
+  @override
+  String get csCall => 'Chiama';
+
+  @override
+  String get csSendMessage => 'Invia messaggio';
+
+  @override
+  String get csWhatsApp => 'WhatsApp';
 }
