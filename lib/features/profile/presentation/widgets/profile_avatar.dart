@@ -1,39 +1,41 @@
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
+
 import '../../../../core/theme/app_colors.dart';
+import '../theme/profile_handoff_tokens.dart';
 
+/// Profile photo — Figma **1:22365**: 108×108 @ 430 frame, corner radius ~11.32,
+/// camera control bottom-end, rgba black 60% + white hairline border.
 class ProfileAvatar extends StatelessWidget {
-  final double radius;
-  final double borderRadius;
-  final ImageProvider? backgroundImage;
-  final IconData editIcon;
-  final double editButtonSize;
-  final double editIconSize;
-  final VoidCallback? onEditTap;
-
   const ProfileAvatar({
     super.key,
-    this.radius = 40,
-    this.borderRadius = 16,
     this.backgroundImage,
-    this.editIcon = Iconsax.edit_2,
-    this.editButtonSize = 28,
-    this.editIconSize = 14,
+    this.editIcon = Iconsax.camera,
     this.onEditTap,
   });
 
+  final ImageProvider? backgroundImage;
+  final IconData editIcon;
+  final VoidCallback? onEditTap;
+
   @override
   Widget build(BuildContext context) {
-    final size = radius * 2;
+    final t = ProfileHandoffTokens.of(context);
+    final side = t.w(108);
+    final rRect = t.w(11.319);
+    final editSize = t.w(33.956);
+    final editIconExtent = t.w(12.841);
+    final borderW = t.w(0.713);
     final hasImage = backgroundImage != null;
 
     return Stack(
+      clipBehavior: Clip.none,
       children: [
         ClipRRect(
-          borderRadius: BorderRadius.circular(borderRadius),
+          borderRadius: BorderRadius.circular(rRect),
           child: Container(
-            width: size,
-            height: size,
+            width: side,
+            height: side,
             decoration: BoxDecoration(
               color: AppColors.lightBg(context),
               image: hasImage
@@ -48,7 +50,7 @@ class ProfileAvatar extends StatelessWidget {
                 ? null
                 : Icon(
                     Iconsax.user,
-                    size: radius * 0.95,
+                    size: side * 0.42,
                     color: AppColors.greyText(context),
                   ),
           ),
@@ -59,16 +61,21 @@ class ProfileAvatar extends StatelessWidget {
           child: GestureDetector(
             onTap: onEditTap,
             child: Container(
-              width: editButtonSize,
-              height: editButtonSize,
-              decoration: const BoxDecoration(
-                color: AppColors.primary,
+              width: editSize,
+              height: editSize,
+              decoration: BoxDecoration(
+                color: Colors.black.withValues(alpha: 0.60),
                 shape: BoxShape.circle,
+                border: Border.all(
+                  color: AppColors.white,
+                  width: borderW.clamp(0.5, 1.5),
+                ),
               ),
+              alignment: Alignment.center,
               child: Icon(
                 editIcon,
                 color: AppColors.onImage,
-                size: editIconSize,
+                size: editIconExtent,
               ),
             ),
           ),
