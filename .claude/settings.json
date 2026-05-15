@@ -67,7 +67,12 @@
       "Bash(git commit:*)",
       "Bash(git push origin feat/client-feedback-round1)",
       "mcp__claude_ai_Supabase__list_projects",
-      "Bash(flutter pub add flutter_staggered_grid_view)"
+      "Bash(flutter pub add flutter_staggered_grid_view)",
+      "Bash(dart analyze lib/features/trip_details/presentation/widgets/trip_details_travel_sections.dart lib/features/trip_details/presentation/widgets/trip_details_accommodation_section.dart lib/features/trip_details/presentation/widgets/trip_details_post_stats_sections.dart lib/features/trip_details/presentation/widgets/trip_details_destination_details_section.dart lib/features/trip_details/presentation/view/trip_details_view.dart)",
+      "Bash(dart analyze lib/features/trip_details/)",
+      "Bash(dart analyze lib/features/trip_details/presentation/widgets/trip_details_destination_details_section.dart)",
+      "Bash(dart analyze lib/features/trip_details/presentation/widgets/trip_details_accommodation_section.dart)",
+      "Bash(dart analyze lib/features/trip_details/presentation/widgets/trip_details_hero_header.dart)"
     ]
   }
 }

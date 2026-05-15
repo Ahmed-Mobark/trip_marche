@@ -195,18 +195,22 @@ class SpecialTripWideCard extends StatelessWidget {
                                 color: AppColors.darkText(context),
                               ).copyWith(
                                 fontWeight: FontWeight.w800,
-                                fontSize: 16.sp,
+                                fontSize: 14.sp,
                               ),
                         ),
-                        SizedBox(width: 6.w),
+                        SizedBox(width: 2.w),
                         Text(
                           PriceFormatter.format(
                             trip.price,
                             currency: trip.currency,
                           ),
-                          style: AppTextStyles.bodySmall(
-                            color: AppColors.greyText(context),
-                          ).copyWith(decoration: TextDecoration.lineThrough),
+                          style:
+                              AppTextStyles.bodySmall(
+                                color: AppColors.greyText(context),
+                              ).copyWith(
+                                decoration: TextDecoration.lineThrough,
+                                fontSize: 12.sp,
+                              ),
                         ),
                       ] else
                         Text(
@@ -219,16 +223,16 @@ class SpecialTripWideCard extends StatelessWidget {
                                 color: AppColors.darkText(context),
                               ).copyWith(
                                 fontWeight: FontWeight.w800,
-                                fontSize: 16.sp,
+                                fontSize: 14.sp,
                               ),
                         ),
+                      Text(
+                        '/${context.tr.homePerPerson}',
+                        style: AppTextStyles.bodySmall(
+                          color: AppColors.greyText(context),
+                        ).copyWith(fontSize: 12.sp),
+                      ),
                     ],
-                  ),
-                  Text(
-                    '/${context.tr.homePerPerson}',
-                    style: AppTextStyles.bodySmall(
-                      color: AppColors.greyText(context),
-                    ),
                   ),
                 ],
               ),

@@ -1038,7 +1038,7 @@ class AppLocalizationsAr extends AppLocalizations {
   }
 
   @override
-  String get tripDetailsOverviewTitle => 'نظرة عامة على الرحلة';
+  String get tripDetailsOverviewTitle => 'عن هذه الرحلة';
 
   @override
   String get tripDetailsOverviewBody =>
@@ -1421,7 +1421,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get tripDetailsAmenityTourGuide => 'مرشد سياحي';
 
   @override
-  String get tripDetailsAccommodationTitle => 'الإقامة';
+  String get tripDetailsAccommodationTitle => 'أين ستقيم';
 
   @override
   String get tripDetailsAccommodationHotelNameLabel => 'اسم الفندق';
@@ -1464,7 +1464,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get tripDetailsTrainLegSummary => 'عودة · القاهرة · 8س 30د';
 
   @override
-  String get tripDetailsDestinationsTitle => 'الوجهات';
+  String get tripDetailsDestinationsTitle => 'أماكن ستزورها';
 
   @override
   String get tripDetailsDestinationDahab => 'دهب';
@@ -1589,13 +1589,13 @@ class AppLocalizationsAr extends AppLocalizations {
   String get tripDetailsVisaDetailsTitle => 'تفاصيل التأشيرة';
 
   @override
-  String get tripDetailsTripInstructionsTitle => 'تعليمات الرحلة';
+  String get tripDetailsTripInstructionsTitle => 'إرشادات الرحلة';
 
   @override
-  String get tripDetailsSafetyProceduresTitle => 'إجراءات السلامة';
+  String get tripDetailsSafetyProceduresTitle => 'إرشادات السلامة';
 
   @override
-  String get tripDetailsCompanySectionTitle => 'الشركة';
+  String get tripDetailsCompanySectionTitle => 'شريك السفر';
 
   @override
   String get tripDetailsViewAll => 'عرض الكل';

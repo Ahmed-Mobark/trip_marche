@@ -287,9 +287,7 @@ class HomeViewState extends State<HomeView> {
                           locationText: _locationText.isNotEmpty
                               ? _locationText
                               : scrollContext.tr.homeLocationText,
-                          topPadding: MediaQuery.paddingOf(
-                            scrollContext,
-                          ).top,
+                          topPadding: MediaQuery.paddingOf(scrollContext).top,
                           onNotificationsTap: () {},
                         ),
                       ),
@@ -302,23 +300,14 @@ class HomeViewState extends State<HomeView> {
                               start: horizontalPadding,
                               end: horizontalPadding,
                               top: 18.h,
-                              bottom: 24.h,
                             ),
-                            decoration: BoxDecoration(
-                              color: AppColors.scaffoldBg(context),
-                              borderRadius: BorderRadius.vertical(
-                                top: Radius.circular(sheetTopRadius),
-                              ),
-                              boxShadow: [
-                                BoxShadow(
-                                  color: AppColors.shadow.withValues(
-                                    alpha: 0.04,
-                                  ),
-                                  blurRadius: 18.r,
-                                  offset: Offset(0, 10.h),
-                                ),
-                              ],
-                            ),
+                            // decoration: BoxDecoration(
+                            //   color: AppColors.scaffoldBg(context),
+                            //   borderRadius: BorderRadius.vertical(
+                            //     top: Radius.circular(sheetTopRadius),
+                            //   ),
+
+                            // ),
                             child:
                                 BlocBuilder<
                                   HomeSectionsCubit,
@@ -721,7 +710,7 @@ class HomeViewState extends State<HomeView> {
                             ),
                             SizedBox(height: 14.h),
                             _SpecialTripsSeeMoreButton(
-                              label: context.tr.homeSeeAll,
+                              label: context.tr.homeViewAll,
                               onTap: () {
                                 final selectedId = catState.selectedId;
                                 if (selectedId == null) return;

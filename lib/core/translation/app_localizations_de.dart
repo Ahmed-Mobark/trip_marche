@@ -1048,7 +1048,7 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
-  String get tripDetailsOverviewTitle => 'Reiseübersicht';
+  String get tripDetailsOverviewTitle => 'Über diese Reise';
 
   @override
   String get tripDetailsOverviewBody =>
@@ -1433,7 +1433,7 @@ class AppLocalizationsDe extends AppLocalizations {
   String get tripDetailsAmenityTourGuide => 'Reiseleiter';
 
   @override
-  String get tripDetailsAccommodationTitle => 'Unterkunft';
+  String get tripDetailsAccommodationTitle => 'Wo du übernachtest';
 
   @override
   String get tripDetailsAccommodationHotelNameLabel => 'Hotelname';
@@ -1476,7 +1476,7 @@ class AppLocalizationsDe extends AppLocalizations {
   String get tripDetailsTrainLegSummary => 'Rückfahrt · Kairo · 8 Std. 30 Min.';
 
   @override
-  String get tripDetailsDestinationsTitle => 'Reiseziele';
+  String get tripDetailsDestinationsTitle => 'Orte, die du besuchen wirst';
 
   @override
   String get tripDetailsDestinationDahab => 'Dahab';
@@ -1601,13 +1601,13 @@ class AppLocalizationsDe extends AppLocalizations {
   String get tripDetailsVisaDetailsTitle => 'Visadetails';
 
   @override
-  String get tripDetailsTripInstructionsTitle => 'Reisehinweise';
+  String get tripDetailsTripInstructionsTitle => 'Reiserichtlinien';
 
   @override
-  String get tripDetailsSafetyProceduresTitle => 'Sicherheitsmaßnahmen';
+  String get tripDetailsSafetyProceduresTitle => 'Sicherheitsrichtlinien';
 
   @override
-  String get tripDetailsCompanySectionTitle => 'Unternehmen';
+  String get tripDetailsCompanySectionTitle => 'Reisepartner';
 
   @override
   String get tripDetailsViewAll => 'Alle ansehen';

@@ -579,7 +579,7 @@ class _ZoomingHeroPhoto extends StatelessWidget {
   }
 }
 
-class _FramedThumbTile extends StatelessWidget {
+class _FramedThumbTile extends StatefulWidget {
   const _FramedThumbTile({
     required this.outerSize,
     required this.innerSize,
@@ -599,19 +599,56 @@ class _FramedThumbTile extends StatelessWidget {
   final VoidCallback onTap;
 
   @override
+  State<_FramedThumbTile> createState() => _FramedThumbTileState();
+}
+
+class _FramedThumbTileState extends State<_FramedThumbTile>
+    with SingleTickerProviderStateMixin {
+  late final AnimationController _controller;
+  late final Animation<double> _scale;
+  bool _tapping = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 100),
+      reverseDuration: const Duration(milliseconds: 160),
+    );
+    _scale = Tween<double>(begin: 1.0, end: 0.88).animate(
+      CurvedAnimation(parent: _controller, curve: Curves.easeOut),
+    );
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  Future<void> _onTap() async {
+    if (_tapping) return;
+    _tapping = true;
+    await _controller.forward();
+    await _controller.reverse();
+    _tapping = false;
+    if (mounted) widget.onTap();
+  }
+
+  @override
   Widget build(BuildContext context) {
     final radiusOuter = 14.r;
     final radiusInner = 11.r;
 
-    return Material(
-      color: AppColors.transparent,
-      child: InkWell(
-        onTap: onTap,
-        borderRadius: BorderRadius.circular(radiusOuter),
+    return GestureDetector(
+      onTap: _onTap,
+      child: ScaleTransition(
+        scale: _scale,
         child: Container(
-          width: outerSize,
-          height: outerSize,
-          padding: EdgeInsets.all(framePadding),
+          width: widget.outerSize,
+          height: widget.outerSize,
+          padding: EdgeInsets.all(widget.framePadding),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(radiusOuter),
             border: Border.all(
@@ -633,18 +670,21 @@ class _FramedThumbTile extends StatelessWidget {
           child: ClipRRect(
             borderRadius: BorderRadius.circular(radiusInner),
             child: SizedBox(
-              width: innerSize,
-              height: innerSize,
+              width: widget.innerSize,
+              height: widget.innerSize,
               child: Stack(
                 fit: StackFit.expand,
                 children: [
-                  AppCachedNetworkImage(imageUrl: url, fit: BoxFit.cover),
-                  if (showMoreOverlay)
+                  AppCachedNetworkImage(
+                    imageUrl: widget.url,
+                    fit: BoxFit.cover,
+                  ),
+                  if (widget.showMoreOverlay)
                     ColoredBox(
                       color: AppColors.shadow.withValues(alpha: 0.52),
                       child: Center(
                         child: Text(
-                          moreLabel,
+                          widget.moreLabel,
                           style:
                               AppTextStyles.bodyMedium(
                                 color: AppColors.onImage,

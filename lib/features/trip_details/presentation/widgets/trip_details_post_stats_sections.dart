@@ -14,15 +14,6 @@ class TripDetailsPostStatsSections extends StatelessWidget {
 
   final TripDetails trip;
 
-  Widget? _buildMapsButton(double? lat, double? lng, String location) {
-    final hasCoords = lat != null && lng != null;
-    final hasLabel = location.trim().isNotEmpty;
-    if (!hasCoords && !hasLabel) {
-      return null;
-    }
-    return GoogleMapsLinkButton(label: location, lat: lat, lng: lng);
-  }
-
   @override
   Widget build(BuildContext context) {
     final inclusions = trip.inclusions
@@ -67,7 +58,7 @@ class TripDetailsPostStatsSections extends StatelessWidget {
             ],
           ),
         ),
-        SizedBox(height: 16.h),
+        SizedBox(height: 12.h),
         if (inclusions.isNotEmpty)
           TripDetailsInfoCard(
             padding: const EdgeInsetsDirectional.only(
@@ -99,77 +90,7 @@ class TripDetailsPostStatsSections extends StatelessWidget {
               ],
             ),
           ),
-        if (inclusions.isNotEmpty) SizedBox(height: 16.h),
-        TripDetailsInfoCard(
-          padding: const EdgeInsetsDirectional.only(
-            start: 16,
-            end: 16,
-            top: 16,
-            bottom: 16,
-          ),
-          borderRadius: 14,
-          borderColor: AppColors.tripDetailsHairline(context),
-          withShadow: false,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Text(
-                context.tr.tripDetailsDepartureDetailsTitle,
-                style: TextStyle(
-                  fontFamily: AppFont.fontFamily,
-                  fontSize: 16,
-                  fontWeight: FontWeight.w700,
-                  height: 1.0,
-                  letterSpacing: 0,
-                  color: AppColors.darkText(context),
-                ),
-              ),
-              const SizedBox(height: 12),
-              _LocationRow(
-                icon: Iconsax.location,
-                label: context.tr.tripDetailsMeetingLocationLabel,
-                value: trip.meeting.location,
-                trailing: _buildMapsButton(
-                  trip.meeting.lat,
-                  trip.meeting.lng,
-                  trip.meeting.location,
-                ),
-              ),
-              const SizedBox(height: 12),
-              _LocationRow(
-                icon: Iconsax.routing_2,
-                label: context.tr.tripDetailsReturnLocationLabel,
-                value: trip.returnPoint.location,
-                trailing: _buildMapsButton(
-                  trip.returnPoint.lat,
-                  trip.returnPoint.lng,
-                  trip.returnPoint.location,
-                ),
-              ),
-              const SizedBox(height: 12),
-              Row(
-                children: [
-                  Expanded(
-                    child: _TimeRow(
-                      icon: Iconsax.profile_2user,
-                      label: context.tr.tripDetailsMeetingTimeLabel,
-                      value: trip.meeting.time,
-                    ),
-                  ),
-                  const SizedBox(width: 12),
-                  Expanded(
-                    child: _TimeRow(
-                      icon: Iconsax.clock,
-                      label: context.tr.tripDetailsReturnTimeLabel,
-                      value: trip.returnPoint.time,
-                    ),
-                  ),
-                ],
-              ),
-            ],
-          ),
-        ),
+        if (inclusions.isNotEmpty) SizedBox(height: 12.h),
       ],
     );
   }
@@ -243,6 +164,95 @@ class _IncludedItem extends StatelessWidget {
           ),
         ),
       ],
+    );
+  }
+}
+
+class TripDetailsDepartureDetailsCard extends StatelessWidget {
+  const TripDetailsDepartureDetailsCard({super.key, required this.trip});
+
+  final TripDetails trip;
+
+  Widget? _buildMapsButton(double? lat, double? lng, String location) {
+    final hasCoords = lat != null && lng != null;
+    final hasLabel = location.trim().isNotEmpty;
+    if (!hasCoords && !hasLabel) {
+      return null;
+    }
+    return GoogleMapsLinkButton(label: location, lat: lat, lng: lng);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return TripDetailsInfoCard(
+      padding: const EdgeInsetsDirectional.only(
+        start: 16,
+        end: 16,
+        top: 16,
+        bottom: 16,
+      ),
+      borderRadius: 14,
+      borderColor: AppColors.tripDetailsHairline(context),
+      withShadow: false,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Text(
+            context.tr.tripDetailsDepartureDetailsTitle,
+            style: TextStyle(
+              fontFamily: AppFont.fontFamily,
+              fontSize: 16,
+              fontWeight: FontWeight.w700,
+              height: 1.0,
+              letterSpacing: 0,
+              color: AppColors.darkText(context),
+            ),
+          ),
+          const SizedBox(height: 12),
+          _LocationRow(
+            icon: Iconsax.location,
+            label: context.tr.tripDetailsMeetingLocationLabel,
+            value: trip.meeting.location,
+            trailing: _buildMapsButton(
+              trip.meeting.lat,
+              trip.meeting.lng,
+              trip.meeting.location,
+            ),
+          ),
+          const SizedBox(height: 12),
+          _LocationRow(
+            icon: Iconsax.routing_2,
+            label: context.tr.tripDetailsReturnLocationLabel,
+            value: trip.returnPoint.location,
+            trailing: _buildMapsButton(
+              trip.returnPoint.lat,
+              trip.returnPoint.lng,
+              trip.returnPoint.location,
+            ),
+          ),
+          const SizedBox(height: 12),
+          Row(
+            children: [
+              Expanded(
+                child: _TimeRow(
+                  icon: Iconsax.profile_2user,
+                  label: context.tr.tripDetailsMeetingTimeLabel,
+                  value: trip.meeting.time,
+                ),
+              ),
+              const SizedBox(width: 12),
+              Expanded(
+                child: _TimeRow(
+                  icon: Iconsax.clock,
+                  label: context.tr.tripDetailsReturnTimeLabel,
+                  value: trip.returnPoint.time,
+                ),
+              ),
+            ],
+          ),
+        ],
+      ),
     );
   }
 }

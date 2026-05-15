@@ -253,7 +253,7 @@ class _SearchFieldState extends State<_SearchField> {
       padding: EdgeInsetsDirectional.symmetric(horizontal: 14.w),
       decoration: BoxDecoration(
         color: bgColor,
-        borderRadius: BorderRadius.circular(999.r),
+        borderRadius: BorderRadius.circular(13.r),
       ),
       child: Row(
         children: [
@@ -276,7 +276,7 @@ class _SearchFieldState extends State<_SearchField> {
                       animation.status == AnimationStatus.completed;
                   final slide =
                       Tween<Offset>(
-                        begin: Offset(0, isIncoming ? 0.55 : -0.55),
+                        begin: Offset(0, isIncoming ? -0.55 : 0.55),
                         end: Offset.zero,
                       ).animate(
                         CurvedAnimation(
@@ -305,7 +305,7 @@ class _SearchFieldState extends State<_SearchField> {
                       // Start of line = beside the search icon in both LTR and RTL.
                       textAlign: TextAlign.start,
                       style: TextStyle(
-                        fontSize: 14.sp,
+                        fontSize: 13.sp,
                         fontWeight: FontWeight.w400,
                         color: AppColors.greyText(
                           context,

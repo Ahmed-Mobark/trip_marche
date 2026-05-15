@@ -2077,7 +2077,7 @@ abstract class AppLocalizations {
   /// No description provided for @tripDetailsOverviewTitle.
   ///
   /// In en, this message translates to:
-  /// **'Trip Overview'**
+  /// **'About This Trip'**
   String get tripDetailsOverviewTitle;
 
   /// No description provided for @tripDetailsOverviewBody.
@@ -2809,7 +2809,7 @@ abstract class AppLocalizations {
   /// No description provided for @tripDetailsAccommodationTitle.
   ///
   /// In en, this message translates to:
-  /// **'Accommodation'**
+  /// **'Where you\'ll stay'**
   String get tripDetailsAccommodationTitle;
 
   /// No description provided for @tripDetailsAccommodationHotelNameLabel.
@@ -2893,7 +2893,7 @@ abstract class AppLocalizations {
   /// No description provided for @tripDetailsDestinationsTitle.
   ///
   /// In en, this message translates to:
-  /// **'Destinations'**
+  /// **'Places you\'ll visit'**
   String get tripDetailsDestinationsTitle;
 
   /// No description provided for @tripDetailsDestinationDahab.
@@ -3139,19 +3139,19 @@ abstract class AppLocalizations {
   /// No description provided for @tripDetailsTripInstructionsTitle.
   ///
   /// In en, this message translates to:
-  /// **'Trip Instructions'**
+  /// **'Trip Guidelines'**
   String get tripDetailsTripInstructionsTitle;
 
   /// No description provided for @tripDetailsSafetyProceduresTitle.
   ///
   /// In en, this message translates to:
-  /// **'Safety Procedures'**
+  /// **'Safety Guidelines'**
   String get tripDetailsSafetyProceduresTitle;
 
   /// No description provided for @tripDetailsCompanySectionTitle.
   ///
   /// In en, this message translates to:
-  /// **'Company'**
+  /// **'Travel Partner'**
   String get tripDetailsCompanySectionTitle;
 
   /// No description provided for @tripDetailsViewAll.

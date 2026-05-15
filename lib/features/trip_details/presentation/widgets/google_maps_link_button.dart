@@ -17,7 +17,7 @@ class GoogleMapsLinkButton extends StatelessWidget {
     required this.label,
     this.lat,
     this.lng,
-    this.size = 36,
+    this.size = 32,
     this.tooltip,
   });
 

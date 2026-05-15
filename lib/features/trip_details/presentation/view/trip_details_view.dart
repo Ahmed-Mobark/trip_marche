@@ -65,11 +65,10 @@ class _TripDetailsBodyState extends State<_TripDetailsBody> {
     _scrollController.addListener(_onScroll);
   }
 
-
   void _onScroll() {
     if (!_scrollController.hasClients) return;
     final pos = _scrollController.position;
-    final nearBottom = pos.pixels >= pos.maxScrollExtent - 150;
+    final nearBottom = pos.pixels >= pos.maxScrollExtent - 60;
     if (nearBottom != _bookingExpanded) {
       setState(() => _bookingExpanded = nearBottom);
     }

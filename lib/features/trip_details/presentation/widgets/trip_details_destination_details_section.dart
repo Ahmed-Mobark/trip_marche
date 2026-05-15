@@ -50,7 +50,7 @@ class TripDetailsDestinationDetailsSection extends StatelessWidget {
     final carousel = _carouselDestinations();
 
     final destCardSize = 132.w;
-    final destCardHeight = destCardSize + 48.h;
+    final destCardHeight = destCardSize;
     final destCardRadius = 16.r;
 
     return Column(
@@ -63,7 +63,7 @@ class TripDetailsDestinationDetailsSection extends StatelessWidget {
               color: AppColors.darkText(context),
             ).copyWith(height: 1.1, letterSpacing: 0),
           ),
-          SizedBox(height: 8.h),
+          SizedBox(height: 10.h),
           SizedBox(
             height: destCardHeight,
             child: ListView.separated(
@@ -84,9 +84,7 @@ class TripDetailsDestinationDetailsSection extends StatelessWidget {
               },
             ),
           ),
-          SizedBox(height: 24.h),
         ],
-        const _DestinationDetailsGridCard(),
       ],
     );
   }
@@ -119,112 +117,140 @@ class _DestinationPhotoCard extends StatelessWidget {
   final double size;
   final double borderRadius;
 
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        if (imageUrl == null) return;
-        showDialog<void>(
-          context: context,
-          builder: (_) => GestureDetector(
-            onTap: () => Navigator.pop(context),
-            child: InteractiveViewer(
-              child: Center(
-                child: AppCachedNetworkImage(
-                  imageUrl: imageUrl,
-                  fit: BoxFit.contain,
+  void _showDetailSheet(BuildContext context) {
+    showModalBottomSheet<void>(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: AppColors.cardBg(context),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(20.r)),
+      ),
+      builder: (ctx) {
+        return SafeArea(
+          top: false,
+          child: Padding(
+            padding: EdgeInsetsDirectional.fromSTEB(20.w, 10.h, 20.w, 20.h),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Center(
+                  child: Container(
+                    width: 55.w,
+                    height: 4.h,
+                    decoration: BoxDecoration(
+                      color: AppColors.border(context),
+                      borderRadius: BorderRadius.circular(999.r),
+                    ),
+                  ),
                 ),
-              ),
+                SizedBox(height: 16.h),
+                if (imageUrl != null)
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(16.r),
+                    child: AppCachedNetworkImage(
+                      imageUrl: imageUrl,
+                      width: double.infinity,
+                      height: 220.h,
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                SizedBox(height: 16.h),
+                Text(
+                  name,
+                  textAlign: TextAlign.start,
+                  style:
+                      AppTextStyles.heading3(
+                        color: AppColors.darkText(context),
+                      ).copyWith(
+                        fontSize: 18.sp,
+                        fontWeight: FontWeight.w700,
+                        height: 1.2,
+                      ),
+                ),
+                if (description.trim().isNotEmpty) ...[
+                  SizedBox(height: 10.h),
+                  Text(
+                    description.trim(),
+                    textAlign: TextAlign.start,
+                    style: AppTextStyles.body(
+                      color: AppColors.secondaryText(context),
+                    ).copyWith(fontSize: 14.sp, height: 1.5),
+                  ),
+                ],
+              ],
             ),
           ),
         );
       },
-      child: SizedBox(
-        width: size,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            ClipRRect(
-              borderRadius: BorderRadius.circular(borderRadius),
-              child: SizedBox(
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: () => _showDetailSheet(context),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(borderRadius),
+        child: SizedBox(
+          width: size,
+          height: size,
+          child: Stack(
+            fit: StackFit.expand,
+            children: [
+              AppCachedNetworkImage(
+                imageUrl: imageUrl,
+                fit: BoxFit.cover,
                 width: size,
                 height: size,
-                child: Stack(
-                  fit: StackFit.expand,
-                  children: [
-                    AppCachedNetworkImage(
-                      imageUrl: imageUrl,
-                      fit: BoxFit.cover,
-                      width: size,
-                      height: size,
-                    ),
-                    DecoratedBox(
-                      decoration: BoxDecoration(
-                        gradient: LinearGradient(
-                          begin: Alignment.topCenter,
-                          end: Alignment.bottomCenter,
-                          colors: [
-                            AppColors.scrim.withValues(alpha: 0),
-                            AppColors.scrim.withValues(alpha: 0.55),
-                          ],
-                        ),
-                      ),
-                    ),
-                    PositionedDirectional(
-                      start: 12.w,
-                      end: 12.w,
-                      bottom: 12.h,
-                      child: Text(
-                        name,
-                        textAlign: TextAlign.center,
-                        maxLines: 2,
-                        overflow: TextOverflow.ellipsis,
-                        style:
-                            AppTextStyles.bodyMedium(
-                              color: AppColors.onImage,
-                            ).copyWith(
-                              fontSize: 14.sp,
-                              fontWeight: FontWeight.w700,
-                              height: 1.2,
-                              letterSpacing: 0,
-                              shadows: [
-                                Shadow(
-                                  color: AppColors.scrim.withValues(alpha: 0.4),
-                                  blurRadius: 8.r,
-                                  offset: Offset(0, 1.h),
-                                ),
-                              ],
-                            ),
-                      ),
-                    ),
-                  ],
+              ),
+              DecoratedBox(
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                    colors: [
+                      AppColors.scrim.withValues(alpha: 0),
+                      AppColors.scrim.withValues(alpha: 0.55),
+                    ],
+                  ),
                 ),
               ),
-            ),
-            SizedBox(height: 8.h),
-            Text(
-              description.trim(),
-              maxLines: 2,
-              overflow: TextOverflow.ellipsis,
-              style:
-                  AppTextStyles.caption(
-                    color: AppColors.secondaryText(context),
-                  ).copyWith(
-                    fontSize: 12.sp,
-                    height: 1.25,
-                    fontWeight: FontWeight.w400,
-                    letterSpacing: 0,
-                  ),
-            ),
-          ],
+              PositionedDirectional(
+                start: 12.w,
+                end: 12.w,
+                bottom: 12.h,
+                child: Text(
+                  name,
+                  textAlign: TextAlign.center,
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                  style: AppTextStyles.bodyMedium(color: AppColors.onImage)
+                      .copyWith(
+                        fontSize: 14.sp,
+                        fontWeight: FontWeight.w700,
+                        height: 1.2,
+                        letterSpacing: 0,
+                        shadows: [
+                          Shadow(
+                            color: AppColors.scrim.withValues(alpha: 0.4),
+                            blurRadius: 8.r,
+                            offset: Offset(0, 1.h),
+                          ),
+                        ],
+                      ),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
   }
 }
 
-class _DestinationDetailsGridCard extends StatelessWidget {
-  const _DestinationDetailsGridCard();
+class TripDetailsDestinationDetailsGridCard extends StatelessWidget {
+  const TripDetailsDestinationDetailsGridCard({super.key});
 
   @override
   Widget build(BuildContext context) {

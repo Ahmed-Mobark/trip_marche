@@ -1044,7 +1044,7 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String get tripDetailsOverviewTitle => 'Trip Overview';
+  String get tripDetailsOverviewTitle => 'About This Trip';
 
   @override
   String get tripDetailsOverviewBody =>
@@ -1426,7 +1426,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get tripDetailsAmenityTourGuide => 'Tour guide';
 
   @override
-  String get tripDetailsAccommodationTitle => 'Accommodation';
+  String get tripDetailsAccommodationTitle => 'Where you\'ll stay';
 
   @override
   String get tripDetailsAccommodationHotelNameLabel => 'Hotel Name';
@@ -1468,7 +1468,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get tripDetailsTrainLegSummary => 'Return · Cairo · 8h 30m';
 
   @override
-  String get tripDetailsDestinationsTitle => 'Destinations';
+  String get tripDetailsDestinationsTitle => 'Places you\'ll visit';
 
   @override
   String get tripDetailsDestinationDahab => 'Dahab';
@@ -1592,13 +1592,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String get tripDetailsVisaDetailsTitle => 'Visa Details';
 
   @override
-  String get tripDetailsTripInstructionsTitle => 'Trip Instructions';
+  String get tripDetailsTripInstructionsTitle => 'Trip Guidelines';
 
   @override
-  String get tripDetailsSafetyProceduresTitle => 'Safety Procedures';
+  String get tripDetailsSafetyProceduresTitle => 'Safety Guidelines';
 
   @override
-  String get tripDetailsCompanySectionTitle => 'Company';
+  String get tripDetailsCompanySectionTitle => 'Travel Partner';
 
   @override
   String get tripDetailsViewAll => 'View All';

@@ -1046,7 +1046,7 @@ class AppLocalizationsIt extends AppLocalizations {
   }
 
   @override
-  String get tripDetailsOverviewTitle => 'Panoramica viaggio';
+  String get tripDetailsOverviewTitle => 'Informazioni sul viaggio';
 
   @override
   String get tripDetailsOverviewBody =>
@@ -1429,7 +1429,7 @@ class AppLocalizationsIt extends AppLocalizations {
   String get tripDetailsAmenityTourGuide => 'Guida turistica';
 
   @override
-  String get tripDetailsAccommodationTitle => 'Alloggio';
+  String get tripDetailsAccommodationTitle => 'Dove alloggerai';
 
   @override
   String get tripDetailsAccommodationHotelNameLabel => 'Nome hotel';
@@ -1471,7 +1471,7 @@ class AppLocalizationsIt extends AppLocalizations {
   String get tripDetailsTrainLegSummary => 'Ritorno · Il Cairo · 8h 30m';
 
   @override
-  String get tripDetailsDestinationsTitle => 'Destinazioni';
+  String get tripDetailsDestinationsTitle => 'Luoghi che visiterai';
 
   @override
   String get tripDetailsDestinationDahab => 'Dahab';
@@ -1595,13 +1595,13 @@ class AppLocalizationsIt extends AppLocalizations {
   String get tripDetailsVisaDetailsTitle => 'Dettagli visto';
 
   @override
-  String get tripDetailsTripInstructionsTitle => 'Istruzioni del viaggio';
+  String get tripDetailsTripInstructionsTitle => 'Linee guida del viaggio';
 
   @override
-  String get tripDetailsSafetyProceduresTitle => 'Procedure di sicurezza';
+  String get tripDetailsSafetyProceduresTitle => 'Linee guida di sicurezza';
 
   @override
-  String get tripDetailsCompanySectionTitle => 'Azienda';
+  String get tripDetailsCompanySectionTitle => 'Partner di viaggio';
 
   @override
   String get tripDetailsViewAll => 'Vedi tutto';
