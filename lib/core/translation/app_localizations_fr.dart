@@ -1477,7 +1477,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get tripDetailsTrainLegSummary => 'Retour · Le Caire · 8 h 30';
 
   @override
-  String get tripDetailsDestinationsTitle => 'Lieux que vous visiterez';
+  String get tripDetailsDestinationsTitle => 'Points forts du voyage';
 
   @override
   String get tripDetailsDestinationDahab => 'Dahab';

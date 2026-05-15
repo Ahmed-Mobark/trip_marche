@@ -2893,7 +2893,7 @@ abstract class AppLocalizations {
   /// No description provided for @tripDetailsDestinationsTitle.
   ///
   /// In en, this message translates to:
-  /// **'Places you\'ll visit'**
+  /// **'Journey Highlights'**
   String get tripDetailsDestinationsTitle;
 
   /// No description provided for @tripDetailsDestinationDahab.

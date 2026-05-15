@@ -35,15 +35,15 @@ class TripDetailsTravelSections extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // 1. Places you'll visit (Destinations carousel)
-          TripDetailsDestinationDetailsSection(trip: trip),
-          SizedBox(height: 12.h),
-
-          // 2. Where you'll stay (Accommodation)
+          // 1. Where you'll stay (Accommodation)
           if (accommodations.isNotEmpty) ...[
             TripDetailsAccommodationSection(trip: trip),
             SizedBox(height: 12.h),
           ],
+
+          // 2. Journey Highlights (Destinations carousel)
+          TripDetailsDestinationDetailsSection(trip: trip),
+          SizedBox(height: 12.h),
 
           // 3. Flight details
           TripDetailsFlightDetailsSection(trip: trip),
