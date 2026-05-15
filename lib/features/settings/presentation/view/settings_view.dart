@@ -2,6 +2,7 @@ import 'package:adaptive_theme/adaptive_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 import '../../../../core/app/app_state.dart';
+import '../../../../core/widgets/app_theme_mode_toggle.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_text_styles.dart';
 import '../../../../core/injection/injection_container.dart';
@@ -83,18 +84,16 @@ class SettingsView extends StatelessWidget {
                   icon: Iconsax.moon,
                   title: context.tr.settingsDarkMode,
                   foregroundColor: titleColor,
-                  trailing: Switch.adaptive(
+                  trailing: AppThemeModeToggle(
+                    semanticsLabel: context.tr.settingsDarkMode,
                     value: isDark,
-                    onChanged: (value) async {
-                      final mode = value
+                    onChanged: (darkEnabled) async {
+                      final mode = darkEnabled
                           ? AdaptiveThemeMode.dark
                           : AdaptiveThemeMode.light;
                       AdaptiveTheme.of(context).setThemeMode(mode);
                       await AppState.storeThemeMode(mode);
                     },
-                    activeThumbColor: AppColors.onImage,
-                    activeTrackColor: AppColors.primary.withValues(alpha: 0.45),
-                    inactiveTrackColor: borderTone,
                   ),
                   onTap: null,
                 ),
