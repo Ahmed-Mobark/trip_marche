@@ -63,7 +63,7 @@ class ProfileMenuItem extends StatelessWidget {
                   title,
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
-                  style: ProfileHandoffTokens.menuRowTitleStyle(context).copyWith(
+                  style: t.menuRowTitleStyle(context).copyWith(
                     color: titleColor,
                   ),
                 ),

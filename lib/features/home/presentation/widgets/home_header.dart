@@ -170,6 +170,9 @@ class _SearchField extends StatefulWidget {
     this.collapseProgress = 0.0,
   });
 
+  /// Corner radius — subtler than a capsule (`999`); matches moderate Figma rounding.
+  static BorderRadius get barDecorationRadius => BorderRadius.circular(14.r);
+
   final String hint;
   final List<String> destinations;
   final double collapseProgress;
@@ -253,7 +256,7 @@ class _SearchFieldState extends State<_SearchField> {
       padding: EdgeInsetsDirectional.symmetric(horizontal: 14.w),
       decoration: BoxDecoration(
         color: bgColor,
-        borderRadius: BorderRadius.circular(13.r),
+        borderRadius: _SearchField.barDecorationRadius,
       ),
       child: Row(
         children: [
