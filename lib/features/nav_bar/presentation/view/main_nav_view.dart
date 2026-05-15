@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import '../../../../core/config/app_icons.dart';
 import '../../../../core/extensions/localization.dart';
@@ -43,23 +44,37 @@ class _MainNavViewState extends State<MainNavView> {
   BottomNavigationBarItem _item(
     NavBarHandoffTokens nav, {
     required String svgAsset,
+    required String svgAssetFilled,
     required String label,
     required Color primary,
     required Color muted,
-    required bool selected,
   }) {
     final size = nav.w(24);
-    final slot = _navIconSlot(
+    final icon = _navIconSlot(
       nav,
       NavBarSvgIcon(
         assetPath: svgAsset,
-        selected: selected,
+        selected: false,
         primaryColor: primary,
         inactiveColor: muted,
         size: size,
       ),
     );
-    return BottomNavigationBarItem(icon: slot, activeIcon: slot, label: label);
+    final activeIcon = _navIconSlot(
+      nav,
+      NavBarSvgIcon(
+        assetPath: svgAssetFilled,
+        selected: true,
+        primaryColor: primary,
+        inactiveColor: muted,
+        size: size,
+      ),
+    );
+    return BottomNavigationBarItem(
+      icon: icon,
+      activeIcon: activeIcon,
+      label: label,
+    );
   }
 
   @override
@@ -68,7 +83,7 @@ class _MainNavViewState extends State<MainNavView> {
     final muted = AppColors.greyText(context);
     final nav = NavBarHandoffTokens.of(context);
     final hInset = nav.w(20);
-    final vInset = nav.w(16);
+    final vInset = nav.w(10);
 
     return Scaffold(
       backgroundColor: AppColors.background(context),
@@ -113,6 +128,7 @@ class _MainNavViewState extends State<MainNavView> {
                       unselectedIconTheme: IconThemeData(size: nav.w(24)),
                       currentIndex: _currentIndex,
                       onTap: (index) async {
+                        HapticFeedback.lightImpact();
                         setState(() => _currentIndex = index);
                         if (index == 0) {
                           await _homeKey.currentState?.refreshFromNavBarTap();
@@ -139,34 +155,34 @@ class _MainNavViewState extends State<MainNavView> {
                         _item(
                           nav,
                           svgAsset: AppIcons.homeIconSvg,
+                          svgAssetFilled: AppIcons.homeIconFilledSvg,
                           label: context.tr.navHome,
                           primary: primary,
                           muted: muted,
-                          selected: _currentIndex == 0,
                         ),
                         _item(
                           nav,
                           svgAsset: AppIcons.tripsIconSvg,
+                          svgAssetFilled: AppIcons.tripsIconFilledSvg,
                           label: context.tr.navTrips,
                           primary: primary,
                           muted: muted,
-                          selected: _currentIndex == 1,
                         ),
                         _item(
                           nav,
                           svgAsset: AppIcons.wishlistIconSvg,
+                          svgAssetFilled: AppIcons.wishlistIconFilledSvg,
                           label: context.tr.navWishlist,
                           primary: primary,
                           muted: muted,
-                          selected: _currentIndex == 2,
                         ),
                         _item(
                           nav,
                           svgAsset: AppIcons.accountIconSvg,
+                          svgAssetFilled: AppIcons.accountIconFilledSvg,
                           label: context.tr.navAccount,
                           primary: primary,
                           muted: muted,
-                          selected: _currentIndex == 3,
                         ),
                       ],
                     ),

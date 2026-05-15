@@ -18,7 +18,7 @@ class ProfileHandoffTokens {
   static const double kFigmaFrameW = 430;
 
   /// Header gradient height from frame top (node `1:22366`).
-  static const double kHeaderGradientHeightFigma = 263;
+  static const double kHeaderGradientHeightFigma = 240;
 
   /// First Account card top from frame top (node `1:22378`).
   static const double kFirstCardTopFigma = 205;
@@ -64,12 +64,12 @@ class ProfileHandoffTokens {
   }
 
   static List<BoxShadow> cardShadow() => [
-        BoxShadow(
-          color: Colors.black.withValues(alpha: 0.10),
-          blurRadius: 5,
-          offset: const Offset(0, 4),
-        ),
-      ];
+    BoxShadow(
+      color: Colors.black.withValues(alpha: 0.10),
+      blurRadius: 5,
+      offset: const Offset(0, 4),
+    ),
+  ];
 
   static Color canvas(BuildContext context) =>
       AppColors.isDark(context) ? AppColors.scaffoldBg(context) : canvasLight;
@@ -80,10 +80,9 @@ class ProfileHandoffTokens {
   static Color sectionLabelColor(BuildContext context) =>
       AppColors.isDark(context) ? AppColors.greyTextColorDark : sectionLabel;
 
-  static Color emailColor(BuildContext context) =>
-      AppColors.isDark(context)
-          ? AppColors.onImage.withValues(alpha: 0.72)
-          : emailOnHeader;
+  static Color emailColor(BuildContext context) => AppColors.isDark(context)
+      ? AppColors.onImage.withValues(alpha: 0.72)
+      : emailOnHeader;
 
   static Color dividerColor(BuildContext context) =>
       AppColors.isDark(context) ? AppColors.borderColorDark : divider;
@@ -92,55 +91,55 @@ class ProfileHandoffTokens {
       AppColors.isDark(context) ? AppColors.error : deleteRowTitleLight;
 
   TextStyle headerNameStyle() => TextStyle(
-        fontFamily: AppFont.fontFamily,
-        fontWeight: AppFont.semiBold,
-        fontSize: scaledFontSize(20),
-        height: 1.0,
-        color: AppColors.onImage,
-      );
+    fontFamily: AppFont.fontFamily,
+    fontWeight: AppFont.semiBold,
+    fontSize: scaledFontSize(20),
+    height: 1.0,
+    color: AppColors.onImage,
+  );
 
   TextStyle headerEmailStyle(BuildContext context) => TextStyle(
-        fontFamily: AppFont.fontFamily,
-        fontWeight: AppFont.medium,
-        fontSize: scaledFontSize(14),
-        height: 20 / 14,
-        letterSpacing: 0.1,
-        color: emailColor(context),
-      );
+    fontFamily: AppFont.fontFamily,
+    fontWeight: AppFont.medium,
+    fontSize: scaledFontSize(14),
+    height: 20 / 14,
+    letterSpacing: 0.1,
+    color: emailColor(context),
+  );
 
   TextStyle headerTripsStyle() => TextStyle(
-        fontFamily: AppFont.fontFamily,
-        fontWeight: AppFont.medium,
-        fontSize: scaledFontSize(14),
-        height: 20 / 14,
-        letterSpacing: 0.1,
-        color: tripsBooked,
-      );
+    fontFamily: AppFont.fontFamily,
+    fontWeight: AppFont.medium,
+    fontSize: scaledFontSize(14),
+    height: 20 / 14,
+    letterSpacing: 0.1,
+    color: tripsBooked,
+  );
 
   TextStyle sectionHeaderStyle(BuildContext context) => TextStyle(
-        fontFamily: AppFont.fontFamily,
-        fontWeight: AppFont.medium,
-        fontSize: scaledFontSize(16),
-        height: 20 / 16,
-        letterSpacing: 0.1,
-        color: sectionLabelColor(context),
-      );
+    fontFamily: AppFont.fontFamily,
+    fontWeight: AppFont.medium,
+    fontSize: scaledFontSize(16),
+    height: 20 / 16,
+    letterSpacing: 0.1,
+    color: sectionLabelColor(context),
+  );
 
   TextStyle menuRowTitleStyle(BuildContext context) => TextStyle(
-        fontFamily: AppFont.fontFamily,
-        fontWeight: AppFont.medium,
-        fontSize: scaledFontSize(16),
-        height: 20 / 16,
-        letterSpacing: 0.1,
-        color: menuTitle(context),
-      );
+    fontFamily: AppFont.fontFamily,
+    fontWeight: AppFont.medium,
+    fontSize: scaledFontSize(16),
+    height: 20 / 16,
+    letterSpacing: 0.1,
+    color: menuTitle(context),
+  );
 
   TextStyle logoutTitleStyle() => TextStyle(
-        fontFamily: AppFont.fontFamily,
-        fontWeight: AppFont.medium,
-        fontSize: scaledFontSize(16),
-        height: 20 / 16,
-        letterSpacing: 0.1,
-        color: AppColors.red,
-      );
+    fontFamily: AppFont.fontFamily,
+    fontWeight: AppFont.medium,
+    fontSize: scaledFontSize(16),
+    height: 20 / 16,
+    letterSpacing: 0.1,
+    color: AppColors.red,
+  );
 }

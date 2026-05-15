@@ -21,10 +21,10 @@ class ProfileAvatar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final t = ProfileHandoffTokens.of(context);
-    final side = t.w(108);
-    final rRect = t.w(11.319);
-    final editSize = t.w(33.956);
-    final editIconExtent = t.w(12.841);
+    final side = t.w(80);
+    final rRect = t.w(8.4);
+    final editSize = t.w(28);
+    final editIconExtent = t.w(11);
     final borderW = t.w(0.713);
     final hasImage = backgroundImage != null;
 

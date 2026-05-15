@@ -72,7 +72,8 @@
       "Bash(dart analyze lib/features/trip_details/)",
       "Bash(dart analyze lib/features/trip_details/presentation/widgets/trip_details_destination_details_section.dart)",
       "Bash(dart analyze lib/features/trip_details/presentation/widgets/trip_details_accommodation_section.dart)",
-      "Bash(dart analyze lib/features/trip_details/presentation/widgets/trip_details_hero_header.dart)"
+      "Bash(dart analyze lib/features/trip_details/presentation/widgets/trip_details_hero_header.dart)",
+      "Bash(dart analyze lib/features/nav_bar/presentation/view/main_nav_view.dart)"
     ]
   }
 }
