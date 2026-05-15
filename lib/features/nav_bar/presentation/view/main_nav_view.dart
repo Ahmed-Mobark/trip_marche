@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:iconsax/iconsax.dart';
 
+import '../../../../core/config/app_icons.dart';
 import '../../../../core/extensions/localization.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../home/presentation/view/home_view.dart';
@@ -8,6 +8,7 @@ import '../../../my_trips/presentation/view/my_trips_view.dart';
 import '../../../profile/presentation/view/profile_view.dart';
 import '../../../wishlist/presentation/view/wishlist_view.dart';
 import '../theme/nav_bar_handoff_tokens.dart';
+import '../widgets/nav_bar_svg_icon.dart';
 
 class MainNavView extends StatefulWidget {
   const MainNavView({super.key});
@@ -41,17 +42,23 @@ class _MainNavViewState extends State<MainNavView> {
 
   BottomNavigationBarItem _item(
     NavBarHandoffTokens nav, {
-    required IconData outline,
-    required IconData filled,
+    required String svgAsset,
     required String label,
     required Color primary,
     required Color muted,
     required bool selected,
   }) {
     final size = nav.w(24);
-    final iconData = selected ? filled : outline;
-    final color = selected ? primary : muted;
-    final slot = _navIconSlot(nav, Icon(iconData, size: size, color: color));
+    final slot = _navIconSlot(
+      nav,
+      NavBarSvgIcon(
+        assetPath: svgAsset,
+        selected: selected,
+        primaryColor: primary,
+        inactiveColor: muted,
+        size: size,
+      ),
+    );
     return BottomNavigationBarItem(icon: slot, activeIcon: slot, label: label);
   }
 
@@ -131,8 +138,7 @@ class _MainNavViewState extends State<MainNavView> {
                       items: [
                         _item(
                           nav,
-                          outline: Iconsax.home,
-                          filled: Iconsax.home5,
+                          svgAsset: AppIcons.homeIconSvg,
                           label: context.tr.navHome,
                           primary: primary,
                           muted: muted,
@@ -140,8 +146,7 @@ class _MainNavViewState extends State<MainNavView> {
                         ),
                         _item(
                           nav,
-                          outline: Iconsax.briefcase,
-                          filled: Iconsax.briefcase5,
+                          svgAsset: AppIcons.tripsIconSvg,
                           label: context.tr.navTrips,
                           primary: primary,
                           muted: muted,
@@ -149,8 +154,7 @@ class _MainNavViewState extends State<MainNavView> {
                         ),
                         _item(
                           nav,
-                          outline: Iconsax.heart,
-                          filled: Iconsax.heart5,
+                          svgAsset: AppIcons.wishlistIconSvg,
                           label: context.tr.navWishlist,
                           primary: primary,
                           muted: muted,
@@ -158,8 +162,7 @@ class _MainNavViewState extends State<MainNavView> {
                         ),
                         _item(
                           nav,
-                          outline: Iconsax.profile_circle,
-                          filled: Iconsax.profile_circle5,
+                          svgAsset: AppIcons.accountIconSvg,
                           label: context.tr.navAccount,
                           primary: primary,
                           muted: muted,
