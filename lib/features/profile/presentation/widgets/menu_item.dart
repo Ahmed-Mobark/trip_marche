@@ -50,11 +50,7 @@ class ProfileMenuItem extends StatelessWidget {
                 width: iconSize,
                 height: iconSize,
                 child: Center(
-                  child: Icon(
-                    icon,
-                    size: iconSize,
-                    color: defaultIcon,
-                  ),
+                  child: Icon(icon, size: iconSize, color: defaultIcon),
                 ),
               ),
               SizedBox(width: gap),
@@ -63,9 +59,10 @@ class ProfileMenuItem extends StatelessWidget {
                   title,
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
-                  style: t.menuRowTitleStyle(context).copyWith(
-                    color: titleColor,
-                  ),
+                  textAlign: TextAlign.start,
+                  style: t
+                      .menuRowTitleStyle(context)
+                      .copyWith(color: titleColor),
                 ),
               ),
               if (trailing != null) trailing!,
@@ -87,11 +84,22 @@ class _HandoffChevron extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isRtl = Directionality.of(context) == TextDirection.rtl;
-    return Icon(
-      isRtl ? Icons.arrow_back_ios_new : Icons.arrow_forward_ios,
-      size: size,
-      color: color,
+    final rtl = Directionality.of(context) == TextDirection.rtl;
+    return SizedBox(
+      width: size,
+      height: size,
+      child: Center(
+        child: Transform.flip(
+          flipX: rtl,
+          child: Icon(
+            Localizations.localeOf(context).languageCode == 'ar'
+                ? Icons.arrow_back_ios_rounded
+                : Icons.arrow_forward_ios_rounded,
+            size: size,
+            color: color,
+          ),
+        ),
+      ),
     );
   }
 }
