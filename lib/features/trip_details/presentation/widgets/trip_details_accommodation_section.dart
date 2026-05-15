@@ -97,7 +97,8 @@ class TripDetailsAccommodationSection extends StatelessWidget {
 }
 
 class TripDetailsCompanyCard extends StatelessWidget {
-  const TripDetailsCompanyCard({super.key,
+  const TripDetailsCompanyCard({
+    super.key,
     required this.companyName,
     required this.ratingValue,
     required this.ratingCount,
@@ -300,7 +301,8 @@ class _RatePillRow extends StatelessWidget {
 }
 
 class TripDetailsQuickLinks extends StatelessWidget {
-  const TripDetailsQuickLinks({super.key,
+  const TripDetailsQuickLinks({
+    super.key,
     required this.onVisa,
     required this.onInstructions,
     required this.onSafety,
@@ -459,11 +461,11 @@ class _AccommodationHotelBlock extends StatelessWidget {
     );
     final locationStyle = TextStyle(
       fontFamily: AppFont.fontFamily,
-      fontSize: 14,
-      fontWeight: FontWeight.w600,
+      fontSize: 14.sp,
+      fontWeight: FontWeight.w500,
       height: 1.15,
       letterSpacing: 0,
-      color: _valueColor(context),
+      color: AppColors.white,
     );
 
     final thumbs = imageUrls.length;
@@ -485,11 +487,16 @@ class _AccommodationHotelBlock extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         if (cityName.isNotEmpty) ...[
-          Text(
-            cityName,
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-            style: locationStyle,
+          Container(
+            padding: EdgeInsetsDirectional.symmetric(
+              horizontal: 8.w,
+              vertical: 4.h,
+            ),
+            decoration: BoxDecoration(
+              color: AppColors.tripDetailsHeroCompanyAccent,
+              borderRadius: BorderRadius.circular(10.r),
+            ),
+            child: Text(cityName, style: locationStyle),
           ),
           const SizedBox(height: 6),
         ],
