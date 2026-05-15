@@ -17,6 +17,22 @@ class ProfileHandoffTokens {
 
   static const double kFigmaFrameW = 430;
 
+  /// Header gradient height from frame top (node `1:22366`).
+  static const double kHeaderGradientHeightFigma = 263;
+
+  /// First Account card top from frame top (node `1:22378`).
+  static const double kFirstCardTopFigma = 205;
+
+  /// Overlap of first card into the gradient: `263 − 205 = 58`.
+  static const double kHeaderCardOverlapFigma =
+      kHeaderGradientHeightFigma - kFirstCardTopFigma;
+
+  /// Avatar + text row top from frame top (node `1:22367`).
+  static const double kAvatarRowTopFigma = 70;
+
+  /// Horizontal inset; cards are `390` wide on `430` frame → `(430-390)/2 = 20`.
+  static const double kHorizontalInsetFigma = 20;
+
   /// `figmaPx` measured on the 430-wide Figma frame → logical px on device.
   double w(double figmaPx) => figmaPx * _screenW / kFigmaFrameW;
 
@@ -24,6 +40,9 @@ class ProfileHandoffTokens {
 
   static ProfileHandoffTokens of(BuildContext context) =>
       ProfileHandoffTokens._(MediaQuery.sizeOf(context).width);
+
+  /// Typography on the 430 frame (scaled like widths for proportional screens).
+  double scaledFontSize(double figmaPx) => figmaPx * _screenW / kFigmaFrameW;
 
   // --- Figma colors (light reference; dark uses theme fallbacks) ---
   static const Color canvasLight = Color(0xFFFEFCFF);
@@ -72,55 +91,54 @@ class ProfileHandoffTokens {
   static Color deleteTitle(BuildContext context) =>
       AppColors.isDark(context) ? AppColors.error : deleteRowTitleLight;
 
-  // --- Typography (Readex Pro = project font; sizes from Figma) ---
-  static TextStyle headerNameStyle() => TextStyle(
+  TextStyle headerNameStyle() => TextStyle(
         fontFamily: AppFont.fontFamily,
         fontWeight: AppFont.semiBold,
-        fontSize: FontSizes.s20,
+        fontSize: scaledFontSize(20),
         height: 1.0,
         color: AppColors.onImage,
       );
 
-  static TextStyle headerEmailStyle(BuildContext context) => TextStyle(
+  TextStyle headerEmailStyle(BuildContext context) => TextStyle(
         fontFamily: AppFont.fontFamily,
         fontWeight: AppFont.medium,
-        fontSize: FontSizes.s14,
+        fontSize: scaledFontSize(14),
         height: 20 / 14,
         letterSpacing: 0.1,
         color: emailColor(context),
       );
 
-  static TextStyle headerTripsStyle() => TextStyle(
+  TextStyle headerTripsStyle() => TextStyle(
         fontFamily: AppFont.fontFamily,
         fontWeight: AppFont.medium,
-        fontSize: FontSizes.s14,
+        fontSize: scaledFontSize(14),
         height: 20 / 14,
         letterSpacing: 0.1,
         color: tripsBooked,
       );
 
-  static TextStyle sectionHeaderStyle(BuildContext context) => TextStyle(
+  TextStyle sectionHeaderStyle(BuildContext context) => TextStyle(
         fontFamily: AppFont.fontFamily,
         fontWeight: AppFont.medium,
-        fontSize: FontSizes.s16,
+        fontSize: scaledFontSize(16),
         height: 20 / 16,
         letterSpacing: 0.1,
         color: sectionLabelColor(context),
       );
 
-  static TextStyle menuRowTitleStyle(BuildContext context) => TextStyle(
+  TextStyle menuRowTitleStyle(BuildContext context) => TextStyle(
         fontFamily: AppFont.fontFamily,
         fontWeight: AppFont.medium,
-        fontSize: FontSizes.s16,
+        fontSize: scaledFontSize(16),
         height: 20 / 16,
         letterSpacing: 0.1,
         color: menuTitle(context),
       );
 
-  static TextStyle logoutTitleStyle() => TextStyle(
+  TextStyle logoutTitleStyle() => TextStyle(
         fontFamily: AppFont.fontFamily,
         fontWeight: AppFont.medium,
-        fontSize: FontSizes.s16,
+        fontSize: scaledFontSize(16),
         height: 20 / 16,
         letterSpacing: 0.1,
         color: AppColors.red,

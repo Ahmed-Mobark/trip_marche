@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:trip_marche/core/injection/injection_container.dart';
 import 'package:trip_marche/core/navigation/app_navigator.dart';
@@ -22,215 +21,213 @@ import 'my_followings_view.dart';
 import 'my_reviews_view.dart';
 import 'personal_info_view.dart';
 
-/// Account / profile — Figma **Profile** `1:22365` (frame 430×~1000).
+/// Account / profile — Figma **Profile** `1:22365` (handoff frame **430** wide).
+///
+/// **Scroll:** One [SingleChildScrollView]; purple header + avatar + cards share
+/// the same scroll extent. Visual overlap uses [Transform.translate] by
+/// [ProfileHandoffTokens.kHeaderCardOverlapFigma] (not a fixed overlay Stack).
+///
+/// Vertical anchors (frame coordinates):
+/// - Gradient height **263**, avatar row **70**, first card top **205**
 class ProfileView extends StatelessWidget {
   const ProfileView({super.key});
 
   @override
   Widget build(BuildContext context) {
     final t = ProfileHandoffTokens.of(context);
-    final topPad = MediaQuery.paddingOf(context).top;
-    final purpleH = t.w(263);
-    final sheetRadius = t.w(16);
+    final bottomInset = MediaQuery.paddingOf(context).bottom;
+    final purpleH = t.w(ProfileHandoffTokens.kHeaderGradientHeightFigma);
+    final hInset = t.w(ProfileHandoffTokens.kHorizontalInsetFigma);
+    final overlapY = t.w(ProfileHandoffTokens.kHeaderCardOverlapFigma);
     final userJson = sl<Storage>().getUserJson();
     final name = (userJson?['name'] as String?)?.trim();
     final email = (userJson?['email'] as String?)?.trim();
     const tripsBooked = 14;
-    final hMargin = t.w(20);
-    final avatarRowTop = topPad + t.w(70);
+
+    final scrollBottomPad = bottomInset + t.w(16);
 
     return Scaffold(
       backgroundColor: ProfileHandoffTokens.canvas(context),
-      body: Stack(
-        clipBehavior: Clip.none,
-        children: [
-          PositionedDirectional(
-            top: 0,
-            start: 0,
-            end: 0,
-            height: purpleH,
-            child: DecoratedBox(
-              decoration: BoxDecoration(
-                gradient: ProfileHandoffTokens.headerGradient(),
+      body: SingleChildScrollView(
+          clipBehavior: Clip.none,
+          physics: const BouncingScrollPhysics(
+            parent: AlwaysScrollableScrollPhysics(),
+          ),
+          padding: EdgeInsets.only(bottom: scrollBottomPad),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              SizedBox(
+                height: purpleH,
+                width: double.infinity,
+                child: Stack(
+                  clipBehavior: Clip.none,
+                  children: [
+                    Positioned.fill(
+                      child: DecoratedBox(
+                        decoration: BoxDecoration(
+                          gradient: ProfileHandoffTokens.headerGradient(),
+                        ),
+                      ),
+                    ),
+                    PositionedDirectional(
+                      top: t.w(ProfileHandoffTokens.kAvatarRowTopFigma),
+                      start: hInset,
+                      end: hInset,
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          ProfileAvatar(onEditTap: () {}),
+                          SizedBox(width: t.w(16)),
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  (name == null || name.isEmpty) ? '—' : name,
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: t.headerNameStyle(),
+                                ),
+                                SizedBox(height: t.w(4)),
+                                Text(
+                                  (email == null || email.isEmpty)
+                                      ? '—'
+                                      : email,
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: t.headerEmailStyle(context),
+                                ),
+                                SizedBox(height: t.w(4)),
+                                Text(
+                                  context.tr.profileTripsBooked(tripsBooked),
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: t.headerTripsStyle(),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
               ),
-            ),
-          ),
-          SingleChildScrollView(
-            padding: EdgeInsets.only(top: purpleH - t.w(58)),
-            child: Column(
-              children: [
-                Container(
-                  width: double.infinity,
-                  decoration: BoxDecoration(
-                    color: ProfileHandoffTokens.canvas(context),
-                    borderRadius: BorderRadius.vertical(
-                      top: Radius.circular(sheetRadius),
-                    ),
+              Transform.translate(
+                offset: Offset(0, -overlapY),
+                child: Padding(
+                  padding: EdgeInsetsDirectional.only(
+                    start: hInset,
+                    end: hInset,
                   ),
-                  child: Padding(
-                    padding: EdgeInsetsDirectional.only(
-                      start: hMargin,
-                      end: hMargin,
-                      top: t.w(40),
-                      bottom: 24.h,
-                    ),
-                    child: Column(
-                      children: [
-                        _HandoffCard(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.stretch,
-                            children: [
-                              Text(
-                                context.tr.profileTitleAccount,
-                                style: ProfileHandoffTokens.sectionHeaderStyle(
-                                  context,
-                                ),
-                              ),
-                              SizedBox(height: t.w(8)),
-                              ProfileMenuItem(
-                                icon: Iconsax.user,
-                                title: context.tr.profilePersonalInfo,
-                                onTap: () => sl<AppNavigator>().push(
-                                  screen: const PersonalInfoView(),
-                                ),
-                              ),
-                              _HandoffDivider(),
-                              ProfileMenuItem(
-                                icon: Iconsax.card,
-                                title: context.tr.profilePaymentMethod,
-                                onTap: () {},
-                              ),
-                              _HandoffDivider(),
-                              ProfileMenuItem(
-                                icon: Iconsax.star,
-                                title: context.tr.profileMyReviews,
-                                onTap: () => sl<AppNavigator>().push(
-                                  screen: const MyReviewsView(),
-                                ),
-                              ),
-                              _HandoffDivider(),
-                              ProfileMenuItem(
-                                icon: Iconsax.tick_circle,
-                                title: context.tr.profileFollowingCompanies,
-                                onTap: () => sl<AppNavigator>().push(
-                                  screen: const MyFollowingsView(),
-                                ),
-                              ),
-                              _HandoffDivider(),
-                              ProfileMenuItem(
-                                icon: Iconsax.setting_2,
-                                title: context.tr.profileSettings,
-                                onTap: () => sl<AppNavigator>().push(
-                                  screen: const SettingsView(),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        SizedBox(height: t.w(16)),
-                        _HandoffCard(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.stretch,
-                            children: [
-                              Text(
-                                context.tr.profileTitleSupport,
-                                style: ProfileHandoffTokens.sectionHeaderStyle(
-                                  context,
-                                ),
-                              ),
-                              SizedBox(height: t.w(16)),
-                              ProfileMenuItem(
-                                icon: Iconsax.headphone,
-                                title: context.tr.profileCustomerService,
-                                onTap: () => sl<AppNavigator>().push(
-                                  screen: const CustomerServiceView(),
-                                ),
-                              ),
-                              _HandoffDivider(),
-                              ProfileMenuItem(
-                                icon: Iconsax.message_question,
-                                title: context.tr.profileFaqs,
-                                onTap: () => sl<AppNavigator>().push(
-                                  screen: const FaqsView(),
-                                ),
-                              ),
-                              _HandoffDivider(),
-                              ProfileMenuItem(
-                                icon: Iconsax.task,
-                                title: context.tr.profileTermsAndConditions,
-                                onTap: () => sl<AppNavigator>().push(
-                                  screen: const TermsView(),
-                                ),
-                              ),
-                              _HandoffDivider(),
-                              ProfileMenuItem(
-                                icon: Iconsax.trash,
-                                title: context.tr.profileDeleteAccount,
-                                titleColor: ProfileHandoffTokens.deleteTitle(
-                                  context,
-                                ),
-                                iconColor: AppColors.error,
-                                showChevron: false,
-                                verticalPaddingFigma: 16,
-                                onTap: () => _showDeleteAccountDialog(context),
-                              ),
-                            ],
-                          ),
-                        ),
-                        SizedBox(height: t.w(16)),
-                        _HandoffLogoutBar(
-                          onTap: () => _showLogoutDialog(context),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-          PositionedDirectional(
-            top: avatarRowTop,
-            start: hMargin,
-            end: hMargin,
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                ProfileAvatar(
-                  onEditTap: () {},
-                ),
-                SizedBox(width: t.w(16)),
-                Expanded(
                   child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
-                      Text(
-                        (name == null || name.isEmpty) ? '—' : name,
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        style: ProfileHandoffTokens.headerNameStyle(),
+                      _HandoffCard(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                          children: [
+                            Text(
+                              context.tr.profileTitleAccount,
+                              style: t.sectionHeaderStyle(context),
+                            ),
+                            SizedBox(height: t.w(8)),
+                            ProfileMenuItem(
+                              icon: Iconsax.user,
+                              title: context.tr.profilePersonalInfo,
+                              onTap: () => sl<AppNavigator>().push(
+                                screen: const PersonalInfoView(),
+                              ),
+                            ),
+                            const _HandoffDivider(),
+                            ProfileMenuItem(
+                              icon: Iconsax.card,
+                              title: context.tr.profilePaymentMethod,
+                              onTap: () {},
+                            ),
+                            const _HandoffDivider(),
+                            ProfileMenuItem(
+                              icon: Iconsax.star,
+                              title: context.tr.profileMyReviews,
+                              onTap: () => sl<AppNavigator>().push(
+                                screen: const MyReviewsView(),
+                              ),
+                            ),
+                            const _HandoffDivider(),
+                            ProfileMenuItem(
+                              icon: Iconsax.tick_circle,
+                              title: context.tr.profileFollowingCompanies,
+                              onTap: () => sl<AppNavigator>().push(
+                                screen: const MyFollowingsView(),
+                              ),
+                            ),
+                            const _HandoffDivider(),
+                            ProfileMenuItem(
+                              icon: Iconsax.setting_2,
+                              title: context.tr.profileSettings,
+                              onTap: () => sl<AppNavigator>().push(
+                                screen: const SettingsView(),
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
-                      SizedBox(height: t.w(4)),
-                      Text(
-                        (email == null || email.isEmpty) ? '—' : email,
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        style: ProfileHandoffTokens.headerEmailStyle(context),
+                      SizedBox(height: t.w(16)),
+                      _HandoffCard(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                          children: [
+                            Text(
+                              context.tr.profileTitleSupport,
+                              style: t.sectionHeaderStyle(context),
+                            ),
+                            SizedBox(height: t.w(16)),
+                            ProfileMenuItem(
+                              icon: Iconsax.headphone,
+                              title: context.tr.profileCustomerService,
+                              onTap: () => sl<AppNavigator>().push(
+                                screen: const CustomerServiceView(),
+                              ),
+                            ),
+                            const _HandoffDivider(),
+                            ProfileMenuItem(
+                              icon: Iconsax.message_question,
+                              title: context.tr.profileFaqs,
+                              onTap: () =>
+                                  sl<AppNavigator>().push(screen: const FaqsView()),
+                            ),
+                            const _HandoffDivider(),
+                            ProfileMenuItem(
+                              icon: Iconsax.task,
+                              title: context.tr.profileTermsAndConditions,
+                              onTap: () =>
+                                  sl<AppNavigator>().push(screen: const TermsView()),
+                            ),
+                            const _HandoffDivider(),
+                            ProfileMenuItem(
+                              icon: Iconsax.trash,
+                              title: context.tr.profileDeleteAccount,
+                              titleColor:
+                                  ProfileHandoffTokens.deleteTitle(context),
+                              iconColor: AppColors.error,
+                              showChevron: false,
+                              verticalPaddingFigma: 16,
+                              onTap: () => _showDeleteAccountDialog(context),
+                            ),
+                          ],
+                        ),
                       ),
-                      SizedBox(height: t.w(4)),
-                      Text(
-                        context.tr.profileTripsBooked(tripsBooked),
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        style: ProfileHandoffTokens.headerTripsStyle(),
-                      ),
+                      SizedBox(height: t.w(16)),
+                      _HandoffLogoutBar(onTap: () => _showLogoutDialog(context)),
+                      SizedBox(height: t.w(8)),
                     ],
                   ),
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
-        ],
-      ),
+        ),
     );
   }
 
@@ -310,17 +307,26 @@ class _HandoffCard extends StatelessWidget {
   }
 }
 
+/// Divider aligns under labels — inset matches icon slot (`24`) + gap (`8`).
 class _HandoffDivider extends StatelessWidget {
   const _HandoffDivider();
 
+  static const double _leadingInsetFigma = 32;
+
   @override
-  Widget build(BuildContext context) => Divider(
-        height: 1,
-        thickness: 1,
-        color: ProfileHandoffTokens.dividerColor(context),
-      );
+  Widget build(BuildContext context) {
+    final t = ProfileHandoffTokens.of(context);
+    return Divider(
+      height: 1,
+      thickness: 1,
+      indent: t.w(_leadingInsetFigma),
+      color: ProfileHandoffTokens.dividerColor(context),
+    );
+  }
 }
 
+/// Node `1:22463`: 394×64 at inset ~19 — scaled via margins elsewhere.
+/// Leading-aligned icon + label (`gap 8`), padded horizontally **16**.
 class _HandoffLogoutBar extends StatelessWidget {
   const _HandoffLogoutBar({required this.onTap});
 
@@ -344,15 +350,17 @@ class _HandoffLogoutBar extends StatelessWidget {
               color: ProfileHandoffTokens.dividerColor(context),
             ),
           ),
-          child: Center(
+          padding: EdgeInsetsDirectional.only(start: t.w(16), end: t.w(16)),
+          child: Align(
+            alignment: AlignmentDirectional.centerStart,
             child: Row(
-              mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 Icon(Iconsax.logout_1, size: t.w(24), color: AppColors.red),
                 SizedBox(width: t.w(8)),
                 Text(
                   context.tr.profileLogout,
-                  style: ProfileHandoffTokens.logoutTitleStyle(),
+                  style: t.logoutTitleStyle(),
                 ),
               ],
             ),
