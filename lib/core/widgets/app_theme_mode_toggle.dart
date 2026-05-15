@@ -30,7 +30,7 @@ class AppThemeModeToggle extends StatelessWidget {
     final thumbSurface = AppColors.cardBg(context);
 
     final trackH = 46.w;
-    final trackW = 132.w;
+    final trackW = 100.w;
     final thumb = 36.w;
     final inset = 5.w;
     final inactiveFade = muted.withValues(alpha: 0.42);
