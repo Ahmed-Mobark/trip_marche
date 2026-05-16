@@ -255,7 +255,7 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String get homeLocationText => 'Egypt, Cairo, New Cairo';
+  String get homeLocationText => 'Cairo, Egypt';
 
   @override
   String get homeTrendingDestinations => 'Trending Destinations';

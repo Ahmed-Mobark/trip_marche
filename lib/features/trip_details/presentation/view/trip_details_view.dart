@@ -18,6 +18,8 @@ import '../widgets/trip_details_booking_bar.dart';
 import '../widgets/trip_details_hero_header.dart';
 import '../widgets/trip_details_stat_grid.dart';
 import '../widgets/trip_details_post_stats_sections.dart';
+import '../widgets/trip_details_accommodation_section.dart';
+import '../widgets/trip_details_destination_details_section.dart';
 import '../widgets/trip_details_program_section.dart';
 import '../widgets/trip_details_travel_sections.dart';
 
@@ -239,6 +241,17 @@ class _TripDetailsBodyState extends State<_TripDetailsBody> {
                                     _buildStatGrid(context, trip),
                                     TripDetailsPostStatsSections(trip: trip),
                                     TripDetailsProgramSection(trip: trip),
+                                    SizedBox(height: 12.h),
+                                    TripDetailsDestinationDetailsSection(
+                                      trip: trip,
+                                    ),
+                                    if (trip.activityRates.isNotEmpty) ...[
+                                      SizedBox(height: 12.h),
+                                      TripDetailsActivityRateCard(
+                                        rates: trip.activityRates,
+                                      ),
+                                    ],
+                                    SizedBox(height: 12.h),
                                     TripDetailsTravelSections(trip: trip),
                                   ],
                                 ),

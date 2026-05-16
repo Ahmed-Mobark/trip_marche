@@ -62,6 +62,15 @@ class HomeViewState extends State<HomeView> {
     }
   }
 
+  String _headerLocationText(BuildContext context) {
+    if (_locationText.isNotEmpty) {
+      return _locationText;
+    }
+    return LocationService.formatCityCountry(
+      raw: context.tr.homeLocationText,
+    );
+  }
+
   Future<void> refreshFromNavBarTap() async {
     final ctx = _refreshContext;
     if (ctx == null) {
@@ -186,7 +195,6 @@ class HomeViewState extends State<HomeView> {
   @override
   Widget build(BuildContext context) {
     final horizontalPadding = 16.w;
-    final sheetTopRadius = 24.r;
     final sheetOverlap = 18.h;
     final sectionTitleStyle = AppTextStyles.heading3(
       color: AppColors.darkText(context),
@@ -284,9 +292,7 @@ class HomeViewState extends State<HomeView> {
                             'Southeast Asia',
                             'Bali',
                           ],
-                          locationText: _locationText.isNotEmpty
-                              ? _locationText
-                              : scrollContext.tr.homeLocationText,
+                          locationText: _headerLocationText(scrollContext),
                           topPadding: MediaQuery.paddingOf(scrollContext).top,
                           onNotificationsTap: () {},
                         ),
@@ -846,6 +852,7 @@ class _TripHorizontalList extends StatelessWidget {
             child: RepaintBoundary(
               child: SizedBox(
                 width: 190.w,
+                height: 346.h,
                 child: PopularTripGridCard(
                   trip: trip,
                   onTap: () async {

@@ -251,7 +251,7 @@ class AppLocalizationsAr extends AppLocalizations {
   }
 
   @override
-  String get homeLocationText => 'مصر، القاهرة، القاهرة الجديدة';
+  String get homeLocationText => 'القاهرة، مصر';
 
   @override
   String get homeTrendingDestinations => 'الوجهات الرائجة';

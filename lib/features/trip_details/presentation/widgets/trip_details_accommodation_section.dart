@@ -18,7 +18,6 @@ import 'trip_details_reviews_section.dart';
 
 // Accommodation card — Figma-fixed typography (no .sp on these styles).
 const Color _kAccommodationTitleValueLight = Color(0xFF000000);
-const Color _kAccommodationLabelLight = Color(0xFF9E9E9E);
 
 class TripDetailsAccommodationSection extends StatelessWidget {
   const TripDetailsAccommodationSection({super.key, required this.trip});
@@ -433,24 +432,12 @@ class _AccommodationHotelBlock extends StatelessWidget {
   final double? lat;
   final double? lng;
 
-  Color _metaLabelColor(BuildContext context) => AppColors.isDark(context)
-      ? AppColors.greyText(context)
-      : _kAccommodationLabelLight;
-
   Color _valueColor(BuildContext context) => AppColors.isDark(context)
       ? AppColors.darkText(context)
       : _kAccommodationTitleValueLight;
 
   @override
   Widget build(BuildContext context) {
-    final labelStyle = TextStyle(
-      fontFamily: AppFont.fontFamily,
-      fontSize: 12,
-      fontWeight: FontWeight.w400,
-      height: 1.15,
-      letterSpacing: 0,
-      color: _metaLabelColor(context),
-    );
     final hotelNameStyle = TextStyle(
       fontFamily: AppFont.fontFamily,
       fontSize: 16,
@@ -504,22 +491,11 @@ class _AccommodationHotelBlock extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Text(
-                    context.tr.tripDetailsAccommodationHotelNameLabel,
-                    style: labelStyle,
-                  ),
-                  const SizedBox(height: 3),
-                  Text(
-                    hotelName,
-                    maxLines: 2,
-                    overflow: TextOverflow.ellipsis,
-                    style: hotelNameStyle,
-                  ),
-                ],
+              child: Text(
+                hotelName,
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
+                style: hotelNameStyle,
               ),
             ),
             if (hasMapTarget) ...[

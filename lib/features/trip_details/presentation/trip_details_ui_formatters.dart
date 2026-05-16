@@ -25,7 +25,11 @@ abstract final class TripDetailsUiFormatters {
   }
 
   /// Compact range for hero overlay, e.g. "27 Nov → 4 Dec" (locale-aware).
-  static String heroTripDateRange(BuildContext context, String start, String end) {
+  static String heroTripDateRange(
+    BuildContext context,
+    String start,
+    String end,
+  ) {
     final startDt = DateTime.tryParse(start);
     final endDt = DateTime.tryParse(end);
     if (startDt == null || endDt == null) {

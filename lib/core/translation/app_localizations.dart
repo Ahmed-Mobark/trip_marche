@@ -571,7 +571,7 @@ abstract class AppLocalizations {
   /// No description provided for @homeLocationText.
   ///
   /// In en, this message translates to:
-  /// **'Egypt, Cairo, New Cairo'**
+  /// **'Cairo, Egypt'**
   String get homeLocationText;
 
   /// No description provided for @homeTrendingDestinations.

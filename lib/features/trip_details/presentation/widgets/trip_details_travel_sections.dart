@@ -41,11 +41,7 @@ class TripDetailsTravelSections extends StatelessWidget {
             SizedBox(height: 12.h),
           ],
 
-          // 2. Journey Highlights (Destinations carousel)
-          TripDetailsDestinationDetailsSection(trip: trip),
-          SizedBox(height: 12.h),
-
-          // 3. Flight details
+          // 2. Flight details
           TripDetailsFlightDetailsSection(trip: trip),
           SizedBox(height: 12.h),
           Divider(color: AppColors.border(context), height: 1),
@@ -63,13 +59,7 @@ class TripDetailsTravelSections extends StatelessWidget {
           const TripDetailsDestinationDetailsGridCard(),
           SizedBox(height: 12.h),
 
-          // 7. Activity rates
-          if (trip.activityRates.isNotEmpty) ...[
-            TripDetailsActivityRateCard(rates: trip.activityRates),
-            SizedBox(height: 12.h),
-          ],
-
-          // 8. User reviews
+          // 7. User reviews
           TripDetailsReviewsSection(trip: trip),
           SizedBox(height: 12.h),
 
