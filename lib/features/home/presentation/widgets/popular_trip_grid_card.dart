@@ -11,10 +11,10 @@ import '../../../../core/utils/price_formatter.dart';
 import '../../../../core/widgets/app_cached_network_image.dart';
 import '../../data/models/home_section_response.dart';
 
-/// Figma home trip rail card — 190×346 @ 393×852 design.
+/// Figma home trip rail card — 190×368 @ 393×852 design.
 abstract final class _PopularTripGridCardTokens {
   static double get cardWidth => 190.w;
-  static double get cardHeight => 346.h;
+  static double get cardHeight => 368.h;
   static double get cardRadius => 20.r;
   static double get inset => 12.w;
   static double get imageToContentGap => 6.h;
@@ -46,6 +46,9 @@ class PopularTripGridCard extends StatelessWidget {
     this.onTap,
     this.onFavoriteTap,
   });
+
+  /// Height of the card and its horizontal list rail on Home.
+  static double get layoutHeight => _PopularTripGridCardTokens.cardHeight;
 
   final TripModel trip;
   final VoidCallback? onTap;

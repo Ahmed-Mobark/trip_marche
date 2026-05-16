@@ -839,7 +839,7 @@ class _TripHorizontalList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 346.h,
+      height: PopularTripGridCard.layoutHeight,
       child: ListView.separated(
         scrollDirection: Axis.horizontal,
         reverse: Directionality.of(context) == TextDirection.rtl,
@@ -852,7 +852,7 @@ class _TripHorizontalList extends StatelessWidget {
             child: RepaintBoundary(
               child: SizedBox(
                 width: 190.w,
-                height: 346.h,
+                height: PopularTripGridCard.layoutHeight,
                 child: PopularTripGridCard(
                   trip: trip,
                   onTap: () async {
