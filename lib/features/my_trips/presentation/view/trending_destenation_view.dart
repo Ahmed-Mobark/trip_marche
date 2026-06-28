@@ -101,7 +101,7 @@ class _TrendingDestinationViewState extends State<TrendingDestinationView> {
     }
     _lastAppliedSearchKey = key;
     _listCubit.setFilters(
-      search: _searchCtrl.text,
+      country: _searchCtrl.text,
       destinationId: _effectiveDestinationIdForCatalog(),
     );
     if (_scroll.hasClients) {

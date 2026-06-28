@@ -4,6 +4,7 @@ class FilterDestinationModel {
   const FilterDestinationModel({
     required this.id,
     required this.name,
+    required this.code,
     required this.slug,
     required this.country,
     this.image,
@@ -12,16 +13,20 @@ class FilterDestinationModel {
 
   final int id;
   final String name;
+  final String code;
   final String slug;
   final String country;
   final String? image;
   final int? trendingRank;
 
   factory FilterDestinationModel.fromJson(Map<String, dynamic> json) {
+    final slug = _asString(json['slug']);
+    final code = _asString(json['code']);
     return FilterDestinationModel(
       id: _asInt(json['id']),
       name: _asString(json['name']),
-      slug: _asString(json['slug']),
+      code: code.isNotEmpty ? code : slug,
+      slug: slug,
       country: _asString(json['country']),
       image: _asNullableString(json['image']),
       trendingRank: _asNullableInt(json['trending_rank']),
@@ -32,6 +37,7 @@ class FilterDestinationModel {
     return FilterDestination(
       id: id,
       name: name,
+      code: code,
       slug: slug,
       country: country,
       image: image,

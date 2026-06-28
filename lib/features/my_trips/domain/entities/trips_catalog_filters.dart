@@ -1,6 +1,5 @@
 class TripsCatalogFilters {
   const TripsCatalogFilters({
-    this.search,
     this.type,
     this.country,
     this.departureCountry,
@@ -37,7 +36,6 @@ class TripsCatalogFilters {
     this.sort,
   });
 
-  final String? search;
   final String? type;
   final String? country;
   final String? departureCountry;
@@ -73,14 +71,21 @@ class TripsCatalogFilters {
   final String? flag;
   final String? sort;
 
-  /// Same filters with an updated search string. Whitespace-only clears search.
-  TripsCatalogFilters withSearch(String? raw) {
-    final trimmed = raw?.trim();
-    final newSearch = (trimmed == null || trimmed.isEmpty) ? null : trimmed;
+  /// Destination search entry (typed query or picked destination code).
+  factory TripsCatalogFilters.forDestinationSearch(String raw) {
+    final trimmed = raw.trim();
     return TripsCatalogFilters(
-      search: newSearch,
+      country: trimmed.isEmpty ? null : trimmed,
+    );
+  }
+
+  /// Same filters with an updated destination country/code. Whitespace clears it.
+  TripsCatalogFilters withCountry(String? raw) {
+    final trimmed = raw?.trim();
+    final newCountry = (trimmed == null || trimmed.isEmpty) ? null : trimmed;
+    return TripsCatalogFilters(
       type: type,
-      country: country,
+      country: newCountry,
       departureCountry: departureCountry,
       departureCity: departureCity,
       destinationId: destinationId,
@@ -144,7 +149,6 @@ class TripsCatalogFilters {
       }
     }
 
-    putString('search', search);
     putString('type', type);
     putString('country', country);
     putString('departure_country', departureCountry);

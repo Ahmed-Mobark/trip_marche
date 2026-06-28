@@ -79,14 +79,12 @@ class _DestinationSearchScaffoldState
     if (trimmed.isEmpty) {
       return;
     }
-    _openSearchResults(TripsCatalogFilters(search: trimmed));
+    _openSearchResults(TripsCatalogFilters.forDestinationSearch(trimmed));
   }
 
   void _openDestination(FilterDestination destination) {
     _openSearchResults(
-      TripsCatalogFilters(
-        search: destination.name,
-      ),
+      TripsCatalogFilters.forDestinationSearch(destination.searchCode),
     );
   }
 

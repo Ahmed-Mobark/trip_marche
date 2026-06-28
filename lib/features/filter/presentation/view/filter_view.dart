@@ -1066,7 +1066,6 @@ class _FilterBody extends StatelessWidget {
       country: state.otherCountries.isEmpty
           ? null
           : state.otherCountries.join(','),
-      search: null,
       sort: null,
     );
   }

@@ -107,7 +107,7 @@ class _SearchResultViewState extends State<SearchResultView> {
     }
     // Preserve the active search query when applying filter changes so users
     // don't lose their typed destination after tweaking filters (#52).
-    await _listCubit.applyFilters(result.withSearch(currentFilters.search));
+    await _listCubit.applyFilters(result.withCountry(currentFilters.country));
   }
 
   @override
@@ -137,7 +137,7 @@ class _SearchResultViewState extends State<SearchResultView> {
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   SearchResultSearchBar(
-                    initialQuery: widget.filters.search ?? '',
+                    initialQuery: widget.filters.country ?? '',
                     scrollController: _scrollController,
                   ),
                   SizedBox(height: 16.h),
