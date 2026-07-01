@@ -12,7 +12,9 @@ import '../theme/nav_bar_handoff_tokens.dart';
 import '../widgets/nav_bar_svg_icon.dart';
 
 class MainNavView extends StatefulWidget {
-  const MainNavView({super.key});
+  const MainNavView({super.key, this.initialIndex = 0});
+
+  final int initialIndex;
 
   @override
   State<MainNavView> createState() => _MainNavViewState();
@@ -21,7 +23,13 @@ class MainNavView extends StatefulWidget {
 class _MainNavViewState extends State<MainNavView> {
   static const int _itemCount = 4;
 
-  int _currentIndex = 0;
+  late int _currentIndex;
+  @override
+  void initState() {
+    super.initState();
+    _currentIndex = widget.initialIndex.clamp(0, _itemCount - 1);
+  }
+
   final GlobalKey<HomeViewState> _homeKey = GlobalKey<HomeViewState>();
   final GlobalKey<WishlistViewState> _wishlistKey =
       GlobalKey<WishlistViewState>();

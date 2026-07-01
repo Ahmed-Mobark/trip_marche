@@ -1,28 +1,39 @@
 import 'package:flutter/material.dart';
-import 'package:iconsax/iconsax.dart';
-import '../../../../core/theme/app_colors.dart';
-import '../../../../core/theme/app_text_styles.dart';
-import '../widgets/trip_summary_card.dart';
-import '../widgets/info_row.dart';
-import '../widgets/price_breakdown.dart';
+import 'package:flutter/services.dart';
+import 'package:trip_marche/core/config/app_colors.dart';
+import 'package:trip_marche/core/config/dimensions/review_figma_tokens.dart';
+import 'package:trip_marche/core/extensions/localization.dart';
+import 'package:trip_marche/core/injection/injection_container.dart';
+import 'package:trip_marche/core/navigation/app_navigator.dart';
+import 'package:trip_marche/core/theme/app_text_styles.dart';
+import 'package:trip_marche/features/booking/domain/entities/booking_review_data.dart';
+import 'package:trip_marche/features/nav_bar/presentation/view/main_nav_view.dart';
+import '../widgets/booking_bottom_buttons.dart';
+import '../widgets/coupon_field.dart';
+import '../widgets/payment_details_card.dart';
+import '../widgets/review_trip_card.dart';
 
 class ReviewView extends StatefulWidget {
-  const ReviewView({super.key});
+  const ReviewView({required this.data, super.key});
+
+  final BookingReviewData data;
 
   @override
   State<ReviewView> createState() => _ReviewViewState();
 }
 
 class _ReviewViewState extends State<ReviewView> {
+  static const double _couponDiscount = 100;
+
   final _couponController = TextEditingController();
   bool _couponApplied = false;
+  bool _isPaying = false;
 
-  final double _basePrice = 699.0;
-  final double _activitiesPrice = 130.0;
-  final double _discount = 50.0;
-
-  double get _totalPrice =>
-      _basePrice + _activitiesPrice - (_couponApplied ? _discount : 0);
+  BookingPriceBreakdown get _breakdown {
+    return widget.data.priceBreakdown.copyWith(
+      couponDiscount: _couponApplied ? _couponDiscount : 0,
+    );
+  }
 
   @override
   void dispose() {
@@ -30,223 +41,110 @@ class _ReviewViewState extends State<ReviewView> {
     super.dispose();
   }
 
+  void _applyCoupon() {
+    if (_couponController.text.trim().isEmpty) {
+      return;
+    }
+    setState(() => _couponApplied = true);
+  }
+
+  Future<void> _onPay() async {
+    if (_isPaying) {
+      return;
+    }
+    setState(() => _isPaying = true);
+    await Future<void>.delayed(const Duration(seconds: 1));
+    if (!mounted) {
+      return;
+    }
+    sl<AppNavigator>().pushAndRemoveUntil(
+      screen: const MainNavView(initialIndex: 1),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: AppColors.background(context),
-      appBar: AppBar(
-        backgroundColor: AppColors.background(context),
-        elevation: 0,
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back_ios_new_rounded, color: AppColors.darkText(context)),
-          onPressed: () => Navigator.pop(context),
-        ),
-        title: Text(
-          'Review',
-          style: AppTextStyles.bodyMedium(color: AppColors.darkText(context)),
-        ),
-        centerTitle: true,
-      ),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.all(20),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            TripSummaryCard(
-              title: 'Dahab Trip',
-              subtitle: '7 Days | Jan 15 - Jan 21, 2026',
-              ratingRow: Row(
-                children: [
-                  const Icon(Iconsax.star1, color: AppColors.primary, size: 14),
-                  const SizedBox(width: 4),
-                  Text('4.9 (112)', style: AppTextStyles.bodyMedium()),
-                ],
-              ),
-            ),
-            const SizedBox(height: 20),
-            _buildSectionCard(
-              title: 'Traveler Details',
-              children: const [
-                InfoRow(label: 'Full Name', value: 'Ahmed Hassan'),
-                InfoRow(label: 'Phone', value: '+20 123 456 7890'),
-                InfoRow(label: 'Email', value: 'ahmed@example.com'),
-                InfoRow(label: 'Emergency Contact', value: '+20 111 222 3333'),
-                InfoRow(label: 'ID/Passport', value: 'A12345678'),
-              ],
-            ),
-            const SizedBox(height: 20),
-            _buildSectionCard(
-              title: 'Selected Options',
-              children: const [
-                InfoRow(label: 'Room Type', value: 'Double Room'),
-                InfoRow(label: 'Bus Seat', value: 'Middle'),
-                InfoRow(label: 'Travelers', value: '1'),
-              ],
-            ),
-            const SizedBox(height: 20),
-            _buildSectionCard(
-              title: 'Activities',
-              children: const [
-                InfoRow(label: 'Snorkeling', value: '+50'),
-                InfoRow(label: 'Desert Safari', value: '+80'),
-              ],
-            ),
-            const SizedBox(height: 20),
-            _buildCouponSection(),
-            const SizedBox(height: 20),
-            PriceBreakdown(
-              items: [
-                PriceBreakdownItem(
-                  label: 'Base Price',
-                  value: _basePrice.toStringAsFixed(0),
-                ),
-                PriceBreakdownItem(
-                  label: 'Activities',
-                  value: '+${_activitiesPrice.toStringAsFixed(0)}',
-                ),
-                if (_couponApplied)
-                  PriceBreakdownItem(
-                    label: 'Discount',
-                    value: '-${_discount.toStringAsFixed(0)}',
-                    isDiscount: true,
-                  ),
-              ],
-              totalLabel: 'Total',
-              totalValue: _totalPrice.toStringAsFixed(0),
-            ),
-            const SizedBox(height: 24),
-            _buildProceedButton(),
-            const SizedBox(height: 20),
-          ],
-        ),
-      ),
-    );
-  }
+    final tr = context.tr;
+    final breakdown = _breakdown;
 
-  Widget _buildSectionCard({
-    required String title,
-    required List<Widget> children,
-  }) {
-    return Container(
-      width: double.infinity,
-      padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: AppColors.lightBg(context),
-        borderRadius: BorderRadius.circular(14),
-        border: Border.all(color: AppColors.border(context)),
+    return AnnotatedRegion<SystemUiOverlayStyle>(
+      value: SystemUiOverlayStyle.dark.copyWith(
+        statusBarColor: ReviewFigmaTokens.screenBackground,
       ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(title, style: AppTextStyles.subtitle(color: AppColors.darkText(context))),
-          const SizedBox(height: 12),
-          ...children,
-        ],
-      ),
-    );
-  }
-
-  Widget _buildCouponSection() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          'Coupon Code',
-          style: AppTextStyles.subtitle(color: AppColors.darkText(context)),
-        ),
-        const SizedBox(height: 10),
-        Row(
-          children: [
-            Expanded(
-              child: TextFormField(
-                controller: _couponController,
-                style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                  fontSize: 14,
-                  fontWeight: FontWeight.w500,
-                  color: AppColors.darkText(context),
+      child: Scaffold(
+        backgroundColor: ReviewFigmaTokens.screenBackground,
+        body: SafeArea(
+          bottom: false,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Padding(
+                padding: EdgeInsetsDirectional.only(
+                  top: ReviewFigmaTokens.titleTop,
+                  bottom: ReviewFigmaTokens.titleBottom,
                 ),
-                decoration: InputDecoration(
-                  hintText: 'Enter coupon code',
-                  hintStyle: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                    fontSize: 14,
-                    color: AppColors.greyText(context),
-                  ),
-                  filled: true,
-                  fillColor: AppColors.lightBg(context),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(12),
-                    borderSide: BorderSide(color: AppColors.border(context)),
-                  ),
-                  enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(12),
-                    borderSide: BorderSide(color: AppColors.border(context)),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(12),
-                    borderSide: const BorderSide(color: AppColors.primary),
-                  ),
-                  contentPadding: const EdgeInsets.symmetric(
-                    horizontal: 16,
-                    vertical: 14,
+                child: Text(
+                  tr.bookingReviewTitle,
+                  textAlign: TextAlign.center,
+                  style: AppTextStyles.heading3(
+                    color: AppColors.tripDetailsFigmaBlack,
+                  ).copyWith(
+                    fontSize: ReviewFigmaTokens.titleFontSize,
+                    fontWeight: FontWeight.w600,
                   ),
                 ),
               ),
-            ),
-            const SizedBox(width: 10),
-            GestureDetector(
-              onTap: () {
-                if (_couponController.text.isNotEmpty) {
-                  setState(() => _couponApplied = true);
-                }
-              },
-              child: Container(
-                height: 50,
-                padding: const EdgeInsets.symmetric(horizontal: 20),
-                decoration: BoxDecoration(
-                  gradient: AppColors.primaryGradient,
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                child: Center(
-                  child: Text('Apply', style: AppTextStyles.button()),
+              Expanded(
+                child: ListView(
+                  padding: EdgeInsetsDirectional.fromSTEB(
+                    ReviewFigmaTokens.screenPadding,
+                    0,
+                    ReviewFigmaTokens.screenPadding,
+                    ReviewFigmaTokens.listBottom,
+                  ),
+                  children: [
+                    ReviewTripCard(
+                      trip: widget.data.trip,
+                      includedTitle: tr.tripDetailsWhatsIncludedTitle,
+                    ),
+                    SizedBox(height: ReviewFigmaTokens.sectionGap),
+                    CouponField(
+                      controller: _couponController,
+                      title: tr.bookingReviewCouponQuestion,
+                      placeholder: tr.bookingReviewCouponPlaceholder,
+                      applyLabel: tr.bookingReviewCouponApply,
+                      successMessage: tr.bookingReviewCouponSuccess,
+                      onApply: _applyCoupon,
+                      showSuccess: _couponApplied,
+                    ),
+                    SizedBox(height: ReviewFigmaTokens.sectionGap),
+                    PaymentDetailsCard(
+                      title: tr.bookingReviewPaymentDetailTitle,
+                      breakdown: breakdown,
+                      travelersLabel: tr.bookingReviewPaymentTravelers(
+                        breakdown.travelersCount,
+                      ),
+                      activitiesLabel: tr.bookingReviewPaymentActivities,
+                      taxesLabel: tr.bookingReviewPaymentTaxes,
+                      couponLabel: tr.bookingReviewPaymentCouponCode,
+                      totalLabel: tr.bookingReviewPaymentTotal,
+                      currencySuffix: tr.bookingReviewCurrency,
+                      showCoupon: _couponApplied,
+                    ),
+                  ],
                 ),
               ),
-            ),
-          ],
-        ),
-        if (_couponApplied)
-          Padding(
-            padding: const EdgeInsets.only(top: 8),
-            child: Row(
-              children: [
-                const Icon(
-                  Iconsax.tick_circle,
-                  color: AppColors.success,
-                  size: 16,
+              SafeArea(
+                top: false,
+                child: BookingBottomButtons(
+                  onBack: () => Navigator.pop(context),
+                  onPay: _onPay,
+                  payLabel: tr.bookingPay,
+                  isLoading: _isPaying,
                 ),
-                const SizedBox(width: 6),
-                Text(
-                  'Coupon applied! -${_discount.toStringAsFixed(0)}',
-                  style: AppTextStyles.bodySmall(color: AppColors.success),
-                ),
-              ],
-            ),
+              ),
+            ],
           ),
-      ],
-    );
-  }
-
-  Widget _buildProceedButton() {
-    return GestureDetector(
-      onTap: () {},
-      child: Container(
-        width: double.infinity,
-        height: 56,
-        decoration: BoxDecoration(
-          gradient: AppColors.primaryGradient,
-          borderRadius: BorderRadius.circular(12),
-        ),
-        child: Center(
-          child: Text('Proceed to Payment', style: AppTextStyles.button()),
         ),
       ),
     );

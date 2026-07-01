@@ -1,10 +1,26 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:iconsax/iconsax.dart';
-import '../../../../core/theme/app_colors.dart';
-import '../../../../core/theme/app_text_styles.dart';
-import '../widgets/trip_summary_card.dart';
-import '../widgets/radio_option.dart';
-import '../widgets/counter_button.dart';
+import 'package:trip_marche/core/config/app_colors.dart';
+import 'package:trip_marche/core/extensions/localization.dart';
+import 'package:trip_marche/core/injection/injection_container.dart';
+import 'package:trip_marche/core/navigation/app_navigator.dart';
+import 'package:trip_marche/core/theme/app_text_styles.dart';
+import 'package:trip_marche/features/booking/domain/entities/booking_flow_context.dart';
+import 'contact_info_view.dart';
+import 'package:trip_marche/core/config/dimensions/trip_options_figma_tokens.dart';
+import 'package:trip_marche/core/widgets/bottom_booking_bar.dart';
+import '../widgets/accommodation_card.dart';
+import '../widgets/date_option_card.dart';
+import '../widgets/traveler_counter_card.dart';
+
+class _TripDateOption {
+  const _TripDateOption({required this.range, required this.price});
+
+  final String range;
+  final String price;
+}
 
 class TripOptionsView extends StatefulWidget {
   const TripOptionsView({super.key});
@@ -14,282 +30,269 @@ class TripOptionsView extends StatefulWidget {
 }
 
 class _TripOptionsViewState extends State<TripOptionsView> {
-  String _roomType = 'Double';
-  String _busSeat = 'Middle';
-  int _travelers = 1;
-  final _specialRequestsController = TextEditingController();
+  static const List<_TripDateOption> _dates = [
+    _TripDateOption(range: '16 May - 24 May', price: '\$950'),
+    _TripDateOption(range: '20 May - 28 May', price: '\$980'),
+    _TripDateOption(range: '3 Jun - 11 Jun', price: '\$850'),
+    _TripDateOption(range: '8 Jun - 16 Jun', price: '\$900'),
+    _TripDateOption(range: '24 Jun - 2 Jul', price: '\$920'),
+    _TripDateOption(range: '30 Jun - 8 Jul', price: '\$930'),
+  ];
 
-  double get _basePrice => 699.0;
-  double get _roomExtra {
-    switch (_roomType) {
-      case 'Single':
-        return 100.0;
-      case 'Triple':
-        return -50.0;
-      default:
-        return 0.0;
+  int _selectedDateIndex = 2;
+  int _adults = 4;
+  int _kids = 1;
+  int _babies = 0;
+  int _singlePersons = 1;
+  int _doublePersons = 1;
+  int _triplePersons = 3;
+
+  int get _travelersCount => _adults + _kids + _babies;
+
+  void _onContinue() {
+    sl<AppNavigator>().push(
+      screen: ContactInfoView(
+        travelersCount: _travelersCount,
+        flowContext: BookingFlowContext(
+          dateRange: _dates[_selectedDateIndex].range,
+          travelersCount: _travelersCount,
+          roomName: _selectedRoomName(context),
+          roomPrice: _selectedRoomPrice(),
+        ),
+      ),
+    );
+  }
+
+  String _selectedRoomName(BuildContext context) {
+    final tr = context.tr;
+    if (_triplePersons > 0) {
+      return tr.bookingTripleRoom;
     }
+    if (_doublePersons > 0) {
+      return tr.bookingDoubleRoom;
+    }
+    return tr.bookingSingleRoom;
   }
 
-  double get _seatExtra {
-    if (_busSeat == 'Front') return 20.0;
-    return 0.0;
-  }
-
-  double get _totalPrice => (_basePrice + _roomExtra + _seatExtra) * _travelers;
-
-  @override
-  void dispose() {
-    _specialRequestsController.dispose();
-    super.dispose();
+  double _selectedRoomPrice() {
+    if (_triplePersons > 0) {
+      return 480;
+    }
+    if (_doublePersons > 0) {
+      return 0;
+    }
+    return 480;
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: AppColors.background(context),
-      appBar: AppBar(
-        backgroundColor: AppColors.background(context),
-        elevation: 0,
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back_ios_new_rounded, color: AppColors.darkText(context)),
-          onPressed: () => Navigator.pop(context),
-        ),
-        title: Text(
-          'Trip Options',
-          style: AppTextStyles.subtitle(color: AppColors.darkText(context)),
-        ),
-        centerTitle: true,
+    final tr = context.tr;
+    return AnnotatedRegion<SystemUiOverlayStyle>(
+      value: SystemUiOverlayStyle.dark.copyWith(
+        statusBarColor: AppColors.white,
       ),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.all(20),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            TripSummaryCard(
-              title: 'Dahab Trip',
-              subtitle: '7 Days | 20 Person | Mixed',
-              trailing: Text(
-                '699/Person',
-                style: AppTextStyles.bodyMedium(color: AppColors.primary),
-              ),
-            ),
-            const SizedBox(height: 24),
-            _buildRoomTypeSection(),
-            const SizedBox(height: 24),
-            _buildBusSeatSection(),
-            const SizedBox(height: 24),
-            _buildTravelersSection(),
-            const SizedBox(height: 24),
-            _buildSpecialRequests(),
-            const SizedBox(height: 24),
-            _buildTotalPrice(),
-            const SizedBox(height: 24),
-            _buildContinueButton(),
-            const SizedBox(height: 20),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget _buildRoomTypeSection() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          'Room Type',
-          style: AppTextStyles.subtitle(color: AppColors.darkText(context)),
-        ),
-        const SizedBox(height: 12),
-        RadioOption(
-          value: 'Single',
-          label: 'Single Room (+100)',
-          groupValue: _roomType,
-          onChanged: (v) => setState(() => _roomType = v!),
-        ),
-        RadioOption(
-          value: 'Double',
-          label: 'Double Room (Default)',
-          groupValue: _roomType,
-          onChanged: (v) => setState(() => _roomType = v!),
-        ),
-        RadioOption(
-          value: 'Triple',
-          label: 'Triple Room (-50)',
-          groupValue: _roomType,
-          onChanged: (v) => setState(() => _roomType = v!),
-        ),
-      ],
-    );
-  }
-
-  Widget _buildBusSeatSection() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          'Bus Seat',
-          style: AppTextStyles.subtitle(color: AppColors.darkText(context)),
-        ),
-        const SizedBox(height: 12),
-        RadioOption(
-          value: 'Front',
-          label: 'Front Seat (+20)',
-          groupValue: _busSeat,
-          onChanged: (v) => setState(() => _busSeat = v!),
-        ),
-        RadioOption(
-          value: 'Middle',
-          label: 'Middle Seat (Default)',
-          groupValue: _busSeat,
-          onChanged: (v) => setState(() => _busSeat = v!),
-        ),
-        RadioOption(
-          value: 'Back',
-          label: 'Back Seat',
-          groupValue: _busSeat,
-          onChanged: (v) => setState(() => _busSeat = v!),
-        ),
-      ],
-    );
-  }
-
-  Widget _buildTravelersSection() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          'Number of Travelers',
-          style: AppTextStyles.subtitle(color: AppColors.darkText(context)),
-        ),
-        const SizedBox(height: 12),
-        Container(
-          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-          decoration: BoxDecoration(
-            color: AppColors.lightBg(context),
-            borderRadius: BorderRadius.circular(12),
-            border: Border.all(color: AppColors.border(context)),
-          ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      child: Scaffold(
+        backgroundColor: AppColors.white,
+        body: SafeArea(
+          bottom: false,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              Text(
-                'Travelers',
-                style: AppTextStyles.bodyMedium(color: AppColors.darkText(context)),
+              Padding(
+                padding: EdgeInsetsDirectional.only(
+                  top: TripOptionsFigmaTokens.titleTop,
+                  bottom: TripOptionsFigmaTokens.titleBottom,
+                ),
+                child: Text(
+                  tr.bookingTripOptionsTitle,
+                  textAlign: TextAlign.center,
+                  style: AppTextStyles.heading3(
+                    color: AppColors.tripDetailsFigmaBlack,
+                  ).copyWith(
+                    fontSize: TripOptionsFigmaTokens.titleFontSize,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
               ),
-              Row(
-                children: [
-                  CounterButton(
-                    icon: Iconsax.minus,
-                    onTap: () {
-                      if (_travelers > 1) setState(() => _travelers--);
-                    },
+              Expanded(
+                child: SingleChildScrollView(
+                  padding: EdgeInsetsDirectional.symmetric(
+                    horizontal: TripOptionsFigmaTokens.screenPadding,
                   ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 16),
-                    child: Text(
-                      '$_travelers',
-                      style: AppTextStyles.subtitle(color: AppColors.darkText(context)),
-                    ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      _SectionTitle(tr.bookingChooseDateTitle),
+                      _DateOptionsGrid(
+                        dates: _dates,
+                        selectedIndex: _selectedDateIndex,
+                        onSelected: (index) =>
+                            setState(() => _selectedDateIndex = index),
+                      ),
+                      SizedBox(height: TripOptionsFigmaTokens.seeAllTop),
+                      Center(
+                        child: GestureDetector(
+                          onTap: () {},
+                          behavior: HitTestBehavior.opaque,
+                          child: Text(
+                            tr.bookingSeeAllDates,
+                            style: AppTextStyles.bodyMedium(
+                              color: AppColors.primary,
+                            ).copyWith(
+                              fontSize: TripOptionsFigmaTokens.seeAllFontSize,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                        ),
+                      ),
+                      SizedBox(height: TripOptionsFigmaTokens.sectionBottom),
+                      _SectionTitle(tr.bookingHowManyTraveling),
+                      TravelerCounterCard(
+                        icon: Iconsax.profile_2user,
+                        title: tr.bookingTravelerAdult,
+                        count: _adults,
+                        min: 1,
+                        onDecrement: () => setState(() => _adults--),
+                        onIncrement: () => setState(() => _adults++),
+                      ),
+                      SizedBox(height: TripOptionsFigmaTokens.travelerCardGap),
+                      TravelerCounterCard(
+                        icon: Iconsax.emoji_happy,
+                        title: tr.bookingTravelerKid,
+                        subtitle: tr.bookingTravelerKidAge,
+                        count: _kids,
+                        onDecrement: () => setState(() => _kids--),
+                        onIncrement: () => setState(() => _kids++),
+                      ),
+                      SizedBox(height: TripOptionsFigmaTokens.travelerCardGap),
+                      TravelerCounterCard(
+                        icon: Iconsax.milk,
+                        title: tr.bookingTravelerBaby,
+                        subtitle: tr.bookingTravelerBabyAge,
+                        count: _babies,
+                        onDecrement: () => setState(() => _babies--),
+                        onIncrement: () => setState(() => _babies++),
+                      ),
+                      SizedBox(height: TripOptionsFigmaTokens.sectionBottom),
+                      _SectionTitle(tr.bookingAccommodationOptions),
+                      AccommodationCard(
+                        title: tr.bookingSingleRoom,
+                        subtitle: tr.bookingSingleRoomSubtitle,
+                        priceLabel: '\$480+',
+                        personLabel: tr.bookingPerson,
+                        personCount: _singlePersons,
+                        canDecrement: _singlePersons > 1,
+                        canIncrement: _singlePersons < 1,
+                        onDecrement: () =>
+                            setState(() => _singlePersons = _singlePersons - 1),
+                        onIncrement: () =>
+                            setState(() => _singlePersons = _singlePersons + 1),
+                      ),
+                      SizedBox(height: TripOptionsFigmaTokens.travelerCardGap),
+                      AccommodationCard(
+                        title: tr.bookingDoubleRoom,
+                        subtitle: tr.bookingDoubleRoomSubtitle,
+                        priceLabel: tr.bookingFree,
+                        personLabel: tr.bookingPerson,
+                        personCount: _doublePersons,
+                        canDecrement: false,
+                        canIncrement: _doublePersons < 2,
+                        onDecrement: () {},
+                        onIncrement: () =>
+                            setState(() => _doublePersons = _doublePersons + 1),
+                      ),
+                      SizedBox(height: TripOptionsFigmaTokens.travelerCardGap),
+                      AccommodationCard(
+                        title: tr.bookingTripleRoom,
+                        subtitle: tr.bookingTripleRoomSubtitle,
+                        priceLabel: '\$650+',
+                        personLabel: tr.bookingPerson,
+                        personCount: _triplePersons,
+                        canDecrement: _triplePersons > 1,
+                        canIncrement: false,
+                        onDecrement: () =>
+                            setState(() => _triplePersons = _triplePersons - 1),
+                        onIncrement: () {},
+                      ),
+                      SizedBox(height: 24.h),
+                    ],
                   ),
-                  CounterButton(
-                    icon: Iconsax.add,
-                    onTap: () => setState(() => _travelers++),
-                  ),
-                ],
+                ),
+              ),
+              SafeArea(
+                top: false,
+                child: BottomBookingBar(
+                  onBack: () => Navigator.pop(context),
+                  onContinue: _onContinue,
+                  continueLabel: tr.bookingContinue,
+                ),
               ),
             ],
           ),
         ),
-      ],
-    );
-  }
-
-  Widget _buildSpecialRequests() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          'Special Requests',
-          style: AppTextStyles.subtitle(color: AppColors.darkText(context)),
-        ),
-        const SizedBox(height: 12),
-        TextFormField(
-          controller: _specialRequestsController,
-          maxLines: 3,
-          style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-            fontSize: 14,
-            fontWeight: FontWeight.w500,
-            color: AppColors.darkText(context),
-          ),
-          decoration: InputDecoration(
-            hintText: 'Any special requests or dietary requirements...',
-            hintStyle: Theme.of(context).textTheme.bodyMedium!.copyWith(
-              fontSize: 14,
-              color: AppColors.greyText(context),
-            ),
-            filled: true,
-            fillColor: AppColors.lightBg(context),
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(12),
-              borderSide: BorderSide(color: AppColors.border(context)),
-            ),
-            enabledBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(12),
-              borderSide: BorderSide(color: AppColors.border(context)),
-            ),
-            focusedBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(12),
-              borderSide: const BorderSide(color: AppColors.primary),
-            ),
-            contentPadding: const EdgeInsets.all(16),
-          ),
-        ),
-      ],
-    );
-  }
-
-  Widget _buildTotalPrice() {
-    return Container(
-      padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: AppColors.primary.withValues(alpha: 0.05),
-        borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: AppColors.primary.withValues(alpha: 0.2)),
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Text(
-            'Total Price',
-            style: AppTextStyles.subtitle(color: AppColors.darkText(context)),
-          ),
-          Text(
-            _totalPrice.toStringAsFixed(0),
-            style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-              fontSize: 24,
-              fontWeight: FontWeight.w700,
-              color: AppColors.primary,
-            ),
-          ),
-        ],
       ),
     );
   }
+}
 
-  Widget _buildContinueButton() {
-    return GestureDetector(
-      onTap: () {},
-      child: Container(
-        width: double.infinity,
-        height: 56,
-        decoration: BoxDecoration(
-          gradient: AppColors.primaryGradient,
-          borderRadius: BorderRadius.circular(12),
-        ),
-        child: Center(child: Text('Continue', style: AppTextStyles.button())),
+class _SectionTitle extends StatelessWidget {
+  const _SectionTitle(this.label);
+
+  final String label;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: EdgeInsetsDirectional.only(
+        bottom: TripOptionsFigmaTokens.sectionTitleBottom,
       ),
+      child: Text(
+        label,
+        style: AppTextStyles.subtitle(
+          color: AppColors.tripDetailsFigmaBlack,
+        ).copyWith(
+          fontSize: TripOptionsFigmaTokens.sectionTitleFontSize,
+          fontWeight: FontWeight.w600,
+        ),
+      ),
+    );
+  }
+}
+
+class _DateOptionsGrid extends StatelessWidget {
+  const _DateOptionsGrid({
+    required this.dates,
+    required this.selectedIndex,
+    required this.onSelected,
+  });
+
+  final List<_TripDateOption> dates;
+  final int selectedIndex;
+  final ValueChanged<int> onSelected;
+
+  @override
+  Widget build(BuildContext context) {
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final itemWidth =
+            (constraints.maxWidth - TripOptionsFigmaTokens.gridHGap) / 2;
+        return Wrap(
+          spacing: TripOptionsFigmaTokens.gridHGap,
+          runSpacing: TripOptionsFigmaTokens.gridVGap,
+          children: [
+            for (var i = 0; i < dates.length; i++)
+              SizedBox(
+                width: itemWidth,
+                child: DateOptionCard(
+                  dateRange: dates[i].range,
+                  price: dates[i].price,
+                  isSelected: selectedIndex == i,
+                  onTap: () => onSelected(i),
+                ),
+              ),
+          ],
+        );
+      },
     );
   }
 }

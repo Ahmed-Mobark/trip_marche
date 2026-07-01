@@ -733,6 +733,9 @@ class AppLocalizationsFr extends AppLocalizations {
   String get bookingContactPhoneLabel => 'Numéro de téléphone';
 
   @override
+  String get bookingContactPhoneNumberHint => 'Enter your number';
+
+  @override
   String get bookingContactPhoneHint => '+20 123 456 7890';
 
   @override
@@ -756,6 +759,176 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get bookingContinue => 'Continuer';
+
+  @override
+  String bookingTravelerTitle(int index) {
+    return 'Traveler $index';
+  }
+
+  @override
+  String get bookingTripOptionsTitle => 'Trip Options';
+
+  @override
+  String get bookingChooseDateTitle => 'Choose the date that suits you';
+
+  @override
+  String get bookingSeeAllDates => 'See All Dates';
+
+  @override
+  String get bookingHowManyTraveling => 'How many are traveling?';
+
+  @override
+  String get bookingTravelerAdult => 'Adult';
+
+  @override
+  String get bookingTravelerKid => 'Kid';
+
+  @override
+  String get bookingTravelerKidAge => '2~5 Years';
+
+  @override
+  String get bookingTravelerBaby => 'Baby';
+
+  @override
+  String get bookingTravelerBabyAge => '0~2 Years';
+
+  @override
+  String get bookingAccommodationOptions => 'Accommodation Options';
+
+  @override
+  String get bookingSingleRoom => 'Single Room';
+
+  @override
+  String get bookingSingleRoomSubtitle => 'Private room for one';
+
+  @override
+  String get bookingDoubleRoom => 'Double Room';
+
+  @override
+  String get bookingDoubleRoomSubtitle => 'Shared room for two';
+
+  @override
+  String get bookingTripleRoom => 'Triple Room';
+
+  @override
+  String get bookingTripleRoomSubtitle => 'Shared room for three';
+
+  @override
+  String get bookingPerson => 'Person';
+
+  @override
+  String get bookingFree => 'Free';
+
+  @override
+  String get bookingSelectActivitiesTitle => 'Select Activities';
+
+  @override
+  String bookingTravelerParenthetical(int index) {
+    return '(Traveler $index)';
+  }
+
+  @override
+  String get bookingSameAsTravelerOne => 'Same as traveler 1';
+
+  @override
+  String get bookingActivityCamping => 'Camping';
+
+  @override
+  String get bookingActivityFishing => 'Fishing';
+
+  @override
+  String get bookingActivityDiving => 'Diving';
+
+  @override
+  String get bookingReviewTitle => 'Review';
+
+  @override
+  String get bookingReviewTripName => 'Dahab Trip';
+
+  @override
+  String get bookingReviewTripDescription =>
+      'Experience the breathtaking beauty of the Swiss Alps on this 7-day adventure. Visit iconic destinations, enjoy scenic train rides, and immerse yourself in Swiss culture. Perfect for nature lovers and photography enthusiasts.';
+
+  @override
+  String bookingReviewFromDate(String dateRange) {
+    return 'From $dateRange';
+  }
+
+  @override
+  String get bookingReviewDuration => '7 Days';
+
+  @override
+  String bookingReviewParticipantsSummary(int count, String price) {
+    return '$count Participant x $price LE';
+  }
+
+  @override
+  String get bookingReviewRoutePrefix => 'From Cairo to ';
+
+  @override
+  String get bookingReviewRouteDestination => 'Dahab';
+
+  @override
+  String get bookingReviewMeetingTime => 'Meeting at 10:00 AM';
+
+  @override
+  String get bookingReviewStartingTime => 'Starting at 10:30 PM';
+
+  @override
+  String get bookingReviewGroupSize => 'Group Size 25-30';
+
+  @override
+  String get bookingReviewLocation => '18 El Tesen Road, New Cairo, Egypt';
+
+  @override
+  String get bookingReviewIncludedFreeCancellation => 'Free Cancelation';
+
+  @override
+  String get bookingReviewIncludedHotelStay => 'Hotel Stay';
+
+  @override
+  String get bookingReviewIncludedBreakfast => 'Breakfast';
+
+  @override
+  String get bookingReviewIncludedAirportTransfer => 'Airport Transfer';
+
+  @override
+  String get bookingReviewCouponQuestion => 'Do you have a coupon?';
+
+  @override
+  String get bookingReviewCouponPlaceholder => 'Coupon Code';
+
+  @override
+  String get bookingReviewCouponApply => 'Apply';
+
+  @override
+  String get bookingReviewCouponSuccess => 'Coupon Applied Successfully!';
+
+  @override
+  String get bookingReviewPaymentDetailTitle => 'Payment Detail';
+
+  @override
+  String bookingReviewPaymentTravelers(int count) {
+    return '$count Travelers';
+  }
+
+  @override
+  String get bookingReviewPaymentActivities => 'Activities';
+
+  @override
+  String get bookingReviewPaymentTaxes => 'Taxes';
+
+  @override
+  String get bookingReviewPaymentCouponCode => 'Coupon Code';
+
+  @override
+  String get bookingReviewPaymentTotal => 'Total';
+
+  @override
+  String get bookingReviewCurrency => 'EGP';
+
+  @override
+  String get bookingPay => 'Pay';
 
   @override
   String get bookingAddNewCardTitle => 'Ajouter une nouvelle carte';

@@ -1,188 +1,213 @@
 import 'package:flutter/material.dart';
-import 'package:iconsax/iconsax.dart';
-import '../../../../core/theme/app_colors.dart';
-import '../../../../core/theme/app_text_styles.dart';
-import '../widgets/activity_item.dart';
+import 'package:flutter/services.dart';
+import 'package:trip_marche/core/config/app_colors.dart';
+import 'package:trip_marche/core/config/dimensions/select_activities_figma_tokens.dart';
+import 'package:trip_marche/core/extensions/localization.dart';
+import 'package:trip_marche/core/injection/injection_container.dart';
+import 'package:trip_marche/core/navigation/app_navigator.dart';
+import 'package:trip_marche/core/theme/app_text_styles.dart';
+import 'package:trip_marche/core/widgets/bottom_booking_bar.dart';
+import 'package:trip_marche/features/booking/domain/entities/activity.dart';
+import 'package:trip_marche/features/booking/domain/entities/booking_flow_context.dart';
+import 'package:trip_marche/features/booking/domain/entities/booking_activities.dart';
+import 'package:trip_marche/features/booking/domain/entities/booking_review_data_builder.dart';
+import 'package:trip_marche/features/booking/domain/entities/traveler_contact.dart';
+import '../widgets/traveler_activities_section.dart';
+import 'review_view.dart';
 
-class _Activity {
-  final String name;
-  final String description;
-  final double price;
-  final IconData icon;
-  bool isSelected = false;
+class _TravelerActivitiesEntry {
+  _TravelerActivitiesEntry({required this.traveler})
+      : selectedActivityIds = <String>{},
+        sameAsTravelerOne = false;
 
-  _Activity({
-    required this.name,
-    required this.description,
-    required this.price,
-    required this.icon,
-  });
+  final TravelerContact traveler;
+  Set<String> selectedActivityIds;
+  bool sameAsTravelerOne;
 }
 
 class SelectActivitiesView extends StatefulWidget {
-  const SelectActivitiesView({super.key});
+  const SelectActivitiesView({
+    required this.travelers,
+    required this.flowContext,
+    super.key,
+  });
+
+  final List<TravelerContact> travelers;
+  final BookingFlowContext flowContext;
 
   @override
   State<SelectActivitiesView> createState() => _SelectActivitiesViewState();
 }
 
 class _SelectActivitiesViewState extends State<SelectActivitiesView> {
-  final List<_Activity> _activities = [
-    _Activity(
-      name: 'Snorkeling',
-      description: 'Explore the coral reefs at Blue Hole',
-      price: 50,
-      icon: Iconsax.ship,
-    ),
-    _Activity(
-      name: 'Desert Safari',
-      description: 'Jeep tour through the Sinai desert',
-      price: 80,
-      icon: Iconsax.sun_1,
-    ),
-    _Activity(
-      name: 'Camel Ride',
-      description: 'Sunset camel ride along the coast',
-      price: 35,
-      icon: Iconsax.routing,
-    ),
-    _Activity(
-      name: 'Scuba Diving',
-      description: 'Professional diving with certified instructor',
-      price: 120,
-      icon: Iconsax.bubble,
-    ),
-    _Activity(
-      name: 'Quad Biking',
-      description: 'ATV adventure in the desert dunes',
-      price: 65,
-      icon: Iconsax.driving,
-    ),
-    _Activity(
-      name: 'Rock Climbing',
-      description: 'Guided climbing in Sinai mountains',
-      price: 90,
-      icon: Iconsax.hierarchy_3,
-    ),
-    _Activity(
-      name: 'Yoga Session',
-      description: 'Morning yoga on the beach',
-      price: 25,
-      icon: Iconsax.health,
-    ),
-    _Activity(
-      name: 'Photography Tour',
-      description: 'Guided photo tour of scenic spots',
-      price: 45,
-      icon: Iconsax.camera,
-    ),
-  ];
+  late final List<_TravelerActivitiesEntry> _entries;
 
-  double get _totalActivitiesPrice {
-    return _activities
-        .where((a) => a.isSelected)
-        .fold(0.0, (sum, a) => sum + a.price);
+  @override
+  void initState() {
+    super.initState();
+    _entries = widget.travelers
+        .map((traveler) => _TravelerActivitiesEntry(traveler: traveler))
+        .toList(growable: false);
+  }
+
+  List<Activity> _availableActivities(BuildContext context) {
+    final tr = context.tr;
+    return [
+      Activity(id: 'camping', name: tr.bookingActivityCamping, price: 70),
+      Activity(id: 'fishing', name: tr.bookingActivityFishing, price: 30),
+      Activity(id: 'diving', name: tr.bookingActivityDiving, price: 80),
+    ];
+  }
+
+  void _syncFromTravelerOne() {
+    if (_entries.isEmpty) {
+      return;
+    }
+    final source = Set<String>.from(_entries.first.selectedActivityIds);
+    for (var i = 1; i < _entries.length; i++) {
+      if (_entries[i].sameAsTravelerOne) {
+        _entries[i].selectedActivityIds = Set<String>.from(source);
+      }
+    }
+  }
+
+  void _toggleActivity(int travelerIndex, String activityId) {
+    final entry = _entries[travelerIndex];
+    if (entry.sameAsTravelerOne) {
+      return;
+    }
+
+    setState(() {
+      if (entry.selectedActivityIds.contains(activityId)) {
+        entry.selectedActivityIds.remove(activityId);
+      } else {
+        entry.selectedActivityIds.add(activityId);
+      }
+
+      if (travelerIndex == 0) {
+        _syncFromTravelerOne();
+      }
+    });
+  }
+
+  void _onSameAsTravelerOneChanged(int travelerIndex, bool value) {
+    setState(() {
+      final entry = _entries[travelerIndex];
+      entry.sameAsTravelerOne = value;
+      if (value) {
+        entry.selectedActivityIds =
+            Set<String>.from(_entries.first.selectedActivityIds);
+      }
+    });
+  }
+
+  void _onContinue(BuildContext context) {
+    final activitiesCatalog = {
+      for (final activity in _availableActivities(context)) activity.id: activity,
+    };
+
+    final result = _entries
+        .map(
+          (entry) => BookingActivities(
+            traveler: entry.traveler,
+            activities: entry.selectedActivityIds
+                .map((id) => activitiesCatalog[id])
+                .whereType<Activity>()
+                .toList(growable: false),
+          ),
+        )
+        .toList(growable: false);
+
+    final reviewData = BookingReviewDataBuilder.fromBookingFlow(
+      context: context,
+      activities: result,
+      dateRange: widget.flowContext.dateRange,
+      travelersCount: widget.flowContext.travelersCount,
+      roomName: widget.flowContext.roomName,
+      roomPrice: widget.flowContext.roomPrice,
+    );
+
+    sl<AppNavigator>().push(
+      screen: ReviewView(data: reviewData),
+    );
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: AppColors.background(context),
-      appBar: AppBar(
-        backgroundColor: AppColors.background(context),
-        elevation: 0,
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back_ios_new_rounded, color: AppColors.darkText(context)),
-          onPressed: () => Navigator.pop(context),
-        ),
-        title: Text(
-          'Select Activities',
-          style: AppTextStyles.subtitle(color: AppColors.darkText(context)),
-        ),
-        centerTitle: true,
-      ),
-      body: Column(
-        children: [
-          Expanded(
-            child: ListView.separated(
-              padding: const EdgeInsets.all(20),
-              itemCount: _activities.length,
-              separatorBuilder: (_, __) => const SizedBox(height: 10),
-              itemBuilder: (context, index) {
-                final activity = _activities[index];
-                return ActivityItem(
-                  icon: activity.icon,
-                  name: activity.name,
-                  description: activity.description,
-                  price: activity.price,
-                  isSelected: activity.isSelected,
-                  onTap: () => setState(
-                    () => activity.isSelected = !activity.isSelected,
-                  ),
-                );
-              },
-            ),
-          ),
-          _buildBottomSection(),
-        ],
-      ),
-    );
-  }
+    final tr = context.tr;
+    final activities = _availableActivities(context);
 
-  Widget _buildBottomSection() {
-    return Container(
-      padding: EdgeInsets.only(
-        left: 20,
-        right: 20,
-        top: 16,
-        bottom: MediaQuery.of(context).padding.bottom + 16,
+    return AnnotatedRegion<SystemUiOverlayStyle>(
+      value: SystemUiOverlayStyle.dark.copyWith(
+        statusBarColor: SelectActivitiesFigmaTokens.screenBackground,
       ),
-      decoration: BoxDecoration(
-        color: AppColors.background(context),
-        boxShadow: [
-          BoxShadow(
-            color: AppColors.shadow.withValues(alpha: 0.06),
-            blurRadius: 10,
-            offset: const Offset(0, -4),
-          ),
-        ],
-      ),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      child: Scaffold(
+        backgroundColor: SelectActivitiesFigmaTokens.screenBackground,
+        body: SafeArea(
+          bottom: false,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              Text(
-                'Activities Total',
-                style: AppTextStyles.bodyMedium(color: AppColors.greyText(context)),
+              Padding(
+                padding: EdgeInsetsDirectional.only(
+                  top: SelectActivitiesFigmaTokens.titleTop,
+                  bottom: SelectActivitiesFigmaTokens.titleBottom,
+                ),
+                child: Text(
+                  tr.bookingSelectActivitiesTitle,
+                  textAlign: TextAlign.center,
+                  style: AppTextStyles.heading3(
+                    color: AppColors.tripDetailsFigmaBlack,
+                  ).copyWith(
+                    fontSize: SelectActivitiesFigmaTokens.titleFontSize,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
               ),
-              Text(
-                '+${_totalActivitiesPrice.toStringAsFixed(0)}',
-                style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                  fontSize: 20,
-                  fontWeight: FontWeight.w700,
-                  color: AppColors.primary,
+              Expanded(
+                child: ListView.separated(
+                  padding: EdgeInsetsDirectional.fromSTEB(
+                    SelectActivitiesFigmaTokens.screenPadding,
+                    0,
+                    SelectActivitiesFigmaTokens.screenPadding,
+                    SelectActivitiesFigmaTokens.listBottom,
+                  ),
+                  itemCount: _entries.length,
+                  separatorBuilder: (_, __) =>
+                      SizedBox(height: SelectActivitiesFigmaTokens.sectionGap),
+                  itemBuilder: (context, index) {
+                    final entry = _entries[index];
+                    return TravelerActivitiesSection(
+                      travelerName: entry.traveler.fullName,
+                      travelerIndexLabel:
+                          tr.bookingTravelerParenthetical(index + 1),
+                      activities: activities,
+                      selectedActivityIds: entry.selectedActivityIds,
+                      onActivityToggled: (activityId) =>
+                          _toggleActivity(index, activityId),
+                      showSameAsTravelerOne: index > 0,
+                      sameAsTravelerOne: entry.sameAsTravelerOne,
+                      sameAsTravelerOneLabel: tr.bookingSameAsTravelerOne,
+                      onSameAsTravelerOneChanged: index > 0
+                          ? (value) => _onSameAsTravelerOneChanged(index, value)
+                          : null,
+                      activitiesEnabled: !entry.sameAsTravelerOne,
+                    );
+                  },
+                ),
+              ),
+              SafeArea(
+                top: false,
+                child: BottomBookingBar(
+                  backButtonCircular: true,
+                  onBack: () => Navigator.pop(context),
+                  onContinue: () => _onContinue(context),
+                  continueLabel: tr.bookingContinue,
                 ),
               ),
             ],
           ),
-          const SizedBox(height: 12),
-          GestureDetector(
-            onTap: () {},
-            child: Container(
-              width: double.infinity,
-              height: 56,
-              decoration: BoxDecoration(
-                gradient: AppColors.primaryGradient,
-                borderRadius: BorderRadius.circular(12),
-              ),
-              child: Center(
-                child: Text('Continue', style: AppTextStyles.button()),
-              ),
-            ),
-          ),
-        ],
+        ),
       ),
     );
   }

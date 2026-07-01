@@ -240,10 +240,11 @@
   "navWishlist": "المفضلة",
   "navAccount": "الحساب",
 
-  "bookingContactInfoTitle": "معلومات التواصل",
+  "bookingContactInfoTitle": "معلومات الاتصال",
   "bookingContactFullNameLabel": "الاسم الكامل",
   "bookingContactFullNameHint": "أدخل اسمك الكامل",
   "bookingContactPhoneLabel": "رقم الهاتف",
+  "bookingContactPhoneNumberHint": "أدخل رقمك",
   "bookingContactPhoneHint": "+20 123 456 7890",
   "bookingContactEmailLabel": "البريد الإلكتروني",
   "bookingContactEmailHint": "email@example.com",
@@ -252,6 +253,101 @@
   "bookingContactIdPassportLabel": "رقم الهوية/جواز السفر",
   "bookingContactIdPassportHint": "أدخل رقم الهوية أو جواز السفر",
   "bookingContinue": "متابعة",
+
+  "bookingTravelerTitle": "مسافر {index}",
+  "@bookingTravelerTitle": {
+    "placeholders": {
+      "index": {
+        "type": "int"
+      }
+    }
+  },
+
+  "bookingTripOptionsTitle": "خيارات الرحلة",
+  "bookingChooseDateTitle": "اختر التاريخ المناسب لك",
+  "bookingSeeAllDates": "عرض كل التواريخ",
+  "bookingHowManyTraveling": "كم عدد المسافرين؟",
+  "bookingTravelerAdult": "بالغ",
+  "bookingTravelerKid": "طفل",
+  "bookingTravelerKidAge": "2~5 سنوات",
+  "bookingTravelerBaby": "رضيع",
+  "bookingTravelerBabyAge": "0~2 سنوات",
+  "bookingAccommodationOptions": "خيارات الإقامة",
+  "bookingSingleRoom": "غرفة مفردة",
+  "bookingSingleRoomSubtitle": "غرفة خاصة لشخص واحد",
+  "bookingDoubleRoom": "غرفة مزدوجة",
+  "bookingDoubleRoomSubtitle": "غرفة مشتركة لشخصين",
+  "bookingTripleRoom": "غرفة ثلاثية",
+  "bookingTripleRoomSubtitle": "غرفة مشتركة لثلاثة أشخاص",
+  "bookingPerson": "شخص",
+  "bookingFree": "مجاني",
+
+  "bookingSelectActivitiesTitle": "اختر الأنشطة",
+  "bookingTravelerParenthetical": "(مسافر {index})",
+  "@bookingTravelerParenthetical": {
+    "placeholders": {
+      "index": {
+        "type": "int"
+      }
+    }
+  },
+  "bookingSameAsTravelerOne": "نفس مسافر 1",
+  "bookingActivityCamping": "تخييم",
+  "bookingActivityFishing": "صيد",
+  "bookingActivityDiving": "غوص",
+
+  "bookingReviewTitle": "مراجعة",
+  "bookingReviewTripName": "رحلة دهب",
+  "bookingReviewTripDescription": "استمتع بجمال جبال الألب السويسرية الخلاب في مغامرة لمدة 7 أيام. زر الوجهات الشهيرة، واستمتع برحلات القطار ذات المناظر الخلابة، وانغمس في الثقافة السويسرية. مثالية لعشاق الطبيعة والتصوير.",
+  "bookingReviewFromDate": "من {dateRange}",
+  "@bookingReviewFromDate": {
+    "placeholders": {
+      "dateRange": {
+        "type": "String"
+      }
+    }
+  },
+  "bookingReviewDuration": "7 أيام",
+  "bookingReviewParticipantsSummary": "{count} مشارك x {price} جنيه",
+  "@bookingReviewParticipantsSummary": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      },
+      "price": {
+        "type": "String"
+      }
+    }
+  },
+  "bookingReviewRoutePrefix": "من القاهرة إلى ",
+  "bookingReviewRouteDestination": "دهب",
+  "bookingReviewMeetingTime": "الاجتماع الساعة 10:00 صباحاً",
+  "bookingReviewStartingTime": "الانطلاق الساعة 10:30 مساءً",
+  "bookingReviewGroupSize": "حجم المجموعة 25-30",
+  "bookingReviewLocation": "18 طريق التسعين، التجمع الخامس، مصر",
+  "bookingReviewIncludedFreeCancellation": "إلغاء مجاني",
+  "bookingReviewIncludedHotelStay": "إقامة فندقية",
+  "bookingReviewIncludedBreakfast": "إفطار",
+  "bookingReviewIncludedAirportTransfer": "نقل من المطار",
+  "bookingReviewCouponQuestion": "هل لديك كوبون؟",
+  "bookingReviewCouponPlaceholder": "رمز الكوبون",
+  "bookingReviewCouponApply": "تطبيق",
+  "bookingReviewCouponSuccess": "تم تطبيق الكوبون بنجاح!",
+  "bookingReviewPaymentDetailTitle": "تفاصيل الدفع",
+  "bookingReviewPaymentTravelers": "{count} مسافرين",
+  "@bookingReviewPaymentTravelers": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "bookingReviewPaymentActivities": "الأنشطة",
+  "bookingReviewPaymentTaxes": "الضرائب",
+  "bookingReviewPaymentCouponCode": "رمز الكوبون",
+  "bookingReviewPaymentTotal": "الإجمالي",
+  "bookingReviewCurrency": "جنيه",
+  "bookingPay": "ادفع",
 
   "bookingAddNewCardTitle": "إضافة بطاقة جديدة",
   "bookingCardNumberLabel": "رقم البطاقة",

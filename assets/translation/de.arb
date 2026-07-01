@@ -244,6 +244,7 @@
   "bookingContactFullNameLabel": "Vollständiger Name",
   "bookingContactFullNameHint": "Gib deinen vollständigen Namen ein",
   "bookingContactPhoneLabel": "Telefonnummer",
+  "bookingContactPhoneNumberHint": "Enter your number",
   "bookingContactPhoneHint": "+20 123 456 7890",
   "bookingContactEmailLabel": "E-Mail",
   "bookingContactEmailHint": "email@example.com",
@@ -252,6 +253,101 @@
   "bookingContactIdPassportLabel": "ID-/Passnummer",
   "bookingContactIdPassportHint": "Gib deine ID- oder Passnummer ein",
   "bookingContinue": "Weiter",
+
+  "bookingTravelerTitle": "Traveler {index}",
+  "@bookingTravelerTitle": {
+    "placeholders": {
+      "index": {
+        "type": "int"
+      }
+    }
+  },
+
+  "bookingTripOptionsTitle": "Trip Options",
+  "bookingChooseDateTitle": "Choose the date that suits you",
+  "bookingSeeAllDates": "See All Dates",
+  "bookingHowManyTraveling": "How many are traveling?",
+  "bookingTravelerAdult": "Adult",
+  "bookingTravelerKid": "Kid",
+  "bookingTravelerKidAge": "2~5 Years",
+  "bookingTravelerBaby": "Baby",
+  "bookingTravelerBabyAge": "0~2 Years",
+  "bookingAccommodationOptions": "Accommodation Options",
+  "bookingSingleRoom": "Single Room",
+  "bookingSingleRoomSubtitle": "Private room for one",
+  "bookingDoubleRoom": "Double Room",
+  "bookingDoubleRoomSubtitle": "Shared room for two",
+  "bookingTripleRoom": "Triple Room",
+  "bookingTripleRoomSubtitle": "Shared room for three",
+  "bookingPerson": "Person",
+  "bookingFree": "Free",
+
+  "bookingSelectActivitiesTitle": "Select Activities",
+  "bookingTravelerParenthetical": "(Traveler {index})",
+  "@bookingTravelerParenthetical": {
+    "placeholders": {
+      "index": {
+        "type": "int"
+      }
+    }
+  },
+  "bookingSameAsTravelerOne": "Same as traveler 1",
+  "bookingActivityCamping": "Camping",
+  "bookingActivityFishing": "Fishing",
+  "bookingActivityDiving": "Diving",
+
+  "bookingReviewTitle": "Review",
+  "bookingReviewTripName": "Dahab Trip",
+  "bookingReviewTripDescription": "Experience the breathtaking beauty of the Swiss Alps on this 7-day adventure. Visit iconic destinations, enjoy scenic train rides, and immerse yourself in Swiss culture. Perfect for nature lovers and photography enthusiasts.",
+  "bookingReviewFromDate": "From {dateRange}",
+  "@bookingReviewFromDate": {
+    "placeholders": {
+      "dateRange": {
+        "type": "String"
+      }
+    }
+  },
+  "bookingReviewDuration": "7 Days",
+  "bookingReviewParticipantsSummary": "{count} Participant x {price} LE",
+  "@bookingReviewParticipantsSummary": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      },
+      "price": {
+        "type": "String"
+      }
+    }
+  },
+  "bookingReviewRoutePrefix": "From Cairo to ",
+  "bookingReviewRouteDestination": "Dahab",
+  "bookingReviewMeetingTime": "Meeting at 10:00 AM",
+  "bookingReviewStartingTime": "Starting at 10:30 PM",
+  "bookingReviewGroupSize": "Group Size 25-30",
+  "bookingReviewLocation": "18 El Tesen Road, New Cairo, Egypt",
+  "bookingReviewIncludedFreeCancellation": "Free Cancelation",
+  "bookingReviewIncludedHotelStay": "Hotel Stay",
+  "bookingReviewIncludedBreakfast": "Breakfast",
+  "bookingReviewIncludedAirportTransfer": "Airport Transfer",
+  "bookingReviewCouponQuestion": "Do you have a coupon?",
+  "bookingReviewCouponPlaceholder": "Coupon Code",
+  "bookingReviewCouponApply": "Apply",
+  "bookingReviewCouponSuccess": "Coupon Applied Successfully!",
+  "bookingReviewPaymentDetailTitle": "Payment Detail",
+  "bookingReviewPaymentTravelers": "{count} Travelers",
+  "@bookingReviewPaymentTravelers": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "bookingReviewPaymentActivities": "Activities",
+  "bookingReviewPaymentTaxes": "Taxes",
+  "bookingReviewPaymentCouponCode": "Coupon Code",
+  "bookingReviewPaymentTotal": "Total",
+  "bookingReviewCurrency": "EGP",
+  "bookingPay": "Pay",
 
   "bookingAddNewCardTitle": "Neue Karte hinzufügen",
   "bookingCardNumberLabel": "Kartennummer",

@@ -4,9 +4,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:trip_marche/core/extensions/localization.dart';
 import 'package:trip_marche/core/injection/injection_container.dart';
+import 'package:trip_marche/core/navigation/app_navigator.dart';
 import 'package:trip_marche/core/theme/app_colors.dart';
 import 'package:trip_marche/core/toast/app_toast.dart';
 import 'package:trip_marche/core/widgets/custom_loading.dart';
+import 'package:trip_marche/features/booking/presentation/view/trip_options_view.dart';
 import 'package:trip_marche/features/trip_details/domain/entities/trip_details_entity.dart';
 import 'package:trip_marche/features/trip_details/domain/usecases/get_trip_details_usecase.dart';
 import 'package:trip_marche/features/trip_details/presentation/trip_details_ui_formatters.dart';
@@ -274,7 +276,9 @@ class _TripDetailsBodyState extends State<_TripDetailsBody> {
                           : null,
                       secondaryBadgeText: payExtra,
                       bookNowText: context.tr.tripDetailsBookNow,
-                      onBookNow: () {},
+                      onBookNow: () {
+                        sl<AppNavigator>().push(screen: TripOptionsView());
+                      },
                       expanded: _bookingExpanded,
                     ),
                   ),

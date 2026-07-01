@@ -1459,7 +1459,7 @@ abstract class AppLocalizations {
   /// No description provided for @bookingContactInfoTitle.
   ///
   /// In en, this message translates to:
-  /// **'Contact Info'**
+  /// **'Contact information'**
   String get bookingContactInfoTitle;
 
   /// No description provided for @bookingContactFullNameLabel.
@@ -1479,6 +1479,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Phone Number'**
   String get bookingContactPhoneLabel;
+
+  /// No description provided for @bookingContactPhoneNumberHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter your number'**
+  String get bookingContactPhoneNumberHint;
 
   /// No description provided for @bookingContactPhoneHint.
   ///
@@ -1527,6 +1533,324 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Continue'**
   String get bookingContinue;
+
+  /// No description provided for @bookingTravelerTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Traveler {index}'**
+  String bookingTravelerTitle(int index);
+
+  /// No description provided for @bookingTripOptionsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Trip Options'**
+  String get bookingTripOptionsTitle;
+
+  /// No description provided for @bookingChooseDateTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose the date that suits you'**
+  String get bookingChooseDateTitle;
+
+  /// No description provided for @bookingSeeAllDates.
+  ///
+  /// In en, this message translates to:
+  /// **'See All Dates'**
+  String get bookingSeeAllDates;
+
+  /// No description provided for @bookingHowManyTraveling.
+  ///
+  /// In en, this message translates to:
+  /// **'How many are traveling?'**
+  String get bookingHowManyTraveling;
+
+  /// No description provided for @bookingTravelerAdult.
+  ///
+  /// In en, this message translates to:
+  /// **'Adult'**
+  String get bookingTravelerAdult;
+
+  /// No description provided for @bookingTravelerKid.
+  ///
+  /// In en, this message translates to:
+  /// **'Kid'**
+  String get bookingTravelerKid;
+
+  /// No description provided for @bookingTravelerKidAge.
+  ///
+  /// In en, this message translates to:
+  /// **'2~5 Years'**
+  String get bookingTravelerKidAge;
+
+  /// No description provided for @bookingTravelerBaby.
+  ///
+  /// In en, this message translates to:
+  /// **'Baby'**
+  String get bookingTravelerBaby;
+
+  /// No description provided for @bookingTravelerBabyAge.
+  ///
+  /// In en, this message translates to:
+  /// **'0~2 Years'**
+  String get bookingTravelerBabyAge;
+
+  /// No description provided for @bookingAccommodationOptions.
+  ///
+  /// In en, this message translates to:
+  /// **'Accommodation Options'**
+  String get bookingAccommodationOptions;
+
+  /// No description provided for @bookingSingleRoom.
+  ///
+  /// In en, this message translates to:
+  /// **'Single Room'**
+  String get bookingSingleRoom;
+
+  /// No description provided for @bookingSingleRoomSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Private room for one'**
+  String get bookingSingleRoomSubtitle;
+
+  /// No description provided for @bookingDoubleRoom.
+  ///
+  /// In en, this message translates to:
+  /// **'Double Room'**
+  String get bookingDoubleRoom;
+
+  /// No description provided for @bookingDoubleRoomSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Shared room for two'**
+  String get bookingDoubleRoomSubtitle;
+
+  /// No description provided for @bookingTripleRoom.
+  ///
+  /// In en, this message translates to:
+  /// **'Triple Room'**
+  String get bookingTripleRoom;
+
+  /// No description provided for @bookingTripleRoomSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Shared room for three'**
+  String get bookingTripleRoomSubtitle;
+
+  /// No description provided for @bookingPerson.
+  ///
+  /// In en, this message translates to:
+  /// **'Person'**
+  String get bookingPerson;
+
+  /// No description provided for @bookingFree.
+  ///
+  /// In en, this message translates to:
+  /// **'Free'**
+  String get bookingFree;
+
+  /// No description provided for @bookingSelectActivitiesTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Select Activities'**
+  String get bookingSelectActivitiesTitle;
+
+  /// No description provided for @bookingTravelerParenthetical.
+  ///
+  /// In en, this message translates to:
+  /// **'(Traveler {index})'**
+  String bookingTravelerParenthetical(int index);
+
+  /// No description provided for @bookingSameAsTravelerOne.
+  ///
+  /// In en, this message translates to:
+  /// **'Same as traveler 1'**
+  String get bookingSameAsTravelerOne;
+
+  /// No description provided for @bookingActivityCamping.
+  ///
+  /// In en, this message translates to:
+  /// **'Camping'**
+  String get bookingActivityCamping;
+
+  /// No description provided for @bookingActivityFishing.
+  ///
+  /// In en, this message translates to:
+  /// **'Fishing'**
+  String get bookingActivityFishing;
+
+  /// No description provided for @bookingActivityDiving.
+  ///
+  /// In en, this message translates to:
+  /// **'Diving'**
+  String get bookingActivityDiving;
+
+  /// No description provided for @bookingReviewTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Review'**
+  String get bookingReviewTitle;
+
+  /// No description provided for @bookingReviewTripName.
+  ///
+  /// In en, this message translates to:
+  /// **'Dahab Trip'**
+  String get bookingReviewTripName;
+
+  /// No description provided for @bookingReviewTripDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Experience the breathtaking beauty of the Swiss Alps on this 7-day adventure. Visit iconic destinations, enjoy scenic train rides, and immerse yourself in Swiss culture. Perfect for nature lovers and photography enthusiasts.'**
+  String get bookingReviewTripDescription;
+
+  /// No description provided for @bookingReviewFromDate.
+  ///
+  /// In en, this message translates to:
+  /// **'From {dateRange}'**
+  String bookingReviewFromDate(String dateRange);
+
+  /// No description provided for @bookingReviewDuration.
+  ///
+  /// In en, this message translates to:
+  /// **'7 Days'**
+  String get bookingReviewDuration;
+
+  /// No description provided for @bookingReviewParticipantsSummary.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} Participant x {price} LE'**
+  String bookingReviewParticipantsSummary(int count, String price);
+
+  /// No description provided for @bookingReviewRoutePrefix.
+  ///
+  /// In en, this message translates to:
+  /// **'From Cairo to '**
+  String get bookingReviewRoutePrefix;
+
+  /// No description provided for @bookingReviewRouteDestination.
+  ///
+  /// In en, this message translates to:
+  /// **'Dahab'**
+  String get bookingReviewRouteDestination;
+
+  /// No description provided for @bookingReviewMeetingTime.
+  ///
+  /// In en, this message translates to:
+  /// **'Meeting at 10:00 AM'**
+  String get bookingReviewMeetingTime;
+
+  /// No description provided for @bookingReviewStartingTime.
+  ///
+  /// In en, this message translates to:
+  /// **'Starting at 10:30 PM'**
+  String get bookingReviewStartingTime;
+
+  /// No description provided for @bookingReviewGroupSize.
+  ///
+  /// In en, this message translates to:
+  /// **'Group Size 25-30'**
+  String get bookingReviewGroupSize;
+
+  /// No description provided for @bookingReviewLocation.
+  ///
+  /// In en, this message translates to:
+  /// **'18 El Tesen Road, New Cairo, Egypt'**
+  String get bookingReviewLocation;
+
+  /// No description provided for @bookingReviewIncludedFreeCancellation.
+  ///
+  /// In en, this message translates to:
+  /// **'Free Cancelation'**
+  String get bookingReviewIncludedFreeCancellation;
+
+  /// No description provided for @bookingReviewIncludedHotelStay.
+  ///
+  /// In en, this message translates to:
+  /// **'Hotel Stay'**
+  String get bookingReviewIncludedHotelStay;
+
+  /// No description provided for @bookingReviewIncludedBreakfast.
+  ///
+  /// In en, this message translates to:
+  /// **'Breakfast'**
+  String get bookingReviewIncludedBreakfast;
+
+  /// No description provided for @bookingReviewIncludedAirportTransfer.
+  ///
+  /// In en, this message translates to:
+  /// **'Airport Transfer'**
+  String get bookingReviewIncludedAirportTransfer;
+
+  /// No description provided for @bookingReviewCouponQuestion.
+  ///
+  /// In en, this message translates to:
+  /// **'Do you have a coupon?'**
+  String get bookingReviewCouponQuestion;
+
+  /// No description provided for @bookingReviewCouponPlaceholder.
+  ///
+  /// In en, this message translates to:
+  /// **'Coupon Code'**
+  String get bookingReviewCouponPlaceholder;
+
+  /// No description provided for @bookingReviewCouponApply.
+  ///
+  /// In en, this message translates to:
+  /// **'Apply'**
+  String get bookingReviewCouponApply;
+
+  /// No description provided for @bookingReviewCouponSuccess.
+  ///
+  /// In en, this message translates to:
+  /// **'Coupon Applied Successfully!'**
+  String get bookingReviewCouponSuccess;
+
+  /// No description provided for @bookingReviewPaymentDetailTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Payment Detail'**
+  String get bookingReviewPaymentDetailTitle;
+
+  /// No description provided for @bookingReviewPaymentTravelers.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} Travelers'**
+  String bookingReviewPaymentTravelers(int count);
+
+  /// No description provided for @bookingReviewPaymentActivities.
+  ///
+  /// In en, this message translates to:
+  /// **'Activities'**
+  String get bookingReviewPaymentActivities;
+
+  /// No description provided for @bookingReviewPaymentTaxes.
+  ///
+  /// In en, this message translates to:
+  /// **'Taxes'**
+  String get bookingReviewPaymentTaxes;
+
+  /// No description provided for @bookingReviewPaymentCouponCode.
+  ///
+  /// In en, this message translates to:
+  /// **'Coupon Code'**
+  String get bookingReviewPaymentCouponCode;
+
+  /// No description provided for @bookingReviewPaymentTotal.
+  ///
+  /// In en, this message translates to:
+  /// **'Total'**
+  String get bookingReviewPaymentTotal;
+
+  /// No description provided for @bookingReviewCurrency.
+  ///
+  /// In en, this message translates to:
+  /// **'EGP'**
+  String get bookingReviewCurrency;
+
+  /// No description provided for @bookingPay.
+  ///
+  /// In en, this message translates to:
+  /// **'Pay'**
+  String get bookingPay;
 
   /// No description provided for @bookingAddNewCardTitle.
   ///

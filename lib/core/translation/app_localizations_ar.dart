@@ -712,7 +712,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get navAccount => 'الحساب';
 
   @override
-  String get bookingContactInfoTitle => 'معلومات التواصل';
+  String get bookingContactInfoTitle => 'معلومات الاتصال';
 
   @override
   String get bookingContactFullNameLabel => 'الاسم الكامل';
@@ -722,6 +722,9 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get bookingContactPhoneLabel => 'رقم الهاتف';
+
+  @override
+  String get bookingContactPhoneNumberHint => 'أدخل رقمك';
 
   @override
   String get bookingContactPhoneHint => '+20 123 456 7890';
@@ -746,6 +749,176 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get bookingContinue => 'متابعة';
+
+  @override
+  String bookingTravelerTitle(int index) {
+    return 'مسافر $index';
+  }
+
+  @override
+  String get bookingTripOptionsTitle => 'خيارات الرحلة';
+
+  @override
+  String get bookingChooseDateTitle => 'اختر التاريخ المناسب لك';
+
+  @override
+  String get bookingSeeAllDates => 'عرض كل التواريخ';
+
+  @override
+  String get bookingHowManyTraveling => 'كم عدد المسافرين؟';
+
+  @override
+  String get bookingTravelerAdult => 'بالغ';
+
+  @override
+  String get bookingTravelerKid => 'طفل';
+
+  @override
+  String get bookingTravelerKidAge => '2~5 سنوات';
+
+  @override
+  String get bookingTravelerBaby => 'رضيع';
+
+  @override
+  String get bookingTravelerBabyAge => '0~2 سنوات';
+
+  @override
+  String get bookingAccommodationOptions => 'خيارات الإقامة';
+
+  @override
+  String get bookingSingleRoom => 'غرفة مفردة';
+
+  @override
+  String get bookingSingleRoomSubtitle => 'غرفة خاصة لشخص واحد';
+
+  @override
+  String get bookingDoubleRoom => 'غرفة مزدوجة';
+
+  @override
+  String get bookingDoubleRoomSubtitle => 'غرفة مشتركة لشخصين';
+
+  @override
+  String get bookingTripleRoom => 'غرفة ثلاثية';
+
+  @override
+  String get bookingTripleRoomSubtitle => 'غرفة مشتركة لثلاثة أشخاص';
+
+  @override
+  String get bookingPerson => 'شخص';
+
+  @override
+  String get bookingFree => 'مجاني';
+
+  @override
+  String get bookingSelectActivitiesTitle => 'اختر الأنشطة';
+
+  @override
+  String bookingTravelerParenthetical(int index) {
+    return '(مسافر $index)';
+  }
+
+  @override
+  String get bookingSameAsTravelerOne => 'نفس مسافر 1';
+
+  @override
+  String get bookingActivityCamping => 'تخييم';
+
+  @override
+  String get bookingActivityFishing => 'صيد';
+
+  @override
+  String get bookingActivityDiving => 'غوص';
+
+  @override
+  String get bookingReviewTitle => 'مراجعة';
+
+  @override
+  String get bookingReviewTripName => 'رحلة دهب';
+
+  @override
+  String get bookingReviewTripDescription =>
+      'استمتع بجمال جبال الألب السويسرية الخلاب في مغامرة لمدة 7 أيام. زر الوجهات الشهيرة، واستمتع برحلات القطار ذات المناظر الخلابة، وانغمس في الثقافة السويسرية. مثالية لعشاق الطبيعة والتصوير.';
+
+  @override
+  String bookingReviewFromDate(String dateRange) {
+    return 'من $dateRange';
+  }
+
+  @override
+  String get bookingReviewDuration => '7 أيام';
+
+  @override
+  String bookingReviewParticipantsSummary(int count, String price) {
+    return '$count مشارك x $price جنيه';
+  }
+
+  @override
+  String get bookingReviewRoutePrefix => 'من القاهرة إلى ';
+
+  @override
+  String get bookingReviewRouteDestination => 'دهب';
+
+  @override
+  String get bookingReviewMeetingTime => 'الاجتماع الساعة 10:00 صباحاً';
+
+  @override
+  String get bookingReviewStartingTime => 'الانطلاق الساعة 10:30 مساءً';
+
+  @override
+  String get bookingReviewGroupSize => 'حجم المجموعة 25-30';
+
+  @override
+  String get bookingReviewLocation => '18 طريق التسعين، التجمع الخامس، مصر';
+
+  @override
+  String get bookingReviewIncludedFreeCancellation => 'إلغاء مجاني';
+
+  @override
+  String get bookingReviewIncludedHotelStay => 'إقامة فندقية';
+
+  @override
+  String get bookingReviewIncludedBreakfast => 'إفطار';
+
+  @override
+  String get bookingReviewIncludedAirportTransfer => 'نقل من المطار';
+
+  @override
+  String get bookingReviewCouponQuestion => 'هل لديك كوبون؟';
+
+  @override
+  String get bookingReviewCouponPlaceholder => 'رمز الكوبون';
+
+  @override
+  String get bookingReviewCouponApply => 'تطبيق';
+
+  @override
+  String get bookingReviewCouponSuccess => 'تم تطبيق الكوبون بنجاح!';
+
+  @override
+  String get bookingReviewPaymentDetailTitle => 'تفاصيل الدفع';
+
+  @override
+  String bookingReviewPaymentTravelers(int count) {
+    return '$count مسافرين';
+  }
+
+  @override
+  String get bookingReviewPaymentActivities => 'الأنشطة';
+
+  @override
+  String get bookingReviewPaymentTaxes => 'الضرائب';
+
+  @override
+  String get bookingReviewPaymentCouponCode => 'رمز الكوبون';
+
+  @override
+  String get bookingReviewPaymentTotal => 'الإجمالي';
+
+  @override
+  String get bookingReviewCurrency => 'جنيه';
+
+  @override
+  String get bookingPay => 'ادفع';
 
   @override
   String get bookingAddNewCardTitle => 'إضافة بطاقة جديدة';

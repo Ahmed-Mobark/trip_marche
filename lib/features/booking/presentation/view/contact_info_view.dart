@@ -1,11 +1,40 @@
 import 'package:flutter/material.dart';
-import 'package:iconsax/iconsax.dart';
-import '../../../../core/theme/app_colors.dart';
-import '../../../../core/theme/app_text_styles.dart';
-import '../../../../core/extensions/localization.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:trip_marche/core/config/app_colors.dart';
+import 'package:trip_marche/core/config/dimensions/contact_info_figma_tokens.dart';
+import 'package:trip_marche/core/extensions/localization.dart';
+import 'package:trip_marche/core/injection/injection_container.dart';
+import 'package:trip_marche/core/navigation/app_navigator.dart';
+import 'package:trip_marche/core/theme/app_text_styles.dart';
+import 'package:trip_marche/core/widgets/bottom_booking_bar.dart';
+import 'package:trip_marche/features/booking/domain/entities/booking_flow_context.dart';
+import 'package:trip_marche/features/booking/domain/entities/traveler_contact.dart';
+import '../widgets/traveler_contact_card.dart';
+import 'select_activities_view.dart';
+
+class _TravelerFormControllers {
+  _TravelerFormControllers() : countryCode = '+20';
+
+  final TextEditingController nameController = TextEditingController();
+  final TextEditingController phoneController = TextEditingController();
+  String countryCode;
+
+  void dispose() {
+    nameController.dispose();
+    phoneController.dispose();
+  }
+}
 
 class ContactInfoView extends StatefulWidget {
-  const ContactInfoView({super.key});
+  const ContactInfoView({
+    required this.travelersCount,
+    required this.flowContext,
+    super.key,
+  });
+
+  final int travelersCount;
+  final BookingFlowContext flowContext;
 
   @override
   State<ContactInfoView> createState() => _ContactInfoViewState();
@@ -13,176 +42,133 @@ class ContactInfoView extends StatefulWidget {
 
 class _ContactInfoViewState extends State<ContactInfoView> {
   final _formKey = GlobalKey<FormState>();
-  final _fullNameController = TextEditingController();
-  final _phoneController = TextEditingController();
-  final _emailController = TextEditingController();
-  final _emergencyContactController = TextEditingController();
-  final _idPassportController = TextEditingController();
+  late final List<_TravelerFormControllers> _travelerForms;
+  late final int _effectiveTravelersCount;
+  bool _validateOnSubmit = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _effectiveTravelersCount = widget.travelersCount < 1 ? 1 : widget.travelersCount;
+    _travelerForms = List.generate(
+      _effectiveTravelersCount,
+      (_) => _TravelerFormControllers(),
+    );
+  }
 
   @override
   void dispose() {
-    _fullNameController.dispose();
-    _phoneController.dispose();
-    _emailController.dispose();
-    _emergencyContactController.dispose();
-    _idPassportController.dispose();
+    for (final form in _travelerForms) {
+      form.dispose();
+    }
     super.dispose();
+  }
+
+  AutovalidateMode get _autovalidateMode =>
+      _validateOnSubmit ? AutovalidateMode.onUserInteraction : AutovalidateMode.disabled;
+
+  void _onContinue() {
+    setState(() => _validateOnSubmit = true);
+    if (!(_formKey.currentState?.validate() ?? false)) {
+      return;
+    }
+
+    final contacts = List<TravelerContact>.generate(
+      _travelerForms.length,
+      (index) {
+        final form = _travelerForms[index];
+        return TravelerContact(
+          fullName: form.nameController.text.trim(),
+          phoneNumber: form.phoneController.text.trim(),
+          countryCode: form.countryCode,
+        );
+      },
+    );
+
+    sl<AppNavigator>().push(
+      screen: SelectActivitiesView(
+        travelers: contacts,
+        flowContext: widget.flowContext,
+      ),
+    );
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: AppColors.background(context),
-      appBar: AppBar(
-        backgroundColor: AppColors.background(context),
-        elevation: 0,
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back_ios_new_rounded, color: AppColors.darkText(context)),
-          onPressed: () => Navigator.pop(context),
-        ),
-        title: Text(
-          context.tr.bookingContactInfoTitle,
-          style: AppTextStyles.bodyMedium(color: AppColors.darkText(context)),
-        ),
-        centerTitle: true,
+    final tr = context.tr;
+    return AnnotatedRegion<SystemUiOverlayStyle>(
+      value: SystemUiOverlayStyle.dark.copyWith(
+        statusBarColor: ContactInfoFigmaTokens.screenBackground,
       ),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.all(20),
-        child: Form(
-          key: _formKey,
+      child: Scaffold(
+        backgroundColor: ContactInfoFigmaTokens.screenBackground,
+        resizeToAvoidBottomInset: true,
+        body: SafeArea(
+          bottom: false,
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              _buildTextField(
-                label: context.tr.bookingContactFullNameLabel,
-                hint: context.tr.bookingContactFullNameHint,
-                controller: _fullNameController,
-                icon: Iconsax.user,
-                keyboardType: TextInputType.name,
+              Padding(
+                padding: EdgeInsetsDirectional.only(
+                  top: ContactInfoFigmaTokens.titleTop,
+                  bottom: ContactInfoFigmaTokens.titleBottom,
+                ),
+                child: Text(
+                  tr.bookingContactInfoTitle,
+                  textAlign: TextAlign.center,
+                  style: AppTextStyles.heading3(
+                    color: AppColors.tripDetailsFigmaBlack,
+                  ).copyWith(
+                    fontSize: ContactInfoFigmaTokens.titleFontSize,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
               ),
-              const SizedBox(height: 20),
-              _buildTextField(
-                label: context.tr.bookingContactPhoneLabel,
-                hint: context.tr.bookingContactPhoneHint,
-                controller: _phoneController,
-                icon: Iconsax.call,
-                keyboardType: TextInputType.phone,
+              Expanded(
+                child: Form(
+                  key: _formKey,
+                  autovalidateMode: _autovalidateMode,
+                  child: ListView.separated(
+                    padding: EdgeInsetsDirectional.fromSTEB(
+                      ContactInfoFigmaTokens.screenPadding,
+                      0,
+                      ContactInfoFigmaTokens.screenPadding,
+                      16.h,
+                    ),
+                    itemCount: _travelerForms.length,
+                    separatorBuilder: (_, __) =>
+                        SizedBox(height: ContactInfoFigmaTokens.cardGap),
+                    itemBuilder: (context, index) {
+                      final form = _travelerForms[index];
+                      return TravelerContactCard(
+                        travelerTitle: tr.bookingTravelerTitle(index + 1),
+                        fullNameLabel: tr.bookingContactFullNameLabel,
+                        fullNameHint: tr.bookingContactFullNameHint,
+                        phoneLabel: tr.bookingContactPhoneLabel,
+                        phoneHint: tr.bookingContactPhoneNumberHint,
+                        nameController: form.nameController,
+                        phoneController: form.phoneController,
+                        countryCode: form.countryCode,
+                        onCountryCodeChanged: (code) {
+                          setState(() => form.countryCode = code);
+                        },
+                        requiredErrorText: tr.errorFieldRequired,
+                        autovalidateMode: _autovalidateMode,
+                      );
+                    },
+                  ),
+                ),
               ),
-              const SizedBox(height: 20),
-              _buildTextField(
-                label: context.tr.bookingContactEmailLabel,
-                hint: context.tr.bookingContactEmailHint,
-                controller: _emailController,
-                icon: Iconsax.sms,
-                keyboardType: TextInputType.emailAddress,
+              SafeArea(
+                top: false,
+                child: BottomBookingBar(
+                  backButtonCircular: true,
+                  onBack: () => Navigator.pop(context),
+                  onContinue: _onContinue,
+                  continueLabel: tr.bookingContinue,
+                ),
               ),
-              const SizedBox(height: 20),
-              _buildTextField(
-                label: context.tr.bookingContactEmergencyLabel,
-                hint: context.tr.bookingContactEmergencyHint,
-                controller: _emergencyContactController,
-                icon: Iconsax.call_calling,
-                keyboardType: TextInputType.phone,
-              ),
-              const SizedBox(height: 20),
-              _buildTextField(
-                label: context.tr.bookingContactIdPassportLabel,
-                hint: context.tr.bookingContactIdPassportHint,
-                controller: _idPassportController,
-                icon: Iconsax.card,
-                keyboardType: TextInputType.text,
-              ),
-              const SizedBox(height: 40),
-              _buildContinueButton(context),
-              const SizedBox(height: 20),
             ],
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget _buildTextField({
-    required String label,
-    required String hint,
-    required TextEditingController controller,
-    required IconData icon,
-    TextInputType keyboardType = TextInputType.text,
-  }) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(label, style: AppTextStyles.bodyMedium()),
-        const SizedBox(height: 8),
-        TextFormField(
-          controller: controller,
-          keyboardType: keyboardType,
-          style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-            fontSize: 14,
-            fontWeight: FontWeight.w500,
-            color: AppColors.darkText(context),
-          ),
-          validator: (value) {
-            if (value == null || value.isEmpty) {
-              return context.tr.errorFieldRequired;
-            }
-            return null;
-          },
-          decoration: InputDecoration(
-            hintText: hint,
-            hintStyle: Theme.of(context).textTheme.bodyMedium!.copyWith(
-              fontSize: 14,
-              color: AppColors.greyText(context),
-            ),
-            prefixIcon: Icon(icon, color: AppColors.greyText(context), size: 20),
-            filled: true,
-            fillColor: AppColors.inputBg(context),
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(12),
-              borderSide: BorderSide(color: AppColors.border(context)),
-            ),
-            enabledBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(12),
-              borderSide: BorderSide(color: AppColors.border(context)),
-            ),
-            focusedBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(12),
-              borderSide: const BorderSide(color: AppColors.primary),
-            ),
-            errorBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(12),
-              borderSide: const BorderSide(color: AppColors.error),
-            ),
-            contentPadding: const EdgeInsets.symmetric(
-              horizontal: 16,
-              vertical: 16,
-            ),
-          ),
-        ),
-      ],
-    );
-  }
-
-  Widget _buildContinueButton(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        if (_formKey.currentState!.validate()) {
-          // Navigate to next screen
-        }
-      },
-      child: Container(
-        width: double.infinity,
-        height: 56,
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            colors: [AppColors.primary, AppColors.primary],
-          ),
-          borderRadius: BorderRadius.circular(12),
-        ),
-        child: Center(
-          child: Text(
-            context.tr.bookingContinue,
-            style: AppTextStyles.button(),
           ),
         ),
       ),

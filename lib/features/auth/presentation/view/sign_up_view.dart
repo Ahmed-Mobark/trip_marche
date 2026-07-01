@@ -15,7 +15,7 @@ import '../cubit/sign_up/sign_up_cubit.dart';
 import '../cubit/sign_up/sign_up_state.dart';
 import '../widgets/auth_link_text.dart';
 import '../widgets/auth_header.dart';
-import '../widgets/auth_phone_number_field.dart';
+import 'package:trip_marche/core/widgets/app_phone_number_field.dart';
 import '../widgets/divider_with_text.dart';
 
 class SignUpView extends StatelessWidget {
@@ -165,7 +165,8 @@ class SignUpView extends StatelessWidget {
                       BlocBuilder<SignUpCubit, SignUpState>(
                         buildWhen: (p, n) => p.dialCode != n.dialCode,
                         builder: (context, state) {
-                          return AuthPhoneNumberField(
+                          return AppPhoneNumberField(
+                            variant: AppPhoneNumberFieldVariant.auth,
                             validator: (value) => context
                                 .read<SignUpCubit>()
                                 .validatePhone(value),
