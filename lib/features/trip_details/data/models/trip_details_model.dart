@@ -94,6 +94,9 @@ class TripDetailsModel {
       depositAmount: _JsonParse.asNullableDouble(json['deposit_amount']),
       payOnArrivalAmount:
           _JsonParse.asNullableDouble(json['pay_on_arrival_amount']),
+      taxPercent: _JsonParse.asNullableDouble(json['tax_percent']),
+      kidPrice: _JsonParse.asNullableDouble(json['kid_price']),
+      babyPrice: _JsonParse.asNullableDouble(json['baby_price']),
       rating: _JsonParse.asDouble(json['rating']),
       reviewsCount: _JsonParse.asInt(json['reviews_count']),
       badge: _JsonParse.asNullableString(json['badge']),
@@ -134,6 +137,9 @@ class TripDetailsModel {
       transports: _parseTransports(json['transports']),
       accommodations: _parseAccommodations(json['accommodations']),
       activityRates: _parseActivityRates(json['activity_rates']),
+      departures: _parseDepartures(json['departures']),
+      roomTypes: _parseRoomTypes(json['room_types']),
+      activities: _parseActivities(json['activities']),
       reviews: _parseReviews(json['reviews']),
       visaDetails: _normalizeMultiline(
         _JsonParse.asNullableString(json['visa_details']),
@@ -347,6 +353,61 @@ class TripDetailsModel {
             key: _JsonParse.asString(e['key']),
             label: _JsonParse.asString(e['label']),
             value: _JsonParse.asInt(e['value']),
+          ),
+        )
+        .toList();
+  }
+
+  static List<TripDeparture> _parseDepartures(dynamic raw) {
+    if (raw is! List) {
+      return [];
+    }
+    return raw
+        .whereType<Map<String, dynamic>>()
+        .map(
+          (e) => TripDeparture(
+            id: _JsonParse.asInt(e['id']),
+            startDate: _JsonParse.asString(e['start_date']),
+            endDate: _JsonParse.asString(e['end_date']),
+            price: _JsonParse.asDouble(e['price']),
+            seatsLeft: _JsonParse.asInt(e['seats_left']),
+          ),
+        )
+        .toList();
+  }
+
+  static List<TripRoomType> _parseRoomTypes(dynamic raw) {
+    if (raw is! List) {
+      return [];
+    }
+    return raw
+        .whereType<Map<String, dynamic>>()
+        .map(
+          (e) => TripRoomType(
+            id: _JsonParse.asInt(e['id']),
+            key: _JsonParse.asString(e['key']),
+            name: _JsonParse.asString(e['name']),
+            description: _JsonParse.asString(e['description']),
+            capacity: _JsonParse.asInt(e['capacity']),
+            price: _JsonParse.asDouble(e['price']),
+          ),
+        )
+        .toList();
+  }
+
+  static List<TripDetailsActivity> _parseActivities(dynamic raw) {
+    if (raw is! List) {
+      return [];
+    }
+    return raw
+        .whereType<Map<String, dynamic>>()
+        .map(
+          (e) => TripDetailsActivity(
+            id: _JsonParse.asInt(e['id']),
+            key: _JsonParse.asString(e['key']),
+            label: _JsonParse.asString(e['label']),
+            icon: _JsonParse.asNullableString(e['icon']),
+            price: _JsonParse.asDouble(e['price']),
           ),
         )
         .toList();

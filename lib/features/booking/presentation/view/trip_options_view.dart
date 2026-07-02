@@ -8,6 +8,8 @@ import 'package:trip_marche/core/injection/injection_container.dart';
 import 'package:trip_marche/core/navigation/app_navigator.dart';
 import 'package:trip_marche/core/theme/app_text_styles.dart';
 import 'package:trip_marche/features/booking/domain/entities/booking_flow_context.dart';
+import 'package:trip_marche/features/trip_details/domain/entities/trip_details_entity.dart';
+import 'package:trip_marche/features/trip_details/presentation/trip_details_ui_formatters.dart';
 import 'contact_info_view.dart';
 import 'package:trip_marche/core/config/dimensions/trip_options_figma_tokens.dart';
 import 'package:trip_marche/core/widgets/bottom_booking_bar.dart';
@@ -23,70 +25,138 @@ class _TripDateOption {
 }
 
 class TripOptionsView extends StatefulWidget {
-  const TripOptionsView({super.key});
+  const TripOptionsView({required this.trip, super.key});
+
+  final TripDetails trip;
 
   @override
   State<TripOptionsView> createState() => _TripOptionsViewState();
 }
 
 class _TripOptionsViewState extends State<TripOptionsView> {
-  static const List<_TripDateOption> _dates = [
-    _TripDateOption(range: '16 May - 24 May', price: '\$950'),
-    _TripDateOption(range: '20 May - 28 May', price: '\$980'),
-    _TripDateOption(range: '3 Jun - 11 Jun', price: '\$850'),
-    _TripDateOption(range: '8 Jun - 16 Jun', price: '\$900'),
-    _TripDateOption(range: '24 Jun - 2 Jul', price: '\$920'),
-    _TripDateOption(range: '30 Jun - 8 Jul', price: '\$930'),
-  ];
+  late final List<TripRoomType> _roomTypes;
+  late final Map<String, int> _roomPersonCounts;
 
-  int _selectedDateIndex = 2;
-  int _adults = 4;
-  int _kids = 1;
+  int _selectedDateIndex = 0;
+  int _adults = 1;
+  int _kids = 0;
   int _babies = 0;
-  int _singlePersons = 1;
-  int _doublePersons = 1;
-  int _triplePersons = 3;
 
   int get _travelersCount => _adults + _kids + _babies;
 
+  @override
+  void initState() {
+    super.initState();
+    _roomTypes = List<TripRoomType>.of(widget.trip.roomTypes)
+      ..sort((a, b) => a.capacity.compareTo(b.capacity));
+    _roomPersonCounts = {
+      for (final room in _roomTypes)
+        room.key: _initialRoomPersonCount(room),
+    };
+  }
+
+  int _initialRoomPersonCount(TripRoomType room) {
+    if (room.capacity >= 3) {
+      return room.capacity;
+    }
+    return 1;
+  }
+
+  List<_TripDateOption> _buildDateOptions(BuildContext context) {
+    return widget.trip.departures
+        .map(
+          (departure) => _TripDateOption(
+            range: TripDetailsUiFormatters.departureDateRange(
+              context,
+              departure.startDate,
+              departure.endDate,
+            ),
+            price: TripDetailsUiFormatters.formatAmount(
+              departure.price,
+              currency: widget.trip.currency,
+            ),
+          ),
+        )
+        .where((option) => option.range.isNotEmpty)
+        .toList(growable: false);
+  }
+
   void _onContinue() {
+    final dateOptions = _buildDateOptions(context);
+    if (dateOptions.isEmpty) {
+      return;
+    }
+
+    final selectedDateIndex =
+        _selectedDateIndex.clamp(0, dateOptions.length - 1);
+
+    final selectedRoom = _selectedRoom();
+    if (selectedRoom == null) {
+      return;
+    }
+
+    final selectedDate = dateOptions[selectedDateIndex];
+
     sl<AppNavigator>().push(
       screen: ContactInfoView(
         travelersCount: _travelersCount,
         flowContext: BookingFlowContext(
-          dateRange: _dates[_selectedDateIndex].range,
+          dateRange: selectedDate.range,
           travelersCount: _travelersCount,
-          roomName: _selectedRoomName(context),
-          roomPrice: _selectedRoomPrice(),
+          roomName: selectedRoom.name,
+          roomPrice: selectedRoom.price,
         ),
       ),
     );
   }
 
-  String _selectedRoomName(BuildContext context) {
-    final tr = context.tr;
-    if (_triplePersons > 0) {
-      return tr.bookingTripleRoom;
+  TripRoomType? _selectedRoom() {
+    if (_roomTypes.isEmpty) {
+      return null;
     }
-    if (_doublePersons > 0) {
-      return tr.bookingDoubleRoom;
+
+    final sortedByCapacity = List<TripRoomType>.of(_roomTypes)
+      ..sort((a, b) => b.capacity.compareTo(a.capacity));
+
+    for (final room in sortedByCapacity) {
+      if ((_roomPersonCounts[room.key] ?? 0) > 0) {
+        return room;
+      }
     }
-    return tr.bookingSingleRoom;
+
+    return _roomTypes.first;
   }
 
-  double _selectedRoomPrice() {
-    if (_triplePersons > 0) {
-      return 480;
+  String _roomPriceLabel(BuildContext context, TripRoomType room) {
+    final tr = context.tr;
+    if (room.price <= 0) {
+      return tr.bookingFree;
     }
-    if (_doublePersons > 0) {
-      return 0;
+    return '${TripDetailsUiFormatters.formatAmount(room.price, currency: widget.trip.currency)}+';
+  }
+
+  bool _canDecrementRoom(TripRoomType room, int count) {
+    if (room.key == 'double') {
+      return false;
     }
-    return 480;
+    return count > 1;
+  }
+
+  bool _canIncrementRoom(TripRoomType room, int count) {
+    if (room.key == 'triple') {
+      return false;
+    }
+    return count < room.capacity;
   }
 
   @override
   Widget build(BuildContext context) {
     final tr = context.tr;
+    final dateOptions = _buildDateOptions(context);
+    final selectedDateIndex = dateOptions.isEmpty
+        ? 0
+        : _selectedDateIndex.clamp(0, dateOptions.length - 1);
+
     return AnnotatedRegion<SystemUiOverlayStyle>(
       value: SystemUiOverlayStyle.dark.copyWith(
         statusBarColor: AppColors.white,
@@ -122,30 +192,32 @@ class _TripOptionsViewState extends State<TripOptionsView> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
-                      _SectionTitle(tr.bookingChooseDateTitle),
-                      _DateOptionsGrid(
-                        dates: _dates,
-                        selectedIndex: _selectedDateIndex,
-                        onSelected: (index) =>
-                            setState(() => _selectedDateIndex = index),
-                      ),
-                      SizedBox(height: TripOptionsFigmaTokens.seeAllTop),
-                      Center(
-                        child: GestureDetector(
-                          onTap: () {},
-                          behavior: HitTestBehavior.opaque,
-                          child: Text(
-                            tr.bookingSeeAllDates,
-                            style: AppTextStyles.bodyMedium(
-                              color: AppColors.primary,
-                            ).copyWith(
-                              fontSize: TripOptionsFigmaTokens.seeAllFontSize,
-                              fontWeight: FontWeight.w500,
+                      if (dateOptions.isNotEmpty) ...[
+                        _SectionTitle(tr.bookingChooseDateTitle),
+                        _DateOptionsGrid(
+                          dates: dateOptions,
+                          selectedIndex: selectedDateIndex,
+                          onSelected: (index) =>
+                              setState(() => _selectedDateIndex = index),
+                        ),
+                        SizedBox(height: TripOptionsFigmaTokens.seeAllTop),
+                        Center(
+                          child: GestureDetector(
+                            onTap: () {},
+                            behavior: HitTestBehavior.opaque,
+                            child: Text(
+                              tr.bookingSeeAllDates,
+                              style: AppTextStyles.bodyMedium(
+                                color: AppColors.primary,
+                              ).copyWith(
+                                fontSize: TripOptionsFigmaTokens.seeAllFontSize,
+                                fontWeight: FontWeight.w500,
+                              ),
                             ),
                           ),
                         ),
-                      ),
-                      SizedBox(height: TripOptionsFigmaTokens.sectionBottom),
+                        SizedBox(height: TripOptionsFigmaTokens.sectionBottom),
+                      ],
                       _SectionTitle(tr.bookingHowManyTraveling),
                       TravelerCounterCard(
                         icon: Iconsax.profile_2user,
@@ -173,47 +245,17 @@ class _TripOptionsViewState extends State<TripOptionsView> {
                         onDecrement: () => setState(() => _babies--),
                         onIncrement: () => setState(() => _babies++),
                       ),
-                      SizedBox(height: TripOptionsFigmaTokens.sectionBottom),
-                      _SectionTitle(tr.bookingAccommodationOptions),
-                      AccommodationCard(
-                        title: tr.bookingSingleRoom,
-                        subtitle: tr.bookingSingleRoomSubtitle,
-                        priceLabel: '\$480+',
-                        personLabel: tr.bookingPerson,
-                        personCount: _singlePersons,
-                        canDecrement: _singlePersons > 1,
-                        canIncrement: _singlePersons < 1,
-                        onDecrement: () =>
-                            setState(() => _singlePersons = _singlePersons - 1),
-                        onIncrement: () =>
-                            setState(() => _singlePersons = _singlePersons + 1),
-                      ),
-                      SizedBox(height: TripOptionsFigmaTokens.travelerCardGap),
-                      AccommodationCard(
-                        title: tr.bookingDoubleRoom,
-                        subtitle: tr.bookingDoubleRoomSubtitle,
-                        priceLabel: tr.bookingFree,
-                        personLabel: tr.bookingPerson,
-                        personCount: _doublePersons,
-                        canDecrement: false,
-                        canIncrement: _doublePersons < 2,
-                        onDecrement: () {},
-                        onIncrement: () =>
-                            setState(() => _doublePersons = _doublePersons + 1),
-                      ),
-                      SizedBox(height: TripOptionsFigmaTokens.travelerCardGap),
-                      AccommodationCard(
-                        title: tr.bookingTripleRoom,
-                        subtitle: tr.bookingTripleRoomSubtitle,
-                        priceLabel: '\$650+',
-                        personLabel: tr.bookingPerson,
-                        personCount: _triplePersons,
-                        canDecrement: _triplePersons > 1,
-                        canIncrement: false,
-                        onDecrement: () =>
-                            setState(() => _triplePersons = _triplePersons - 1),
-                        onIncrement: () {},
-                      ),
+                      if (_roomTypes.isNotEmpty) ...[
+                        SizedBox(height: TripOptionsFigmaTokens.sectionBottom),
+                        _SectionTitle(tr.bookingAccommodationOptions),
+                        for (var i = 0; i < _roomTypes.length; i++) ...[
+                          if (i > 0)
+                            SizedBox(
+                              height: TripOptionsFigmaTokens.travelerCardGap,
+                            ),
+                          _buildAccommodationCard(context, _roomTypes[i]),
+                        ],
+                      ],
                       SizedBox(height: 24.h),
                     ],
                   ),
@@ -231,6 +273,26 @@ class _TripOptionsViewState extends State<TripOptionsView> {
           ),
         ),
       ),
+    );
+  }
+
+  Widget _buildAccommodationCard(BuildContext context, TripRoomType room) {
+    final count = _roomPersonCounts[room.key] ?? 1;
+
+    return AccommodationCard(
+      title: room.name,
+      subtitle: room.description,
+      priceLabel: _roomPriceLabel(context, room),
+      personLabel: context.tr.bookingPerson,
+      personCount: count,
+      canDecrement: _canDecrementRoom(room, count),
+      canIncrement: _canIncrementRoom(room, count),
+      onDecrement: () => setState(() {
+        _roomPersonCounts[room.key] = count - 1;
+      }),
+      onIncrement: () => setState(() {
+        _roomPersonCounts[room.key] = count + 1;
+      }),
     );
   }
 }

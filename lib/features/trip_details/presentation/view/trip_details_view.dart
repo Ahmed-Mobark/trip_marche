@@ -277,7 +277,9 @@ class _TripDetailsBodyState extends State<_TripDetailsBody> {
                       secondaryBadgeText: payExtra,
                       bookNowText: context.tr.tripDetailsBookNow,
                       onBookNow: () {
-                        sl<AppNavigator>().push(screen: TripOptionsView());
+                        sl<AppNavigator>().push(
+                          screen: TripOptionsView(trip: trip),
+                        );
                       },
                       expanded: _bookingExpanded,
                     ),

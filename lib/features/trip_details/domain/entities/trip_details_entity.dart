@@ -252,6 +252,65 @@ class TripActivityRate extends Equatable {
   List<Object?> get props => [key, label, value];
 }
 
+class TripDeparture extends Equatable {
+  const TripDeparture({
+    required this.id,
+    required this.startDate,
+    required this.endDate,
+    required this.price,
+    required this.seatsLeft,
+  });
+
+  final int id;
+  final String startDate;
+  final String endDate;
+  final double price;
+  final int seatsLeft;
+
+  @override
+  List<Object?> get props => [id, startDate, endDate, price, seatsLeft];
+}
+
+class TripRoomType extends Equatable {
+  const TripRoomType({
+    required this.id,
+    required this.key,
+    required this.name,
+    required this.description,
+    required this.capacity,
+    required this.price,
+  });
+
+  final int id;
+  final String key;
+  final String name;
+  final String description;
+  final int capacity;
+  final double price;
+
+  @override
+  List<Object?> get props => [id, key, name, description, capacity, price];
+}
+
+class TripDetailsActivity extends Equatable {
+  const TripDetailsActivity({
+    required this.id,
+    required this.key,
+    required this.label,
+    this.icon,
+    required this.price,
+  });
+
+  final int id;
+  final String key;
+  final String label;
+  final String? icon;
+  final double price;
+
+  @override
+  List<Object?> get props => [id, key, label, icon, price];
+}
+
 class TripReviewer extends Equatable {
   const TripReviewer({
     required this.name,
@@ -313,6 +372,9 @@ class TripDetails extends Equatable {
     this.currency = 'EGP',
     this.depositAmount,
     this.payOnArrivalAmount,
+    this.taxPercent,
+    this.kidPrice,
+    this.babyPrice,
     required this.rating,
     required this.reviewsCount,
     this.badge,
@@ -327,6 +389,9 @@ class TripDetails extends Equatable {
     required this.transports,
     required this.accommodations,
     required this.activityRates,
+    required this.departures,
+    required this.roomTypes,
+    required this.activities,
     required this.reviews,
     this.visaDetails,
     this.tripInstructions,
@@ -357,6 +422,9 @@ class TripDetails extends Equatable {
   final String currency;
   final double? depositAmount;
   final double? payOnArrivalAmount;
+  final double? taxPercent;
+  final double? kidPrice;
+  final double? babyPrice;
   final double rating;
   final int reviewsCount;
   final String? badge;
@@ -371,6 +439,9 @@ class TripDetails extends Equatable {
   final List<TripTransportLeg> transports;
   final List<TripAccommodation> accommodations;
   final List<TripActivityRate> activityRates;
+  final List<TripDeparture> departures;
+  final List<TripRoomType> roomTypes;
+  final List<TripDetailsActivity> activities;
   final List<TripReview> reviews;
   final String? visaDetails;
   final String? tripInstructions;
@@ -430,6 +501,9 @@ class TripDetails extends Equatable {
         currency,
         depositAmount,
         payOnArrivalAmount,
+        taxPercent,
+        kidPrice,
+        babyPrice,
         rating,
         reviewsCount,
         badge,
@@ -444,6 +518,9 @@ class TripDetails extends Equatable {
         transports,
         accommodations,
         activityRates,
+        departures,
+        roomTypes,
+        activities,
         reviews,
         visaDetails,
         tripInstructions,

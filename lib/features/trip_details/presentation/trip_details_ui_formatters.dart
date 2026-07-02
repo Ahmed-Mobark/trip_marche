@@ -41,4 +41,20 @@ abstract final class TripDetailsUiFormatters {
     final dayMonth = DateFormat('d MMM', loc);
     return '${dayMonth.format(startLocal)} → ${dayMonth.format(endLocal)}';
   }
+
+  /// Booking date chip, e.g. "3 Jun - 11 Jun" (locale-aware).
+  static String departureDateRange(
+    BuildContext context,
+    String start,
+    String end,
+  ) {
+    final startDt = DateTime.tryParse(start);
+    final endDt = DateTime.tryParse(end);
+    if (startDt == null || endDt == null) {
+      return '';
+    }
+    final loc = Localizations.localeOf(context).toString();
+    final dayMonth = DateFormat('d MMM', loc);
+    return '${dayMonth.format(startDt.toLocal())} - ${dayMonth.format(endDt.toLocal())}';
+  }
 }
