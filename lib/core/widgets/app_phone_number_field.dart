@@ -1,5 +1,6 @@
 import 'package:country_code_picker/country_code_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:trip_marche/core/config/app_colors.dart';
 import 'package:trip_marche/core/config/dimensions/contact_info_figma_tokens.dart';
@@ -36,6 +37,7 @@ class AppPhoneNumberField extends StatelessWidget {
         controller: controller,
         hintText: hint,
         keyboardType: TextInputType.phone,
+        onlyDigit: true,
         validator: validator,
         cardColor: AppColors.inputBg(context),
         hintStyle: AppTextStyles.body(
@@ -65,6 +67,7 @@ class AppPhoneNumberField extends StatelessWidget {
     return TextFormField(
       controller: controller,
       keyboardType: TextInputType.phone,
+      inputFormatters: [FilteringTextInputFormatter.digitsOnly],
       validator: validator,
       autovalidateMode: autovalidateMode,
       style: AppTextStyles.bodyMedium(

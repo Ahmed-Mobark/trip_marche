@@ -128,7 +128,7 @@ class _ReviewViewState extends State<ReviewView> {
                       taxesLabel: tr.bookingReviewPaymentTaxes,
                       couponLabel: tr.bookingReviewPaymentCouponCode,
                       totalLabel: tr.bookingReviewPaymentTotal,
-                      currencySuffix: tr.bookingReviewCurrency,
+                      currencySuffix: widget.data.currency,
                       showCoupon: _couponApplied,
                     ),
                   ],

@@ -765,6 +765,9 @@ class AppLocalizationsAr extends AppLocalizations {
   String get bookingSeeAllDates => 'عرض كل التواريخ';
 
   @override
+  String get bookingShowLessDates => 'عرض أقل';
+
+  @override
   String get bookingHowManyTraveling => 'كم عدد المسافرين؟';
 
   @override
@@ -849,23 +852,31 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String bookingReviewParticipantsSummary(int count, String price) {
-    return '$count مشارك x $price جنيه';
+    return '$count مشارك x $price';
   }
 
   @override
-  String get bookingReviewRoutePrefix => 'من القاهرة إلى ';
+  String bookingReviewRoutePrefix(String from) {
+    return 'من $from إلى ';
+  }
 
   @override
   String get bookingReviewRouteDestination => 'دهب';
 
   @override
-  String get bookingReviewMeetingTime => 'الاجتماع الساعة 10:00 صباحاً';
+  String bookingReviewMeetingTime(String time) {
+    return 'الاجتماع الساعة $time';
+  }
 
   @override
-  String get bookingReviewStartingTime => 'الانطلاق الساعة 10:30 مساءً';
+  String bookingReviewStartingTime(String time) {
+    return 'الانطلاق الساعة $time';
+  }
 
   @override
-  String get bookingReviewGroupSize => 'حجم المجموعة 25-30';
+  String bookingReviewGroupSize(String range) {
+    return 'حجم المجموعة $range';
+  }
 
   @override
   String get bookingReviewLocation => '18 طريق التسعين، التجمع الخامس، مصر';

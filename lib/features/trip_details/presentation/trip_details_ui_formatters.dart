@@ -13,6 +13,26 @@ abstract final class TripDetailsUiFormatters {
     return DateFormat.yMMMd(loc).format(utc.toLocal());
   }
 
+  /// Formats an API clock string ("HH:mm" / "HH:mm:ss") into a locale-aware
+  /// time, e.g. "05:00" -> "5:00 AM". Falls back to the raw value on failure.
+  static String clockTime(BuildContext context, String raw) {
+    final trimmed = raw.trim();
+    if (trimmed.isEmpty) {
+      return '';
+    }
+    final parts = trimmed.split(':');
+    if (parts.length < 2) {
+      return trimmed;
+    }
+    final hour = int.tryParse(parts[0]);
+    final minute = int.tryParse(parts[1]);
+    if (hour == null || minute == null) {
+      return trimmed;
+    }
+    final loc = Localizations.localeOf(context).toString();
+    return DateFormat.jm(loc).format(DateTime(2000, 1, 1, hour, minute));
+  }
+
   static String formatAmount(num value, {String currency = 'EGP'}) {
     return PriceFormatter.format(value, currency: currency);
   }

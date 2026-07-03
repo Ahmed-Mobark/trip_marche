@@ -271,6 +271,7 @@
   "bookingTripOptionsTitle": "Trip Options",
   "bookingChooseDateTitle": "Choose the date that suits you",
   "bookingSeeAllDates": "See All Dates",
+  "bookingShowLessDates": "Show Less",
   "bookingHowManyTraveling": "How many are traveling?",
   "bookingTravelerAdult": "Adult",
   "bookingTravelerKid": "Kid",
@@ -313,7 +314,7 @@
     }
   },
   "bookingReviewDuration": "7 Days",
-  "bookingReviewParticipantsSummary": "{count} Participant x {price} LE",
+  "bookingReviewParticipantsSummary": "{count} Participant x {price}",
   "@bookingReviewParticipantsSummary": {
     "placeholders": {
       "count": {
@@ -324,11 +325,39 @@
       }
     }
   },
-  "bookingReviewRoutePrefix": "From Cairo to ",
+  "bookingReviewRoutePrefix": "From {from} to ",
+  "@bookingReviewRoutePrefix": {
+    "placeholders": {
+      "from": {
+        "type": "String"
+      }
+    }
+  },
   "bookingReviewRouteDestination": "Dahab",
-  "bookingReviewMeetingTime": "Meeting at 10:00 AM",
-  "bookingReviewStartingTime": "Starting at 10:30 PM",
-  "bookingReviewGroupSize": "Group Size 25-30",
+  "bookingReviewMeetingTime": "Meeting at {time}",
+  "@bookingReviewMeetingTime": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "bookingReviewStartingTime": "Starting at {time}",
+  "@bookingReviewStartingTime": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "bookingReviewGroupSize": "Group Size {range}",
+  "@bookingReviewGroupSize": {
+    "placeholders": {
+      "range": {
+        "type": "String"
+      }
+    }
+  },
   "bookingReviewLocation": "18 El Tesen Road, New Cairo, Egypt",
   "bookingReviewIncludedFreeCancellation": "Free Cancelation",
   "bookingReviewIncludedHotelStay": "Hotel Stay",

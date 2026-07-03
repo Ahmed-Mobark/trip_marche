@@ -266,6 +266,7 @@
   "bookingTripOptionsTitle": "خيارات الرحلة",
   "bookingChooseDateTitle": "اختر التاريخ المناسب لك",
   "bookingSeeAllDates": "عرض كل التواريخ",
+  "bookingShowLessDates": "عرض أقل",
   "bookingHowManyTraveling": "كم عدد المسافرين؟",
   "bookingTravelerAdult": "بالغ",
   "bookingTravelerKid": "طفل",
@@ -308,7 +309,7 @@
     }
   },
   "bookingReviewDuration": "7 أيام",
-  "bookingReviewParticipantsSummary": "{count} مشارك x {price} جنيه",
+  "bookingReviewParticipantsSummary": "{count} مشارك x {price}",
   "@bookingReviewParticipantsSummary": {
     "placeholders": {
       "count": {
@@ -319,11 +320,39 @@
       }
     }
   },
-  "bookingReviewRoutePrefix": "من القاهرة إلى ",
+  "bookingReviewRoutePrefix": "من {from} إلى ",
+  "@bookingReviewRoutePrefix": {
+    "placeholders": {
+      "from": {
+        "type": "String"
+      }
+    }
+  },
   "bookingReviewRouteDestination": "دهب",
-  "bookingReviewMeetingTime": "الاجتماع الساعة 10:00 صباحاً",
-  "bookingReviewStartingTime": "الانطلاق الساعة 10:30 مساءً",
-  "bookingReviewGroupSize": "حجم المجموعة 25-30",
+  "bookingReviewMeetingTime": "الاجتماع الساعة {time}",
+  "@bookingReviewMeetingTime": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "bookingReviewStartingTime": "الانطلاق الساعة {time}",
+  "@bookingReviewStartingTime": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "bookingReviewGroupSize": "حجم المجموعة {range}",
+  "@bookingReviewGroupSize": {
+    "placeholders": {
+      "range": {
+        "type": "String"
+      }
+    }
+  },
   "bookingReviewLocation": "18 طريق التسعين، التجمع الخامس، مصر",
   "bookingReviewIncludedFreeCancellation": "إلغاء مجاني",
   "bookingReviewIncludedHotelStay": "إقامة فندقية",

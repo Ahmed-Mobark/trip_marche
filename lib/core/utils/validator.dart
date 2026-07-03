@@ -7,6 +7,22 @@ class Validator {
   static BuildContext context =
       sl<AppNavigator>().navigatorKey.currentState!.context;
 
+  /// Minimum digits accepted for a phone number (national number, excluding
+  /// the country dial code).
+  static const int minPhoneDigits = 7;
+
+  static String? phone(String? value) {
+    final digits = value?.trim() ?? '';
+    if (digits.isEmpty) {
+      return context.tr.errorFieldRequired;
+    }
+    if (!RegExp(r'^[0-9]+$').hasMatch(digits) ||
+        digits.length < minPhoneDigits) {
+      return context.tr.errorInvalidPhoneNumber;
+    }
+    return null;
+  }
+
   static String? defaultValidator(String? value) {
     if (value == null || value.trim().isEmpty) {
       return context.tr.errorFieldRequired;

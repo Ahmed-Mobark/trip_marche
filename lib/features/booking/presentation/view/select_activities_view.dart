@@ -120,11 +120,8 @@ class _SelectActivitiesViewState extends State<SelectActivitiesView> {
 
     final reviewData = BookingReviewDataBuilder.fromBookingFlow(
       context: context,
+      flowContext: widget.flowContext,
       activities: result,
-      dateRange: widget.flowContext.dateRange,
-      travelersCount: widget.flowContext.travelersCount,
-      roomName: widget.flowContext.roomName,
-      roomPrice: widget.flowContext.roomPrice,
     );
 
     sl<AppNavigator>().push(
@@ -182,6 +179,7 @@ class _SelectActivitiesViewState extends State<SelectActivitiesView> {
                       travelerIndexLabel:
                           tr.bookingTravelerParenthetical(index + 1),
                       activities: activities,
+                      currency: widget.flowContext.currency,
                       selectedActivityIds: entry.selectedActivityIds,
                       onActivityToggled: (activityId) =>
                           _toggleActivity(index, activityId),

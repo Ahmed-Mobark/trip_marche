@@ -1558,6 +1558,12 @@ abstract class AppLocalizations {
   /// **'See All Dates'**
   String get bookingSeeAllDates;
 
+  /// No description provided for @bookingShowLessDates.
+  ///
+  /// In en, this message translates to:
+  /// **'Show Less'**
+  String get bookingShowLessDates;
+
   /// No description provided for @bookingHowManyTraveling.
   ///
   /// In en, this message translates to:
@@ -1717,14 +1723,14 @@ abstract class AppLocalizations {
   /// No description provided for @bookingReviewParticipantsSummary.
   ///
   /// In en, this message translates to:
-  /// **'{count} Participant x {price} LE'**
+  /// **'{count} Participant x {price}'**
   String bookingReviewParticipantsSummary(int count, String price);
 
   /// No description provided for @bookingReviewRoutePrefix.
   ///
   /// In en, this message translates to:
-  /// **'From Cairo to '**
-  String get bookingReviewRoutePrefix;
+  /// **'From {from} to '**
+  String bookingReviewRoutePrefix(String from);
 
   /// No description provided for @bookingReviewRouteDestination.
   ///
@@ -1735,20 +1741,20 @@ abstract class AppLocalizations {
   /// No description provided for @bookingReviewMeetingTime.
   ///
   /// In en, this message translates to:
-  /// **'Meeting at 10:00 AM'**
-  String get bookingReviewMeetingTime;
+  /// **'Meeting at {time}'**
+  String bookingReviewMeetingTime(String time);
 
   /// No description provided for @bookingReviewStartingTime.
   ///
   /// In en, this message translates to:
-  /// **'Starting at 10:30 PM'**
-  String get bookingReviewStartingTime;
+  /// **'Starting at {time}'**
+  String bookingReviewStartingTime(String time);
 
   /// No description provided for @bookingReviewGroupSize.
   ///
   /// In en, this message translates to:
-  /// **'Group Size 25-30'**
-  String get bookingReviewGroupSize;
+  /// **'Group Size {range}'**
+  String bookingReviewGroupSize(String range);
 
   /// No description provided for @bookingReviewLocation.
   ///

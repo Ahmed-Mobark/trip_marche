@@ -774,6 +774,9 @@ class AppLocalizationsEs extends AppLocalizations {
   String get bookingSeeAllDates => 'See All Dates';
 
   @override
+  String get bookingShowLessDates => 'Show Less';
+
+  @override
   String get bookingHowManyTraveling => 'How many are traveling?';
 
   @override
@@ -858,23 +861,31 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String bookingReviewParticipantsSummary(int count, String price) {
-    return '$count Participant x $price LE';
+    return '$count Participant x $price';
   }
 
   @override
-  String get bookingReviewRoutePrefix => 'From Cairo to ';
+  String bookingReviewRoutePrefix(String from) {
+    return 'From $from to ';
+  }
 
   @override
   String get bookingReviewRouteDestination => 'Dahab';
 
   @override
-  String get bookingReviewMeetingTime => 'Meeting at 10:00 AM';
+  String bookingReviewMeetingTime(String time) {
+    return 'Meeting at $time';
+  }
 
   @override
-  String get bookingReviewStartingTime => 'Starting at 10:30 PM';
+  String bookingReviewStartingTime(String time) {
+    return 'Starting at $time';
+  }
 
   @override
-  String get bookingReviewGroupSize => 'Group Size 25-30';
+  String bookingReviewGroupSize(String range) {
+    return 'Group Size $range';
+  }
 
   @override
   String get bookingReviewLocation => '18 El Tesen Road, New Cairo, Egypt';

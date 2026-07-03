@@ -1,21 +1,20 @@
 import 'package:flutter/widgets.dart';
 import 'package:trip_marche/core/extensions/localization.dart';
 import 'package:trip_marche/features/booking/domain/entities/booking_activities.dart';
+import 'package:trip_marche/features/booking/domain/entities/booking_flow_context.dart';
 import 'package:trip_marche/features/booking/domain/entities/booking_review_data.dart';
+import 'package:trip_marche/features/trip_details/presentation/trip_details_ui_formatters.dart';
 
 abstract final class BookingReviewDataBuilder {
-  static const double _travelerUnitPrice = 1000;
-  static const double _taxesAmount = 70;
-
   static BookingReviewData fromBookingFlow({
     required BuildContext context,
+    required BookingFlowContext flowContext,
     required List<BookingActivities> activities,
-    required String dateRange,
-    required int travelersCount,
-    required String roomName,
-    required double roomPrice,
   }) {
     final tr = context.tr;
+    final trip = flowContext.trip;
+    final currency = flowContext.currency;
+
     final travelers = activities
         .map((entry) => entry.traveler)
         .toList(growable: false);
@@ -30,45 +29,78 @@ abstract final class BookingReviewDataBuilder {
           ),
     );
 
-    final effectiveTravelers =
-        travelersCount > 0 ? travelersCount : travelers.length;
+    final travelersCount = flowContext.travelersCount > 0
+        ? flowContext.travelersCount
+        : travelers.length;
 
-    final formattedDateRange = dateRange.replaceAll(' - ', ' to ');
+    final unitPrice = trip.discountPrice ?? trip.price;
+    final travelersTotal = travelersCount * unitPrice;
+    final roomTotal = flowContext.roomPrice;
+
+    final taxableSubtotal = travelersTotal + roomTotal + activitiesTotal;
+    final taxes = trip.taxPercent != null
+        ? taxableSubtotal * (trip.taxPercent! / 100)
+        : 0.0;
+
+    final destinationName = trip.destination?.name.isNotEmpty == true
+        ? trip.destination!.name
+        : trip.country;
+
+    final priceLabel = TripDetailsUiFormatters.formatAmount(
+      unitPrice,
+      currency: currency,
+    );
+
+    final durationLabel = '${trip.durationDays} ${tr.tripDetailsDurationUnit}';
 
     return BookingReviewData(
       trip: BookingReviewTrip(
-        name: tr.bookingReviewTripName,
-        description: tr.bookingReviewTripDescription,
-        dateRange: tr.bookingReviewFromDate(formattedDateRange),
-        duration: tr.bookingReviewDuration,
-        participantsSummary: tr.bookingReviewParticipantsSummary(
-          effectiveTravelers,
-          _travelerUnitPrice.toStringAsFixed(0),
+        name: trip.title,
+        description: trip.description.isNotEmpty
+            ? trip.description
+            : trip.overview,
+        dateRange: tr.bookingReviewFromDate(
+          flowContext.dateRange.replaceAll(' - ', ' to '),
         ),
-        routeLabel: tr.bookingReviewRoutePrefix,
-        routeHighlight: tr.bookingReviewRouteDestination,
-        meetingTime: tr.bookingReviewMeetingTime,
-        startingTime: tr.bookingReviewStartingTime,
-        groupSize: tr.bookingReviewGroupSize,
-        location: tr.bookingReviewLocation,
-        includedFeatures: [
-          tr.bookingReviewIncludedFreeCancellation,
-          tr.bookingReviewIncludedBreakfast,
-          tr.bookingReviewIncludedHotelStay,
-          tr.bookingReviewIncludedAirportTransfer,
-        ],
+        duration: durationLabel,
+        participantsSummary: tr.bookingReviewParticipantsSummary(
+          travelersCount,
+          priceLabel,
+        ),
+        routeLabel: tr.bookingReviewRoutePrefix(trip.fromLocation),
+        routeHighlight: destinationName,
+        meetingTime: tr.bookingReviewMeetingTime(
+          TripDetailsUiFormatters.clockTime(context, trip.meeting.time),
+        ),
+        startingTime: tr.bookingReviewStartingTime(
+          TripDetailsUiFormatters.clockTime(context, trip.returnPoint.time),
+        ),
+        groupSize: tr.bookingReviewGroupSize(
+          '${trip.groupSize.min}-${trip.groupSize.max}',
+        ),
+        location: trip.meeting.location.isNotEmpty
+            ? trip.meeting.location
+            : trip.fromLocation,
+        includedFeatures: trip.inclusions
+            .map((inclusion) => inclusion.label)
+            .where((label) => label.isNotEmpty)
+            .toList(growable: false),
       ),
       travelers: travelers,
-      room: BookingRoomSelection(name: roomName, price: roomPrice),
+      room: BookingRoomSelection(
+        name: flowContext.roomName,
+        price: roomTotal,
+      ),
       activities: activities,
       priceBreakdown: BookingPriceBreakdown(
-        travelersCount: effectiveTravelers,
-        travelersTotal: effectiveTravelers * _travelerUnitPrice,
-        roomLabel: roomName,
-        roomTotal: roomPrice,
+        travelersCount: travelersCount,
+        travelersTotal: travelersTotal,
+        roomLabel: flowContext.roomName,
+        roomTotal: roomTotal,
         activitiesTotal: activitiesTotal,
-        taxes: _taxesAmount,
+        taxes: taxes,
       ),
+      currency: currency,
     );
   }
 }

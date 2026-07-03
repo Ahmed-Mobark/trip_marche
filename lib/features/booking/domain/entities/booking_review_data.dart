@@ -83,6 +83,7 @@ class BookingReviewData {
     required this.room,
     required this.activities,
     required this.priceBreakdown,
+    required this.currency,
   });
 
   final BookingReviewTrip trip;
@@ -90,4 +91,5 @@ class BookingReviewData {
   final BookingRoomSelection room;
   final List<BookingActivities> activities;
   final BookingPriceBreakdown priceBreakdown;
+  final String currency;
 }

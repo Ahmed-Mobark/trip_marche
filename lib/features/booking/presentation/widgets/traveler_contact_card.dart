@@ -4,6 +4,7 @@ import 'package:iconsax/iconsax.dart';
 import 'package:trip_marche/core/config/app_colors.dart';
 import 'package:trip_marche/core/config/dimensions/contact_info_figma_tokens.dart';
 import 'package:trip_marche/core/theme/app_text_styles.dart';
+import 'package:trip_marche/core/utils/validator.dart';
 import 'package:trip_marche/core/widgets/app_phone_number_field.dart';
 
 class TravelerContactCard extends StatelessWidget {
@@ -115,12 +116,7 @@ class TravelerContactCard extends StatelessWidget {
             selectedDialCode: countryCode,
             onDialCodeChanged: onCountryCodeChanged,
             autovalidateMode: autovalidateMode,
-            validator: (value) {
-              if (value == null || value.trim().isEmpty) {
-                return requiredErrorText;
-              }
-              return null;
-            },
+            validator: Validator.phone,
           ),
         ],
       ),

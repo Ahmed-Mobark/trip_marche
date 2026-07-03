@@ -42,26 +42,39 @@ class DateOptionCard extends StatelessWidget {
         ),
         child: Row(
           children: [
-            Expanded(
-              child: Text(
-                dateRange,
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                style: AppTextStyles.bodyMedium(
-                  color: AppColors.tripDetailsFigmaBlack,
-                ).copyWith(
-                  fontSize: 14.sp,
-                  fontWeight: FontWeight.w500,
+            Flexible(
+              child: FittedBox(
+                fit: BoxFit.scaleDown,
+                alignment: AlignmentDirectional.centerStart,
+                child: Text(
+                  dateRange,
+                  maxLines: 1,
+                  softWrap: false,
+                  style: AppTextStyles.bodyMedium(
+                    color: AppColors.tripDetailsFigmaBlack,
+                  ).copyWith(
+                    fontSize: 14.sp,
+                    fontWeight: FontWeight.w500,
+                  ),
                 ),
               ),
             ),
-            Text(
-              price,
-              style: AppTextStyles.bodyMedium(
-                color: AppColors.primary,
-              ).copyWith(
-                fontSize: 14.sp,
-                fontWeight: FontWeight.w600,
+            SizedBox(width: 8.w),
+            Flexible(
+              child: FittedBox(
+                fit: BoxFit.scaleDown,
+                alignment: AlignmentDirectional.centerEnd,
+                child: Text(
+                  price,
+                  maxLines: 1,
+                  softWrap: false,
+                  style: AppTextStyles.bodyMedium(
+                    color: AppColors.primary,
+                  ).copyWith(
+                    fontSize: 14.sp,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
               ),
             ),
           ],

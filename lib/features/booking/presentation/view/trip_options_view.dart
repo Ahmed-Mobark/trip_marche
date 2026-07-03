@@ -34,10 +34,13 @@ class TripOptionsView extends StatefulWidget {
 }
 
 class _TripOptionsViewState extends State<TripOptionsView> {
+  static const int _initialVisibleDates = 4;
+
   late final List<TripRoomType> _roomTypes;
   late final Map<String, int> _roomPersonCounts;
 
   int _selectedDateIndex = 0;
+  bool _datesExpanded = false;
   int _adults = 1;
   int _kids = 0;
   int _babies = 0;
@@ -101,10 +104,15 @@ class _TripOptionsViewState extends State<TripOptionsView> {
       screen: ContactInfoView(
         travelersCount: _travelersCount,
         flowContext: BookingFlowContext(
+          trip: widget.trip,
           dateRange: selectedDate.range,
+          adultCount: _adults,
+          kidCount: _kids,
+          babyCount: _babies,
           travelersCount: _travelersCount,
           roomName: selectedRoom.name,
           roomPrice: selectedRoom.price,
+          currency: widget.trip.currency,
         ),
       ),
     );
@@ -156,6 +164,10 @@ class _TripOptionsViewState extends State<TripOptionsView> {
     final selectedDateIndex = dateOptions.isEmpty
         ? 0
         : _selectedDateIndex.clamp(0, dateOptions.length - 1);
+    final showDatesToggle = dateOptions.length > _initialVisibleDates;
+    final visibleDates = showDatesToggle && !_datesExpanded
+        ? dateOptions.sublist(0, _initialVisibleDates)
+        : dateOptions;
 
     return AnnotatedRegion<SystemUiOverlayStyle>(
       value: SystemUiOverlayStyle.dark.copyWith(
@@ -195,27 +207,34 @@ class _TripOptionsViewState extends State<TripOptionsView> {
                       if (dateOptions.isNotEmpty) ...[
                         _SectionTitle(tr.bookingChooseDateTitle),
                         _DateOptionsGrid(
-                          dates: dateOptions,
+                          dates: visibleDates,
                           selectedIndex: selectedDateIndex,
                           onSelected: (index) =>
                               setState(() => _selectedDateIndex = index),
                         ),
-                        SizedBox(height: TripOptionsFigmaTokens.seeAllTop),
-                        Center(
-                          child: GestureDetector(
-                            onTap: () {},
-                            behavior: HitTestBehavior.opaque,
-                            child: Text(
-                              tr.bookingSeeAllDates,
-                              style: AppTextStyles.bodyMedium(
-                                color: AppColors.primary,
-                              ).copyWith(
-                                fontSize: TripOptionsFigmaTokens.seeAllFontSize,
-                                fontWeight: FontWeight.w500,
+                        if (showDatesToggle) ...[
+                          SizedBox(height: TripOptionsFigmaTokens.seeAllTop),
+                          Center(
+                            child: GestureDetector(
+                              onTap: () => setState(
+                                () => _datesExpanded = !_datesExpanded,
+                              ),
+                              behavior: HitTestBehavior.opaque,
+                              child: Text(
+                                _datesExpanded
+                                    ? tr.bookingShowLessDates
+                                    : tr.bookingSeeAllDates,
+                                style: AppTextStyles.bodyMedium(
+                                  color: AppColors.primary,
+                                ).copyWith(
+                                  fontSize:
+                                      TripOptionsFigmaTokens.seeAllFontSize,
+                                  fontWeight: FontWeight.w500,
+                                ),
                               ),
                             ),
                           ),
-                        ),
+                        ],
                         SizedBox(height: TripOptionsFigmaTokens.sectionBottom),
                       ],
                       _SectionTitle(tr.bookingHowManyTraveling),

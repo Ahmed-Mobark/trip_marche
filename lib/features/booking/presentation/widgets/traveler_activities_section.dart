@@ -10,6 +10,7 @@ class TravelerActivitiesSection extends StatelessWidget {
     required this.travelerName,
     required this.travelerIndexLabel,
     required this.activities,
+    required this.currency,
     required this.selectedActivityIds,
     required this.onActivityToggled,
     this.showSameAsTravelerOne = false,
@@ -22,6 +23,7 @@ class TravelerActivitiesSection extends StatelessWidget {
   final String travelerName;
   final String travelerIndexLabel;
   final List<Activity> activities;
+  final String currency;
   final Set<String> selectedActivityIds;
   final ValueChanged<String> onActivityToggled;
   final bool showSameAsTravelerOne;
@@ -48,6 +50,7 @@ class TravelerActivitiesSection extends StatelessWidget {
           if (i > 0) SizedBox(height: SelectActivitiesFigmaTokens.activityGap),
           ActivityCard(
             activity: activities[i],
+            currency: currency,
             isSelected: selectedActivityIds.contains(activities[i].id),
             enabled: activitiesEnabled,
             onTap: () => onActivityToggled(activities[i].id),

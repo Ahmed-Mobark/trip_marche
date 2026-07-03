@@ -10,21 +10,9 @@ import 'package:trip_marche/core/theme/app_text_styles.dart';
 import 'package:trip_marche/core/widgets/bottom_booking_bar.dart';
 import 'package:trip_marche/features/booking/domain/entities/booking_flow_context.dart';
 import 'package:trip_marche/features/booking/domain/entities/traveler_contact.dart';
+import 'package:trip_marche/features/booking/presentation/models/traveler_data.dart';
 import '../widgets/traveler_contact_card.dart';
 import 'select_activities_view.dart';
-
-class _TravelerFormControllers {
-  _TravelerFormControllers() : countryCode = '+20';
-
-  final TextEditingController nameController = TextEditingController();
-  final TextEditingController phoneController = TextEditingController();
-  String countryCode;
-
-  void dispose() {
-    nameController.dispose();
-    phoneController.dispose();
-  }
-}
 
 class ContactInfoView extends StatefulWidget {
   const ContactInfoView({
@@ -42,24 +30,24 @@ class ContactInfoView extends StatefulWidget {
 
 class _ContactInfoViewState extends State<ContactInfoView> {
   final _formKey = GlobalKey<FormState>();
-  late final List<_TravelerFormControllers> _travelerForms;
-  late final int _effectiveTravelersCount;
+  late final List<TravelerData> _travelers;
   bool _validateOnSubmit = false;
 
   @override
   void initState() {
     super.initState();
-    _effectiveTravelersCount = widget.travelersCount < 1 ? 1 : widget.travelersCount;
-    _travelerForms = List.generate(
-      _effectiveTravelersCount,
-      (_) => _TravelerFormControllers(),
+    final totalTravelers =
+        widget.travelersCount < 1 ? 1 : widget.travelersCount;
+    _travelers = List.generate(
+      totalTravelers,
+      (_) => TravelerData(),
     );
   }
 
   @override
   void dispose() {
-    for (final form in _travelerForms) {
-      form.dispose();
+    for (final traveler in _travelers) {
+      traveler.dispose();
     }
     super.dispose();
   }
@@ -74,13 +62,13 @@ class _ContactInfoViewState extends State<ContactInfoView> {
     }
 
     final contacts = List<TravelerContact>.generate(
-      _travelerForms.length,
+      _travelers.length,
       (index) {
-        final form = _travelerForms[index];
+        final traveler = _travelers[index];
         return TravelerContact(
-          fullName: form.nameController.text.trim(),
-          phoneNumber: form.phoneController.text.trim(),
-          countryCode: form.countryCode,
+          fullName: traveler.fullNameController.text.trim(),
+          phoneNumber: traveler.phoneController.text.trim(),
+          countryCode: traveler.selectedCountry,
         );
       },
     );
@@ -135,22 +123,22 @@ class _ContactInfoViewState extends State<ContactInfoView> {
                       ContactInfoFigmaTokens.screenPadding,
                       16.h,
                     ),
-                    itemCount: _travelerForms.length,
+                    itemCount: _travelers.length,
                     separatorBuilder: (_, __) =>
                         SizedBox(height: ContactInfoFigmaTokens.cardGap),
                     itemBuilder: (context, index) {
-                      final form = _travelerForms[index];
+                      final traveler = _travelers[index];
                       return TravelerContactCard(
                         travelerTitle: tr.bookingTravelerTitle(index + 1),
                         fullNameLabel: tr.bookingContactFullNameLabel,
                         fullNameHint: tr.bookingContactFullNameHint,
                         phoneLabel: tr.bookingContactPhoneLabel,
                         phoneHint: tr.bookingContactPhoneNumberHint,
-                        nameController: form.nameController,
-                        phoneController: form.phoneController,
-                        countryCode: form.countryCode,
+                        nameController: traveler.fullNameController,
+                        phoneController: traveler.phoneController,
+                        countryCode: traveler.selectedCountry,
                         onCountryCodeChanged: (code) {
-                          setState(() => form.countryCode = code);
+                          setState(() => traveler.selectedCountry = code);
                         },
                         requiredErrorText: tr.errorFieldRequired,
                         autovalidateMode: _autovalidateMode,
