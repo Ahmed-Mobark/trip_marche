@@ -54,6 +54,7 @@ abstract final class BookingReviewDataBuilder {
     final durationLabel = '${trip.durationDays} ${tr.tripDetailsDurationUnit}';
 
     return BookingReviewData(
+      tripId: trip.id,
       trip: BookingReviewTrip(
         name: trip.title,
         description: trip.description.isNotEmpty

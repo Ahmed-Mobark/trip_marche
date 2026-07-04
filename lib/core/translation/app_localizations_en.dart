@@ -908,6 +908,29 @@ class AppLocalizationsEn extends AppLocalizations {
   String get bookingReviewCouponApply => 'Apply';
 
   @override
+  String get bookingReviewCouponApplied => 'Applied';
+
+  @override
+  String bookingReviewCouponFixedLabel(String code) {
+    return 'Coupon ($code)';
+  }
+
+  @override
+  String bookingReviewCouponPercentLabel(String code, String percent) {
+    return 'Coupon ($code - $percent%)';
+  }
+
+  @override
+  String get bookingReviewPaymentSubtotal => 'Subtotal';
+
+  @override
+  String get bookingReviewPaymentFinalTotal => 'Final Total';
+
+  @override
+  String get bookingReviewNetworkError =>
+      'Something went wrong. Please check your connection and try again.';
+
+  @override
   String get bookingReviewCouponSuccess => 'Coupon Applied Successfully!';
 
   @override

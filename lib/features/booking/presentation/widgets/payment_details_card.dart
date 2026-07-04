@@ -14,10 +14,12 @@ class PaymentDetailsCard extends StatelessWidget {
     required this.travelersLabel,
     required this.activitiesLabel,
     required this.taxesLabel,
-    required this.couponLabel,
     required this.totalLabel,
     required this.currencySuffix,
-    this.showCoupon = false,
+    this.subtotalLabel,
+    this.finalTotalLabel,
+    this.couponRowLabel,
+    this.showCouponBreakdown = false,
   });
 
   final String title;
@@ -25,17 +27,19 @@ class PaymentDetailsCard extends StatelessWidget {
   final String travelersLabel;
   final String activitiesLabel;
   final String taxesLabel;
-  final String couponLabel;
   final String totalLabel;
   final String currencySuffix;
-  final bool showCoupon;
+  final String? subtotalLabel;
+  final String? finalTotalLabel;
+  final String? couponRowLabel;
+  final bool showCouponBreakdown;
 
-  String _format(double value) {
+  String _format(double value, {bool forceNegative = false}) {
     final abs = value.abs();
     final formatted = abs == abs.roundToDouble()
         ? abs.toStringAsFixed(0)
         : abs.toStringAsFixed(2);
-    if (value < 0) {
+    if (forceNegative || value < 0) {
       return '-$formatted $currencySuffix';
     }
     return '$formatted $currencySuffix';
@@ -72,21 +76,33 @@ class PaymentDetailsCard extends StatelessWidget {
           label: taxesLabel,
           value: _format(breakdown.taxes),
         ),
-        if (showCoupon && breakdown.couponDiscount > 0)
+        if (showCouponBreakdown && breakdown.couponDiscount > 0) ...[
           PriceRow(
-            label: couponLabel,
-            value:
-                '-${breakdown.couponDiscount.toStringAsFixed(0)} $currencySuffix',
+            label: subtotalLabel ?? totalLabel,
+            value: _format(breakdown.subtotal),
+          ),
+          PriceRow(
+            label: couponRowLabel ?? '',
+            value: _format(breakdown.couponDiscount, forceNegative: true),
             isDiscount: true,
           ),
-        Padding(
-          padding: EdgeInsetsDirectional.only(top: 4.h),
-          child: PriceRow(
-            label: totalLabel,
-            value: _format(breakdown.total),
-            isTotal: true,
+          Padding(
+            padding: EdgeInsetsDirectional.only(top: 4.h),
+            child: PriceRow(
+              label: finalTotalLabel ?? totalLabel,
+              value: _format(breakdown.total),
+              isTotal: true,
+            ),
           ),
-        ),
+        ] else
+          Padding(
+            padding: EdgeInsetsDirectional.only(top: 4.h),
+            child: PriceRow(
+              label: totalLabel,
+              value: _format(breakdown.total),
+              isTotal: true,
+            ),
+          ),
       ],
     );
   }

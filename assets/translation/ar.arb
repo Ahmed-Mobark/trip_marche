@@ -361,6 +361,29 @@
   "bookingReviewCouponQuestion": "هل لديك كوبون؟",
   "bookingReviewCouponPlaceholder": "رمز الكوبون",
   "bookingReviewCouponApply": "تطبيق",
+  "bookingReviewCouponApplied": "تم التطبيق",
+  "bookingReviewCouponFixedLabel": "كوبون ({code})",
+  "@bookingReviewCouponFixedLabel": {
+    "placeholders": {
+      "code": {
+        "type": "String"
+      }
+    }
+  },
+  "bookingReviewCouponPercentLabel": "كوبون ({code} - {percent}%)",
+  "@bookingReviewCouponPercentLabel": {
+    "placeholders": {
+      "code": {
+        "type": "String"
+      },
+      "percent": {
+        "type": "String"
+      }
+    }
+  },
+  "bookingReviewPaymentSubtotal": "المجموع الفرعي",
+  "bookingReviewPaymentFinalTotal": "الإجمالي النهائي",
+  "bookingReviewNetworkError": "حدث خطأ. يرجى التحقق من اتصالك والمحاولة مرة أخرى.",
   "bookingReviewCouponSuccess": "تم تطبيق الكوبون بنجاح!",
   "bookingReviewPaymentDetailTitle": "تفاصيل الدفع",
   "bookingReviewPaymentTravelers": "{count} مسافرين",

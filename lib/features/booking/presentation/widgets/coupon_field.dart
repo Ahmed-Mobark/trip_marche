@@ -12,18 +12,30 @@ class CouponField extends StatelessWidget {
     required this.title,
     required this.placeholder,
     required this.applyLabel,
+    required this.appliedLabel,
     required this.successMessage,
     required this.onApply,
-    required this.showSuccess,
+    required this.onChanged,
+    this.showSuccess = false,
+    this.showError = false,
+    this.errorMessage,
+    this.isLoading = false,
+    this.isApplied = false,
   });
 
   final TextEditingController controller;
   final String title;
   final String placeholder;
   final String applyLabel;
+  final String appliedLabel;
   final String successMessage;
   final VoidCallback onApply;
+  final ValueChanged<String> onChanged;
   final bool showSuccess;
+  final bool showError;
+  final String? errorMessage;
+  final bool isLoading;
+  final bool isApplied;
 
   static const _transparentInputTheme = InputDecorationTheme(
     filled: false,
@@ -40,6 +52,8 @@ class CouponField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final canApply = !isLoading && !isApplied;
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
@@ -83,6 +97,7 @@ class CouponField extends StatelessWidget {
                     expands: true,
                     maxLines: null,
                     textAlignVertical: TextAlignVertical.center,
+                    onChanged: onChanged,
                     style: AppTextStyles.bodyMedium(
                       color: AppColors.tripDetailsFigmaBlack,
                     ).copyWith(fontSize: ReviewFigmaTokens.bodySize),
@@ -106,7 +121,7 @@ class CouponField extends StatelessWidget {
                 ),
               ),
               GestureDetector(
-                onTap: onApply,
+                onTap: canApply ? onApply : null,
                 behavior: HitTestBehavior.opaque,
                 child: Container(
                   alignment: Alignment.center,
@@ -114,20 +129,31 @@ class CouponField extends StatelessWidget {
                     horizontal: ReviewFigmaTokens.applyButtonHPadding,
                   ),
                   decoration: BoxDecoration(
-                    color: AppColors.primary,
+                    color: isApplied
+                        ? ReviewFigmaTokens.successGreen
+                        : AppColors.primary,
                     borderRadius: BorderRadius.circular(
                       ReviewFigmaTokens.applyButtonRadius,
                     ),
                   ),
-                  child: Text(
-                    applyLabel,
-                    style: AppTextStyles.button(
-                      color: AppColors.onImage,
-                    ).copyWith(
-                      fontSize: ReviewFigmaTokens.smallSize,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
+                  child: isLoading
+                      ? SizedBox(
+                          width: 16.w,
+                          height: 16.w,
+                          child: CircularProgressIndicator(
+                            strokeWidth: 2,
+                            color: AppColors.onImage,
+                          ),
+                        )
+                      : Text(
+                          isApplied ? appliedLabel : applyLabel,
+                          style: AppTextStyles.button(
+                            color: AppColors.onImage,
+                          ).copyWith(
+                            fontSize: ReviewFigmaTokens.smallSize,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
                 ),
               ),
             ],
@@ -139,6 +165,18 @@ class CouponField extends StatelessWidget {
             successMessage,
             style: AppTextStyles.bodyMedium(
               color: ReviewFigmaTokens.successGreen,
+            ).copyWith(
+              fontSize: ReviewFigmaTokens.smallSize,
+              fontWeight: FontWeight.w500,
+            ),
+          ),
+        ],
+        if (showError && errorMessage != null && errorMessage!.isNotEmpty) ...[
+          SizedBox(height: 8.h),
+          Text(
+            errorMessage!,
+            style: AppTextStyles.bodyMedium(
+              color: AppColors.error,
             ).copyWith(
               fontSize: ReviewFigmaTokens.smallSize,
               fontWeight: FontWeight.w500,

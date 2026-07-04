@@ -366,6 +366,29 @@
   "bookingReviewCouponQuestion": "Do you have a coupon?",
   "bookingReviewCouponPlaceholder": "Coupon Code",
   "bookingReviewCouponApply": "Apply",
+  "bookingReviewCouponApplied": "Applied",
+  "bookingReviewCouponFixedLabel": "Coupon ({code})",
+  "@bookingReviewCouponFixedLabel": {
+    "placeholders": {
+      "code": {
+        "type": "String"
+      }
+    }
+  },
+  "bookingReviewCouponPercentLabel": "Coupon ({code} - {percent}%)",
+  "@bookingReviewCouponPercentLabel": {
+    "placeholders": {
+      "code": {
+        "type": "String"
+      },
+      "percent": {
+        "type": "String"
+      }
+    }
+  },
+  "bookingReviewPaymentSubtotal": "Subtotal",
+  "bookingReviewPaymentFinalTotal": "Final Total",
+  "bookingReviewNetworkError": "Something went wrong. Please check your connection and try again.",
   "bookingReviewCouponSuccess": "Coupon Applied Successfully!",
   "bookingReviewPaymentDetailTitle": "Payment Detail",
   "bookingReviewPaymentTravelers": "{count} Travelers",

@@ -60,8 +60,12 @@ class BookingPriceBreakdown {
   final double taxes;
   final double couponDiscount;
 
-  double get total =>
-      travelersTotal + roomTotal + activitiesTotal + taxes - couponDiscount;
+  double get subtotal => travelersTotal + roomTotal + activitiesTotal + taxes;
+
+  double get total {
+    final discounted = subtotal - couponDiscount;
+    return discounted < 0 ? 0 : discounted;
+  }
 
   BookingPriceBreakdown copyWith({double? couponDiscount}) {
     return BookingPriceBreakdown(
@@ -78,6 +82,7 @@ class BookingPriceBreakdown {
 
 class BookingReviewData {
   const BookingReviewData({
+    required this.tripId,
     required this.trip,
     required this.travelers,
     required this.room,
@@ -86,6 +91,7 @@ class BookingReviewData {
     required this.currency,
   });
 
+  final int tripId;
   final BookingReviewTrip trip;
   final List<TravelerContact> travelers;
   final BookingRoomSelection room;

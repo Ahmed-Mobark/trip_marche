@@ -40,4 +40,7 @@ class AppEndpoints {
 
   /// POST — toggles wishlist for [tripId]. Response includes `is_wishlisted`.
   static String wishlistToggle(int tripId) => 'wishlist/$tripId/toggle';
+
+  /// POST — validates a coupon against a trip and amount.
+  static const String couponsValidate = 'coupons/validate';
 }

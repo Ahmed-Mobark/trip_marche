@@ -903,6 +903,29 @@ class AppLocalizationsAr extends AppLocalizations {
   String get bookingReviewCouponApply => 'تطبيق';
 
   @override
+  String get bookingReviewCouponApplied => 'تم التطبيق';
+
+  @override
+  String bookingReviewCouponFixedLabel(String code) {
+    return 'كوبون ($code)';
+  }
+
+  @override
+  String bookingReviewCouponPercentLabel(String code, String percent) {
+    return 'كوبون ($code - $percent%)';
+  }
+
+  @override
+  String get bookingReviewPaymentSubtotal => 'المجموع الفرعي';
+
+  @override
+  String get bookingReviewPaymentFinalTotal => 'الإجمالي النهائي';
+
+  @override
+  String get bookingReviewNetworkError =>
+      'حدث خطأ. يرجى التحقق من اتصالك والمحاولة مرة أخرى.';
+
+  @override
   String get bookingReviewCouponSuccess => 'تم تطبيق الكوبون بنجاح!';
 
   @override

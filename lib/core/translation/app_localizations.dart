@@ -1804,6 +1804,42 @@ abstract class AppLocalizations {
   /// **'Apply'**
   String get bookingReviewCouponApply;
 
+  /// No description provided for @bookingReviewCouponApplied.
+  ///
+  /// In en, this message translates to:
+  /// **'Applied'**
+  String get bookingReviewCouponApplied;
+
+  /// No description provided for @bookingReviewCouponFixedLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Coupon ({code})'**
+  String bookingReviewCouponFixedLabel(String code);
+
+  /// No description provided for @bookingReviewCouponPercentLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Coupon ({code} - {percent}%)'**
+  String bookingReviewCouponPercentLabel(String code, String percent);
+
+  /// No description provided for @bookingReviewPaymentSubtotal.
+  ///
+  /// In en, this message translates to:
+  /// **'Subtotal'**
+  String get bookingReviewPaymentSubtotal;
+
+  /// No description provided for @bookingReviewPaymentFinalTotal.
+  ///
+  /// In en, this message translates to:
+  /// **'Final Total'**
+  String get bookingReviewPaymentFinalTotal;
+
+  /// No description provided for @bookingReviewNetworkError.
+  ///
+  /// In en, this message translates to:
+  /// **'Something went wrong. Please check your connection and try again.'**
+  String get bookingReviewNetworkError;
+
   /// No description provided for @bookingReviewCouponSuccess.
   ///
   /// In en, this message translates to:
