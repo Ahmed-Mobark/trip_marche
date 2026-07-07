@@ -7,7 +7,9 @@ import 'package:trip_marche/core/extensions/localization.dart';
 import 'package:trip_marche/core/injection/injection_container.dart';
 import 'package:trip_marche/core/navigation/app_navigator.dart';
 import 'package:trip_marche/core/theme/app_text_styles.dart';
+import 'package:trip_marche/core/toast/app_toast.dart';
 import 'package:trip_marche/features/booking/domain/entities/booking_flow_context.dart';
+import 'package:trip_marche/features/booking/domain/entities/booking_room.dart';
 import 'package:trip_marche/features/trip_details/domain/entities/trip_details_entity.dart';
 import 'package:trip_marche/features/trip_details/presentation/trip_details_ui_formatters.dart';
 import 'contact_info_view.dart';
@@ -18,8 +20,13 @@ import '../widgets/date_option_card.dart';
 import '../widgets/traveler_counter_card.dart';
 
 class _TripDateOption {
-  const _TripDateOption({required this.range, required this.price});
+  const _TripDateOption({
+    required this.id,
+    required this.range,
+    required this.price,
+  });
 
+  final int id;
   final String range;
   final String price;
 }
@@ -69,6 +76,7 @@ class _TripOptionsViewState extends State<TripOptionsView> {
     return widget.trip.departures
         .map(
           (departure) => _TripDateOption(
+            id: departure.id,
             range: TripDetailsUiFormatters.departureDateRange(
               context,
               departure.startDate,
@@ -93,8 +101,26 @@ class _TripOptionsViewState extends State<TripOptionsView> {
     final selectedDateIndex =
         _selectedDateIndex.clamp(0, dateOptions.length - 1);
 
-    final selectedRoom = _selectedRoom();
-    if (selectedRoom == null) {
+    final selectedRooms = _selectedRooms();
+    if (selectedRooms.isEmpty) {
+      appToast(
+        context: context,
+        type: ToastType.error,
+        message: context.tr.bookingRoomsRequired,
+      );
+      return;
+    }
+
+    final totalRoomOccupants = selectedRooms.fold<int>(
+      0,
+      (sum, room) => sum + room.persons,
+    );
+    if (totalRoomOccupants != _travelersCount) {
+      appToast(
+        context: context,
+        type: ToastType.error,
+        message: context.tr.bookingRoomOccupantsMismatch(_travelersCount),
+      );
       return;
     }
 
@@ -105,34 +131,32 @@ class _TripOptionsViewState extends State<TripOptionsView> {
         travelersCount: _travelersCount,
         flowContext: BookingFlowContext(
           trip: widget.trip,
+          departureId: selectedDate.id,
           dateRange: selectedDate.range,
           adultCount: _adults,
           kidCount: _kids,
           babyCount: _babies,
           travelersCount: _travelersCount,
-          roomName: selectedRoom.name,
-          roomPrice: selectedRoom.price,
+          rooms: selectedRooms,
           currency: widget.trip.currency,
         ),
       ),
     );
   }
 
-  TripRoomType? _selectedRoom() {
+  List<BookingRoom> _selectedRooms() {
     if (_roomTypes.isEmpty) {
-      return null;
+      return const <BookingRoom>[];
     }
 
-    final sortedByCapacity = List<TripRoomType>.of(_roomTypes)
-      ..sort((a, b) => b.capacity.compareTo(a.capacity));
-
-    for (final room in sortedByCapacity) {
-      if ((_roomPersonCounts[room.key] ?? 0) > 0) {
-        return room;
+    final result = <BookingRoom>[];
+    for (final room in _roomTypes) {
+      final count = _roomPersonCounts[room.key];
+      if (count != null && count > 0) {
+        result.add(BookingRoom(roomTypeId: room.id, persons: count));
       }
     }
-
-    return _roomTypes.first;
+    return result;
   }
 
   String _roomPriceLabel(BuildContext context, TripRoomType room) {
@@ -144,16 +168,10 @@ class _TripOptionsViewState extends State<TripOptionsView> {
   }
 
   bool _canDecrementRoom(TripRoomType room, int count) {
-    if (room.key == 'double') {
-      return false;
-    }
-    return count > 1;
+    return count > 0;
   }
 
   bool _canIncrementRoom(TripRoomType room, int count) {
-    if (room.key == 'triple') {
-      return false;
-    }
     return count < room.capacity;
   }
 

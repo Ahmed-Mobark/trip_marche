@@ -2,6 +2,7 @@ import 'package:flutter/widgets.dart';
 import 'package:trip_marche/core/extensions/localization.dart';
 import 'package:trip_marche/features/booking/domain/entities/booking_activities.dart';
 import 'package:trip_marche/features/booking/domain/entities/booking_flow_context.dart';
+import 'package:trip_marche/features/booking/domain/entities/booking_room.dart';
 import 'package:trip_marche/features/booking/domain/entities/booking_review_data.dart';
 import 'package:trip_marche/features/trip_details/presentation/trip_details_ui_formatters.dart';
 
@@ -35,7 +36,12 @@ abstract final class BookingReviewDataBuilder {
 
     final unitPrice = trip.discountPrice ?? trip.price;
     final travelersTotal = travelersCount * unitPrice;
-    final roomTotal = flowContext.roomPrice;
+    final roomTotal = flowContext.rooms.isNotEmpty
+        ? flowContext.rooms.fold<double>(
+            0,
+            (sum, room) => sum + room.persons * unitPrice,
+          )
+        : 0.0;
 
     final taxableSubtotal = travelersTotal + roomTotal + activitiesTotal;
     final taxes = trip.taxPercent != null
@@ -52,6 +58,11 @@ abstract final class BookingReviewDataBuilder {
     );
 
     final durationLabel = '${trip.durationDays} ${tr.tripDetailsDurationUnit}';
+    final roomLabel = flowContext.rooms.isNotEmpty
+        ? flowContext.rooms
+                .map((r) => '${r.persons} ${tr.bookingPerson}')
+                .join(', ')
+        : '';
 
     return BookingReviewData(
       tripId: trip.id,
@@ -89,19 +100,24 @@ abstract final class BookingReviewDataBuilder {
       ),
       travelers: travelers,
       room: BookingRoomSelection(
-        name: flowContext.roomName,
+        name: roomLabel,
         price: roomTotal,
       ),
+      selectedRooms: List<BookingRoom>.of(flowContext.rooms),
       activities: activities,
       priceBreakdown: BookingPriceBreakdown(
         travelersCount: travelersCount,
         travelersTotal: travelersTotal,
-        roomLabel: flowContext.roomName,
+        roomLabel: roomLabel,
         roomTotal: roomTotal,
         activitiesTotal: activitiesTotal,
         taxes: taxes,
       ),
       currency: currency,
+      departureId: flowContext.departureId,
+      adultCount: flowContext.adultCount,
+      kidCount: flowContext.kidCount,
+      babyCount: flowContext.babyCount,
     );
   }
 }

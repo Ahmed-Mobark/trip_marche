@@ -1606,6 +1606,18 @@ abstract class AppLocalizations {
   /// **'Accommodation Options'**
   String get bookingAccommodationOptions;
 
+  /// No description provided for @bookingRoomsRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Please select at least one room'**
+  String get bookingRoomsRequired;
+
+  /// No description provided for @bookingRoomOccupantsMismatch.
+  ///
+  /// In en, this message translates to:
+  /// **'The total room occupants must equal the number of travelers ({count})'**
+  String bookingRoomOccupantsMismatch(Object count);
+
   /// No description provided for @bookingSingleRoom.
   ///
   /// In en, this message translates to:

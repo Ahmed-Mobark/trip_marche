@@ -789,6 +789,14 @@ class AppLocalizationsAr extends AppLocalizations {
   String get bookingAccommodationOptions => 'خيارات الإقامة';
 
   @override
+  String get bookingRoomsRequired => 'يرجى اختيار غرفة واحدة على الأقل';
+
+  @override
+  String bookingRoomOccupantsMismatch(Object count) {
+    return 'يجب أن يساوي إجمالي عدد الأشخاص في الغرف عدد المسافرين ($count)';
+  }
+
+  @override
   String get bookingSingleRoom => 'غرفة مفردة';
 
   @override

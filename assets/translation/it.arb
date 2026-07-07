@@ -274,6 +274,8 @@
   "bookingTravelerBaby": "Baby",
   "bookingTravelerBabyAge": "0~2 Years",
   "bookingAccommodationOptions": "Accommodation Options",
+  "bookingRoomsRequired": "Seleziona almeno una camera",
+  "bookingRoomOccupantsMismatch": "Il numero totale di occupanti delle camere deve essere uguale al numero di viaggiatori ({count})",
   "bookingSingleRoom": "Single Room",
   "bookingSingleRoomSubtitle": "Private room for one",
   "bookingDoubleRoom": "Double Room",

@@ -274,6 +274,8 @@
   "bookingTravelerBaby": "رضيع",
   "bookingTravelerBabyAge": "0~2 سنوات",
   "bookingAccommodationOptions": "خيارات الإقامة",
+  "bookingRoomsRequired": "يرجى اختيار غرفة واحدة على الأقل",
+  "bookingRoomOccupantsMismatch": "يجب أن يساوي إجمالي عدد الأشخاص في الغرف عدد المسافرين ({count})",
   "bookingSingleRoom": "غرفة مفردة",
   "bookingSingleRoomSubtitle": "غرفة خاصة لشخص واحد",
   "bookingDoubleRoom": "غرفة مزدوجة",
