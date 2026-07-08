@@ -46,4 +46,7 @@ class AppEndpoints {
 
   /// POST — creates a new booking for a trip.
   static String createBooking(int tripId) => 'trips/$tripId/book';
+
+  /// GET — paginated list of the current user's bookings.
+  static const String bookings = 'bookings';
 }

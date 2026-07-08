@@ -132,6 +132,14 @@ class _ReviewBodyState extends State<_ReviewBody> {
         if (state.isValidationFailure && state.validationErrors != null) {
           _showCreateBookingErrors(state.validationErrors!);
         } else if (state.isSuccess) {
+          final apiMessage = state.bookingResponse?.message;
+          appToast(
+            context: context,
+            type: ToastType.success,
+            message: apiMessage != null && apiMessage.trim().isNotEmpty
+                ? apiMessage
+                : tr.bookingCreatedSuccess,
+          );
           sl<AppNavigator>().pushAndRemoveUntil(
             screen: const MainNavView(initialIndex: 1),
           );
@@ -155,11 +163,15 @@ class _ReviewBodyState extends State<_ReviewBody> {
           context.read<CouponCubit>().clearNetworkErrorFlag();
         },
         child: AnnotatedRegion<SystemUiOverlayStyle>(
-          value: SystemUiOverlayStyle.dark.copyWith(
-            statusBarColor: ReviewFigmaTokens.screenBackground,
-          ),
+          value: AppColors.isDark(context)
+              ? SystemUiOverlayStyle.light.copyWith(
+                  statusBarColor: AppColors.scaffoldBg(context),
+                )
+              : SystemUiOverlayStyle.dark.copyWith(
+                  statusBarColor: AppColors.scaffoldBg(context),
+                ),
           child: Scaffold(
-            backgroundColor: ReviewFigmaTokens.screenBackground,
+            backgroundColor: AppColors.scaffoldBg(context),
             body: SafeArea(
               bottom: false,
               child: Column(
@@ -174,7 +186,7 @@ class _ReviewBodyState extends State<_ReviewBody> {
                       tr.bookingReviewTitle,
                       textAlign: TextAlign.center,
                       style: AppTextStyles.heading3(
-                        color: AppColors.tripDetailsFigmaBlack,
+                        color: AppColors.ink(context),
                       ).copyWith(
                         fontSize: ReviewFigmaTokens.titleFontSize,
                         fontWeight: FontWeight.w600,
@@ -244,11 +256,40 @@ class _ReviewBodyState extends State<_ReviewBody> {
                         TextField(
                           controller: _notesController,
                           maxLines: 3,
-                          decoration: const InputDecoration(
+                          style: AppTextStyles.bodyMedium(
+                            color: AppColors.ink(context),
+                          ).copyWith(fontSize: ReviewFigmaTokens.bodySize),
+                          decoration: InputDecoration(
                             labelText: 'Notes',
                             hintText: 'Any special requests',
+                            labelStyle: AppTextStyles.bodySmall(
+                              color: AppColors.captionText(context),
+                            ).copyWith(fontSize: ReviewFigmaTokens.smallSize),
+                            hintStyle: AppTextStyles.body(
+                              color: AppColors.captionText(context),
+                            ).copyWith(fontSize: ReviewFigmaTokens.bodySize),
+                            filled: true,
+                            fillColor: AppColors.cardBg(context),
                             border: OutlineInputBorder(
-                              borderRadius: BorderRadius.all(Radius.circular(12)),
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(12)),
+                              borderSide: BorderSide(
+                                color: AppColors.softBorder(context),
+                              ),
+                            ),
+                            enabledBorder: OutlineInputBorder(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(12)),
+                              borderSide: BorderSide(
+                                color: AppColors.softBorder(context),
+                              ),
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(12)),
+                              borderSide: BorderSide(
+                                color: AppColors.primary,
+                              ),
                             ),
                           ),
                         ),

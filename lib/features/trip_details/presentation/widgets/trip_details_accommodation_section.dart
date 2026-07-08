@@ -103,6 +103,7 @@ class TripDetailsCompanyCard extends StatelessWidget {
     required this.ratingCount,
     required this.onFollow,
     this.avatarUrl,
+    this.isFollowing = false,
   });
 
   final String companyName;
@@ -110,6 +111,7 @@ class TripDetailsCompanyCard extends StatelessWidget {
   final String ratingCount;
   final VoidCallback onFollow;
   final String? avatarUrl;
+  final bool isFollowing;
 
   @override
   Widget build(BuildContext context) {
@@ -188,7 +190,9 @@ class TripDetailsCompanyCard extends StatelessWidget {
               tapTargetSize: MaterialTapTargetSize.shrinkWrap,
             ),
             child: Text(
-              context.tr.tripDetailsFollow,
+              isFollowing
+                  ? context.tr.companyProfileFollowing
+                  : context.tr.tripDetailsFollow,
               style: AppTextStyles.bodyMedium(
                 color: AppColors.primary,
               ).copyWith(fontWeight: FontWeight.w600),

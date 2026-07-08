@@ -193,45 +193,47 @@ class MyTripsScreenTripCard extends StatelessWidget {
                         ),
                       ],
                     ),
-                    SizedBox(height: MyTripsTripCardTokens.rowTight),
-                    Row(
-                      children: [
-                        Icon(
-                          Iconsax.star1,
-                          size: MyTripsTripCardTokens.starSize,
-                          color: AppColors.myTripsTripCardStar,
-                        ),
-                        SizedBox(width: MyTripsTripCardTokens.starToText),
-                        Text.rich(
-                          TextSpan(
-                            children: [
-                              TextSpan(
-                                text: trip.rating.toStringAsFixed(1),
-                                style: MyTripsFigmaTokens.text(
-                                  fontSize: MyTripsTripCardTokens.metaFont,
-                                  fontWeight: FontWeight.w700,
-                                  height: MyTripsTripCardTokens.lh(14, 18),
-                                  letterSpacing: 0,
-                                  color: AppColors.myTripsTripCardInk(context),
-                                ),
-                              ),
-                              TextSpan(
-                                text: '(${trip.reviewCount})',
-                                style: MyTripsFigmaTokens.text(
-                                  fontSize: MyTripsTripCardTokens.metaFont,
-                                  fontWeight: FontWeight.w400,
-                                  height: MyTripsTripCardTokens.lh(14, 18),
-                                  letterSpacing: 0,
-                                  color: AppColors.myTripsTripCardMuted(
-                                    context,
+                    if (trip.rating > 0) ...[
+                      SizedBox(height: MyTripsTripCardTokens.rowTight),
+                      Row(
+                        children: [
+                          Icon(
+                            Iconsax.star1,
+                            size: MyTripsTripCardTokens.starSize,
+                            color: AppColors.myTripsTripCardStar,
+                          ),
+                          SizedBox(width: MyTripsTripCardTokens.starToText),
+                          Text.rich(
+                            TextSpan(
+                              children: [
+                                TextSpan(
+                                  text: trip.rating.toStringAsFixed(1),
+                                  style: MyTripsFigmaTokens.text(
+                                    fontSize: MyTripsTripCardTokens.metaFont,
+                                    fontWeight: FontWeight.w700,
+                                    height: MyTripsTripCardTokens.lh(14, 18),
+                                    letterSpacing: 0,
+                                    color: AppColors.myTripsTripCardInk(context),
                                   ),
                                 ),
-                              ),
-                            ],
+                                TextSpan(
+                                  text: '(${trip.reviewCount})',
+                                  style: MyTripsFigmaTokens.text(
+                                    fontSize: MyTripsTripCardTokens.metaFont,
+                                    fontWeight: FontWeight.w400,
+                                    height: MyTripsTripCardTokens.lh(14, 18),
+                                    letterSpacing: 0,
+                                    color: AppColors.myTripsTripCardMuted(
+                                      context,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
-                        ),
-                      ],
-                    ),
+                        ],
+                      ),
+                    ],
                     SizedBox(height: MyTripsTripCardTokens.rowTight),
                     _MetaRow(icon: Iconsax.location, text: trip.locationLabel),
                     SizedBox(height: MyTripsTripCardTokens.rowTight),

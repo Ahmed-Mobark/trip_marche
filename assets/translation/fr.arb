@@ -227,6 +227,12 @@
   "myTripsStatusCanceled": "Annulé",
   "myTripsBookAgain": "Réserver à nouveau",
   "myTripsFromPrefix": "À partir de",
+  "myTripsTravelers": "{count} voyageurs",
+  "@myTripsTravelers": {
+    "placeholders": {
+      "count": {"type": "int"}
+    }
+  },
   "myTripsViewDetails": "Voir les détails",
   "myTripsViewReceipt": "Voir le reçu",
   "myTripsBookingDetails": "Détails de réservation",
@@ -274,8 +280,11 @@
   "bookingTravelerBaby": "Baby",
   "bookingTravelerBabyAge": "0~2 Years",
   "bookingAccommodationOptions": "Accommodation Options",
+  "bookingCreatedSuccess": "Réservation créée avec succès",
   "bookingRoomsRequired": "Veuillez sélectionner au moins une chambre",
   "bookingRoomOccupantsMismatch": "Le nombre total d'occupants des chambres doit être égal au nombre de voyageurs ({count})",
+  "bookingTripUnavailableTitle": "This trip isn't available for booking yet.",
+  "bookingTripUnavailableBody": "This trip doesn't have any booking options available at the moment. Please choose another trip or check back later.",
   "bookingSingleRoom": "Single Room",
   "bookingSingleRoomSubtitle": "Private room for one",
   "bookingDoubleRoom": "Double Room",

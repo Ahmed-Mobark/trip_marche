@@ -50,13 +50,16 @@ class _SelectActivitiesViewState extends State<SelectActivitiesView> {
         .toList(growable: false);
   }
 
-  List<Activity> _availableActivities(BuildContext context) {
-    final tr = context.tr;
-    return [
-      Activity(id: '1', name: tr.bookingActivityCamping, price: 70),
-      Activity(id: '2', name: tr.bookingActivityFishing, price: 30),
-      Activity(id: '3', name: tr.bookingActivityDiving, price: 80),
-    ];
+  List<Activity> _availableActivities() {
+    return widget.flowContext.trip.activities
+        .map(
+          (activity) => Activity(
+            id: activity.id.toString(),
+            name: activity.label,
+            price: activity.price,
+          ),
+        )
+        .toList(growable: false);
   }
 
   void _syncFromTravelerOne() {
@@ -103,7 +106,7 @@ class _SelectActivitiesViewState extends State<SelectActivitiesView> {
 
   void _onContinue(BuildContext context) {
     final activitiesCatalog = {
-      for (final activity in _availableActivities(context)) activity.id: activity,
+      for (final activity in _availableActivities()) activity.id: activity,
     };
 
     final result = _entries
@@ -132,14 +135,18 @@ class _SelectActivitiesViewState extends State<SelectActivitiesView> {
   @override
   Widget build(BuildContext context) {
     final tr = context.tr;
-    final activities = _availableActivities(context);
+    final activities = _availableActivities();
 
     return AnnotatedRegion<SystemUiOverlayStyle>(
-      value: SystemUiOverlayStyle.dark.copyWith(
-        statusBarColor: SelectActivitiesFigmaTokens.screenBackground,
-      ),
+      value: AppColors.isDark(context)
+          ? SystemUiOverlayStyle.light.copyWith(
+              statusBarColor: AppColors.scaffoldBg(context),
+            )
+          : SystemUiOverlayStyle.dark.copyWith(
+              statusBarColor: AppColors.scaffoldBg(context),
+            ),
       child: Scaffold(
-        backgroundColor: SelectActivitiesFigmaTokens.screenBackground,
+        backgroundColor: AppColors.scaffoldBg(context),
         body: SafeArea(
           bottom: false,
           child: Column(
@@ -154,7 +161,7 @@ class _SelectActivitiesViewState extends State<SelectActivitiesView> {
                   tr.bookingSelectActivitiesTitle,
                   textAlign: TextAlign.center,
                   style: AppTextStyles.heading3(
-                    color: AppColors.tripDetailsFigmaBlack,
+                    color: AppColors.ink(context),
                   ).copyWith(
                     fontSize: SelectActivitiesFigmaTokens.titleFontSize,
                     fontWeight: FontWeight.w600,

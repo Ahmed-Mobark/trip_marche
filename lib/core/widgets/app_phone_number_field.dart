@@ -57,7 +57,7 @@ class AppPhoneNumberField extends StatelessWidget {
     }
 
     final radius = BorderRadius.circular(ContactInfoFigmaTokens.fieldRadius);
-    final border = ContactInfoFigmaTokens.fieldBorder;
+    final border = AppColors.softBorder(context);
 
     OutlineInputBorder outline(Color color) => OutlineInputBorder(
           borderRadius: radius,
@@ -71,7 +71,7 @@ class AppPhoneNumberField extends StatelessWidget {
       validator: validator,
       autovalidateMode: autovalidateMode,
       style: AppTextStyles.bodyMedium(
-        color: AppColors.tripDetailsFigmaBlack,
+        color: AppColors.ink(context),
       ).copyWith(
         fontSize: ContactInfoFigmaTokens.inputFontSize,
         fontWeight: FontWeight.w500,
@@ -82,7 +82,7 @@ class AppPhoneNumberField extends StatelessWidget {
           color: AppColors.captionText(context),
         ).copyWith(fontSize: ContactInfoFigmaTokens.inputFontSize),
         filled: true,
-        fillColor: AppColors.white,
+        fillColor: AppColors.cardBg(context),
         contentPadding: EdgeInsetsDirectional.fromSTEB(0, 14.h, 14.w, 14.h),
         prefixIcon: _CountryPrefix(
           selectedDialCode: selectedDialCode,
@@ -197,7 +197,7 @@ class _CountryPrefix extends StatelessWidget {
         end: isBooking ? 4.w : 0,
       ),
       color: isBooking
-          ? ContactInfoFigmaTokens.fieldBorder
+          ? AppColors.softBorder(context)
           : AppColors.border(context),
     );
 

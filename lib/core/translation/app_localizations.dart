@@ -1390,6 +1390,12 @@ abstract class AppLocalizations {
   /// **'From'**
   String get myTripsFromPrefix;
 
+  /// No description provided for @myTripsTravelers.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} travelers'**
+  String myTripsTravelers(int count);
+
   /// No description provided for @myTripsViewDetails.
   ///
   /// In en, this message translates to:
@@ -1606,6 +1612,12 @@ abstract class AppLocalizations {
   /// **'Accommodation Options'**
   String get bookingAccommodationOptions;
 
+  /// No description provided for @bookingCreatedSuccess.
+  ///
+  /// In en, this message translates to:
+  /// **'Booking created successfully'**
+  String get bookingCreatedSuccess;
+
   /// No description provided for @bookingRoomsRequired.
   ///
   /// In en, this message translates to:
@@ -1617,6 +1629,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'The total room occupants must equal the number of travelers ({count})'**
   String bookingRoomOccupantsMismatch(Object count);
+
+  /// No description provided for @bookingTripUnavailableTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'This trip isn\'t available for booking yet.'**
+  String get bookingTripUnavailableTitle;
+
+  /// No description provided for @bookingTripUnavailableBody.
+  ///
+  /// In en, this message translates to:
+  /// **'This trip doesn\'t have any booking options available at the moment. Please choose another trip or check back later.'**
+  String get bookingTripUnavailableBody;
 
   /// No description provided for @bookingSingleRoom.
   ///

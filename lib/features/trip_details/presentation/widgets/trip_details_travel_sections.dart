@@ -102,10 +102,16 @@ class TripDetailsTravelSections extends StatelessWidget {
           ),
           SizedBox(height: 12.h),
           TripDetailsCompanyCard(
-            companyName: trip.vendor.name,
-            ratingValue: trip.rating.toStringAsFixed(2),
-            ratingCount: context.tr.tripDetailsReviewsCount(trip.reviewsCount),
+            companyName: trip.vendor.company != null &&
+                    trip.vendor.company!.trim().isNotEmpty
+                ? trip.vendor.company!
+                : trip.vendor.name,
+            ratingValue: (trip.vendor.rating ?? 0).toStringAsFixed(2),
+            ratingCount: context.tr.tripDetailsReviewsCount(
+              trip.vendor.reviewsCount ?? 0,
+            ),
             avatarUrl: trip.vendor.avatar,
+            isFollowing: trip.vendor.isFollowing ?? false,
             onFollow: () {},
           ),
 

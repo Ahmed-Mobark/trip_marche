@@ -85,11 +85,15 @@ class _ContactInfoViewState extends State<ContactInfoView> {
   Widget build(BuildContext context) {
     final tr = context.tr;
     return AnnotatedRegion<SystemUiOverlayStyle>(
-      value: SystemUiOverlayStyle.dark.copyWith(
-        statusBarColor: ContactInfoFigmaTokens.screenBackground,
-      ),
+      value: AppColors.isDark(context)
+          ? SystemUiOverlayStyle.light.copyWith(
+              statusBarColor: AppColors.scaffoldBg(context),
+            )
+          : SystemUiOverlayStyle.dark.copyWith(
+              statusBarColor: AppColors.scaffoldBg(context),
+            ),
       child: Scaffold(
-        backgroundColor: ContactInfoFigmaTokens.screenBackground,
+        backgroundColor: AppColors.scaffoldBg(context),
         resizeToAvoidBottomInset: true,
         body: SafeArea(
           bottom: false,
@@ -105,7 +109,7 @@ class _ContactInfoViewState extends State<ContactInfoView> {
                   tr.bookingContactInfoTitle,
                   textAlign: TextAlign.center,
                   style: AppTextStyles.heading3(
-                    color: AppColors.tripDetailsFigmaBlack,
+                    color: AppColors.ink(context),
                   ).copyWith(
                     fontSize: ContactInfoFigmaTokens.titleFontSize,
                     fontWeight: FontWeight.w600,

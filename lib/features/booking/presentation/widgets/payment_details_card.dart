@@ -53,7 +53,7 @@ class PaymentDetailsCard extends StatelessWidget {
         Text(
           title,
           style: AppTextStyles.subtitle(
-            color: AppColors.tripDetailsFigmaBlack,
+            color: AppColors.ink(context),
           ).copyWith(
             fontSize: ReviewFigmaTokens.bodySize,
             fontWeight: FontWeight.w600,

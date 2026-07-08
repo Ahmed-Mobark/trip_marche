@@ -60,7 +60,7 @@ class CouponField extends StatelessWidget {
         Text(
           title,
           style: AppTextStyles.subtitle(
-            color: AppColors.tripDetailsFigmaBlack,
+            color: AppColors.ink(context),
           ).copyWith(
             fontSize: ReviewFigmaTokens.bodySize,
             fontWeight: FontWeight.w600,
@@ -71,9 +71,9 @@ class CouponField extends StatelessWidget {
           height: ReviewFigmaTokens.couponFieldHeight,
           padding: EdgeInsetsDirectional.fromSTEB(12.w, 6.h, 6.w, 6.h),
           decoration: BoxDecoration(
-            color: AppColors.white,
+            color: AppColors.cardBg(context),
             borderRadius: BorderRadius.circular(ReviewFigmaTokens.couponFieldRadius),
-            border: Border.all(color: ReviewFigmaTokens.cardBorder),
+            border: Border.all(color: AppColors.softBorder(context)),
           ),
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -82,7 +82,7 @@ class CouponField extends StatelessWidget {
                 child: Icon(
                   Iconsax.ticket_discount,
                   size: 20.sp,
-                  color: ReviewFigmaTokens.metaGrey,
+                  color: AppColors.metaGrey(context),
                 ),
               ),
               SizedBox(width: 8.w),
@@ -99,7 +99,7 @@ class CouponField extends StatelessWidget {
                     textAlignVertical: TextAlignVertical.center,
                     onChanged: onChanged,
                     style: AppTextStyles.bodyMedium(
-                      color: AppColors.tripDetailsFigmaBlack,
+                      color: AppColors.ink(context),
                     ).copyWith(fontSize: ReviewFigmaTokens.bodySize),
                     decoration: InputDecoration(
                       hintText: placeholder,

@@ -31,7 +31,7 @@ class BottomBookingBar extends StatelessWidget {
         TripOptionsFigmaTokens.bottomBarBottom,
       ),
       decoration: BoxDecoration(
-        color: AppColors.white,
+        color: AppColors.cardBg(context),
         border: Border(
           top: BorderSide(
             color: TripOptionsFigmaTokens.cardBorder(context),

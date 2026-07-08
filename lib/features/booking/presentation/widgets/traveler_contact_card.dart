@@ -38,7 +38,7 @@ class TravelerContactCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final fieldRadius = BorderRadius.circular(ContactInfoFigmaTokens.fieldRadius);
-    final borderColor = ContactInfoFigmaTokens.fieldBorder;
+    final borderColor = AppColors.softBorder(context);
 
     OutlineInputBorder outline(Color color) => OutlineInputBorder(
           borderRadius: fieldRadius,
@@ -48,7 +48,7 @@ class TravelerContactCard extends StatelessWidget {
     return Container(
       padding: EdgeInsetsDirectional.all(ContactInfoFigmaTokens.cardPadding),
       decoration: BoxDecoration(
-        color: AppColors.white,
+        color: AppColors.cardBg(context),
         borderRadius: BorderRadius.circular(ContactInfoFigmaTokens.cardRadius),
         border: Border.all(color: borderColor, width: 1),
       ),
@@ -58,7 +58,7 @@ class TravelerContactCard extends StatelessWidget {
           Text(
             travelerTitle,
             style: AppTextStyles.subtitle(
-              color: AppColors.tripDetailsFigmaBlack,
+              color: AppColors.ink(context),
             ).copyWith(
               fontSize: ContactInfoFigmaTokens.travelerTitleSize,
               fontWeight: FontWeight.w600,
@@ -78,7 +78,7 @@ class TravelerContactCard extends StatelessWidget {
               return null;
             },
             style: AppTextStyles.bodyMedium(
-              color: AppColors.tripDetailsFigmaBlack,
+              color: AppColors.ink(context),
             ).copyWith(
               fontSize: ContactInfoFigmaTokens.inputFontSize,
               fontWeight: FontWeight.w500,
@@ -89,7 +89,7 @@ class TravelerContactCard extends StatelessWidget {
                 color: AppColors.captionText(context),
               ).copyWith(fontSize: ContactInfoFigmaTokens.inputFontSize),
               filled: true,
-              fillColor: AppColors.white,
+              fillColor: AppColors.cardBg(context),
               prefixIcon: Icon(
                 Iconsax.user,
                 color: AppColors.greyText(context),
@@ -134,7 +134,7 @@ class _FieldLabel extends StatelessWidget {
     return Text(
       label,
       style: AppTextStyles.bodyMedium(
-        color: ContactInfoFigmaTokens.labelGrey,
+        color: AppColors.subtitleGrey(context),
       ).copyWith(
         fontSize: ContactInfoFigmaTokens.labelSize,
         fontWeight: FontWeight.w500,

@@ -129,6 +129,11 @@ class TripDetailsModel {
               name: _JsonParse.asString(vendor['name']),
               avatar: _JsonParse.asNullableString(vendor['avatar']),
               company: _JsonParse.asNullableString(vendor['company']),
+              rating: _JsonParse.asNullableDouble(vendor['rating']),
+              reviewsCount: _JsonParse.asNullableInt(vendor['reviews_count']),
+              followersCount:
+                  _JsonParse.asNullableInt(vendor['followers_count']),
+              isFollowing: _JsonParse.asBool(vendor['is_following']),
             )
           : const TripVendor(id: 0, name: ''),
       inclusions: _parseInclusions(json['inclusions']),
@@ -483,6 +488,22 @@ abstract final class _JsonParse {
       return double.tryParse(v) ?? fallback;
     }
     return fallback;
+  }
+
+  static int? asNullableInt(dynamic v) {
+    if (v == null) {
+      return null;
+    }
+    if (v is int) {
+      return v;
+    }
+    if (v is double) {
+      return v.round();
+    }
+    if (v is String) {
+      return int.tryParse(v);
+    }
+    return null;
   }
 
   static double? asNullableDouble(dynamic v) {

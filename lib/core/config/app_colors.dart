@@ -196,6 +196,42 @@ abstract class AppColors {
   static Color cardBg(BuildContext context) =>
       isDark(context) ? cardColorDark : cardColorLight;
 
+  // --- Booking flow screens: dark-mode aware helpers -------------------------
+  // Each preserves the exact Figma light value and provides a sensible dark
+  // variant so the four booking screens repaint correctly on theme toggle.
+
+  /// Primary ink text (titles/values). Figma #000000 in light, white in dark.
+  static Color ink(BuildContext context) =>
+      isDark(context) ? textColorDark : tripDetailsFigmaBlack;
+
+  /// Secondary label grey (Figma #757575) in light; soft grey in dark.
+  static Color subtitleGrey(BuildContext context) =>
+      isDark(context) ? const Color(0xFFB3B3B3) : const Color(0xFF757575);
+
+  /// Muted meta grey (Figma #6B7280) in light; lifted grey in dark.
+  static Color metaGrey(BuildContext context) =>
+      isDark(context) ? const Color(0xFF9AA0A6) : const Color(0xFF6B7280);
+
+  /// Soft hairline border (Figma #E0E0E0) in light; dark divider in dark.
+  static Color softBorder(BuildContext context) =>
+      isDark(context) ? borderColorDark : const Color(0xFFE0E0E0);
+
+  /// Included-section border (Figma #E5E7EB) in light; dark divider in dark.
+  static Color includedBorder(BuildContext context) =>
+      isDark(context) ? borderColorDark : const Color(0xFFE5E7EB);
+
+  /// Selected purple tint (Figma #F8F0FC) in light; deep violet in dark.
+  static Color selectedPurpleTint(BuildContext context) =>
+      isDark(context) ? const Color(0xFF2A1A33) : const Color(0xFFF8F0FC);
+
+  /// Subtle surface behind "included" panels (Figma #FAFAFA) in light.
+  static Color includedSurface(BuildContext context) =>
+      isDark(context) ? const Color(0xFF242424) : const Color(0xFFFAFAFA);
+
+  /// Disabled/secondary icon grey (Figma #BDBDBD) in light; muted in dark.
+  static Color disabledIcon(BuildContext context) =>
+      isDark(context) ? const Color(0xFF6E6E6E) : const Color(0xFFBDBDBD);
+
   /// Trip details screen canvas (reference off-white #F8F9FA).
   static Color tripDetailsScreenBg(BuildContext context) =>
       isDark(context) ? scaffoldColorDark : const Color(0xFFF8F9FA);

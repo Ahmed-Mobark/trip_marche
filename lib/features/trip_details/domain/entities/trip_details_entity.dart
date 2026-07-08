@@ -89,15 +89,32 @@ class TripVendor extends Equatable {
     required this.name,
     this.avatar,
     this.company,
+    this.rating,
+    this.reviewsCount,
+    this.followersCount,
+    this.isFollowing,
   });
 
   final int id;
   final String name;
   final String? avatar;
   final String? company;
+  final double? rating;
+  final int? reviewsCount;
+  final int? followersCount;
+  final bool? isFollowing;
 
   @override
-  List<Object?> get props => [id, name, avatar, company];
+  List<Object?> get props => [
+        id,
+        name,
+        avatar,
+        company,
+        rating,
+        reviewsCount,
+        followersCount,
+        isFollowing,
+      ];
 }
 
 class TripInclusion extends Equatable {

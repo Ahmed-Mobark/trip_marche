@@ -103,8 +103,7 @@ class _MainNavViewState extends State<MainNavView> {
           final itemW = innerW / _itemCount;
           final isRtl = Directionality.of(context) == TextDirection.rtl;
           final indicatorPhysicalLeft = isRtl
-              ? hInset +
-                  (_itemCount - 1 - _currentIndex) * itemW
+              ? hInset + (_itemCount - 1 - _currentIndex) * itemW
               : hInset + _currentIndex * itemW;
           final labelSize = nav.w(14);
 

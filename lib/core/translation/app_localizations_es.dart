@@ -686,6 +686,11 @@ class AppLocalizationsEs extends AppLocalizations {
   String get myTripsFromPrefix => 'Desde';
 
   @override
+  String myTripsTravelers(int count) {
+    return '$count viajeros';
+  }
+
+  @override
   String get myTripsViewDetails => 'Ver detalles';
 
   @override
@@ -798,12 +803,23 @@ class AppLocalizationsEs extends AppLocalizations {
   String get bookingAccommodationOptions => 'Accommodation Options';
 
   @override
+  String get bookingCreatedSuccess => 'Reserva creada con éxito';
+
+  @override
   String get bookingRoomsRequired => 'Selecciona al menos una habitación';
 
   @override
   String bookingRoomOccupantsMismatch(Object count) {
     return 'El número total de ocupantes de las habitaciones debe ser igual al número de viajeros ($count)';
   }
+
+  @override
+  String get bookingTripUnavailableTitle =>
+      'This trip isn\'t available for booking yet.';
+
+  @override
+  String get bookingTripUnavailableBody =>
+      'This trip doesn\'t have any booking options available at the moment. Please choose another trip or check back later.';
 
   @override
   String get bookingSingleRoom => 'Single Room';

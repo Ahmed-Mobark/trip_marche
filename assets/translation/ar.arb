@@ -227,6 +227,12 @@
   "myTripsStatusCanceled": "ملغاة",
   "myTripsBookAgain": "احجز مرة أخرى",
   "myTripsFromPrefix": "من",
+  "myTripsTravelers": "{count} مسافرين",
+  "@myTripsTravelers": {
+    "placeholders": {
+      "count": {"type": "int"}
+    }
+  },
   "myTripsViewDetails": "عرض التفاصيل",
   "myTripsViewReceipt": "عرض الإيصال",
   "myTripsBookingDetails": "تفاصيل الحجز",
@@ -274,8 +280,11 @@
   "bookingTravelerBaby": "رضيع",
   "bookingTravelerBabyAge": "0~2 سنوات",
   "bookingAccommodationOptions": "خيارات الإقامة",
+  "bookingCreatedSuccess": "تم إنشاء الحجز بنجاح",
   "bookingRoomsRequired": "يرجى اختيار غرفة واحدة على الأقل",
   "bookingRoomOccupantsMismatch": "يجب أن يساوي إجمالي عدد الأشخاص في الغرف عدد المسافرين ({count})",
+  "bookingTripUnavailableTitle": "This trip isn't available for booking yet.",
+  "bookingTripUnavailableBody": "This trip doesn't have any booking options available at the moment. Please choose another trip or check back later.",
   "bookingSingleRoom": "غرفة مفردة",
   "bookingSingleRoomSubtitle": "غرفة خاصة لشخص واحد",
   "bookingDoubleRoom": "غرفة مزدوجة",

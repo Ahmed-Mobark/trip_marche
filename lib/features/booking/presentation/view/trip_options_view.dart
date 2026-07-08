@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'dart:async';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:trip_marche/core/config/app_colors.dart';
@@ -8,6 +9,7 @@ import 'package:trip_marche/core/injection/injection_container.dart';
 import 'package:trip_marche/core/navigation/app_navigator.dart';
 import 'package:trip_marche/core/theme/app_text_styles.dart';
 import 'package:trip_marche/core/toast/app_toast.dart';
+import 'package:trip_marche/core/toast/toast_service.dart';
 import 'package:trip_marche/features/booking/domain/entities/booking_flow_context.dart';
 import 'package:trip_marche/features/booking/domain/entities/booking_room.dart';
 import 'package:trip_marche/features/trip_details/domain/entities/trip_details_entity.dart';
@@ -52,6 +54,9 @@ class _TripOptionsViewState extends State<TripOptionsView> {
   int _kids = 0;
   int _babies = 0;
 
+  bool _bookingUnavailableToastVisible = false;
+  Timer? _bookingUnavailableToastTimer;
+
   int get _travelersCount => _adults + _kids + _babies;
 
   @override
@@ -63,6 +68,12 @@ class _TripOptionsViewState extends State<TripOptionsView> {
       for (final room in _roomTypes)
         room.key: _initialRoomPersonCount(room),
     };
+  }
+
+  @override
+  void dispose() {
+    _bookingUnavailableToastTimer?.cancel();
+    super.dispose();
   }
 
   int _initialRoomPersonCount(TripRoomType room) {
@@ -94,7 +105,10 @@ class _TripOptionsViewState extends State<TripOptionsView> {
 
   void _onContinue() {
     final dateOptions = _buildDateOptions(context);
-    if (dateOptions.isEmpty) {
+    final hasBookingOptions = dateOptions.isNotEmpty && _roomTypes.isNotEmpty;
+
+    if (!hasBookingOptions) {
+      _showBookingUnavailableToast();
       return;
     }
 
@@ -144,6 +158,30 @@ class _TripOptionsViewState extends State<TripOptionsView> {
     );
   }
 
+  void _showBookingUnavailableToast() {
+    if (_bookingUnavailableToastVisible) {
+      return;
+    }
+    _bookingUnavailableToastVisible = true;
+
+    appToast(
+      context: context,
+      type: ToastType.warning,
+      message: context.tr.bookingTripUnavailableTitle,
+      description: context.tr.bookingTripUnavailableBody,
+      length: ToastLength.medium,
+    );
+
+    _bookingUnavailableToastTimer = Timer(
+      const Duration(milliseconds: 4200),
+      () {
+        if (mounted) {
+          _bookingUnavailableToastVisible = false;
+        }
+      },
+    );
+  }
+
   List<BookingRoom> _selectedRooms() {
     if (_roomTypes.isEmpty) {
       return const <BookingRoom>[];
@@ -188,11 +226,15 @@ class _TripOptionsViewState extends State<TripOptionsView> {
         : dateOptions;
 
     return AnnotatedRegion<SystemUiOverlayStyle>(
-      value: SystemUiOverlayStyle.dark.copyWith(
-        statusBarColor: AppColors.white,
-      ),
+      value: AppColors.isDark(context)
+          ? SystemUiOverlayStyle.light.copyWith(
+              statusBarColor: AppColors.scaffoldBg(context),
+            )
+          : SystemUiOverlayStyle.dark.copyWith(
+              statusBarColor: AppColors.scaffoldBg(context),
+            ),
       child: Scaffold(
-        backgroundColor: AppColors.white,
+        backgroundColor: AppColors.scaffoldBg(context),
         body: SafeArea(
           bottom: false,
           child: Column(
@@ -207,7 +249,7 @@ class _TripOptionsViewState extends State<TripOptionsView> {
                   tr.bookingTripOptionsTitle,
                   textAlign: TextAlign.center,
                   style: AppTextStyles.heading3(
-                    color: AppColors.tripDetailsFigmaBlack,
+                    color: AppColors.ink(context),
                   ).copyWith(
                     fontSize: TripOptionsFigmaTokens.titleFontSize,
                     fontWeight: FontWeight.w600,
@@ -348,7 +390,7 @@ class _SectionTitle extends StatelessWidget {
       child: Text(
         label,
         style: AppTextStyles.subtitle(
-          color: AppColors.tripDetailsFigmaBlack,
+          color: AppColors.ink(context),
         ).copyWith(
           fontSize: TripOptionsFigmaTokens.sectionTitleFontSize,
           fontWeight: FontWeight.w600,

@@ -35,15 +35,15 @@ class ActivityCard extends StatelessWidget {
           ),
           decoration: BoxDecoration(
             color: isSelected
-                ? SelectActivitiesFigmaTokens.selectedCardFill
-                : AppColors.white,
+                ? AppColors.selectedPurpleTint(context)
+                : AppColors.cardBg(context),
             borderRadius: BorderRadius.circular(
               SelectActivitiesFigmaTokens.activityCardRadius,
             ),
             border: Border.all(
               color: isSelected
                   ? AppColors.primary
-                  : SelectActivitiesFigmaTokens.cardBorder,
+                  : AppColors.softBorder(context),
               width: 1,
             ),
           ),
@@ -56,7 +56,7 @@ class ActivityCard extends StatelessWidget {
                   overflow: TextOverflow.ellipsis,
                   style:
                       AppTextStyles.bodyMedium(
-                        color: AppColors.tripDetailsFigmaBlack,
+                        color: AppColors.ink(context),
                       ).copyWith(
                         fontSize: SelectActivitiesFigmaTokens.activityNameSize,
                         fontWeight: FontWeight.w500,

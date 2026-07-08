@@ -38,7 +38,7 @@ class _ExpandableDescriptionState extends State<ExpandableDescription> {
       child: Text(
         widget.text,
         style: AppTextStyles.bodyMedium(
-          color: ReviewFigmaTokens.descriptionGrey,
+          color: AppColors.metaGrey(context),
         ).copyWith(
           fontSize: ReviewFigmaTokens.bodySize,
           fontWeight: FontWeight.w400,
@@ -76,7 +76,7 @@ class ExpandableDescriptionHeader extends StatelessWidget {
             child: Text(
               title,
               style: AppTextStyles.subtitle(
-                color: AppColors.tripDetailsFigmaBlack,
+                color: AppColors.ink(context),
               ).copyWith(
                 fontSize: ReviewFigmaTokens.tripNameSize,
                 fontWeight: FontWeight.w600,
@@ -87,7 +87,7 @@ class ExpandableDescriptionHeader extends StatelessWidget {
             isExpanded
                 ? Icons.keyboard_arrow_up_rounded
                 : Icons.keyboard_arrow_down_rounded,
-            color: ReviewFigmaTokens.metaGrey,
+            color: AppColors.metaGrey(context),
             size: 22.sp,
           ),
         ],
