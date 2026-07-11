@@ -425,6 +425,15 @@
   "bookingCardholderNamePlaceholder": "اسم حامل البطاقة",
 
   "bookingPaymentMethodTitle": "طريقة الدفع",
+  "bookingPaymentMethodSelect": "اختر طريقة الدفع",
+  "bookingPaymentMethodChoose": "اختر طريقة الدفع المناسبة",
+  "bookingPaymentMethodChange": "تغيير",
+  "paymentMethodContinue": "متابعة",
+  "paymentMethodEmptyTitle": "لا توجد طرق دفع",
+  "paymentMethodEmptyDescription": "لا توجد طرق دفع متاحة حاليا.",
+  "paymentMethodErrorTitle": "خطأ",
+  "paymentMethodErrorDescription": "حدث خطأ ما",
+  "paymentMethodRetry": "إعادة المحاولة",
   "bookingPaymentOptionCreditCard": "بطاقة ائتمان",
   "bookingPaymentOptionCreditCardSubtitle": "ادفع باستخدام Visa أو Mastercard",
   "bookingPaymentOptionPaypal": "PayPal",
@@ -783,5 +792,9 @@
   "csLetsGetInTouch": "تواصل معنا",
   "csCall": "اتصال",
   "csSendMessage": "إرسال رسالة",
-  "csWhatsApp": "واتساب"
+  "csWhatsApp": "واتساب",
+  "paymentWebViewTitle": "إتمام الدفع",
+  "paymentWebViewError": "تعذر تحميل صفحة الدفع.",
+  "paymentWebViewRetry": "إعادة المحاولة",
+  "paymentWebViewFailed": "فشل الدفع أو تم إلغاؤه."
 }

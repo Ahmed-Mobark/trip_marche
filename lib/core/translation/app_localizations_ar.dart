@@ -1015,6 +1015,33 @@ class AppLocalizationsAr extends AppLocalizations {
   String get bookingPaymentMethodTitle => 'طريقة الدفع';
 
   @override
+  String get bookingPaymentMethodSelect => 'اختر طريقة الدفع';
+
+  @override
+  String get bookingPaymentMethodChoose => 'اختر طريقة الدفع المناسبة';
+
+  @override
+  String get bookingPaymentMethodChange => 'تغيير';
+
+  @override
+  String get paymentMethodContinue => 'متابعة';
+
+  @override
+  String get paymentMethodEmptyTitle => 'لا توجد طرق دفع';
+
+  @override
+  String get paymentMethodEmptyDescription => 'لا توجد طرق دفع متاحة حاليا.';
+
+  @override
+  String get paymentMethodErrorTitle => 'خطأ';
+
+  @override
+  String get paymentMethodErrorDescription => 'حدث خطأ ما';
+
+  @override
+  String get paymentMethodRetry => 'إعادة المحاولة';
+
+  @override
   String get bookingPaymentOptionCreditCard => 'بطاقة ائتمان';
 
   @override
@@ -2063,4 +2090,16 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get csWhatsApp => 'واتساب';
+
+  @override
+  String get paymentWebViewTitle => 'إتمام الدفع';
+
+  @override
+  String get paymentWebViewError => 'تعذر تحميل صفحة الدفع.';
+
+  @override
+  String get paymentWebViewRetry => 'إعادة المحاولة';
+
+  @override
+  String get paymentWebViewFailed => 'فشل الدفع أو تم إلغاؤه.';
 }

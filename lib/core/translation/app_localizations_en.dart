@@ -1020,6 +1020,34 @@ class AppLocalizationsEn extends AppLocalizations {
   String get bookingPaymentMethodTitle => 'Payment Method';
 
   @override
+  String get bookingPaymentMethodSelect => 'Select Payment Method';
+
+  @override
+  String get bookingPaymentMethodChoose => 'Choose how you want to pay';
+
+  @override
+  String get bookingPaymentMethodChange => 'Change';
+
+  @override
+  String get paymentMethodContinue => 'Continue';
+
+  @override
+  String get paymentMethodEmptyTitle => 'No Payment Methods';
+
+  @override
+  String get paymentMethodEmptyDescription =>
+      'No payment methods are currently available.';
+
+  @override
+  String get paymentMethodErrorTitle => 'Error';
+
+  @override
+  String get paymentMethodErrorDescription => 'Something went wrong';
+
+  @override
+  String get paymentMethodRetry => 'Retry';
+
+  @override
   String get bookingPaymentOptionCreditCard => 'Credit Card';
 
   @override
@@ -2066,4 +2094,16 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get csWhatsApp => 'WhatsApp';
+
+  @override
+  String get paymentWebViewTitle => 'Complete Payment';
+
+  @override
+  String get paymentWebViewError => 'Unable to load payment page.';
+
+  @override
+  String get paymentWebViewRetry => 'Retry';
+
+  @override
+  String get paymentWebViewFailed => 'Payment failed or cancelled.';
 }

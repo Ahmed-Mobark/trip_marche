@@ -425,6 +425,15 @@
   "bookingCardholderNamePlaceholder": "INTESTATARIO CARTA",
 
   "bookingPaymentMethodTitle": "Metodo di pagamento",
+  "bookingPaymentMethodSelect": "Seleziona metodo di pagamento",
+  "bookingPaymentMethodChoose": "Scegli come vuoi pagare",
+  "bookingPaymentMethodChange": "Cambia",
+  "paymentMethodContinue": "Continua",
+  "paymentMethodEmptyTitle": "Nessun metodo di pagamento",
+  "paymentMethodEmptyDescription": "Nessun metodo di pagamento disponibile.",
+  "paymentMethodErrorTitle": "Errore",
+  "paymentMethodErrorDescription": "Qualcosa è andato storto",
+  "paymentMethodRetry": "Riprova",
   "bookingPaymentOptionCreditCard": "Carta di credito",
   "bookingPaymentOptionCreditCardSubtitle": "Paga con Visa, Mastercard",
   "bookingPaymentOptionPaypal": "PayPal",
@@ -783,6 +792,10 @@
   "csLetsGetInTouch": "Contattaci",
   "csCall": "Chiama",
   "csSendMessage": "Invia messaggio",
-  "csWhatsApp": "WhatsApp"
+  "csWhatsApp": "WhatsApp",
+  "paymentWebViewTitle": "Completa pagamento",
+  "paymentWebViewError": "Impossibile caricare la pagina di pagamento.",
+  "paymentWebViewRetry": "Riprova",
+  "paymentWebViewFailed": "Pagamento fallito o annullato."
 }
 

@@ -425,6 +425,15 @@
   "bookingCardholderNamePlaceholder": "NOM DU TITULAIRE",
 
   "bookingPaymentMethodTitle": "Mode de paiement",
+  "bookingPaymentMethodSelect": "Sélectionner un mode de paiement",
+  "bookingPaymentMethodChoose": "Choisissez comment vous voulez payer",
+  "bookingPaymentMethodChange": "Modifier",
+  "paymentMethodContinue": "Continuer",
+  "paymentMethodEmptyTitle": "Aucun mode de paiement",
+  "paymentMethodEmptyDescription": "Aucun mode de paiement disponible.",
+  "paymentMethodErrorTitle": "Erreur",
+  "paymentMethodErrorDescription": "Un problème est survenu",
+  "paymentMethodRetry": "Réessayer",
   "bookingPaymentOptionCreditCard": "Carte bancaire",
   "bookingPaymentOptionCreditCardSubtitle": "Payer avec Visa, Mastercard",
   "bookingPaymentOptionPaypal": "PayPal",
@@ -783,6 +792,10 @@
   "csLetsGetInTouch": "Contactez-nous",
   "csCall": "Appeler",
   "csSendMessage": "Envoyer un message",
-  "csWhatsApp": "WhatsApp"
+  "csWhatsApp": "WhatsApp",
+  "paymentWebViewTitle": "Finaliser le paiement",
+  "paymentWebViewError": "Impossible de charger la page de paiement.",
+  "paymentWebViewRetry": "Réessayer",
+  "paymentWebViewFailed": "Paiement échoué ou annulé."
 }
 

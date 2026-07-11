@@ -425,6 +425,15 @@
   "bookingCardholderNamePlaceholder": "KARTENINHABER",
 
   "bookingPaymentMethodTitle": "Zahlungsmethode",
+  "bookingPaymentMethodSelect": "Zahlungsmethode auswählen",
+  "bookingPaymentMethodChoose": "Wählen Sie, wie Sie zahlen möchten",
+  "bookingPaymentMethodChange": "Ändern",
+  "paymentMethodContinue": "Weiter",
+  "paymentMethodEmptyTitle": "Keine Zahlungsmethoden",
+  "paymentMethodEmptyDescription": "Derzeit sind keine Zahlungsmethoden verfügbar.",
+  "paymentMethodErrorTitle": "Fehler",
+  "paymentMethodErrorDescription": "Etwas ist schiefgelaufen",
+  "paymentMethodRetry": "Wiederholen",
   "bookingPaymentOptionCreditCard": "Kreditkarte",
   "bookingPaymentOptionCreditCardSubtitle": "Bezahlen mit Visa, Mastercard",
   "bookingPaymentOptionPaypal": "PayPal",
@@ -783,6 +792,10 @@
   "csLetsGetInTouch": "Kontaktieren Sie uns",
   "csCall": "Anrufen",
   "csSendMessage": "Nachricht senden",
-  "csWhatsApp": "WhatsApp"
+  "csWhatsApp": "WhatsApp",
+  "paymentWebViewTitle": "Zahlung abschließen",
+  "paymentWebViewError": "Zahlungsseite konnte nicht geladen werden.",
+  "paymentWebViewRetry": "Wiederholen",
+  "paymentWebViewFailed": "Zahlung fehlgeschlagen oder abgebrochen."
 }
 

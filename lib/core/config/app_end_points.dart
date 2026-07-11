@@ -49,4 +49,7 @@ class AppEndpoints {
 
   /// GET — paginated list of the current user's bookings.
   static const String bookings = 'bookings';
+
+  /// GET — list of available payment methods.
+  static const String paymentMethods = 'payment-methods';
 }

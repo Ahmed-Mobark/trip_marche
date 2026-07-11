@@ -2002,6 +2002,60 @@ abstract class AppLocalizations {
   /// **'Payment Method'**
   String get bookingPaymentMethodTitle;
 
+  /// No description provided for @bookingPaymentMethodSelect.
+  ///
+  /// In en, this message translates to:
+  /// **'Select Payment Method'**
+  String get bookingPaymentMethodSelect;
+
+  /// No description provided for @bookingPaymentMethodChoose.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose how you want to pay'**
+  String get bookingPaymentMethodChoose;
+
+  /// No description provided for @bookingPaymentMethodChange.
+  ///
+  /// In en, this message translates to:
+  /// **'Change'**
+  String get bookingPaymentMethodChange;
+
+  /// No description provided for @paymentMethodContinue.
+  ///
+  /// In en, this message translates to:
+  /// **'Continue'**
+  String get paymentMethodContinue;
+
+  /// No description provided for @paymentMethodEmptyTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'No Payment Methods'**
+  String get paymentMethodEmptyTitle;
+
+  /// No description provided for @paymentMethodEmptyDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'No payment methods are currently available.'**
+  String get paymentMethodEmptyDescription;
+
+  /// No description provided for @paymentMethodErrorTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Error'**
+  String get paymentMethodErrorTitle;
+
+  /// No description provided for @paymentMethodErrorDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Something went wrong'**
+  String get paymentMethodErrorDescription;
+
+  /// No description provided for @paymentMethodRetry.
+  ///
+  /// In en, this message translates to:
+  /// **'Retry'**
+  String get paymentMethodRetry;
+
   /// No description provided for @bookingPaymentOptionCreditCard.
   ///
   /// In en, this message translates to:
@@ -3993,6 +4047,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'WhatsApp'**
   String get csWhatsApp;
+
+  /// No description provided for @paymentWebViewTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Complete Payment'**
+  String get paymentWebViewTitle;
+
+  /// No description provided for @paymentWebViewError.
+  ///
+  /// In en, this message translates to:
+  /// **'Unable to load payment page.'**
+  String get paymentWebViewError;
+
+  /// No description provided for @paymentWebViewRetry.
+  ///
+  /// In en, this message translates to:
+  /// **'Retry'**
+  String get paymentWebViewRetry;
+
+  /// No description provided for @paymentWebViewFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Payment failed or cancelled.'**
+  String get paymentWebViewFailed;
 }
 
 class _AppLocalizationsDelegate

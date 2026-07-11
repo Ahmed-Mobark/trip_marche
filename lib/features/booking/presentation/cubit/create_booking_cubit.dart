@@ -4,11 +4,17 @@ import 'package:trip_marche/features/booking/data/models/create_booking_request.
 import 'package:trip_marche/features/booking/domain/entities/booking_review_data.dart';
 import 'package:trip_marche/features/booking/presentation/cubit/create_booking_state.dart';
 import 'package:trip_marche/features/booking/domain/usecases/create_booking_use_case.dart';
+import 'package:trip_marche/features/payment_method/domain/entities/payment_method_entity.dart';
 
 class CreateBookingCubit extends Cubit<CreateBookingState> {
-  CreateBookingCubit(this._createBookingUseCase) : super(const CreateBookingState());
+  CreateBookingCubit(this._createBookingUseCase)
+    : super(const CreateBookingState());
 
   final CreateBookingUseCase _createBookingUseCase;
+
+  void selectPaymentMethod(PaymentMethodEntity method) {
+    emit(state.copyWith(selectedPaymentMethod: method));
+  }
 
   Future<void> createBooking({
     required BookingReviewData data,
@@ -33,6 +39,10 @@ class CreateBookingCubit extends Cubit<CreateBookingState> {
 
     if (data.selectedRooms.isEmpty) {
       validationErrors['rooms'] = 'Please select at least one room';
+    }
+
+    if (state.selectedPaymentMethod == null) {
+      validationErrors['payment_method'] = 'Please select a payment method';
     }
 
     final adultCount = data.adultCount;
@@ -132,10 +142,7 @@ class CreateBookingCubit extends Cubit<CreateBookingState> {
         final activityId = int.tryParse(activity.id);
         if (activityId != null) {
           activities.add(
-            CreateBookingActivity(
-              travelerIndex: i,
-              activityId: activityId,
-            ),
+            CreateBookingActivity(travelerIndex: i, activityId: activityId),
           );
         }
       }
@@ -151,6 +158,7 @@ class CreateBookingCubit extends Cubit<CreateBookingState> {
       couponCode: trimmedCoupon,
       travelers: travelers,
       notes: trimmedNotes,
+      paymentMethod: state.selectedPaymentMethod?.key,
     );
 
     debugPrint('CreateBookingRequest body: ${request.toJson()}');

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:iconsax/iconsax.dart';
 import 'package:trip_marche/core/config/app_colors.dart';
 import 'package:trip_marche/core/config/dimensions/review_figma_tokens.dart';
 import 'package:trip_marche/core/extensions/localization.dart';
@@ -14,6 +16,9 @@ import 'package:trip_marche/features/booking/presentation/cubit/coupon_state.dar
 import 'package:trip_marche/features/booking/presentation/cubit/create_booking_cubit.dart';
 import 'package:trip_marche/features/booking/presentation/cubit/create_booking_state.dart';
 import 'package:trip_marche/features/nav_bar/presentation/view/main_nav_view.dart';
+import 'package:trip_marche/features/payment_method/domain/entities/payment_method_entity.dart';
+import 'package:trip_marche/features/payment_method/presentation/view/payment_methods_screen.dart';
+import 'package:trip_marche/features/booking/presentation/view/payment_webview_screen.dart';
 import '../widgets/booking_bottom_buttons.dart';
 import '../widgets/coupon_field.dart';
 import '../widgets/payment_details_card.dart';
@@ -58,8 +63,7 @@ class _ReviewBodyState extends State<_ReviewBody> {
     super.dispose();
   }
 
-  bool get _isPaying =>
-      context.watch<CreateBookingCubit>().state.isLoading;
+  bool get _isPaying => context.watch<CreateBookingCubit>().state.isLoading;
 
   BookingPriceBreakdown _breakdown(CouponState couponState) {
     final discount = couponState.isApplied
@@ -89,10 +93,10 @@ class _ReviewBodyState extends State<_ReviewBody> {
       return;
     }
     context.read<CouponCubit>().applyCoupon(
-          code: code,
-          tripId: widget.data.tripId,
-          amount: widget.data.priceBreakdown.subtotal,
-        );
+      code: code,
+      tripId: widget.data.tripId,
+      amount: widget.data.priceBreakdown.subtotal,
+    );
   }
 
   void _onPay() {
@@ -102,10 +106,10 @@ class _ReviewBodyState extends State<_ReviewBody> {
         : null;
 
     context.read<CreateBookingCubit>().createBooking(
-          data: widget.data,
-          notes: _notesController.text.trim(),
-          couponCode: couponCode,
-        );
+      data: widget.data,
+      notes: _notesController.text.trim(),
+      couponCode: couponCode,
+    );
   }
 
   void _showCreateBookingErrors(Map<String, String> errors) {
@@ -113,26 +117,58 @@ class _ReviewBodyState extends State<_ReviewBody> {
     if (messages.isEmpty) {
       return;
     }
-    appToast(
-      context: context,
-      type: ToastType.error,
-      message: messages.first,
-    );
+    appToast(context: context, type: ToastType.error, message: messages.first);
   }
 
   @override
   Widget build(BuildContext context) {
     final tr = context.tr;
+    final selectedMethod = context
+        .watch<CreateBookingCubit>()
+        .state
+        .selectedPaymentMethod;
 
     return BlocListener<CreateBookingCubit, CreateBookingState>(
       listenWhen: (previous, current) =>
           previous.status != current.status &&
-          (current.isValidationFailure || current.isFailure || current.isSuccess),
+          (current.isValidationFailure ||
+              current.isFailure ||
+              current.isSuccess),
       listener: (context, state) {
         if (state.isValidationFailure && state.validationErrors != null) {
           _showCreateBookingErrors(state.validationErrors!);
         } else if (state.isSuccess) {
           final apiMessage = state.bookingResponse?.message;
+          final requiresPayment =
+              state.bookingResponse?.data?.requiresPayment == true;
+          final checkoutUrl = state.bookingResponse?.data?.payment?.checkoutUrl;
+
+          if (requiresPayment && checkoutUrl != null) {
+            if (!mounted) return;
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (_) => PaymentWebViewScreen(
+                  url: checkoutUrl,
+                  onPaymentComplete: () {
+                    if (!mounted) return;
+                    appToast(
+                      context: context,
+                      type: ToastType.success,
+                      message:
+                          apiMessage != null && apiMessage.trim().isNotEmpty
+                          ? apiMessage
+                          : tr.bookingCreatedSuccess,
+                    );
+                    sl<AppNavigator>().pushAndRemoveUntil(
+                      screen: const MainNavView(initialIndex: 1),
+                    );
+                  },
+                ),
+              ),
+            );
+            return;
+          }
+
           appToast(
             context: context,
             type: ToastType.success,
@@ -185,12 +221,13 @@ class _ReviewBodyState extends State<_ReviewBody> {
                     child: Text(
                       tr.bookingReviewTitle,
                       textAlign: TextAlign.center,
-                      style: AppTextStyles.heading3(
-                        color: AppColors.ink(context),
-                      ).copyWith(
-                        fontSize: ReviewFigmaTokens.titleFontSize,
-                        fontWeight: FontWeight.w600,
-                      ),
+                      style:
+                          AppTextStyles.heading3(
+                            color: AppColors.ink(context),
+                          ).copyWith(
+                            fontSize: ReviewFigmaTokens.titleFontSize,
+                            fontWeight: FontWeight.w600,
+                          ),
                     ),
                   ),
                   Expanded(
@@ -207,6 +244,145 @@ class _ReviewBodyState extends State<_ReviewBody> {
                           includedTitle: tr.tripDetailsWhatsIncludedTitle,
                         ),
                         SizedBox(height: ReviewFigmaTokens.sectionGap),
+                        GestureDetector(
+                          onTap: () async {
+                            final result =
+                                await Navigator.push<PaymentMethodEntity>(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (_) =>
+                                        const PaymentMethodsScreen(),
+                                  ),
+                                );
+                            if (result != null) {
+                              context
+                                  .read<CreateBookingCubit>()
+                                  .selectPaymentMethod(result);
+                            }
+                          },
+                          child: Container(
+                            width: double.infinity,
+                            padding: EdgeInsetsDirectional.all(16.w),
+                            decoration: BoxDecoration(
+                              color: AppColors.cardBg(context),
+                              borderRadius: BorderRadius.circular(16.r),
+                              border: Border.all(
+                                color: AppColors.softBorder(context),
+                              ),
+                            ),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.stretch,
+                              children: [
+                                Text(
+                                  tr.bookingPaymentMethodTitle,
+                                  style:
+                                      AppTextStyles.bodySmall(
+                                        color: AppColors.greyText(context),
+                                      ).copyWith(
+                                        fontSize: ReviewFigmaTokens.smallSize,
+                                        fontWeight: FontWeight.w500,
+                                      ),
+                                ),
+                                SizedBox(height: 8.h),
+                                if (selectedMethod != null) ...[
+                                  Row(
+                                    children: [
+                                      Icon(
+                                        Iconsax.card,
+                                        size: 20.w,
+                                        color: AppColors.primary,
+                                      ),
+                                      SizedBox(width: 8.w),
+                                      Expanded(
+                                        child: Text(
+                                          selectedMethod.name,
+                                          style:
+                                              AppTextStyles.bodyMedium(
+                                                color: AppColors.darkText(
+                                                  context,
+                                                ),
+                                              ).copyWith(
+                                                fontSize:
+                                                    ReviewFigmaTokens.bodySize,
+                                                fontWeight: FontWeight.w600,
+                                              ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  SizedBox(height: 4.h),
+                                  Text(
+                                    selectedMethod.description,
+                                    style:
+                                        AppTextStyles.bodySmall(
+                                          color: AppColors.greyText(context),
+                                        ).copyWith(
+                                          fontSize: ReviewFigmaTokens.smallSize,
+                                        ),
+                                  ),
+                                  SizedBox(height: 8.h),
+                                  Text(
+                                    tr.bookingPaymentMethodChange,
+                                    style:
+                                        AppTextStyles.bodyMedium(
+                                          color: AppColors.primary,
+                                        ).copyWith(
+                                          fontSize: ReviewFigmaTokens.bodySize,
+                                          fontWeight: FontWeight.w500,
+                                        ),
+                                  ),
+                                ] else ...[
+                                  Row(
+                                    children: [
+                                      Icon(
+                                        Iconsax.card,
+                                        size: 20.w,
+                                        color: AppColors.greyText(context),
+                                      ),
+                                      SizedBox(width: 8.w),
+                                      Expanded(
+                                        child: Text(
+                                          tr.bookingPaymentMethodSelect,
+                                          style:
+                                              AppTextStyles.bodyMedium(
+                                                color: AppColors.greyText(
+                                                  context,
+                                                ),
+                                              ).copyWith(
+                                                fontSize:
+                                                    ReviewFigmaTokens.bodySize,
+                                              ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  SizedBox(height: 4.h),
+                                  Text(
+                                    tr.bookingPaymentMethodChoose,
+                                    style:
+                                        AppTextStyles.bodySmall(
+                                          color: AppColors.greyText(context),
+                                        ).copyWith(
+                                          fontSize: ReviewFigmaTokens.smallSize,
+                                        ),
+                                  ),
+                                  SizedBox(height: 8.h),
+                                  Text(
+                                    '>',
+                                    style:
+                                        AppTextStyles.bodyMedium(
+                                          color: AppColors.primary,
+                                        ).copyWith(
+                                          fontSize: ReviewFigmaTokens.bodySize,
+                                          fontWeight: FontWeight.w500,
+                                        ),
+                                  ),
+                                ],
+                              ],
+                            ),
+                          ),
+                        ),
+                        SizedBox(height: ReviewFigmaTokens.sectionGap),
                         BlocBuilder<CouponCubit, CouponState>(
                           builder: (context, couponState) {
                             return CouponField(
@@ -215,12 +391,16 @@ class _ReviewBodyState extends State<_ReviewBody> {
                               placeholder: tr.bookingReviewCouponPlaceholder,
                               applyLabel: tr.bookingReviewCouponApply,
                               appliedLabel: tr.bookingReviewCouponApplied,
-                              successMessage: couponState.successMessage ??
+                              successMessage:
+                                  couponState.successMessage ??
                                   tr.bookingReviewCouponSuccess,
                               onApply: _applyCoupon,
-                              onChanged: context.read<CouponCubit>().onCodeChanged,
+                              onChanged: context
+                                  .read<CouponCubit>()
+                                  .onCodeChanged,
                               showSuccess: couponState.isApplied,
-                              showError: couponState.status == CouponStatus.error &&
+                              showError:
+                                  couponState.status == CouponStatus.error &&
                                   couponState.errorMessage != null,
                               errorMessage: couponState.errorMessage,
                               isLoading: couponState.isLoading,
@@ -241,13 +421,18 @@ class _ReviewBodyState extends State<_ReviewBody> {
                               travelersLabel: tr.bookingReviewPaymentTravelers(
                                 breakdown.travelersCount,
                               ),
-                              activitiesLabel: tr.bookingReviewPaymentActivities,
+                              activitiesLabel:
+                                  tr.bookingReviewPaymentActivities,
                               taxesLabel: tr.bookingReviewPaymentTaxes,
                               totalLabel: tr.bookingReviewPaymentTotal,
                               currencySuffix: widget.data.currency,
                               subtotalLabel: tr.bookingReviewPaymentSubtotal,
-                              finalTotalLabel: tr.bookingReviewPaymentFinalTotal,
-                              couponRowLabel: _couponRowLabel(context, couponState),
+                              finalTotalLabel:
+                                  tr.bookingReviewPaymentFinalTotal,
+                              couponRowLabel: _couponRowLabel(
+                                context,
+                                couponState,
+                              ),
                               showCouponBreakdown: couponState.isApplied,
                             );
                           },
@@ -271,25 +456,26 @@ class _ReviewBodyState extends State<_ReviewBody> {
                             filled: true,
                             fillColor: AppColors.cardBg(context),
                             border: OutlineInputBorder(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(12)),
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(12),
+                              ),
                               borderSide: BorderSide(
                                 color: AppColors.softBorder(context),
                               ),
                             ),
                             enabledBorder: OutlineInputBorder(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(12)),
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(12),
+                              ),
                               borderSide: BorderSide(
                                 color: AppColors.softBorder(context),
                               ),
                             ),
                             focusedBorder: OutlineInputBorder(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(12)),
-                              borderSide: BorderSide(
-                                color: AppColors.primary,
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(12),
                               ),
+                              borderSide: BorderSide(color: AppColors.primary),
                             ),
                           ),
                         ),
