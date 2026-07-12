@@ -44,5 +44,7 @@ void initMyTripsInjection(GetIt sl) {
     () => BookingsCubit(sl<FetchBookingsUseCase>()),
   );
 
-  sl.registerFactory<MyTripsShellCubit>(() => MyTripsShellCubit());
+  sl.registerFactory<MyTripsShellCubit>(
+    () => MyTripsShellCubit(sl<ToggleWishlistUseCase>()),
+  );
 }

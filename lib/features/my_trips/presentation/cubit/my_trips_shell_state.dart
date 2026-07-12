@@ -23,7 +23,6 @@ class MyTripRowUiModel extends Equatable {
   final String? imageUrl;
   final bool isWishlisted;
 
-  /// Figma: on **Active**, third card shows "Download pdf" instead of "Booking Details".
   final bool useDownloadPdfWhenActive;
 
   MyTripRowUiModel copyWith({
@@ -70,24 +69,36 @@ class MyTripsShellState extends Equatable {
     this.tab = MyTripsShellTab.past,
     this.searchQuery = '',
     this.trips = const [],
+    this.favoriteStatus = const {},
+    this.wishlistErrorMessage,
   });
 
   final MyTripsShellTab tab;
   final String searchQuery;
   final List<MyTripRowUiModel> trips;
+  final Map<int, bool> favoriteStatus;
+  final String? wishlistErrorMessage;
 
   MyTripsShellState copyWith({
     MyTripsShellTab? tab,
     String? searchQuery,
     List<MyTripRowUiModel>? trips,
+    Map<int, bool>? favoriteStatus,
+    String? wishlistErrorMessage,
+    bool clearWishlistError = false,
   }) {
     return MyTripsShellState(
       tab: tab ?? this.tab,
       searchQuery: searchQuery ?? this.searchQuery,
       trips: trips ?? this.trips,
+      favoriteStatus: favoriteStatus ?? this.favoriteStatus,
+      wishlistErrorMessage: clearWishlistError
+          ? null
+          : (wishlistErrorMessage ?? this.wishlistErrorMessage),
     );
   }
 
   @override
-  List<Object?> get props => [tab, searchQuery, trips];
+  List<Object?> get props =>
+      [tab, searchQuery, trips, favoriteStatus, wishlistErrorMessage];
 }

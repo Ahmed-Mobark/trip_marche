@@ -30,6 +30,9 @@ class MyTripsScreenTripCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    debugPrint(
+      '[MyTripsCard] Build trip=${trip.id} isWishlisted=${trip.isWishlisted} iconColor=${trip.isWishlisted ? "red" : "grey"}',
+    );
     final tr = context.tr;
 
     final (Color badgeColor, String badgeLabel) = switch (tab) {
@@ -167,11 +170,16 @@ class MyTripsScreenTripCard extends StatelessWidget {
                           ),
                           child: Material(
                             color: AppColors.transparent,
-                            child: InkWell(
-                              onTap: () => context
-                                  .read<MyTripsShellCubit>()
-                                  .toggleWishlist(trip.id),
-                              customBorder: const CircleBorder(),
+                              child: InkWell(
+                                onTap: () {
+                                  debugPrint(
+                                    '[MyTripsCard] Heart tapped, tripId=${trip.id}, current isWishlisted=${trip.isWishlisted}',
+                                  );
+                                  context
+                                      .read<MyTripsShellCubit>()
+                                      .toggleWishlist(trip.id);
+                                },
+                                customBorder: const CircleBorder(),
                               child: Container(
                                 width: MyTripsTripCardTokens.favoriteSize,
                                 height: MyTripsTripCardTokens.favoriteSize,
@@ -185,7 +193,9 @@ class MyTripsScreenTripCard extends StatelessWidget {
                                       ? Iconsax.heart5
                                       : Iconsax.heart,
                                   size: MyTripsTripCardTokens.favoriteIcon,
-                                  color: AppColors.myTripsTripCardRed,
+                                  color: trip.isWishlisted
+                                      ? AppColors.myTripsTripCardRed
+                                      : AppColors.greyText(context),
                                 ),
                               ),
                             ),

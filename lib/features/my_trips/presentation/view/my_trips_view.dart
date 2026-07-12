@@ -18,6 +18,7 @@ import 'package:trip_marche/features/my_trips/presentation/my_trips_figma_tokens
 import 'package:trip_marche/features/my_trips/presentation/widgets/my_trips_screen_trip_card.dart';
 import 'package:trip_marche/features/my_trips/presentation/widgets/my_trips_screen_tabs.dart';
 import 'package:trip_marche/features/trip_details/presentation/view/trip_details_view.dart';
+import 'package:trip_marche/features/trip_details/presentation/trip_wishlist_pop_result.dart';
 
 class MyTripsView extends StatelessWidget {
   const MyTripsView({super.key});
@@ -59,7 +60,16 @@ class _MyTripsViewBodyState extends State<_MyTripsViewBody> {
   void initState() {
     super.initState();
     _searchCtrl = TextEditingController();
-    context.read<BookingsCubit>().loadInitial();
+    final bookingsCubit = context.read<BookingsCubit>();
+    final shellCubit = context.read<MyTripsShellCubit>();
+
+    for (final b in bookingsCubit.state.bookings) {
+      debugPrint(
+        '[MyTrips] Initial favorite for trip ${b.trip.id} (${b.trip.title}) = ${shellCubit.isWishlisted(b.trip.id)}',
+      );
+    }
+
+    bookingsCubit.loadInitial();
   }
 
   @override
@@ -68,9 +78,27 @@ class _MyTripsViewBodyState extends State<_MyTripsViewBody> {
     super.dispose();
   }
 
-  void _onBookingTap(Booking booking) {
-    sl<AppNavigator>().push(
-      screen: TripDetailsView(tripId: booking.trip.id),
+  Future<void> _onBookingTap(Booking booking) async {
+    final shellCubit = context.read<MyTripsShellCubit>();
+    debugPrint('[MyTrips] Tap trip ${booking.trip.id} (${booking.trip.title})');
+
+    final result = await sl<AppNavigator>().push<TripWishlistPopResult>(
+      screen: TripDetailsView(
+        tripId: booking.trip.id,
+        initialIsWishlisted: shellCubit.isWishlisted(booking.trip.id),
+      ),
+    );
+
+    if (result == null || !mounted) {
+      return;
+    }
+
+    debugPrint(
+      '[MyTrips] Returned from trip details tripId=${result.tripId} isWishlisted=${result.isWishlisted}',
+    );
+    shellCubit.applyWishlistStateFromDetails(
+      result.tripId,
+      result.isWishlisted,
     );
   }
 
@@ -277,51 +305,63 @@ class _BookingsList extends StatelessWidget {
       );
     }
 
-    return RefreshIndicator(
-      onRefresh: onRefresh,
-      child: NotificationListener<ScrollNotification>(
-        onNotification: (notification) {
-          if (notification is ScrollEndNotification &&
-              notification.metrics.extentAfter < 120.h &&
-              state.hasMore) {
-            onLoadMore();
-          }
-          return false;
-        },
-        child: ListView.separated(
-          physics: const BouncingScrollPhysics(),
-          padding: EdgeInsetsDirectional.only(
-            start: MyTripsFigmaTokens.padH,
-            end: MyTripsFigmaTokens.padH,
-            top: MyTripsFigmaTokens.listPadTop,
-            bottom: MyTripsFigmaTokens.listPadBottom,
+    return BlocBuilder<MyTripsShellCubit, MyTripsShellState>(
+      builder: (context, shellState) {
+        final shellCubit = context.read<MyTripsShellCubit>();
+
+        return RefreshIndicator(
+          onRefresh: onRefresh,
+          child: NotificationListener<ScrollNotification>(
+            onNotification: (notification) {
+              if (notification is ScrollEndNotification &&
+                  notification.metrics.extentAfter < 120.h &&
+                  state.hasMore) {
+                onLoadMore();
+              }
+              return false;
+            },
+            child: ListView.separated(
+              physics: const BouncingScrollPhysics(),
+              padding: EdgeInsetsDirectional.only(
+                start: MyTripsFigmaTokens.padH,
+                end: MyTripsFigmaTokens.padH,
+                top: MyTripsFigmaTokens.listPadTop,
+                bottom: MyTripsFigmaTokens.listPadBottom,
+              ),
+              itemCount: items.length + (state.hasMore ? 1 : 0),
+              separatorBuilder: (_, __) =>
+                  SizedBox(height: MyTripsFigmaTokens.cardSeparator),
+              itemBuilder: (context, index) {
+                if (index >= items.length) {
+                  return const Padding(
+                    padding: EdgeInsets.symmetric(vertical: 16),
+                    child: Center(child: CircularProgressIndicator()),
+                  );
+                }
+                final booking = items[index];
+                final isFav = shellCubit.isWishlisted(booking.trip.id);
+
+                debugPrint(
+                  '[MyTrips] Render trip ${booking.trip.id} (${booking.trip.title}) isWishlisted=$isFav',
+                );
+
+                return MyTripsScreenTripCard(
+                  trip: _toRowModel(booking, isFav),
+                  tab: tab,
+                  onPrimaryTap: () => onBookingTap(booking),
+                  onSecondaryTap: () => onBookingTap(booking),
+                  onBottomTap: () => onBookingTap(booking),
+                );
+              },
+            ),
           ),
-          itemCount: items.length + (state.hasMore ? 1 : 0),
-          separatorBuilder: (_, __) =>
-              SizedBox(height: MyTripsFigmaTokens.cardSeparator),
-          itemBuilder: (context, index) {
-            if (index >= items.length) {
-              return const Padding(
-                padding: EdgeInsets.symmetric(vertical: 16),
-                child: Center(child: CircularProgressIndicator()),
-              );
-            }
-            final booking = items[index];
-            return MyTripsScreenTripCard(
-              trip: _toRowModel(booking),
-              tab: tab,
-              onPrimaryTap: () => onBookingTap(booking),
-              onSecondaryTap: () => onBookingTap(booking),
-              onBottomTap: () => onBookingTap(booking),
-            );
-          },
-        ),
-      ),
+        );
+      },
     );
   }
 }
 
-MyTripRowUiModel _toRowModel(Booking booking) {
+MyTripRowUiModel _toRowModel(Booking booking, bool isWishlisted) {
   return MyTripRowUiModel(
     id: booking.id,
     title: booking.trip.title,
@@ -330,7 +370,7 @@ MyTripRowUiModel _toRowModel(Booking booking) {
     locationLabel: booking.trip.fromLocation,
     dateRange: booking.dates.range,
     imageUrl: booking.trip.coverImage,
-    isWishlisted: false,
+    isWishlisted: isWishlisted,
     useDownloadPdfWhenActive: false,
   );
 }
