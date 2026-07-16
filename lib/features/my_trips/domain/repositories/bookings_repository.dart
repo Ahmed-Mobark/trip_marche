@@ -5,6 +5,10 @@ import 'package:trip_marche/features/my_trips/domain/entities/booking_entity.dar
 abstract class BookingsRepository {
   Future<Either<Failure, BookingsPage>> fetchBookings({
     required int page,
-    int perPage = 15,
+    required String status,
+    String search = '',
+    int perPage = 10,
   });
+
+  Future<Either<Failure, String>> fetchBookingPdf(int bookingId);
 }

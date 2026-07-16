@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:trip_marche/core/extensions/localization.dart';
 import 'package:trip_marche/core/theme/app_colors.dart';
+import 'package:trip_marche/features/my_trips/presentation/cubit/bookings_cubit.dart';
 import 'package:trip_marche/features/my_trips/presentation/cubit/my_trips_shell_cubit.dart';
 import 'package:trip_marche/features/my_trips/presentation/cubit/my_trips_shell_state.dart';
 import 'package:trip_marche/features/my_trips/presentation/cubit/my_trips_shell_tab.dart';
@@ -16,7 +17,8 @@ class MyTripsScreenTabs extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<MyTripsShellCubit, MyTripsShellState>(
       builder: (context, state) {
-        final cubit = context.read<MyTripsShellCubit>();
+        final shellCubit = context.read<MyTripsShellCubit>();
+        final bookingsCubit = context.read<BookingsCubit>();
         return Padding(
           padding: EdgeInsetsDirectional.only(
             start: MyTripsFigmaTokens.padH,
@@ -30,7 +32,10 @@ class MyTripsScreenTabs extends StatelessWidget {
                 child: _TabPill(
                   label: context.tr.myTripsTabActive,
                   selected: state.tab == MyTripsShellTab.active,
-                  onTap: () => cubit.selectTab(MyTripsShellTab.active),
+                  onTap: () {
+                    shellCubit.selectTab(MyTripsShellTab.active);
+                    bookingsCubit.changeStatus(MyTripsShellTab.active);
+                  },
                 ),
               ),
               SizedBox(width: MyTripsFigmaTokens.tabGap),
@@ -38,7 +43,10 @@ class MyTripsScreenTabs extends StatelessWidget {
                 child: _TabPill(
                   label: context.tr.myTripsTabPastNew,
                   selected: state.tab == MyTripsShellTab.past,
-                  onTap: () => cubit.selectTab(MyTripsShellTab.past),
+                  onTap: () {
+                    shellCubit.selectTab(MyTripsShellTab.past);
+                    bookingsCubit.changeStatus(MyTripsShellTab.past);
+                  },
                 ),
               ),
               SizedBox(width: MyTripsFigmaTokens.tabGap),
@@ -46,7 +54,10 @@ class MyTripsScreenTabs extends StatelessWidget {
                 child: _TabPill(
                   label: context.tr.myTripsTabCanceled,
                   selected: state.tab == MyTripsShellTab.canceled,
-                  onTap: () => cubit.selectTab(MyTripsShellTab.canceled),
+                  onTap: () {
+                    shellCubit.selectTab(MyTripsShellTab.canceled);
+                    bookingsCubit.changeStatus(MyTripsShellTab.canceled);
+                  },
                 ),
               ),
             ],

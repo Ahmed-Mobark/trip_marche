@@ -20,6 +20,7 @@ class MyTripsScreenTripCard extends StatelessWidget {
     this.onPrimaryTap,
     this.onSecondaryTap,
     this.onBottomTap,
+    this.isPdfLoading = false,
   });
 
   final MyTripRowUiModel trip;
@@ -27,6 +28,7 @@ class MyTripsScreenTripCard extends StatelessWidget {
   final VoidCallback? onPrimaryTap;
   final VoidCallback? onSecondaryTap;
   final VoidCallback? onBottomTap;
+  final bool isPdfLoading;
 
   @override
   Widget build(BuildContext context) {
@@ -267,7 +269,11 @@ class MyTripsScreenTripCard extends StatelessWidget {
                       ],
                     ),
                     SizedBox(height: MyTripsTripCardTokens.belowTwinRow),
-                    _FooterCta(label: bottomLabel, onTap: onBottomTap),
+                    _FooterCta(
+                      label: bottomLabel,
+                      onTap: onBottomTap,
+                      isLoading: isPdfLoading,
+                    ),
                   ],
                 ),
               ),
@@ -426,17 +432,22 @@ class _OutlineCta extends StatelessWidget {
 }
 
 class _FooterCta extends StatelessWidget {
-  const _FooterCta({required this.label, this.onTap});
+  const _FooterCta({
+    required this.label,
+    this.onTap,
+    this.isLoading = false,
+  });
 
   final String label;
   final VoidCallback? onTap;
+  final bool isLoading;
 
   @override
   Widget build(BuildContext context) {
     return Material(
       color: AppColors.transparent,
       child: InkWell(
-        onTap: onTap,
+        onTap: isLoading ? null : onTap,
         borderRadius: BorderRadius.circular(MyTripsTripCardTokens.footerRadius),
         child: Container(
           height: MyTripsTripCardTokens.footerH,
@@ -458,11 +469,21 @@ class _FooterCta extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             mainAxisSize: MainAxisSize.min,
             children: [
-              Icon(
-                Icons.picture_as_pdf_rounded,
-                size: MyTripsTripCardTokens.pdfSize,
-                color: AppColors.myTripsTripCardRed,
-              ),
+              if (isLoading)
+                SizedBox(
+                  width: MyTripsTripCardTokens.pdfSize,
+                  height: MyTripsTripCardTokens.pdfSize,
+                  child: CircularProgressIndicator(
+                    strokeWidth: 2,
+                    color: AppColors.myTripsTripCardRed,
+                  ),
+                )
+              else
+                Icon(
+                  Icons.picture_as_pdf_rounded,
+                  size: MyTripsTripCardTokens.pdfSize,
+                  color: AppColors.myTripsTripCardRed,
+                ),
               SizedBox(width: MyTripsTripCardTokens.pdfGap),
               Flexible(
                 child: Text(

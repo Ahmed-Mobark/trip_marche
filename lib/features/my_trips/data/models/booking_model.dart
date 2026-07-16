@@ -135,8 +135,12 @@ class BookingModel {
     required this.reference,
     required this.status,
     required this.paymentStatus,
+    this.paymentMethod,
+    this.requiresPayment = false,
     this.paidAt,
+    this.expiresAt,
     required this.currency,
+    this.payment,
     required this.trip,
     required this.dates,
     required this.travelersCount,
@@ -148,8 +152,12 @@ class BookingModel {
   final String reference;
   final String status;
   final String paymentStatus;
+  final String? paymentMethod;
+  final bool requiresPayment;
   final String? paidAt;
+  final String? expiresAt;
   final String currency;
+  final Map<String, dynamic>? payment;
   final BookingTripModel trip;
   final BookingDatesModel dates;
   final BookingTravelersCountModel travelersCount;
@@ -161,15 +169,22 @@ class BookingModel {
     final dates = json['dates'] as Map<String, dynamic>? ?? {};
     final travelers = json['travelers_count'] as Map<String, dynamic>? ?? {};
     final payment = json['payment_detail'] as Map<String, dynamic>? ?? {};
+    final rawPayment = json['payment'];
     return BookingModel(
       id: json['id'] as int? ?? 0,
       reference: (json['reference'] as String?)?.trim() ?? '',
       status: (json['status'] as String?)?.trim() ?? '',
       paymentStatus: (json['payment_status'] as String?)?.trim() ?? '',
+      paymentMethod: json['payment_method'] as String?,
+      requiresPayment: json['requires_payment'] as bool? ?? false,
       paidAt: json['paid_at'] as String?,
+      expiresAt: json['expires_at'] as String?,
       currency: (json['currency'] as String?)?.trim().isNotEmpty == true
           ? (json['currency'] as String).trim()
           : 'EGP',
+      payment: rawPayment is Map<String, dynamic>
+          ? Map<String, dynamic>.from(rawPayment)
+          : null,
       trip: BookingTripModel.fromJson(trip),
       dates: BookingDatesModel.fromJson(dates),
       travelersCount: BookingTravelersCountModel.fromJson(travelers),
@@ -183,8 +198,12 @@ class BookingModel {
         reference: reference,
         status: status,
         paymentStatus: paymentStatus,
+        paymentMethod: paymentMethod,
+        requiresPayment: requiresPayment,
         paidAt: paidAt,
+        expiresAt: expiresAt,
         currency: currency,
+        payment: payment,
         trip: trip.toEntity(),
         dates: dates.toEntity(),
         travelersCount: travelersCount.toEntity(),

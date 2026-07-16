@@ -66,7 +66,7 @@ class MyTripRowUiModel extends Equatable {
 
 class MyTripsShellState extends Equatable {
   const MyTripsShellState({
-    this.tab = MyTripsShellTab.past,
+    this.tab = MyTripsShellTab.active,
     this.searchQuery = '',
     this.trips = const [],
     this.favoriteStatus = const {},

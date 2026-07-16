@@ -96,8 +96,12 @@ class Booking extends Equatable {
     required this.reference,
     required this.status,
     required this.paymentStatus,
+    this.paymentMethod,
+    this.requiresPayment = false,
     this.paidAt,
+    this.expiresAt,
     required this.currency,
+    this.payment,
     required this.trip,
     required this.dates,
     required this.travelersCount,
@@ -109,8 +113,12 @@ class Booking extends Equatable {
   final String reference;
   final String status;
   final String paymentStatus;
+  final String? paymentMethod;
+  final bool requiresPayment;
   final String? paidAt;
+  final String? expiresAt;
   final String currency;
+  final Map<String, dynamic>? payment;
   final BookingTrip trip;
   final BookingDates dates;
   final BookingTravelersCount travelersCount;
@@ -139,8 +147,12 @@ class Booking extends Equatable {
         reference,
         status,
         paymentStatus,
+        paymentMethod,
+        requiresPayment,
         paidAt,
+        expiresAt,
         currency,
+        payment,
         trip,
         dates,
         travelersCount,

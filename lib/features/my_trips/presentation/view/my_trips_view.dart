@@ -7,6 +7,7 @@ import 'package:trip_marche/core/theme/app_text_styles.dart';
 import 'package:trip_marche/core/injection/injection_container.dart';
 import 'package:trip_marche/core/navigation/app_navigator.dart';
 import 'package:trip_marche/core/theme/app_colors.dart';
+import 'package:trip_marche/core/toast/app_toast.dart';
 import 'package:trip_marche/core/widgets/app_trip_search_text_field.dart';
 import 'package:trip_marche/features/my_trips/domain/entities/booking_entity.dart';
 import 'package:trip_marche/features/my_trips/presentation/cubit/bookings_cubit.dart';
@@ -14,7 +15,10 @@ import 'package:trip_marche/features/my_trips/presentation/cubit/bookings_state.
 import 'package:trip_marche/features/my_trips/presentation/cubit/my_trips_shell_cubit.dart';
 import 'package:trip_marche/features/my_trips/presentation/cubit/my_trips_shell_state.dart';
 import 'package:trip_marche/features/my_trips/presentation/cubit/my_trips_shell_tab.dart';
+import 'package:trip_marche/features/my_trips/presentation/cubit/booking_pdf_cubit.dart';
+import 'package:trip_marche/features/my_trips/presentation/cubit/booking_pdf_state.dart';
 import 'package:trip_marche/features/my_trips/presentation/my_trips_figma_tokens.dart';
+import 'package:trip_marche/features/my_trips/presentation/view/booking_pdf_viewer_screen.dart';
 import 'package:trip_marche/features/my_trips/presentation/widgets/my_trips_screen_trip_card.dart';
 import 'package:trip_marche/features/my_trips/presentation/widgets/my_trips_screen_tabs.dart';
 import 'package:trip_marche/features/trip_details/presentation/view/trip_details_view.dart';
@@ -29,20 +33,10 @@ class MyTripsView extends StatelessWidget {
       providers: [
         BlocProvider(create: (_) => sl<MyTripsShellCubit>()),
         BlocProvider(create: (_) => sl<BookingsCubit>()),
+        BlocProvider(create: (_) => sl<BookingPdfCubit>()),
       ],
       child: const _MyTripsViewBody(),
     );
-  }
-}
-
-BookingStatusCategory _categoryForTab(MyTripsShellTab tab) {
-  switch (tab) {
-    case MyTripsShellTab.active:
-      return BookingStatusCategory.active;
-    case MyTripsShellTab.past:
-      return BookingStatusCategory.past;
-    case MyTripsShellTab.canceled:
-      return BookingStatusCategory.cancelled;
   }
 }
 
@@ -102,15 +96,39 @@ class _MyTripsViewBodyState extends State<_MyTripsViewBody> {
     );
   }
 
+  Future<void> _onBookingPdfTap(Booking booking) async {
+    final pdfCubit = context.read<BookingPdfCubit>();
+    await pdfCubit.fetchAndOpen(booking.id);
+  }
+
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<MyTripsShellCubit, MyTripsShellState>(
       builder: (context, shellState) {
-        final shellCubit = context.read<MyTripsShellCubit>();
-        final category = _categoryForTab(shellState.tab);
-        final q = shellState.searchQuery.trim().toLowerCase();
+      final bookingsCubit = context.read<BookingsCubit>();
 
-        return Scaffold(
+      return BlocListener<BookingPdfCubit, BookingPdfState>(
+        listener: (context, pdfState) {
+          if (pdfState.status == BookingPdfStatus.success &&
+              pdfState.filePath != null) {
+            sl<AppNavigator>().push(
+              screen: BookingPdfViewerScreen(
+                filePath: pdfState.filePath!,
+                title: 'Booking Details',
+              ),
+            );
+            context.read<BookingPdfCubit>().reset();
+          } else if (pdfState.status == BookingPdfStatus.failure &&
+              pdfState.errorMessage != null) {
+            appToast(
+              context: context,
+              type: ToastType.error,
+              message: pdfState.errorMessage!,
+            );
+            context.read<BookingPdfCubit>().reset();
+          }
+        },
+        child: Scaffold(
           backgroundColor: AppColors.primary,
           body: Stack(
             fit: StackFit.expand,
@@ -167,10 +185,10 @@ class _MyTripsViewBodyState extends State<_MyTripsViewBody> {
                             child: AppTripSearchTextField(
                               controller: _searchCtrl,
                               hintText: context.tr.myTripsSearchHint,
-                              onChanged: shellCubit.setSearchQuery,
+                              onChanged: (q) => bookingsCubit.updateSearch(q),
                               onClear: () {
                                 _searchCtrl.clear();
-                                shellCubit.setSearchQuery('');
+                                bookingsCubit.updateSearch('');
                               },
                             ),
                           ),
@@ -180,10 +198,9 @@ class _MyTripsViewBodyState extends State<_MyTripsViewBody> {
                               builder: (context, bookingsState) {
                                 return _BookingsList(
                                   state: bookingsState,
-                                  category: category,
                                   tab: shellState.tab,
-                                  query: q,
                                   onBookingTap: _onBookingTap,
+                                  onBookingPdfTap: _onBookingPdfTap,
                                   onRetry: () =>
                                       context.read<BookingsCubit>().loadInitial(),
                                   onRefresh: () =>
@@ -202,47 +219,33 @@ class _MyTripsViewBodyState extends State<_MyTripsViewBody> {
               ),
             ],
           ),
-        );
-      },
-    );
-  }
+        ),
+      );
+    },
+  );
+}
 }
 
 class _BookingsList extends StatelessWidget {
   const _BookingsList({
     required this.state,
-    required this.category,
     required this.tab,
-    required this.query,
     required this.onBookingTap,
+    required this.onBookingPdfTap,
     required this.onRetry,
     required this.onRefresh,
     required this.onLoadMore,
   });
 
   final BookingsState state;
-  final BookingStatusCategory category;
   final MyTripsShellTab tab;
-  final String query;
   final void Function(Booking) onBookingTap;
+  final void Function(Booking) onBookingPdfTap;
   final VoidCallback onRetry;
   final Future<void> Function() onRefresh;
   final VoidCallback onLoadMore;
 
-  List<Booking> get _filtered {
-    final inTab = state.bookings
-        .where((b) => b.statusCategory == category)
-        .toList();
-    if (query.isEmpty) {
-      return inTab;
-    }
-    return inTab.where((b) {
-      final q = query;
-      return b.trip.title.toLowerCase().contains(q) ||
-          b.trip.fromLocation.toLowerCase().contains(q) ||
-          b.reference.toLowerCase().contains(q);
-    }).toList();
-  }
+  List<Booking> get _filtered => state.bookings;
 
   @override
   Widget build(BuildContext context) {
@@ -345,12 +348,21 @@ class _BookingsList extends StatelessWidget {
                   '[MyTrips] Render trip ${booking.trip.id} (${booking.trip.title}) isWishlisted=$isFav',
                 );
 
-                return MyTripsScreenTripCard(
-                  trip: _toRowModel(booking, isFav),
-                  tab: tab,
-                  onPrimaryTap: () => onBookingTap(booking),
-                  onSecondaryTap: () => onBookingTap(booking),
-                  onBottomTap: () => onBookingTap(booking),
+                return BlocBuilder<BookingPdfCubit, BookingPdfState>(
+                  builder: (context, pdfState) {
+                    final isPdfLoading =
+                        pdfState.isLoadingFor(booking.id);
+                    return MyTripsScreenTripCard(
+                      trip: _toRowModel(booking, isFav),
+                      tab: tab,
+                      onPrimaryTap: () => onBookingTap(booking),
+                      onSecondaryTap: () => onBookingTap(booking),
+                      onBottomTap: isPdfLoading
+                          ? null
+                          : () => onBookingPdfTap(booking),
+                      isPdfLoading: isPdfLoading,
+                    );
+                  },
                 );
               },
             ),

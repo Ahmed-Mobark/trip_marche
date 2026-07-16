@@ -10,10 +10,14 @@ class FetchBookingsUseCase {
 
   Future<Either<Failure, BookingsPage>> call({
     required int page,
-    int perPage = 15,
+    required String status,
+    String search = '',
+    int perPage = 10,
   }) {
     return _repository.fetchBookings(
       page: page,
+      status: status,
+      search: search,
       perPage: perPage,
     );
   }

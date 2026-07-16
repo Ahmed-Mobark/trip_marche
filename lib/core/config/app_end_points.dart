@@ -52,4 +52,7 @@ class AppEndpoints {
 
   /// GET — list of available payment methods.
   static const String paymentMethods = 'payment-methods';
+
+  /// GET — booking details PDF by booking id.
+  static String bookingsPdf(int bookingId) => 'bookings/$bookingId/pdf';
 }
