@@ -162,16 +162,15 @@ class MyTripBookingCard extends StatelessWidget {
                 children: [
                   Row(
                     children: [
-                      Expanded(
-                        child: Text(
-                          _title,
-                          maxLines: 2,
-                          overflow: TextOverflow.ellipsis,
-                          style: AppTextStyles.subtitle(
-                            color: AppColors.darkText(context),
-                          ).copyWith(fontWeight: FontWeight.w700),
-                        ),
-                      ),
+                       Expanded(
+                         child: Text(
+                           _title,
+                           maxLines: 3,
+                           style: AppTextStyles.subtitle(
+                             color: AppColors.darkText(context),
+                           ).copyWith(fontWeight: FontWeight.w700),
+                         ),
+                       ),
                       TripFavoriteCircleButton(
                         isFavorite: _heartFilled,
                         onTap: () => onFavoriteTap?.call(),

@@ -356,7 +356,7 @@ class _BookingsList extends StatelessWidget {
                       trip: _toRowModel(booking, isFav),
                       tab: tab,
                       onPrimaryTap: () => onBookingTap(booking),
-                      onSecondaryTap: () => onBookingTap(booking),
+                      onSecondaryTap: () => onBookingPdfTap(booking),
                       onBottomTap: isPdfLoading
                           ? null
                           : () => onBookingPdfTap(booking),

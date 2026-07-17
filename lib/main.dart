@@ -7,6 +7,7 @@ import 'core/app/app_state.dart';
 import 'core/bloc/bloc_observer.dart';
 import 'core/injection/injection_container.dart' as injection;
 
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await ScreenUtil.ensureScreenSize();

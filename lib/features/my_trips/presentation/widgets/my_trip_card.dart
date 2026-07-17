@@ -65,12 +65,11 @@ class MyTripCard extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      trip.title,
-                      style: AppTextStyles.subtitle().copyWith(fontSize: 15.sp),
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
-                    ),
+                     Text(
+                       trip.title,
+                       style: AppTextStyles.subtitle().copyWith(fontSize: 15.sp),
+                       maxLines: 3,
+                     ),
                     SizedBox(height: 6.h),
                     Row(
                       children: [

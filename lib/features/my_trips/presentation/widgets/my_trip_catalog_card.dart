@@ -118,17 +118,16 @@ class MyTripCatalogCard extends StatelessWidget {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               mainAxisAlignment: MainAxisAlignment.start,
                               children: [
-                                Text(
-                                  trip.title,
-                                  maxLines: 2,
-                                  overflow: TextOverflow.ellipsis,
-                                  style: TextStyle(
-                                    fontSize: 17.sp,
-                                    fontWeight: FontWeight.w700,
-                                    color: AppColors.darkText(context),
-                                    height: 1.25,
-                                  ),
-                                ),
+                                 Text(
+                                   trip.title,
+                                   maxLines: 3,
+                                   style: TextStyle(
+                                     fontSize: 17.sp,
+                                     fontWeight: FontWeight.w700,
+                                     color: AppColors.darkText(context),
+                                     height: 1.25,
+                                   ),
+                                 ),
                                 SizedBox(height: 6.h),
 
                                 Row(

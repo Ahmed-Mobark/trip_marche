@@ -1,4 +1,4 @@
-package com.addicta.trip_marche
+package com.app.trevlen
 
 import io.flutter.embedding.android.FlutterActivity
 
