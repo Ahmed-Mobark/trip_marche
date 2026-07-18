@@ -796,6 +796,13 @@
   "paymentWebViewTitle": "Completa pagamento",
   "paymentWebViewError": "Impossibile caricare la pagina di pagamento.",
   "paymentWebViewRetry": "Riprova",
-  "paymentWebViewFailed": "Pagamento fallito o annullato."
+  "paymentWebViewFailed": "Pagamento fallito o annullato.",
+  "profileChangePasswordTitle": "Cambia password",
+  "profileCurrentPasswordLabel": "Password attuale",
+  "profileNewPasswordLabel": "Nuova password",
+  "profileUpdatePasswordAction": "Aggiorna password",
+  "errorPasswordMinLength": "La password deve contenere almeno 8 caratteri",
+  "passwordUpdatedSuccessfully": "Password aggiornata con successo",
+  "somethingWentWrong": "Qualcosa è andato storto"
 }
 

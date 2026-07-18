@@ -2102,4 +2102,26 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get paymentWebViewFailed => 'فشل الدفع أو تم إلغاؤه.';
+
+  @override
+  String get profileChangePasswordTitle => 'تغيير كلمة المرور';
+
+  @override
+  String get profileCurrentPasswordLabel => 'كلمة المرور الحالية';
+
+  @override
+  String get profileNewPasswordLabel => 'كلمة المرور الجديدة';
+
+  @override
+  String get profileUpdatePasswordAction => 'تحديث كلمة المرور';
+
+  @override
+  String get errorPasswordMinLength =>
+      'يجب أن تتكون كلمة المرور من 8 أحرف على الأقل';
+
+  @override
+  String get passwordUpdatedSuccessfully => 'تم تحديث كلمة المرور بنجاح';
+
+  @override
+  String get somethingWentWrong => 'حدث خطأ ما';
 }

@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../core/config/app_icons.dart';
 import '../../../../core/extensions/localization.dart';
+import '../../../../core/injection/injection_container.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../home/presentation/view/home_view.dart';
 import '../../../my_trips/presentation/view/my_trips_view.dart';
+import '../../../profile/presentation/cubit/profile_cubit.dart';
+import '../../../profile/presentation/cubit/profile_state.dart';
 import '../../../profile/presentation/view/profile_view.dart';
 import '../../../wishlist/presentation/view/wishlist_view.dart';
 import '../theme/nav_bar_handoff_tokens.dart';
@@ -93,128 +97,143 @@ class _MainNavViewState extends State<MainNavView> {
     final hInset = nav.w(20);
     final vInset = nav.w(10);
 
-    return Scaffold(
-      backgroundColor: AppColors.background(context),
-      body: IndexedStack(index: _currentIndex, children: _pages),
-      bottomNavigationBar: LayoutBuilder(
-        builder: (context, constraints) {
-          final outerW = constraints.maxWidth;
-          final innerW = outerW - 2 * hInset;
-          final itemW = innerW / _itemCount;
-          final isRtl = Directionality.of(context) == TextDirection.rtl;
-          final indicatorPhysicalLeft = isRtl
-              ? hInset + (_itemCount - 1 - _currentIndex) * itemW
-              : hInset + _currentIndex * itemW;
-          final labelSize = nav.w(14);
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(create: (_) => sl<ProfileCubit>()),
+      ],
+      child: Builder(
+        builder: (innerContext) {
+          return Scaffold(
+            backgroundColor: AppColors.background(context),
+            body: IndexedStack(index: _currentIndex, children: _pages),
+            bottomNavigationBar: LayoutBuilder(
+              builder: (context, constraints) {
+                final outerW = constraints.maxWidth;
+                final innerW = outerW - 2 * hInset;
+                final itemW = innerW / _itemCount;
+                final isRtl = Directionality.of(context) == TextDirection.rtl;
+                final indicatorPhysicalLeft = isRtl
+                    ? hInset + (_itemCount - 1 - _currentIndex) * itemW
+                    : hInset + _currentIndex * itemW;
+                final labelSize = nav.w(14);
 
-          return DecoratedBox(
-            decoration: BoxDecoration(
-              color: AppColors.cardBg(context),
-              border: const Border(
-                top: BorderSide(color: NavBarHandoffTokens.borderTop, width: 1),
-              ),
-              boxShadow: NavBarHandoffTokens.topShadow(),
-            ),
-            child: SafeArea(
-              top: false,
-              maintainBottomViewPadding: true,
-              child: Stack(
-                clipBehavior: Clip.none,
-                alignment: Alignment.bottomCenter,
-                children: [
-                  Padding(
-                    padding: EdgeInsetsDirectional.only(
-                      start: hInset,
-                      end: hInset,
-                      top: vInset,
-                      bottom: vInset,
+                return DecoratedBox(
+                  decoration: BoxDecoration(
+                    color: AppColors.cardBg(context),
+                    border: const Border(
+                      top: BorderSide(color: NavBarHandoffTokens.borderTop, width: 1),
                     ),
-                    child: BottomNavigationBar(
-                      iconSize: nav.w(24),
-                      selectedIconTheme: IconThemeData(size: nav.w(24)),
-                      unselectedIconTheme: IconThemeData(size: nav.w(24)),
-                      currentIndex: _currentIndex,
-                      onTap: (index) async {
-                        HapticFeedback.lightImpact();
-                        setState(() => _currentIndex = index);
-                        if (index == 0) {
-                          await _homeKey.currentState?.refreshFromNavBarTap();
-                        }
-                        if (index == 2) {
-                          await _wishlistKey.currentState
-                              ?.refreshFromNavBarTap();
-                        }
-                      },
-                      type: BottomNavigationBarType.fixed,
-                      backgroundColor: Colors.transparent,
-                      elevation: 0,
-                      selectedItemColor: primary,
-                      unselectedItemColor: muted,
-                      selectedLabelStyle: TextStyle(
-                        fontSize: labelSize,
-                        fontWeight: FontWeight.w600,
-                      ),
-                      unselectedLabelStyle: TextStyle(
-                        fontSize: labelSize,
-                        fontWeight: FontWeight.w500,
-                      ),
-                      items: [
-                        _item(
-                          nav,
-                          svgAsset: AppIcons.homeIconSvg,
-                          svgAssetFilled: AppIcons.homeIconFilledSvg,
-                          label: context.tr.navHome,
-                          primary: primary,
-                          muted: muted,
+                    boxShadow: NavBarHandoffTokens.topShadow(),
+                  ),
+                  child: SafeArea(
+                    top: false,
+                    maintainBottomViewPadding: true,
+                    child: Stack(
+                      clipBehavior: Clip.none,
+                      alignment: Alignment.bottomCenter,
+                      children: [
+                        Padding(
+                          padding: EdgeInsetsDirectional.only(
+                            start: hInset,
+                            end: hInset,
+                            top: vInset,
+                            bottom: vInset,
+                          ),
+                          child: BottomNavigationBar(
+                            iconSize: nav.w(24),
+                            selectedIconTheme: IconThemeData(size: nav.w(24)),
+                            unselectedIconTheme: IconThemeData(size: nav.w(24)),
+                            currentIndex: _currentIndex,
+                            onTap: (index) {
+                              HapticFeedback.lightImpact();
+                              setState(() => _currentIndex = index);
+                              if (index == 0) {
+                                _homeKey.currentState?.refreshFromNavBarTap();
+                              }
+                              if (index == 2) {
+                                _wishlistKey.currentState
+                                    ?.refreshFromNavBarTap();
+                              }
+                              if (index == 3) {
+                                final cubit = innerContext.read<ProfileCubit>();
+                                if (cubit.state.status != ProfileStatus.success) {
+                                  cubit.fetchProfile();
+                                }
+                              }
+                            },
+                            type: BottomNavigationBarType.fixed,
+                            backgroundColor: Colors.transparent,
+                            elevation: 0,
+                            selectedItemColor: primary,
+                            unselectedItemColor: muted,
+                            selectedLabelStyle: TextStyle(
+                              fontSize: labelSize,
+                              fontWeight: FontWeight.w600,
+                            ),
+                            unselectedLabelStyle: TextStyle(
+                              fontSize: labelSize,
+                              fontWeight: FontWeight.w500,
+                            ),
+                            items: [
+                              _item(
+                                nav,
+                                svgAsset: AppIcons.homeIconSvg,
+                                svgAssetFilled: AppIcons.homeIconFilledSvg,
+                                label: context.tr.navHome,
+                                primary: primary,
+                                muted: muted,
+                              ),
+                              _item(
+                                nav,
+                                svgAsset: AppIcons.tripsIconSvg,
+                                svgAssetFilled: AppIcons.tripsIconFilledSvg,
+                                label: context.tr.navTrips,
+                                primary: primary,
+                                muted: muted,
+                              ),
+                              _item(
+                                nav,
+                                svgAsset: AppIcons.wishlistIconSvg,
+                                svgAssetFilled: AppIcons.wishlistIconFilledSvg,
+                                label: context.tr.navWishlist,
+                                primary: primary,
+                                muted: muted,
+                              ),
+                              _item(
+                                nav,
+                                svgAsset: AppIcons.accountIconSvg,
+                                svgAssetFilled: AppIcons.accountIconFilledSvg,
+                                label: context.tr.navAccount,
+                                primary: primary,
+                                muted: muted,
+                              ),
+                            ],
+                          ),
                         ),
-                        _item(
-                          nav,
-                          svgAsset: AppIcons.tripsIconSvg,
-                          svgAssetFilled: AppIcons.tripsIconFilledSvg,
-                          label: context.tr.navTrips,
-                          primary: primary,
-                          muted: muted,
-                        ),
-                        _item(
-                          nav,
-                          svgAsset: AppIcons.wishlistIconSvg,
-                          svgAssetFilled: AppIcons.wishlistIconFilledSvg,
-                          label: context.tr.navWishlist,
-                          primary: primary,
-                          muted: muted,
-                        ),
-                        _item(
-                          nav,
-                          svgAsset: AppIcons.accountIconSvg,
-                          svgAssetFilled: AppIcons.accountIconFilledSvg,
-                          label: context.tr.navAccount,
-                          primary: primary,
-                          muted: muted,
+                        Positioned(
+                          top: 0,
+                          left: indicatorPhysicalLeft,
+                          child: AnimatedContainer(
+                            duration: const Duration(milliseconds: 180),
+                            curve: Curves.easeOutCubic,
+                            width: itemW,
+                            height: 3,
+                            alignment: Alignment.center,
+                            child: Container(
+                              width: nav.w(56),
+                              height: 3,
+                              decoration: BoxDecoration(
+                                color: AppColors.primary,
+                                borderRadius: BorderRadius.circular(999),
+                              ),
+                            ),
+                          ),
                         ),
                       ],
                     ),
                   ),
-                  Positioned(
-                    top: 0,
-                    left: indicatorPhysicalLeft,
-                    child: AnimatedContainer(
-                      duration: const Duration(milliseconds: 180),
-                      curve: Curves.easeOutCubic,
-                      width: itemW,
-                      height: 3,
-                      alignment: Alignment.center,
-                      child: Container(
-                        width: nav.w(56),
-                        height: 3,
-                        decoration: BoxDecoration(
-                          color: AppColors.primary,
-                          borderRadius: BorderRadius.circular(999),
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
+                );
+              },
             ),
           );
         },

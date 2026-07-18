@@ -2119,4 +2119,26 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get paymentWebViewFailed => 'Zahlung fehlgeschlagen oder abgebrochen.';
+
+  @override
+  String get profileChangePasswordTitle => 'Passwort ändern';
+
+  @override
+  String get profileCurrentPasswordLabel => 'Aktuelles Passwort';
+
+  @override
+  String get profileNewPasswordLabel => 'Neues Passwort';
+
+  @override
+  String get profileUpdatePasswordAction => 'Passwort aktualisieren';
+
+  @override
+  String get errorPasswordMinLength =>
+      'Das Passwort muss mindestens 8 Zeichen lang sein';
+
+  @override
+  String get passwordUpdatedSuccessfully => 'Passwort erfolgreich aktualisiert';
+
+  @override
+  String get somethingWentWrong => 'Etwas ist schief gelaufen';
 }

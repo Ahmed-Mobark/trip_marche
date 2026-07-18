@@ -4071,6 +4071,48 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Payment failed or cancelled.'**
   String get paymentWebViewFailed;
+
+  /// No description provided for @profileChangePasswordTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Change Password'**
+  String get profileChangePasswordTitle;
+
+  /// No description provided for @profileCurrentPasswordLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Current Password'**
+  String get profileCurrentPasswordLabel;
+
+  /// No description provided for @profileNewPasswordLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'New Password'**
+  String get profileNewPasswordLabel;
+
+  /// No description provided for @profileUpdatePasswordAction.
+  ///
+  /// In en, this message translates to:
+  /// **'Update Password'**
+  String get profileUpdatePasswordAction;
+
+  /// No description provided for @errorPasswordMinLength.
+  ///
+  /// In en, this message translates to:
+  /// **'Password must be at least 8 characters'**
+  String get errorPasswordMinLength;
+
+  /// No description provided for @passwordUpdatedSuccessfully.
+  ///
+  /// In en, this message translates to:
+  /// **'Password updated successfully'**
+  String get passwordUpdatedSuccessfully;
+
+  /// No description provided for @somethingWentWrong.
+  ///
+  /// In en, this message translates to:
+  /// **'Something went wrong'**
+  String get somethingWentWrong;
 }
 
 class _AppLocalizationsDelegate

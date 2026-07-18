@@ -2123,4 +2123,27 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get paymentWebViewFailed => 'Paiement échoué ou annulé.';
+
+  @override
+  String get profileChangePasswordTitle => 'Changer le mot de passe';
+
+  @override
+  String get profileCurrentPasswordLabel => 'Mot de passe actuel';
+
+  @override
+  String get profileNewPasswordLabel => 'Nouveau mot de passe';
+
+  @override
+  String get profileUpdatePasswordAction => 'Mettre à jour le mot de passe';
+
+  @override
+  String get errorPasswordMinLength =>
+      'Le mot de passe doit comporter au moins 8 caractères';
+
+  @override
+  String get passwordUpdatedSuccessfully =>
+      'Mot de passe mis à jour avec succès';
+
+  @override
+  String get somethingWentWrong => 'Une erreur est survenue';
 }

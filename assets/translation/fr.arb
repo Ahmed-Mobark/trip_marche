@@ -796,6 +796,13 @@
   "paymentWebViewTitle": "Finaliser le paiement",
   "paymentWebViewError": "Impossible de charger la page de paiement.",
   "paymentWebViewRetry": "Réessayer",
-  "paymentWebViewFailed": "Paiement échoué ou annulé."
+  "paymentWebViewFailed": "Paiement échoué ou annulé.",
+  "profileChangePasswordTitle": "Changer le mot de passe",
+  "profileCurrentPasswordLabel": "Mot de passe actuel",
+  "profileNewPasswordLabel": "Nouveau mot de passe",
+  "profileUpdatePasswordAction": "Mettre à jour le mot de passe",
+  "errorPasswordMinLength": "Le mot de passe doit comporter au moins 8 caractères",
+  "passwordUpdatedSuccessfully": "Mot de passe mis à jour avec succès",
+  "somethingWentWrong": "Une erreur est survenue"
 }
 

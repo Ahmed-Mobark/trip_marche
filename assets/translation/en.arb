@@ -808,5 +808,12 @@
   "paymentWebViewTitle": "Complete Payment",
   "paymentWebViewError": "Unable to load payment page.",
   "paymentWebViewRetry": "Retry",
-  "paymentWebViewFailed": "Payment failed or cancelled."
+  "paymentWebViewFailed": "Payment failed or cancelled.",
+  "profileChangePasswordTitle": "Change Password",
+  "profileCurrentPasswordLabel": "Current Password",
+  "profileNewPasswordLabel": "New Password",
+  "profileUpdatePasswordAction": "Update Password",
+  "errorPasswordMinLength": "Password must be at least 8 characters",
+  "passwordUpdatedSuccessfully": "Password updated successfully",
+  "somethingWentWrong": "Something went wrong"
 }

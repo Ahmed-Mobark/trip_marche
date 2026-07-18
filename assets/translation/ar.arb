@@ -796,5 +796,12 @@
   "paymentWebViewTitle": "إتمام الدفع",
   "paymentWebViewError": "تعذر تحميل صفحة الدفع.",
   "paymentWebViewRetry": "إعادة المحاولة",
-  "paymentWebViewFailed": "فشل الدفع أو تم إلغاؤه."
+  "paymentWebViewFailed": "فشل الدفع أو تم إلغاؤه.",
+  "profileChangePasswordTitle": "تغيير كلمة المرور",
+  "profileCurrentPasswordLabel": "كلمة المرور الحالية",
+  "profileNewPasswordLabel": "كلمة المرور الجديدة",
+  "profileUpdatePasswordAction": "تحديث كلمة المرور",
+  "errorPasswordMinLength": "يجب أن تتكون كلمة المرور من 8 أحرف على الأقل",
+  "passwordUpdatedSuccessfully": "تم تحديث كلمة المرور بنجاح",
+  "somethingWentWrong": "حدث خطأ ما"
 }

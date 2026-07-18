@@ -2106,4 +2106,25 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get paymentWebViewFailed => 'Payment failed or cancelled.';
+
+  @override
+  String get profileChangePasswordTitle => 'Change Password';
+
+  @override
+  String get profileCurrentPasswordLabel => 'Current Password';
+
+  @override
+  String get profileNewPasswordLabel => 'New Password';
+
+  @override
+  String get profileUpdatePasswordAction => 'Update Password';
+
+  @override
+  String get errorPasswordMinLength => 'Password must be at least 8 characters';
+
+  @override
+  String get passwordUpdatedSuccessfully => 'Password updated successfully';
+
+  @override
+  String get somethingWentWrong => 'Something went wrong';
 }

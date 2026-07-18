@@ -55,4 +55,7 @@ class AppEndpoints {
 
   /// GET — booking details PDF by booking id.
   static String bookingsPdf(int bookingId) => 'bookings/$bookingId/pdf';
+
+  static const String profile = 'profile';
+  static const String profilePassword = 'profile/password';
 }

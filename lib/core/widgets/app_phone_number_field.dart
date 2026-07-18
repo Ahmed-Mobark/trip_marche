@@ -17,6 +17,8 @@ class AppPhoneNumberField extends StatelessWidget {
     required this.hint,
     required this.selectedDialCode,
     required this.onDialCodeChanged,
+    this.initialCountryCode,
+    this.onChanged,
     this.validator,
     this.autovalidateMode,
     this.variant = AppPhoneNumberFieldVariant.auth,
@@ -25,7 +27,9 @@ class AppPhoneNumberField extends StatelessWidget {
   final TextEditingController controller;
   final String hint;
   final String selectedDialCode;
+  final String? initialCountryCode;
   final ValueChanged<String> onDialCodeChanged;
+  final void Function(String)? onChanged;
   final String? Function(String?)? validator;
   final AutovalidateMode? autovalidateMode;
   final AppPhoneNumberFieldVariant variant;
@@ -48,8 +52,10 @@ class AppPhoneNumberField extends StatelessWidget {
         errorBorderColor: AppColors.error.withValues(alpha: 0.9),
         borderRadius: 18.r,
         contentPadding: EdgeInsetsDirectional.fromSTEB(0, 16.h, 16.w, 16.h),
+        onChanged: onChanged,
         prefixWidget: _CountryPrefix(
           selectedDialCode: selectedDialCode,
+          initialCountryCode: initialCountryCode,
           onDialCodeChanged: onDialCodeChanged,
           variant: variant,
         ),
@@ -70,6 +76,7 @@ class AppPhoneNumberField extends StatelessWidget {
       inputFormatters: [FilteringTextInputFormatter.digitsOnly],
       validator: validator,
       autovalidateMode: autovalidateMode,
+      onChanged: onChanged,
       style: AppTextStyles.bodyMedium(
         color: AppColors.ink(context),
       ).copyWith(
@@ -86,6 +93,7 @@ class AppPhoneNumberField extends StatelessWidget {
         contentPadding: EdgeInsetsDirectional.fromSTEB(0, 14.h, 14.w, 14.h),
         prefixIcon: _CountryPrefix(
           selectedDialCode: selectedDialCode,
+          initialCountryCode: initialCountryCode,
           onDialCodeChanged: onDialCodeChanged,
           variant: variant,
         ),
@@ -103,17 +111,20 @@ class AppPhoneNumberField extends StatelessWidget {
 class _CountryPrefix extends StatelessWidget {
   const _CountryPrefix({
     required this.selectedDialCode,
+    this.initialCountryCode,
     required this.onDialCodeChanged,
     required this.variant,
   });
 
   final String selectedDialCode;
+  final String? initialCountryCode;
   final ValueChanged<String> onDialCodeChanged;
   final AppPhoneNumberFieldVariant variant;
 
   @override
   Widget build(BuildContext context) {
     final isBooking = variant == AppPhoneNumberFieldVariant.booking;
+    final initialSelection = _resolveCountryCode(initialCountryCode);
     final dialCodeStyle = AppTextStyles.bodyMedium(
       color: isBooking ? AppColors.greyText(context) : AppColors.darkText(context),
     ).copyWith(
@@ -131,7 +142,7 @@ class _CountryPrefix extends StatelessWidget {
         onChanged: (countryCode) {
           onDialCodeChanged(countryCode.dialCode ?? '+20');
         },
-        initialSelection: selectedDialCode,
+        initialSelection: initialSelection,
         favorite: const ['EG', '+20'],
         showCountryOnly: false,
         showOnlyCountryWhenClosed: false,
@@ -219,4 +230,14 @@ class _CountryPrefix extends StatelessWidget {
       ),
     );
   }
+}
+
+String _resolveCountryCode(String? dialCode) {
+  final code = dialCode?.trim();
+  if (code == null || code.isEmpty) return 'EG';
+  final match = codes.firstWhere(
+    (json) => json['dial_code'] == code,
+    orElse: () => const {'name': 'Egypt', 'code': 'EG', 'dial_code': '+20', 'flag_uri': 'flags/eg.png'},
+  );
+  return match['code'] as String;
 }

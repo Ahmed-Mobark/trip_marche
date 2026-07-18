@@ -11,6 +11,7 @@ import '../../features/trip_details/trip_details_inj.dart';
 import '../../features/wishlist/wishlist_inj.dart';
 import '../../features/booking/booking_inj.dart';
 import '../../features/payment_method/payment_method_inj.dart';
+import '../../features/profile/profile_inj.dart';
 import 'package:get_it/get_it.dart';
 
 GetIt sl = GetIt.instance;
@@ -29,4 +30,5 @@ Future<void> init() async {
   initMyTripsInjection(sl);
   initFilterInjection(sl);
   initHomeInjection(sl);
+  initProfileInjection(sl);
 }
