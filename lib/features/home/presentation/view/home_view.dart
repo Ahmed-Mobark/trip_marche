@@ -860,7 +860,7 @@ class _TripHorizontalList extends StatelessWidget {
                         .push<TripWishlistPopResult>(
                           screen: TripDetailsView(
                             tripId: trip.id,
-                            initialIsWishlisted: trip.isWishlisted,
+                             initialIsWishlisted: trip.isFavorite,
                           ),
                         );
                     onReturnedFromTripDetails(result);
@@ -956,7 +956,7 @@ class _SpecialTripsVerticalList extends StatelessWidget {
                     .push<TripWishlistPopResult>(
                       screen: TripDetailsView(
                         tripId: trip.id,
-                        initialIsWishlisted: trip.isWishlisted,
+                        initialIsWishlisted: trip.isFavorite,
                       ),
                     );
                 onReturnedFromTripDetails(result);

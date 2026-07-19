@@ -152,8 +152,8 @@ class TripDetailsHeroHeader extends StatelessWidget {
                     child: CircleIconButton(
                       diameter: actionDiameter,
                       iconSize: 22.sp,
-                      icon: state.isFavorite ? Iconsax.heart5 : Iconsax.heart,
-                      iconColor: AppColors.red,
+                      icon: state.isFavorite ? Icons.favorite : Icons.favorite_border,
+                      iconColor: Colors.red,
                       backgroundColor: _frostFill,
                       borderColor: _frostBorder,
                       blurredBackground: true,

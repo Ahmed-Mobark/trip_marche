@@ -58,4 +58,5 @@ class AppEndpoints {
 
   static const String profile = 'profile';
   static const String profilePassword = 'profile/password';
+  static const String profileDelete = 'profile';
 }

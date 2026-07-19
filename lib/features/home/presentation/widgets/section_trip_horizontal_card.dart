@@ -148,11 +148,9 @@ class SectionTripHorizontalCard extends StatelessWidget {
                                 shape: BoxShape.circle,
                               ),
                               child: Icon(
-                                trip.isWishlisted
-                                    ? Iconsax.heart5
-                                    : Iconsax.heart,
+                                trip.isFavorite ? Iconsax.heart5 : Iconsax.heart,
                                 size: 18.sp,
-                                color: trip.isWishlisted
+                                color: trip.isFavorite
                                     ? AppColors.error
                                     : AppColors.greyText(context),
                               ),

@@ -43,6 +43,9 @@ class WishlistTripCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final flagBadge = _derivedFlagBadge(context);
+    debugPrint(
+      '[WishlistCard] Build trip=${trip.id} isFavorite=${trip.isFavorite} iconColor=${trip.isFavorite ? "red" : "grey"}',
+    );
 
     return GestureDetector(
       onTap: () async {
@@ -143,10 +146,10 @@ class WishlistTripCard extends StatelessWidget {
                             shape: BoxShape.circle,
                           ),
                           child: Icon(
-                            trip.isWishlisted ? Iconsax.heart5 : Iconsax.heart,
+                            trip.isFavorite ? Icons.favorite : Icons.favorite_border,
                             size: 18.sp,
-                            color: trip.isWishlisted
-                                ? AppColors.error
+                            color: trip.isFavorite
+                                ? Colors.red
                                 : AppColors.greyText(context),
                           ),
                         ),

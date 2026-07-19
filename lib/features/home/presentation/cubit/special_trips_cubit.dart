@@ -12,7 +12,9 @@ List<TripModel> _patchTripsWishlisted(
 ) {
   return trips
       .map(
-        (t) => t.id == tripId ? t.copyWith(isWishlisted: isWishlisted) : t,
+        (t) => t.id == tripId
+            ? t.copyWith(isWishlisted: isWishlisted, isFav: isWishlisted, isFavorite: isWishlisted)
+            : t,
       )
       .toList();
 }
@@ -109,7 +111,7 @@ class SpecialTripsCubit extends Cubit<SpecialTripsState> {
       return;
     }
 
-    final previous = trip.isWishlisted;
+    final previous = trip.isFavorite;
     _wishlistBusy.add(tripId);
     emit(
       state.copyWith(

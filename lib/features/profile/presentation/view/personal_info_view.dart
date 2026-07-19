@@ -6,7 +6,6 @@ import 'package:trip_marche/core/extensions/localization.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../../core/injection/injection_container.dart';
 import '../../../../features/profile/domain/repositories/profile_repository.dart';
-import '../../../../features/profile/domain/usecases/update_profile_usecase.dart';
 import '../../../../features/profile/domain/usecases/change_password_usecase.dart';
 import '../../../../features/profile/presentation/cubit/profile_cubit.dart';
 import '../../../../features/profile/presentation/cubit/profile_state.dart';
@@ -45,9 +44,7 @@ class PersonalInfoView extends StatelessWidget {
     final initialCountryCode = profile?.phone?.countryCode ?? '';
     final initialNumber = profile?.phone?.number ?? '';
 
-    final cubit = UpdateProfileCubit(
-      UpdateProfileUseCase(sl<ProfileRepository>()),
-    );
+    final cubit = context.read<UpdateProfileCubit>();
 
     await showModalBottomSheet<void>(
       context: context,

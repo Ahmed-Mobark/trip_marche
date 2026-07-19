@@ -60,6 +60,7 @@ class WishlistTripItem extends Equatable {
     this.badge,
     required this.flags,
     required this.isWishlisted,
+    required this.isFavorite,
   });
 
   final int id;
@@ -77,6 +78,7 @@ class WishlistTripItem extends Equatable {
   final String? badge;
   final WishlistTripFlags flags;
   final bool isWishlisted;
+  final bool isFavorite;
 
   String get dateRange => '$startDate - $endDate';
 
@@ -96,6 +98,7 @@ class WishlistTripItem extends Equatable {
     String? badge,
     WishlistTripFlags? flags,
     bool? isWishlisted,
+    bool? isFavorite,
   }) {
     return WishlistTripItem(
       id: id ?? this.id,
@@ -113,6 +116,7 @@ class WishlistTripItem extends Equatable {
       badge: badge ?? this.badge,
       flags: flags ?? this.flags,
       isWishlisted: isWishlisted ?? this.isWishlisted,
+      isFavorite: isFavorite ?? this.isFavorite,
     );
   }
 
@@ -133,6 +137,7 @@ class WishlistTripItem extends Equatable {
         badge,
         flags,
         isWishlisted,
+        isFavorite,
       ];
 }
 

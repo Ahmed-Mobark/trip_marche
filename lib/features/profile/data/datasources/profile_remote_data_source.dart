@@ -7,6 +7,7 @@ abstract class ProfileRemoteDataSource {
   Future<Map<String, dynamic>> getProfile();
   Future<Map<String, dynamic>> updateProfile(ProfileUpdateRequest request);
   Future<Map<String, dynamic>> changePassword(ChangePasswordRequest request);
+  Future<Map<String, dynamic>> deleteAccount();
 }
 
 class ProfileRemoteDataSourceImpl implements ProfileRemoteDataSource {
@@ -26,9 +27,11 @@ class ProfileRemoteDataSourceImpl implements ProfileRemoteDataSource {
   Future<Map<String, dynamic>> updateProfile(
     ProfileUpdateRequest request,
   ) async {
+    final formData = await request.toFormData();
     final response = await _apiHelper.post<Map<String, dynamic>>(
       url: AppEndpoints.profile,
-      body: request.toJson(),
+      formData: formData,
+      body: formData == null ? request.toJson() : null,
     );
     return response;
   }
@@ -40,6 +43,14 @@ class ProfileRemoteDataSourceImpl implements ProfileRemoteDataSource {
     final response = await _apiHelper.post<Map<String, dynamic>>(
       url: AppEndpoints.profilePassword,
       body: request.toJson(),
+    );
+    return response;
+  }
+
+  @override
+  Future<Map<String, dynamic>> deleteAccount() async {
+    final response = await _apiHelper.delete<Map<String, dynamic>>(
+      url: AppEndpoints.profileDelete,
     );
     return response;
   }

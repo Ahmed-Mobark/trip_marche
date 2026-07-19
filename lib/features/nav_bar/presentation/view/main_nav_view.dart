@@ -99,7 +99,7 @@ class _MainNavViewState extends State<MainNavView> {
 
     return MultiBlocProvider(
       providers: [
-        BlocProvider(create: (_) => sl<ProfileCubit>()),
+        BlocProvider.value(value: sl<ProfileCubit>()),
       ],
       child: Builder(
         builder: (innerContext) {

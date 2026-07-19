@@ -2200,6 +2200,36 @@ abstract class AppLocalizations {
   /// **'Save Changes'**
   String get profileSaveChanges;
 
+  /// No description provided for @profileChangePhotoTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Change Profile Photo'**
+  String get profileChangePhotoTitle;
+
+  /// No description provided for @profileChangePhotoSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose where you want to get your photo from.'**
+  String get profileChangePhotoSubtitle;
+
+  /// No description provided for @profilePhotoCamera.
+  ///
+  /// In en, this message translates to:
+  /// **'Camera'**
+  String get profilePhotoCamera;
+
+  /// No description provided for @profilePhotoGallery.
+  ///
+  /// In en, this message translates to:
+  /// **'Gallery'**
+  String get profilePhotoGallery;
+
+  /// No description provided for @profilePhotoCancel.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel'**
+  String get profilePhotoCancel;
+
   /// No description provided for @companyProfileCompanyName.
   ///
   /// In en, this message translates to:
@@ -4113,6 +4143,126 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Something went wrong'**
   String get somethingWentWrong;
+
+  /// Logout action label
+  ///
+  /// In en, this message translates to:
+  /// **'Logout'**
+  String get logout;
+
+  /// Title for logout confirmation bottom sheet
+  ///
+  /// In en, this message translates to:
+  /// **'Logout'**
+  String get logoutTitle;
+
+  /// Description text for logout confirmation
+  ///
+  /// In en, this message translates to:
+  /// **'Are you sure you want to logout from your account?'**
+  String get logoutDescription;
+
+  /// Primary action button text for logout
+  ///
+  /// In en, this message translates to:
+  /// **'Logout'**
+  String get logoutAction;
+
+  /// Cancel action text
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel'**
+  String get cancel;
+
+  /// Delete account action label
+  ///
+  /// In en, this message translates to:
+  /// **'Delete Account'**
+  String get deleteAccount;
+
+  /// Title for delete account confirmation bottom sheet
+  ///
+  /// In en, this message translates to:
+  /// **'Delete Account'**
+  String get deleteAccountTitle;
+
+  /// Description text for delete account confirmation
+  ///
+  /// In en, this message translates to:
+  /// **'This action is permanent and cannot be undone. All your trips, bookings and account information will be permanently removed.'**
+  String get deleteAccountDescription;
+
+  /// Warning text for final delete account confirmation dialog
+  ///
+  /// In en, this message translates to:
+  /// **'Are you absolutely sure you want to permanently delete your account?'**
+  String get deleteAccountWarning;
+
+  /// Primary action button text for delete account
+  ///
+  /// In en, this message translates to:
+  /// **'Delete Account'**
+  String get deleteAccountAction;
+
+  /// Title for final confirmation dialog before account deletion
+  ///
+  /// In en, this message translates to:
+  /// **'Final Confirmation'**
+  String get finalConfirmation;
+
+  /// No description provided for @profilePhotoFromCamera.
+  ///
+  /// In en, this message translates to:
+  /// **'Camera'**
+  String get profilePhotoFromCamera;
+
+  /// No description provided for @profilePhotoFromGallery.
+  ///
+  /// In en, this message translates to:
+  /// **'Gallery'**
+  String get profilePhotoFromGallery;
+
+  /// No description provided for @profilePhotoPermissionRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Permission required to access your photos.'**
+  String get profilePhotoPermissionRequired;
+
+  /// No description provided for @profilePhotoCameraUnavailable.
+  ///
+  /// In en, this message translates to:
+  /// **'Camera is not available on this device.'**
+  String get profilePhotoCameraUnavailable;
+
+  /// No description provided for @profilePhotoInvalidFile.
+  ///
+  /// In en, this message translates to:
+  /// **'The selected file is not a valid image.'**
+  String get profilePhotoInvalidFile;
+
+  /// No description provided for @profilePhotoTooLarge.
+  ///
+  /// In en, this message translates to:
+  /// **'The selected image is too large. Please choose a smaller one.'**
+  String get profilePhotoTooLarge;
+
+  /// No description provided for @profilePhotoPickFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to pick image. Please try again.'**
+  String get profilePhotoPickFailed;
+
+  /// No description provided for @profileUpdateSuccess.
+  ///
+  /// In en, this message translates to:
+  /// **'Profile updated successfully'**
+  String get profileUpdateSuccess;
+
+  /// Success toast message after account deletion
+  ///
+  /// In en, this message translates to:
+  /// **'Your account has been deleted.'**
+  String get deleteAccountSuccess;
 }
 
 class _AppLocalizationsDelegate

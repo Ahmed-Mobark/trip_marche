@@ -1,3 +1,6 @@
+import 'package:flutter/foundation.dart';
+
+import 'package:trip_marche/core/utils/json_parser.dart';
 import 'package:trip_marche/features/my_trips/domain/entities/booking_entity.dart';
 
 class BookingPaymentDetailModel {
@@ -104,20 +107,27 @@ class BookingTripModel {
     required this.title,
     this.coverImage,
     required this.fromLocation,
+    this.isFavorite = false,
   });
 
   final int id;
   final String title;
   final String? coverImage;
   final String fromLocation;
+  final bool isFavorite;
 
   factory BookingTripModel.fromJson(Map<String, dynamic> json) {
     final cover = json['cover_image'] as String?;
+    final isFav = JsonParser.parseFavorite(json['is_favorite']);
+    debugPrint(
+      '[BookingTripModel] id=${json['id']} title=${(json['title'] as String?)?.trim()} isFavorite=$isFav raw=${json['is_favorite']}',
+    );
     return BookingTripModel(
       id: json['id'] as int? ?? 0,
       title: (json['title'] as String?)?.trim() ?? '',
       coverImage: cover?.trim().isNotEmpty == true ? cover!.trim() : null,
       fromLocation: (json['from_location'] as String?)?.trim() ?? '',
+      isFavorite: isFav,
     );
   }
 
@@ -126,6 +136,7 @@ class BookingTripModel {
         title: title,
         coverImage: coverImage,
         fromLocation: fromLocation,
+        isFavorite: isFavorite,
       );
 }
 

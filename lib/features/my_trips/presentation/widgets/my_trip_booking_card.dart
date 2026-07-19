@@ -88,13 +88,13 @@ class MyTripBookingCard extends StatelessWidget {
   }
 
   bool get _heartFilled =>
-      _apiTrip?.isWishlisted ?? isFavorite;
+      _apiTrip?.isFavorite ?? isFavorite;
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () async {
-        final initialWishlisted = _apiTrip?.isWishlisted ?? isFavorite;
+        final initialWishlisted = _apiTrip?.isFavorite ?? isFavorite;
         final result = await sl<AppNavigator>().push<TripWishlistPopResult>(
           screen: TripDetailsView(
             tripId: _tripId,

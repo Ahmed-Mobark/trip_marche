@@ -18,8 +18,9 @@ List<HomeSectionModel> _patchSectionsTripWishlisted(
       destinations: section.destinations,
       trips: section.trips
           .map(
-            (t) =>
-                t.id == tripId ? t.copyWith(isWishlisted: isWishlisted) : t,
+            (t) => t.id == tripId
+                ? t.copyWith(isWishlisted: isWishlisted, isFav: isWishlisted, isFavorite: isWishlisted)
+                : t,
           )
           .toList(),
     );
@@ -104,7 +105,7 @@ class HomeSectionsCubit extends Cubit<HomeSectionsState> {
       return;
     }
 
-    final previous = trip.isWishlisted;
+    final previous = trip.isFavorite;
     _wishlistBusy.add(tripId);
     emit(
       state.copyWith(

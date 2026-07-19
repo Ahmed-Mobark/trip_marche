@@ -162,6 +162,7 @@ class TripDetailsModel {
         _JsonParse.asNullableString(json['cancellation_policy']),
       ),
       isWishlisted: _JsonParse.asBool(json['is_wishlisted']),
+      isFavorite: _JsonParse.asBool(json['is_favorite']),
     );
   }
 

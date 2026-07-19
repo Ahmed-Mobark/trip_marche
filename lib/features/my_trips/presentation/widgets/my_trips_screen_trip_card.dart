@@ -33,7 +33,7 @@ class MyTripsScreenTripCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     debugPrint(
-      '[MyTripsCard] Build trip=${trip.id} isWishlisted=${trip.isWishlisted} iconColor=${trip.isWishlisted ? "red" : "grey"}',
+      '[MyTripsCard] Build trip=${trip.id} isFavorite=${trip.isFavorite} iconColor=${trip.isFavorite ? "red" : "grey"}',
     );
     final tr = context.tr;
 
@@ -174,7 +174,7 @@ class MyTripsScreenTripCard extends StatelessWidget {
                               child: InkWell(
                                 onTap: () {
                                   debugPrint(
-                                    '[MyTripsCard] Heart tapped, tripId=${trip.id}, current isWishlisted=${trip.isWishlisted}',
+                                    '[MyTripsCard] Heart tapped, tripId=${trip.id}, current isFavorite=${trip.isFavorite}',
                                   );
                                   context
                                       .read<MyTripsShellCubit>()
@@ -189,15 +189,15 @@ class MyTripsScreenTripCard extends StatelessWidget {
                                   color: AppColors.greyTextColorDarkOpacity50,
                                 ),
                                 alignment: Alignment.center,
-                                child: Icon(
-                                  trip.isWishlisted
-                                      ? Iconsax.heart5
-                                      : Iconsax.heart,
-                                  size: MyTripsTripCardTokens.favoriteIcon,
-                                  color: trip.isWishlisted
-                                      ? AppColors.myTripsTripCardRed
-                                      : AppColors.greyText(context),
-                                ),
+                                 child: Icon(
+                                   trip.isFavorite
+                                       ? Icons.favorite
+                                       : Icons.favorite_border,
+                                   size: MyTripsTripCardTokens.favoriteIcon,
+                                   color: trip.isFavorite
+                                       ? Colors.red
+                                       : AppColors.greyText(context),
+                                 ),
                               ),
                             ),
                           ),

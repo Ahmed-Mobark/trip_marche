@@ -11,6 +11,7 @@ class MyTripRowUiModel extends Equatable {
     required this.dateRange,
     this.imageUrl,
     this.isWishlisted = true,
+    this.isFavorite = false,
     this.useDownloadPdfWhenActive = false,
   });
 
@@ -22,6 +23,7 @@ class MyTripRowUiModel extends Equatable {
   final String dateRange;
   final String? imageUrl;
   final bool isWishlisted;
+  final bool isFavorite;
 
   final bool useDownloadPdfWhenActive;
 
@@ -34,6 +36,7 @@ class MyTripRowUiModel extends Equatable {
     String? dateRange,
     String? imageUrl,
     bool? isWishlisted,
+    bool? isFavorite,
     bool? useDownloadPdfWhenActive,
   }) {
     return MyTripRowUiModel(
@@ -45,6 +48,7 @@ class MyTripRowUiModel extends Equatable {
       dateRange: dateRange ?? this.dateRange,
       imageUrl: imageUrl ?? this.imageUrl,
       isWishlisted: isWishlisted ?? this.isWishlisted,
+      isFavorite: isFavorite ?? this.isFavorite,
       useDownloadPdfWhenActive:
           useDownloadPdfWhenActive ?? this.useDownloadPdfWhenActive,
     );
@@ -60,6 +64,7 @@ class MyTripRowUiModel extends Equatable {
         dateRange,
         imageUrl,
         isWishlisted,
+        isFavorite,
         useDownloadPdfWhenActive,
       ];
 }

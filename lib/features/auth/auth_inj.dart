@@ -5,8 +5,10 @@ import '../../core/storage/data/storage.dart';
 import 'data/datasources/auth_remote_data_source.dart';
 import 'data/repositories/auth_repository_impl.dart';
 import 'domain/repositories/auth_repository.dart';
+import 'domain/usecases/logout_usecase.dart';
 import 'presentation/cubit/forgot_password/forgot_password_cubit.dart';
 import 'presentation/cubit/login/login_cubit.dart';
+import 'presentation/cubit/logout/logout_cubit.dart';
 import 'presentation/cubit/sign_up/sign_up_cubit.dart';
 
 Future<void> initAuthInjection(GetIt sl) async {
@@ -29,6 +31,12 @@ Future<void> initAuthInjection(GetIt sl) async {
   );
   sl.registerFactory<ForgotPasswordCubit>(
     () => ForgotPasswordCubit(sl<AppNavigator>(), sl<AuthRepository>()),
+  );
+  sl.registerFactory<LogoutCubit>(
+    () => LogoutCubit(
+      LogoutUseCase(sl<AuthRepository>()),
+      sl<Storage>(),
+    ),
   );
   // VerifyNumberCubit is created directly in the view (requires email param)
 }

@@ -11,4 +11,5 @@ abstract class ProfileRepository {
   Future<Either<Failure, Map<String, dynamic>>> changePassword(
     ChangePasswordRequest request,
   );
+  Future<Either<Failure, Map<String, dynamic>>> deleteAccount();
 }

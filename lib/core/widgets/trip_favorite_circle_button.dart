@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:iconsax/iconsax.dart';
 import 'package:trip_marche/core/theme/app_colors.dart';
 
 /// Flat grey circle + heart (no elevation on the circle); slight depth on the glyph.
@@ -20,8 +19,8 @@ class TripFavoriteCircleButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final iconData = isFavorite ? Iconsax.heart5 : Iconsax.heart;
-    final iconColor = isFavorite ? AppColors.error : AppColors.greyText(context);
+    final iconData = isFavorite ? Icons.favorite : Icons.favorite_border;
+    final iconColor = isFavorite ? Colors.red : AppColors.greyText(context);
     final d = diameter.w;
     final s = iconSize.sp;
 

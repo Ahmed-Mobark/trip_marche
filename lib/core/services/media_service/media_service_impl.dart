@@ -3,11 +3,13 @@ import 'dart:math';
 import '../../enums/media_type.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:path_provider/path_provider.dart' as path_provider;
 
 import 'media_services.dart';
+import 'media_service_exceptions.dart';
 
 class MediaServiceImpl implements MediaService {
   @override
@@ -25,12 +27,33 @@ class MediaServiceImpl implements MediaService {
       );
       if (rawPickedImageFile != null) {
         processedPickedImageFile = File(rawPickedImageFile.path);
+        if (!await processedPickedImageFile.exists()) {
+          throw InvalidFileException('Selected file does not exist');
+        }
         processedPickedImageFile = await compressFile(processedPickedImageFile);
+        if (processedPickedImageFile == null) {
+          throw InvalidFileException('Failed to process image');
+        }
         return processedPickedImageFile;
       }
       return null;
-    } catch (_) {
-      return null;
+    } on PlatformException catch (e) {
+      if (e.code == 'camera_access_denied' ||
+          e.code == 'photo_access_denied' ||
+          e.code == 'permission_denied') {
+        throw PermissionException(e.message ?? 'Permission denied');
+      }
+      if (e.code == 'camera_unavailable') {
+        throw CameraUnavailableException(e.message ?? 'Camera unavailable');
+      }
+      throw Exception(e.message ?? 'Failed to pick image');
+    } catch (e) {
+      if (e is PermissionException ||
+          e is CameraUnavailableException ||
+          e is InvalidFileException) {
+        rethrow;
+      }
+      throw Exception('Failed to pick image: $e');
     }
   }
 

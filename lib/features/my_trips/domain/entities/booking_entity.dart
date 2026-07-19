@@ -79,15 +79,17 @@ class BookingTrip extends Equatable {
     required this.title,
     this.coverImage,
     required this.fromLocation,
+    this.isFavorite = false,
   });
 
   final int id;
   final String title;
   final String? coverImage;
   final String fromLocation;
+  final bool isFavorite;
 
   @override
-  List<Object?> get props => [id, title, coverImage, fromLocation];
+  List<Object?> get props => [id, title, coverImage, fromLocation, isFavorite];
 }
 
 class Booking extends Equatable {

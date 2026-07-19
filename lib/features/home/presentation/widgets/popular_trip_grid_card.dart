@@ -118,11 +118,11 @@ class PopularTripGridCard extends StatelessWidget {
                                       shape: BoxShape.circle,
                                     ),
                                     child: Icon(
-                                      trip.isWishlisted
+                                      trip.isFavorite
                                           ? Iconsax.heart5
                                           : Iconsax.heart,
                                       size: 18.sp,
-                                      color: trip.isWishlisted
+                                      color: trip.isFavorite
                                           ? AppColors.error
                                           : AppColors.onImage,
                                     ),

@@ -29,4 +29,9 @@ class ProfileRepositoryImpl with RepositoryHelper implements ProfileRepository {
   ) {
     return handleEither(() => _remoteDataSource.changePassword(request));
   }
+
+  @override
+  Future<Either<Failure, Map<String, dynamic>>> deleteAccount() {
+    return handleEither(() => _remoteDataSource.deleteAccount());
+  }
 }

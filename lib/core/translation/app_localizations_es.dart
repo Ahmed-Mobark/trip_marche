@@ -1130,6 +1130,22 @@ class AppLocalizationsEs extends AppLocalizations {
   String get profileSaveChanges => 'Guardar cambios';
 
   @override
+  String get profileChangePhotoTitle => 'Cambiar foto de perfil';
+
+  @override
+  String get profileChangePhotoSubtitle =>
+      'Elige de dónde quieres obtener tu foto.';
+
+  @override
+  String get profilePhotoCamera => 'Cámara';
+
+  @override
+  String get profilePhotoGallery => 'Galería';
+
+  @override
+  String get profilePhotoCancel => 'Cancelar';
+
+  @override
   String get companyProfileCompanyName => 'Travel Egypt Co.';
 
   @override
@@ -2147,4 +2163,72 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get somethingWentWrong => 'Algo salió mal';
+
+  @override
+  String get logout => 'Logout';
+
+  @override
+  String get logoutTitle => 'Logout';
+
+  @override
+  String get logoutDescription =>
+      'Are you sure you want to logout from your account?';
+
+  @override
+  String get logoutAction => 'Logout';
+
+  @override
+  String get cancel => 'Cancel';
+
+  @override
+  String get deleteAccount => 'Delete Account';
+
+  @override
+  String get deleteAccountTitle => 'Delete Account';
+
+  @override
+  String get deleteAccountDescription =>
+      'This action is permanent and cannot be undone. All your trips, bookings and account information will be permanently removed.';
+
+  @override
+  String get deleteAccountWarning =>
+      'Are you absolutely sure you want to permanently delete your account?';
+
+  @override
+  String get deleteAccountAction => 'Delete Account';
+
+  @override
+  String get finalConfirmation => 'Final Confirmation';
+
+  @override
+  String get profilePhotoFromCamera => 'Cámara';
+
+  @override
+  String get profilePhotoFromGallery => 'Galería';
+
+  @override
+  String get profilePhotoPermissionRequired =>
+      'Se requiere permiso para acceder a tus fotos.';
+
+  @override
+  String get profilePhotoCameraUnavailable =>
+      'La cámara no está disponible en este dispositivo.';
+
+  @override
+  String get profilePhotoInvalidFile =>
+      'El archivo seleccionado no es una imagen válida.';
+
+  @override
+  String get profilePhotoTooLarge =>
+      'La imagen seleccionada es demasiado grande. Elige una más pequeña.';
+
+  @override
+  String get profilePhotoPickFailed =>
+      'Error al seleccionar la imagen. Inténtalo de nuevo.';
+
+  @override
+  String get profileUpdateSuccess => 'Perfil actualizado correctamente';
+
+  @override
+  String get deleteAccountSuccess => 'Tu cuenta ha sido eliminada.';
 }

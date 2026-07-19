@@ -459,6 +459,11 @@
   "profileGenderFemale": "أنثى",
   "profileDateOfBirth": "تاريخ الميلاد",
   "profileSaveChanges": "حفظ التغييرات",
+  "profileChangePhotoTitle": "تغيير صورة الملف الشخصي",
+  "profileChangePhotoSubtitle": "اختر من أين تريد الحصول على صورتك.",
+  "profilePhotoCamera": "الكاميرا",
+  "profilePhotoGallery": "المعرض",
+  "profilePhotoCancel": "إلغاء",
 
   "companyProfileCompanyName": "Travel Egypt Co.",
   "companyProfileReviewsCountShort": "({count} تقييم)",
@@ -803,5 +808,64 @@
   "profileUpdatePasswordAction": "تحديث كلمة المرور",
   "errorPasswordMinLength": "يجب أن تتكون كلمة المرور من 8 أحرف على الأقل",
   "passwordUpdatedSuccessfully": "تم تحديث كلمة المرور بنجاح",
-  "somethingWentWrong": "حدث خطأ ما"
+  "somethingWentWrong": "حدث خطأ ما",
+  "logout": "تسجيل الخروج",
+  "@logout": {
+    "description": "Logout action label"
+  },
+  "logoutTitle": "تسجيل الخروج",
+  "@logoutTitle": {
+    "description": "Title for logout confirmation bottom sheet"
+  },
+  "logoutDescription": "هل أنت متأكد أنك تريد تسجيل الخروج من حسابك؟",
+  "@logoutDescription": {
+    "description": "Description text for logout confirmation"
+  },
+  "logoutAction": "تسجيل الخروج",
+  "@logoutAction": {
+    "description": "Primary action button text for logout"
+  },
+  "cancel": "إلغاء",
+  "@cancel": {
+    "description": "Cancel action text"
+  },
+  "deleteAccount": "حذف الحساب",
+  "@deleteAccount": {
+    "description": "Delete account action label"
+  },
+  "deleteAccountTitle": "حذف الحساب",
+  "@deleteAccountTitle": {
+    "description": "Title for delete account confirmation bottom sheet"
+  },
+  "deleteAccountDescription": "سيتم حذف حسابك وجميع بياناتك بشكل نهائي ولا يمكن التراجع عن هذا الإجراء.",
+  "@deleteAccountDescription": {
+    "description": "Description text for delete account confirmation"
+  },
+  "deleteAccountWarning": "هل أنت متأكد تمامًا أنك تريد حذف حسابك نهائيًا؟",
+  "@deleteAccountWarning": {
+    "description": "Warning text for final delete account confirmation dialog"
+  },
+  "deleteAccountAction": "حذف الحساب",
+  "@deleteAccountAction": {
+    "description": "Primary action button text for delete account"
+  },
+  "finalConfirmation": "تأكيد نهائي",
+  "@finalConfirmation": {
+    "description": "Title for final confirmation dialog before account deletion"
+  },
+  "profileChangePhotoTitle": "تغيير صورة الملف الشخصي",
+  "profileChangePhotoSubtitle": "اختر من أين تريد الحصول على صورتك.",
+  "profilePhotoFromCamera": "الكاميرا",
+  "profilePhotoFromGallery": "المعرض",
+  "profilePhotoCancel": "إلغاء",
+  "profilePhotoPermissionRequired": "مطلوب إذن للوصول إلى الصور.",
+  "profilePhotoCameraUnavailable": "الكاميرا غير متوفرة على هذا الجهاز.",
+  "profilePhotoInvalidFile": "الملف المحدد ليس صورة صالحة.",
+  "profilePhotoTooLarge": "الصورة المحددة كبيرة جداً. يرجى اختيار صورة أصغر.",
+  "profilePhotoPickFailed": "فشل اختيار الصورة. يرجى المحاولة مرة أخرى.",
+  "profileUpdateSuccess": "تم تحديث الملف الشخصي بنجاح",
+  "deleteAccountSuccess": "تم حذف الحساب بنجاح.",
+  "@deleteAccountSuccess": {
+    "description": "Success toast message after account deletion"
+  }
 }

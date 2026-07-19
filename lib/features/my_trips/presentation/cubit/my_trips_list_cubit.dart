@@ -255,7 +255,7 @@ class MyTripsListCubit extends Cubit<MyTripsListState> {
       return;
     }
 
-    final previous = trip.isWishlisted;
+    final previous = trip.isFavorite;
     _wishlistBusy.add(tripId);
 
     emit(
@@ -263,7 +263,7 @@ class MyTripsListCubit extends Cubit<MyTripsListState> {
         trips: state.trips
             .map(
               (t) => t.id == tripId
-                  ? t.copyWith(isWishlisted: !previous)
+                  ? t.copyWith(isFavorite: !previous)
                   : t,
             )
             .toList(),
@@ -281,7 +281,7 @@ class MyTripsListCubit extends Cubit<MyTripsListState> {
             trips: state.trips
                 .map(
                   (t) => t.id == tripId
-                      ? t.copyWith(isWishlisted: previous)
+                      ? t.copyWith(isFavorite: previous)
                       : t,
                 )
                 .toList(),
@@ -295,7 +295,7 @@ class MyTripsListCubit extends Cubit<MyTripsListState> {
             trips: state.trips
                 .map(
                   (t) => t.id == tripId
-                      ? t.copyWith(isWishlisted: success.isWishlisted)
+                      ? t.copyWith(isFavorite: success.isWishlisted)
                       : t,
                 )
                 .toList(),
@@ -317,7 +317,7 @@ class MyTripsListCubit extends Cubit<MyTripsListState> {
         trips: state.trips
             .map(
               (t) =>
-                  t.id == tripId ? t.copyWith(isWishlisted: isWishlisted) : t,
+                  t.id == tripId ? t.copyWith(isFavorite: isWishlisted) : t,
             )
             .toList(),
       ),

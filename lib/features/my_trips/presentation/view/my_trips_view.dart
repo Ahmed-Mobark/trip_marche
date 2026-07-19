@@ -105,31 +105,49 @@ class _MyTripsViewBodyState extends State<_MyTripsViewBody> {
   Widget build(BuildContext context) {
     return BlocBuilder<MyTripsShellCubit, MyTripsShellState>(
       builder: (context, shellState) {
-      final bookingsCubit = context.read<BookingsCubit>();
+        final shellCubit = context.read<MyTripsShellCubit>();
+        final bookingsCubit = context.read<BookingsCubit>();
 
-      return BlocListener<BookingPdfCubit, BookingPdfState>(
-        listener: (context, pdfState) {
-          if (pdfState.status == BookingPdfStatus.success &&
-              pdfState.filePath != null) {
-            sl<AppNavigator>().push(
-              screen: BookingPdfViewerScreen(
-                filePath: pdfState.filePath!,
-                title: 'Booking Details',
-              ),
-            );
-            context.read<BookingPdfCubit>().reset();
-          } else if (pdfState.status == BookingPdfStatus.failure &&
-              pdfState.errorMessage != null) {
-            appToast(
-              context: context,
-              type: ToastType.error,
-              message: pdfState.errorMessage!,
-            );
-            context.read<BookingPdfCubit>().reset();
-          }
-        },
-        child: Scaffold(
-          backgroundColor: AppColors.primary,
+        return MultiBlocListener(
+          listeners: [
+            BlocListener<BookingPdfCubit, BookingPdfState>(
+              listener: (context, pdfState) {
+                if (pdfState.status == BookingPdfStatus.success &&
+                    pdfState.filePath != null) {
+                  sl<AppNavigator>().push(
+                    screen: BookingPdfViewerScreen(
+                      filePath: pdfState.filePath!,
+                      title: 'Booking Details',
+                    ),
+                  );
+                  context.read<BookingPdfCubit>().reset();
+                } else if (pdfState.status == BookingPdfStatus.failure &&
+                    pdfState.errorMessage != null) {
+                  appToast(
+                    context: context,
+                    type: ToastType.error,
+                    message: pdfState.errorMessage!,
+                  );
+                  context.read<BookingPdfCubit>().reset();
+                }
+              },
+            ),
+            BlocListener<BookingsCubit, BookingsState>(
+              listenWhen: (previous, current) =>
+                  current.status == BookingsStatus.success &&
+                  previous.bookings != current.bookings,
+              listener: (context, bookingsState) {
+                debugPrint(
+                  '[MyTrips] Bookings loaded, syncing favoriteStatus for ${bookingsState.bookings.length} bookings',
+                );
+                shellCubit.syncFavoriteStatusFromBookings(
+                  bookingsState.bookings,
+                );
+              },
+            ),
+          ],
+          child: Scaffold(
+            backgroundColor: AppColors.primary,
           body: Stack(
             fit: StackFit.expand,
             children: [
@@ -345,7 +363,7 @@ class _BookingsList extends StatelessWidget {
                 final isFav = shellCubit.isWishlisted(booking.trip.id);
 
                 debugPrint(
-                  '[MyTrips] Render trip ${booking.trip.id} (${booking.trip.title}) isWishlisted=$isFav',
+                  '[MyTrips] Render trip ${booking.trip.id} (${booking.trip.title}) isFavorite=$isFav',
                 );
 
                 return BlocBuilder<BookingPdfCubit, BookingPdfState>(
@@ -373,7 +391,10 @@ class _BookingsList extends StatelessWidget {
   }
 }
 
-MyTripRowUiModel _toRowModel(Booking booking, bool isWishlisted) {
+MyTripRowUiModel _toRowModel(Booking booking, bool isFavorite) {
+  debugPrint(
+    '[MyTrips] _toRowModel tripId=${booking.trip.id} isFavorite=$isFavorite',
+  );
   return MyTripRowUiModel(
     id: booking.id,
     title: booking.trip.title,
@@ -382,7 +403,7 @@ MyTripRowUiModel _toRowModel(Booking booking, bool isWishlisted) {
     locationLabel: booking.trip.fromLocation,
     dateRange: booking.dates.range,
     imageUrl: booking.trip.coverImage,
-    isWishlisted: isWishlisted,
+    isFavorite: isFavorite,
     useDownloadPdfWhenActive: false,
   );
 }

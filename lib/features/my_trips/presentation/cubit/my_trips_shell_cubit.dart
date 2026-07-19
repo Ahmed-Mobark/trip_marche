@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:trip_marche/features/my_trips/domain/entities/booking_entity.dart';
 import 'package:trip_marche/features/my_trips/presentation/cubit/my_trips_shell_state.dart';
 import 'package:trip_marche/features/my_trips/presentation/cubit/my_trips_shell_tab.dart';
 import 'package:trip_marche/features/wishlist/domain/usecases/toggle_wishlist_usecase.dart';
@@ -78,6 +79,16 @@ class MyTripsShellCubit extends Cubit<MyTripsShellState> {
     }
     final updated = Map<int, bool>.from(state.favoriteStatus);
     updated[tripId] = isWishlisted;
+    emit(state.copyWith(favoriteStatus: updated));
+  }
+
+  void syncFavoriteStatusFromBookings(List<Booking> bookings) {
+    final updated = Map<int, bool>.from(state.favoriteStatus);
+    for (final b in bookings) {
+      final fav = b.trip.isFavorite;
+      debugPrint('[MyTripsShell] sync tripId=${b.trip.id} isFavorite=$fav');
+      updated[b.trip.id] = fav;
+    }
     emit(state.copyWith(favoriteStatus: updated));
   }
 

@@ -277,14 +277,14 @@ class MyTripCatalogCard extends StatelessWidget {
                     ),
                   ),
 
-                  PositionedDirectional(
-                    top: 10.h,
-                    end: 10.w,
-                    child: _CatalogFavoriteButton(
-                      isFavorite: trip.isWishlisted,
-                      onTap: onFavoriteTap,
-                    ),
-                  ),
+                   PositionedDirectional(
+                     top: 10.h,
+                     end: 10.w,
+                     child: _CatalogFavoriteButton(
+                       isFavorite: trip.isFavorite,
+                       onTap: onFavoriteTap,
+                     ),
+                   ),
                 ],
               ),
             ),
@@ -323,10 +323,10 @@ class _CatalogFavoriteButton extends StatelessWidget {
             child: Center(
               child: ExcludeSemantics(
                 child: Icon(
-                  isFavorite ? Iconsax.heart5 : Iconsax.heart,
+                  isFavorite ? Icons.favorite : Icons.favorite_border,
                   size: 18.sp,
                   color: isFavorite
-                      ? AppColors.error
+                      ? Colors.red
                       : AppColors.catalogMetaMuted(context),
                 ),
               ),

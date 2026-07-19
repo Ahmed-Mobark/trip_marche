@@ -459,6 +459,11 @@
   "profileGenderFemale": "Weiblich",
   "profileDateOfBirth": "Geburtsdatum",
   "profileSaveChanges": "Änderungen speichern",
+  "profileChangePhotoTitle": "Profilfoto ändern",
+  "profileChangePhotoSubtitle": "Wähle, woher du dein Foto laden möchtest.",
+  "profilePhotoCamera": "Kamera",
+  "profilePhotoGallery": "Galerie",
+  "profilePhotoCancel": "Abbrechen",
 
   "companyProfileCompanyName": "Travel Egypt Co.",
   "companyProfileReviewsCountShort": "({count} Bewertungen)",
@@ -803,6 +808,65 @@
   "profileUpdatePasswordAction": "Passwort aktualisieren",
   "errorPasswordMinLength": "Das Passwort muss mindestens 8 Zeichen lang sein",
   "passwordUpdatedSuccessfully": "Passwort erfolgreich aktualisiert",
-  "somethingWentWrong": "Etwas ist schief gelaufen"
+  "somethingWentWrong": "Etwas ist schief gelaufen",
+  "logout": "Logout",
+  "@logout": {
+    "description": "Logout action label"
+  },
+  "logoutTitle": "Logout",
+  "@logoutTitle": {
+    "description": "Title for logout confirmation bottom sheet"
+  },
+  "logoutDescription": "Are you sure you want to logout from your account?",
+  "@logoutDescription": {
+    "description": "Description text for logout confirmation"
+  },
+  "logoutAction": "Logout",
+  "@logoutAction": {
+    "description": "Primary action button text for logout"
+  },
+  "cancel": "Cancel",
+  "@cancel": {
+    "description": "Cancel action text"
+  },
+  "deleteAccount": "Delete Account",
+  "@deleteAccount": {
+    "description": "Delete account action label"
+  },
+  "deleteAccountTitle": "Delete Account",
+  "@deleteAccountTitle": {
+    "description": "Title for delete account confirmation bottom sheet"
+  },
+  "deleteAccountDescription": "This action is permanent and cannot be undone. All your trips, bookings and account information will be permanently removed.",
+  "@deleteAccountDescription": {
+    "description": "Description text for delete account confirmation"
+  },
+  "deleteAccountWarning": "Are you absolutely sure you want to permanently delete your account?",
+  "@deleteAccountWarning": {
+    "description": "Warning text for final delete account confirmation dialog"
+  },
+  "deleteAccountAction": "Delete Account",
+  "@deleteAccountAction": {
+    "description": "Primary action button text for delete account"
+  },
+  "finalConfirmation": "Final Confirmation",
+  "@finalConfirmation": {
+    "description": "Title for final confirmation dialog before account deletion"
+  },
+  "profileChangePhotoTitle": "Profilbild ändern",
+  "profileChangePhotoSubtitle": "Wähle, woher du dein Foto beziehen möchtest.",
+  "profilePhotoFromCamera": "Kamera",
+  "profilePhotoFromGallery": "Galerie",
+  "profilePhotoCancel": "Abbrechen",
+  "profilePhotoPermissionRequired": "Berechtigung zum Zugriff auf deine Fotos erforderlich.",
+  "profilePhotoCameraUnavailable": "Die Kamera ist auf diesem Gerät nicht verfügbar.",
+  "profilePhotoInvalidFile": "Die ausgewählte Datei ist kein gültiges Bild.",
+  "profilePhotoTooLarge": "Das ausgewählte Bild ist zu groß. Bitte wähle ein kleineres.",
+  "profilePhotoPickFailed": "Bildauswahl fehlgeschlagen. Bitte versuche es erneut.",
+  "profileUpdateSuccess": "Profil erfolgreich aktualisiert",
+  "deleteAccountSuccess": "Dein Konto wurde gelöscht.",
+  "@deleteAccountSuccess": {
+    "description": "Success toast message after account deletion"
+  }
 }
 

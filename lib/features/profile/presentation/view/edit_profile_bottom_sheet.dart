@@ -138,10 +138,12 @@ class _EditProfileBottomSheetState extends State<EditProfileBottomSheet> {
     final trimmedValue = _controller.text.trim();
 
     if (widget.field == EditProfileField.phone) {
-      final fullPhone = _selectedDialCode + trimmedValue;
-      await cubit.updateProfile(field: 'phone', value: fullPhone);
+      await cubit.updateProfile(
+        phoneCountryCode: _selectedDialCode.trim(),
+        phoneNumber: trimmedValue,
+      );
     } else {
-      await cubit.updateProfile(field: 'name', value: trimmedValue);
+      await cubit.updateProfile(name: trimmedValue);
     }
   }
 
