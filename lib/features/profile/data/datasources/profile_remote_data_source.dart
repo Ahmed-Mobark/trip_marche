@@ -1,6 +1,7 @@
 import '../../../../core/config/app_end_points.dart';
 import '../../../../core/network/network_service/api_basehelper.dart';
 import '../models/change_password_request.dart';
+import '../models/follow_vendor_response.dart';
 import '../models/profile_update_request.dart';
 
 abstract class ProfileRemoteDataSource {
@@ -8,6 +9,8 @@ abstract class ProfileRemoteDataSource {
   Future<Map<String, dynamic>> updateProfile(ProfileUpdateRequest request);
   Future<Map<String, dynamic>> changePassword(ChangePasswordRequest request);
   Future<Map<String, dynamic>> deleteAccount();
+  Future<Map<String, dynamic>> getFollowings();
+  Future<FollowVendorResponse> toggleFollowVendor(int vendorId);
 }
 
 class ProfileRemoteDataSourceImpl implements ProfileRemoteDataSource {
@@ -53,5 +56,21 @@ class ProfileRemoteDataSourceImpl implements ProfileRemoteDataSource {
       url: AppEndpoints.profileDelete,
     );
     return response;
+  }
+
+  @override
+  Future<Map<String, dynamic>> getFollowings() async {
+    final response = await _apiHelper.get<Map<String, dynamic>>(
+      url: AppEndpoints.profileFollowing,
+    );
+    return response;
+  }
+
+  @override
+  Future<FollowVendorResponse> toggleFollowVendor(int vendorId) async {
+    final response = await _apiHelper.post<Map<String, dynamic>>(
+      url: AppEndpoints.vendorFollow(vendorId),
+    );
+    return FollowVendorResponse.fromJson(response);
   }
 }

@@ -630,6 +630,9 @@ class AppLocalizationsFr extends AppLocalizations {
   String get followingsUnfollow => 'Se désabonner';
 
   @override
+  String get follow => 'Suivre';
+
+  @override
   String get followingsEmptyTitle => 'Aucun abonnement';
 
   @override

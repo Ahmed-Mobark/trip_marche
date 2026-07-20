@@ -208,6 +208,7 @@
   "followingsTitle": "الشركات التي أتابعها",
   "followingsCountTitle": "{count} متابعة",
   "followingsUnfollow": "إلغاء المتابعة",
+  "follow": "متابعة",
   "followingsEmptyTitle": "لا توجد متابعات بعد",
   "followingsEmptyDescription": "ابدأ بمتابعة الشركات لتشاهد\nرحلاتها هنا.",
 

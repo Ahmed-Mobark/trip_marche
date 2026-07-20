@@ -208,6 +208,7 @@
   "followingsTitle": "My Followings",
   "followingsCountTitle": "{count} Following",
   "followingsUnfollow": "Unfollow",
+  "follow": "Follow",
   "followingsEmptyTitle": "No followings yet",
   "followingsEmptyDescription": "Start following companies to see\ntheir trips here.",
 

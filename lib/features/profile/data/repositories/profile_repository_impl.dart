@@ -3,6 +3,7 @@ import '../../../../core/network/network_service/failures.dart';
 import '../../../../core/network/network_service/repository_helper.dart';
 import '../datasources/profile_remote_data_source.dart';
 import '../../domain/repositories/profile_repository.dart';
+import '../../domain/entities/follow_vendor_entity.dart';
 import '../models/change_password_request.dart';
 import '../models/profile_update_request.dart';
 
@@ -33,5 +34,18 @@ class ProfileRepositoryImpl with RepositoryHelper implements ProfileRepository {
   @override
   Future<Either<Failure, Map<String, dynamic>>> deleteAccount() {
     return handleEither(() => _remoteDataSource.deleteAccount());
+  }
+
+  @override
+  Future<Either<Failure, Map<String, dynamic>>> getFollowings() {
+    return handleEither(() => _remoteDataSource.getFollowings());
+  }
+
+  @override
+  Future<Either<Failure, FollowVendorEntity>> toggleFollowVendor(int vendorId) {
+    return handleEither(() async {
+      final model = await _remoteDataSource.toggleFollowVendor(vendorId);
+      return model.toEntity();
+    });
   }
 }

@@ -208,6 +208,7 @@
   "followingsTitle": "Mes abonnements",
   "followingsCountTitle": "{count} abonnements",
   "followingsUnfollow": "Se désabonner",
+  "follow": "Suivre",
   "followingsEmptyTitle": "Aucun abonnement",
   "followingsEmptyDescription": "Commencez à suivre des entreprises pour voir\nleurs voyages ici.",
 

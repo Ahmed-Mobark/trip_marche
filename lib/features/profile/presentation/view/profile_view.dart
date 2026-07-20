@@ -53,13 +53,6 @@ class _ProfileViewState extends State<ProfileView> {
     final scrollBottomPad = bottomInset + t.w(16);
     final firstCardTop = t.w(ProfileHandoffTokens.kFirstCardTopFigma) - 20;
 
-    // ProfileView owns its ProfileCubit scope. We reuse the app-wide
-    // singleton instance (sl<ProfileCubit>()) so the same state is shared
-    // with the nav shell. Providing it here guarantees the provider is
-    // always found above this widget, whether ProfileView is rendered as a
-    // tab or pushed through navigation (no "Could not find Provider" error).
-    // The Builder ensures no context.read<ProfileCubit>() runs before the
-    // BlocProvider is inserted into the tree.
     return BlocProvider<ProfileCubit>.value(
       value: sl<ProfileCubit>(),
       child: Builder(
@@ -84,168 +77,179 @@ class _ProfileViewState extends State<ProfileView> {
 
                   final updateCubit = context.watch<UpdateProfileCubit>();
                   final avatarPreviewPath = updateCubit.state.avatarPreviewPath;
-            final effectiveAvatar = avatarPreviewPath != null
-                ? FileImage(File(avatarPreviewPath))
-                : (avatarUrl != null
-                    ? AppCachedNetworkImage.getImageProvider(avatarUrl)
-                    : null);
+                  final effectiveAvatar = avatarPreviewPath != null
+                      ? FileImage(File(avatarPreviewPath))
+                      : (avatarUrl != null
+                            ? AppCachedNetworkImage.getImageProvider(avatarUrl)
+                            : null);
 
-            Widget bodyContent;
-            if (profileState.status == ProfileStatus.loading &&
-                profile == null) {
-              bodyContent = SizedBox(
-                height: 200,
-                child: const CustomLoading(size: 36, strokeWidth: 2.5),
-              );
-            } else if (profileState.status == ProfileStatus.failure) {
-              bodyContent = Center(
-                child: Padding(
-                  padding: EdgeInsets.symmetric(vertical: 60),
-                  child: Column(
-                    children: [
-                      Icon(
-                        Icons.error_outline,
-                        size: 48,
-                        color: AppColors.greyText(context),
-                      ),
-                      SizedBox(height: 12),
-                      Text(
-                        profileState.errorMessage ?? 'Something went wrong',
-                        textAlign: TextAlign.center,
-                        style: AppTextStyles.bodyMedium(
-                          color: AppColors.greyText(context),
+                  Widget bodyContent;
+                  if (profileState.status == ProfileStatus.loading &&
+                      profile == null) {
+                    bodyContent = SizedBox(
+                      height: 200,
+                      child: const CustomLoading(size: 36, strokeWidth: 2.5),
+                    );
+                  } else if (profileState.status == ProfileStatus.failure) {
+                    bodyContent = Center(
+                      child: Padding(
+                        padding: EdgeInsets.symmetric(vertical: 60),
+                        child: Column(
+                          children: [
+                            Icon(
+                              Icons.error_outline,
+                              size: 48,
+                              color: AppColors.greyText(context),
+                            ),
+                            SizedBox(height: 12),
+                            Text(
+                              profileState.errorMessage ??
+                                  'Something went wrong',
+                              textAlign: TextAlign.center,
+                              style: AppTextStyles.bodyMedium(
+                                color: AppColors.greyText(context),
+                              ),
+                            ),
+                            SizedBox(height: 16),
+                            ElevatedButton(
+                              onPressed: () =>
+                                  context.read<ProfileCubit>().fetchProfile(),
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: AppColors.primary,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(12),
+                                ),
+                              ),
+                              child: Text(
+                                'Retry',
+                                style: AppTextStyles.bodyMedium(
+                                  color: AppColors.onPrimary(context),
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
                       ),
-                      SizedBox(height: 16),
-                      ElevatedButton(
-                        onPressed: () =>
-                            context.read<ProfileCubit>().fetchProfile(),
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: AppColors.primary,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                        ),
-                        child: Text(
-                          'Retry',
-                          style: AppTextStyles.bodyMedium(
-                            color: AppColors.onPrimary(context),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              );
-            } else {
-              bodyContent = _buildScrollableCards(
-                context,
-                t,
-                hInset,
-                scrollBottomPad,
-                avatarUrl: avatarUrl,
-              );
-            }
+                    );
+                  } else {
+                    bodyContent = _buildScrollableCards(
+                      context,
+                      t,
+                      hInset,
+                      scrollBottomPad,
+                      avatarUrl: avatarUrl,
+                    );
+                  }
 
-            return Scaffold(
-              backgroundColor: ProfileHandoffTokens.canvas(context),
-              body: Stack(
-                children: [
-                  SizedBox(
-                    height: purpleH,
-                    width: double.infinity,
-                    child: DecoratedBox(
-                      decoration: BoxDecoration(
-                        gradient: ProfileHandoffTokens.headerGradient(),
-                      ),
-                    ),
-                  ),
-                  PositionedDirectional(
-                    top: t.w(ProfileHandoffTokens.kAvatarRowTopFigma),
-                    start: hInset,
-                    end: hInset,
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
+                  return Scaffold(
+                    backgroundColor: ProfileHandoffTokens.canvas(context),
+                    body: Stack(
                       children: [
-                        ProfileAvatar(
-                          backgroundImage: effectiveAvatar,
-                          onEditTap: _isUploadingAvatar
-                              ? null
-                              : _handleAvatarEdit,
+                        SizedBox(
+                          height: purpleH,
+                          width: double.infinity,
+                          child: DecoratedBox(
+                            decoration: BoxDecoration(
+                              gradient: ProfileHandoffTokens.headerGradient(),
+                            ),
+                          ),
                         ),
-                        SizedBox(width: t.w(16)),
-                        Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
+                        PositionedDirectional(
+                          top: t.w(ProfileHandoffTokens.kAvatarRowTopFigma),
+                          start: hInset,
+                          end: hInset,
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
-                              Text(
-                                (name == null || name.isEmpty) ? '—' : name,
-                                maxLines: 1,
-                                overflow: TextOverflow.ellipsis,
-                                style: t.headerNameStyle(),
+                              ProfileAvatar(
+                                backgroundImage: effectiveAvatar,
+                                onEditTap: _isUploadingAvatar
+                                    ? null
+                                    : () => _handleAvatarEdit(context),
                               ),
-                              SizedBox(height: t.w(4)),
-                              Text(
-                                (email == null || email.isEmpty) ? '—' : email,
-                                maxLines: 1,
-                                overflow: TextOverflow.ellipsis,
-                                style: t.headerEmailStyle(context),
-                              ),
-                              SizedBox(height: t.w(4)),
-                              Text(
-                                context.tr.profileTripsBooked(tripsBooked),
-                                maxLines: 1,
-                                overflow: TextOverflow.ellipsis,
-                                style: t.headerTripsStyle(),
+                              SizedBox(width: t.w(16)),
+                              Expanded(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      (name == null || name.isEmpty)
+                                          ? '—'
+                                          : name,
+                                      maxLines: 1,
+                                      overflow: TextOverflow.ellipsis,
+                                      style: t.headerNameStyle(),
+                                    ),
+                                    SizedBox(height: t.w(4)),
+                                    Text(
+                                      (email == null || email.isEmpty)
+                                          ? '—'
+                                          : email,
+                                      maxLines: 1,
+                                      overflow: TextOverflow.ellipsis,
+                                      style: t.headerEmailStyle(context),
+                                    ),
+                                    SizedBox(height: t.w(4)),
+                                    Text(
+                                      context.tr.profileTripsBooked(
+                                        tripsBooked,
+                                      ),
+                                      maxLines: 1,
+                                      overflow: TextOverflow.ellipsis,
+                                      style: t.headerTripsStyle(),
+                                    ),
+                                  ],
+                                ),
                               ),
                             ],
                           ),
                         ),
+                        Column(
+                          children: [
+                            SizedBox(height: firstCardTop),
+                            Expanded(child: bodyContent),
+                          ],
+                        ),
                       ],
                     ),
-                  ),
-                  Column(
-                    children: [
-                      SizedBox(height: firstCardTop),
-                      Expanded(child: bodyContent),
-                    ],
-                  ),
-                ],
+                  );
+                },
               ),
-            );
-          },
-        ),
+            ),
+          );
+        },
       ),
-      );
-      },
-    ),
     );
   }
 
-  Future<void> _handleAvatarEdit() async {
+  Future<void> _handleAvatarEdit(BuildContext context) async {
     final cubit = context.read<UpdateProfileCubit>();
+
     final pickFailedMsg = context.tr.profilePhotoPickFailed;
     final successMsg = context.tr.profileUpdateSuccess;
 
     final pickedFile = await showImageSourceBottomSheet(context);
+
     if (pickedFile == null || !mounted) return;
 
     setState(() => _isUploadingAvatar = true);
 
     try {
       cubit.setAvatarPreview(pickedFile);
+
       await cubit.updateProfile(avatarFile: pickedFile);
 
       if (!mounted) return;
 
-      final newState = cubit.state;
-      if (newState.status == UpdateProfileStatus.failure) {
+      final state = cubit.state;
+
+      if (state.status == UpdateProfileStatus.failure) {
         appToast(
           context: context,
           type: ToastType.error,
-          message: newState.errorMessage ?? pickFailedMsg,
+          message: state.errorMessage ?? pickFailedMsg,
         );
-      } else if (newState.status == UpdateProfileStatus.success) {
+      } else if (state.status == UpdateProfileStatus.success) {
         appToast(
           context: context,
           type: ToastType.success,
@@ -331,8 +335,9 @@ class _ProfileViewState extends State<ProfileView> {
                   ProfileMenuItem(
                     icon: Iconsax.tick_circle,
                     title: context.tr.profileFollowingCompanies,
-                    onTap: () =>
-                        sl<AppNavigator>().push(screen: const MyFollowingsView()),
+                    onTap: () => sl<AppNavigator>().push(
+                      screen: const MyFollowingsView(),
+                    ),
                   ),
                   const _HandoffDivider(),
                   ProfileMenuItem(

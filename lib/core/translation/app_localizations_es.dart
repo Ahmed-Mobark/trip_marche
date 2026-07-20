@@ -629,6 +629,9 @@ class AppLocalizationsEs extends AppLocalizations {
   String get followingsUnfollow => 'Dejar de seguir';
 
   @override
+  String get follow => 'Seguir';
+
+  @override
   String get followingsEmptyTitle => 'Aún no sigues a nadie';
 
   @override

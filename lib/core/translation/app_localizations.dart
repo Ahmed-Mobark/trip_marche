@@ -1282,6 +1282,12 @@ abstract class AppLocalizations {
   /// **'Unfollow'**
   String get followingsUnfollow;
 
+  /// No description provided for @follow.
+  ///
+  /// In en, this message translates to:
+  /// **'Follow'**
+  String get follow;
+
   /// No description provided for @followingsEmptyTitle.
   ///
   /// In en, this message translates to:

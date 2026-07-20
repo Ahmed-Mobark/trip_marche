@@ -2,6 +2,7 @@ import 'dart:math' show min;
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:trip_marche/core/config/app_images.dart';
@@ -12,6 +13,7 @@ import 'package:trip_marche/core/theme/app_colors.dart';
 import 'package:trip_marche/core/widgets/app_cached_network_image.dart';
 import 'package:trip_marche/core/widgets/app_image_gallery_screen.dart';
 import 'package:trip_marche/features/trip_details/domain/entities/trip_details_entity.dart';
+import 'package:trip_marche/features/trip_details/presentation/cubit/trip_details_cubit.dart';
 import 'google_maps_link_button.dart';
 import 'trip_details_info_card.dart';
 import 'trip_details_reviews_section.dart';
@@ -102,19 +104,26 @@ class TripDetailsCompanyCard extends StatelessWidget {
     required this.ratingValue,
     required this.ratingCount,
     required this.onFollow,
+    required this.vendorId,
     this.avatarUrl,
-    this.isFollowing = false,
   });
 
   final String companyName;
   final String ratingValue;
   final String ratingCount;
   final VoidCallback onFollow;
+  final int vendorId;
   final String? avatarUrl;
-  final bool isFollowing;
 
   @override
   Widget build(BuildContext context) {
+    final isFollowing = context.select<TripDetailsCubit, bool>(
+      (cubit) => cubit.isFollowingForVendor(vendorId),
+    );
+    final isBusy = context.select<TripDetailsCubit, bool>(
+      (cubit) => cubit.isFollowBusy(vendorId),
+    );
+
     return TripDetailsInfoCard(
       withShadow: false,
       borderRadius: 16.r,
@@ -175,8 +184,9 @@ class TripDetailsCompanyCard extends StatelessWidget {
               ],
             ),
           ),
+          SizedBox(width: 12.w),
           OutlinedButton(
-            onPressed: onFollow,
+            onPressed: isBusy ? null : onFollow,
             style: OutlinedButton.styleFrom(
               side: const BorderSide(color: AppColors.primary),
               shape: RoundedRectangleBorder(
@@ -189,14 +199,23 @@ class TripDetailsCompanyCard extends StatelessWidget {
               minimumSize: Size.zero,
               tapTargetSize: MaterialTapTargetSize.shrinkWrap,
             ),
-            child: Text(
-              isFollowing
-                  ? context.tr.companyProfileFollowing
-                  : context.tr.tripDetailsFollow,
-              style: AppTextStyles.bodyMedium(
-                color: AppColors.primary,
-              ).copyWith(fontWeight: FontWeight.w600),
-            ),
+            child: isBusy
+                ? SizedBox(
+                    width: 16.w,
+                    height: 16.h,
+                    child: const CircularProgressIndicator(
+                      strokeWidth: 2,
+                      color: AppColors.primary,
+                    ),
+                  )
+                : Text(
+                    isFollowing
+                        ? context.tr.companyProfileFollowing
+                        : context.tr.tripDetailsFollow,
+                    style: AppTextStyles.bodyMedium(
+                      color: AppColors.primary,
+                    ).copyWith(fontWeight: FontWeight.w600),
+                  ),
           ),
         ],
       ),

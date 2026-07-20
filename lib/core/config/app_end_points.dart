@@ -59,4 +59,7 @@ class AppEndpoints {
   static const String profile = 'profile';
   static const String profilePassword = 'profile/password';
   static const String profileDelete = 'profile';
+  static const String profileFollowing = 'profile/following';
+
+  static String vendorFollow(int vendorId) => 'vendors/$vendorId/follow';
 }

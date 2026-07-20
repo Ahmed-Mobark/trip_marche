@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:trip_marche/core/config/styles/styles.dart';
 import 'package:trip_marche/core/extensions/localization.dart';
 import 'package:trip_marche/core/theme/app_colors.dart';
 import 'package:trip_marche/features/trip_details/domain/entities/trip_details_entity.dart';
+import 'package:trip_marche/features/trip_details/presentation/cubit/trip_details_cubit.dart';
 import 'trip_details_accommodation_section.dart';
 import 'trip_details_destination_details_section.dart';
 import 'trip_details_flight_details_section.dart';
@@ -111,8 +113,10 @@ class TripDetailsTravelSections extends StatelessWidget {
               trip.vendor.reviewsCount ?? 0,
             ),
             avatarUrl: trip.vendor.avatar,
-            isFollowing: trip.vendor.isFollowing ?? false,
-            onFollow: () {},
+            vendorId: trip.vendor.id,
+            onFollow: () => context
+                .read<TripDetailsCubit>()
+                .toggleFollowVendor(trip.vendor.id),
           ),
 
           SizedBox(height: 70.h),
