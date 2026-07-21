@@ -4,6 +4,7 @@ import 'package:trip_marche/features/my_trips/presentation/cubit/my_trips_shell_
 class MyTripRowUiModel extends Equatable {
   const MyTripRowUiModel({
     required this.id,
+    required this.tripId,
     required this.title,
     required this.rating,
     required this.reviewCount,
@@ -16,6 +17,7 @@ class MyTripRowUiModel extends Equatable {
   });
 
   final int id;
+  final int tripId;
   final String title;
   final double rating;
   final int reviewCount;
@@ -29,6 +31,7 @@ class MyTripRowUiModel extends Equatable {
 
   MyTripRowUiModel copyWith({
     int? id,
+    int? tripId,
     String? title,
     double? rating,
     int? reviewCount,
@@ -41,6 +44,7 @@ class MyTripRowUiModel extends Equatable {
   }) {
     return MyTripRowUiModel(
       id: id ?? this.id,
+      tripId: tripId ?? this.tripId,
       title: title ?? this.title,
       rating: rating ?? this.rating,
       reviewCount: reviewCount ?? this.reviewCount,
@@ -57,6 +61,7 @@ class MyTripRowUiModel extends Equatable {
   @override
   List<Object?> get props => [
         id,
+        tripId,
         title,
         rating,
         reviewCount,

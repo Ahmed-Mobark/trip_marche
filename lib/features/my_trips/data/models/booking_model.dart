@@ -118,9 +118,9 @@ class BookingTripModel {
 
   factory BookingTripModel.fromJson(Map<String, dynamic> json) {
     final cover = json['cover_image'] as String?;
-    final isFav = JsonParser.parseFavorite(json['is_favorite']);
+    final isFav = JsonParser.parseFavorite(json['is_fav'] ?? json['is_favorite']);
     debugPrint(
-      '[BookingTripModel] id=${json['id']} title=${(json['title'] as String?)?.trim()} isFavorite=$isFav raw=${json['is_favorite']}',
+      '[BookingTripModel] id=${json['id']} title=${(json['title'] as String?)?.trim()} isFavorite=$isFav raw=${json['is_fav'] ?? json['is_favorite']}',
     );
     return BookingTripModel(
       id: json['id'] as int? ?? 0,

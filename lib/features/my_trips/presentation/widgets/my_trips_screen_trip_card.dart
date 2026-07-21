@@ -33,7 +33,7 @@ class MyTripsScreenTripCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     debugPrint(
-      '[MyTripsCard] Build trip=${trip.id} isFavorite=${trip.isFavorite} iconColor=${trip.isFavorite ? "red" : "grey"}',
+      '[MyTripsCard] Build tripId=${trip.tripId} isFavorite=${trip.isFavorite} iconColor=${trip.isFavorite ? "red" : "grey"}',
     );
     final tr = context.tr;
 
@@ -172,14 +172,14 @@ class MyTripsScreenTripCard extends StatelessWidget {
                           child: Material(
                             color: AppColors.transparent,
                               child: InkWell(
-                                onTap: () {
-                                  debugPrint(
-                                    '[MyTripsCard] Heart tapped, tripId=${trip.id}, current isFavorite=${trip.isFavorite}',
-                                  );
-                                  context
-                                      .read<MyTripsShellCubit>()
-                                      .toggleWishlist(trip.id);
-                                },
+                                 onTap: () {
+                                   debugPrint(
+                                     '[MyTripsCard] Heart tapped, tripId=${trip.tripId}, current isFavorite=${trip.isFavorite}',
+                                   );
+                                   context
+                                       .read<MyTripsShellCubit>()
+                                       .toggleWishlist(trip.tripId);
+                                 },
                                 customBorder: const CircleBorder(),
                               child: Container(
                                 width: MyTripsTripCardTokens.favoriteSize,

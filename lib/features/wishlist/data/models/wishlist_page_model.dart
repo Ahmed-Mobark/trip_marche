@@ -109,6 +109,11 @@ class WishlistTripItemModel {
   final bool isFavorite;
 
   factory WishlistTripItemModel.fromJson(Map<String, dynamic> json) {
+    final isWishlisted = JsonParser.asBool(json['is_wishlisted']);
+    final favoriteRaw = json['is_favorite'] ??
+        (json['trip'] is Map<String, dynamic>
+            ? (json['trip'] as Map<String, dynamic>)['is_favorite']
+            : null);
     return WishlistTripItemModel(
       id: json['id'] as int? ?? 0,
       title: json['title'] as String? ?? '',
@@ -128,13 +133,8 @@ class WishlistTripItemModel {
       flags: WishlistTripFlagsModel.fromJson(
         json['flags'] as Map<String, dynamic>? ?? {},
       ),
-      isWishlisted: JsonParser.asBool(json['is_wishlisted']),
-      isFavorite: JsonParser.parseFavorite(
-        json['is_favorite'] ??
-            (json['trip'] is Map<String, dynamic>
-                ? (json['trip'] as Map<String, dynamic>)['is_favorite']
-                : null),
-      ),
+      isWishlisted: isWishlisted,
+      isFavorite: favoriteRaw != null ? JsonParser.parseFavorite(favoriteRaw) : isWishlisted,
     );
   }
 

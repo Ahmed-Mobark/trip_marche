@@ -397,6 +397,7 @@ MyTripRowUiModel _toRowModel(Booking booking, bool isFavorite) {
   );
   return MyTripRowUiModel(
     id: booking.id,
+    tripId: booking.trip.id,
     title: booking.trip.title,
     rating: 0.0,
     reviewCount: 0,
