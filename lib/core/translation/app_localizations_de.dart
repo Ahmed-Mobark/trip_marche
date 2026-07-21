@@ -1201,6 +1201,48 @@ class AppLocalizationsDe extends AppLocalizations {
       'Tolle Erfahrung! Die Reise war sehr gut organisiert und der Guide war sehr professionell.';
 
   @override
+  String get companyProfileCompanyDetails => 'Firmendetails';
+
+  @override
+  String get companyProfileLocation => 'Standort';
+
+  @override
+  String get companyProfileEmail => 'E-Mail';
+
+  @override
+  String get companyProfileYearOfEstablishment => 'Gründungsjahr';
+
+  @override
+  String get companyProfileCommercialRegistration => 'Gewerberegistrierung';
+
+  @override
+  String get companyProfileBusinessLicense => 'Gewerbeschein';
+
+  @override
+  String get companyProfileTaxCard => 'Steuerkarte';
+
+  @override
+  String get companyProfileTripCategories => 'Reisekategorien';
+
+  @override
+  String get companyProfileOurTeam => 'Unser Team';
+
+  @override
+  String get companyProfileCustomerReviews => 'Kundenbewertungen';
+
+  @override
+  String get companyProfileViewAll => 'Alle ansehen';
+
+  @override
+  String get companyProfileAvailableTrips => 'Verfügbare Reisen';
+
+  @override
+  String get companyProfileSeeAllTrips => 'Alle Reisen anzeigen';
+
+  @override
+  String get companyProfilePricePerPerson => 'Person';
+
+  @override
   String get filterTitle => 'Filter';
 
   @override

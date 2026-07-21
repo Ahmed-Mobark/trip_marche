@@ -1,10 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:iconsax/iconsax.dart';
-import '../../../../core/theme/app_colors.dart';
-import '../../../../core/theme/app_text_styles.dart';
-import '../widgets/company_stat_item.dart';
-import '../widgets/company_review_item.dart';
+import '../../../../core/config/app_colors.dart';
 import '../../../../core/extensions/localization.dart';
+import '../../../../core/config/dimensions/company_profile_figma_tokens.dart';
+import '../widgets/company_profile_header.dart';
+import '../widgets/company_action_buttons.dart';
+import '../widgets/company_details_section.dart';
+import '../widgets/trip_categories_section.dart';
+import '../widgets/team_section.dart';
+import '../widgets/customer_reviews_section.dart';
+import '../widgets/available_trips_section.dart';
+import '../widgets/company_trip_card.dart';
+import '../widgets/faq_section.dart';
 
 class CompanyProfileView extends StatefulWidget {
   const CompanyProfileView({super.key});
@@ -19,14 +27,13 @@ class _CompanyProfileViewState extends State<CompanyProfileView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.background(context),
+      backgroundColor: AppColors.screenBackground,
       body: CustomScrollView(
         slivers: [
-          // Cover Image + Back Button
           SliverAppBar(
-            expandedHeight: 200,
+            expandedHeight: 200.h,
             pinned: true,
-            backgroundColor: AppColors.background(context),
+            backgroundColor: AppColors.transparent,
             leading: Padding(
               padding: const EdgeInsets.all(8.0),
               child: CircleAvatar(
@@ -43,318 +50,262 @@ class _CompanyProfileViewState extends State<CompanyProfileView> {
             ),
             flexibleSpace: FlexibleSpaceBar(
               background: Container(
-                color: AppColors.lightBg(context),
-                child: Icon(Iconsax.image, size: 48, color: AppColors.greyText(context)),
-              ),
-            ),
-          ),
-
-          SliverToBoxAdapter(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const SizedBox(height: 16),
-                  // Company Logo + Name + Rating
-                  Row(
-                    children: [
-                      Container(
-                        width: 60,
-                        height: 60,
-                        decoration: BoxDecoration(
-                          color: AppColors.lightBg(context),
-                          borderRadius: BorderRadius.circular(12),
-                          border: Border.all(color: AppColors.border(context)),
-                        ),
-                        child: Icon(
-                          Iconsax.building,
-                          color: AppColors.greyText(context),
-                          size: 28,
-                        ),
-                      ),
-                      const SizedBox(width: 12),
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              context.tr.companyProfileCompanyName,
-                              style: AppTextStyles.heading3(),
-                            ),
-                            const SizedBox(height: 4),
-                            Row(
-                              children: [
-                                const Icon(
-                                  Icons.star,
-                                  size: 16,
-                                  color: AppColors.yellow,
-                                ),
-                                const SizedBox(width: 4),
-                                Text('4.8', style: AppTextStyles.bodyMedium()),
-                                const SizedBox(width: 4),
-                                Text(
-                                  context.tr.companyProfileReviewsCountShort(
-                                    '120',
-                                  ),
-                                  style: Theme.of(context).textTheme.bodyMedium!
-                                      .copyWith(
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.w400,
-                                        color: AppColors.greyText(context),
-                                      ),
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
+                decoration: const BoxDecoration(
+                  gradient: LinearGradient(
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                    colors: [AppColors.searchResultHeaderStart, AppColors.primary],
                   ),
-                  const SizedBox(height: 16),
-
-                  // Follow Button
-                  SizedBox(
-                    width: double.infinity,
-                    height: 44,
-                    child: OutlinedButton(
-                      onPressed: () {
-                        setState(() {
-                          _isFollowing = !_isFollowing;
-                        });
-                      },
-                      style: OutlinedButton.styleFrom(
-                        backgroundColor: _isFollowing
-                            ? AppColors.primary
-                            : AppColors.transparent,
-                        side: BorderSide(
-                          color: _isFollowing
-                              ? AppColors.primary
-                              : AppColors.border(context),
-                        ),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                      ),
-                      child: Text(
-                        _isFollowing
-                            ? context.tr.companyProfileFollowing
-                            : context.tr.companyProfileFollow,
-                        style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                          fontSize: 14,
-                          fontWeight: FontWeight.w600,
-                          color: _isFollowing
-                              ? AppColors.onImage
-                              : AppColors.primary,
-                        ),
-                      ),
-                    ),
-                  ),
-                  const SizedBox(height: 20),
-
-                  // Stats Row
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      CompanyStatItem(
-                        value: '24',
-                        label: context.tr.companyProfileStatsTrips,
-                      ),
-                      Container(width: 1, height: 40, color: AppColors.border(context)),
-                      CompanyStatItem(
-                        value: '120',
-                        label: context.tr.companyProfileStatsReviews,
-                      ),
-                      Container(width: 1, height: 40, color: AppColors.border(context)),
-                      CompanyStatItem(
-                        value: '1.2K',
-                        label: context.tr.companyProfileStatsFollowers,
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 24),
-
-                  // About Section
-                  Text(
-                    context.tr.companyProfileAbout,
-                    style: AppTextStyles.subtitle(),
-                  ),
-                  const SizedBox(height: 8),
-                  Text(
-                    context.tr.companyProfileAboutDescription,
-                    style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                      fontSize: 14,
-                      fontWeight: FontWeight.w400,
-                      color: AppColors.secondaryText(context),
-                      height: 1.5,
-                    ),
-                  ),
-                  const SizedBox(height: 24),
-
-                  // Trips Section
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        context.tr.companyProfileTrips,
-                        style: AppTextStyles.subtitle(),
-                      ),
-                      TextButton(
-                        onPressed: () {},
-                        child: Text(
-                          context.tr.companyProfileSeeAll,
-                          style: Theme.of(context).textTheme.bodyMedium!
-                              .copyWith(
-                                fontSize: 14,
-                                fontWeight: FontWeight.w500,
-                                color: AppColors.primary,
-                              ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 8),
-                ],
-              ),
-            ),
-          ),
-
-          // Trip Cards Grid
-          SliverPadding(
-            padding: const EdgeInsets.symmetric(horizontal: 20),
-            sliver: SliverGrid(
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2,
-                mainAxisSpacing: 12,
-                crossAxisSpacing: 12,
-                childAspectRatio: 0.7,
-              ),
-              delegate: SliverChildBuilderDelegate(
-                (context, index) => _buildTripCard(),
-                childCount: 4,
-              ),
-            ),
-          ),
-
-          SliverToBoxAdapter(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const SizedBox(height: 24),
-                  // Reviews Section
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        context.tr.companyProfileReviews,
-                        style: AppTextStyles.subtitle(),
-                      ),
-                      TextButton(
-                        onPressed: () {},
-                        child: Text(
-                          context.tr.companyProfileSeeAll,
-                          style: Theme.of(context).textTheme.bodyMedium!
-                              .copyWith(
-                                fontSize: 14,
-                                fontWeight: FontWeight.w500,
-                                color: AppColors.primary,
-                              ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 8),
-                  ...List.generate(
-                    3,
-                    (index) => CompanyReviewItem(
-                      name: context.tr.companyProfileReviewAuthor,
-                      rating: 4,
-                      date: context.tr.companyProfileReviewDate,
-                      comment: context.tr.companyProfileReviewComment,
-                    ),
-                  ),
-                  const SizedBox(height: 32),
-                ],
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildTripCard() {
-    return Container(
-      decoration: BoxDecoration(
-        color: AppColors.background(context),
-        borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: AppColors.border(context)),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          // Image placeholder
-          Expanded(
-            flex: 3,
-            child: Container(
-              decoration: BoxDecoration(
-                color: AppColors.lightBg(context),
-                borderRadius: const BorderRadius.only(
-                  topLeft: Radius.circular(12),
-                  topRight: Radius.circular(12),
                 ),
               ),
-              child: Center(
-                child: Icon(Iconsax.image, color: AppColors.greyText(context), size: 32),
-              ),
             ),
           ),
-          // Info
-          Expanded(
-            flex: 2,
-            child: Padding(
-              padding: const EdgeInsets.all(8),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    context.tr.companyProfileTripName,
-                    style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                      fontSize: 13,
-                      fontWeight: FontWeight.w600,
-                      color: AppColors.darkText(context),
+
+          SliverToBoxAdapter(
+            child: Column(
+              children: [
+                SizedBox(height: 14.h),
+                CompanyProfileHeader(
+                  companyName: context.tr.companyProfileCompanyName,
+                  avatarUrl: '',
+                  rating: 4.9,
+                  reviewsCount: 112,
+                  isFollowing: _isFollowing,
+                  onFollowToggle: () {
+                    setState(() {
+                      _isFollowing = !_isFollowing;
+                    });
+                  },
+                ),
+                SizedBox(height: 14.h),
+                CompanyActionButtons(
+                  onCallPressed: () {},
+                  onWhatsAppPressed: () {},
+                  socialButtons: [
+                    SocialButtonData(
+                      icon: const Icon(
+                        Icons.facebook,
+                        color: AppColors.facebookBlue,
+                        size: 18,
+                      ),
+                      iconColor: AppColors.facebookBlue,
+                      borderColor: AppColors.socialBorder,
                     ),
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                  const SizedBox(height: 4),
-                  Row(
-                    children: [
-                      const Icon(Icons.star, size: 12, color: AppColors.yellow),
-                      const SizedBox(width: 2),
-                      Text(
-                        '4.5',
-                        style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                          fontSize: 11,
-                          fontWeight: FontWeight.w500,
-                          color: AppColors.secondaryText(context),
+                    SocialButtonData(
+                      icon: const Icon(
+                        Icons.camera_alt,
+                        color: AppColors.instagramPink,
+                        size: 18,
+                      ),
+                      iconColor: AppColors.instagramPink,
+                      borderColor: AppColors.socialBorder,
+                    ),
+                    SocialButtonData(
+                      icon: const Icon(
+                        Icons.music_note,
+                        color: AppColors.black,
+                        size: 16,
+                      ),
+                      iconColor: AppColors.black,
+                      borderColor: AppColors.socialBorder,
+                    ),
+                    SocialButtonData(
+                      icon: const Icon(
+                        Icons.play_circle_filled,
+                        color: AppColors.youtubeRed,
+                        size: 18,
+                      ),
+                      iconColor: AppColors.youtubeRed,
+                      borderColor: AppColors.socialBorder,
+                    ),
+                    SocialButtonData(
+                      icon: const Icon(
+                        Iconsax.global,
+                        color: AppColors.websiteBlue,
+                        size: 18,
+                      ),
+                      iconColor: AppColors.websiteBlue,
+                      borderColor: AppColors.socialBorder,
+                    ),
+                  ],
+                ),
+                SizedBox(height: 14.h),
+                CompanyDetailsSection(
+                  about: context.tr.companyProfileAboutDescription,
+                  details: [
+                    CompanyDetailData(
+                      label: context.tr.companyProfileLocation,
+                      value: '18 El Tesen Road, New Cairo, Egypt',
+                      trailing: GestureDetector(
+                        onTap: () {},
+                        child: Container(
+                          width: 36.r,
+                          height: 36.r,
+                          decoration: BoxDecoration(
+                            color: AppColors.mapButtonBg,
+                            borderRadius: BorderRadius.circular(CompanyProfileFigmaTokens.cardRadius),
+                            border: Border.all(color: AppColors.mapButtonBorder),
+                          ),
+                          child: Icon(
+                            Icons.map_outlined,
+                            size: CompanyProfileFigmaTokens.mediumIconSize,
+                            color: AppColors.mapBlue,
+                          ),
                         ),
                       ),
-                    ],
-                  ),
-                  const Spacer(),
-                  Text(
-                    '199/Person',
-                    style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                      fontSize: 13,
-                      fontWeight: FontWeight.w600,
-                      color: AppColors.primary,
                     ),
-                  ),
-                ],
-              ),
+                    CompanyDetailData(
+                      label: context.tr.companyProfileEmail,
+                      value: 'tripmarche@gmail.com',
+                    ),
+                    CompanyDetailData(
+                      label: context.tr.companyProfileYearOfEstablishment,
+                      value: '2015',
+                    ),
+                    CompanyDetailData(
+                      label: context.tr.companyProfileCommercialRegistration,
+                      value: 'CR123456789',
+                    ),
+                    CompanyDetailData(
+                      label: context.tr.companyProfileBusinessLicense,
+                      value: 'BL987654321',
+                    ),
+                    CompanyDetailData(
+                      label: context.tr.companyProfileTaxCard,
+                      value: 'TC456789123',
+                    ),
+                  ],
+                ),
+                SizedBox(height: 14.h),
+                TripCategoriesSection(
+                  categories: [
+                    TripCategoryItemData(
+                      icon: const Icon(Iconsax.airplane, size: 20),
+                      label: 'International',
+                    ),
+                    TripCategoryItemData(
+                      icon: const Icon(Iconsax.people, size: 20),
+                      label: 'Domestic',
+                    ),
+                    TripCategoryItemData(
+                      icon: const Icon(Iconsax.activity, size: 20),
+                      label: 'Camping',
+                    ),
+                    TripCategoryItemData(
+                      icon: const Icon(Icons.agriculture, size: 20),
+                      label: 'Fishing',
+                    ),
+                  ],
+                ),
+                SizedBox(height: 14.h),
+                TeamSection(
+                  members: [
+                    TeamMemberData(
+                      name: 'John Smith',
+                      role: 'CEO',
+                      avatarUrl: '',
+                    ),
+                    TeamMemberData(
+                      name: 'Sarah Johnson',
+                      role: 'Tour Manager',
+                      avatarUrl: '',
+                    ),
+                    TeamMemberData(
+                      name: 'Sarah Johnson',
+                      role: 'Tour Manager',
+                      avatarUrl: '',
+                    ),
+                    TeamMemberData(
+                      name: 'Sarah Johnson',
+                      role: 'Tour Manager',
+                      avatarUrl: '',
+                    ),
+                  ],
+                ),
+                SizedBox(height: 14.h),
+                CustomerReviewsSection(
+                  reviews: [
+                    ReviewData(
+                      name: 'Emma Thompson',
+                      avatarUrl: '',
+                      country: 'Spain',
+                      countryFlagUrl: '',
+                      rating: 5,
+                      comment:
+                          'Amazing experience with Wanderlust! The Maldives trip was perfectly organized and the staff was very professional.',
+                      galleryImages: ['', '', '', '', ''],
+                    ),
+                  ],
+                ),
+                SizedBox(height: 14.h),
+                AvailableTripsSection(
+                  trips: [
+                    CompanyTripCardData(
+                      title: 'Dahab Trip',
+                      imageUrl: '',
+                      rating: 4.9,
+                      reviewsCount: 112,
+                      fromCity: 'From Cairo',
+                      dateFrom: '27 Nov',
+                      dateTo: '4 Dec',
+                      oldPrice: 1000,
+                      newPrice: 699,
+                      currency: '\$',
+                      badge: 'Top Rated',
+                      isFavorite: false,
+                    ),
+                    CompanyTripCardData(
+                      title: 'Dahab Trip',
+                      imageUrl: '',
+                      rating: 4.9,
+                      reviewsCount: 112,
+                      fromCity: 'From Cairo',
+                      dateFrom: '27 Nov',
+                      dateTo: '4 Dec',
+                      oldPrice: 1000,
+                      newPrice: 699,
+                      currency: '\$',
+                      badge: 'Recommended',
+                      isFavorite: false,
+                    ),
+                    CompanyTripCardData(
+                      title: 'Dahab Trip',
+                      imageUrl: '',
+                      rating: 4.9,
+                      reviewsCount: 112,
+                      fromCity: 'From Cairo',
+                      dateFrom: '27 Nov',
+                      dateTo: '4 Dec',
+                      oldPrice: 1000,
+                      newPrice: 699,
+                      currency: '\$',
+                      badge: 'Best Price',
+                      isFavorite: false,
+                    ),
+                  ],
+                ),
+                SizedBox(height: 14.h),
+                FAQSection(
+                  faqs: [
+                    FAQData(
+                      question: '1. How do I book a trip?',
+                      answer:
+                          'you can book a trip by selecting your desired destination, choosing your preferred dates and package, then clicking "Book Now" and following the checkout steps.',
+                      isExpanded: true,
+                    ),
+                    FAQData(
+                      question: '2. Can I cancel my booking?',
+                      answer: '',
+                    ),
+                    FAQData(
+                      question: '5. How do I contact customer support?',
+                      answer: '',
+                    ),
+                    FAQData(question: '4. Are payments secure?', answer: ''),
+                  ],
+                ),
+                SizedBox(height: CompanyProfileFigmaTokens.sectionBottom),
+              ],
             ),
           ),
         ],

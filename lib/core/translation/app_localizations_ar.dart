@@ -1189,6 +1189,48 @@ class AppLocalizationsAr extends AppLocalizations {
       'تجربة رائعة! كانت الرحلة منظمة جدًا والمرشد كان على معرفة كبيرة.';
 
   @override
+  String get companyProfileCompanyDetails => 'تفاصيل الشركة';
+
+  @override
+  String get companyProfileLocation => 'الموقع';
+
+  @override
+  String get companyProfileEmail => 'البريد الإلكتروني';
+
+  @override
+  String get companyProfileYearOfEstablishment => 'سنة التأسيس';
+
+  @override
+  String get companyProfileCommercialRegistration => 'السجل التجاري';
+
+  @override
+  String get companyProfileBusinessLicense => 'رخصة العمل';
+
+  @override
+  String get companyProfileTaxCard => 'البطاقة الضريبية';
+
+  @override
+  String get companyProfileTripCategories => 'فئات الرحلات';
+
+  @override
+  String get companyProfileOurTeam => 'فريقنا';
+
+  @override
+  String get companyProfileCustomerReviews => 'تقييمات العملاء';
+
+  @override
+  String get companyProfileViewAll => 'عرض الكل';
+
+  @override
+  String get companyProfileAvailableTrips => 'الرحلات المتاحة';
+
+  @override
+  String get companyProfileSeeAllTrips => 'عرض جميع الرحلات';
+
+  @override
+  String get companyProfilePricePerPerson => 'شخص';
+
+  @override
   String get filterTitle => 'تصفية';
 
   @override

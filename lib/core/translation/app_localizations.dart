@@ -2332,6 +2332,90 @@ abstract class AppLocalizations {
   /// **'Great experience! The trip was well organized and the guide was very knowledgeable.'**
   String get companyProfileReviewComment;
 
+  /// No description provided for @companyProfileCompanyDetails.
+  ///
+  /// In en, this message translates to:
+  /// **'Company Details'**
+  String get companyProfileCompanyDetails;
+
+  /// No description provided for @companyProfileLocation.
+  ///
+  /// In en, this message translates to:
+  /// **'Location'**
+  String get companyProfileLocation;
+
+  /// No description provided for @companyProfileEmail.
+  ///
+  /// In en, this message translates to:
+  /// **'Email'**
+  String get companyProfileEmail;
+
+  /// No description provided for @companyProfileYearOfEstablishment.
+  ///
+  /// In en, this message translates to:
+  /// **'Year of Establishment'**
+  String get companyProfileYearOfEstablishment;
+
+  /// No description provided for @companyProfileCommercialRegistration.
+  ///
+  /// In en, this message translates to:
+  /// **'Commercial Registration'**
+  String get companyProfileCommercialRegistration;
+
+  /// No description provided for @companyProfileBusinessLicense.
+  ///
+  /// In en, this message translates to:
+  /// **'Business License'**
+  String get companyProfileBusinessLicense;
+
+  /// No description provided for @companyProfileTaxCard.
+  ///
+  /// In en, this message translates to:
+  /// **'Tax Card'**
+  String get companyProfileTaxCard;
+
+  /// No description provided for @companyProfileTripCategories.
+  ///
+  /// In en, this message translates to:
+  /// **'Trip Categories'**
+  String get companyProfileTripCategories;
+
+  /// No description provided for @companyProfileOurTeam.
+  ///
+  /// In en, this message translates to:
+  /// **'Our Team'**
+  String get companyProfileOurTeam;
+
+  /// No description provided for @companyProfileCustomerReviews.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Reviews'**
+  String get companyProfileCustomerReviews;
+
+  /// No description provided for @companyProfileViewAll.
+  ///
+  /// In en, this message translates to:
+  /// **'View All'**
+  String get companyProfileViewAll;
+
+  /// No description provided for @companyProfileAvailableTrips.
+  ///
+  /// In en, this message translates to:
+  /// **'Available Trips'**
+  String get companyProfileAvailableTrips;
+
+  /// No description provided for @companyProfileSeeAllTrips.
+  ///
+  /// In en, this message translates to:
+  /// **'See All Trips'**
+  String get companyProfileSeeAllTrips;
+
+  /// No description provided for @companyProfilePricePerPerson.
+  ///
+  /// In en, this message translates to:
+  /// **'Person'**
+  String get companyProfilePricePerPerson;
+
   /// No description provided for @filterTitle.
   ///
   /// In en, this message translates to:
