@@ -4,6 +4,7 @@ import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_text_styles.dart';
 import '../../../../core/extensions/localization.dart';
 import '../../../../core/config/dimensions/company_profile_figma_tokens.dart';
+import '../models/social_button_model.dart';
 
 class CompanyActionButtons extends StatelessWidget {
   const CompanyActionButtons({
@@ -15,18 +16,12 @@ class CompanyActionButtons extends StatelessWidget {
 
   final VoidCallback onCallPressed;
   final VoidCallback onWhatsAppPressed;
-  final List<SocialButtonData> socialButtons;
+  final List<SocialButtonModel> socialButtons;
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: EdgeInsets.symmetric(horizontal: CompanyProfileFigmaTokens.screenPadding),
-      padding: EdgeInsets.all(CompanyProfileFigmaTokens.cardPadding),
-      decoration: BoxDecoration(
-        color: AppColors.background(context),
-        borderRadius: BorderRadius.circular(CompanyProfileFigmaTokens.cardRadius),
-        border: Border.all(color: AppColors.cardBorder),
-      ),
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: CompanyProfileFigmaTokens.screenPadding),
       child: Column(
         children: [
           Row(
@@ -61,7 +56,9 @@ class CompanyActionButtons extends StatelessWidget {
             children: [
               ...List.generate(socialButtons.length * 2 - 1, (index) {
                 if (index.isOdd) {
-                  return SizedBox(width: CompanyProfileFigmaTokens.rowGapMedium);
+                  return SizedBox(
+                    width: CompanyProfileFigmaTokens.rowGapMedium,
+                  );
                 }
                 final buttonIndex = index ~/ 2;
                 return _SocialIconButton(data: socialButtons[buttonIndex]);
@@ -72,18 +69,6 @@ class CompanyActionButtons extends StatelessWidget {
       ),
     );
   }
-}
-
-class SocialButtonData {
-  const SocialButtonData({
-    required this.icon,
-    required this.iconColor,
-    required this.borderColor,
-  });
-
-  final Widget icon;
-  final Color iconColor;
-  final Color borderColor;
 }
 
 class _ActionButton extends StatelessWidget {
@@ -113,17 +98,25 @@ class _ActionButton extends StatelessWidget {
         height: CompanyProfileFigmaTokens.actionButtonHeight,
         decoration: BoxDecoration(
           color: fillColor,
-          borderRadius: BorderRadius.circular(CompanyProfileFigmaTokens.actionButtonRadius),
+          borderRadius: BorderRadius.circular(
+            CompanyProfileFigmaTokens.actionButtonRadius,
+          ),
           border: Border.all(color: borderColor),
         ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(icon, size: CompanyProfileFigmaTokens.largeIconSize, color: iconColor),
+            Icon(
+              icon,
+              size: CompanyProfileFigmaTokens.largeIconSize,
+              color: iconColor,
+            ),
             SizedBox(width: CompanyProfileFigmaTokens.rowGapMedium),
             Text(
               label,
-              style: AppTextStyles.button(color: textColor).copyWith(fontWeight: FontWeight.w500),
+              style: AppTextStyles.button(
+                color: textColor,
+              ).copyWith(fontWeight: FontWeight.w500),
             ),
           ],
         ),
@@ -135,7 +128,7 @@ class _ActionButton extends StatelessWidget {
 class _SocialIconButton extends StatelessWidget {
   const _SocialIconButton({required this.data});
 
-  final SocialButtonData data;
+  final SocialButtonModel data;
 
   @override
   Widget build(BuildContext context) {
@@ -143,9 +136,11 @@ class _SocialIconButton extends StatelessWidget {
       child: Container(
         height: CompanyProfileFigmaTokens.socialIconButtonHeight,
         decoration: BoxDecoration(
-          color: AppColors.white,
-          borderRadius: BorderRadius.circular(CompanyProfileFigmaTokens.socialIconButtonRadius),
-          border: Border.all(color: AppColors.socialBorder),
+          color: AppColors.background(context),
+          borderRadius: BorderRadius.circular(
+            CompanyProfileFigmaTokens.socialIconButtonRadius,
+          ),
+          border: Border.all(color: AppColors.socialBorder(context)),
         ),
         child: Center(child: data.icon),
       ),

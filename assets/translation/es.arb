@@ -465,7 +465,10 @@
   "profilePhotoCamera": "Cámara",
   "profilePhotoGallery": "Galería",
   "profilePhotoCancel": "Cancelar",
-
+  "companyProfileTitle": "Company Profile",
+  "@companyProfileTitle": {
+    "description": "Company Profile screen title"
+  },
   "companyProfileCompanyName": "Travel Egypt Co.",
   "companyProfileReviewsCountShort": "({count} reseñas)",
   "companyProfileFollowing": "Siguiendo",

@@ -3,6 +3,8 @@ import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_text_styles.dart';
 import '../../../../core/extensions/localization.dart';
 import '../../../../core/config/dimensions/company_profile_figma_tokens.dart';
+import '../models/trip_category_model.dart';
+import 'profile_section_title.dart';
 
 class TripCategoryItem extends StatelessWidget {
   const TripCategoryItem({
@@ -10,7 +12,7 @@ class TripCategoryItem extends StatelessWidget {
     required this.category,
   });
 
-  final TripCategoryItemData category;
+  final TripCategoryModel category;
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +22,7 @@ class TripCategoryItem extends StatelessWidget {
       decoration: BoxDecoration(
         color: AppColors.background(context),
         borderRadius: BorderRadius.circular(CompanyProfileFigmaTokens.cardRadiusLarge),
-        border: Border.all(color: AppColors.cardBorder),
+        border: Border.all(color: AppColors.cardBorder(context)),
       ),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -45,35 +47,22 @@ class TripCategoryItem extends StatelessWidget {
 class TripCategoriesSection extends StatelessWidget {
   const TripCategoriesSection({super.key, required this.categories});
 
-  final List<TripCategoryItemData> categories;
+  final List<TripCategoryModel> categories;
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: EdgeInsets.symmetric(horizontal: CompanyProfileFigmaTokens.screenPadding),
-      decoration: BoxDecoration(
-        color: AppColors.background(context),
-        borderRadius: BorderRadius.circular(CompanyProfileFigmaTokens.cardRadius),
-        border: Border.all(color: AppColors.cardBorder),
-      ),
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: CompanyProfileFigmaTokens.screenPadding),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Padding(
-            padding: EdgeInsets.fromLTRB(CompanyProfileFigmaTokens.screenPaddingSmall, CompanyProfileFigmaTokens.cardPadding, CompanyProfileFigmaTokens.screenPaddingSmall, 0),
-            child: Text(
-              context.tr.companyProfileTripCategories,
-              style: AppTextStyles.heading3(
-                color: AppColors.darkText(context),
-              ).copyWith(fontSize: CompanyProfileFigmaTokens.titleFontSize, fontWeight: FontWeight.w700),
-            ),
-          ),
+          ProfileSectionTitle(title: context.tr.companyProfileTripCategories),
           SizedBox(height: CompanyProfileFigmaTokens.rowGapMedium),
           SizedBox(
             height: CompanyProfileFigmaTokens.categoryItemHeight,
             child: ListView.separated(
               scrollDirection: Axis.horizontal,
-              padding: EdgeInsets.symmetric(horizontal: CompanyProfileFigmaTokens.screenPaddingSmall),
+              padding: EdgeInsets.zero,
               itemCount: categories.length,
               separatorBuilder: (_, __) => SizedBox(width: CompanyProfileFigmaTokens.rowGapMedium),
               itemBuilder: (context, index) {
@@ -86,11 +75,4 @@ class TripCategoriesSection extends StatelessWidget {
       ),
     );
   }
-}
-
-class TripCategoryItemData {
-  const TripCategoryItemData({required this.icon, required this.label});
-
-  final Widget icon;
-  final String label;
 }

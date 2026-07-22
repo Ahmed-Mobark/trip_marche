@@ -3,8 +3,10 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_text_styles.dart';
 import '../../../../core/extensions/localization.dart';
-import '../../../../core/config/app_images.dart';
 import '../../../../core/config/dimensions/company_profile_figma_tokens.dart';
+import '../models/review_model.dart';
+import 'profile_avatar.dart';
+import 'profile_section_title.dart';
 
 class ReviewImageItem extends StatelessWidget {
   const ReviewImageItem({
@@ -22,7 +24,7 @@ class ReviewImageItem extends StatelessWidget {
         width: 58.w,
         height: 56.h,
         decoration: BoxDecoration(
-          border: Border.all(color: AppColors.socialBorder),
+          border: Border.all(color: AppColors.socialBorder(context)),
         ),
         child: Image.network(
           imageUrl,
@@ -46,7 +48,7 @@ class ReviewCard extends StatelessWidget {
     required this.review,
   });
 
-  final ReviewData review;
+  final ReviewModel review;
 
   @override
   Widget build(BuildContext context) {
@@ -55,7 +57,7 @@ class ReviewCard extends StatelessWidget {
       decoration: BoxDecoration(
         color: AppColors.background(context),
         borderRadius: BorderRadius.circular(CompanyProfileFigmaTokens.cardRadius),
-        border: Border.all(color: AppColors.surfaceDivider),
+        border: Border.all(color: AppColors.surfaceDivider(context)),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -63,35 +65,10 @@ class ReviewCard extends StatelessWidget {
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              ClipRRect(
-                borderRadius: BorderRadius.circular(CompanyProfileFigmaTokens.reviewAvatarSize),
-                child: Container(
-                  width: CompanyProfileFigmaTokens.reviewAvatarSize,
-                  height: CompanyProfileFigmaTokens.reviewAvatarSize,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    border: Border.all(color: AppColors.surfaceDivider),
-                  ),
-                  child: review.avatarUrl.isNotEmpty
-                      ? Image.network(
-                          review.avatarUrl,
-                          width: CompanyProfileFigmaTokens.reviewAvatarSize,
-                          height: CompanyProfileFigmaTokens.reviewAvatarSize,
-                          fit: BoxFit.cover,
-                          errorBuilder: (_, __, ___) => Image.asset(
-                            AppImages.logo,
-                            width: CompanyProfileFigmaTokens.reviewAvatarSize,
-                            height: CompanyProfileFigmaTokens.reviewAvatarSize,
-                            fit: BoxFit.cover,
-                          ),
-                        )
-                      : Image.asset(
-                          AppImages.logo,
-                          width: CompanyProfileFigmaTokens.reviewAvatarSize,
-                          height: CompanyProfileFigmaTokens.reviewAvatarSize,
-                          fit: BoxFit.cover,
-                        ),
-                ),
+              ProfileAvatar(
+                imageUrl: review.avatarUrl,
+                size: CompanyProfileFigmaTokens.reviewAvatarSize,
+                borderRadius: CompanyProfileFigmaTokens.reviewAvatarSize,
               ),
               SizedBox(width: CompanyProfileFigmaTokens.rowGapMedium),
               Expanded(
@@ -109,26 +86,26 @@ class ReviewCard extends StatelessWidget {
                           borderRadius: BorderRadius.circular(3.5.r),
                           child: review.countryFlagUrl.isNotEmpty
                               ? Image.network(
-                                  review.countryFlagUrl,
-                                  width: 18.w,
-                                  height: 14.h,
-                                  fit: BoxFit.cover,
-                                  errorBuilder: (_, __, ___) => Container(
-                                    width: 18.w,
-                                    height: 14.h,
-                                    color: AppColors.greyText(context),
-                                  ),
-                                )
+                            review.countryFlagUrl,
+                            width: 18.w,
+                            height: 14.h,
+                            fit: BoxFit.cover,
+                            errorBuilder: (_, __, ___) => Container(
+                              width: 18.w,
+                              height: 14.h,
+                              color: AppColors.greyText(context),
+                            ),
+                          )
                               : Container(
-                                  width: 18.w,
-                                  height: 14.h,
-                                  color: AppColors.greyText(context),
-                                ),
+                            width: 18.w,
+                            height: 14.h,
+                            color: AppColors.greyText(context),
+                          ),
                         ),
                         SizedBox(width: CompanyProfileFigmaTokens.rowGapSmall),
                         Text(
                           review.country,
-                          style: AppTextStyles.caption(color: AppColors.countryText),
+                          style: AppTextStyles.caption(color: AppColors.countryText(context)),
                         ),
                       ],
                     ),
@@ -136,7 +113,7 @@ class ReviewCard extends StatelessWidget {
                     Row(
                       children: List.generate(
                         5,
-                        (index) => Icon(
+                            (index) => Icon(
                           index < review.rating.floor()
                               ? Icons.star_rounded
                               : Icons.star_border_rounded,
@@ -153,7 +130,7 @@ class ReviewCard extends StatelessWidget {
           SizedBox(height: CompanyProfileFigmaTokens.rowGapMedium),
           Text(
             review.comment,
-            style: AppTextStyles.bodySmall(color: AppColors.commentGrey).copyWith(height: 1.4),
+            style: AppTextStyles.bodySmall(color: AppColors.commentGrey(context)).copyWith(height: 1.4),
           ),
           if (review.galleryImages.isNotEmpty) ...[
             SizedBox(height: CompanyProfileFigmaTokens.rowGapLarge),
@@ -178,78 +155,25 @@ class ReviewCard extends StatelessWidget {
 class CustomerReviewsSection extends StatelessWidget {
   const CustomerReviewsSection({super.key, required this.reviews});
 
-  final List<ReviewData> reviews;
+  final List<ReviewModel> reviews;
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: EdgeInsets.symmetric(horizontal: CompanyProfileFigmaTokens.screenPadding),
-      decoration: BoxDecoration(
-        color: AppColors.background(context),
-        borderRadius: BorderRadius.circular(CompanyProfileFigmaTokens.cardRadius),
-        border: Border.all(color: AppColors.cardBorder),
-      ),
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: CompanyProfileFigmaTokens.screenPadding),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Padding(
-            padding: EdgeInsets.fromLTRB(CompanyProfileFigmaTokens.screenPaddingSmall, CompanyProfileFigmaTokens.cardPadding, CompanyProfileFigmaTokens.screenPaddingSmall, 0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  context.tr.companyProfileCustomerReviews,
-                  style: AppTextStyles.heading3(
-                    color: AppColors.darkText(context),
-                  ).copyWith(fontSize: CompanyProfileFigmaTokens.titleFontSize, fontWeight: FontWeight.w700),
-                ),
-                TextButton(
-                  onPressed: () {},
-                  child: Text(
-                    context.tr.companyProfileViewAll,
-                    style: AppTextStyles.bodyMedium(
-                      color: AppColors.primary,
-                    ).copyWith(fontSize: CompanyProfileFigmaTokens.bodyMediumFontSize, fontWeight: FontWeight.w500),
-                  ),
-                ),
-              ],
-            ),
+          ProfileSectionTitle(
+            title: context.tr.companyProfileCustomerReviews,
+            actionText: context.tr.companyProfileViewAll,
+            onActionTap: () {},
           ),
           SizedBox(height: CompanyProfileFigmaTokens.rowGapMedium),
-          ListView.separated(
-            shrinkWrap: true,
-            physics: const NeverScrollableScrollPhysics(),
-            padding: EdgeInsets.symmetric(horizontal: CompanyProfileFigmaTokens.screenPaddingSmall),
-            itemCount: reviews.length,
-            separatorBuilder: (_, __) => SizedBox(height: CompanyProfileFigmaTokens.rowGapMedium),
-            itemBuilder: (context, index) {
-              final review = reviews[index];
-              return ReviewCard(review: review);
-            },
-          ),
+          ...reviews.map((review) => ReviewCard(review: review)),
           SizedBox(height: CompanyProfileFigmaTokens.cardPadding),
         ],
       ),
     );
   }
-}
-
-class ReviewData {
-  const ReviewData({
-    required this.name,
-    required this.avatarUrl,
-    required this.country,
-    required this.countryFlagUrl,
-    required this.rating,
-    required this.comment,
-    required this.galleryImages,
-  });
-
-  final String name;
-  final String avatarUrl;
-  final String country;
-  final String countryFlagUrl;
-  final double rating;
-  final String comment;
-  final List<String> galleryImages;
 }

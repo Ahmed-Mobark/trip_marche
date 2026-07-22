@@ -3,6 +3,8 @@ import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_text_styles.dart';
 import '../../../../core/extensions/localization.dart';
 import '../../../../core/config/dimensions/company_profile_figma_tokens.dart';
+import '../models/faq_model.dart';
+import 'profile_section_title.dart';
 
 class FAQItem extends StatefulWidget {
   const FAQItem({
@@ -10,7 +12,7 @@ class FAQItem extends StatefulWidget {
     required this.faq,
   });
 
-  final FAQData faq;
+  final FAQModel faq;
 
   @override
   State<FAQItem> createState() => _FAQItemState();
@@ -39,7 +41,7 @@ class _FAQItemState extends State<FAQItem> {
         decoration: BoxDecoration(
           color: AppColors.background(context),
           borderRadius: BorderRadius.circular(CompanyProfileFigmaTokens.faqRadius),
-          border: Border.all(color: AppColors.faqBorder),
+          border: Border.all(color: AppColors.faqBorder(context)),
         ),
         child: Column(
           children: [
@@ -50,7 +52,7 @@ class _FAQItemState extends State<FAQItem> {
                   Expanded(
                     child: Text(
                       widget.faq.question,
-                      style: AppTextStyles.bodySmall(color: AppColors.darkInk).copyWith(fontWeight: FontWeight.w600),
+                      style: AppTextStyles.bodySmall(color: AppColors.darkInk(context)).copyWith(fontWeight: FontWeight.w600),
                     ),
                   ),
                   SizedBox(width: CompanyProfileFigmaTokens.rowGapMedium),
@@ -60,7 +62,7 @@ class _FAQItemState extends State<FAQItem> {
                     child: Icon(
                       Icons.keyboard_arrow_up_rounded,
                       size: CompanyProfileFigmaTokens.largeIconSize,
-                      color: AppColors.secondaryGrey,
+                      color: AppColors.secondaryGrey(context),
                     ),
                   ),
                 ],
@@ -73,7 +75,7 @@ class _FAQItemState extends State<FAQItem> {
                   alignment: Alignment.centerLeft,
                   child: Text(
                     widget.faq.answer,
-                    style: AppTextStyles.bodySmall(color: AppColors.secondaryGrey).copyWith(height: 1.5),
+                    style: AppTextStyles.bodySmall(color: AppColors.secondaryGrey(context)).copyWith(height: 1.5),
                   ),
                 ),
               ),
@@ -87,56 +89,21 @@ class _FAQItemState extends State<FAQItem> {
 class FAQSection extends StatelessWidget {
   const FAQSection({super.key, required this.faqs});
 
-  final List<FAQData> faqs;
+  final List<FAQModel> faqs;
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: EdgeInsets.symmetric(horizontal: CompanyProfileFigmaTokens.screenPadding),
-      decoration: BoxDecoration(
-        color: AppColors.background(context),
-        borderRadius: BorderRadius.circular(CompanyProfileFigmaTokens.cardRadius),
-        border: Border.all(color: AppColors.cardBorder),
-      ),
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: CompanyProfileFigmaTokens.screenPadding),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Padding(
-            padding: EdgeInsets.fromLTRB(CompanyProfileFigmaTokens.screenPaddingSmall, CompanyProfileFigmaTokens.cardPadding, CompanyProfileFigmaTokens.screenPaddingSmall, 0),
-            child: Text(
-              context.tr.profileFaqs,
-              style: AppTextStyles.heading3(
-                color: AppColors.darkText(context),
-              ).copyWith(fontSize: CompanyProfileFigmaTokens.titleFontSize, fontWeight: FontWeight.w700),
-            ),
-          ),
+          ProfileSectionTitle(title: context.tr.profileFaqs),
           SizedBox(height: CompanyProfileFigmaTokens.rowGapMedium),
-          ListView.separated(
-            shrinkWrap: true,
-            physics: const NeverScrollableScrollPhysics(),
-            padding: EdgeInsets.zero,
-            itemCount: faqs.length,
-            separatorBuilder: (_, __) => SizedBox(height: CompanyProfileFigmaTokens.rowGapMedium),
-            itemBuilder: (context, index) {
-              final faq = faqs[index];
-              return FAQItem(faq: faq);
-            },
-          ),
+          ...faqs.map((faq) => FAQItem(faq: faq)),
           SizedBox(height: CompanyProfileFigmaTokens.cardPadding),
         ],
       ),
     );
   }
-}
-
-class FAQData {
-  const FAQData({
-    required this.question,
-    required this.answer,
-    this.isExpanded = false,
-  });
-
-  final String question;
-  final String answer;
-  final bool isExpanded;
 }

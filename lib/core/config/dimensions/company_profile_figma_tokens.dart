@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 abstract final class CompanyProfileFigmaTokens {
@@ -55,4 +56,12 @@ abstract final class CompanyProfileFigmaTokens {
   static double get smallIconSize => 10.r;
   static double get mediumIconSize => 14.r;
   static double get largeIconSize => 18.r;
+
+  static List<BoxShadow> cardShadow() => [
+    BoxShadow(
+      color: Colors.black.withValues(alpha: 0.06),
+      blurRadius: 12,
+      offset: const Offset(0, 4),
+    ),
+  ];
 }

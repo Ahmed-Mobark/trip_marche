@@ -1152,6 +1152,9 @@ class AppLocalizationsFr extends AppLocalizations {
   String get profilePhotoCancel => 'Annuler';
 
   @override
+  String get companyProfileTitle => 'Company Profile';
+
+  @override
   String get companyProfileCompanyName => 'Travel Egypt Co.';
 
   @override

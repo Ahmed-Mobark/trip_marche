@@ -336,30 +336,64 @@ abstract class AppColors {
       isDark(context) ? const Color(0xFF2C2C2C) : const Color(0xFFF3F4F6);
 
   // --- Company Profile ---
-  static const Color screenBackground = Color(0xFFFEFBFF);
-  static const Color cardBorder = Color(0xFFF9F9F9);
-  static const Color surfaceDivider = Color(0xFFE5E7EB);
-  static const Color darkInk = Color(0xFF121113);
-  static const Color secondaryGrey = Color(0xFF7C808A);
-  static const Color ratingValue = Color(0xFF272829);
+  static Color screenBackground(BuildContext context) =>
+      isDark(context) ? scaffoldColorDark : const Color(0xFFFEFBFF);
+
+  static Color cardBorder(BuildContext context) =>
+      isDark(context) ? borderColorDark : const Color(0xFFF9F9F9);
+
+  static Color surfaceDivider(BuildContext context) =>
+      isDark(context) ? borderColorDark : const Color(0xFFE5E7EB);
+
+  static Color darkInk(BuildContext context) =>
+      isDark(context) ? textColorDark : const Color(0xFF121113);
+
+  static Color secondaryGrey(BuildContext context) =>
+      isDark(context) ? greyTextColorDark : const Color(0xFF7C808A);
+
+  static Color ratingValue(BuildContext context) =>
+      isDark(context) ? textColorDark : const Color(0xFF272829);
+
+  static Color countryText(BuildContext context) =>
+      isDark(context) ? textColorDark : const Color(0xFF1F2937);
+
+  static Color commentGrey(BuildContext context) =>
+      isDark(context) ? greyTextColorDark : const Color(0xFF4B5563);
+
+  static Color tripTitle(BuildContext context) =>
+      isDark(context) ? textColorDark : const Color(0xFF28282A);
+
+  static Color iconSlate(BuildContext context) =>
+      isDark(context) ? greyTextColorDark : const Color(0xFF373F46);
+
+  static Color metaSlate(BuildContext context) =>
+      isDark(context) ? greyTextColorDark : const Color(0xFF556371);
+
+  static Color favoriteBg(BuildContext context) =>
+      isDark(context) ? cardColorDark : const Color(0xFFC6C1C9);
+
+  static Color strikethroughGrey(BuildContext context) =>
+      isDark(context) ? greyTextColorDark : const Color(0xFF979797);
+
+  static Color faqBorder(BuildContext context) =>
+      isDark(context) ? borderColorDark : const Color(0xFFD5D9DF);
+
+  static Color socialBorder(BuildContext context) =>
+      isDark(context) ? borderColorDark : const Color(0xFFE8ECF4);
+
+  static Color mapButtonBg(BuildContext context) =>
+      isDark(context) ? inputBgDark : const Color(0xFFF0F4F5);
+
+  static Color mapButtonBorder(BuildContext context) =>
+      isDark(context) ? borderColorDark : const Color(0xFFE6E8E9);
+
   static const Color verifiedBlue = Color(0xFF0078F1);
   static const Color facebookBlue = Color(0xFF4091FF);
   static const Color instagramPink = Color(0xFFE4405F);
   static const Color youtubeRed = Color(0xFFFF0000);
   static const Color websiteBlue = Color(0xFF0669E4);
   static const Color whatsAppGreen = Color(0xFF60D669);
-  static const Color socialBorder = Color(0xFFE8ECF4);
   static const Color mapBlue = Color(0xFF1A73E8);
-  static const Color mapButtonBg = Color(0xFFF0F4F5);
-  static const Color mapButtonBorder = Color(0xFFE6E8E9);
-  static const Color countryText = Color(0xFF1F2937);
-  static const Color commentGrey = Color(0xFF4B5563);
-  static const Color tripTitle = Color(0xFF28282A);
-  static const Color iconSlate = Color(0xFF373F46);
-  static const Color metaSlate = Color(0xFF556371);
-  static const Color favoriteBg = Color(0xFFC6C1C9);
   static const Color favoritePink = Color(0xFFF32858);
-  static const Color strikethroughGrey = Color(0xFF979797);
-  static const Color faqBorder = Color(0xFFD5D9DF);
   static const Color badgeAmber = Color(0xFFFAB431);
 }

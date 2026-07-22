@@ -3,46 +3,25 @@ import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_text_styles.dart';
 import '../../../../core/extensions/localization.dart';
 import '../../../../core/config/dimensions/company_profile_figma_tokens.dart';
+import '../models/trip_card_model.dart';
 import 'company_trip_card.dart';
+import 'profile_section_title.dart';
 
 class AvailableTripsSection extends StatelessWidget {
   const AvailableTripsSection({super.key, required this.trips});
 
-  final List<CompanyTripCardData> trips;
+  final List<TripCardModel> trips;
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: EdgeInsets.symmetric(horizontal: CompanyProfileFigmaTokens.screenPadding),
-      decoration: BoxDecoration(
-        color: AppColors.background(context),
-        borderRadius: BorderRadius.circular(CompanyProfileFigmaTokens.cardRadius),
-        border: Border.all(color: AppColors.cardBorder),
-      ),
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: CompanyProfileFigmaTokens.screenPadding),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Padding(
-            padding: EdgeInsets.fromLTRB(CompanyProfileFigmaTokens.screenPaddingSmall, CompanyProfileFigmaTokens.cardPadding, CompanyProfileFigmaTokens.screenPaddingSmall, 0),
-            child: Text(
-              context.tr.companyProfileAvailableTrips,
-              style: AppTextStyles.heading3(
-                color: AppColors.darkText(context),
-              ).copyWith(fontSize: CompanyProfileFigmaTokens.titleFontSize, fontWeight: FontWeight.w700),
-            ),
-          ),
+          ProfileSectionTitle(title: context.tr.companyProfileAvailableTrips),
           SizedBox(height: CompanyProfileFigmaTokens.rowGapMedium),
-          ListView.separated(
-            shrinkWrap: true,
-            physics: const NeverScrollableScrollPhysics(),
-            padding: EdgeInsets.zero,
-            itemCount: trips.length,
-            separatorBuilder: (_, __) => SizedBox(height: CompanyProfileFigmaTokens.rowGapMedium),
-            itemBuilder: (context, index) {
-              final trip = trips[index];
-              return CompanyTripCard(trip: trip);
-            },
-          ),
+          ...trips.map((trip) => CompanyTripCard(trip: trip)),
           SizedBox(height: CompanyProfileFigmaTokens.rowGapMedium),
           Align(
             alignment: Alignment.center,

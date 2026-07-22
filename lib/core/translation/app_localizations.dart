@@ -2236,6 +2236,12 @@ abstract class AppLocalizations {
   /// **'Cancel'**
   String get profilePhotoCancel;
 
+  /// Company Profile screen title
+  ///
+  /// In en, this message translates to:
+  /// **'Company Profile'**
+  String get companyProfileTitle;
+
   /// No description provided for @companyProfileCompanyName.
   ///
   /// In en, this message translates to:

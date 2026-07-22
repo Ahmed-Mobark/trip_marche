@@ -30,23 +30,23 @@ class CompanyProfileHeader extends StatelessWidget {
     final greyColor = AppColors.greyText(context);
 
     return Container(
-      margin: EdgeInsets.symmetric(horizontal: CompanyProfileFigmaTokens.screenPadding),
-      padding: EdgeInsets.all(CompanyProfileFigmaTokens.cardPadding),
-      decoration: BoxDecoration(
-        color: AppColors.background(context),
-        borderRadius: BorderRadius.circular(CompanyProfileFigmaTokens.cardRadius),
-        border: Border.all(color: AppColors.cardBorder),
+      margin: EdgeInsets.symmetric(
+        horizontal: CompanyProfileFigmaTokens.screenPadding,
       ),
+      padding: EdgeInsets.only(top: CompanyProfileFigmaTokens.cardPadding * 4),
+
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           ClipRRect(
-            borderRadius: BorderRadius.circular(CompanyProfileFigmaTokens.cardRadiusLarge),
+            borderRadius: BorderRadius.circular(
+              CompanyProfileFigmaTokens.cardRadiusLarge,
+            ),
             child: Container(
               width: CompanyProfileFigmaTokens.headerAvatarWidth,
               height: CompanyProfileFigmaTokens.headerAvatarHeight,
               decoration: BoxDecoration(
-                border: Border.all(color: AppColors.surfaceDivider),
+                border: Border.all(color: AppColors.surfaceDivider(context)),
               ),
               child: avatarUrl.isNotEmpty
                   ? Image.network(
@@ -92,7 +92,11 @@ class CompanyProfileHeader extends StatelessWidget {
                         color: AppColors.verifiedBlue,
                         shape: BoxShape.circle,
                       ),
-                      child: Icon(Icons.check, size: CompanyProfileFigmaTokens.smallIconSize, color: AppColors.white),
+                      child: Icon(
+                        Icons.check,
+                        size: CompanyProfileFigmaTokens.smallIconSize,
+                        color: AppColors.white,
+                      ),
                     ),
                   ],
                 ),
@@ -107,7 +111,9 @@ class CompanyProfileHeader extends StatelessWidget {
                     SizedBox(width: CompanyProfileFigmaTokens.rowGapSmall),
                     Text(
                       rating.toStringAsFixed(1),
-                      style: AppTextStyles.caption(color: AppColors.ratingValue).copyWith(fontWeight: FontWeight.w600),
+                      style: AppTextStyles.caption(
+                        color: AppColors.ratingValue(context),
+                      ).copyWith(fontWeight: FontWeight.w600),
                     ),
                     SizedBox(width: CompanyProfileFigmaTokens.rowGapSmall),
                     Text(
@@ -133,7 +139,9 @@ class CompanyProfileHeader extends StatelessWidget {
                   color: isFollowing ? AppColors.primary : borderColor,
                 ),
                 shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(CompanyProfileFigmaTokens.cardRadius),
+                  borderRadius: BorderRadius.circular(
+                    CompanyProfileFigmaTokens.cardRadius,
+                  ),
                 ),
                 padding: EdgeInsets.zero,
                 minimumSize: Size.zero,

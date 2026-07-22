@@ -3,19 +3,9 @@ import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_text_styles.dart';
 import '../../../../core/extensions/localization.dart';
 import '../../../../core/config/dimensions/company_profile_figma_tokens.dart';
+import '../models/company_detail_model.dart';
 import 'company_detail_row.dart';
-
-class CompanyDetailData {
-  const CompanyDetailData({
-    required this.label,
-    required this.value,
-    this.trailing,
-  });
-
-  final String label;
-  final String value;
-  final Widget? trailing;
-}
+import 'profile_section_title.dart';
 
 class CompanyDetailsSection extends StatelessWidget {
   const CompanyDetailsSection({
@@ -25,62 +15,36 @@ class CompanyDetailsSection extends StatelessWidget {
   });
 
   final String about;
-  final List<CompanyDetailData> details;
+  final List<CompanyDetailModel> details;
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: EdgeInsets.symmetric(horizontal: CompanyProfileFigmaTokens.screenPadding),
-      decoration: BoxDecoration(
-        color: AppColors.background(context),
-        borderRadius: BorderRadius.circular(CompanyProfileFigmaTokens.cardRadius),
-        border: Border.all(color: AppColors.cardBorder),
-      ),
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: CompanyProfileFigmaTokens.screenPadding),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Padding(
-            padding: EdgeInsets.fromLTRB(CompanyProfileFigmaTokens.cardPadding, CompanyProfileFigmaTokens.cardPadding, CompanyProfileFigmaTokens.cardPadding, 0),
-            child: Text(
-              context.tr.companyProfileCompanyDetails,
-              style: AppTextStyles.heading3(
-                color: AppColors.darkText(context),
-              ).copyWith(fontSize: CompanyProfileFigmaTokens.titleFontSize, fontWeight: FontWeight.w700),
-            ),
-          ),
+          ProfileSectionTitle(title: context.tr.companyProfileCompanyDetails),
           SizedBox(height: CompanyProfileFigmaTokens.rowGapMedium),
           Container(
             padding: EdgeInsets.all(CompanyProfileFigmaTokens.cardPadding),
             decoration: BoxDecoration(
-              border: Border.all(color: AppColors.surfaceDivider),
+              border: Border.all(color: AppColors.surfaceDivider(context)),
             ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
                   context.tr.companyProfileAbout,
-                  style: AppTextStyles.caption(color: AppColors.secondaryGrey).copyWith(fontWeight: FontWeight.w500),
+                  style: AppTextStyles.caption(color: AppColors.secondaryGrey(context)).copyWith(fontWeight: FontWeight.w500),
                 ),
                 SizedBox(height: CompanyProfileFigmaTokens.rowGapSmall),
                 Text(
                   about,
-                  style: AppTextStyles.bodySmall(color: AppColors.darkInk).copyWith(height: 1.5),
+                  style: AppTextStyles.bodySmall(color: AppColors.darkInk(context)).copyWith(height: 1.5),
                 ),
                 SizedBox(height: CompanyProfileFigmaTokens.rowGapMedium),
-                ListView.builder(
-                  shrinkWrap: true,
-                  physics: const NeverScrollableScrollPhysics(),
-                  padding: EdgeInsets.zero,
-                  itemCount: details.length,
-                  itemBuilder: (context, index) {
-                    final detail = details[index];
-                    return CompanyDetailRow(
-                      label: detail.label,
-                      value: detail.value,
-                      trailing: detail.trailing,
-                    );
-                  },
-                ),
+                ...details.map((detail) => CompanyDetailRow(model: detail)),
               ],
             ),
           ),
