@@ -32,11 +32,10 @@ class _MyFollowingsViewState extends State<MyFollowingsView> {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (_) =>
-          FollowingsCubit(
-            GetFollowingsUseCase(sl<ProfileRepository>()),
-            ToggleFollowVendorUseCase(sl<ProfileRepository>()),
-          )..fetchFollowings(),
+      create: (_) => FollowingsCubit(
+        GetFollowingsUseCase(sl<ProfileRepository>()),
+        ToggleFollowVendorUseCase(sl<ProfileRepository>()),
+      )..fetchFollowings(),
       child: BlocConsumer<FollowingsCubit, FollowingsState>(
         listenWhen: (previous, current) =>
             (current.status == FollowingsStatus.failure &&
@@ -53,7 +52,9 @@ class _MyFollowingsViewState extends State<MyFollowingsView> {
           if (state.toggleMessage != null) {
             appToast(
               context: context,
-              type: state.toggleMessageIsError ? ToastType.error : ToastType.success,
+              type: state.toggleMessageIsError
+                  ? ToastType.error
+                  : ToastType.success,
               message: state.toggleMessage!,
             );
             context.read<FollowingsCubit>().clearToggleMessage();
@@ -198,51 +199,51 @@ class _MyFollowingsViewState extends State<MyFollowingsView> {
                 ),
               ),
               centerTitle: true,
+            ),
+            body: ListView.builder(
+              padding: EdgeInsetsDirectional.only(
+                start: 18.w,
+                end: 18.w,
+                top: 10.h,
+                bottom: 24.h,
               ),
-              body: ListView.builder(
-                padding: EdgeInsetsDirectional.only(
-                  start: 18.w,
-                  end: 18.w,
-                  top: 10.h,
-                  bottom: 24.h,
-                ),
-                itemCount: 2 * companies.length,
-                itemBuilder: (context, index) {
-                  if (index == 0) {
-                    return Text(
-                      context.tr.followingsCountTitle(companies.length),
-                      style: AppTextStyles.bodyMedium(
-                        color: AppColors.darkText(context),
-                      ).copyWith(fontWeight: FontWeight.w700),
-                    );
-                  }
-
-                  final gapIndex = index - 1;
-                  if (gapIndex % 2 == 1) {
-                    return SizedBox(height: gapIndex == 1 ? 10.h : 12.h);
-                  }
-
-                  final companyIndex = gapIndex ~/ 2;
-                  final company = companies[companyIndex];
-
-                  return _FollowingCompanyCard(
-                    name: company.name,
-                    logoAsset: company.avatar,
-                    ratingValue: company.rating.toStringAsFixed(2),
-                    ratingCount: company.reviewsCount.toString(),
-                    onTap: () => sl<AppNavigator>().push(
-                      screen: const CompanyProfileView(),
-                    ),
-                    actionText: company.isFollowing
-                        ? context.tr.followingsUnfollow
-                        : context.tr.follow,
-                    isActive: company.isFollowing,
-                    vendorId: company.id,
-                    onAction: () =>
-                        context.read<FollowingsCubit>().toggleFollowVendor(company.id),
+              itemCount: 2 * companies.length,
+              itemBuilder: (context, index) {
+                if (index == 0) {
+                  return Text(
+                    context.tr.followingsCountTitle(companies.length),
+                    style: AppTextStyles.bodyMedium(
+                      color: AppColors.darkText(context),
+                    ).copyWith(fontWeight: FontWeight.w700),
                   );
-                },
-              ),
+                }
+
+                final gapIndex = index - 1;
+                if (gapIndex % 2 == 1) {
+                  return SizedBox(height: gapIndex == 1 ? 10.h : 12.h);
+                }
+
+                final companyIndex = gapIndex ~/ 2;
+                final company = companies[companyIndex];
+
+                return _FollowingCompanyCard(
+                  name: company.name,
+                  logoAsset: company.avatar,
+                  ratingValue: company.rating.toStringAsFixed(2),
+                  ratingCount: company.reviewsCount.toString(),
+                  onTap: () =>
+                       sl<AppNavigator>().push(screen: CompanyProfileView(vendorId: company.id)),
+                  actionText: company.isFollowing
+                      ? context.tr.followingsUnfollow
+                      : context.tr.follow,
+                  isActive: company.isFollowing,
+                  vendorId: company.id,
+                  onAction: () => context
+                      .read<FollowingsCubit>()
+                      .toggleFollowVendor(company.id),
+                );
+              },
+            ),
           );
         },
       ),

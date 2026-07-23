@@ -9,10 +9,7 @@ import 'profile_section_title.dart';
 import 'profile_avatar.dart';
 
 class TeamMemberItem extends StatelessWidget {
-  const TeamMemberItem({
-    super.key,
-    required this.member,
-  });
+  const TeamMemberItem({super.key, required this.member});
 
   final TeamMemberModel member;
 
@@ -36,7 +33,9 @@ class TeamMemberItem extends StatelessWidget {
               children: [
                 Text(
                   member.name,
-                  style: AppTextStyles.caption(color: AppColors.darkText(context)).copyWith(fontWeight: FontWeight.w600),
+                  style: AppTextStyles.caption(
+                    color: AppColors.darkText(context),
+                  ).copyWith(fontWeight: FontWeight.w600),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   textAlign: TextAlign.center,
@@ -44,7 +43,9 @@ class TeamMemberItem extends StatelessWidget {
                 SizedBox(height: CompanyProfileFigmaTokens.rowGapSmall),
                 Text(
                   member.role,
-                  style: AppTextStyles.caption(color: AppColors.secondaryGrey(context)).copyWith(fontWeight: FontWeight.w400),
+                  style: AppTextStyles.caption(
+                    color: AppColors.secondaryGrey(context),
+                  ).copyWith(fontWeight: FontWeight.w400),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   textAlign: TextAlign.center,
@@ -66,7 +67,9 @@ class TeamSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: CompanyProfileFigmaTokens.screenPadding),
+      padding: EdgeInsets.symmetric(
+        horizontal: CompanyProfileFigmaTokens.screenPadding,
+      ),
       child: Column(
         children: [
           ProfileSectionTitle(title: context.tr.companyProfileOurTeam),
@@ -77,7 +80,8 @@ class TeamSection extends StatelessWidget {
               scrollDirection: Axis.horizontal,
               padding: EdgeInsets.zero,
               itemCount: members.length,
-              separatorBuilder: (_, __) => SizedBox(width: CompanyProfileFigmaTokens.rowGapLarge),
+              separatorBuilder: (_, __) =>
+                  SizedBox(width: CompanyProfileFigmaTokens.rowGapLarge),
               itemBuilder: (context, index) {
                 final member = members[index];
                 return TeamMemberItem(member: member);

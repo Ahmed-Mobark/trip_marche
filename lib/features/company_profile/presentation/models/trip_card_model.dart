@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 class TripCardModel {
   const TripCardModel({
+    this.id = 0,
     required this.title,
     required this.imageUrl,
     required this.rating,
@@ -18,6 +19,7 @@ class TripCardModel {
     this.onFavoriteTap,
   });
 
+  final int id;
   final String title;
   final String imageUrl;
   final double rating;

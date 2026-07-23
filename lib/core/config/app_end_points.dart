@@ -62,4 +62,6 @@ class AppEndpoints {
   static const String profileFollowing = 'profile/following';
 
   static String vendorFollow(int vendorId) => 'vendors/$vendorId/follow';
+
+  static String vendorProfile(int vendorId) => 'vendors/$vendorId';
 }

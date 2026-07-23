@@ -18,13 +18,17 @@ class ProfileSectionTitle extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final titleStyle = AppTextStyles.heading3(
-      color: AppColors.darkText(context),
-    ).copyWith(fontSize: CompanyProfileFigmaTokens.titleFontSize, fontWeight: FontWeight.w700);
+    final titleStyle =
+        AppTextStyles.heading3(color: AppColors.darkText(context)).copyWith(
+          fontSize: CompanyProfileFigmaTokens.titleFontSize,
+          fontWeight: FontWeight.w700,
+        );
 
-    final actionStyle = AppTextStyles.bodyMedium(
-      color: AppColors.primary,
-    ).copyWith(fontSize: CompanyProfileFigmaTokens.bodyMediumFontSize, fontWeight: FontWeight.w500);
+    final actionStyle = AppTextStyles.bodyMedium(color: AppColors.primary)
+        .copyWith(
+          fontSize: CompanyProfileFigmaTokens.bodyMediumFontSize,
+          fontWeight: FontWeight.w500,
+        );
 
     return Padding(
       padding: EdgeInsets.only(
@@ -33,15 +37,15 @@ class ProfileSectionTitle extends StatelessWidget {
       ),
       child: actionText != null
           ? Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Text(title, style: titleStyle),
-          TextButton(
-            onPressed: onActionTap,
-            child: Text(actionText!, style: actionStyle),
-          ),
-        ],
-      )
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(title, style: titleStyle),
+                TextButton(
+                  onPressed: onActionTap,
+                  child: Text(actionText!, style: actionStyle),
+                ),
+              ],
+            )
           : Text(title, style: titleStyle),
     );
   }

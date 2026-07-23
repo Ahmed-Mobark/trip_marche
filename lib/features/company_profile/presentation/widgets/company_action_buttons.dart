@@ -12,16 +12,22 @@ class CompanyActionButtons extends StatelessWidget {
     required this.onCallPressed,
     required this.onWhatsAppPressed,
     required this.socialButtons,
+    this.onCallEnabled,
+    this.onWhatsAppEnabled,
   });
 
-  final VoidCallback onCallPressed;
-  final VoidCallback onWhatsAppPressed;
+  final VoidCallback? onCallPressed;
+  final VoidCallback? onWhatsAppPressed;
   final List<SocialButtonModel> socialButtons;
+  final bool? onCallEnabled;
+  final bool? onWhatsAppEnabled;
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: CompanyProfileFigmaTokens.screenPadding),
+      padding: EdgeInsets.symmetric(
+        horizontal: CompanyProfileFigmaTokens.screenPadding,
+      ),
       child: Column(
         children: [
           Row(
@@ -35,6 +41,7 @@ class CompanyActionButtons extends StatelessWidget {
                   textColor: AppColors.primary,
                   borderColor: AppColors.primary,
                   fillColor: AppColors.transparent,
+                  enabled: onCallEnabled ?? onCallPressed != null,
                 ),
               ),
               SizedBox(width: CompanyProfileFigmaTokens.rowGapMedium),
@@ -47,6 +54,7 @@ class CompanyActionButtons extends StatelessWidget {
                   textColor: AppColors.white,
                   borderColor: AppColors.whatsAppGreen,
                   fillColor: AppColors.whatsAppGreen,
+                  enabled: onWhatsAppEnabled ?? onWhatsAppPressed != null,
                 ),
               ),
             ],
@@ -54,15 +62,18 @@ class CompanyActionButtons extends StatelessWidget {
           SizedBox(height: CompanyProfileFigmaTokens.rowGapMedium),
           Row(
             children: [
-              ...List.generate(socialButtons.length * 2 - 1, (index) {
-                if (index.isOdd) {
-                  return SizedBox(
-                    width: CompanyProfileFigmaTokens.rowGapMedium,
-                  );
-                }
-                final buttonIndex = index ~/ 2;
-                return _SocialIconButton(data: socialButtons[buttonIndex]);
-              }),
+              ...List.generate(
+                socialButtons.isEmpty ? 0 : socialButtons.length * 2 - 1,
+                (index) {
+                  if (index.isOdd) {
+                    return SizedBox(
+                      width: CompanyProfileFigmaTokens.rowGapMedium,
+                    );
+                  }
+                  final buttonIndex = index ~/ 2;
+                  return _SocialIconButton(data: socialButtons[buttonIndex]);
+                },
+              ),
             ],
           ),
         ],
@@ -75,50 +86,56 @@ class _ActionButton extends StatelessWidget {
   const _ActionButton({
     required this.icon,
     required this.label,
-    required this.onPressed,
     required this.iconColor,
     required this.textColor,
     required this.borderColor,
     required this.fillColor,
+    this.onPressed,
+    this.enabled = true,
   });
 
   final IconData icon;
   final String label;
-  final VoidCallback onPressed;
+  final VoidCallback? onPressed;
   final Color iconColor;
   final Color textColor;
   final Color borderColor;
   final Color fillColor;
+  final bool enabled;
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: onPressed,
-      child: Container(
-        height: CompanyProfileFigmaTokens.actionButtonHeight,
-        decoration: BoxDecoration(
-          color: fillColor,
-          borderRadius: BorderRadius.circular(
-            CompanyProfileFigmaTokens.actionButtonRadius,
+      onTap: enabled ? onPressed : null,
+      child: AnimatedOpacity(
+        opacity: enabled ? 1.0 : 0.5,
+        duration: const Duration(milliseconds: 200),
+        child: Container(
+          height: CompanyProfileFigmaTokens.actionButtonHeight,
+          decoration: BoxDecoration(
+            color: fillColor,
+            borderRadius: BorderRadius.circular(
+              CompanyProfileFigmaTokens.actionButtonRadius,
+            ),
+            border: Border.all(color: borderColor),
           ),
-          border: Border.all(color: borderColor),
-        ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(
-              icon,
-              size: CompanyProfileFigmaTokens.largeIconSize,
-              color: iconColor,
-            ),
-            SizedBox(width: CompanyProfileFigmaTokens.rowGapMedium),
-            Text(
-              label,
-              style: AppTextStyles.button(
-                color: textColor,
-              ).copyWith(fontWeight: FontWeight.w500),
-            ),
-          ],
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(
+                icon,
+                size: CompanyProfileFigmaTokens.largeIconSize,
+                color: iconColor,
+              ),
+              SizedBox(width: CompanyProfileFigmaTokens.rowGapMedium),
+              Text(
+                label,
+                style: AppTextStyles.button(
+                  color: textColor,
+                ).copyWith(fontWeight: FontWeight.w500),
+              ),
+            ],
+          ),
         ),
       ),
     );

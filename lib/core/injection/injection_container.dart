@@ -3,6 +3,7 @@ import '../network/network_service_inj.dart';
 import '../services/location_service.dart';
 import '../services/media_service_inj.dart';
 import '../storage/storage_inj.dart';
+import '../../features/company_profile/company_profile_inj.dart';
 import '../../features/auth/auth_inj.dart';
 import '../../features/home/home_inj.dart';
 import '../../features/my_trips/my_trips_inj.dart';
@@ -31,4 +32,5 @@ Future<void> init() async {
   initFilterInjection(sl);
   initHomeInjection(sl);
   initProfileInjection(sl);
+  initCompanyProfileInjection(sl);
 }

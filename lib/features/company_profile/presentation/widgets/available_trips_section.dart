@@ -8,20 +8,37 @@ import 'company_trip_card.dart';
 import 'profile_section_title.dart';
 
 class AvailableTripsSection extends StatelessWidget {
-  const AvailableTripsSection({super.key, required this.trips});
+  const AvailableTripsSection({
+    super.key,
+    required this.trips,
+    this.onFavoriteTap,
+    this.onTripTap,
+  });
 
   final List<TripCardModel> trips;
+  final void Function(int tripId)? onFavoriteTap;
+  final void Function(int tripId)? onTripTap;
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: CompanyProfileFigmaTokens.screenPadding),
+      padding: EdgeInsets.symmetric(
+        horizontal: CompanyProfileFigmaTokens.screenPadding,
+      ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           ProfileSectionTitle(title: context.tr.companyProfileAvailableTrips),
           SizedBox(height: CompanyProfileFigmaTokens.rowGapMedium),
-          ...trips.map((trip) => CompanyTripCard(trip: trip)),
+          ...trips.map(
+            (trip) => CompanyTripCard(
+              trip: trip,
+              onFavoriteTap: onFavoriteTap != null
+                  ? () => onFavoriteTap!(trip.id)
+                  : null,
+              onTap: onTripTap != null ? () => onTripTap!(trip.id) : null,
+            ),
+          ),
           SizedBox(height: CompanyProfileFigmaTokens.rowGapMedium),
           Align(
             alignment: Alignment.center,
@@ -29,9 +46,11 @@ class AvailableTripsSection extends StatelessWidget {
               onPressed: () {},
               child: Text(
                 context.tr.companyProfileSeeAllTrips,
-                style: AppTextStyles.bodyMedium(
-                  color: AppColors.primary,
-                ).copyWith(fontSize: CompanyProfileFigmaTokens.bodyMediumFontSize, fontWeight: FontWeight.w500),
+                style: AppTextStyles.bodyMedium(color: AppColors.primary)
+                    .copyWith(
+                      fontSize: CompanyProfileFigmaTokens.bodyMediumFontSize,
+                      fontWeight: FontWeight.w500,
+                    ),
               ),
             ),
           ),

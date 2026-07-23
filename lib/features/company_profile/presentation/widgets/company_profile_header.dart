@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_text_styles.dart';
 import '../../../../core/extensions/localization.dart';
-import '../../../../core/config/app_images.dart';
 import '../../../../core/config/dimensions/company_profile_figma_tokens.dart';
+import '../../../../core/widgets/app_cached_network_image.dart';
 
 class CompanyProfileHeader extends StatelessWidget {
   const CompanyProfileHeader({
@@ -14,6 +15,9 @@ class CompanyProfileHeader extends StatelessWidget {
     required this.reviewsCount,
     required this.isFollowing,
     required this.onFollowToggle,
+    this.followersCount,
+    this.tripsCount,
+    this.isVerified,
   });
 
   final String companyName;
@@ -22,6 +26,9 @@ class CompanyProfileHeader extends StatelessWidget {
   final int reviewsCount;
   final bool isFollowing;
   final VoidCallback onFollowToggle;
+  final int? followersCount;
+  final int? tripsCount;
+  final bool? isVerified;
 
   @override
   Widget build(BuildContext context) {
@@ -48,25 +55,12 @@ class CompanyProfileHeader extends StatelessWidget {
               decoration: BoxDecoration(
                 border: Border.all(color: AppColors.surfaceDivider(context)),
               ),
-              child: avatarUrl.isNotEmpty
-                  ? Image.network(
-                      avatarUrl,
-                      width: CompanyProfileFigmaTokens.headerAvatarWidth,
-                      height: CompanyProfileFigmaTokens.headerAvatarHeight,
-                      fit: BoxFit.cover,
-                      errorBuilder: (_, __, ___) => Image.asset(
-                        AppImages.logo,
-                        width: CompanyProfileFigmaTokens.headerAvatarWidth,
-                        height: CompanyProfileFigmaTokens.headerAvatarHeight,
-                        fit: BoxFit.cover,
-                      ),
-                    )
-                  : Image.asset(
-                      AppImages.logo,
-                      width: CompanyProfileFigmaTokens.headerAvatarWidth,
-                      height: CompanyProfileFigmaTokens.headerAvatarHeight,
-                      fit: BoxFit.cover,
-                    ),
+              child: AppCachedNetworkImage(
+                imageUrl: avatarUrl,
+                width: CompanyProfileFigmaTokens.headerAvatarWidth,
+                height: CompanyProfileFigmaTokens.headerAvatarHeight,
+                fit: BoxFit.cover,
+              ),
             ),
           ),
           SizedBox(width: CompanyProfileFigmaTokens.rowGapMedium),
@@ -84,20 +78,22 @@ class CompanyProfileHeader extends StatelessWidget {
                         overflow: TextOverflow.ellipsis,
                       ),
                     ),
-                    SizedBox(width: CompanyProfileFigmaTokens.rowGapSmall),
-                    Container(
-                      width: CompanyProfileFigmaTokens.verifiedBadgeSize,
-                      height: CompanyProfileFigmaTokens.verifiedBadgeSize,
-                      decoration: const BoxDecoration(
-                        color: AppColors.verifiedBlue,
-                        shape: BoxShape.circle,
+                    if (isVerified == true) ...[
+                      SizedBox(width: CompanyProfileFigmaTokens.rowGapSmall),
+                      Container(
+                        width: CompanyProfileFigmaTokens.verifiedBadgeSize,
+                        height: CompanyProfileFigmaTokens.verifiedBadgeSize,
+                        decoration: const BoxDecoration(
+                          color: AppColors.verifiedBlue,
+                          shape: BoxShape.circle,
+                        ),
+                        child: Icon(
+                          Icons.check,
+                          size: CompanyProfileFigmaTokens.smallIconSize,
+                          color: AppColors.white,
+                        ),
                       ),
-                      child: Icon(
-                        Icons.check,
-                        size: CompanyProfileFigmaTokens.smallIconSize,
-                        color: AppColors.white,
-                      ),
-                    ),
+                    ],
                   ],
                 ),
                 SizedBox(height: CompanyProfileFigmaTokens.rowGapSmall),
@@ -120,6 +116,38 @@ class CompanyProfileHeader extends StatelessWidget {
                       '($reviewsCount)',
                       style: AppTextStyles.caption(color: greyColor),
                     ),
+                    if (followersCount != null) ...[
+                      SizedBox(width: CompanyProfileFigmaTokens.rowGapMedium),
+                      Container(
+                        width: 3.r,
+                        height: 3.r,
+                        decoration: BoxDecoration(
+                          color: AppColors.greyText(context),
+                          shape: BoxShape.circle,
+                        ),
+                      ),
+                      SizedBox(width: CompanyProfileFigmaTokens.rowGapMedium),
+                      Text(
+                        '$followersCount',
+                        style: AppTextStyles.caption(color: greyColor),
+                      ),
+                    ],
+                    if (tripsCount != null) ...[
+                      SizedBox(width: CompanyProfileFigmaTokens.rowGapMedium),
+                      Container(
+                        width: 3.r,
+                        height: 3.r,
+                        decoration: BoxDecoration(
+                          color: AppColors.greyText(context),
+                          shape: BoxShape.circle,
+                        ),
+                      ),
+                      SizedBox(width: CompanyProfileFigmaTokens.rowGapMedium),
+                      Text(
+                        '$tripsCount',
+                        style: AppTextStyles.caption(color: greyColor),
+                      ),
+                    ],
                   ],
                 ),
               ],

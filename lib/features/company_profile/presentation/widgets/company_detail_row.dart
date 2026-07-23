@@ -19,7 +19,9 @@ class CompanyDetailRow extends StatelessWidget {
             children: [
               Text(
                 model.label,
-                style: AppTextStyles.caption(color: AppColors.secondaryGrey(context)),
+                style: AppTextStyles.caption(
+                  color: AppColors.secondaryGrey(context),
+                ),
               ),
               SizedBox(height: CompanyProfileFigmaTokens.rowGapSmall),
               Text(

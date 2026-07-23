@@ -20,7 +20,9 @@ class CompanyDetailsSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: CompanyProfileFigmaTokens.screenPadding),
+      padding: EdgeInsets.symmetric(
+        horizontal: CompanyProfileFigmaTokens.screenPadding,
+      ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -36,12 +38,16 @@ class CompanyDetailsSection extends StatelessWidget {
               children: [
                 Text(
                   context.tr.companyProfileAbout,
-                  style: AppTextStyles.caption(color: AppColors.secondaryGrey(context)).copyWith(fontWeight: FontWeight.w500),
+                  style: AppTextStyles.caption(
+                    color: AppColors.secondaryGrey(context),
+                  ).copyWith(fontWeight: FontWeight.w500),
                 ),
                 SizedBox(height: CompanyProfileFigmaTokens.rowGapSmall),
                 Text(
                   about,
-                  style: AppTextStyles.bodySmall(color: AppColors.darkInk(context)).copyWith(height: 1.5),
+                  style: AppTextStyles.bodySmall(
+                    color: AppColors.darkInk(context),
+                  ).copyWith(height: 1.5),
                 ),
                 SizedBox(height: CompanyProfileFigmaTokens.rowGapMedium),
                 ...details.map((detail) => CompanyDetailRow(model: detail)),

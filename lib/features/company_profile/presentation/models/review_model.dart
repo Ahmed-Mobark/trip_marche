@@ -7,6 +7,7 @@ class ReviewModel {
     required this.rating,
     required this.comment,
     required this.galleryImages,
+    this.createdAt,
   });
 
   final String name;
@@ -16,4 +17,5 @@ class ReviewModel {
   final double rating;
   final String comment;
   final List<String> galleryImages;
+  final String? createdAt;
 }

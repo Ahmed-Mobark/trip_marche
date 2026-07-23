@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../../../../core/config/app_images.dart';
 import '../../../../core/theme/app_colors.dart';
+import '../../../../core/widgets/app_cached_network_image.dart';
 
 class ProfileAvatar extends StatelessWidget {
   const ProfileAvatar({
@@ -29,25 +29,12 @@ class ProfileAvatar extends StatelessWidget {
           shape: borderRadius == null ? BoxShape.circle : BoxShape.rectangle,
           border: Border.all(color: AppColors.surfaceDivider(context)),
         ),
-        child: imageUrl.isNotEmpty
-            ? Image.network(
-                imageUrl,
-                width: size,
-                height: size,
-                fit: BoxFit.cover,
-                errorBuilder: (_, __, ___) => Image.asset(
-                  fallbackAsset ?? AppImages.logo,
-                  width: size,
-                  height: size,
-                  fit: BoxFit.cover,
-                ),
-              )
-            : Image.asset(
-                fallbackAsset ?? AppImages.logo,
-                width: size,
-                height: size,
-                fit: BoxFit.cover,
-              ),
+        child: AppCachedNetworkImage(
+          imageUrl: imageUrl,
+          width: size,
+          height: size,
+          fit: BoxFit.cover,
+        ),
       ),
     );
   }
