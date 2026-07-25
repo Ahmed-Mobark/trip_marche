@@ -14,5 +14,6 @@ abstract class ProfileRepository {
   );
   Future<Either<Failure, Map<String, dynamic>>> deleteAccount();
   Future<Either<Failure, Map<String, dynamic>>> getFollowings();
+  Future<Either<Failure, Map<String, dynamic>>> getReviews();
   Future<Either<Failure, FollowVendorEntity>> toggleFollowVendor(int vendorId);
 }
