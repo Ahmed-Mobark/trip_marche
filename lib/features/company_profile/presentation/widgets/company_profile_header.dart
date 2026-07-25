@@ -63,10 +63,11 @@ class CompanyProfileHeader extends StatelessWidget {
               ),
             ),
           ),
-          SizedBox(width: CompanyProfileFigmaTokens.rowGapMedium),
+          SizedBox(width: CompanyProfileFigmaTokens.rowGapLarge),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
               children: [
                 Row(
                   children: [
@@ -79,7 +80,7 @@ class CompanyProfileHeader extends StatelessWidget {
                       ),
                     ),
                     if (isVerified == true) ...[
-                      SizedBox(width: CompanyProfileFigmaTokens.rowGapSmall),
+                      SizedBox(width: CompanyProfileFigmaTokens.rowGapMedium),
                       Container(
                         width: CompanyProfileFigmaTokens.verifiedBadgeSize,
                         height: CompanyProfileFigmaTokens.verifiedBadgeSize,
@@ -154,35 +155,32 @@ class CompanyProfileHeader extends StatelessWidget {
             ),
           ),
           SizedBox(width: CompanyProfileFigmaTokens.rowGapMedium),
-          SizedBox(
-            width: CompanyProfileFigmaTokens.followButtonWidth,
-            height: CompanyProfileFigmaTokens.followButtonHeight,
-            child: TextButton(
-              onPressed: onFollowToggle,
-              style: TextButton.styleFrom(
-                backgroundColor: isFollowing
-                    ? AppColors.primary
-                    : AppColors.transparent,
-                side: BorderSide(
-                  color: isFollowing ? AppColors.primary : borderColor,
-                ),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(
-                    CompanyProfileFigmaTokens.cardRadius,
-                  ),
-                ),
-                padding: EdgeInsets.zero,
-                minimumSize: Size.zero,
-                tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+          TextButton(
+            onPressed: onFollowToggle,
+            style: TextButton.styleFrom(
+              backgroundColor: isFollowing
+                  ? AppColors.primary
+                  : AppColors.transparent,
+              side: BorderSide(
+                color: isFollowing ? AppColors.primary : borderColor,
               ),
-              child: Text(
-                isFollowing
-                    ? context.tr.companyProfileFollowing
-                    : context.tr.companyProfileFollow,
-                style: AppTextStyles.button(
-                  color: isFollowing ? AppColors.white : AppColors.primary,
-                ).copyWith(fontWeight: FontWeight.w600),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(999.r),
               ),
+              padding: EdgeInsets.symmetric(
+                horizontal: 16.w,
+                vertical: 8.h,
+              ),
+              minimumSize: Size.zero,
+              tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+            ),
+            child: Text(
+              isFollowing
+                  ? context.tr.companyProfileFollowing
+                  : context.tr.companyProfileFollow,
+              style: AppTextStyles.button(
+                color: isFollowing ? AppColors.white : AppColors.primary,
+              ).copyWith(fontWeight: FontWeight.w600),
             ),
           ),
         ],

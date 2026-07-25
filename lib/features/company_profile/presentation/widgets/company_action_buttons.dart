@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:iconsax/iconsax.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_text_styles.dart';
@@ -34,7 +35,11 @@ class CompanyActionButtons extends StatelessWidget {
             children: [
               Expanded(
                 child: _ActionButton(
-                  icon: Iconsax.call,
+                  icon: Icon(
+                    Iconsax.call,
+                    size: CompanyProfileFigmaTokens.largeIconSize,
+                    color: AppColors.primary,
+                  ),
                   label: context.tr.csCall,
                   onPressed: onCallPressed,
                   iconColor: AppColors.primary,
@@ -47,7 +52,11 @@ class CompanyActionButtons extends StatelessWidget {
               SizedBox(width: CompanyProfileFigmaTokens.rowGapMedium),
               Expanded(
                 child: _ActionButton(
-                  icon: Iconsax.message_circle,
+                  icon: FaIcon(
+                    FontAwesomeIcons.whatsapp,
+                    size: CompanyProfileFigmaTokens.largeIconSize,
+                    color: AppColors.white,
+                  ),
                   label: context.tr.csWhatsApp,
                   onPressed: onWhatsAppPressed,
                   iconColor: AppColors.white,
@@ -94,7 +103,7 @@ class _ActionButton extends StatelessWidget {
     this.enabled = true,
   });
 
-  final IconData icon;
+  final Widget icon;
   final String label;
   final VoidCallback? onPressed;
   final Color iconColor;
@@ -122,11 +131,7 @@ class _ActionButton extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Icon(
-                icon,
-                size: CompanyProfileFigmaTokens.largeIconSize,
-                color: iconColor,
-              ),
+              icon,
               SizedBox(width: CompanyProfileFigmaTokens.rowGapMedium),
               Text(
                 label,
@@ -149,17 +154,25 @@ class _SocialIconButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final enabled = data.onTap != null;
     return Expanded(
-      child: Container(
-        height: CompanyProfileFigmaTokens.socialIconButtonHeight,
-        decoration: BoxDecoration(
-          color: AppColors.background(context),
-          borderRadius: BorderRadius.circular(
-            CompanyProfileFigmaTokens.socialIconButtonRadius,
+      child: GestureDetector(
+        onTap: enabled ? data.onTap : null,
+        child: AnimatedOpacity(
+          opacity: enabled ? 1.0 : 0.5,
+          duration: const Duration(milliseconds: 200),
+          child: Container(
+            height: CompanyProfileFigmaTokens.socialIconButtonHeight,
+            decoration: BoxDecoration(
+              color: AppColors.background(context),
+              borderRadius: BorderRadius.circular(
+                CompanyProfileFigmaTokens.socialIconButtonRadius,
+              ),
+              border: Border.all(color: AppColors.socialBorder(context)),
+            ),
+            child: Center(child: data.icon),
           ),
-          border: Border.all(color: AppColors.socialBorder(context)),
         ),
-        child: Center(child: data.icon),
       ),
     );
   }

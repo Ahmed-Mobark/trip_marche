@@ -7,7 +7,7 @@ import '../models/trip_card_model.dart';
 import 'company_trip_card.dart';
 import 'profile_section_title.dart';
 
-class AvailableTripsSection extends StatelessWidget {
+class AvailableTripsSection extends StatefulWidget {
   const AvailableTripsSection({
     super.key,
     required this.trips,
@@ -20,7 +20,26 @@ class AvailableTripsSection extends StatelessWidget {
   final void Function(int tripId)? onTripTap;
 
   @override
+  State<AvailableTripsSection> createState() => _AvailableTripsSectionState();
+}
+
+class _AvailableTripsSectionState extends State<AvailableTripsSection> {
+  bool _isExpanded = false;
+
+  @override
   Widget build(BuildContext context) {
+    final trips = widget.trips;
+    if (trips.isEmpty) {
+      return const SizedBox.shrink();
+    }
+
+    final visibleTrips = _isExpanded ? trips : trips.take(1).toList();
+    final toggleText = trips.length > 1
+        ? (_isExpanded
+            ? context.tr.companyProfileShowLess
+            : context.tr.companyProfileSeeAllTrips)
+        : null;
+
     return Padding(
       padding: EdgeInsets.symmetric(
         horizontal: CompanyProfileFigmaTokens.screenPadding,
@@ -30,31 +49,44 @@ class AvailableTripsSection extends StatelessWidget {
         children: [
           ProfileSectionTitle(title: context.tr.companyProfileAvailableTrips),
           SizedBox(height: CompanyProfileFigmaTokens.rowGapMedium),
-          ...trips.map(
-            (trip) => CompanyTripCard(
-              trip: trip,
-              onFavoriteTap: onFavoriteTap != null
-                  ? () => onFavoriteTap!(trip.id)
-                  : null,
-              onTap: onTripTap != null ? () => onTripTap!(trip.id) : null,
+          AnimatedSize(
+            duration: const Duration(milliseconds: 200),
+            curve: Curves.easeInOut,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: visibleTrips
+                  .map(
+                    (trip) => CompanyTripCard(
+                      trip: trip,
+                      onFavoriteTap: widget.onFavoriteTap != null
+                          ? () => widget.onFavoriteTap!(trip.id)
+                          : null,
+                      onTap: widget.onTripTap != null
+                          ? () => widget.onTripTap!(trip.id)
+                          : null,
+                    ),
+                  )
+                  .toList(),
             ),
           ),
-          SizedBox(height: CompanyProfileFigmaTokens.rowGapMedium),
-          Align(
-            alignment: Alignment.center,
-            child: TextButton(
-              onPressed: () {},
-              child: Text(
-                context.tr.companyProfileSeeAllTrips,
-                style: AppTextStyles.bodyMedium(color: AppColors.primary)
-                    .copyWith(
-                      fontSize: CompanyProfileFigmaTokens.bodyMediumFontSize,
-                      fontWeight: FontWeight.w500,
-                    ),
+          if (toggleText != null) ...[
+            SizedBox(height: CompanyProfileFigmaTokens.rowGapMedium),
+            Align(
+              alignment: Alignment.center,
+              child: TextButton(
+                onPressed: () => setState(() => _isExpanded = !_isExpanded),
+                child: Text(
+                  toggleText,
+                  style: AppTextStyles.bodyMedium(color: AppColors.primary)
+                      .copyWith(
+                        fontSize: CompanyProfileFigmaTokens.bodyMediumFontSize,
+                        fontWeight: FontWeight.w500,
+                      ),
+                ),
               ),
             ),
-          ),
-          SizedBox(height: CompanyProfileFigmaTokens.rowGapMedium),
+            SizedBox(height: CompanyProfileFigmaTokens.rowGapMedium),
+          ],
         ],
       ),
     );

@@ -1,9 +1,9 @@
-import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:trip_marche/core/config/app_icons.dart';
 import 'package:trip_marche/core/config/styles/styles.dart';
 import 'package:trip_marche/core/extensions/localization.dart';
 import 'package:trip_marche/features/my_trips/presentation/my_trips_figma_tokens.dart';
@@ -48,12 +48,7 @@ class _CompanyProfileViewState extends State<CompanyProfileView> {
     super.initState();
     _cubit = sl<VendorProfileCubit>();
     if (widget.vendorId > 0) {
-      log(
-        'CompanyProfileView initState: loadVendorProfile(${widget.vendorId})',
-      );
       _cubit.loadVendorProfile(widget.vendorId);
-    } else {
-      log('CompanyProfileView initState: vendorId <= 0, not loading');
     }
   }
 
@@ -64,12 +59,25 @@ class _CompanyProfileViewState extends State<CompanyProfileView> {
     final social = profile.social;
     final buttons = <SocialButtonModel>[];
 
+    Future<void> launch(String? url) async {
+      if (url == null || url.isEmpty) return;
+      final uri = Uri.tryParse(url);
+      if (uri == null || !uri.hasScheme) return;
+      if (!mounted) return;
+      try {
+        if (await canLaunchUrl(uri)) {
+          launchUrl(uri, mode: LaunchMode.externalApplication);
+        }
+      } catch (_) {}
+    }
+
     if (social.website != null && social.website!.isNotEmpty) {
       buttons.add(
         SocialButtonModel(
           icon: const FaIcon(FontAwesomeIcons.globe, size: 18),
           iconColor: AppColors.websiteBlue,
           borderColor: AppColors.socialBorder(context),
+          onTap: () => launch(social.website),
         ),
       );
     }
@@ -79,6 +87,7 @@ class _CompanyProfileViewState extends State<CompanyProfileView> {
           icon: const FaIcon(FontAwesomeIcons.facebook, size: 18),
           iconColor: AppColors.facebookBlue,
           borderColor: AppColors.socialBorder(context),
+          onTap: () => launch(social.facebook),
         ),
       );
     }
@@ -88,15 +97,17 @@ class _CompanyProfileViewState extends State<CompanyProfileView> {
           icon: const FaIcon(FontAwesomeIcons.instagram, size: 18),
           iconColor: AppColors.instagramPink,
           borderColor: AppColors.socialBorder(context),
+          onTap: () => launch(social.instagram),
         ),
       );
     }
     if (social.tiktok != null && social.tiktok!.isNotEmpty) {
       buttons.add(
         SocialButtonModel(
-          icon: const FaIcon(FontAwesomeIcons.tiktok, size: 16),
+          icon: const FaIcon(FontAwesomeIcons.tiktok, size: 18),
           iconColor: AppColors.darkText(context),
           borderColor: AppColors.socialBorder(context),
+          onTap: () => launch(social.tiktok),
         ),
       );
     }
@@ -106,6 +117,7 @@ class _CompanyProfileViewState extends State<CompanyProfileView> {
           icon: const FaIcon(FontAwesomeIcons.youtube, size: 18),
           iconColor: AppColors.youtubeRed,
           borderColor: AppColors.socialBorder(context),
+          onTap: () => launch(social.youtube),
         ),
       );
     }
@@ -147,10 +159,8 @@ class _CompanyProfileViewState extends State<CompanyProfileView> {
               ),
               border: Border.all(color: AppColors.mapButtonBorder(context)),
             ),
-            child: Icon(
-              Icons.map_outlined,
-              size: CompanyProfileFigmaTokens.mediumIconSize,
-              color: AppColors.mapBlue,
+            child: Center(
+              child: AppIcons.icon(icon: AppIcons.googleMapsIcon, size: 20),
             ),
           ),
         ),
@@ -250,7 +260,6 @@ class _CompanyProfileViewState extends State<CompanyProfileView> {
 
   @override
   Widget build(BuildContext context) {
-    log('CompanyProfileView build: currentState=${_cubit.state.runtimeType}');
     return BlocProvider(
       create: (_) => _cubit,
       child: BlocListener<VendorProfileCubit, VendorProfileState>(
@@ -273,17 +282,72 @@ class _CompanyProfileViewState extends State<CompanyProfileView> {
             return false;
           },
           builder: (context, state) {
-            log('CompanyProfileView BlocBuilder: state=${state.runtimeType}');
             if (state is VendorProfileLoading) {
-              log('CompanyProfileView BlocBuilder: returning Loading');
-              return const Scaffold(
+              return Scaffold(
                 backgroundColor: AppColors.primary,
-                body: Center(child: CustomLoading(top: 40, bottom: 40)),
+                body: Stack(
+                  fit: StackFit.expand,
+                  children: [
+                    const DecoratedBox(
+                      decoration: BoxDecoration(
+                        gradient: AppColors.primaryGradient,
+                      ),
+                    ),
+                    SingleChildScrollView(
+                      child: Column(
+                        children: [
+                          SafeArea(
+                            bottom: false,
+                            child: Padding(
+                              padding: EdgeInsetsDirectional.only(
+                                start: MyTripsFigmaTokens.padH,
+                                end: MyTripsFigmaTokens.padH,
+                                top: MyTripsFigmaTokens.headerPadTop,
+                                bottom: MyTripsFigmaTokens.headerPadBottom,
+                              ),
+                              child: Align(
+                                alignment: AlignmentDirectional.centerStart,
+                                child: Row(
+                                  children: [
+                                    IconButton(
+                                      icon: Icon(
+                                        Icons.arrow_back_ios_new_rounded,
+                                        color: AppColors.onImage,
+                                        size: 20,
+                                      ),
+                                      onPressed: () => Navigator.pop(context),
+                                    ),
+                                    SizedBox(width: 12.w),
+                                    Text(
+                                      context.tr.companyProfileTitle,
+                                      style:
+                                          AppTextStyles.heading2(
+                                            color: AppColors.onImage,
+                                          ).copyWith(
+                                            fontSize: 20.sp,
+                                            fontWeight: FontWeight.w600,
+                                          ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                          SizedBox(
+                            height: 400.h,
+                            child: const Center(
+                              child: CustomLoading(top: 40, bottom: 40),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
               );
             }
 
             if (state is VendorProfileError) {
-              log('CompanyProfileView BlocBuilder: returning Error');
               return _buildErrorScreen(context, state.message);
             }
 
@@ -387,20 +451,61 @@ class _CompanyProfileViewState extends State<CompanyProfileView> {
                                       ? () async {
                                           final uri = Uri.parse('tel:$phone');
                                           if (await canLaunchUrl(uri)) {
-                                            launchUrl(uri);
+                                            await launchUrl(uri);
+                                          } else if (mounted) {
+                                            ScaffoldMessenger.of(
+                                              context,
+                                            ).showSnackBar(
+                                              SnackBar(
+                                                content: Text(
+                                                  context.tr.somethingWentWrong,
+                                                ),
+                                              ),
+                                            );
                                           }
                                         }
-                                      : () {},
+                                      : null,
                                   onWhatsAppPressed: whatsapp.isNotEmpty
                                       ? () async {
-                                          final uri = Uri.parse(
-                                            'https://wa.me/$whatsapp',
+                                          final sanitized = whatsapp.replaceAll(
+                                            RegExp(r'[\s\-\+]'),
+                                            '',
                                           );
+                                          final uri = Uri.parse(
+                                            'https://wa.me/$sanitized',
+                                          );
+
+                                          bool launched = false;
                                           if (await canLaunchUrl(uri)) {
-                                            launchUrl(uri);
+                                            launched = await launchUrl(
+                                              uri,
+                                              mode: LaunchMode
+                                                  .externalApplication,
+                                            );
+                                          }
+
+                                          if (!launched && mounted) {
+                                            launched = await launchUrl(
+                                              uri,
+                                              mode: LaunchMode.platformDefault,
+                                            );
+                                          }
+
+                                          if (!launched && mounted) {
+                                            ScaffoldMessenger.of(
+                                              context,
+                                            ).showSnackBar(
+                                              SnackBar(
+                                                content: Text(
+                                                  context.tr.somethingWentWrong,
+                                                ),
+                                              ),
+                                            );
                                           }
                                         }
-                                      : () {},
+                                      : null,
+                                  onCallEnabled: phone.isNotEmpty,
+                                  onWhatsAppEnabled: whatsapp.isNotEmpty,
                                   socialButtons: _buildSocialButtons(
                                     context,
                                     profile,

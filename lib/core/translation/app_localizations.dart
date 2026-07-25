@@ -2416,6 +2416,12 @@ abstract class AppLocalizations {
   /// **'See All Trips'**
   String get companyProfileSeeAllTrips;
 
+  /// No description provided for @companyProfileShowLess.
+  ///
+  /// In en, this message translates to:
+  /// **'Show Less'**
+  String get companyProfileShowLess;
+
   /// No description provided for @companyProfilePricePerPerson.
   ///
   /// In en, this message translates to:

@@ -498,6 +498,7 @@
   "companyProfileViewAll": "عرض الكل",
   "companyProfileAvailableTrips": "الرحلات المتاحة",
   "companyProfileSeeAllTrips": "عرض جميع الرحلات",
+  "companyProfileShowLess": "عرض أقل",
   "companyProfilePricePerPerson": "شخص",
 
   "filterTitle": "تصفية",

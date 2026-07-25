@@ -51,14 +51,14 @@ class VendorModel extends Equatable {
   factory VendorModel.fromJson(Map<String, dynamic> json) {
     return VendorModel(
       id: json['id'] as int? ?? 0,
-      name: json['name'] as String? ?? '',
-      avatar: json['avatar'] as String?,
+      name: json['name']?.toString() ?? '',
+      avatar: json['avatar']?.toString(),
       rating: (json['rating'] as num?)?.toDouble(),
       reviewsCount: json['reviews_count'] as int?,
       followersCount: json['followers_count'] as int?,
       tripsCount: json['trips_count'] as int?,
       isFollowing: JsonParser.asBool(json['is_following']),
-      isVerified: JsonParser.asBool(json['is_verified']),
+      isVerified: JsonParser.asBool(json['verified'] ?? json['is_verified']),
     );
   }
 
@@ -89,10 +89,10 @@ class ContactModel extends Equatable {
       return const ContactModel();
     }
     return ContactModel(
-      phone: json['phone'] as String?,
-      phoneAlt: json['phone_alt'] as String?,
-      whatsapp: json['whatsapp'] as String?,
-      email: json['email'] as String?,
+      phone: json['phone']?.toString(),
+      phoneAlt: json['phone_alt']?.toString(),
+      whatsapp: json['whatsapp']?.toString(),
+      email: json['email']?.toString(),
     );
   }
 
@@ -120,11 +120,11 @@ class SocialModel extends Equatable {
       return const SocialModel();
     }
     return SocialModel(
-      website: json['website'] as String?,
-      facebook: json['facebook'] as String?,
-      instagram: json['instagram'] as String?,
-      tiktok: json['tiktok'] as String?,
-      youtube: json['youtube'] as String?,
+      website: json['website']?.toString(),
+      facebook: json['facebook']?.toString(),
+      instagram: json['instagram']?.toString(),
+      tiktok: json['tiktok']?.toString(),
+      youtube: json['youtube']?.toString(),
     );
   }
 
@@ -160,15 +160,15 @@ class CompanyDetailsModel extends Equatable {
       return const CompanyDetailsModel();
     }
     return CompanyDetailsModel(
-      about: json['about'] as String?,
-      location: json['location'] as String?,
+      about: json['about']?.toString(),
+      location: json['location']?.toString(),
       locationLat: (json['location_lat'] as num?)?.toDouble(),
       locationLng: (json['location_lng'] as num?)?.toDouble(),
-      email: json['email'] as String?,
-      yearEstablished: json['year_established'] as String?,
-      commercialRegistration: json['commercial_registration'] as String?,
-      businessLicense: json['business_license'] as String?,
-      taxCard: json['tax_card'] as String?,
+      email: json['email']?.toString(),
+      yearEstablished: json['year_established']?.toString(),
+      commercialRegistration: json['commercial_registration']?.toString(),
+      businessLicense: json['business_license']?.toString(),
+      taxCard: json['tax_card']?.toString(),
     );
   }
 
@@ -196,8 +196,8 @@ class CategoryModel extends Equatable {
   factory CategoryModel.fromJson(Map<String, dynamic> json) {
     return CategoryModel(
       id: json['id'] as int? ?? 0,
-      name: json['name'] as String? ?? '',
-      slug: json['slug'] as String?,
+      name: json['name']?.toString() ?? '',
+      slug: json['slug']?.toString(),
     );
   }
 
@@ -218,9 +218,9 @@ class TeamMemberApiModel extends Equatable {
 
   factory TeamMemberApiModel.fromJson(Map<String, dynamic> json) {
     return TeamMemberApiModel(
-      name: json['name'] as String? ?? '',
-      title: json['title'] as String? ?? json['role'] as String? ?? '',
-      avatar: json['avatar'] as String?,
+      name: json['name']?.toString() ?? '',
+      title: json['title']?.toString() ?? json['role']?.toString() ?? '',
+      avatar: json['avatar']?.toString(),
     );
   }
 
@@ -243,12 +243,12 @@ class ReviewerModel extends Equatable {
 
   factory ReviewerModel.fromJson(Map<String, dynamic> json) {
     return ReviewerModel(
-      name: json['name'] as String? ?? '',
-      avatar: json['avatar'] as String?,
-      country: json['country'] as String? ?? '',
+      name: json['name']?.toString() ?? '',
+      avatar: json['avatar']?.toString(),
+      country: json['country']?.toString() ?? '',
       countryCode:
-          json['country_code'] as String? ??
-          json['countryCode'] as String? ??
+          json['country_code']?.toString() ??
+          json['countryCode']?.toString() ??
           '',
     );
   }
@@ -317,20 +317,19 @@ class AvailableTripModel extends Equatable {
   final bool isFavorite;
 
   factory AvailableTripModel.fromJson(Map<String, dynamic> json) {
+    final rawCurrency = (json['currency']?.toString() ?? '').trim();
     return AvailableTripModel(
       id: json['id'] as int? ?? 0,
-      coverImage: json['cover_image'] as String? ?? '',
-      title: json['title'] as String? ?? '',
+      coverImage: json['cover_image']?.toString() ?? '',
+      title: json['title']?.toString() ?? '',
       rating: (json['rating'] as num?)?.toDouble() ?? 0.0,
       reviewsCount: json['reviews_count'] as int? ?? 0,
-      fromLocation: json['from_location'] as String? ?? '',
-      startDate: json['start_date'] as String? ?? '',
-      endDate: json['end_date'] as String? ?? '',
+      fromLocation: json['from_location']?.toString() ?? '',
+      startDate: json['start_date']?.toString() ?? '',
+      endDate: json['end_date']?.toString() ?? '',
       price: (json['price'] as num?)?.toDouble() ?? 0.0,
       discountPrice: (json['discount_price'] as num?)?.toDouble(),
-      currency: (json['currency'] as String?)?.trim().isNotEmpty == true
-          ? (json['currency'] as String).trim()
-          : '\$',
+      currency: rawCurrency.isNotEmpty ? rawCurrency : '\$',
       flags: TripFlagsModel.fromJson(
         json['flags'] as Map<String, dynamic>? ?? {},
       ),
@@ -425,9 +424,9 @@ class ReviewModelApi extends Equatable {
         json['reviewer'] as Map<String, dynamic>? ?? {},
       ),
       rating: (json['rating'] as num?)?.toDouble() ?? 0.0,
-      comment: json['comment'] as String? ?? '',
-      images: imagesJson.map((e) => e is String ? e : '').toList(),
-      createdAt: json['created_at'] as String?,
+      comment: json['comment']?.toString() ?? '',
+      images: imagesJson.map((e) => e is String ? e : e.toString()).toList(),
+      createdAt: json['created_at']?.toString(),
     );
   }
 
@@ -443,8 +442,8 @@ class FAQModelApi extends Equatable {
 
   factory FAQModelApi.fromJson(Map<String, dynamic> json) {
     return FAQModelApi(
-      question: json['question'] as String? ?? '',
-      answer: json['answer'] as String? ?? '',
+      question: json['question']?.toString() ?? '',
+      answer: json['answer']?.toString() ?? '',
     );
   }
 
@@ -500,20 +499,19 @@ class VendorProfileModel extends Equatable {
   }
 
   factory VendorProfileModel.fromJson(Map<String, dynamic> json) {
-    final categoriesJson = json['categories'] as List<dynamic>? ?? [];
-    final teamJson = json['team'] as List<dynamic>? ?? [];
-    final reviewsJson = json['reviews'] as List<dynamic>? ?? [];
-    final tripsJson = json['available_trips'] as List<dynamic>? ?? [];
-    final faqsJson = json['faqs'] as List<dynamic>? ?? [];
+    final dataPayload = json['data'] as Map<String, dynamic>? ?? json;
+    final categoriesJson = dataPayload['categories'] as List<dynamic>? ?? [];
+    final teamJson = dataPayload['team'] as List<dynamic>? ?? [];
+    final reviewsJson = dataPayload['reviews'] as List<dynamic>? ?? [];
+    final tripsJson = dataPayload['available_trips'] as List<dynamic>? ?? [];
+    final faqsJson = dataPayload['faqs'] as List<dynamic>? ?? [];
 
     return VendorProfileModel(
-      vendor: VendorModel.fromJson(
-        json['vendor'] as Map<String, dynamic>? ?? {},
-      ),
-      contact: ContactModel.fromJson(json['contact'] as Map<String, dynamic>?),
-      social: SocialModel.fromJson(json['social'] as Map<String, dynamic>?),
+      vendor: VendorModel.fromJson(dataPayload),
+      contact: ContactModel.fromJson(dataPayload['contact'] as Map<String, dynamic>?),
+      social: SocialModel.fromJson(dataPayload['social'] as Map<String, dynamic>?),
       companyDetails: CompanyDetailsModel.fromJson(
-        json['company_details'] as Map<String, dynamic>?,
+        dataPayload['company_details'] as Map<String, dynamic>?,
       ),
       categories: categoriesJson
           .map((e) => CategoryModel.fromJson(e as Map<String, dynamic>))

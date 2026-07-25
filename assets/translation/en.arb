@@ -503,6 +503,7 @@
   "companyProfileViewAll": "View All",
   "companyProfileAvailableTrips": "Available Trips",
   "companyProfileSeeAllTrips": "See All Trips",
+  "companyProfileShowLess": "Show Less",
   "companyProfilePricePerPerson": "Person",
 
   "filterTitle": "Filter",

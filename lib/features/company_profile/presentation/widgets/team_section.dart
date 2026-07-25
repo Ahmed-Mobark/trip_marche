@@ -71,6 +71,7 @@ class TeamSection extends StatelessWidget {
         horizontal: CompanyProfileFigmaTokens.screenPadding,
       ),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           ProfileSectionTitle(title: context.tr.companyProfileOurTeam),
           SizedBox(height: CompanyProfileFigmaTokens.rowGapMedium),

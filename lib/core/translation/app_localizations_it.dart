@@ -1242,6 +1242,9 @@ class AppLocalizationsIt extends AppLocalizations {
   String get companyProfileSeeAllTrips => 'Vedi tutti i viaggi';
 
   @override
+  String get companyProfileShowLess => 'Mostra meno';
+
+  @override
   String get companyProfilePricePerPerson => 'Persona';
 
   @override

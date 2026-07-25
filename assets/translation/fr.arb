@@ -498,6 +498,7 @@
   "companyProfileViewAll": "Voir tout",
   "companyProfileAvailableTrips": "Voyages disponibles",
   "companyProfileSeeAllTrips": "Voir tous les voyages",
+  "companyProfileShowLess": "Afficher moins",
   "companyProfilePricePerPerson": "Personne",
 
   "filterTitle": "Filtre",

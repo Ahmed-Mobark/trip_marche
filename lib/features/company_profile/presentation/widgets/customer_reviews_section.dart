@@ -151,7 +151,7 @@ class ReviewCard extends StatelessWidget {
   }
 }
 
-class CustomerReviewsSection extends StatelessWidget {
+class CustomerReviewsSection extends StatefulWidget {
   const CustomerReviewsSection({
     super.key,
     required this.reviews,
@@ -162,7 +162,26 @@ class CustomerReviewsSection extends StatelessWidget {
   final VoidCallback? onViewAll;
 
   @override
+  State<CustomerReviewsSection> createState() => _CustomerReviewsSectionState();
+}
+
+class _CustomerReviewsSectionState extends State<CustomerReviewsSection> {
+  bool _isExpanded = false;
+
+  @override
   Widget build(BuildContext context) {
+    final reviews = widget.reviews;
+    if (reviews.isEmpty) {
+      return const SizedBox.shrink();
+    }
+
+    final visibleReviews = _isExpanded ? reviews : reviews.take(3).toList();
+    final toggleText = reviews.length > 3
+        ? (_isExpanded
+            ? context.tr.companyProfileShowLess
+            : context.tr.companyProfileViewAll)
+        : null;
+
     return Padding(
       padding: EdgeInsets.symmetric(
         horizontal: CompanyProfileFigmaTokens.screenPadding,
@@ -172,11 +191,22 @@ class CustomerReviewsSection extends StatelessWidget {
         children: [
           ProfileSectionTitle(
             title: context.tr.companyProfileCustomerReviews,
-            actionText: context.tr.companyProfileViewAll,
-            onActionTap: onViewAll ?? () {},
+            actionText: toggleText,
+            onActionTap: toggleText != null
+                ? () => setState(() => _isExpanded = !_isExpanded)
+                : null,
           ),
           SizedBox(height: CompanyProfileFigmaTokens.rowGapMedium),
-          ...reviews.map((review) => ReviewCard(review: review)),
+          AnimatedSize(
+            duration: const Duration(milliseconds: 200),
+            curve: Curves.easeInOut,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: visibleReviews
+                  .map((review) => ReviewCard(review: review))
+                  .toList(),
+            ),
+          ),
           SizedBox(height: CompanyProfileFigmaTokens.cardPadding),
         ],
       ),

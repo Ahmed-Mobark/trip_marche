@@ -1231,6 +1231,9 @@ class AppLocalizationsAr extends AppLocalizations {
   String get companyProfileSeeAllTrips => 'عرض جميع الرحلات';
 
   @override
+  String get companyProfileShowLess => 'عرض أقل';
+
+  @override
   String get companyProfilePricePerPerson => 'شخص';
 
   @override
