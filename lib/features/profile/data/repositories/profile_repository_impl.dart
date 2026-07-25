@@ -47,6 +47,17 @@ class ProfileRepositoryImpl with RepositoryHelper implements ProfileRepository {
   }
 
   @override
+  Future<Either<Failure, Map<String, dynamic>>> addVendorReview(
+    int vendorId,
+    double rating,
+    String comment,
+  ) {
+    return handleEither(
+      () => _remoteDataSource.addVendorReview(vendorId, rating, comment),
+    );
+  }
+
+  @override
   Future<Either<Failure, FollowVendorEntity>> toggleFollowVendor(int vendorId) {
     return handleEither(() async {
       final model = await _remoteDataSource.toggleFollowVendor(vendorId);

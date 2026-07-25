@@ -15,6 +15,7 @@ import '../../../../core/widgets/custom_loading.dart';
 import '../cubit/reviews_cubit.dart';
 import '../cubit/reviews_state.dart';
 import '../widgets/my_reviews_empty_state.dart';
+import 'add_vendor_review_view.dart';
 
 class MyReviewsRoute extends MaterialPageRoute<void> {
   MyReviewsRoute() : super(builder: (context) => const MyReviewsView());
@@ -139,7 +140,18 @@ class MyReviewsView extends StatelessWidget {
                       fromText: context.tr.tripDetailsHeroFromLocation,
                       dateRangeText: context.tr.tripDetailsHeroDateRange,
                       addReviewText: context.tr.profileAddReview,
-                      onAddReview: () {},
+                      onAddReview: () async {
+                        final result = await Navigator.push<bool>(
+                          context,
+                          MaterialPageRoute(
+                            builder: (_) =>
+                                const AddVendorReviewView(vendorId: 13),
+                          ),
+                        );
+                        if (result == true && context.mounted) {
+                          context.read<ReviewsCubit>().fetchReviews();
+                        }
+                      },
                     ),
                     SizedBox(height: 14.h),
                     if (reviews.isEmpty)

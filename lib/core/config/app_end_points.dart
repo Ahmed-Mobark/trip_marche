@@ -65,4 +65,6 @@ class AppEndpoints {
   static String vendorFollow(int vendorId) => 'vendors/$vendorId/follow';
 
   static String vendorProfile(int vendorId) => 'vendors/$vendorId';
+
+  static String vendorReviews(int vendorId) => 'vendors/$vendorId/reviews';
 }
