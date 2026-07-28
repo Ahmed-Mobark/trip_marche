@@ -237,6 +237,8 @@
   "myTripsViewDetails": "عرض التفاصيل",
   "myTripsViewReceipt": "عرض الإيصال",
   "myTripsBookingDetails": "تفاصيل الحجز",
+  "myTripsBookingConfirmation": "تأكيد الحجز",
+  "myTripsWriteReview": "كتابة تقييم",
   "myTripsDownloadPdf": "تحميل pdf",
   "myTripsEmptyTitle": "لا توجد رحلات بعد",
   "myTripsEmptyDescription": "ابدأ الاستكشاف واحجز\nمغامرتك الأولى!",

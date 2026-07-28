@@ -696,6 +696,12 @@ class AppLocalizationsAr extends AppLocalizations {
   String get myTripsBookingDetails => 'تفاصيل الحجز';
 
   @override
+  String get myTripsBookingConfirmation => 'تأكيد الحجز';
+
+  @override
+  String get myTripsWriteReview => 'كتابة تقييم';
+
+  @override
   String get myTripsDownloadPdf => 'تحميل pdf';
 
   @override

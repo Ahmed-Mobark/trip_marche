@@ -1420,6 +1420,18 @@ abstract class AppLocalizations {
   /// **'Booking Details'**
   String get myTripsBookingDetails;
 
+  /// No description provided for @myTripsBookingConfirmation.
+  ///
+  /// In en, this message translates to:
+  /// **'Booking Confirmation'**
+  String get myTripsBookingConfirmation;
+
+  /// No description provided for @myTripsWriteReview.
+  ///
+  /// In en, this message translates to:
+  /// **'Write Review'**
+  String get myTripsWriteReview;
+
   /// No description provided for @myTripsDownloadPdf.
   ///
   /// In en, this message translates to:
