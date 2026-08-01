@@ -4,14 +4,18 @@ import '../../core/storage/data/storage.dart';
 import 'data/datasources/profile_remote_data_source.dart';
 import 'data/repositories/profile_repository_impl.dart';
 import 'domain/repositories/profile_repository.dart';
+import 'domain/usecases/add_vendor_review_usecase.dart';
 import 'domain/usecases/get_followings_usecase.dart';
 import 'domain/usecases/get_profile_usecase.dart';
+import 'domain/usecases/get_reviews_usecase.dart';
 import 'domain/usecases/update_profile_usecase.dart';
 import 'domain/usecases/change_password_usecase.dart';
 import 'domain/usecases/delete_account_usecase.dart';
 import 'domain/usecases/toggle_follow_vendor_usecase.dart';
+import 'presentation/cubit/add_vendor_review_cubit.dart';
 import 'presentation/cubit/followings_cubit.dart';
 import 'presentation/cubit/profile_cubit.dart';
+import 'presentation/cubit/reviews_cubit.dart';
 import 'presentation/cubit/update_profile_cubit.dart';
 import 'presentation/cubit/change_password_cubit.dart';
 import 'presentation/cubit/delete_account_cubit.dart';
@@ -34,6 +38,14 @@ Future<void> initProfileInjection(GetIt sl) async {
   );
 
   sl.registerLazySingleton(
+    () => GetReviewsUseCase(sl<ProfileRepository>()),
+  );
+
+  sl.registerLazySingleton(
+    () => AddVendorReviewUseCase(sl<ProfileRepository>()),
+  );
+
+  sl.registerLazySingleton(
     () => ToggleFollowVendorUseCase(sl<ProfileRepository>()),
   );
 
@@ -41,6 +53,18 @@ Future<void> initProfileInjection(GetIt sl) async {
     () => FollowingsCubit(
       sl<GetFollowingsUseCase>(),
       sl<ToggleFollowVendorUseCase>(),
+    ),
+  );
+
+  sl.registerFactory<ReviewsCubit>(
+    () => ReviewsCubit(
+      sl<GetReviewsUseCase>(),
+    ),
+  );
+
+  sl.registerFactory<AddVendorReviewCubit>(
+    () => AddVendorReviewCubit(
+      sl<AddVendorReviewUseCase>(),
     ),
   );
 

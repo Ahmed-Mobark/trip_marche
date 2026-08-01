@@ -10,6 +10,8 @@ abstract class ProfileRemoteDataSource {
   Future<Map<String, dynamic>> changePassword(ChangePasswordRequest request);
   Future<Map<String, dynamic>> deleteAccount();
   Future<Map<String, dynamic>> getFollowings();
+  Future<Map<String, dynamic>> getReviews();
+  Future<Map<String, dynamic>> addVendorReview(int vendorId, double rating, String comment);
   Future<FollowVendorResponse> toggleFollowVendor(int vendorId);
 }
 
@@ -62,6 +64,30 @@ class ProfileRemoteDataSourceImpl implements ProfileRemoteDataSource {
   Future<Map<String, dynamic>> getFollowings() async {
     final response = await _apiHelper.get<Map<String, dynamic>>(
       url: AppEndpoints.profileFollowing,
+    );
+    return response;
+  }
+
+  @override
+  Future<Map<String, dynamic>> getReviews() async {
+    final response = await _apiHelper.get<Map<String, dynamic>>(
+      url: AppEndpoints.profileReviews,
+    );
+    return response;
+  }
+
+  @override
+  Future<Map<String, dynamic>> addVendorReview(
+    int vendorId,
+    double rating,
+    String comment,
+  ) async {
+    final response = await _apiHelper.post<Map<String, dynamic>>(
+      url: AppEndpoints.vendorReviews(vendorId),
+      body: {
+        'rating': rating.toInt(),
+        'comment': comment,
+      },
     );
     return response;
   }

@@ -24,6 +24,7 @@ class AppIcons {
   static const String camera = '${_path}camera.svg';
   static const String gallery = '${_path}gallery.svg';
   static const String file = '${_path}file.svg';
+  static String frameSvg = '${_path}Frame.svg';
   static const String basket = '${_path}basket.png';
   static const String filter = '${_path}filter.png';
   static const String homeIcon = '${_path}home_icon.png';
@@ -41,7 +42,8 @@ class AppIcons {
   static const String tripsIconSvg = '${_path}trips_icon.svg';
   static const String tripsIconFilledSvg = '${_path}trips_icon_filled.svg';
   static const String wishlistIconSvg = '${_path}wishlist_icon.svg';
-  static const String wishlistIconFilledSvg = '${_path}wishlist_icon_filled.svg';
+  static const String wishlistIconFilledSvg =
+      '${_path}wishlist_icon_filled.svg';
   static const String accountIconSvg = '${_path}account_icon.svg';
   static const String accountIconFilledSvg = '${_path}account_icon_filled.svg';
   static const String googleMapsIcon = '${_path}google-map-icon.svg';

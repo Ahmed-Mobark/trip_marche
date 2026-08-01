@@ -38,7 +38,7 @@ class SettingsView extends StatelessWidget {
 }
 
 class _SettingsViewContent extends StatelessWidget {
-  const _SettingsViewContent({super.key});
+  const _SettingsViewContent();
 
   @override
   Widget build(BuildContext context) {
