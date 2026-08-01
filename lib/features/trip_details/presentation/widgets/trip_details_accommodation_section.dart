@@ -106,6 +106,7 @@ class TripDetailsCompanyCard extends StatelessWidget {
     required this.onFollow,
     required this.vendorId,
     this.avatarUrl,
+    this.onTap,
   });
 
   final String companyName;
@@ -114,6 +115,7 @@ class TripDetailsCompanyCard extends StatelessWidget {
   final VoidCallback onFollow;
   final int vendorId;
   final String? avatarUrl;
+  final VoidCallback? onTap;
 
   @override
   Widget build(BuildContext context) {
@@ -130,58 +132,79 @@ class TripDetailsCompanyCard extends StatelessWidget {
       padding: EdgeInsetsDirectional.all(14.r),
       child: Row(
         children: [
-          ClipRRect(
-            borderRadius: BorderRadius.circular(12.r),
-            child: SizedBox(
-              width: 56.r,
-              height: 56.r,
-              child: avatarUrl != null && avatarUrl!.isNotEmpty
-                  ? CachedNetworkImage(
-                      imageUrl: avatarUrl!,
-                      fit: BoxFit.cover,
-                      errorWidget: (_, __, ___) =>
-                          Image.asset(AppImages.logo, fit: BoxFit.cover),
-                    )
-                  : Image.asset(AppImages.logo, fit: BoxFit.cover),
-            ),
-          ),
-          SizedBox(width: 12.w),
           Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  companyName,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: AppTextStyles.bodyMedium(
-                    color: AppColors.darkText(context),
-                  ).copyWith(fontWeight: FontWeight.w700),
-                ),
-                SizedBox(height: 6.h),
-                Row(
+            child: Material(
+              color: Colors.transparent,
+              child: InkWell(
+                onTap: onTap,
+                child: Row(
                   children: [
-                    Icon(
-                      Iconsax.star1,
-                      color: AppColors.starYellow,
-                      size: 14.sp,
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(12.r),
+                      child: SizedBox(
+                        width: 56.r,
+                        height: 56.r,
+                        child: avatarUrl != null && avatarUrl!.isNotEmpty
+                            ? CachedNetworkImage(
+                                imageUrl: avatarUrl!,
+                                fit: BoxFit.cover,
+                                errorWidget: (_, __, ___) =>
+                                    Image.asset(AppImages.logo, fit: BoxFit.cover),
+                              )
+                            : Image.asset(AppImages.logo, fit: BoxFit.cover),
+                      ),
                     ),
-                    SizedBox(width: 6.w),
-                    Text(
-                      ratingValue,
-                      style: AppTextStyles.caption(
-                        color: AppColors.darkText(context),
-                      ).copyWith(fontWeight: FontWeight.w700),
-                    ),
-                    Text(
-                      ' ($ratingCount)',
-                      style: AppTextStyles.caption(
-                        color: AppColors.greyText(context),
+                    SizedBox(width: 12.w),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            companyName,
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: AppTextStyles.bodyMedium(
+                              color: AppColors.darkText(context),
+                            ).copyWith(fontWeight: FontWeight.w700),
+                          ),
+                          SizedBox(height: 6.h),
+                           Row(
+                             mainAxisSize: MainAxisSize.min,
+                             children: [
+                               Icon(
+                                 Iconsax.star1,
+                                 color: AppColors.starYellow,
+                                 size: 14.sp,
+                               ),
+                               SizedBox(width: 6.w),
+                               Flexible(
+                                 child: Text(
+                                   ratingValue,
+                                   style: AppTextStyles.caption(
+                                     color: AppColors.darkText(context),
+                                   ).copyWith(fontWeight: FontWeight.w700),
+                                   maxLines: 1,
+                                   overflow: TextOverflow.ellipsis,
+                                 ),
+                               ),
+                               Flexible(
+                                 child: Text(
+                                   ' ($ratingCount)',
+                                   style: AppTextStyles.caption(
+                                     color: AppColors.greyText(context),
+                                   ),
+                                   maxLines: 1,
+                                   overflow: TextOverflow.ellipsis,
+                                 ),
+                               ),
+                             ],
+                           ),
+                        ],
                       ),
                     ),
                   ],
                 ),
-              ],
+              ),
             ),
           ),
           SizedBox(width: 12.w),

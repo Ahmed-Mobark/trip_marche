@@ -982,6 +982,24 @@ abstract class AppLocalizations {
   /// **'Free cancellation'**
   String get wishlistFiltersFreeCancellation;
 
+  /// No description provided for @wishlistFiltersCategories.
+  ///
+  /// In en, this message translates to:
+  /// **'Categories'**
+  String get wishlistFiltersCategories;
+
+  /// No description provided for @wishlistFiltersDestinationCountry.
+  ///
+  /// In en, this message translates to:
+  /// **'Destination Country'**
+  String get wishlistFiltersDestinationCountry;
+
+  /// No description provided for @wishlistFiltersFiveStarOnly.
+  ///
+  /// In en, this message translates to:
+  /// **'5-Star Only'**
+  String get wishlistFiltersFiveStarOnly;
+
   /// No description provided for @filterSeeResults.
   ///
   /// In en, this message translates to:
@@ -2535,6 +2553,84 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Sort By'**
   String get searchResultSortBy;
+
+  /// No description provided for @searchResultSortPriceAsc.
+  ///
+  /// In en, this message translates to:
+  /// **'Price: Low to High'**
+  String get searchResultSortPriceAsc;
+
+  /// No description provided for @searchResultSortPriceDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Price: High to Low'**
+  String get searchResultSortPriceDesc;
+
+  /// No description provided for @searchResultSortRating.
+  ///
+  /// In en, this message translates to:
+  /// **'Highest Rating'**
+  String get searchResultSortRating;
+
+  /// No description provided for @searchResultSortDurationAsc.
+  ///
+  /// In en, this message translates to:
+  /// **'Duration: Shortest First'**
+  String get searchResultSortDurationAsc;
+
+  /// No description provided for @searchResultSortDurationDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Duration: Longest First'**
+  String get searchResultSortDurationDesc;
+
+  /// No description provided for @searchResultSortRecent.
+  ///
+  /// In en, this message translates to:
+  /// **'Most Recent'**
+  String get searchResultSortRecent;
+
+  /// No description provided for @searchResultSortSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose how you\'d like to sort the results'**
+  String get searchResultSortSubtitle;
+
+  /// No description provided for @searchResultSortPriceAscDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Show the cheapest trips first.'**
+  String get searchResultSortPriceAscDesc;
+
+  /// No description provided for @searchResultSortPriceDescDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Show the most expensive trips first.'**
+  String get searchResultSortPriceDescDesc;
+
+  /// No description provided for @searchResultSortRatingDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Show the best-rated trips first.'**
+  String get searchResultSortRatingDesc;
+
+  /// No description provided for @searchResultSortDurationAscDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Show trips with the shortest duration first.'**
+  String get searchResultSortDurationAscDesc;
+
+  /// No description provided for @searchResultSortDurationDescDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Show trips with the longest duration first.'**
+  String get searchResultSortDurationDescDesc;
+
+  /// No description provided for @searchResultSortRecentDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Show the newest trips first.'**
+  String get searchResultSortRecentDesc;
 
   /// No description provided for @searchResultFilters.
   ///

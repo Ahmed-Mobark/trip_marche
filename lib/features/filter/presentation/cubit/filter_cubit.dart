@@ -23,6 +23,10 @@ class FilterCubit extends Cubit<FilterState> {
     emit(state.copyWith(priceRange: value));
   }
 
+  void setSearch(String value) {
+    emit(state.copyWith(search: value));
+  }
+
   void setTripType(String value) {
     emit(state.copyWith(tripType: value));
   }
@@ -153,6 +157,28 @@ class FilterCubit extends Cubit<FilterState> {
       next.add(value);
     }
     emit(state.copyWith(tripFeatures: next));
+  }
+
+  void toggleCategory(int value) {
+    final next = {...state.categories};
+    if (next.contains(value)) {
+      next.remove(value);
+    } else {
+      next.add(value);
+    }
+    emit(state.copyWith(categories: next));
+  }
+
+  void setFiveStarOnly(bool value) {
+    emit(state.copyWith(fiveStarOnly: value));
+  }
+
+  void setSort(String value) {
+    emit(state.copyWith(sort: value));
+  }
+
+  void setDestinationCountry(String value) {
+    emit(state.copyWith(destinationCountry: value));
   }
 
   /// Updates the visualised price histogram (counts per price bucket).

@@ -445,6 +445,54 @@ class _FilterBody extends StatelessWidget {
                   ),
                 ),
                 SizedBox(height: 24.h),
+                FilterSection(
+                  title: context.tr.wishlistFiltersTripRating,
+                  child: NumberRow(
+                    selected: state.tripRatings,
+                    onTap: cubit.toggleTripRating,
+                  ),
+                ),
+                SizedBox(height: 24.h),
+                FilterSection(
+                  title: context.tr.wishlistFiltersCategories,
+                  child: ButtonRow(
+                    options: const ['Beach', 'Cultural', 'Adventure', 'Luxury', 'Family'],
+                    isSelected: (value) {
+                      final key = _categoryKeyForLabel(value);
+                      return key != null && state.categories.contains(key);
+                    },
+                    onTap: (value) {
+                      final key = _categoryKeyForLabel(value);
+                      if (key != null) {
+                        cubit.toggleCategory(key);
+                      }
+                    },
+                  ),
+                ),
+                SizedBox(height: 24.h),
+                ToggleRow(
+                  icon: Iconsax.star,
+                  label: context.tr.wishlistFiltersFiveStarOnly,
+                  value: state.fiveStarOnly,
+                  onChanged: cubit.setFiveStarOnly,
+                ),
+                SizedBox(height: 24.h),
+                FilterSection(
+                  title: context.tr.wishlistFiltersDestinationCountry,
+                  child: SelectField(
+                    value: state.destinationCountry.isEmpty
+                        ? context.tr.wishlistFiltersSelectCountry
+                        : state.destinationCountry,
+                    onTap: () => _showSingleSelectBottomSheet(
+                      context: context,
+                      title: context.tr.wishlistFiltersDestinationCountry,
+                      options: const ['Egypt', 'Saudi Arabia', 'UAE', 'Qatar', 'Turkey', 'Jordan'],
+                      selectedValue: state.destinationCountry,
+                      onSelected: cubit.setDestinationCountry,
+                    ),
+                  ),
+                ),
+                SizedBox(height: 24.h),
                 TripFeaturesSection(
                   selectedKeys: state.tripFeatures,
                   onChanged: cubit.toggleTripFeature,
@@ -1038,14 +1086,21 @@ class _FilterBody extends StatelessWidget {
     final apiSeason = _resolveApiSeason(state.tripSeasons);
 
     return TripsCatalogFilters(
+      search: state.search.isEmpty ? null : state.search,
       type: state.tripType.isEmpty ? null : state.tripType,
       departureCountry: state.departureCountry.isEmpty
           ? null
           : state.departureCountry,
       departureCity: state.departureCity.isEmpty ? null : state.departureCity,
+      destinationId: state.selectedDestinationIds.isEmpty
+          ? null
+          : state.selectedDestinationIds.first,
       destinations: state.selectedDestinationIds.isEmpty
           ? null
           : state.selectedDestinationIds.toList(),
+      destinationCountry: state.destinationCountry.isEmpty
+          ? null
+          : state.destinationCountry,
       minPrice: state.priceRange.start > 0 ? state.priceRange.start : null,
       maxPrice: state.priceRange.end > 0 ? state.priceRange.end : null,
       minVendorRating: maxOfSet(state.agencyRatings),
@@ -1061,12 +1116,11 @@ class _FilterBody extends StatelessWidget {
       visaType: visaType,
       includeFlight: state.tripFeatures.contains('includeFlight') ? 1 : null,
       hotelsOnly: state.tripFeatures.contains('includeHotel') ? 1 : null,
+      fiveStarOnly: state.fiveStarOnly ? 1 : null,
       acceptsCoupons: state.hasDiscountCode ? 1 : null,
       freeCancellation: state.freeCancellation ? 1 : null,
-      country: state.otherCountries.isEmpty
-          ? null
-          : state.otherCountries.join(','),
-      sort: null,
+      categories: state.categories.isEmpty ? null : state.categories.toList(),
+      sort: state.sort.isEmpty ? null : state.sort,
     );
   }
 
@@ -1079,5 +1133,22 @@ class _FilterBody extends StatelessWidget {
     }
     final first = seasons.first;
     return first == 'newYear' ? 'new_year' : first;
+  }
+
+  int? _categoryKeyForLabel(String label) {
+    switch (label) {
+      case 'Beach':
+        return 1;
+      case 'Cultural':
+        return 2;
+      case 'Adventure':
+        return 3;
+      case 'Luxury':
+        return 4;
+      case 'Family':
+        return 5;
+      default:
+        return null;
+    }
   }
 }

@@ -36,20 +36,22 @@ class CompanyDetailsSection extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  context.tr.companyProfileAbout,
-                  style: AppTextStyles.caption(
-                    color: AppColors.secondaryGrey(context),
-                  ).copyWith(fontWeight: FontWeight.w500),
-                ),
-                SizedBox(height: CompanyProfileFigmaTokens.rowGapSmall),
-                Text(
-                  about,
-                  style: AppTextStyles.bodySmall(
-                    color: AppColors.darkInk(context),
-                  ).copyWith(height: 1.5),
-                ),
-                SizedBox(height: CompanyProfileFigmaTokens.rowGapMedium),
+                if (about.isNotEmpty) ...[
+                  Text(
+                    context.tr.companyProfileAbout,
+                    style: AppTextStyles.caption(
+                      color: AppColors.secondaryGrey(context),
+                    ).copyWith(fontWeight: FontWeight.w500),
+                  ),
+                  SizedBox(height: CompanyProfileFigmaTokens.rowGapSmall),
+                  Text(
+                    about,
+                    style: AppTextStyles.bodySmall(
+                      color: AppColors.darkInk(context),
+                    ).copyWith(height: 1.5),
+                  ),
+                  SizedBox(height: CompanyProfileFigmaTokens.rowGapMedium),
+                ],
                 ...details.map((detail) => CompanyDetailRow(model: detail)),
               ],
             ),

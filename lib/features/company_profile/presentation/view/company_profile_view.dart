@@ -134,38 +134,43 @@ class _CompanyProfileViewState extends State<CompanyProfileView> {
     final lat = details.locationLat;
     final lng = details.locationLng;
     final canOpenMap = lat != null && lng != null;
-    final rows = <CompanyDetailModel>[
-      CompanyDetailModel(
-        label: context.tr.companyProfileLocation,
-        value: details.location ?? '',
-        trailing: GestureDetector(
-          onTap: canOpenMap
-              ? () async {
-                  final uri = Uri.parse(
-                    'https://www.google.com/maps/search/?api=1&query=$lat,$lng',
-                  );
-                  if (await canLaunchUrl(uri)) {
-                    launchUrl(uri, mode: LaunchMode.externalApplication);
+    final rows = <CompanyDetailModel>[];
+
+    final location = details.location;
+    if ((location != null && location.trim().isNotEmpty) || canOpenMap) {
+      rows.add(
+        CompanyDetailModel(
+          label: context.tr.companyProfileLocation,
+          value: details.location ?? '',
+          trailing: GestureDetector(
+            onTap: canOpenMap
+                ? () async {
+                    final uri = Uri.parse(
+                      'https://www.google.com/maps/search/?api=1&query=$lat,$lng',
+                    );
+                    if (await canLaunchUrl(uri)) {
+                      launchUrl(uri, mode: LaunchMode.externalApplication);
+                    }
                   }
-                }
-              : null,
-          child: Container(
-            width: 36.r,
-            height: 36.r,
-            decoration: BoxDecoration(
-              color: AppColors.mapButtonBg(context),
-              borderRadius: BorderRadius.circular(
-                CompanyProfileFigmaTokens.cardRadius,
+                : null,
+            child: Container(
+              width: 36.r,
+              height: 36.r,
+              decoration: BoxDecoration(
+                color: AppColors.mapButtonBg(context),
+                borderRadius: BorderRadius.circular(
+                  CompanyProfileFigmaTokens.cardRadius,
+                ),
+                border: Border.all(color: AppColors.mapButtonBorder(context)),
               ),
-              border: Border.all(color: AppColors.mapButtonBorder(context)),
-            ),
-            child: Center(
-              child: AppIcons.icon(icon: AppIcons.googleMapsIcon, size: 20),
+              child: Center(
+                child: AppIcons.icon(icon: AppIcons.googleMapsIcon, size: 20),
+              ),
             ),
           ),
         ),
-      ),
-    ];
+      );
+    }
 
     if (contact.email != null && contact.email!.isNotEmpty) {
       rows.add(
@@ -283,66 +288,9 @@ class _CompanyProfileViewState extends State<CompanyProfileView> {
           },
           builder: (context, state) {
             if (state is VendorProfileLoading) {
-              return Scaffold(
-                backgroundColor: AppColors.primary,
-                body: Stack(
-                  fit: StackFit.expand,
-                  children: [
-                    const DecoratedBox(
-                      decoration: BoxDecoration(
-                        gradient: AppColors.primaryGradient,
-                      ),
-                    ),
-                    SingleChildScrollView(
-                      child: Column(
-                        children: [
-                          SafeArea(
-                            bottom: false,
-                            child: Padding(
-                              padding: EdgeInsetsDirectional.only(
-                                start: MyTripsFigmaTokens.padH,
-                                end: MyTripsFigmaTokens.padH,
-                                top: MyTripsFigmaTokens.headerPadTop,
-                                bottom: MyTripsFigmaTokens.headerPadBottom,
-                              ),
-                              child: Align(
-                                alignment: AlignmentDirectional.centerStart,
-                                child: Row(
-                                  children: [
-                                    IconButton(
-                                      icon: Icon(
-                                        Icons.arrow_back_ios_new_rounded,
-                                        color: AppColors.onImage,
-                                        size: 20,
-                                      ),
-                                      onPressed: () => Navigator.pop(context),
-                                    ),
-                                    SizedBox(width: 12.w),
-                                    Text(
-                                      context.tr.companyProfileTitle,
-                                      style:
-                                          AppTextStyles.heading2(
-                                            color: AppColors.onImage,
-                                          ).copyWith(
-                                            fontSize: 20.sp,
-                                            fontWeight: FontWeight.w600,
-                                          ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ),
-                          SizedBox(
-                            height: 400.h,
-                            child: const Center(
-                              child: CustomLoading(top: 40, bottom: 40),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
+              return const Scaffold(
+                body: Center(
+                  child: CustomLoading(top: 40, bottom: 40),
                 ),
               );
             }
@@ -357,6 +305,7 @@ class _CompanyProfileViewState extends State<CompanyProfileView> {
               final contact = profile.contact;
               final companyDetails = profile.companyDetails;
               final categories = _buildCategories(profile);
+              final detailsList = _buildCompanyDetails(context, profile);
               final team = profile.team;
               final reviews = profile.reviews;
               final trips = profile.availableTrips;
@@ -512,15 +461,19 @@ class _CompanyProfileViewState extends State<CompanyProfileView> {
                                   ),
                                 ),
                                 SizedBox(height: 14.h),
+                              if ((companyDetails.about ?? '').trim().isNotEmpty ||
+                                  detailsList.isNotEmpty) ...[
+                                SizedBox(height: 14.h),
                                 CompanyDetailsSection(
                                   about: companyDetails.about ?? '',
-                                  details: _buildCompanyDetails(
-                                    context,
-                                    profile,
-                                  ),
+                                  details: detailsList,
                                 ),
+                              ],
+                              if (categories.isNotEmpty) ...[
                                 SizedBox(height: 14.h),
                                 TripCategoriesSection(categories: categories),
+                              ],
+                              if (team.isNotEmpty) ...[
                                 SizedBox(height: 14.h),
                                 TeamSection(
                                   members: team
@@ -533,6 +486,8 @@ class _CompanyProfileViewState extends State<CompanyProfileView> {
                                       )
                                       .toList(),
                                 ),
+                              ],
+                              if (reviews.isNotEmpty) ...[
                                 SizedBox(height: 14.h),
                                 CustomerReviewsSection(
                                   reviews: reviews
@@ -553,6 +508,8 @@ class _CompanyProfileViewState extends State<CompanyProfileView> {
                                       )
                                       .toList(),
                                 ),
+                              ],
+                              if (trips.isNotEmpty) ...[
                                 SizedBox(height: 14.h),
                                 AvailableTripsSection(
                                   trips: trips
@@ -575,6 +532,8 @@ class _CompanyProfileViewState extends State<CompanyProfileView> {
                                       )
                                       .toList(),
                                 ),
+                              ],
+                              if (faqs.isNotEmpty) ...[
                                 SizedBox(height: 14.h),
                                 FAQSection(
                                   faqs: faqs
@@ -586,10 +545,11 @@ class _CompanyProfileViewState extends State<CompanyProfileView> {
                                       )
                                       .toList(),
                                 ),
-                                SizedBox(
-                                  height:
-                                      CompanyProfileFigmaTokens.sectionBottom,
-                                ),
+                              ],
+                              SizedBox(
+                                height:
+                                    CompanyProfileFigmaTokens.sectionBottom,
+                              ),
                               ],
                             ),
                           ),

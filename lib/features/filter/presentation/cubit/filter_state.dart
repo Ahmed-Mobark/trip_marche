@@ -10,6 +10,7 @@ class FilterState extends Equatable {
   const FilterState({
     this.priceRange = const RangeValues(0, 0),
     this.initialPriceRange = const RangeValues(0, 0),
+    this.search = '',
     this.tripType = '',
     this.departureCountry = '',
     this.departureCity = '',
@@ -37,10 +38,15 @@ class FilterState extends Equatable {
     this.metadataErrorMessage,
     this.currencyCode = 'EGP',
     this.priceHistogram = const [],
+    this.categories = const {},
+    this.fiveStarOnly = false,
+    this.sort = '',
+    this.destinationCountry = '',
   });
 
   final RangeValues priceRange;
   final RangeValues initialPriceRange;
+  final String search;
   final String tripType;
   final String departureCountry;
   final String departureCity;
@@ -85,9 +91,24 @@ class FilterState extends Equatable {
   /// empty, the filter view falls back to a deterministic synthetic curve.
   final List<int> priceHistogram;
 
+  /// Multi-select category IDs for the trips catalog.
+  final Set<int> categories;
+
+  /// Whether to restrict results to five-star trips only.
+  final bool fiveStarOnly;
+
+  /// Selected sort option for the trips catalog.
+  final String sort;
+
+  /// The country of the destination (distinct from departure country).
+  final String destinationCountry;
+
   int get activeFilterSectionsCount {
     var count = 0;
     if (selectedDestinationIds.isNotEmpty) {
+      count++;
+    }
+    if (search.isNotEmpty) {
       count++;
     }
     if (!_isSameRange(priceRange, initialPriceRange)) {
@@ -147,12 +168,25 @@ class FilterState extends Equatable {
     if (freeCancellation) {
       count++;
     }
+    if (categories.isNotEmpty) {
+      count++;
+    }
+    if (fiveStarOnly) {
+      count++;
+    }
+    if (sort.isNotEmpty) {
+      count++;
+    }
+    if (destinationCountry.isNotEmpty) {
+      count++;
+    }
     return count;
   }
 
   FilterState copyWith({
     RangeValues? priceRange,
     RangeValues? initialPriceRange,
+    String? search,
     String? tripType,
     String? departureCountry,
     String? departureCity,
@@ -182,10 +216,15 @@ class FilterState extends Equatable {
     bool clearMetadataError = false,
     String? currencyCode,
     List<int>? priceHistogram,
+    Set<int>? categories,
+    bool? fiveStarOnly,
+    String? sort,
+    String? destinationCountry,
   }) {
     return FilterState(
       priceRange: priceRange ?? this.priceRange,
       initialPriceRange: initialPriceRange ?? this.initialPriceRange,
+      search: search ?? this.search,
       tripType: tripType ?? this.tripType,
       departureCountry: departureCountry ?? this.departureCountry,
       departureCity: departureCity ?? this.departureCity,
@@ -217,6 +256,10 @@ class FilterState extends Equatable {
           : metadataErrorMessage ?? this.metadataErrorMessage,
       currencyCode: currencyCode ?? this.currencyCode,
       priceHistogram: priceHistogram ?? this.priceHistogram,
+      categories: categories ?? this.categories,
+      fiveStarOnly: fiveStarOnly ?? this.fiveStarOnly,
+      sort: sort ?? this.sort,
+      destinationCountry: destinationCountry ?? this.destinationCountry,
     );
   }
 
@@ -224,6 +267,7 @@ class FilterState extends Equatable {
   List<Object?> get props => [
         priceRange,
         initialPriceRange,
+        search,
         tripType,
         departureCountry,
         departureCity,
@@ -251,6 +295,10 @@ class FilterState extends Equatable {
         metadataErrorMessage,
         currencyCode,
         priceHistogram,
+        categories,
+        fiveStarOnly,
+        sort,
+        destinationCountry,
       ];
 
   static bool _isSameRange(RangeValues a, RangeValues b) {

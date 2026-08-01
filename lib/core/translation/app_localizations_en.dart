@@ -464,6 +464,15 @@ class AppLocalizationsEn extends AppLocalizations {
   String get wishlistFiltersFreeCancellation => 'Free cancellation';
 
   @override
+  String get wishlistFiltersCategories => 'Categories';
+
+  @override
+  String get wishlistFiltersDestinationCountry => 'Destination Country';
+
+  @override
+  String get wishlistFiltersFiveStarOnly => '5-Star Only';
+
+  @override
   String get filterSeeResults => 'See Results';
 
   @override
@@ -1299,6 +1308,49 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get searchResultSortBy => 'Sort By';
+
+  @override
+  String get searchResultSortPriceAsc => 'Price: Low to High';
+
+  @override
+  String get searchResultSortPriceDesc => 'Price: High to Low';
+
+  @override
+  String get searchResultSortRating => 'Highest Rating';
+
+  @override
+  String get searchResultSortDurationAsc => 'Duration: Shortest First';
+
+  @override
+  String get searchResultSortDurationDesc => 'Duration: Longest First';
+
+  @override
+  String get searchResultSortRecent => 'Most Recent';
+
+  @override
+  String get searchResultSortSubtitle =>
+      'Choose how you\'d like to sort the results';
+
+  @override
+  String get searchResultSortPriceAscDesc => 'Show the cheapest trips first.';
+
+  @override
+  String get searchResultSortPriceDescDesc =>
+      'Show the most expensive trips first.';
+
+  @override
+  String get searchResultSortRatingDesc => 'Show the best-rated trips first.';
+
+  @override
+  String get searchResultSortDurationAscDesc =>
+      'Show trips with the shortest duration first.';
+
+  @override
+  String get searchResultSortDurationDescDesc =>
+      'Show trips with the longest duration first.';
+
+  @override
+  String get searchResultSortRecentDesc => 'Show the newest trips first.';
 
   @override
   String get searchResultFilters => 'Filters';

@@ -21,8 +21,8 @@ class MyTripsListCubit extends Cubit<MyTripsListState> {
   TripsCatalogFilters get activeFilters => _filters;
 
   void setFilters({
+    String? search,
     String? type,
-    String? country,
     String? departureCountry,
     String? departureCity,
     int? destinationId,
@@ -56,12 +56,12 @@ class MyTripsListCubit extends Cubit<MyTripsListState> {
     String? flag,
     String? sort,
   }) {
-    final trimmedCountry = country?.trim();
+    final trimmedSearch = search?.trim();
     _filters = TripsCatalogFilters(
-      type: type,
-      country: (trimmedCountry == null || trimmedCountry.isEmpty)
+      search: (trimmedSearch == null || trimmedSearch.isEmpty)
           ? null
-          : trimmedCountry,
+          : trimmedSearch,
+      type: type,
       departureCountry: departureCountry,
       departureCity: departureCity,
       destinationId: destinationId,
@@ -107,9 +107,9 @@ class MyTripsListCubit extends Cubit<MyTripsListState> {
     await loadInitial();
   }
 
-  /// Updates only the destination country/code filter and reloads.
+  /// Updates only the search query filter and reloads.
   Future<void> applySearchQuery(String raw) async {
-    await applyFilters(_filters.withCountry(raw));
+    await applyFilters(_filters.withSearch(raw));
   }
 
   Future<void> resetFilters() async {
