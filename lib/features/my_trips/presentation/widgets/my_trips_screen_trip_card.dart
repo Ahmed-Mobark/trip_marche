@@ -52,13 +52,16 @@ class MyTripsScreenTripCard extends StatelessWidget {
       ),
     };
 
-    final primaryLabel = tab == MyTripsShellTab.past
-        ? tr.myTripsBookAgain
-        : tr.myTripsViewDetails;
+    final primaryLabel = switch (tab) {
+      MyTripsShellTab.past
+          when !trip.isRated => context.tr.myTripsRateTrip,
+      MyTripsShellTab.past => tr.myTripsBookAgain,
+      _ => tr.myTripsViewDetails,
+    };
 
     final bottomLabel = switch (tab) {
       MyTripsShellTab.canceled => tr.myTripsDownloadPdf,
-      MyTripsShellTab.past => tr.myTripsBookingDetails,
+      MyTripsShellTab.past => tr.myTripsBookingConfirmation,
       MyTripsShellTab.active =>
         trip.useDownloadPdfWhenActive
             ? tr.myTripsDownloadPdf
@@ -250,24 +253,26 @@ class MyTripsScreenTripCard extends StatelessWidget {
                     SizedBox(height: MyTripsTripCardTokens.rowTight),
                     _MetaRow(icon: Iconsax.calendar_1, text: trip.dateRange),
                     SizedBox(height: MyTripsTripCardTokens.beforeActions),
-                    Row(
-                      children: [
-                        Expanded(
-                          child: _FilledCta(
-                            label: primaryLabel,
-                            onTap: onPrimaryTap,
+                    if (!(tab == MyTripsShellTab.past && trip.isRated)) ...[
+                      Row(
+                        children: [
+                          Expanded(
+                            child: _FilledCta(
+                              label: primaryLabel,
+                              onTap: onPrimaryTap,
+                            ),
                           ),
-                        ),
-                        SizedBox(width: MyTripsTripCardTokens.twinGap),
-                        Expanded(
-                          child: _OutlineCta(
-                            label: secondaryLabel,
-                            onTap: onSecondaryTap,
+                          SizedBox(width: MyTripsTripCardTokens.twinGap),
+                          Expanded(
+                            child: _OutlineCta(
+                              label: secondaryLabel,
+                              onTap: onSecondaryTap,
+                            ),
                           ),
-                        ),
-                      ],
-                    ),
-                    SizedBox(height: MyTripsTripCardTokens.belowTwinRow),
+                        ],
+                      ),
+                      SizedBox(height: MyTripsTripCardTokens.belowTwinRow),
+                    ],
                     _FooterCta(
                       label: bottomLabel,
                       onTap: onBottomTap,

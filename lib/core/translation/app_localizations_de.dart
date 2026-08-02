@@ -715,7 +715,10 @@ class AppLocalizationsDe extends AppLocalizations {
   String get myTripsBookingConfirmation => 'Booking Confirmation';
 
   @override
-  String get myTripsWriteReview => 'Write Review';
+  String get myTripsWriteReview => 'Bewertung schreiben';
+
+  @override
+  String get myTripsRateTrip => 'Reise bewerten';
 
   @override
   String get myTripsDownloadPdf => 'PDF herunterladen';

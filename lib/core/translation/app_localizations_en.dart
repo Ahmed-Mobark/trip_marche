@@ -715,6 +715,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get myTripsWriteReview => 'Write Review';
 
   @override
+  String get myTripsRateTrip => 'Rate Trip';
+
+  @override
   String get myTripsDownloadPdf => 'Download pdf';
 
   @override

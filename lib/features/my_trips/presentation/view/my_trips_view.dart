@@ -21,6 +21,7 @@ import 'package:trip_marche/features/my_trips/presentation/my_trips_figma_tokens
 import 'package:trip_marche/features/my_trips/presentation/view/booking_pdf_viewer_screen.dart';
 import 'package:trip_marche/features/my_trips/presentation/widgets/my_trips_screen_trip_card.dart';
 import 'package:trip_marche/features/my_trips/presentation/widgets/my_trips_screen_tabs.dart';
+import 'package:trip_marche/features/profile/presentation/view/add_vendor_review_view.dart';
 import 'package:trip_marche/features/trip_details/presentation/view/trip_details_view.dart';
 import 'package:trip_marche/features/trip_details/presentation/trip_wishlist_pop_result.dart';
 
@@ -94,6 +95,22 @@ class _MyTripsViewBodyState extends State<_MyTripsViewBody> {
       result.tripId,
       result.isWishlisted,
     );
+  }
+
+  Future<void> _onRateTripTap(Booking booking) async {
+    final result = await sl<AppNavigator>().push<bool>(
+      screen: AddVendorReviewView(
+        vendorId: booking.trip.id,
+        title: booking.trip.title,
+        imageUrl: booking.trip.coverImage??"",
+        routeText: booking.trip.fromLocation,
+        dateRangeText: booking.dates.range,
+      ),
+    );
+
+    if (result == true && mounted) {
+      context.read<BookingsCubit>().refresh();
+    }
   }
 
   Future<void> _onBookingPdfTap(Booking booking) async {
@@ -218,6 +235,7 @@ class _MyTripsViewBodyState extends State<_MyTripsViewBody> {
                                   state: bookingsState,
                                   tab: shellState.tab,
                                   onBookingTap: _onBookingTap,
+                                  onRateTripTap: _onRateTripTap,
                                   onBookingPdfTap: _onBookingPdfTap,
                                   onRetry: () =>
                                       context.read<BookingsCubit>().loadInitial(),
@@ -249,6 +267,7 @@ class _BookingsList extends StatelessWidget {
     required this.state,
     required this.tab,
     required this.onBookingTap,
+    required this.onRateTripTap,
     required this.onBookingPdfTap,
     required this.onRetry,
     required this.onRefresh,
@@ -258,6 +277,7 @@ class _BookingsList extends StatelessWidget {
   final BookingsState state;
   final MyTripsShellTab tab;
   final void Function(Booking) onBookingTap;
+  final void Function(Booking) onRateTripTap;
   final void Function(Booking) onBookingPdfTap;
   final VoidCallback onRetry;
   final Future<void> Function() onRefresh;
@@ -373,7 +393,10 @@ class _BookingsList extends StatelessWidget {
                     return MyTripsScreenTripCard(
                       trip: _toRowModel(booking, isFav),
                       tab: tab,
-                      onPrimaryTap: () => onBookingTap(booking),
+                      onPrimaryTap: tab == MyTripsShellTab.past &&
+                              !booking.trip.isRated
+                          ? () => onRateTripTap(booking)
+                          : () => onBookingTap(booking),
                       onSecondaryTap: () => onBookingPdfTap(booking),
                       onBottomTap: isPdfLoading
                           ? null
@@ -406,5 +429,6 @@ MyTripRowUiModel _toRowModel(Booking booking, bool isFavorite) {
     imageUrl: booking.trip.coverImage,
     isFavorite: isFavorite,
     useDownloadPdfWhenActive: false,
+    isRated: booking.trip.isRated,
   );
 }

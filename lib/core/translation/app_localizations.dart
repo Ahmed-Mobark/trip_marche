@@ -1450,6 +1450,12 @@ abstract class AppLocalizations {
   /// **'Write Review'**
   String get myTripsWriteReview;
 
+  /// No description provided for @myTripsRateTrip.
+  ///
+  /// In en, this message translates to:
+  /// **'Rate Trip'**
+  String get myTripsRateTrip;
+
   /// No description provided for @myTripsDownloadPdf.
   ///
   /// In en, this message translates to:

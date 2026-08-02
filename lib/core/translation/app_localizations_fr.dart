@@ -719,6 +719,9 @@ class AppLocalizationsFr extends AppLocalizations {
   String get myTripsWriteReview => 'Rédiger un avis';
 
   @override
+  String get myTripsRateTrip => 'Évaluer le voyage';
+
+  @override
   String get myTripsDownloadPdf => 'Télécharger le PDF';
 
   @override

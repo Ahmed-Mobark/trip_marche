@@ -14,6 +14,7 @@ class MyTripRowUiModel extends Equatable {
     this.isWishlisted = true,
     this.isFavorite = false,
     this.useDownloadPdfWhenActive = false,
+    this.isRated = false,
   });
 
   final int id;
@@ -28,6 +29,7 @@ class MyTripRowUiModel extends Equatable {
   final bool isFavorite;
 
   final bool useDownloadPdfWhenActive;
+  final bool isRated;
 
   MyTripRowUiModel copyWith({
     int? id,
@@ -41,6 +43,7 @@ class MyTripRowUiModel extends Equatable {
     bool? isWishlisted,
     bool? isFavorite,
     bool? useDownloadPdfWhenActive,
+    bool? isRated,
   }) {
     return MyTripRowUiModel(
       id: id ?? this.id,
@@ -55,6 +58,7 @@ class MyTripRowUiModel extends Equatable {
       isFavorite: isFavorite ?? this.isFavorite,
       useDownloadPdfWhenActive:
           useDownloadPdfWhenActive ?? this.useDownloadPdfWhenActive,
+      isRated: isRated ?? this.isRated,
     );
   }
 
@@ -71,6 +75,7 @@ class MyTripRowUiModel extends Equatable {
         isWishlisted,
         isFavorite,
         useDownloadPdfWhenActive,
+        isRated,
       ];
 }
 

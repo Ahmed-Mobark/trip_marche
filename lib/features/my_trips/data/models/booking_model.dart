@@ -108,6 +108,7 @@ class BookingTripModel {
     this.coverImage,
     required this.fromLocation,
     this.isFavorite = false,
+    this.isRated = false,
   });
 
   final int id;
@@ -115,6 +116,7 @@ class BookingTripModel {
   final String? coverImage;
   final String fromLocation;
   final bool isFavorite;
+  final bool isRated;
 
   factory BookingTripModel.fromJson(Map<String, dynamic> json) {
     final cover = json['cover_image'] as String?;
@@ -128,6 +130,34 @@ class BookingTripModel {
       coverImage: cover?.trim().isNotEmpty == true ? cover!.trim() : null,
       fromLocation: (json['from_location'] as String?)?.trim() ?? '',
       isFavorite: isFav,
+      isRated: json['is_rated'] as bool? ?? false,
+    );
+  }
+
+  Map<String, dynamic> toJson() => {
+        'id': id,
+        'title': title,
+        'cover_image': coverImage,
+        'from_location': fromLocation,
+        'is_favorite': isFavorite,
+        'is_rated': isRated,
+      };
+
+  BookingTripModel copyWith({
+    int? id,
+    String? title,
+    String? coverImage,
+    String? fromLocation,
+    bool? isFavorite,
+    bool? isRated,
+  }) {
+    return BookingTripModel(
+      id: id ?? this.id,
+      title: title ?? this.title,
+      coverImage: coverImage ?? this.coverImage,
+      fromLocation: fromLocation ?? this.fromLocation,
+      isFavorite: isFavorite ?? this.isFavorite,
+      isRated: isRated ?? this.isRated,
     );
   }
 
@@ -137,6 +167,7 @@ class BookingTripModel {
         coverImage: coverImage,
         fromLocation: fromLocation,
         isFavorite: isFavorite,
+        isRated: isRated,
       );
 }
 
