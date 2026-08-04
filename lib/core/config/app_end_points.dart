@@ -66,5 +66,5 @@ class AppEndpoints {
 
   static String vendorProfile(int vendorId) => 'vendors/$vendorId';
 
-  static String vendorReviews(int vendorId) => 'vendors/$vendorId/reviews';
+  static const String reviews = 'reviews';
 }

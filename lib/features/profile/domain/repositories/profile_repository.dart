@@ -2,6 +2,7 @@ import 'package:dartz/dartz.dart';
 import '../../../../core/network/network_service/failures.dart';
 import '../../data/models/change_password_request.dart';
 import '../../data/models/profile_update_request.dart';
+import '../../data/models/submit_review_request.dart';
 import '../../domain/entities/follow_vendor_entity.dart';
 
 abstract class ProfileRepository {
@@ -15,10 +16,8 @@ abstract class ProfileRepository {
   Future<Either<Failure, Map<String, dynamic>>> deleteAccount();
   Future<Either<Failure, Map<String, dynamic>>> getFollowings();
   Future<Either<Failure, Map<String, dynamic>>> getReviews();
-  Future<Either<Failure, Map<String, dynamic>>> addVendorReview(
-    int vendorId,
-    double rating,
-    String comment,
+  Future<Either<Failure, Map<String, dynamic>>> submitReviews(
+    SubmitReviewRequest request,
   );
   Future<Either<Failure, FollowVendorEntity>> toggleFollowVendor(int vendorId);
 }

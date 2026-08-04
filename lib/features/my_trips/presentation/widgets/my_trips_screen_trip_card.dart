@@ -68,7 +68,7 @@ class MyTripsScreenTripCard extends StatelessWidget {
             : tr.myTripsBookingDetails,
     };
 
-    final secondaryLabel = tr.myTripsViewReceipt;
+    final secondaryLabel = trip.isRated ? tr.myTripsRated : tr.myTripsRateTrip;
 
     return LayoutBuilder(
       builder: (context, constraints) {
@@ -263,12 +263,14 @@ class MyTripsScreenTripCard extends StatelessWidget {
                             ),
                           ),
                           SizedBox(width: MyTripsTripCardTokens.twinGap),
-                          Expanded(
-                            child: _OutlineCta(
-                              label: secondaryLabel,
-                              onTap: onSecondaryTap,
-                            ),
-                          ),
+                           Expanded(
+                             child: _OutlineCta(
+                               label: secondaryLabel,
+                               icon: Iconsax.star1,
+                               isActive: !trip.isRated,
+                               onTap: onSecondaryTap,
+                             ),
+                           ),
                         ],
                       ),
                       SizedBox(height: MyTripsTripCardTokens.belowTwinRow),
@@ -388,17 +390,30 @@ class _FilledCta extends StatelessWidget {
 }
 
 class _OutlineCta extends StatelessWidget {
-  const _OutlineCta({required this.label, this.onTap});
+  const _OutlineCta({
+    required this.label,
+    this.icon,
+    this.isActive = true,
+    this.onTap,
+  });
 
   final String label;
+  final IconData? icon;
+  final bool isActive;
   final VoidCallback? onTap;
 
   @override
   Widget build(BuildContext context) {
+    final bg = isActive
+        ? AppColors.myTripsTripCardPurple
+        : AppColors.greyText(context).withValues(alpha: 0.15);
+    final textColor = isActive ? AppColors.white : AppColors.greyText(context);
+    final iconColor = isActive ? AppColors.white : AppColors.greyText(context);
+
     return Material(
       color: AppColors.transparent,
       child: InkWell(
-        onTap: onTap,
+        onTap: isActive ? onTap : null,
         borderRadius: BorderRadius.circular(MyTripsTripCardTokens.twinRadius),
         child: Container(
           height: MyTripsTripCardTokens.twinH,
@@ -407,27 +422,37 @@ class _OutlineCta extends StatelessWidget {
             horizontal: MyTripsTripCardTokens.twinPadH,
           ),
           decoration: BoxDecoration(
-            color: AppColors.cardBg(context),
+            color: bg,
             borderRadius: BorderRadius.circular(
               MyTripsTripCardTokens.twinRadius,
             ),
-            border: Border.all(
-              color: AppColors.myTripsTripCardBorder(context),
-              width: 1.w,
-            ),
           ),
-          child: Text(
-            label,
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-            textAlign: TextAlign.center,
-            style: MyTripsFigmaTokens.text(
-              fontSize: MyTripsTripCardTokens.twinFont,
-              fontWeight: FontWeight.w600,
-              height: MyTripsTripCardTokens.lh(14, 18),
-              letterSpacing: 0,
-              color: AppColors.myTripsTripCardInk(context),
-            ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              if (icon != null) ...[
+                Icon(
+                  icon,
+                  size: MyTripsTripCardTokens.starSize,
+                  color: iconColor,
+                ),
+                SizedBox(width: MyTripsTripCardTokens.starToText),
+              ],
+              Text(
+                label,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                textAlign: TextAlign.center,
+                style: MyTripsFigmaTokens.text(
+                  fontSize: MyTripsTripCardTokens.twinFont,
+                  fontWeight: FontWeight.w600,
+                  height: MyTripsTripCardTokens.lh(14, 18),
+                  letterSpacing: 0,
+                  color: textColor,
+                ),
+              ),
+            ],
           ),
         ),
       ),

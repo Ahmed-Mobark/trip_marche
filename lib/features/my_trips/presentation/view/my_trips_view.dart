@@ -100,9 +100,10 @@ class _MyTripsViewBodyState extends State<_MyTripsViewBody> {
   Future<void> _onRateTripTap(Booking booking) async {
     final result = await sl<AppNavigator>().push<bool>(
       screen: AddVendorReviewView(
-        vendorId: booking.trip.id,
+        tripId: booking.trip.id,
+        vendorId: booking.trip.vendorId ?? booking.trip.id,
         title: booking.trip.title,
-        imageUrl: booking.trip.coverImage??"",
+        imageUrl: booking.trip.coverImage ?? "",
         routeText: booking.trip.fromLocation,
         dateRangeText: booking.dates.range,
       ),
@@ -397,7 +398,9 @@ class _BookingsList extends StatelessWidget {
                               !booking.trip.isRated
                           ? () => onRateTripTap(booking)
                           : () => onBookingTap(booking),
-                      onSecondaryTap: () => onBookingPdfTap(booking),
+                      onSecondaryTap: booking.trip.isRated
+                          ? null
+                          : () => onRateTripTap(booking),
                       onBottomTap: isPdfLoading
                           ? null
                           : () => onBookingPdfTap(booking),

@@ -6,6 +6,7 @@ import '../../domain/repositories/profile_repository.dart';
 import '../../domain/entities/follow_vendor_entity.dart';
 import '../models/change_password_request.dart';
 import '../models/profile_update_request.dart';
+import '../models/submit_review_request.dart';
 
 class ProfileRepositoryImpl with RepositoryHelper implements ProfileRepository {
   ProfileRepositoryImpl(this._remoteDataSource);
@@ -47,14 +48,10 @@ class ProfileRepositoryImpl with RepositoryHelper implements ProfileRepository {
   }
 
   @override
-  Future<Either<Failure, Map<String, dynamic>>> addVendorReview(
-    int vendorId,
-    double rating,
-    String comment,
+  Future<Either<Failure, Map<String, dynamic>>> submitReviews(
+    SubmitReviewRequest request,
   ) {
-    return handleEither(
-      () => _remoteDataSource.addVendorReview(vendorId, rating, comment),
-    );
+    return handleEither(() => _remoteDataSource.submitReviews(request));
   }
 
   @override

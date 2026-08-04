@@ -1,4 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../data/models/submit_review_request.dart';
 import '../../domain/usecases/add_vendor_review_usecase.dart';
 import 'add_vendor_review_state.dart';
 
@@ -9,11 +10,14 @@ class AddVendorReviewCubit extends Cubit<AddVendorReviewState> {
   final AddVendorReviewUseCase _addVendorReviewUseCase;
 
   Future<void> submitReview({
+    required int tripId,
     required int vendorId,
-    required double rating,
-    required String comment,
+    required int tripRating,
+    required String tripComment,
+    required int vendorRating,
+    required String vendorComment,
   }) async {
-    if (rating <= 0) {
+    if (tripRating <= 0 || vendorRating <= 0) {
       emit(state.copyWith(
         status: AddVendorReviewStatus.failure,
         errorMessage: 'Please select a rating star.',
@@ -26,11 +30,24 @@ class AddVendorReviewCubit extends Cubit<AddVendorReviewState> {
       clearError: true,
     ));
 
-    final result = await _addVendorReviewUseCase(
-      vendorId: vendorId,
-      rating: rating,
-      comment: comment,
+    final request = SubmitReviewRequest(
+      reviews: [
+        ReviewItemRequest(
+          type: 'trip',
+          targetId: tripId,
+          rating: tripRating,
+          comment: tripComment,
+        ),
+        ReviewItemRequest(
+          type: 'vendor',
+          targetId: vendorId,
+          rating: vendorRating,
+          comment: vendorComment,
+        ),
+      ],
     );
+
+    final result = await _addVendorReviewUseCase(request);
 
     result.fold(
       (failure) {

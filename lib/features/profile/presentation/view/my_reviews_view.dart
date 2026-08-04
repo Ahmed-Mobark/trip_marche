@@ -145,7 +145,10 @@ class MyReviewsView extends StatelessWidget {
                           context,
                           MaterialPageRoute(
                             builder: (_) =>
-                                const AddVendorReviewView(vendorId: 13),
+                                const AddVendorReviewView(
+                                tripId: 1,
+                                vendorId: 13,
+                              ),
                           ),
                         );
                         if (result == true && context.mounted) {

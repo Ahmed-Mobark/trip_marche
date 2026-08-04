@@ -3,6 +3,7 @@ import '../../../../core/network/network_service/api_basehelper.dart';
 import '../models/change_password_request.dart';
 import '../models/follow_vendor_response.dart';
 import '../models/profile_update_request.dart';
+import '../models/submit_review_request.dart';
 
 abstract class ProfileRemoteDataSource {
   Future<Map<String, dynamic>> getProfile();
@@ -11,7 +12,7 @@ abstract class ProfileRemoteDataSource {
   Future<Map<String, dynamic>> deleteAccount();
   Future<Map<String, dynamic>> getFollowings();
   Future<Map<String, dynamic>> getReviews();
-  Future<Map<String, dynamic>> addVendorReview(int vendorId, double rating, String comment);
+  Future<Map<String, dynamic>> submitReviews(SubmitReviewRequest request);
   Future<FollowVendorResponse> toggleFollowVendor(int vendorId);
 }
 
@@ -77,17 +78,12 @@ class ProfileRemoteDataSourceImpl implements ProfileRemoteDataSource {
   }
 
   @override
-  Future<Map<String, dynamic>> addVendorReview(
-    int vendorId,
-    double rating,
-    String comment,
+  Future<Map<String, dynamic>> submitReviews(
+    SubmitReviewRequest request,
   ) async {
     final response = await _apiHelper.post<Map<String, dynamic>>(
-      url: AppEndpoints.vendorReviews(vendorId),
-      body: {
-        'rating': rating.toInt(),
-        'comment': comment,
-      },
+      url: AppEndpoints.reviews,
+      body: request.toJson(),
     );
     return response;
   }

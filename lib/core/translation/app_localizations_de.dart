@@ -721,6 +721,9 @@ class AppLocalizationsDe extends AppLocalizations {
   String get myTripsRateTrip => 'Reise bewerten';
 
   @override
+  String get myTripsRated => 'Rated';
+
+  @override
   String get myTripsDownloadPdf => 'PDF herunterladen';
 
   @override

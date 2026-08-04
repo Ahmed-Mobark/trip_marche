@@ -721,6 +721,9 @@ class AppLocalizationsEs extends AppLocalizations {
   String get myTripsRateTrip => 'Calificar viaje';
 
   @override
+  String get myTripsRated => 'Rated';
+
+  @override
   String get myTripsDownloadPdf => 'Descargar PDF';
 
   @override

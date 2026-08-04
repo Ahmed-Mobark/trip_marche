@@ -13,6 +13,7 @@ import '../cubit/add_vendor_review_state.dart';
 class AddVendorReviewView extends StatefulWidget {
   const AddVendorReviewView({
     super.key,
+    required this.tripId,
     required this.vendorId,
     this.title = 'Dahab Trip',
     this.imageUrl = 'https://images.unsplash.com/photo-1528127269322-539801943592?w=900',
@@ -25,6 +26,7 @@ class AddVendorReviewView extends StatefulWidget {
     this.discountedPrice = '\$699',
   });
 
+  final int tripId;
   final int vendorId;
   final String title;
   final String imageUrl;
@@ -267,13 +269,13 @@ class _AddVendorReviewViewState extends State<AddVendorReviewView> {
                           onPressed: isLoading
                               ? null
                               : () {
-                                  final comment = _vendorCommentController.text.isNotEmpty
-                                      ? _vendorCommentController.text
-                                      : _tripCommentController.text;
                                   context.read<AddVendorReviewCubit>().submitReview(
+                                        tripId: widget.tripId,
                                         vendorId: widget.vendorId,
-                                        rating: _vendorRating.toDouble(),
-                                        comment: comment,
+                                        tripRating: _tripRating,
+                                        tripComment: _tripCommentController.text.trim(),
+                                        vendorRating: _vendorRating,
+                                        vendorComment: _vendorCommentController.text.trim(),
                                       );
                                 },
                           style: ElevatedButton.styleFrom(

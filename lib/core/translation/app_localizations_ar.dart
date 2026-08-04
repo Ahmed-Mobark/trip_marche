@@ -714,6 +714,9 @@ class AppLocalizationsAr extends AppLocalizations {
   String get myTripsRateTrip => 'قيّم الرحلة';
 
   @override
+  String get myTripsRated => 'تم التقييم';
+
+  @override
   String get myTripsDownloadPdf => 'تحميل pdf';
 
   @override
