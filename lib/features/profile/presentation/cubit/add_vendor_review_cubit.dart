@@ -1,4 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter/foundation.dart';
 import '../../data/models/submit_review_request.dart';
 import '../../domain/usecases/add_vendor_review_usecase.dart';
 import 'add_vendor_review_state.dart';
@@ -30,6 +31,11 @@ class AddVendorReviewCubit extends Cubit<AddVendorReviewState> {
       clearError: true,
     ));
 
+    debugPrint('Trip ID: $tripId');
+    debugPrint('Vendor ID: $vendorId');
+    debugPrint('Trip Rating: $tripRating');
+    debugPrint('Vendor Rating: $vendorRating');
+
     final request = SubmitReviewRequest(
       reviews: [
         ReviewItemRequest(
@@ -46,6 +52,8 @@ class AddVendorReviewCubit extends Cubit<AddVendorReviewState> {
         ),
       ],
     );
+
+    debugPrint('SubmitReview request JSON: ${request.toJson()}');
 
     final result = await _addVendorReviewUseCase(request);
 

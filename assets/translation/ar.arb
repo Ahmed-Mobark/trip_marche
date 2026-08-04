@@ -906,5 +906,18 @@
   "deleteAccountSuccess": "تم حذف الحساب بنجاح.",
   "@deleteAccountSuccess": {
     "description": "Success toast message after account deletion"
+  },
+  "reviewTitle": "مراجعة الرحلة",
+  "reviewTripSatisfactionHint": "يرجى كتابة مستوى رضاك العام عن الرحلة.",
+  "reviewWriteYourReview": "اكتب مراجعتك",
+  "reviewRateTravelAgency": "يرجى تقييم وكالة السفر.",
+  "reviewSendButton": "إرسال",
+  "reviewEnterReviewHint": "أدخل مراجعتك هنا",
+  "reviewSubmittedSuccess": "تم إرسال المراجعة بنجاح!",
+  "reviewRatingScale": "{rating}/5",
+  "@reviewRatingScale": {
+    "placeholders": {
+      "rating": {"type": "int"}
+    }
   }
 }

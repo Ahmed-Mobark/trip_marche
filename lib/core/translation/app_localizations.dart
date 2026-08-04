@@ -4485,6 +4485,54 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Your account has been deleted.'**
   String get deleteAccountSuccess;
+
+  /// No description provided for @reviewTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Trip Review'**
+  String get reviewTitle;
+
+  /// No description provided for @reviewTripSatisfactionHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Please write your overall satisfaction level with the trip.'**
+  String get reviewTripSatisfactionHint;
+
+  /// No description provided for @reviewWriteYourReview.
+  ///
+  /// In en, this message translates to:
+  /// **'Write Your Review'**
+  String get reviewWriteYourReview;
+
+  /// No description provided for @reviewRateTravelAgency.
+  ///
+  /// In en, this message translates to:
+  /// **'Please Rate the Travel Agency.'**
+  String get reviewRateTravelAgency;
+
+  /// No description provided for @reviewSendButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Send'**
+  String get reviewSendButton;
+
+  /// No description provided for @reviewEnterReviewHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter your review here'**
+  String get reviewEnterReviewHint;
+
+  /// No description provided for @reviewSubmittedSuccess.
+  ///
+  /// In en, this message translates to:
+  /// **'Review submitted successfully!'**
+  String get reviewSubmittedSuccess;
+
+  /// No description provided for @reviewRatingScale.
+  ///
+  /// In en, this message translates to:
+  /// **'{rating}/5'**
+  String reviewRatingScale(int rating);
 }
 
 class _AppLocalizationsDelegate

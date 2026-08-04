@@ -2343,4 +2343,32 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get deleteAccountSuccess => 'Dein Konto wurde gelöscht.';
+
+  @override
+  String get reviewTitle => 'Trip-Bewertung';
+
+  @override
+  String get reviewTripSatisfactionHint =>
+      'Bitte geben Sie Ihre Gesamtzufriedenheit mit der Reise an.';
+
+  @override
+  String get reviewWriteYourReview => 'Schreiben Sie Ihre Bewertung';
+
+  @override
+  String get reviewRateTravelAgency =>
+      'Bitte bewerten Sie das Reiseunternehmen.';
+
+  @override
+  String get reviewSendButton => 'Senden';
+
+  @override
+  String get reviewEnterReviewHint => 'Bewertung hier eingeben';
+
+  @override
+  String get reviewSubmittedSuccess => 'Bewertung erfolgreich eingereicht!';
+
+  @override
+  String reviewRatingScale(int rating) {
+    return '$rating/5';
+  }
 }

@@ -905,6 +905,19 @@
   "deleteAccountSuccess": "Your account has been deleted.",
   "@deleteAccountSuccess": {
     "description": "Success toast message after account deletion"
+  },
+  "reviewTitle": "Évaluation du voyage",
+  "reviewTripSatisfactionHint": "Veuillez écrire votre niveau de satisfaction global avec le voyage.",
+  "reviewWriteYourReview": "Écrivez votre avis",
+  "reviewRateTravelAgency": "Veuillez noter l'agence de voyage.",
+  "reviewSendButton": "Envoyer",
+  "reviewEnterReviewHint": "Écrivez votre avis ici",
+  "reviewSubmittedSuccess": "Avis soumis avec succès !",
+  "reviewRatingScale": "{rating}/5",
+  "@reviewRatingScale": {
+    "placeholders": {
+      "rating": {"type": "int"}
+    }
   }
 }
 

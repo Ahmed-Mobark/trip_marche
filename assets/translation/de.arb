@@ -904,6 +904,19 @@
   "deleteAccountSuccess": "Dein Konto wurde gelöscht.",
   "@deleteAccountSuccess": {
     "description": "Success toast message after account deletion"
+  },
+  "reviewTitle": "Trip-Bewertung",
+  "reviewTripSatisfactionHint": "Bitte geben Sie Ihre Gesamtzufriedenheit mit der Reise an.",
+  "reviewWriteYourReview": "Schreiben Sie Ihre Bewertung",
+  "reviewRateTravelAgency": "Bitte bewerten Sie das Reiseunternehmen.",
+  "reviewSendButton": "Senden",
+  "reviewEnterReviewHint": "Bewertung hier eingeben",
+  "reviewSubmittedSuccess": "Bewertung erfolgreich eingereicht!",
+  "reviewRatingScale": "{rating}/5",
+  "@reviewRatingScale": {
+    "placeholders": {
+      "rating": {"type": "int"}
+    }
   }
 }
 

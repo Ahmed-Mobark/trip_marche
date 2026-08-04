@@ -98,10 +98,17 @@ class _MyTripsViewBodyState extends State<_MyTripsViewBody> {
   }
 
   Future<void> _onRateTripTap(Booking booking) async {
+    final vendorId = booking.trip.vendorId;
+    if (vendorId == null) return;
+
+    debugPrint('Rate Trip button pressed');
+    debugPrint('Trip ID: ${booking.trip.id}');
+    debugPrint('Vendor ID: $vendorId');
+
     final result = await sl<AppNavigator>().push<bool>(
       screen: AddVendorReviewView(
         tripId: booking.trip.id,
-        vendorId: booking.trip.vendorId ?? booking.trip.id,
+        vendorId: vendorId,
         title: booking.trip.title,
         imageUrl: booking.trip.coverImage ?? "",
         routeText: booking.trip.fromLocation,

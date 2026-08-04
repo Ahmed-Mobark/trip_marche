@@ -2318,4 +2318,31 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get deleteAccountSuccess => 'تم حذف الحساب بنجاح.';
+
+  @override
+  String get reviewTitle => 'مراجعة الرحلة';
+
+  @override
+  String get reviewTripSatisfactionHint =>
+      'يرجى كتابة مستوى رضاك العام عن الرحلة.';
+
+  @override
+  String get reviewWriteYourReview => 'اكتب مراجعتك';
+
+  @override
+  String get reviewRateTravelAgency => 'يرجى تقييم وكالة السفر.';
+
+  @override
+  String get reviewSendButton => 'إرسال';
+
+  @override
+  String get reviewEnterReviewHint => 'أدخل مراجعتك هنا';
+
+  @override
+  String get reviewSubmittedSuccess => 'تم إرسال المراجعة بنجاح!';
+
+  @override
+  String reviewRatingScale(int rating) {
+    return '$rating/5';
+  }
 }

@@ -2326,4 +2326,31 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get deleteAccountSuccess => 'Your account has been deleted.';
+
+  @override
+  String get reviewTitle => 'Trip Review';
+
+  @override
+  String get reviewTripSatisfactionHint =>
+      'Please write your overall satisfaction level with the trip.';
+
+  @override
+  String get reviewWriteYourReview => 'Write Your Review';
+
+  @override
+  String get reviewRateTravelAgency => 'Please Rate the Travel Agency.';
+
+  @override
+  String get reviewSendButton => 'Send';
+
+  @override
+  String get reviewEnterReviewHint => 'Enter your review here';
+
+  @override
+  String get reviewSubmittedSuccess => 'Review submitted successfully!';
+
+  @override
+  String reviewRatingScale(int rating) {
+    return '$rating/5';
+  }
 }

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:iconsax/iconsax.dart';
+import '../../../../core/extensions/localization.dart';
 import '../../../../core/injection/injection_container.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_text_styles.dart';
@@ -15,28 +16,28 @@ class AddVendorReviewView extends StatefulWidget {
     super.key,
     required this.tripId,
     required this.vendorId,
-    this.title = 'Dahab Trip',
-    this.imageUrl = 'https://images.unsplash.com/photo-1528127269322-539801943592?w=900',
-    this.routeText = 'Cairo → Dahab',
-    this.dateRangeText = '27 Nov → 4 Dec',
-    this.ratingValue = '4.9',
-    this.ratingCount = '112',
-    this.badgeText = 'Best Price',
-    this.originalPrice = '\$1000',
-    this.discountedPrice = '\$699',
+    this.title ,
+    this.imageUrl,
+    this.routeText ,
+    this.dateRangeText ,
+    this.ratingValue ,
+    this.ratingCount ,
+    this.badgeText ,
+    this.originalPrice ,
+    this.discountedPrice,
   });
 
-  final int tripId;
-  final int vendorId;
-  final String title;
-  final String imageUrl;
-  final String routeText;
-  final String dateRangeText;
-  final String ratingValue;
-  final String ratingCount;
-  final String badgeText;
-  final String originalPrice;
-  final String discountedPrice;
+  final int? tripId;
+  final int? vendorId;
+  final String? title;
+  final String? imageUrl;
+  final String? routeText;
+  final String? dateRangeText;
+  final String? ratingValue;
+  final String? ratingCount;
+  final String? badgeText;
+  final String? originalPrice;
+  final String? discountedPrice;
 
   @override
   State<AddVendorReviewView> createState() => _AddVendorReviewViewState();
@@ -71,7 +72,7 @@ class _AddVendorReviewViewState extends State<AddVendorReviewView> {
             appToast(
               context: context,
               type: ToastType.success,
-              message: state.successMessage ?? 'Review submitted successfully!',
+              message: state.successMessage ?? context.tr.reviewSubmittedSuccess,
             );
             Navigator.pop(context, true);
           }
@@ -100,7 +101,7 @@ class _AddVendorReviewViewState extends State<AddVendorReviewView> {
                         ),
                         SizedBox(width: 4.w),
                         Text(
-                          'Trip Review',
+                          context.tr.reviewTitle,
                           style: AppTextStyles.subtitle(color: Colors.white).copyWith(
                             fontSize: 20.sp,
                             fontWeight: FontWeight.bold,
@@ -133,10 +134,10 @@ class _AddVendorReviewViewState extends State<AddVendorReviewView> {
                             children: [
                               // Top Item Card
                               _ReviewItemHeaderCard(
-                                title: widget.title,
-                                imageUrl: widget.imageUrl,
-                                routeText: widget.routeText,
-                                dateRangeText: widget.dateRangeText,
+                                title: widget.title ?? '',
+                                imageUrl: widget.imageUrl ?? '',
+                                routeText: widget.routeText ?? '',
+                                dateRangeText: widget.dateRangeText ?? '',
                                 ratingValue: widget.ratingValue,
                                 ratingCount: widget.ratingCount,
                                 badgeText: widget.badgeText,
@@ -147,7 +148,7 @@ class _AddVendorReviewViewState extends State<AddVendorReviewView> {
 
                               // Section 1: Trip Rating
                               Text(
-                                'Please write your overall satisfaction level with the trip.',
+                                context.tr.reviewTripSatisfactionHint,
                                 style: AppTextStyles.bodyMedium(
                                   color: AppColors.darkText(context),
                                 ).copyWith(fontWeight: FontWeight.w500, fontSize: 14.sp),
@@ -163,59 +164,59 @@ class _AddVendorReviewViewState extends State<AddVendorReviewView> {
                                   ),
                                   SizedBox(width: 12.w),
                                   Text(
-                                    '$_tripRating/5',
+                                    context.tr.reviewRatingScale(_tripRating),
                                     style: AppTextStyles.bodySmall(
                                       color: AppColors.greyText(context),
                                     ).copyWith(fontWeight: FontWeight.w600),
                                   ),
                                 ],
                               ),
-                              SizedBox(height: 14.h),
-                              Text(
-                                'Write Your Review',
-                                style: AppTextStyles.bodyMedium(
-                                  color: AppColors.darkText(context),
-                                ).copyWith(fontWeight: FontWeight.bold, fontSize: 15.sp),
-                              ),
-                              SizedBox(height: 8.h),
-                              _ReviewTextField(controller: _tripCommentController),
+SizedBox(height: 14.h),
+                               Text(
+                                 context.tr.reviewWriteYourReview,
+                                 style: AppTextStyles.bodyMedium(
+                                   color: AppColors.darkText(context),
+                                 ).copyWith(fontWeight: FontWeight.bold, fontSize: 15.sp),
+                               ),
+                               SizedBox(height: 8.h),
+                               _ReviewTextField(controller: _tripCommentController),
 
-                              SizedBox(height: 24.h),
+                               SizedBox(height: 24.h),
 
-                              // Section 2: Agency (Vendor) Rating
-                              Text(
-                                'Please Rate the Travel Agency.',
-                                style: AppTextStyles.bodyMedium(
-                                  color: AppColors.darkText(context),
-                                ).copyWith(fontWeight: FontWeight.w500, fontSize: 14.sp),
-                              ),
-                              SizedBox(height: 10.h),
-                              Row(
-                                children: [
-                                  _InteractiveStarRating(
-                                    rating: _vendorRating,
-                                    onRatingChanged: (val) {
-                                      setState(() => _vendorRating = val);
-                                    },
-                                  ),
-                                  SizedBox(width: 12.w),
-                                  Text(
-                                    '$_vendorRating/5',
-                                    style: AppTextStyles.bodySmall(
-                                      color: AppColors.greyText(context),
-                                    ).copyWith(fontWeight: FontWeight.w600),
-                                  ),
-                                ],
-                              ),
-                              SizedBox(height: 14.h),
-                              Text(
-                                'Write Your Review',
-                                style: AppTextStyles.bodyMedium(
-                                  color: AppColors.darkText(context),
-                                ).copyWith(fontWeight: FontWeight.bold, fontSize: 15.sp),
-                              ),
-                              SizedBox(height: 8.h),
-                              _ReviewTextField(controller: _vendorCommentController),
+                               // Section 2: Agency (Vendor) Rating
+                               Text(
+                                 context.tr.reviewRateTravelAgency,
+                                 style: AppTextStyles.bodyMedium(
+                                   color: AppColors.darkText(context),
+                                 ).copyWith(fontWeight: FontWeight.w500, fontSize: 14.sp),
+                               ),
+                               SizedBox(height: 10.h),
+                               Row(
+                                 children: [
+                                   _InteractiveStarRating(
+                                     rating: _vendorRating,
+                                     onRatingChanged: (val) {
+                                       setState(() => _vendorRating = val);
+                                     },
+                                   ),
+                                   SizedBox(width: 12.w),
+                                   Text(
+                                     context.tr.reviewRatingScale(_vendorRating),
+                                     style: AppTextStyles.bodySmall(
+                                       color: AppColors.greyText(context),
+                                     ).copyWith(fontWeight: FontWeight.w600),
+                                   ),
+                                 ],
+                               ),
+                               SizedBox(height: 14.h),
+                               Text(
+                                 context.tr.reviewWriteYourReview,
+                                 style: AppTextStyles.bodyMedium(
+                                   color: AppColors.darkText(context),
+                                 ).copyWith(fontWeight: FontWeight.bold, fontSize: 15.sp),
+                               ),
+                               SizedBox(height: 8.h),
+                               _ReviewTextField(controller: _vendorCommentController),
 
                               SizedBox(height: 30.h),
                             ],
@@ -270,8 +271,8 @@ class _AddVendorReviewViewState extends State<AddVendorReviewView> {
                               ? null
                               : () {
                                   context.read<AddVendorReviewCubit>().submitReview(
-                                        tripId: widget.tripId,
-                                        vendorId: widget.vendorId,
+                                        tripId: widget.tripId!,
+                                        vendorId: widget.vendorId!,
                                         tripRating: _tripRating,
                                         tripComment: _tripCommentController.text.trim(),
                                         vendorRating: _vendorRating,
@@ -293,16 +294,16 @@ class _AddVendorReviewViewState extends State<AddVendorReviewView> {
                                     strokeWidth: 2.5,
                                     color: Colors.white,
                                   ),
-                                )
-                              : Text(
-                                  'Send',
-                                  style: AppTextStyles.bodyMedium(
-                                    color: Colors.white,
-                                  ).copyWith(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 16.sp,
-                                  ),
-                                ),
+)
+                               : Text(
+                                   context.tr.reviewSendButton,
+                                   style: AppTextStyles.bodyMedium(
+                                     color: Colors.white,
+                                   ).copyWith(
+                                     fontWeight: FontWeight.bold,
+                                     fontSize: 16.sp,
+                                   ),
+                                 ),
                         ),
                       ),
                     ),
@@ -323,22 +324,22 @@ class _ReviewItemHeaderCard extends StatelessWidget {
     required this.imageUrl,
     required this.routeText,
     required this.dateRangeText,
-    required this.ratingValue,
-    required this.ratingCount,
-    required this.badgeText,
-    required this.originalPrice,
-    required this.discountedPrice,
+    this.ratingValue,
+    this.ratingCount,
+    this.badgeText,
+    this.originalPrice,
+    this.discountedPrice,
   });
 
   final String title;
   final String imageUrl;
   final String routeText;
   final String dateRangeText;
-  final String ratingValue;
-  final String ratingCount;
-  final String badgeText;
-  final String originalPrice;
-  final String discountedPrice;
+  final String? ratingValue;
+  final String? ratingCount;
+  final String? badgeText;
+  final String? originalPrice;
+  final String? discountedPrice;
 
   @override
   Widget build(BuildContext context) {
@@ -374,70 +375,79 @@ class _ReviewItemHeaderCard extends StatelessWidget {
                     color: AppColors.darkText(context),
                   ).copyWith(fontWeight: FontWeight.bold, fontSize: 16.sp),
                 ),
-                SizedBox(height: 4.h),
-                Row(
-                  children: [
-                    Icon(Iconsax.star1, size: 14.sp, color: AppColors.starYellow),
-                    SizedBox(width: 4.w),
-                    Text(
-                      ratingValue,
-                      style: AppTextStyles.bodySmall(
-                        color: AppColors.darkText(context),
-                      ).copyWith(fontWeight: FontWeight.bold),
-                    ),
-                    Text(
-                      '($ratingCount)',
-                      style: AppTextStyles.bodySmall(
-                        color: AppColors.greyText(context),
+                if (ratingValue != null) ...[
+                  SizedBox(height: 4.h),
+                  Row(
+                    children: [
+                      Icon(Iconsax.star1, size: 14.sp, color: AppColors.starYellow),
+                      SizedBox(width: 4.w),
+                      Text(
+                        ratingValue!,
+                        style: AppTextStyles.bodySmall(
+                          color: AppColors.darkText(context),
+                        ).copyWith(fontWeight: FontWeight.bold),
                       ),
-                    ),
-                  ],
-                ),
+                      Text(
+                        '($ratingCount!)',
+                        style: AppTextStyles.bodySmall(
+                          color: AppColors.greyText(context),
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
                 SizedBox(height: 6.h),
                 _HeaderInfoLine(icon: Iconsax.location, text: routeText),
                 SizedBox(height: 4.h),
                 _HeaderInfoLine(icon: Iconsax.calendar_1, text: dateRangeText),
-                SizedBox(height: 6.h),
-                Container(
-                  padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 3.h),
-                  decoration: BoxDecoration(
-                    color: AppColors.green.withValues(alpha: 0.1),
-                    borderRadius: BorderRadius.circular(6.r),
-                    border: Border.all(color: AppColors.green.withValues(alpha: 0.3)),
-                  ),
-                  child: Text(
-                    badgeText,
-                    style: TextStyle(
-                      color: AppColors.green,
-                      fontSize: 11.sp,
-                      fontWeight: FontWeight.w600,
+                if (badgeText != null) ...[
+                  SizedBox(height: 6.h),
+                  Container(
+                    padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 3.h),
+                    decoration: BoxDecoration(
+                      color: AppColors.green.withValues(alpha: 0.1),
+                      borderRadius: BorderRadius.circular(6.r),
+                      border: Border.all(color: AppColors.green.withValues(alpha: 0.3)),
                     ),
-                  ),
-                ),
-                SizedBox(height: 6.h),
-                Row(
-                  children: [
-                    Text(
-                      originalPrice,
+                    child: Text(
+                      badgeText!,
                       style: TextStyle(
-                        decoration: TextDecoration.lineThrough,
-                        color: AppColors.greyText(context),
-                        fontSize: 12.sp,
+                        color: AppColors.green,
+                        fontSize: 11.sp,
+                        fontWeight: FontWeight.w600,
                       ),
                     ),
-                    SizedBox(width: 6.w),
-                    Text(
-                      discountedPrice,
-                      style: AppTextStyles.bodyMedium(
-                        color: AppColors.darkText(context),
-                      ).copyWith(fontWeight: FontWeight.bold, fontSize: 15.sp),
-                    ),
-                    Text(
-                      ' /Person',
-                      style: AppTextStyles.caption(color: AppColors.greyText(context)),
-                    ),
-                  ],
-                ),
+                  ),
+                ],
+                if (originalPrice != null || discountedPrice != null) ...[
+                  SizedBox(height: 6.h),
+                  Row(
+                    children: [
+                      if (originalPrice != null)
+                        Text(
+                          originalPrice!,
+                          style: TextStyle(
+                            decoration: TextDecoration.lineThrough,
+                            color: AppColors.greyText(context),
+                            fontSize: 12.sp,
+                          ),
+                        ),
+                      if (originalPrice != null && discountedPrice != null)
+                        SizedBox(width: 6.w),
+                      if (discountedPrice != null)
+                        Text(
+                          discountedPrice!,
+                          style: AppTextStyles.bodyMedium(
+                            color: AppColors.darkText(context),
+                          ).copyWith(fontWeight: FontWeight.bold, fontSize: 15.sp),
+                        ),
+                      Text(
+                        ' ${context.tr.tripDetailsPerPerson}',
+                        style: AppTextStyles.caption(color: AppColors.greyText(context)),
+                      ),
+                    ],
+                  ),
+                ],
               ],
             ),
           ),
@@ -515,7 +525,7 @@ class _ReviewTextField extends StatelessWidget {
       maxLines: 4,
       style: AppTextStyles.bodyMedium(color: AppColors.darkText(context)),
       decoration: InputDecoration(
-        hintText: 'Enter your review here',
+        hintText: context.tr.reviewEnterReviewHint,
         hintStyle: AppTextStyles.bodyMedium(color: AppColors.greyText(context).withValues(alpha: 0.6)),
         filled: true,
         fillColor: AppColors.cardBg(context),

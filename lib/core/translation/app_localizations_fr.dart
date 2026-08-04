@@ -2348,4 +2348,31 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get deleteAccountSuccess => 'Your account has been deleted.';
+
+  @override
+  String get reviewTitle => 'Évaluation du voyage';
+
+  @override
+  String get reviewTripSatisfactionHint =>
+      'Veuillez écrire votre niveau de satisfaction global avec le voyage.';
+
+  @override
+  String get reviewWriteYourReview => 'Écrivez votre avis';
+
+  @override
+  String get reviewRateTravelAgency => 'Veuillez noter l\'agence de voyage.';
+
+  @override
+  String get reviewSendButton => 'Envoyer';
+
+  @override
+  String get reviewEnterReviewHint => 'Écrivez votre avis ici';
+
+  @override
+  String get reviewSubmittedSuccess => 'Avis soumis avec succès !';
+
+  @override
+  String reviewRatingScale(int rating) {
+    return '$rating/5';
+  }
 }
