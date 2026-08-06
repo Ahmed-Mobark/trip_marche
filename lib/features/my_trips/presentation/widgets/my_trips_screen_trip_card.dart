@@ -413,7 +413,7 @@ class _OutlineCta extends StatelessWidget {
     return Material(
       color: AppColors.transparent,
       child: InkWell(
-        onTap: isActive ? onTap : null,
+        onTap: onTap,
         borderRadius: BorderRadius.circular(MyTripsTripCardTokens.twinRadius),
         child: Container(
           height: MyTripsTripCardTokens.twinH,

@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -99,20 +101,29 @@ class _MyTripsViewBodyState extends State<_MyTripsViewBody> {
 
   Future<void> _onRateTripTap(Booking booking) async {
     final vendorId = booking.trip.vendorId;
-    if (vendorId == null) return;
+    debugPrint('[MyTrips] Rate button clicked');
+    debugPrint('[MyTrips] TripId: ${booking.trip.id}');
+    debugPrint('[MyTrips] VendorId: $vendorId');
+    if (vendorId == null) {
+      debugPrint(
+        '[MyTrips] vendorId is null for trip ${booking.trip.id}, cannot navigate to AddVendorReviewView',
+      );
+      return;
+    }
+    log('========== RATE CLICK ==========');
+    log('TripId: ${booking.trip.id}');
+    log('VendorId: ${booking.trip.vendorId}');
 
-    debugPrint('Rate Trip button pressed');
-    debugPrint('Trip ID: ${booking.trip.id}');
-    debugPrint('Vendor ID: $vendorId');
-
-    final result = await sl<AppNavigator>().push<bool>(
-      screen: AddVendorReviewView(
-        tripId: booking.trip.id,
-        vendorId: vendorId,
-        title: booking.trip.title,
-        imageUrl: booking.trip.coverImage ?? "",
-        routeText: booking.trip.fromLocation,
-        dateRangeText: booking.dates.range,
+    final result = await Navigator.of(context).push<bool>(
+      MaterialPageRoute(
+        builder: (_) => AddVendorReviewView(
+          tripId: booking.trip.id,
+          vendorId: vendorId,
+          title: booking.trip.title,
+          imageUrl: booking.trip.coverImage ?? '',
+          routeText: booking.trip.fromLocation,
+          dateRangeText: booking.dates.range,
+        ),
       ),
     );
 
@@ -173,101 +184,104 @@ class _MyTripsViewBodyState extends State<_MyTripsViewBody> {
           ],
           child: Scaffold(
             backgroundColor: AppColors.primary,
-          body: Stack(
-            fit: StackFit.expand,
-            children: [
-              const DecoratedBox(
-                decoration: BoxDecoration(
-                  gradient: AppColors.primaryGradient,
+            body: Stack(
+              fit: StackFit.expand,
+              children: [
+                const DecoratedBox(
+                  decoration: BoxDecoration(
+                    gradient: AppColors.primaryGradient,
+                  ),
                 ),
-              ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  SafeArea(
-                    bottom: false,
-                    child: Padding(
-                      padding: EdgeInsetsDirectional.only(
-                        start: MyTripsFigmaTokens.padH,
-                        end: MyTripsFigmaTokens.padH,
-                        top: MyTripsFigmaTokens.headerPadTop,
-                        bottom: MyTripsFigmaTokens.headerPadBottom,
-                      ),
-                      child: Align(
-                        alignment: AlignmentDirectional.centerStart,
-                        child: Text(
-                          context.tr.myTripsTitle,
-                          style: AppTextStyles.heading2(
-                            color: AppColors.onImage,
-                          ).copyWith(
-                            fontSize: 20.sp,
-                            fontWeight: FontWeight.w600,
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    SafeArea(
+                      bottom: false,
+                      child: Padding(
+                        padding: EdgeInsetsDirectional.only(
+                          start: MyTripsFigmaTokens.padH,
+                          end: MyTripsFigmaTokens.padH,
+                          top: MyTripsFigmaTokens.headerPadTop,
+                          bottom: MyTripsFigmaTokens.headerPadBottom,
+                        ),
+                        child: Align(
+                          alignment: AlignmentDirectional.centerStart,
+                          child: Text(
+                            context.tr.myTripsTitle,
+                            style:
+                                AppTextStyles.heading2(
+                                  color: AppColors.onImage,
+                                ).copyWith(
+                                  fontSize: 20.sp,
+                                  fontWeight: FontWeight.w600,
+                                ),
                           ),
                         ),
                       ),
                     ),
-                  ),
-                  Expanded(
-                    child: DecoratedBox(
-                      decoration: BoxDecoration(
-                        color: AppColors.cardBg(context),
-                        borderRadius: BorderRadius.vertical(
-                          top: Radius.circular(
-                            MyTripsFigmaTokens.sheetTopRadius,
+                    Expanded(
+                      child: DecoratedBox(
+                        decoration: BoxDecoration(
+                          color: AppColors.cardBg(context),
+                          borderRadius: BorderRadius.vertical(
+                            top: Radius.circular(
+                              MyTripsFigmaTokens.sheetTopRadius,
+                            ),
                           ),
                         ),
-                      ),
-                      child: Column(
-                        children: [
-                          Padding(
-                            padding: EdgeInsetsDirectional.only(
-                              start: MyTripsFigmaTokens.padH,
-                              end: MyTripsFigmaTokens.padH,
-                              top: MyTripsFigmaTokens.searchBlockTop,
+                        child: Column(
+                          children: [
+                            Padding(
+                              padding: EdgeInsetsDirectional.only(
+                                start: MyTripsFigmaTokens.padH,
+                                end: MyTripsFigmaTokens.padH,
+                                top: MyTripsFigmaTokens.searchBlockTop,
+                              ),
+                              child: AppTripSearchTextField(
+                                controller: _searchCtrl,
+                                hintText: context.tr.myTripsSearchHint,
+                                onChanged: (q) => bookingsCubit.updateSearch(q),
+                                onClear: () {
+                                  _searchCtrl.clear();
+                                  bookingsCubit.updateSearch('');
+                                },
+                              ),
                             ),
-                            child: AppTripSearchTextField(
-                              controller: _searchCtrl,
-                              hintText: context.tr.myTripsSearchHint,
-                              onChanged: (q) => bookingsCubit.updateSearch(q),
-                              onClear: () {
-                                _searchCtrl.clear();
-                                bookingsCubit.updateSearch('');
-                              },
+                            const MyTripsScreenTabs(),
+                            Expanded(
+                              child: BlocBuilder<BookingsCubit, BookingsState>(
+                                builder: (context, bookingsState) {
+                                  return _BookingsList(
+                                    state: bookingsState,
+                                    tab: shellState.tab,
+                                    onBookingTap: _onBookingTap,
+                                    onRateTripTap: _onRateTripTap,
+                                    onBookingPdfTap: _onBookingPdfTap,
+                                    onRetry: () => context
+                                        .read<BookingsCubit>()
+                                        .loadInitial(),
+                                    onRefresh: () =>
+                                        context.read<BookingsCubit>().refresh(),
+                                    onLoadMore: () => context
+                                        .read<BookingsCubit>()
+                                        .loadMore(),
+                                  );
+                                },
+                              ),
                             ),
-                          ),
-                          const MyTripsScreenTabs(),
-                          Expanded(
-                            child: BlocBuilder<BookingsCubit, BookingsState>(
-                              builder: (context, bookingsState) {
-                                return _BookingsList(
-                                  state: bookingsState,
-                                  tab: shellState.tab,
-                                  onBookingTap: _onBookingTap,
-                                  onRateTripTap: _onRateTripTap,
-                                  onBookingPdfTap: _onBookingPdfTap,
-                                  onRetry: () =>
-                                      context.read<BookingsCubit>().loadInitial(),
-                                  onRefresh: () =>
-                                      context.read<BookingsCubit>().refresh(),
-                                  onLoadMore: () =>
-                                      context.read<BookingsCubit>().loadMore(),
-                                );
-                              },
-                            ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     ),
-                  ),
-                ],
-              ),
-            ],
+                  ],
+                ),
+              ],
+            ),
           ),
-        ),
-      );
-    },
-  );
-}
+        );
+      },
+    );
+  }
 }
 
 class _BookingsList extends StatelessWidget {
@@ -396,13 +410,12 @@ class _BookingsList extends StatelessWidget {
 
                 return BlocBuilder<BookingPdfCubit, BookingPdfState>(
                   builder: (context, pdfState) {
-                    final isPdfLoading =
-                        pdfState.isLoadingFor(booking.id);
+                    final isPdfLoading = pdfState.isLoadingFor(booking.id);
                     return MyTripsScreenTripCard(
                       trip: _toRowModel(booking, isFav),
                       tab: tab,
-                      onPrimaryTap: tab == MyTripsShellTab.past &&
-                              !booking.trip.isRated
+                      onPrimaryTap:
+                          tab == MyTripsShellTab.past && !booking.trip.isRated
                           ? () => onRateTripTap(booking)
                           : () => onBookingTap(booking),
                       onSecondaryTap: booking.trip.isRated
@@ -440,5 +453,6 @@ MyTripRowUiModel _toRowModel(Booking booking, bool isFavorite) {
     isFavorite: isFavorite,
     useDownloadPdfWhenActive: false,
     isRated: booking.trip.isRated,
+    vendorId: booking.trip.vendorId,
   );
 }

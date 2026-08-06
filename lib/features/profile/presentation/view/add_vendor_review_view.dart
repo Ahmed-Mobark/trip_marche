@@ -8,23 +8,35 @@ import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_text_styles.dart';
 import '../../../../core/toast/app_toast.dart';
 import '../../../../core/widgets/app_cached_network_image.dart';
+import '../../domain/entities/review_entity.dart';
 import '../cubit/add_vendor_review_cubit.dart';
 import '../cubit/add_vendor_review_state.dart';
+
+String? _formatTripDateRange(TripReviewEntity? trip) {
+  if (trip == null) return null;
+  final start = trip.startDate;
+  final end = trip.endDate;
+  if (start.isEmpty && end.isEmpty) return null;
+  if (start.isEmpty) return end;
+  if (end.isEmpty) return start;
+  return '$start - $end';
+}
 
 class AddVendorReviewView extends StatefulWidget {
   const AddVendorReviewView({
     super.key,
     required this.tripId,
     required this.vendorId,
-    this.title ,
+    this.title,
     this.imageUrl,
-    this.routeText ,
-    this.dateRangeText ,
-    this.ratingValue ,
-    this.ratingCount ,
-    this.badgeText ,
-    this.originalPrice ,
+    this.routeText,
+    this.dateRangeText,
+    this.ratingValue,
+    this.ratingCount,
+    this.badgeText,
+    this.originalPrice,
     this.discountedPrice,
+    this.review,
   });
 
   final int? tripId;
@@ -38,6 +50,7 @@ class AddVendorReviewView extends StatefulWidget {
   final String? badgeText;
   final String? originalPrice;
   final String? discountedPrice;
+  final ReviewEntity? review;
 
   @override
   State<AddVendorReviewView> createState() => _AddVendorReviewViewState();
@@ -48,6 +61,21 @@ class _AddVendorReviewViewState extends State<AddVendorReviewView> {
   int _vendorRating = 4;
   final TextEditingController _tripCommentController = TextEditingController();
   final TextEditingController _vendorCommentController = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    final review = widget.review;
+    if (review != null) {
+      if (review.type == 'trip') {
+        _tripRating = review.rating.toInt();
+        _tripCommentController.text = review.comment;
+      } else if (review.type == 'vendor') {
+        _vendorRating = review.rating.toInt();
+        _vendorCommentController.text = review.comment;
+      }
+    }
+  }
 
   @override
   void dispose() {
@@ -132,18 +160,29 @@ class _AddVendorReviewViewState extends State<AddVendorReviewView> {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              // Top Item Card
-                              _ReviewItemHeaderCard(
-                                title: widget.title ?? '',
-                                imageUrl: widget.imageUrl ?? '',
-                                routeText: widget.routeText ?? '',
-                                dateRangeText: widget.dateRangeText ?? '',
-                                ratingValue: widget.ratingValue,
-                                ratingCount: widget.ratingCount,
-                                badgeText: widget.badgeText,
-                                originalPrice: widget.originalPrice,
-                                discountedPrice: widget.discountedPrice,
-                              ),
+                               // Top Item Card
+                               _ReviewItemHeaderCard(
+                                 title: widget.title ??
+                                     widget.review?.vendor?.name ??
+                                     widget.review?.trip?.title ??
+                                     '',
+                                 imageUrl: widget.imageUrl ??
+                                     widget.review?.vendor?.avatar ??
+                                     widget.review?.trip?.coverImage ??
+                                     '',
+                                 routeText: widget.routeText ??
+                                     widget.review?.trip?.fromLocation ??
+                                     '',
+                                 dateRangeText: widget.dateRangeText ??
+                                     _formatTripDateRange(widget.review?.trip) ??
+                                     widget.review?.createdAt ??
+                                     '',
+                                 ratingValue: widget.ratingValue,
+                                 ratingCount: widget.ratingCount,
+                                 badgeText: widget.badgeText,
+                                 originalPrice: widget.originalPrice,
+                                 discountedPrice: widget.discountedPrice,
+                               ),
                               SizedBox(height: 20.h),
 
                               // Section 1: Trip Rating

@@ -15,6 +15,7 @@ class MyTripRowUiModel extends Equatable {
     this.isFavorite = false,
     this.useDownloadPdfWhenActive = false,
     this.isRated = false,
+    this.vendorId,
   });
 
   final int id;
@@ -30,6 +31,7 @@ class MyTripRowUiModel extends Equatable {
 
   final bool useDownloadPdfWhenActive;
   final bool isRated;
+  final int? vendorId;
 
   MyTripRowUiModel copyWith({
     int? id,
@@ -44,6 +46,7 @@ class MyTripRowUiModel extends Equatable {
     bool? isFavorite,
     bool? useDownloadPdfWhenActive,
     bool? isRated,
+    int? vendorId,
   }) {
     return MyTripRowUiModel(
       id: id ?? this.id,
@@ -59,24 +62,26 @@ class MyTripRowUiModel extends Equatable {
       useDownloadPdfWhenActive:
           useDownloadPdfWhenActive ?? this.useDownloadPdfWhenActive,
       isRated: isRated ?? this.isRated,
+      vendorId: vendorId ?? this.vendorId,
     );
   }
 
   @override
   List<Object?> get props => [
-        id,
-        tripId,
-        title,
-        rating,
-        reviewCount,
-        locationLabel,
-        dateRange,
-        imageUrl,
-        isWishlisted,
-        isFavorite,
-        useDownloadPdfWhenActive,
-        isRated,
-      ];
+    id,
+    tripId,
+    title,
+    rating,
+    reviewCount,
+    locationLabel,
+    dateRange,
+    imageUrl,
+    isWishlisted,
+    isFavorite,
+    useDownloadPdfWhenActive,
+    isRated,
+    vendorId,
+  ];
 }
 
 class MyTripsShellState extends Equatable {
@@ -114,6 +119,11 @@ class MyTripsShellState extends Equatable {
   }
 
   @override
-  List<Object?> get props =>
-      [tab, searchQuery, trips, favoriteStatus, wishlistErrorMessage];
+  List<Object?> get props => [
+    tab,
+    searchQuery,
+    trips,
+    favoriteStatus,
+    wishlistErrorMessage,
+  ];
 }
