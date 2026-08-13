@@ -340,13 +340,10 @@ class _TripOptionsViewState extends State<TripOptionsView> {
                   ),
                 ),
               ),
-              SafeArea(
-                top: false,
-                child: BottomBookingBar(
-                  onBack: () => Navigator.pop(context),
-                  onContinue: _onContinue,
-                  continueLabel: tr.bookingContinue,
-                ),
+              BottomBookingBar(
+                onBack: () => Navigator.pop(context),
+                onContinue: _onContinue,
+                continueLabel: tr.bookingContinue,
               ),
             ],
           ),

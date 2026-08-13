@@ -71,16 +71,6 @@ class _CompanyProfileViewState extends State<CompanyProfileView> {
       } catch (_) {}
     }
 
-    if (social.website != null && social.website!.isNotEmpty) {
-      buttons.add(
-        SocialButtonModel(
-          icon: const FaIcon(FontAwesomeIcons.globe, size: 18),
-          iconColor: AppColors.websiteBlue,
-          borderColor: AppColors.socialBorder(context),
-          onTap: () => launch(social.website),
-        ),
-      );
-    }
     if (social.facebook != null && social.facebook!.isNotEmpty) {
       buttons.add(
         SocialButtonModel(
@@ -118,6 +108,16 @@ class _CompanyProfileViewState extends State<CompanyProfileView> {
           iconColor: AppColors.youtubeRed,
           borderColor: AppColors.socialBorder(context),
           onTap: () => launch(social.youtube),
+        ),
+      );
+    }
+    if (social.website != null && social.website!.isNotEmpty) {
+      buttons.add(
+        SocialButtonModel(
+          icon: const FaIcon(FontAwesomeIcons.globe, size: 18),
+          iconColor: AppColors.websiteBlue,
+          borderColor: AppColors.socialBorder(context),
+          onTap: () => launch(social.website),
         ),
       );
     }
@@ -392,6 +392,7 @@ class _CompanyProfileViewState extends State<CompanyProfileView> {
                                     followersCount: vendor.followersCount,
                                     tripsCount: vendor.tripsCount,
                                     isVerified: vendor.isVerified,
+                                    showFollowButton: false,
                                   ),
                                 ),
                                 SizedBox(height: 14.h),
@@ -509,6 +510,48 @@ class _CompanyProfileViewState extends State<CompanyProfileView> {
                                       .toList(),
                                 ),
                               ],
+                              if (reviews.isNotEmpty) ...[
+                                SizedBox(height: 14.h),
+                                Center(
+                                  child: TextButton(
+                                    onPressed: () =>
+                                        _cubit.toggleFollow(widget.vendorId),
+                                    style: TextButton.styleFrom(
+                                      backgroundColor: _cubit.isFollowing(
+                                        widget.vendorId,
+                                      )
+                                          ? AppColors.primary
+                                          : AppColors.transparent,
+                                      side: BorderSide(
+                                        color: _cubit.isFollowing(
+                                          widget.vendorId,
+                                        )
+                                            ? AppColors.primary
+                                            : AppColors.border(context),
+                                      ),
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(999.r),
+                                      ),
+                                      padding: EdgeInsets.symmetric(
+                                        horizontal: 24.w,
+                                        vertical: 10.h,
+                                      ),
+                                    ),
+                                    child: Text(
+                                      _cubit.isFollowing(widget.vendorId)
+                                          ? context.tr.companyProfileFollowing
+                                          : context.tr.companyProfileFollow,
+                                      style: AppTextStyles.button(
+                                        color: _cubit.isFollowing(
+                                          widget.vendorId,
+                                        )
+                                            ? AppColors.white
+                                            : AppColors.primary,
+                                      ).copyWith(fontWeight: FontWeight.w600),
+                                    ),
+                                  ),
+                                ),
+                              ],
                               if (trips.isNotEmpty) ...[
                                 SizedBox(height: 14.h),
                                 AvailableTripsSection(
@@ -547,8 +590,9 @@ class _CompanyProfileViewState extends State<CompanyProfileView> {
                                 ),
                               ],
                               SizedBox(
-                                height:
-                                    CompanyProfileFigmaTokens.sectionBottom,
+                                height: CompanyProfileFigmaTokens.sectionBottom +
+                                    MediaQuery.paddingOf(context).bottom +
+                                    24.h,
                               ),
                               ],
                             ),

@@ -188,27 +188,28 @@ class _SelectActivitiesViewState extends State<SelectActivitiesView> {
                       activities: activities,
                       currency: widget.flowContext.currency,
                       selectedActivityIds: entry.selectedActivityIds,
-                      onActivityToggled: (activityId) =>
-                          _toggleActivity(index, activityId),
+                      onActivityToggled: (activityId) {
+                        if (entry.sameAsTravelerOne) {
+                          return;
+                        }
+                        _toggleActivity(index, activityId);
+                      },
                       showSameAsTravelerOne: index > 0,
                       sameAsTravelerOne: entry.sameAsTravelerOne,
                       sameAsTravelerOneLabel: tr.bookingSameAsTravelerOne,
                       onSameAsTravelerOneChanged: index > 0
                           ? (value) => _onSameAsTravelerOneChanged(index, value)
                           : null,
-                      activitiesEnabled: !entry.sameAsTravelerOne,
+                      activitiesEnabled: true,
                     );
                   },
                 ),
               ),
-              SafeArea(
-                top: false,
-                child: BottomBookingBar(
-                  backButtonCircular: true,
-                  onBack: () => Navigator.pop(context),
-                  onContinue: () => _onContinue(context),
-                  continueLabel: tr.bookingContinue,
-                ),
+              BottomBookingBar(
+                backButtonCircular: true,
+                onBack: () => Navigator.pop(context),
+                onContinue: () => _onContinue(context),
+                continueLabel: tr.bookingContinue,
               ),
             ],
           ),

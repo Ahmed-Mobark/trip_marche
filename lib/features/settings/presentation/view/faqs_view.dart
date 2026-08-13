@@ -58,7 +58,12 @@ class FaqsView extends StatelessWidget {
         centerTitle: true,
       ),
       body: ListView.builder(
-        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
+        padding: EdgeInsets.fromLTRB(
+          20,
+          8,
+          20,
+          8 + MediaQuery.paddingOf(context).bottom + 40,
+        ),
         itemCount: _faqs.length,
         itemBuilder: (context, index) {
           final faq = _faqs[index];

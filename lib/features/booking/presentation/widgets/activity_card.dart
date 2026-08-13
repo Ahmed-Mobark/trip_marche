@@ -23,11 +23,12 @@ class ActivityCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final showDimmed = !enabled && !isSelected;
     return GestureDetector(
       onTap: enabled ? onTap : null,
       behavior: HitTestBehavior.opaque,
       child: Opacity(
-        opacity: enabled ? 1 : 0.72,
+        opacity: showDimmed ? 0.72 : 1,
         child: Container(
           height: SelectActivitiesFigmaTokens.activityCardHeight,
           padding: EdgeInsetsDirectional.symmetric(

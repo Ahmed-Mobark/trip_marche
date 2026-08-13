@@ -1,19 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:trip_marche/core/widgets/app_modal_bottom_sheet.dart';
 
 class CustomPopup {
   static void appShowModalBottomSheet({
     required BuildContext context,
     required Widget Function(BuildContext) builder,
   }) {
-    showModalBottomSheet(
+    showAppModalBottomSheet(
       context: context,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(top: Radius.circular(15.r)),
       ),
       clipBehavior: Clip.hardEdge,
-      isScrollControlled: true,
-      useSafeArea: true,
       backgroundColor: Theme.of(context).cardColor,
       builder: builder,
     );

@@ -3,26 +3,29 @@ import 'package:trip_marche/core/config/styles/font_utils.dart';
 import 'package:trip_marche/core/theme/app_colors.dart';
 import 'trip_details_info_card.dart';
 
-/// Trip details 2×2 stat cards — fixed logical sizes (Figma @1×), no ScreenUtil.
+/// Trip details stat row — Duration, Group Size, Cities, Type in one horizontal row.
 class TripDetailsStatGrid extends StatelessWidget {
   const TripDetailsStatGrid({super.key, required this.cells});
 
   final List<TripDetailsStatCellData> cells;
 
-  static const double _gridGap = 8;
-  static const double _aspect = 2.3;
+  static const double _gap = 6;
+  static const double _cardRadius = 10;
+  static const double _cardPad = 8;
 
   @override
   Widget build(BuildContext context) {
-    return GridView.count(
-      crossAxisCount: 2,
-      shrinkWrap: true,
-      physics: const NeverScrollableScrollPhysics(),
-      padding: EdgeInsets.zero,
-      mainAxisSpacing: _gridGap,
-      crossAxisSpacing: _gridGap,
-      childAspectRatio: _aspect,
-      children: cells.map((c) => TripDetailsStatCell(data: c)).toList(),
+    if (cells.isEmpty) {
+      return const SizedBox.shrink();
+    }
+
+    return Row(
+      children: [
+        for (var i = 0; i < cells.length; i++) ...[
+          if (i > 0) const SizedBox(width: _gap),
+          Expanded(child: TripDetailsStatCell(data: cells[i])),
+        ],
+      ],
     );
   }
 }
@@ -44,21 +47,18 @@ class TripDetailsStatCell extends StatelessWidget {
 
   final TripDetailsStatCellData data;
 
-  /// Figma: icon ~20, label 12 / w400, value 16 / w600, tight vertical rhythm.
-  static const double _cardRadius = 12;
-  static const double _cardPad = 10;
-  static const double _iconSize = 18;
-  static const double _gapIconToLabel = 4;
-  static const double _gapLabelToValue = 2;
-  static const double _labelSize = 11;
-  static const double _valueSize = 13;
+  static const double _iconSize = 16;
+  static const double _gapIconToLabel = 3;
+  static const double _gapLabelToValue = 1;
+  static const double _labelSize = 9;
+  static const double _valueSize = 11;
 
   @override
   Widget build(BuildContext context) {
     final cardBorder = AppColors.border(context).withValues(alpha: 0.35);
     return TripDetailsInfoCard(
-      padding: const EdgeInsetsDirectional.all(_cardPad),
-      borderRadius: _cardRadius,
+      padding: const EdgeInsetsDirectional.all(TripDetailsStatGrid._cardPad),
+      borderRadius: TripDetailsStatGrid._cardRadius,
       borderColor: cardBorder,
       withShadow: false,
       child: Column(
@@ -77,10 +77,12 @@ class TripDetailsStatCell extends StatelessWidget {
               fontFamily: AppFont.fontFamily,
               fontSize: _labelSize,
               fontWeight: FontWeight.w400,
-              height: 1.2,
+              height: 1.1,
               letterSpacing: 0,
               color: AppColors.tripDetailsSecondaryGrey(context),
             ),
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
           ),
           const SizedBox(height: _gapLabelToValue),
           Text(
@@ -89,7 +91,7 @@ class TripDetailsStatCell extends StatelessWidget {
               fontFamily: AppFont.fontFamily,
               fontSize: _valueSize,
               fontWeight: FontWeight.w600,
-              height: 1.15,
+              height: 1.1,
               letterSpacing: 0,
               color: AppColors.darkText(context),
             ),

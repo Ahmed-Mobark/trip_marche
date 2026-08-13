@@ -146,19 +146,17 @@ class _ContactInfoViewState extends State<ContactInfoView> {
                         },
                         requiredErrorText: tr.errorFieldRequired,
                         autovalidateMode: _autovalidateMode,
+                        requirePhone: index == 0,
                       );
                     },
                   ),
                 ),
               ),
-              SafeArea(
-                top: false,
-                child: BottomBookingBar(
-                  backButtonCircular: true,
-                  onBack: () => Navigator.pop(context),
-                  onContinue: _onContinue,
-                  continueLabel: tr.bookingContinue,
-                ),
+              BottomBookingBar(
+                backButtonCircular: true,
+                onBack: () => Navigator.pop(context),
+                onContinue: _onContinue,
+                continueLabel: tr.bookingContinue,
               ),
             ],
           ),

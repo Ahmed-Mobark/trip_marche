@@ -6,9 +6,11 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:trip_marche/core/config/styles/styles.dart';
 import 'package:trip_marche/core/extensions/localization.dart';
+import 'package:trip_marche/core/extensions/media_query_extensions.dart';
 import 'package:trip_marche/core/injection/injection_container.dart';
 import 'package:trip_marche/core/navigation/app_navigator.dart';
 import 'package:trip_marche/core/theme/app_colors.dart';
+import 'package:trip_marche/core/widgets/app_modal_bottom_sheet.dart';
 import 'package:trip_marche/core/widgets/custom_loading.dart';
 import 'package:trip_marche/features/filter/presentation/cubit/filter_cubit.dart';
 import 'package:trip_marche/features/filter/presentation/cubit/filter_state.dart';
@@ -522,19 +524,22 @@ class _FilterBody extends StatelessWidget {
               ],
             ),
           ),
-          bottomNavigationBar: SafeArea(
-            top: false,
-            child: Container(
-              padding: EdgeInsetsDirectional.fromSTEB(16.w, 10.h, 16.w, 14.h),
-              decoration: BoxDecoration(
-                color: AppColors.cardBg(context),
-                border: Border(
-                  top: BorderSide(
-                    color: AppColors.border(context).withValues(alpha: 0.7),
-                  ),
+          bottomNavigationBar: Container(
+            padding: EdgeInsetsDirectional.fromSTEB(
+              16.w,
+              10.h,
+              16.w,
+              14.h + context.systemBottomInset,
+            ),
+            decoration: BoxDecoration(
+              color: AppColors.cardBg(context),
+              border: Border(
+                top: BorderSide(
+                  color: AppColors.border(context).withValues(alpha: 0.7),
                 ),
               ),
-              child: Row(
+            ),
+            child: Row(
                 children: [
                   SizedBox(
                     width: 89.w,
@@ -600,7 +605,6 @@ class _FilterBody extends StatelessWidget {
                   ),
                 ],
               ),
-            ),
           ),
         );
       },
@@ -687,7 +691,7 @@ class _FilterBody extends StatelessWidget {
 
   void _showDestinationsBottomSheet(BuildContext context) {
     final cubit = context.read<FilterCubit>();
-    showModalBottomSheet<void>(
+    showAppModalBottomSheet<void>(
       context: context,
       isScrollControlled: true,
       backgroundColor: AppColors.cardBg(context),
@@ -697,11 +701,9 @@ class _FilterBody extends StatelessWidget {
       builder: (ctx) {
         return BlocProvider.value(
           value: cubit,
-          child: SafeArea(
-            top: false,
-            child: Padding(
-              padding: EdgeInsetsDirectional.fromSTEB(16.w, 12.h, 16.w, 12.h),
-              child: BlocBuilder<FilterCubit, FilterState>(
+          child: Padding(
+            padding: EdgeInsetsDirectional.fromSTEB(16.w, 12.h, 16.w, 12.h),
+            child: BlocBuilder<FilterCubit, FilterState>(
                 builder: (context, state) {
                   return Column(
                     mainAxisSize: MainAxisSize.min,
@@ -811,7 +813,6 @@ class _FilterBody extends StatelessWidget {
                 },
               ),
             ),
-          ),
         );
       },
     );
@@ -824,18 +825,16 @@ class _FilterBody extends StatelessWidget {
     required String selectedValue,
     required ValueChanged<String> onSelected,
   }) {
-    showModalBottomSheet<void>(
+    showAppModalBottomSheet<void>(
       context: context,
       backgroundColor: AppColors.cardBg(context),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(top: Radius.circular(20.r)),
       ),
       builder: (ctx) {
-        return SafeArea(
-          top: false,
-          child: Padding(
-            padding: EdgeInsetsDirectional.fromSTEB(16.w, 12.h, 16.w, 12.h),
-            child: Column(
+        return Padding(
+          padding: EdgeInsetsDirectional.fromSTEB(16.w, 12.h, 16.w, 12.h),
+          child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
                 Container(
@@ -910,7 +909,6 @@ class _FilterBody extends StatelessWidget {
                 ),
               ],
             ),
-          ),
         );
       },
     );
@@ -924,7 +922,7 @@ class _FilterBody extends StatelessWidget {
     required ValueChanged<String> onToggle,
   }) {
     final currentSelected = {...selectedValues};
-    showModalBottomSheet<void>(
+    showAppModalBottomSheet<void>(
       context: context,
       backgroundColor: AppColors.cardBg(context),
       shape: RoundedRectangleBorder(
@@ -933,11 +931,9 @@ class _FilterBody extends StatelessWidget {
       builder: (ctx) {
         return StatefulBuilder(
           builder: (context, setModalState) {
-            return SafeArea(
-              top: false,
-              child: Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(16.w, 12.h, 16.w, 12.h),
-                child: Column(
+            return Padding(
+              padding: EdgeInsetsDirectional.fromSTEB(16.w, 12.h, 16.w, 12.h),
+              child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     Container(
@@ -1019,7 +1015,6 @@ class _FilterBody extends StatelessWidget {
                     ),
                   ],
                 ),
-              ),
             );
           },
         );

@@ -270,20 +270,19 @@ class AppLocalizationsEn extends AppLocalizations {
   String get homePopularTrips => 'Popular Trips';
 
   @override
-  String get homeSponsoredTrips => 'Sponsored Trips';
+  String get homeSponsoredTrips => 'Hot Deals';
 
   @override
-  String get homeDomesticTripsInEgypt => 'Domestic Trips In Egypt';
+  String get homeDomesticTripsInEgypt => 'Explore Egypt';
 
   @override
-  String get homeInternationalTripsFromEgypt =>
-      'International Trips From Egypt';
+  String get homeInternationalTripsFromEgypt => 'Explore the World';
 
   @override
   String get homeRecommendedForYou => 'Recommended For You';
 
   @override
-  String get homeSpecialTrips => 'Special Trips';
+  String get homeSpecialTrips => 'Explore by Category';
 
   @override
   String get homeTopRated => 'Top Rated';

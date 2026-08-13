@@ -261,6 +261,8 @@ class _TripDetailsBodyState extends State<_TripDetailsBody> {
                                       SizedBox(height: 12.h),
                                       TripDetailsActivityRateCard(
                                         rates: trip.activityRates,
+                                        activities: trip.activities,
+                                        currency: trip.currency,
                                       ),
                                     ],
                                     SizedBox(height: 12.h),

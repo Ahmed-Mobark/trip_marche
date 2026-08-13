@@ -21,6 +21,7 @@ class TravelerContactCard extends StatelessWidget {
     required this.onCountryCodeChanged,
     required this.requiredErrorText,
     this.autovalidateMode,
+    this.requirePhone = true,
   });
 
   final String travelerTitle;
@@ -34,6 +35,7 @@ class TravelerContactCard extends StatelessWidget {
   final ValueChanged<String> onCountryCodeChanged;
   final String requiredErrorText;
   final AutovalidateMode? autovalidateMode;
+  final bool requirePhone;
 
   @override
   Widget build(BuildContext context) {
@@ -116,7 +118,14 @@ class TravelerContactCard extends StatelessWidget {
             selectedDialCode: countryCode,
             onDialCodeChanged: onCountryCodeChanged,
             autovalidateMode: autovalidateMode,
-            validator: Validator.phone,
+            validator: requirePhone
+                ? Validator.phone
+                : (value) {
+                    if (value == null || value.trim().isEmpty) {
+                      return null;
+                    }
+                    return Validator.phone(value);
+                  },
           ),
         ],
       ),

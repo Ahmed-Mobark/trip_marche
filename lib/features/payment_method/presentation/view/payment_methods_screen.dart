@@ -6,6 +6,7 @@ import 'package:iconsax/iconsax.dart';
 import 'package:trip_marche/core/config/app_colors.dart';
 import 'package:trip_marche/core/config/styles/styles.dart';
 import 'package:trip_marche/core/extensions/localization.dart';
+import 'package:trip_marche/core/extensions/media_query_extensions.dart';
 import 'package:trip_marche/core/injection/injection_container.dart';
 import 'package:trip_marche/core/widgets/app_empty_screen.dart';
 import 'package:trip_marche/core/widgets/shimmer_widget.dart';
@@ -302,47 +303,52 @@ class _PaymentMethodsBody extends StatelessWidget {
     final hasSelection = cubit.state.selectedPaymentMethod != null;
 
     return Container(
-      padding: EdgeInsetsDirectional.fromSTEB(16.w, 12.h, 16.w, 20.h),
-      decoration: BoxDecoration(
-        color: AppColors.cardBg(context),
-        border: Border(top: BorderSide(color: AppColors.softBorder(context))),
-        boxShadow: [
-          BoxShadow(
-            color: AppColors.shadow.withValues(alpha: 0.06),
-            blurRadius: 8.r,
-            offset: Offset(0, -2.h),
-          ),
-        ],
+      padding: EdgeInsetsDirectional.fromSTEB(
+        16.w,
+        12.h,
+        16.w,
+        12.h + context.systemBottomInset,
       ),
-      child: SizedBox(
-        width: double.infinity,
-        height: 48.h,
-        child: ElevatedButton(
-          onPressed: hasSelection
-              ? () {
-                  final selected = cubit.state.selectedPaymentMethod;
-                  if (selected != null) {
-                    Navigator.pop(context, selected);
-                  }
-                }
-              : null,
-          style: ElevatedButton.styleFrom(
-            backgroundColor: AppColors.primary,
-            disabledBackgroundColor: AppColors.disabled(context),
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(12.r),
+      decoration: BoxDecoration(
+          color: AppColors.cardBg(context),
+          border: Border(top: BorderSide(color: AppColors.softBorder(context))),
+          boxShadow: [
+            BoxShadow(
+              color: AppColors.shadow.withValues(alpha: 0.06),
+              blurRadius: 8.r,
+              offset: Offset(0, -2.h),
             ),
-          ),
-          child: Text(
-            context.tr.paymentMethodContinue,
-            style: TextStyles.textViewSemiBold14.copyWith(
-              color: AppColors.onImage,
-              fontSize: 14.sp,
-              fontWeight: FontWeight.w600,
+          ],
+        ),
+        child: SizedBox(
+          width: double.infinity,
+          height: 48.h,
+          child: ElevatedButton(
+            onPressed: hasSelection
+                ? () {
+                    final selected = cubit.state.selectedPaymentMethod;
+                    if (selected != null) {
+                      Navigator.pop(context, selected);
+                    }
+                  }
+                : null,
+            style: ElevatedButton.styleFrom(
+              backgroundColor: AppColors.primary,
+              disabledBackgroundColor: AppColors.disabled(context),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(12.r),
+              ),
+            ),
+            child: Text(
+              context.tr.paymentMethodContinue,
+              style: TextStyles.textViewSemiBold14.copyWith(
+                color: AppColors.onImage,
+                fontSize: 14.sp,
+                fontWeight: FontWeight.w600,
+              ),
             ),
           ),
         ),
-      ),
     );
   }
 }

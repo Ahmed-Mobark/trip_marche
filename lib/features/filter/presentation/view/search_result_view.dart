@@ -8,6 +8,7 @@ import 'package:trip_marche/core/navigation/app_navigator.dart';
 import 'package:trip_marche/core/theme/app_colors.dart';
 import 'package:trip_marche/core/theme/app_text_styles.dart';
 import 'package:trip_marche/core/toast/app_toast.dart';
+import 'package:trip_marche/core/widgets/app_modal_bottom_sheet.dart';
 import 'package:trip_marche/core/widgets/curved_gradient_sheet_layout.dart';
 import 'package:trip_marche/core/widgets/custom_loading.dart';
 import 'package:trip_marche/features/filter/presentation/view/filter_view.dart';
@@ -150,52 +151,42 @@ class _SearchResultViewState extends State<SearchResultView> {
         Iconsax.calendar_1,
       ),
     ];
-    final result = await showModalBottomSheet<String>(
+    final result = await showAppModalBottomSheet<String>(
       context: context,
       backgroundColor: Colors.transparent,
       isScrollControlled: true,
+      applySystemBottomInset: false,
       builder: (ctx) {
-        final bottomPadding = MediaQuery.of(ctx).padding.bottom;
-        return SafeArea(
-          top: false,
-          child: SingleChildScrollView(
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Container(
-                  width: 40.w,
-                  height: 4.h,
-                  margin: EdgeInsets.only(bottom: 12.h),
-                  decoration: BoxDecoration(
-                    color: AppColors.border(context),
-                    borderRadius: BorderRadius.circular(999.r),
-                  ),
+        return SingleChildScrollView(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Container(
+                width: 40.w,
+                height: 4.h,
+                margin: EdgeInsets.only(bottom: 12.h),
+                decoration: BoxDecoration(
+                  color: AppColors.border(context),
+                  borderRadius: BorderRadius.circular(999.r),
                 ),
-                Container(
-                  decoration: BoxDecoration(
-                    color: AppColors.cardBg(context),
-                    borderRadius: BorderRadius.vertical(
-                      top: Radius.circular(30.r),
-                    ),
-                    boxShadow: [
-                      BoxShadow(
-                        color: AppColors.shadow.withValues(alpha: 0.15),
-                        blurRadius: 20.r,
-                        offset: Offset(0, -4.h),
+              ),
+              BottomSystemInsetSurface(
+                color: AppColors.cardBg(context),
+                borderRadius: BorderRadius.vertical(
+                  top: Radius.circular(30.r),
+                ),
+                additionalBottomPadding: 12.h,
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Padding(
+                      padding: EdgeInsetsDirectional.fromSTEB(
+                        24.w,
+                        20.h,
+                        24.w,
+                        16.h,
                       ),
-                    ],
-                  ),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(
-                          24.w,
-                          20.h,
-                          24.w,
-                          16.h,
-                        ),
-                        child: Row(
+                      child: Row(
                           children: [
                             Icon(
                               Iconsax.sort,
@@ -272,13 +263,11 @@ class _SearchResultViewState extends State<SearchResultView> {
                           ],
                         ),
                       ),
-                      SizedBox(height: bottomPadding + 12.h),
                     ],
                   ),
                 ),
               ],
             ),
-          ),
         );
       },
     );

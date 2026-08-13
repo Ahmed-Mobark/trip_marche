@@ -33,6 +33,7 @@ import '../widgets/profile_avatar.dart';
 import 'my_followings_view.dart';
 import 'my_reviews_view.dart';
 import 'personal_info_view.dart';
+import 'package:trip_marche/features/payment_method/presentation/view/payment_methods_screen.dart';
 
 class ProfileView extends StatefulWidget {
   const ProfileView({super.key});
@@ -322,7 +323,9 @@ class _ProfileViewState extends State<ProfileView> {
                   ProfileMenuItem(
                     icon: Iconsax.card,
                     title: context.tr.profilePaymentMethod,
-                    onTap: () {},
+                    onTap: () => sl<AppNavigator>().push(
+                      screen: const PaymentMethodsScreen(),
+                    ),
                   ),
                   const _HandoffDivider(),
                   ProfileMenuItem(

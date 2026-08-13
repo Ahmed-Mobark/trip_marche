@@ -18,6 +18,7 @@ class CompanyProfileHeader extends StatelessWidget {
     this.followersCount,
     this.tripsCount,
     this.isVerified,
+    this.showFollowButton = true,
   });
 
   final String companyName;
@@ -29,6 +30,7 @@ class CompanyProfileHeader extends StatelessWidget {
   final int? followersCount;
   final int? tripsCount;
   final bool? isVerified;
+  final bool showFollowButton;
 
   @override
   Widget build(BuildContext context) {
@@ -117,72 +119,42 @@ class CompanyProfileHeader extends StatelessWidget {
                       '($reviewsCount)',
                       style: AppTextStyles.caption(color: greyColor),
                     ),
-                    if (followersCount != null) ...[
-                      SizedBox(width: CompanyProfileFigmaTokens.rowGapMedium),
-                      Container(
-                        width: 3.r,
-                        height: 3.r,
-                        decoration: BoxDecoration(
-                          color: AppColors.greyText(context),
-                          shape: BoxShape.circle,
-                        ),
-                      ),
-                      SizedBox(width: CompanyProfileFigmaTokens.rowGapMedium),
-                      Text(
-                        '$followersCount',
-                        style: AppTextStyles.caption(color: greyColor),
-                      ),
-                    ],
-                    if (tripsCount != null) ...[
-                      SizedBox(width: CompanyProfileFigmaTokens.rowGapMedium),
-                      Container(
-                        width: 3.r,
-                        height: 3.r,
-                        decoration: BoxDecoration(
-                          color: AppColors.greyText(context),
-                          shape: BoxShape.circle,
-                        ),
-                      ),
-                      SizedBox(width: CompanyProfileFigmaTokens.rowGapMedium),
-                      Text(
-                        '$tripsCount',
-                        style: AppTextStyles.caption(color: greyColor),
-                      ),
-                    ],
                   ],
                 ),
               ],
             ),
           ),
-          SizedBox(width: CompanyProfileFigmaTokens.rowGapMedium),
-          TextButton(
-            onPressed: onFollowToggle,
-            style: TextButton.styleFrom(
-              backgroundColor: isFollowing
-                  ? AppColors.primary
-                  : AppColors.transparent,
-              side: BorderSide(
-                color: isFollowing ? AppColors.primary : borderColor,
+          if (showFollowButton) ...[
+            SizedBox(width: CompanyProfileFigmaTokens.rowGapMedium),
+            TextButton(
+              onPressed: onFollowToggle,
+              style: TextButton.styleFrom(
+                backgroundColor: isFollowing
+                    ? AppColors.primary
+                    : AppColors.transparent,
+                side: BorderSide(
+                  color: isFollowing ? AppColors.primary : borderColor,
+                ),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(999.r),
+                ),
+                padding: EdgeInsets.symmetric(
+                  horizontal: 16.w,
+                  vertical: 8.h,
+                ),
+                minimumSize: Size.zero,
+                tapTargetSize: MaterialTapTargetSize.shrinkWrap,
               ),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(999.r),
+              child: Text(
+                isFollowing
+                    ? context.tr.companyProfileFollowing
+                    : context.tr.companyProfileFollow,
+                style: AppTextStyles.button(
+                  color: isFollowing ? AppColors.white : AppColors.primary,
+                ).copyWith(fontWeight: FontWeight.w600),
               ),
-              padding: EdgeInsets.symmetric(
-                horizontal: 16.w,
-                vertical: 8.h,
-              ),
-              minimumSize: Size.zero,
-              tapTargetSize: MaterialTapTargetSize.shrinkWrap,
             ),
-            child: Text(
-              isFollowing
-                  ? context.tr.companyProfileFollowing
-                  : context.tr.companyProfileFollow,
-              style: AppTextStyles.button(
-                color: isFollowing ? AppColors.white : AppColors.primary,
-              ).copyWith(fontWeight: FontWeight.w600),
-            ),
-          ),
+          ],
         ],
       ),
     );

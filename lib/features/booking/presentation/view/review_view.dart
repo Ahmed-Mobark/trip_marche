@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:iconsax/iconsax.dart';
 import 'package:trip_marche/core/config/app_colors.dart';
 import 'package:trip_marche/core/config/dimensions/review_figma_tokens.dart';
 import 'package:trip_marche/core/extensions/localization.dart';
@@ -99,13 +97,25 @@ class _ReviewBodyState extends State<_ReviewBody> {
     );
   }
 
-  void _onPay() {
+  Future<void> _onPay() async {
     final couponState = context.read<CouponCubit>().state;
     final couponCode = couponState.isApplied && couponState.appliedCode != null
         ? couponState.appliedCode
         : null;
+    final bookingCubit = context.read<CreateBookingCubit>();
 
-    context.read<CreateBookingCubit>().createBooking(
+    if (bookingCubit.state.selectedPaymentMethod == null) {
+      final result = await Navigator.push<PaymentMethodEntity>(
+        context,
+        MaterialPageRoute(builder: (_) => const PaymentMethodsScreen()),
+      );
+      if (result == null || !mounted) {
+        return;
+      }
+      bookingCubit.selectPaymentMethod(result);
+    }
+
+    bookingCubit.createBooking(
       data: widget.data,
       notes: _notesController.text.trim(),
       couponCode: couponCode,
@@ -123,10 +133,6 @@ class _ReviewBodyState extends State<_ReviewBody> {
   @override
   Widget build(BuildContext context) {
     final tr = context.tr;
-    final selectedMethod = context
-        .watch<CreateBookingCubit>()
-        .state
-        .selectedPaymentMethod;
 
     return BlocListener<CreateBookingCubit, CreateBookingState>(
       listenWhen: (previous, current) =>
@@ -244,145 +250,6 @@ class _ReviewBodyState extends State<_ReviewBody> {
                           includedTitle: tr.tripDetailsWhatsIncludedTitle,
                         ),
                         SizedBox(height: ReviewFigmaTokens.sectionGap),
-                        GestureDetector(
-                          onTap: () async {
-                            final result =
-                                await Navigator.push<PaymentMethodEntity>(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (_) =>
-                                        const PaymentMethodsScreen(),
-                                  ),
-                                );
-                            if (result != null) {
-                              context
-                                  .read<CreateBookingCubit>()
-                                  .selectPaymentMethod(result);
-                            }
-                          },
-                          child: Container(
-                            width: double.infinity,
-                            padding: EdgeInsetsDirectional.all(16.w),
-                            decoration: BoxDecoration(
-                              color: AppColors.cardBg(context),
-                              borderRadius: BorderRadius.circular(16.r),
-                              border: Border.all(
-                                color: AppColors.softBorder(context),
-                              ),
-                            ),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.stretch,
-                              children: [
-                                Text(
-                                  tr.bookingPaymentMethodTitle,
-                                  style:
-                                      AppTextStyles.bodySmall(
-                                        color: AppColors.greyText(context),
-                                      ).copyWith(
-                                        fontSize: ReviewFigmaTokens.smallSize,
-                                        fontWeight: FontWeight.w500,
-                                      ),
-                                ),
-                                SizedBox(height: 8.h),
-                                if (selectedMethod != null) ...[
-                                  Row(
-                                    children: [
-                                      Icon(
-                                        Iconsax.card,
-                                        size: 20.w,
-                                        color: AppColors.primary,
-                                      ),
-                                      SizedBox(width: 8.w),
-                                      Expanded(
-                                        child: Text(
-                                          selectedMethod.name,
-                                          style:
-                                              AppTextStyles.bodyMedium(
-                                                color: AppColors.darkText(
-                                                  context,
-                                                ),
-                                              ).copyWith(
-                                                fontSize:
-                                                    ReviewFigmaTokens.bodySize,
-                                                fontWeight: FontWeight.w600,
-                                              ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                  SizedBox(height: 4.h),
-                                  Text(
-                                    selectedMethod.description,
-                                    style:
-                                        AppTextStyles.bodySmall(
-                                          color: AppColors.greyText(context),
-                                        ).copyWith(
-                                          fontSize: ReviewFigmaTokens.smallSize,
-                                        ),
-                                  ),
-                                  SizedBox(height: 8.h),
-                                  Text(
-                                    tr.bookingPaymentMethodChange,
-                                    style:
-                                        AppTextStyles.bodyMedium(
-                                          color: AppColors.primary,
-                                        ).copyWith(
-                                          fontSize: ReviewFigmaTokens.bodySize,
-                                          fontWeight: FontWeight.w500,
-                                        ),
-                                  ),
-                                ] else ...[
-                                  Row(
-                                    children: [
-                                      Icon(
-                                        Iconsax.card,
-                                        size: 20.w,
-                                        color: AppColors.greyText(context),
-                                      ),
-                                      SizedBox(width: 8.w),
-                                      Expanded(
-                                        child: Text(
-                                          tr.bookingPaymentMethodSelect,
-                                          style:
-                                              AppTextStyles.bodyMedium(
-                                                color: AppColors.greyText(
-                                                  context,
-                                                ),
-                                              ).copyWith(
-                                                fontSize:
-                                                    ReviewFigmaTokens.bodySize,
-                                              ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                  SizedBox(height: 4.h),
-                                  Text(
-                                    tr.bookingPaymentMethodChoose,
-                                    style:
-                                        AppTextStyles.bodySmall(
-                                          color: AppColors.greyText(context),
-                                        ).copyWith(
-                                          fontSize: ReviewFigmaTokens.smallSize,
-                                        ),
-                                  ),
-                                  SizedBox(height: 8.h),
-                                  Text(
-                                    '>',
-                                    style:
-                                        AppTextStyles.bodyMedium(
-                                          color: AppColors.primary,
-                                        ).copyWith(
-                                          fontSize: ReviewFigmaTokens.bodySize,
-                                          fontWeight: FontWeight.w500,
-                                        ),
-                                  ),
-                                ],
-                              ],
-                            ),
-                          ),
-                        ),
-                        SizedBox(height: ReviewFigmaTokens.sectionGap),
                         BlocBuilder<CouponCubit, CouponState>(
                           builder: (context, couponState) {
                             return CouponField(
@@ -482,18 +349,15 @@ class _ReviewBodyState extends State<_ReviewBody> {
                       ],
                     ),
                   ),
-                  SafeArea(
-                    top: false,
-                    child: BlocBuilder<CreateBookingCubit, CreateBookingState>(
-                      builder: (context, state) {
-                        return BookingBottomButtons(
-                          onBack: () => Navigator.pop(context),
-                          onPay: _onPay,
-                          payLabel: tr.bookingPay,
-                          isLoading: _isPaying,
-                        );
-                      },
-                    ),
+                  BlocBuilder<CreateBookingCubit, CreateBookingState>(
+                    builder: (context, state) {
+                      return BookingBottomButtons(
+                        onBack: () => Navigator.pop(context),
+                        onPay: _onPay,
+                        payLabel: tr.bookingPay,
+                        isLoading: _isPaying,
+                      );
+                    },
                   ),
                 ],
               ),

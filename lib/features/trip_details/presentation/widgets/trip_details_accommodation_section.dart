@@ -15,8 +15,8 @@ import 'package:trip_marche/core/widgets/app_image_gallery_screen.dart';
 import 'package:trip_marche/features/trip_details/domain/entities/trip_details_entity.dart';
 import 'package:trip_marche/features/trip_details/presentation/cubit/trip_details_cubit.dart';
 import 'google_maps_link_button.dart';
+import 'package:trip_marche/features/trip_details/presentation/view/trip_details_list_views.dart';
 import 'trip_details_info_card.dart';
-import 'trip_details_reviews_section.dart';
 
 // Accommodation card — Figma-fixed typography (no .sp on these styles).
 const Color _kAccommodationTitleValueLight = Color(0xFF000000);
@@ -74,7 +74,15 @@ class TripDetailsAccommodationSection extends StatelessWidget {
                       minimumSize: Size.zero,
                       tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                     ),
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.of(context).push(
+                        MaterialPageRoute<void>(
+                          builder: (_) => TripAllAccommodationView(
+                            accommodations: accommodations,
+                          ),
+                        ),
+                      );
+                    },
                     child: Text(
                       context.tr.tripDetailsSeeAllAccommodation,
                       textAlign: TextAlign.center,
@@ -247,9 +255,16 @@ class TripDetailsCompanyCard extends StatelessWidget {
 }
 
 class TripDetailsActivityRateCard extends StatelessWidget {
-  const TripDetailsActivityRateCard({super.key, required this.rates});
+  const TripDetailsActivityRateCard({
+    super.key,
+    required this.rates,
+    required this.activities,
+    required this.currency,
+  });
 
   final List<TripActivityRate> rates;
+  final List<TripDetailsActivity> activities;
+  final String currency;
 
   @override
   Widget build(BuildContext context) {
@@ -277,8 +292,18 @@ class TripDetailsActivityRateCard extends StatelessWidget {
           SizedBox(height: 8.h),
           Center(
             child: TextButton(
-              onPressed: () =>
-                  TripDetailsReviewsSection.openAllReviews(context, []),
+              onPressed: activities.isEmpty
+                  ? null
+                  : () {
+                      Navigator.of(context).push(
+                        MaterialPageRoute<void>(
+                          builder: (_) => TripAllActivitiesView(
+                            activities: activities,
+                            currency: currency,
+                          ),
+                        ),
+                      );
+                    },
               style: TextButton.styleFrom(
                 padding: EdgeInsets.zero,
                 minimumSize: Size.zero,

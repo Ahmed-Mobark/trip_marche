@@ -11,6 +11,7 @@ import '../../../../core/navigation/app_navigator.dart';
 import '../../../../core/toast/app_toast.dart';
 import '../../../../core/widgets/app_confirmation_bottom_sheet.dart';
 import '../../../../core/widgets/app_confirm_dialog.dart';
+import '../../../../core/widgets/app_modal_bottom_sheet.dart';
 import '../../../../features/auth/presentation/cubit/logout/logout_cubit.dart';
 import '../../../../features/auth/presentation/cubit/logout/logout_state.dart';
 import '../../../../features/auth/presentation/view/login_view.dart';
@@ -146,10 +147,11 @@ class _SettingsViewContent extends StatelessWidget {
   }
 
   void _showLogoutBottomSheet(BuildContext context) {
-    showModalBottomSheet(
+    showAppModalBottomSheet(
       context: context,
       isScrollControlled: true,
       backgroundColor: AppColors.transparent,
+      applySystemBottomInset: false,
       builder: (sheetContext) => BlocConsumer<LogoutCubit, LogoutState>(
         listener: (context, state) {
           debugPrint("Current Logout State: ${state.status}");
@@ -184,10 +186,11 @@ class _SettingsViewContent extends StatelessWidget {
   }
 
   void _showDeleteAccountFlow(BuildContext context) {
-    showModalBottomSheet(
+    showAppModalBottomSheet(
       context: context,
       isScrollControlled: true,
       backgroundColor: AppColors.transparent,
+      applySystemBottomInset: false,
       builder: (sheetContext) => BlocConsumer<DeleteAccountCubit, DeleteAccountState>(
         listener: (context, state) {
           debugPrint("Current Delete Account State: ${state.status}");

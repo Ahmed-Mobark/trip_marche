@@ -5,14 +5,16 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:trip_marche/core/theme/app_colors.dart';
 import 'package:trip_marche/core/theme/app_text_styles.dart';
 import 'package:trip_marche/core/extensions/localization.dart';
+import 'package:trip_marche/core/extensions/media_query_extensions.dart';
 import 'package:trip_marche/core/enums/media_type.dart';
 import 'package:trip_marche/core/services/media_service/media_services.dart';
 import 'package:trip_marche/core/services/media_service/media_service_exceptions.dart';
 import 'package:trip_marche/core/injection/injection_container.dart';
 import 'package:trip_marche/core/toast/app_toast.dart';
+import 'package:trip_marche/core/widgets/app_modal_bottom_sheet.dart';
 
 Future<File?> showImageSourceBottomSheet(BuildContext context) async {
-  final result = await showModalBottomSheet<File>(
+  final result = await showAppModalBottomSheet<File>(
     context: context,
     isScrollControlled: true,
     backgroundColor: AppColors.cardBg(context),
@@ -80,7 +82,12 @@ class _ImageSourceBottomSheet extends StatelessWidget {
     final dividerColor = AppColors.border(context);
 
     return Container(
-      padding: EdgeInsetsDirectional.fromSTEB(20.w, 10.h, 20.w, 20.h),
+      padding: EdgeInsetsDirectional.fromSTEB(
+        20.w,
+        10.h,
+        20.w,
+        20.h + MediaQuery.viewInsetsOf(context).bottom,
+      ),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
@@ -137,7 +144,6 @@ class _ImageSourceBottomSheet extends StatelessWidget {
               ),
             ),
           ),
-          SizedBox(height: MediaQuery.of(context).viewInsets.bottom),
         ],
       ),
     );

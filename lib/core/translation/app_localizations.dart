@@ -601,19 +601,19 @@ abstract class AppLocalizations {
   /// No description provided for @homeSponsoredTrips.
   ///
   /// In en, this message translates to:
-  /// **'Sponsored Trips'**
+  /// **'Hot Deals'**
   String get homeSponsoredTrips;
 
   /// No description provided for @homeDomesticTripsInEgypt.
   ///
   /// In en, this message translates to:
-  /// **'Domestic Trips In Egypt'**
+  /// **'Explore Egypt'**
   String get homeDomesticTripsInEgypt;
 
   /// No description provided for @homeInternationalTripsFromEgypt.
   ///
   /// In en, this message translates to:
-  /// **'International Trips From Egypt'**
+  /// **'Explore the World'**
   String get homeInternationalTripsFromEgypt;
 
   /// No description provided for @homeRecommendedForYou.
@@ -625,7 +625,7 @@ abstract class AppLocalizations {
   /// No description provided for @homeSpecialTrips.
   ///
   /// In en, this message translates to:
-  /// **'Special Trips'**
+  /// **'Explore by Category'**
   String get homeSpecialTrips;
 
   /// No description provided for @homeTopRated.

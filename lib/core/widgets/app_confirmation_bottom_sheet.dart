@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:trip_marche/core/extensions/media_query_extensions.dart';
 import 'package:trip_marche/core/theme/app_colors.dart';
 import 'package:trip_marche/core/theme/app_text_styles.dart';
 import 'package:trip_marche/core/widgets/app_button.dart';
@@ -44,7 +45,12 @@ class AppConfirmationBottomSheet extends StatelessWidget {
         color: bg,
         borderRadius: BorderRadius.vertical(top: Radius.circular(20.r)),
       ),
-      padding: EdgeInsets.fromLTRB(24.w, 10.h, 24.w, 32.h),
+      padding: EdgeInsets.fromLTRB(
+        24.w,
+        10.h,
+        24.w,
+        32.h + context.systemBottomInset,
+      ),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [

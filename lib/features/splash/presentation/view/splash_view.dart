@@ -47,18 +47,19 @@ class _SplashViewState extends State<SplashView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        width: double.infinity,
-        height: double.infinity,
+      body: DecoratedBox(
         decoration: const BoxDecoration(gradient: AppColors.primaryGradient),
-        child: Center(
-          child: AnimatedOpacity(
-            opacity: _opacity,
-            duration: const Duration(milliseconds: 800),
-            curve: Curves.easeIn,
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [Image.asset(AppIcons.lloPng, width: 200.w)],
+        child: SizedBox.expand(
+          child: Center(
+            child: AnimatedOpacity(
+              opacity: _opacity,
+              duration: const Duration(milliseconds: 800),
+              curve: Curves.easeIn,
+              child: Image.asset(
+                AppIcons.lloPng,
+                width: 200.w,
+                fit: BoxFit.contain,
+              ),
             ),
           ),
         ),

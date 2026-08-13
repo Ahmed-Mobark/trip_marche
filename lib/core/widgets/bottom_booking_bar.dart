@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:trip_marche/core/config/app_colors.dart';
+import 'package:trip_marche/core/extensions/media_query_extensions.dart';
 import 'package:trip_marche/core/config/dimensions/contact_info_figma_tokens.dart';
 import 'package:trip_marche/core/config/dimensions/trip_options_figma_tokens.dart';
 import 'package:trip_marche/core/config/styles/styles.dart';
@@ -28,7 +29,7 @@ class BottomBookingBar extends StatelessWidget {
         TripOptionsFigmaTokens.bottomBarHPadding,
         TripOptionsFigmaTokens.bottomBarVPadding,
         TripOptionsFigmaTokens.bottomBarHPadding,
-        TripOptionsFigmaTokens.bottomBarBottom,
+        TripOptionsFigmaTokens.bottomBarBottom + context.systemBottomInset,
       ),
       decoration: BoxDecoration(
         color: AppColors.cardBg(context),

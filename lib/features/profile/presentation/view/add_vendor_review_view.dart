@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:iconsax/iconsax.dart';
 import '../../../../core/extensions/localization.dart';
+import '../../../../core/extensions/media_query_extensions.dart';
 import '../../../../core/injection/injection_container.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_text_styles.dart';
@@ -270,16 +271,19 @@ SizedBox(height: 14.h),
 
             // Bottom Actions Bar
             bottomNavigationBar: Container(
-              padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 16.h),
+              padding: EdgeInsetsDirectional.fromSTEB(
+                20.w,
+                16.h,
+                20.w,
+                16.h + context.systemBottomInset,
+              ),
               decoration: BoxDecoration(
                 color: AppColors.background(context),
                 border: Border(
                   top: BorderSide(color: AppColors.border(context).withValues(alpha: 0.6)),
                 ),
               ),
-              child: SafeArea(
-                top: false,
-                child: Row(
+              child: Row(
                   children: [
                     // Back Button
                     InkWell(
@@ -348,7 +352,6 @@ SizedBox(height: 14.h),
                     ),
                   ],
                 ),
-              ),
             ),
           );
         },

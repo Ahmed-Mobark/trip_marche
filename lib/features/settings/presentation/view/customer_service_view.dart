@@ -12,11 +12,6 @@ class CustomerServiceView extends StatelessWidget {
 
   static const _phone = '+201221314305';
 
-  Future<void> _launchCall() async {
-    final uri = Uri(scheme: 'tel', path: _phone);
-    if (await canLaunchUrl(uri)) await launchUrl(uri);
-  }
-
   Future<void> _launchSms() async {
     final uri = Uri(scheme: 'sms', path: _phone);
     if (await canLaunchUrl(uri)) await launchUrl(uri);
@@ -71,7 +66,8 @@ class CustomerServiceView extends StatelessWidget {
                   child: _ContactButton(
                     icon: Iconsax.call,
                     label: context.tr.csCall,
-                    onTap: _launchCall,
+                    onTap: null,
+                    enabled: false,
                   ),
                 ),
                 SizedBox(width: 12.w),
@@ -124,19 +120,21 @@ class _ContactButton extends StatelessWidget {
   const _ContactButton({
     required this.icon,
     required this.label,
-    required this.onTap,
+    this.onTap,
+    this.enabled = true,
   });
 
   final IconData icon;
   final String label;
-  final VoidCallback onTap;
+  final VoidCallback? onTap;
+  final bool enabled;
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
       height: 45.h,
       child: OutlinedButton.icon(
-        onPressed: onTap,
+        onPressed: enabled ? onTap : null,
         icon: Icon(icon, color: AppColors.primary, size: 20.sp),
         label: Text(
           label,

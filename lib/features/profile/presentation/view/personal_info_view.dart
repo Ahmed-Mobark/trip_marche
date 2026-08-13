@@ -13,6 +13,7 @@ import '../../../../features/profile/presentation/cubit/update_profile_cubit.dar
 import '../../../../features/profile/presentation/view/edit_profile_bottom_sheet.dart';
 import '../../../../features/profile/presentation/cubit/change_password_cubit.dart';
 import '../../../../features/profile/presentation/view/change_password_bottom_sheet.dart';
+import '../../../../core/widgets/app_modal_bottom_sheet.dart';
 
 class PersonalInfoView extends StatelessWidget {
   const PersonalInfoView({super.key});
@@ -22,7 +23,7 @@ class PersonalInfoView extends StatelessWidget {
       ChangePasswordUseCase(sl<ProfileRepository>()),
     );
 
-    await showModalBottomSheet<void>(
+    await showAppModalBottomSheet<void>(
       context: context,
       isScrollControlled: true,
       enableDrag: false,
@@ -46,7 +47,7 @@ class PersonalInfoView extends StatelessWidget {
 
     final cubit = context.read<UpdateProfileCubit>();
 
-    await showModalBottomSheet<void>(
+    await showAppModalBottomSheet<void>(
       context: context,
       isScrollControlled: true,
       backgroundColor: AppColors.cardBg(context),

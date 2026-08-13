@@ -101,43 +101,45 @@ class MyTripsScreenTripCard extends StatelessWidget {
               PositionedDirectional(
                 start: 0,
                 top: 6.h,
-                bottom: 6.h,
                 width: imageW,
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(
                     MyTripsTripCardTokens.cardRadius,
                   ),
-                  child: Stack(
-                    fit: StackFit.expand,
-                    children: [
-                      _TripThumb(imageUrl: trip.imageUrl),
-                      PositionedDirectional(
-                        top: MyTripsTripCardTokens.badgeInset,
-                        start: MyTripsTripCardTokens.badgeInset,
-                        child: Container(
-                          padding: EdgeInsetsDirectional.symmetric(
-                            horizontal: MyTripsTripCardTokens.badgePadH,
-                            vertical: MyTripsTripCardTokens.badgePadV,
-                          ),
-                          decoration: BoxDecoration(
-                            color: badgeColor,
-                            borderRadius: BorderRadius.circular(
-                              MyTripsFigmaTokens.searchRadiusPill,
+                  child: AspectRatio(
+                    aspectRatio: 1,
+                    child: Stack(
+                      fit: StackFit.expand,
+                      children: [
+                        _TripThumb(imageUrl: trip.imageUrl),
+                        PositionedDirectional(
+                          top: MyTripsTripCardTokens.badgeInset,
+                          start: MyTripsTripCardTokens.badgeInset,
+                          child: Container(
+                            padding: EdgeInsetsDirectional.symmetric(
+                              horizontal: MyTripsTripCardTokens.badgePadH,
+                              vertical: MyTripsTripCardTokens.badgePadV,
                             ),
-                          ),
-                          child: Text(
-                            badgeLabel,
-                            style: MyTripsFigmaTokens.text(
-                              fontSize: MyTripsTripCardTokens.badgeFont,
-                              fontWeight: FontWeight.w500,
-                              height: MyTripsTripCardTokens.lh(11, 13),
-                              letterSpacing: 0,
-                              color: AppColors.white,
+                            decoration: BoxDecoration(
+                              color: badgeColor,
+                              borderRadius: BorderRadius.circular(
+                                MyTripsFigmaTokens.searchRadiusPill,
+                              ),
+                            ),
+                            child: Text(
+                              badgeLabel,
+                              style: MyTripsFigmaTokens.text(
+                                fontSize: MyTripsTripCardTokens.badgeFont,
+                                fontWeight: FontWeight.w500,
+                                height: MyTripsTripCardTokens.lh(11, 13),
+                                letterSpacing: 0,
+                                color: AppColors.white,
+                              ),
                             ),
                           ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
               ),

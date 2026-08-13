@@ -129,54 +129,42 @@ class MyReviewsView extends StatelessWidget {
                 ),
                 child: Column(
                   children: [
-                    _HeroTripCard(
-                      imageUrl: heroReview != null
-                          ? (heroReview.type == 'trip'
-                              ? heroReview.trip?.coverImage ?? ''
-                              : heroReview.vendor?.avatar ?? '')
-                          : '',
-                      title: heroReview != null
-                          ? (heroReview.type == 'trip'
-                              ? heroReview.trip?.title ?? ''
-                              : heroReview.vendor?.name ?? '')
-                          : '',
-                      ratingValue: heroReview != null
-                          ? heroReview.rating.toStringAsFixed(1)
-                          : '',
-                      ratingCount: heroReview != null
-                          ? heroReview.rating.toStringAsFixed(0)
-                          : '',
-                      fromText: heroReview != null
-                          ? (heroReview.type == 'trip'
-                              ? 'Trip Review'
-                              : 'Vendor Review')
-                          : '',
-                      dateRangeText: heroReview != null
-                          ? _formatDate(heroReview.createdAt)
-                          : '',
-                      addReviewText: context.tr.profileAddReview,
-                      onAddReview: () async {
-                        if (heroReview == null) return;
-                        final result = await Navigator.push<bool>(
-                          context,
-                          MaterialPageRoute(
-                            builder: (_) => AddVendorReviewView(
-                              tripId: heroReview.type == 'trip'
-                                  ? heroReview.trip?.id
-                                  : null,
-                              vendorId: heroReview.type == 'trip'
-                                  ? heroReview.trip?.vendorId
-                                  : heroReview.vendor?.id,
-                              review: heroReview,
+                    if (heroReview != null)
+                      _HeroTripCard(
+                        imageUrl: heroReview.type == 'trip'
+                            ? heroReview.trip?.coverImage ?? ''
+                            : heroReview.vendor?.avatar ?? '',
+                        title: heroReview.type == 'trip'
+                            ? heroReview.trip?.title ?? ''
+                            : heroReview.vendor?.name ?? '',
+                        ratingValue: heroReview.rating.toStringAsFixed(1),
+                        ratingCount: heroReview.rating.toStringAsFixed(0),
+                        fromText: heroReview.type == 'trip'
+                            ? 'Trip Review'
+                            : 'Vendor Review',
+                        dateRangeText: _formatDate(heroReview.createdAt),
+                        addReviewText: context.tr.profileAddReview,
+                        onAddReview: () async {
+                          final result = await Navigator.push<bool>(
+                            context,
+                            MaterialPageRoute(
+                              builder: (_) => AddVendorReviewView(
+                                tripId: heroReview.type == 'trip'
+                                    ? heroReview.trip?.id
+                                    : null,
+                                vendorId: heroReview.type == 'trip'
+                                    ? heroReview.trip?.vendorId
+                                    : heroReview.vendor?.id,
+                                review: heroReview,
+                              ),
                             ),
-                          ),
-                        );
-                        if (result == true && context.mounted) {
-                          context.read<ReviewsCubit>().fetchReviews();
-                        }
-                      },
-                    ),
-                    SizedBox(height: 14.h),
+                          );
+                          if (result == true && context.mounted) {
+                            context.read<ReviewsCubit>().fetchReviews();
+                          }
+                        },
+                      ),
+                    if (heroReview != null) SizedBox(height: 14.h),
                     if (reviews.isEmpty)
                       Padding(
                         padding: EdgeInsets.only(top: 40.h),

@@ -266,19 +266,19 @@ class AppLocalizationsAr extends AppLocalizations {
   String get homePopularTrips => 'الرحلات الشائعة';
 
   @override
-  String get homeSponsoredTrips => 'الرحلات الممولة';
+  String get homeSponsoredTrips => 'Hot Deals';
 
   @override
-  String get homeDomesticTripsInEgypt => 'رحلات داخلية في مصر';
+  String get homeDomesticTripsInEgypt => 'Explore Egypt';
 
   @override
-  String get homeInternationalTripsFromEgypt => 'رحلات دولية من مصر';
+  String get homeInternationalTripsFromEgypt => 'Explore the World';
 
   @override
   String get homeRecommendedForYou => 'موصى بها لك';
 
   @override
-  String get homeSpecialTrips => 'رحلات مميزة';
+  String get homeSpecialTrips => 'Explore by Category';
 
   @override
   String get homeTopRated => 'الأعلى تقييماً';

@@ -73,45 +73,48 @@ class WishlistTripCard extends StatelessWidget {
           children: [
             ClipRRect(
               borderRadius: BorderRadius.circular(14.r),
-              child: Stack(
-                children: [
-                  SizedBox(
-                    width: 135.w,
-                    height: 170.h,
-                    child: AppCachedNetworkImage(
-                      imageUrl: trip.coverImage,
-                      fit: BoxFit.cover,
-                    ),
-                  ),
-                  if (trip.badge != null && trip.badge!.isNotEmpty)
-                    PositionedDirectional(
-                      top: 0,
-                      start: 0,
-                      end: 0,
-                      child: Container(
-                        padding: EdgeInsetsDirectional.only(
-                          start: 12.w,
-                          end: 12.w,
-                          top: 4.h,
-                          bottom: 4.h,
-                        ),
-                        decoration: BoxDecoration(
-                          color: AppColors.starYellow,
-                          borderRadius: BorderRadius.vertical(
-                            top: Radius.circular(16.r),
-                          ),
-                        ),
-                        child: Center(
-                          child: Text(
-                            trip.badge!,
-                            style: AppTextStyles.bodySmall(
-                              color: AppColors.onImage,
-                            ).copyWith(fontWeight: FontWeight.w800),
-                          ),
-                        ),
+              child: SizedBox(
+                width: 135.w,
+                child: AspectRatio(
+                  aspectRatio: 1,
+                  child: Stack(
+                    fit: StackFit.expand,
+                    children: [
+                      AppCachedNetworkImage(
+                        imageUrl: trip.coverImage,
+                        fit: BoxFit.cover,
                       ),
-                    ),
-                ],
+                      if (trip.badge != null && trip.badge!.isNotEmpty)
+                        PositionedDirectional(
+                          top: 0,
+                          start: 0,
+                          end: 0,
+                          child: Container(
+                            padding: EdgeInsetsDirectional.only(
+                              start: 12.w,
+                              end: 12.w,
+                              top: 4.h,
+                              bottom: 4.h,
+                            ),
+                            decoration: BoxDecoration(
+                              color: AppColors.starYellow,
+                              borderRadius: BorderRadius.vertical(
+                                top: Radius.circular(16.r),
+                              ),
+                            ),
+                            child: Center(
+                              child: Text(
+                                trip.badge!,
+                                style: AppTextStyles.bodySmall(
+                                  color: AppColors.onImage,
+                                ).copyWith(fontWeight: FontWeight.w800),
+                              ),
+                            ),
+                          ),
+                        ),
+                    ],
+                  ),
+                ),
               ),
             ),
             SizedBox(width: 10.w),

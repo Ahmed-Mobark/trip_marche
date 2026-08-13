@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:iconsax/iconsax.dart';
 import 'package:trip_marche/core/config/styles/styles.dart';
 import 'package:trip_marche/core/extensions/localization.dart';
 import 'package:trip_marche/core/theme/app_text_styles.dart';
@@ -347,13 +348,27 @@ class _BookingsList extends StatelessWidget {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
+              Container(
+                width: 80,
+                height: 80,
+                decoration: BoxDecoration(
+                  color: AppColors.lightBg(context),
+                  shape: BoxShape.circle,
+                ),
+                child: Icon(
+                  Iconsax.airplane,
+                  size: 36,
+                  color: AppColors.greyText(context),
+                ),
+              ),
+              SizedBox(height: 16.h),
               Text(
                 context.tr.myTripsEmptyTitle,
                 style: AppTextStyles.subtitle(
                   color: AppColors.darkText(context),
                 ),
               ),
-              SizedBox(height: 6.h),
+              SizedBox(height: 8.h),
               Text(
                 context.tr.myTripsEmptyDescription,
                 textAlign: TextAlign.center,
@@ -408,25 +423,29 @@ class _BookingsList extends StatelessWidget {
                   '[MyTrips] Render trip ${booking.trip.id} (${booking.trip.title}) isFavorite=$isFav',
                 );
 
-                return BlocBuilder<BookingPdfCubit, BookingPdfState>(
-                  builder: (context, pdfState) {
-                    final isPdfLoading = pdfState.isLoadingFor(booking.id);
-                    return MyTripsScreenTripCard(
-                      trip: _toRowModel(booking, isFav),
-                      tab: tab,
-                      onPrimaryTap:
-                          tab == MyTripsShellTab.past && !booking.trip.isRated
-                          ? () => onRateTripTap(booking)
-                          : () => onBookingTap(booking),
-                      onSecondaryTap: booking.trip.isRated
-                          ? null
-                          : () => onRateTripTap(booking),
-                      onBottomTap: isPdfLoading
-                          ? null
-                          : () => onBookingPdfTap(booking),
-                      isPdfLoading: isPdfLoading,
-                    );
-                  },
+                return GestureDetector(
+                  onTap: () => onBookingTap(booking),
+                  behavior: HitTestBehavior.opaque,
+                  child: BlocBuilder<BookingPdfCubit, BookingPdfState>(
+                    builder: (context, pdfState) {
+                      final isPdfLoading = pdfState.isLoadingFor(booking.id);
+                      return MyTripsScreenTripCard(
+                        trip: _toRowModel(booking, isFav),
+                        tab: tab,
+                        onPrimaryTap:
+                            tab == MyTripsShellTab.past && !booking.trip.isRated
+                            ? () => onRateTripTap(booking)
+                            : () => onBookingTap(booking),
+                        onSecondaryTap: booking.trip.isRated
+                            ? null
+                            : () => onRateTripTap(booking),
+                        onBottomTap: isPdfLoading
+                            ? null
+                            : () => onBookingPdfTap(booking),
+                        isPdfLoading: isPdfLoading,
+                      );
+                    },
+                  ),
                 );
               },
             ),
