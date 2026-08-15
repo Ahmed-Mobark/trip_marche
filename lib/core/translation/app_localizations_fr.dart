@@ -728,14 +728,13 @@ class AppLocalizationsFr extends AppLocalizations {
   String get myTripsDownloadPdf => 'Télécharger le PDF';
 
   @override
-  String get myTripsEmptyTitle => 'Aucun voyage';
+  String get myTripsEmptyTitle => 'Aucune réservation';
 
   @override
-  String get myTripsEmptyDescription =>
-      'Commencez à explorer et réservez\nvotre première aventure !';
+  String get myTripsEmptyDescription => 'Votre prochaine aventure attend...';
 
   @override
-  String get myTripsExploreTrips => 'Explorer les voyages';
+  String get myTripsExploreTrips => 'Découvrir les voyages';
 
   @override
   String get navHome => 'Accueil';

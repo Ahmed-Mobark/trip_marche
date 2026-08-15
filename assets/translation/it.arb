@@ -1,6 +1,5 @@
 {
   "@@locale": "it",
-
   "errorFieldRequired": "Questo campo è obbligatorio",
   "errorInvalidName": "Formato nome non valido",
   "errorInvalidUrl": "URL non valido",
@@ -30,7 +29,6 @@
   "chooseFromFiles": "Carica: scegli dai file",
   "updatePleaseUpdateToContinue": "Aggiorna l’app per continuare.",
   "updateNewVersionAvailableShort": "È disponibile una nuova versione.",
-
   "authLoginTitle": "Accedi al tuo account",
   "authEmailLabel": "Email",
   "authEmailHint": "Inserisci la tua email",
@@ -48,7 +46,6 @@
   "authPartnerPortalTitle": "Portale partner",
   "authWebViewLoadFailed": "Impossibile caricare questa pagina. Controlla la connessione e riprova.",
   "authWebViewRetry": "Riprova",
-
   "authSignUpTitle": "Crea il tuo account",
   "authSignUpSubtitle": "Registrati per iniziare",
   "authFullNameLabel": "Nome completo",
@@ -63,13 +60,11 @@
   "authSocialApple": "Apple",
   "authHaveAccountPrompt": "Hai già un account? ",
   "authLoginAction": "Accedi",
-
   "authForgotPasswordTitle": "Password dimenticata",
   "authForgotPasswordDescription": "Inserisci il tuo indirizzo email qui sotto e ti invieremo un link per reimpostare la password.",
   "authForgotPasswordSubtitle": "Dimenticata? Sistemiamo noi.",
   "authSendButton": "Invia",
   "authSendCodeButton": "Invia codice",
-
   "authVerifyTitle": "Verifica il tuo numero",
   "authVerifyDescription": "Abbiamo inviato un codice OTP al tuo numero registrato. Inserisci il codice qui sotto.",
   "authVerifyButton": "Verifica",
@@ -79,7 +74,6 @@
   "authVerifyEmailSubtitle": "Ti inviamo un codice a 6 cifre per verificare il tuo numero",
   "authVerificationCodeNotReceived": "Codice di verifica non ricevuto?",
   "authResendNow": "Reinvia ora",
-
   "homeAppTitle": "TripMarche",
   "homeSearchHint": "Cerca un viaggio",
   "homeSearchHintDestination": "Cerca un viaggio a {destination}",
@@ -98,7 +92,6 @@
   "homeNewInTripMarche": "Novità su TripMarche",
   "homePerPerson": "Persona",
   "homeSeeAll": "Vedi tutto",
-
   "wishlistTitle": "Preferiti",
   "wishlistSearchHint": "Cerca un viaggio",
   "wishlistSortBy": "Ordina per",
@@ -108,7 +101,6 @@
   "wishlistBestPrice": "Miglior prezzo",
   "wishlistEmptyTitle": "Nessun viaggio salvato",
   "wishlistEmptyDescription": "Tocca l’icona del cuore su un viaggio per\nsalvarlo nei preferiti.",
-
   "wishlistFiltersTitle": "Filtri",
   "wishlistFiltersClearAll": "Cancella tutto",
   "wishlistFiltersDestination": "Destinazione",
@@ -158,7 +150,6 @@
   "wishlistFiltersDestinationCountry": "Destination Country",
   "wishlistFiltersFiveStarOnly": "5-Star Only",
   "filterSeeResults": "Vedi risultati",
-
   "settingsTitle": "Impostazioni",
   "settingsNotificationSetting": "Impostazioni notifiche",
   "settingsLanguage": "Lingua",
@@ -167,7 +158,6 @@
   "settingsArabic": "Arabo",
   "settingsDarkMode": "Modalità scura",
   "settingsAppVersion": "Versione app {version}",
-
   "notificationSettingsTitle": "Impostazioni notifiche",
   "notificationSettingsIntro": "Gestisci le preferenze di notifica per restare aggiornato su nuovi viaggi, offerte e aggiornamenti delle prenotazioni.",
   "notificationSettingsBookingUpdatesTitle": "Aggiornamenti prenotazione",
@@ -182,7 +172,6 @@
   "notificationSettingsTripUpdates": "Aggiornamenti viaggio",
   "notificationSettingsPromotions": "Promozioni",
   "notificationSettingsPriceAlerts": "Avvisi prezzo",
-
   "profileTitleAccount": "Account",
   "profileTitleSupport": "Supporto",
   "profilePersonalInfo": "Info personali",
@@ -207,14 +196,12 @@
   "commonCancel": "Annulla",
   "commonDelete": "Elimina",
   "commonOk": "OK",
-
   "followingsTitle": "I miei seguiti",
   "followingsCountTitle": "{count} seguiti",
   "followingsUnfollow": "Smetti di seguire",
   "follow": "Segui",
   "followingsEmptyTitle": "Nessun seguito",
   "followingsEmptyDescription": "Inizia a seguire le aziende per vedere\nqui i loro viaggi.",
-
   "myTripsTitle": "I miei viaggi",
   "myTripsTabUpcoming": "In arrivo",
   "myTripsTabPast": "Passati",
@@ -234,7 +221,9 @@
   "myTripsTravelers": "{count} viaggiatori",
   "@myTripsTravelers": {
     "placeholders": {
-      "count": {"type": "int"}
+      "count": {
+        "type": "int"
+      }
     }
   },
   "myTripsViewDetails": "Vedi dettagli",
@@ -245,13 +234,11 @@
   "myTripsDownloadPdf": "Scarica PDF",
   "myTripsEmptyTitle": "Nessun viaggio",
   "myTripsEmptyDescription": "Inizia a esplorare e prenota\nla tua prima avventura!",
-  "myTripsExploreTrips": "Esplora viaggi",
-
+  "myTripsExploreTrips": "Scopri viaggi",
   "navHome": "Home",
   "navTrips": "Viaggi",
   "navWishlist": "Preferiti",
   "navAccount": "Account",
-
   "bookingContactInfoTitle": "Informazioni di contatto",
   "bookingContactFullNameLabel": "Nome completo",
   "bookingContactFullNameHint": "Inserisci il tuo nome completo",
@@ -265,7 +252,6 @@
   "bookingContactIdPassportLabel": "Numero ID/Passaporto",
   "bookingContactIdPassportHint": "Inserisci il tuo numero ID o passaporto",
   "bookingContinue": "Continua",
-
   "bookingTravelerTitle": "Traveler {index}",
   "@bookingTravelerTitle": {
     "placeholders": {
@@ -274,7 +260,6 @@
       }
     }
   },
-
   "bookingTripOptionsTitle": "Trip Options",
   "bookingChooseDateTitle": "Choose the date that suits you",
   "bookingSeeAllDates": "See All Dates",
@@ -299,7 +284,6 @@
   "bookingTripleRoomSubtitle": "Shared room for three",
   "bookingPerson": "Person",
   "bookingFree": "Free",
-
   "bookingSelectActivitiesTitle": "Select Activities",
   "bookingTravelerParenthetical": "(Traveler {index})",
   "@bookingTravelerParenthetical": {
@@ -313,7 +297,6 @@
   "bookingActivityCamping": "Camping",
   "bookingActivityFishing": "Fishing",
   "bookingActivityDiving": "Diving",
-
   "bookingReviewTitle": "Review",
   "bookingReviewTripName": "Dahab Trip",
   "bookingReviewTripDescription": "Experience the breathtaking beauty of the Swiss Alps on this 7-day adventure. Visit iconic destinations, enjoy scenic train rides, and immerse yourself in Swiss culture. Perfect for nature lovers and photography enthusiasts.",
@@ -417,7 +400,6 @@
   "bookingReviewPaymentTotal": "Total",
   "bookingReviewCurrency": "EGP",
   "bookingPay": "Pay",
-
   "bookingAddNewCardTitle": "Aggiungi nuova carta",
   "bookingCardNumberLabel": "Numero carta",
   "bookingCardNumberHint": "0000 0000 0000 0000",
@@ -429,7 +411,6 @@
   "bookingCvvHint": "***",
   "bookingSaveCard": "Salva carta",
   "bookingCardholderNamePlaceholder": "INTESTATARIO CARTA",
-
   "bookingPaymentMethodTitle": "Metodo di pagamento",
   "bookingPaymentMethodSelect": "Seleziona metodo di pagamento",
   "bookingPaymentMethodChoose": "Scegli come vuoi pagare",
@@ -450,7 +431,6 @@
   "bookingAddNewCard": "Aggiungi nuova carta",
   "bookingPayNow": "Paga ora - {amount}",
   "bookingCardExpires": "Scade {expiry}",
-
   "profilePersonalInfoTitle": "Info personali",
   "profileFullNameLabel": "Nome completo",
   "profileEmailLabel": "Email",
@@ -505,7 +485,6 @@
   "companyProfileSeeAllTrips": "Vedi tutti i viaggi",
   "companyProfileShowLess": "Mostra meno",
   "companyProfilePricePerPerson": "Persona",
-
   "filterTitle": "Filtro",
   "filterReset": "Reimposta",
   "filterDuration": "Durata",
@@ -514,13 +493,11 @@
   "filterDepartureCity": "Città di partenza",
   "filterSelectCity": "Seleziona città",
   "filterApply": "Applica",
-
   "destinationTitle": "Destinazione",
   "destinationSearchHint": "Cerca destinazioni...",
   "destinationRecentSearches": "Ricerche recenti",
   "destinationClearAll": "Cancella tutto",
   "destinationPopularDestinations": "Destinazioni popolari",
-
   "searchTripsFound": "{count} viaggi trovati",
   "searchQueryExample": "Sharm El Sheikh",
   "searchResultTitle": "Risultati di ricerca",
@@ -551,7 +528,6 @@
   "searchResultOldPrice": "$1000",
   "searchResultDiscountPrice": "$699",
   "searchResultPerPerson": "/Persona",
-
   "tripDetailsTitle": "Viaggio a Dahab",
   "tripDetailsHeroCountryTag": "Indonesia",
   "tripDetailsHeroByCompany": "Da Agenzia di Viaggi",
@@ -565,7 +541,9 @@
   "@tripDetailsHeroByCompanyLine": {
     "description": "Travel vendor line on trip details hero.",
     "placeholders": {
-      "company": {"type": "String"}
+      "company": {
+        "type": "String"
+      }
     }
   },
   "tripDetailsGalleryMoreCount": "+{count}",
@@ -632,7 +610,9 @@
   "@tripDetailsStatCitiesCount": {
     "description": "Stat grid value for how many cities the trip visits.",
     "placeholders": {
-      "count": {"type": "int"}
+      "count": {
+        "type": "int"
+      }
     }
   },
   "tripDetailsPriceLabel": "Prezzo",
@@ -683,7 +663,6 @@
   "tripDetailsRelatedNameSharm": "Sharm El Sheikh",
   "tripDetailsRelatedNameHurghada": "Viaggio Hurghada",
   "tripDetailsRelatedNameLuxorAswan": "Luxor e Aswan",
-
   "tripDetailsHeroRatingLine": "4.5 (120 recensioni)",
   "tripDetailsHeroLocationShort": "Dahab, Egitto",
   "tripDetailsHeroDaysBadge": "7 giorni",
@@ -777,7 +756,6 @@
   "tripDetailsReviewSampleName": "Ahmed Hassan",
   "tripDetailsReviewSampleDate": "Dic 2025",
   "tripDetailsReviewSampleBody": "Viaggio fantastico! Ottima organizzazione e guide cordiali. La giornata di snorkeling è stata indimenticabile.",
-
   "bookingTripTermsTitle": "Termini e condizioni",
   "bookingTripTermsHeader": "Termini e condizioni del viaggio",
   "bookingTripTermsLastUpdated": "Ultimo aggiornamento: {date}",
@@ -795,7 +773,6 @@
   "bookingTripTermsSection6Body": "Le informazioni personali raccolte durante la prenotazione vengono utilizzate esclusivamente per l’organizzazione del viaggio e la comunicazione. Non condividiamo i tuoi dati con terze parti salvo quanto necessario per completare la prenotazione. Per maggiori dettagli consulta la nostra Informativa sulla privacy.",
   "bookingTripTermsSection7Title": "7. Risoluzione delle controversie",
   "bookingTripTermsSection7Body": "Eventuali controversie derivanti da questi termini saranno risolte tramite negoziazione amichevole. Se non si raggiunge un accordo, le controversie saranno sottoposte ai tribunali competenti. Questi termini sono regolati dalle leggi della Repubblica Araba d’Egitto.",
-
   "bookingTripInstructionsTitle": "Istruzioni del viaggio",
   "bookingTripInstructionsHeader": "Prima di partire",
   "bookingTripInstructionsIntro": "Leggi attentamente le seguenti istruzioni per garantire un’esperienza di viaggio fluida e piacevole. Una corretta preparazione ti aiuterà a sfruttare al meglio la tua avventura a Dahab.",
@@ -803,7 +780,6 @@
   "bookingTripInstructionsMeetingPointTime": "Punto e ora d’incontro",
   "bookingTripInstructionsDocumentsToBring": "Documenti da portare",
   "bookingTripInstructionsImportantReminders": "Promemoria importanti",
-
   "bookingTripSafetyTitle": "Sicurezza del viaggio",
   "bookingTripSafetyBanner": "La tua sicurezza è la nostra priorità. Leggi attentamente le seguenti linee guida.",
   "bookingTripSafetyHeader": "Procedure di sicurezza",
@@ -813,7 +789,6 @@
   "bookingTripSafetyHealthTitle": "Salute e assistenza medica",
   "bookingTripSafetyEmergencyTitle": "Contatti di emergenza",
   "bookingTripSafetyGeneralTipsTitle": "Consigli generali di sicurezza",
-
   "authResetPasswordTitle": "Reimposta password",
   "authResetPasswordSubtitle": "Inserisci qui sotto la nuova password",
   "authNewPasswordLabel": "Nuova password",
@@ -821,7 +796,6 @@
   "authConfirmNewPasswordLabel": "Conferma nuova password",
   "authConfirmNewPasswordHint": "Conferma nuova password",
   "authResetPasswordButton": "Reimposta password",
-
   "tripDetailsDurationUnit": "Giorni",
   "tripDetailsProgramDayPrefix": "Giorno",
   "tripDetailsTypeDomestic": "Nazionale",
@@ -915,8 +889,9 @@
   "reviewRatingScale": "{rating}/5",
   "@reviewRatingScale": {
     "placeholders": {
-      "rating": {"type": "int"}
+      "rating": {
+        "type": "int"
+      }
     }
   }
 }
-

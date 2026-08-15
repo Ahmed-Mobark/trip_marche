@@ -20,17 +20,16 @@
   "errorExperienceRequired": "يجب إضافة تجربة واحدة على الأقل.",
   "errorIdDocumentRequired": "يجب رفع مستند الهوية للتحقق من هويتك.",
   "errorPhotoRequired": "يجب رفع صورة بخلفية بيضاء",
-    "updateAvailableTitle": "تحديث متاح",
+  "updateAvailableTitle": "تحديث متاح",
   "updateMandatoryMessage": "يتوفر إصدار جديد من التطبيق. يرجى التحديث للمتابعة في استخدام التطبيق.",
   "updateOptionalMessage": "يتوفر إصدار جديد من التطبيق. نوصي بالتحديث للحصول على أفضل تجربة.",
   "updateNow": "تحديث الآن",
   "skip": "تخطي",
-    "chooseImage": "تحميل اختيار صورة",
+  "chooseImage": "تحميل اختيار صورة",
   "takePicture": "تحميل التقط صورة",
   "chooseFromFiles": "تحميل اختيار من الملفات",
-    "updatePleaseUpdateToContinue": "يرجى تحديث التطبيق للمتابعة.",
+  "updatePleaseUpdateToContinue": "يرجى تحديث التطبيق للمتابعة.",
   "updateNewVersionAvailableShort": "يتوفر إصدار جديد.",
-
   "authLoginTitle": "تسجيل الدخول إلى حسابك",
   "authEmailLabel": "البريد الإلكتروني",
   "authEmailHint": "أدخل بريدك الإلكتروني",
@@ -48,7 +47,6 @@
   "authPartnerPortalTitle": "بوابة الشركاء",
   "authWebViewLoadFailed": "تعذر تحميل هذه الصفحة. تحقق من الاتصال وحاول مرة أخرى.",
   "authWebViewRetry": "إعادة المحاولة",
-
   "authSignUpTitle": "أنشئ حسابك",
   "authSignUpSubtitle": "سجّل لإنشاء حسابك والبدء",
   "authFullNameLabel": "الاسم الكامل",
@@ -63,13 +61,11 @@
   "authSocialApple": "Apple",
   "authHaveAccountPrompt": "لديك حساب بالفعل؟ ",
   "authLoginAction": "تسجيل الدخول",
-
   "authForgotPasswordTitle": "نسيت كلمة مرورك؟",
   "authForgotPasswordDescription": "أدخل بريدك الإلكتروني أدناه وسنرسل لك رابطًا لإعادة تعيين كلمة المرور.",
   "authForgotPasswordSubtitle": "نسيتها؟ دعنا نصلح ذلك.",
   "authSendButton": "إرسال",
   "authSendCodeButton": "إرسال الرمز",
-
   "authVerifyTitle": "تحقق من رقمك",
   "authVerifyDescription": "لقد أرسلنا لك رمز تحقق إلى رقمك المسجل. يرجى إدخال الرمز أدناه.",
   "authVerifyButton": "تحقق",
@@ -79,7 +75,6 @@
   "authVerifyEmailSubtitle": "أرسلنا لك رمزًا من 6 أرقام للتحقق من رقمك",
   "authVerificationCodeNotReceived": "لم تستلم رمز التحقق؟",
   "authResendNow": "أعد الإرسال الآن",
-
   "homeAppTitle": "TripMarche",
   "homeSearchHint": "ابحث عن رحلة",
   "homeSearchHintDestination": "ابحث عن رحلة إلى {destination}",
@@ -98,7 +93,6 @@
   "homeNewInTripMarche": "جديد في TripMarche",
   "homePerPerson": "للفرد",
   "homeSeeAll": "عرض الكل",
-
   "wishlistTitle": "المفضلة",
   "wishlistSearchHint": "ابحث عن رحلة",
   "wishlistSortBy": "ترتيب حسب",
@@ -108,7 +102,6 @@
   "wishlistBestPrice": "أفضل سعر",
   "wishlistEmptyTitle": "لا توجد رحلات محفوظة بعد",
   "wishlistEmptyDescription": "اضغط على أيقونة القلب في أي رحلة\nلحفظها في المفضلة.",
-
   "wishlistFiltersTitle": "التصفية",
   "wishlistFiltersClearAll": "مسح الكل",
   "wishlistFiltersDestination": "الوجهة",
@@ -158,7 +151,6 @@
   "wishlistFiltersDestinationCountry": "بلد الوجهة",
   "wishlistFiltersFiveStarOnly": "خمسة نجوم فقط",
   "filterSeeResults": "عرض النتائج",
-
   "settingsTitle": "الإعدادات",
   "settingsNotificationSetting": "إعدادات الإشعارات",
   "settingsLanguage": "اللغة",
@@ -167,7 +159,6 @@
   "settingsArabic": "العربية",
   "settingsDarkMode": "الوضع الداكن",
   "settingsAppVersion": "إصدار التطبيق {version}",
-
   "notificationSettingsTitle": "إعدادات الإشعارات",
   "notificationSettingsIntro": "قم بإدارة تفضيلات الإشعارات للبقاء على اطلاع على الرحلات الجديدة والعروض وتحديثات الحجز.",
   "notificationSettingsBookingUpdatesTitle": "تحديثات الحجز",
@@ -182,7 +173,6 @@
   "notificationSettingsTripUpdates": "تحديثات الرحلات",
   "notificationSettingsPromotions": "العروض",
   "notificationSettingsPriceAlerts": "تنبيهات الأسعار",
-
   "profileTitleAccount": "الحساب",
   "profileTitleSupport": "الدعم",
   "profilePersonalInfo": "المعلومات الشخصية",
@@ -207,14 +197,12 @@
   "commonCancel": "إلغاء",
   "commonOk": "موافق",
   "commonDelete": "حذف",
-
   "followingsTitle": "الشركات التي أتابعها",
   "followingsCountTitle": "{count} متابعة",
   "followingsUnfollow": "إلغاء المتابعة",
   "follow": "متابعة",
   "followingsEmptyTitle": "لا توجد متابعات بعد",
   "followingsEmptyDescription": "ابدأ بمتابعة الشركات لتشاهد\nرحلاتها هنا.",
-
   "myTripsTitle": "رحلاتي",
   "myTripsTabUpcoming": "القادمة",
   "myTripsTabPast": "السابقة",
@@ -234,7 +222,9 @@
   "myTripsTravelers": "{count} مسافرين",
   "@myTripsTravelers": {
     "placeholders": {
-      "count": {"type": "int"}
+      "count": {
+        "type": "int"
+      }
     }
   },
   "myTripsViewDetails": "عرض التفاصيل",
@@ -245,15 +235,13 @@
   "myTripsRateTrip": "قيّم الرحلة",
   "myTripsRated": "تم التقييم",
   "myTripsDownloadPdf": "تحميل pdf",
-  "myTripsEmptyTitle": "لا توجد رحلات بعد",
-  "myTripsEmptyDescription": "ابدأ الاستكشاف واحجز\nمغامرتك الأولى!",
+  "myTripsEmptyTitle": "لا توجد حجوزات بعد !",
+  "myTripsEmptyDescription": "رحلتك القادمة تنتظرك...",
   "myTripsExploreTrips": "استكشف الرحلات",
-
   "navHome": "الرئيسية",
   "navTrips": "الرحلات",
   "navWishlist": "المفضلة",
   "navAccount": "الحساب",
-
   "bookingContactInfoTitle": "معلومات الاتصال",
   "bookingContactFullNameLabel": "الاسم الكامل",
   "bookingContactFullNameHint": "أدخل اسمك الكامل",
@@ -267,7 +255,6 @@
   "bookingContactIdPassportLabel": "رقم الهوية/جواز السفر",
   "bookingContactIdPassportHint": "أدخل رقم الهوية أو جواز السفر",
   "bookingContinue": "متابعة",
-
   "bookingTravelerTitle": "مسافر {index}",
   "@bookingTravelerTitle": {
     "placeholders": {
@@ -276,7 +263,6 @@
       }
     }
   },
-
   "bookingTripOptionsTitle": "خيارات الرحلة",
   "bookingChooseDateTitle": "اختر التاريخ المناسب لك",
   "bookingSeeAllDates": "عرض كل التواريخ",
@@ -301,7 +287,6 @@
   "bookingTripleRoomSubtitle": "غرفة مشتركة لثلاثة أشخاص",
   "bookingPerson": "شخص",
   "bookingFree": "مجاني",
-
   "bookingSelectActivitiesTitle": "اختر الأنشطة",
   "bookingTravelerParenthetical": "(مسافر {index})",
   "@bookingTravelerParenthetical": {
@@ -315,7 +300,6 @@
   "bookingActivityCamping": "تخييم",
   "bookingActivityFishing": "صيد",
   "bookingActivityDiving": "غوص",
-
   "bookingReviewTitle": "مراجعة",
   "bookingReviewTripName": "رحلة دهب",
   "bookingReviewTripDescription": "استمتع بجمال جبال الألب السويسرية الخلاب في مغامرة لمدة 7 أيام. زر الوجهات الشهيرة، واستمتع برحلات القطار ذات المناظر الخلابة، وانغمس في الثقافة السويسرية. مثالية لعشاق الطبيعة والتصوير.",
@@ -419,7 +403,6 @@
   "bookingReviewPaymentTotal": "الإجمالي",
   "bookingReviewCurrency": "جنيه",
   "bookingPay": "ادفع",
-
   "bookingAddNewCardTitle": "إضافة بطاقة جديدة",
   "bookingCardNumberLabel": "رقم البطاقة",
   "bookingCardNumberHint": "0000 0000 0000 0000",
@@ -431,7 +414,6 @@
   "bookingCvvHint": "***",
   "bookingSaveCard": "حفظ البطاقة",
   "bookingCardholderNamePlaceholder": "اسم حامل البطاقة",
-
   "bookingPaymentMethodTitle": "طريقة الدفع",
   "bookingPaymentMethodSelect": "اختر طريقة الدفع",
   "bookingPaymentMethodChoose": "اختر طريقة الدفع المناسبة",
@@ -451,8 +433,7 @@
   "bookingSavedCards": "البطاقات المحفوظة",
   "bookingAddNewCard": "إضافة بطاقة جديدة",
   "bookingPayNow": "ادفع الآن - {amount}",
-  "bookingCardExpires": "تنتهي {expiry}"
-  ,
+  "bookingCardExpires": "تنتهي {expiry}",
   "profilePersonalInfoTitle": "المعلومات الشخصية",
   "profileFullNameLabel": "الاسم الكامل",
   "profileEmailLabel": "البريد الإلكتروني",
@@ -507,7 +488,6 @@
   "companyProfileSeeAllTrips": "عرض جميع الرحلات",
   "companyProfileShowLess": "عرض أقل",
   "companyProfilePricePerPerson": "شخص",
-
   "filterTitle": "تصفية",
   "filterReset": "إعادة ضبط",
   "filterDuration": "المدة",
@@ -516,13 +496,11 @@
   "filterDepartureCity": "مدينة المغادرة",
   "filterSelectCity": "اختر مدينة",
   "filterApply": "تطبيق",
-
   "destinationTitle": "الوجهات",
   "destinationSearchHint": "ابحث عن وجهات...",
   "destinationRecentSearches": "عمليات البحث الأخيرة",
   "destinationClearAll": "مسح الكل",
   "destinationPopularDestinations": "وجهات شائعة",
-
   "searchTripsFound": "تم العثور على {count} رحلة",
   "searchQueryExample": "شرم الشيخ",
   "searchResultTitle": "نتائج البحث",
@@ -553,7 +531,6 @@
   "searchResultOldPrice": "$1000",
   "searchResultDiscountPrice": "$699",
   "searchResultPerPerson": "/للفرد",
-
   "tripDetailsTitle": "رحلة دهب",
   "tripDetailsHeroCountryTag": "إندونيسيا",
   "tripDetailsHeroByCompany": "بواسطة شركة السفر",
@@ -567,7 +544,9 @@
   "@tripDetailsHeroByCompanyLine": {
     "description": "Travel vendor line on trip details hero.",
     "placeholders": {
-      "company": {"type": "String"}
+      "company": {
+        "type": "String"
+      }
     }
   },
   "tripDetailsGalleryMoreCount": "+{count}",
@@ -634,7 +613,9 @@
   "@tripDetailsStatCitiesCount": {
     "description": "Stat grid value for how many cities the trip visits.",
     "placeholders": {
-      "count": {"type": "int"}
+      "count": {
+        "type": "int"
+      }
     }
   },
   "tripDetailsPriceLabel": "السعر",
@@ -685,7 +666,6 @@
   "tripDetailsRelatedNameSharm": "شرم الشيخ",
   "tripDetailsRelatedNameHurghada": "رحلة الغردقة",
   "tripDetailsRelatedNameLuxorAswan": "الأقصر وأسوان",
-
   "tripDetailsHeroRatingLine": "4.5 (120 تقييم)",
   "tripDetailsHeroLocationShort": "دهب، مصر",
   "tripDetailsHeroDaysBadge": "7 أيام",
@@ -779,7 +759,6 @@
   "tripDetailsReviewSampleName": "أحمد حسن",
   "tripDetailsReviewSampleDate": "ديسمبر 2025",
   "tripDetailsReviewSampleBody": "رحلة رائعة! تنظيم ممتاز ومرشدون لطفاء. يوم السنوركلينج لا يُنسى.",
-
   "bookingTripTermsTitle": "الشروط والأحكام",
   "bookingTripTermsHeader": "شروط وأحكام الرحلة",
   "bookingTripTermsLastUpdated": "آخر تحديث: {date}",
@@ -797,7 +776,6 @@
   "bookingTripTermsSection6Body": "تُستخدم المعلومات الشخصية التي يتم جمعها أثناء الحجز فقط لتنظيم الرحلة والتواصل. لا نشارك معلوماتك مع أطراف ثالثة إلا بقدر ما يلزم لتنفيذ الحجز. لمزيد من التفاصيل يرجى الرجوع إلى سياسة الخصوصية.",
   "bookingTripTermsSection7Title": "7. تسوية النزاعات",
   "bookingTripTermsSection7Body": "يتم حل أي نزاعات تنشأ عن هذه الشروط عبر التفاوض الودي. وفي حال عدم التوصل إلى حل تُحال النزاعات إلى الجهات القضائية المختصة. تخضع هذه الشروط لقوانين جمهورية مصر العربية.",
-
   "bookingTripInstructionsTitle": "تعليمات الرحلة",
   "bookingTripInstructionsHeader": "قبل الانطلاق",
   "bookingTripInstructionsIntro": "يرجى قراءة التعليمات التالية بعناية لضمان تجربة رحلة سلسة وممتعة. سيساعدك الاستعداد الجيد على الاستفادة القصوى من مغامرة دهب.",
@@ -805,7 +783,6 @@
   "bookingTripInstructionsMeetingPointTime": "نقطة ووقت التجمع",
   "bookingTripInstructionsDocumentsToBring": "الوثائق المطلوبة",
   "bookingTripInstructionsImportantReminders": "تذكيرات مهمة",
-
   "bookingTripSafetyTitle": "سلامة الرحلة",
   "bookingTripSafetyBanner": "سلامتك هي أولويتنا. يرجى قراءة الإرشادات التالية بعناية.",
   "bookingTripSafetyHeader": "إجراءات السلامة",
@@ -815,7 +792,6 @@
   "bookingTripSafetyHealthTitle": "الصحة والرعاية الطبية",
   "bookingTripSafetyEmergencyTitle": "جهات الاتصال في الطوارئ",
   "bookingTripSafetyGeneralTipsTitle": "نصائح سلامة عامة",
-
   "authResetPasswordTitle": "إعادة تعيين كلمة المرور",
   "authResetPasswordSubtitle": "أدخل كلمة المرور الجديدة أدناه",
   "authNewPasswordLabel": "كلمة المرور الجديدة",
@@ -823,7 +799,6 @@
   "authConfirmNewPasswordLabel": "تأكيد كلمة المرور الجديدة",
   "authConfirmNewPasswordHint": "أكد كلمة المرور الجديدة",
   "authResetPasswordButton": "إعادة تعيين كلمة المرور",
-
   "tripDetailsDurationUnit": "أيام",
   "tripDetailsProgramDayPrefix": "يوم",
   "tripDetailsTypeDomestic": "محلي",
@@ -917,7 +892,9 @@
   "reviewRatingScale": "{rating}/5",
   "@reviewRatingScale": {
     "placeholders": {
-      "rating": {"type": "int"}
+      "rating": {
+        "type": "int"
+      }
     }
   }
 }

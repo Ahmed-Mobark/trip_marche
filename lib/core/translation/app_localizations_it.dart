@@ -732,7 +732,7 @@ class AppLocalizationsIt extends AppLocalizations {
       'Inizia a esplorare e prenota\nla tua prima avventura!';
 
   @override
-  String get myTripsExploreTrips => 'Esplora viaggi';
+  String get myTripsExploreTrips => 'Scopri viaggi';
 
   @override
   String get navHome => 'Home';

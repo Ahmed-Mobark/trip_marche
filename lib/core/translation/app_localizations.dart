@@ -1471,19 +1471,19 @@ abstract class AppLocalizations {
   /// No description provided for @myTripsEmptyTitle.
   ///
   /// In en, this message translates to:
-  /// **'No trips yet'**
+  /// **'No Bookings Yet !'**
   String get myTripsEmptyTitle;
 
   /// No description provided for @myTripsEmptyDescription.
   ///
   /// In en, this message translates to:
-  /// **'Start exploring and book your\nfirst adventure!'**
+  /// **'Your next adventure awaits...'**
   String get myTripsEmptyDescription;
 
   /// No description provided for @myTripsExploreTrips.
   ///
   /// In en, this message translates to:
-  /// **'Explore Trips'**
+  /// **'Discover Trips'**
   String get myTripsExploreTrips;
 
   /// No description provided for @navHome.

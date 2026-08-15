@@ -3,30 +3,32 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:iconsax/iconsax.dart';
+import 'package:trip_marche/core/config/app_images.dart';
 import 'package:trip_marche/core/config/styles/styles.dart';
 import 'package:trip_marche/core/extensions/localization.dart';
-import 'package:trip_marche/core/theme/app_text_styles.dart';
 import 'package:trip_marche/core/injection/injection_container.dart';
 import 'package:trip_marche/core/navigation/app_navigator.dart';
 import 'package:trip_marche/core/theme/app_colors.dart';
+import 'package:trip_marche/core/theme/app_text_styles.dart';
 import 'package:trip_marche/core/toast/app_toast.dart';
+import 'package:trip_marche/core/widgets/app_button.dart';
 import 'package:trip_marche/core/widgets/app_trip_search_text_field.dart';
 import 'package:trip_marche/features/my_trips/domain/entities/booking_entity.dart';
+import 'package:trip_marche/features/my_trips/presentation/cubit/booking_pdf_cubit.dart';
+import 'package:trip_marche/features/my_trips/presentation/cubit/booking_pdf_state.dart';
 import 'package:trip_marche/features/my_trips/presentation/cubit/bookings_cubit.dart';
 import 'package:trip_marche/features/my_trips/presentation/cubit/bookings_state.dart';
 import 'package:trip_marche/features/my_trips/presentation/cubit/my_trips_shell_cubit.dart';
 import 'package:trip_marche/features/my_trips/presentation/cubit/my_trips_shell_state.dart';
 import 'package:trip_marche/features/my_trips/presentation/cubit/my_trips_shell_tab.dart';
-import 'package:trip_marche/features/my_trips/presentation/cubit/booking_pdf_cubit.dart';
-import 'package:trip_marche/features/my_trips/presentation/cubit/booking_pdf_state.dart';
 import 'package:trip_marche/features/my_trips/presentation/my_trips_figma_tokens.dart';
 import 'package:trip_marche/features/my_trips/presentation/view/booking_pdf_viewer_screen.dart';
-import 'package:trip_marche/features/my_trips/presentation/widgets/my_trips_screen_trip_card.dart';
 import 'package:trip_marche/features/my_trips/presentation/widgets/my_trips_screen_tabs.dart';
+import 'package:trip_marche/features/my_trips/presentation/widgets/my_trips_screen_trip_card.dart';
+import 'package:trip_marche/features/nav_bar/presentation/view/main_nav_view.dart';
 import 'package:trip_marche/features/profile/presentation/view/add_vendor_review_view.dart';
-import 'package:trip_marche/features/trip_details/presentation/view/trip_details_view.dart';
 import 'package:trip_marche/features/trip_details/presentation/trip_wishlist_pop_result.dart';
+import 'package:trip_marche/features/trip_details/presentation/view/trip_details_view.dart';
 
 class MyTripsView extends StatelessWidget {
   const MyTripsView({super.key});
@@ -348,18 +350,10 @@ class _BookingsList extends StatelessWidget {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Container(
-                width: 80,
-                height: 80,
-                decoration: BoxDecoration(
-                  color: AppColors.lightBg(context),
-                  shape: BoxShape.circle,
-                ),
-                child: Icon(
-                  Iconsax.airplane,
-                  size: 36,
-                  color: AppColors.greyText(context),
-                ),
+              SizedBox(
+                width: 140.w,
+                height: 140.w,
+                child: Image.asset(AppImages.emptyTrips),
               ),
               SizedBox(height: 16.h),
               Text(
@@ -377,6 +371,20 @@ class _BookingsList extends StatelessWidget {
                   color: AppColors.greyText(context),
                 ),
               ),
+              SizedBox(height: 16.h),
+              AppButton(
+                heigh: 48.h,
+                onTap: () => sl<AppNavigator>().pushAndRemoveUntil(
+                  screen: MainNavView(initialIndex: 0),
+                ),
+
+                radius: 40.w,
+                style: AppTextStyles.body(
+                  color: AppColors.white,
+                ).copyWith(fontSize: 14.sp, fontWeight: FontWeight.w600),
+                text: context.tr.myTripsExploreTrips,
+              ),
+              SizedBox(height: 8.h),
             ],
           ),
         ),

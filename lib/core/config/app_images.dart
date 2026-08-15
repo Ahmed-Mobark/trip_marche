@@ -13,6 +13,8 @@ class AppImages {
   static const String tripPlaceholder = _fallbackPng;
   static const String searchResultTrip1 =
       '${_imagesPath}search_result_trip_1.png';
+  static const String emptyTrips = '${_imagesPath}notrips.png';
+
   static const String searchResultTrip2 =
       '${_imagesPath}search_result_trip_2.png';
   static const String searchResultTrip3 =

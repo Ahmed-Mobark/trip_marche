@@ -720,10 +720,10 @@ class AppLocalizationsAr extends AppLocalizations {
   String get myTripsDownloadPdf => 'تحميل pdf';
 
   @override
-  String get myTripsEmptyTitle => 'لا توجد رحلات بعد';
+  String get myTripsEmptyTitle => 'لا توجد حجوزات بعد !';
 
   @override
-  String get myTripsEmptyDescription => 'ابدأ الاستكشاف واحجز\nمغامرتك الأولى!';
+  String get myTripsEmptyDescription => 'رحلتك القادمة تنتظرك...';
 
   @override
   String get myTripsExploreTrips => 'استكشف الرحلات';

@@ -243,8 +243,8 @@
   "myTripsWriteReview": "Bewertung schreiben",
   "myTripsRateTrip": "Reise bewerten",
   "myTripsDownloadPdf": "PDF herunterladen",
-  "myTripsEmptyTitle": "Noch keine Reisen",
-  "myTripsEmptyDescription": "Entdecke Reisen und buche\ndein erstes Abenteuer!",
+  "myTripsEmptyTitle": "Noch keine Buchungen",
+  "myTripsEmptyDescription": "Deine nächste Reise wartet auf dich...",
   "myTripsExploreTrips": "Reisen entdecken",
 
   "navHome": "Start",
