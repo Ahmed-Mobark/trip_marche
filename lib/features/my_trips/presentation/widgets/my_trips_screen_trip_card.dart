@@ -32,9 +32,6 @@ class MyTripsScreenTripCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    debugPrint(
-      '[MyTripsCard] Build tripId=${trip.tripId} isFavorite=${trip.isFavorite} iconColor=${trip.isFavorite ? "red" : "grey"}',
-    );
     final tr = context.tr;
 
     final (Color badgeColor, String badgeLabel) = switch (tab) {
@@ -52,12 +49,7 @@ class MyTripsScreenTripCard extends StatelessWidget {
       ),
     };
 
-    final primaryLabel = switch (tab) {
-      MyTripsShellTab.past
-          when !trip.isRated => context.tr.myTripsRateTrip,
-      MyTripsShellTab.past => tr.myTripsBookAgain,
-      _ => tr.myTripsViewDetails,
-    };
+    final primaryLabel = tr.myTripsViewDetails;
 
     final bottomLabel = switch (tab) {
       MyTripsShellTab.canceled => tr.myTripsDownloadPdf,
@@ -68,7 +60,7 @@ class MyTripsScreenTripCard extends StatelessWidget {
             : tr.myTripsBookingDetails,
     };
 
-    final secondaryLabel = trip.isRated ? tr.myTripsRated : tr.myTripsRateTrip;
+    final secondaryLabel = tr.myTripsViewReceipt;
 
     return LayoutBuilder(
       builder: (context, constraints) {
@@ -101,45 +93,43 @@ class MyTripsScreenTripCard extends StatelessWidget {
               PositionedDirectional(
                 start: 0,
                 top: 6.h,
+                bottom: 6.h,
                 width: imageW,
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(
                     MyTripsTripCardTokens.cardRadius,
                   ),
-                  child: AspectRatio(
-                    aspectRatio: 1,
-                    child: Stack(
-                      fit: StackFit.expand,
-                      children: [
-                        _TripThumb(imageUrl: trip.imageUrl),
-                        PositionedDirectional(
-                          top: MyTripsTripCardTokens.badgeInset,
-                          start: MyTripsTripCardTokens.badgeInset,
-                          child: Container(
-                            padding: EdgeInsetsDirectional.symmetric(
-                              horizontal: MyTripsTripCardTokens.badgePadH,
-                              vertical: MyTripsTripCardTokens.badgePadV,
+                  child: Stack(
+                    fit: StackFit.expand,
+                    children: [
+                      _TripThumb(imageUrl: trip.imageUrl),
+                      PositionedDirectional(
+                        top: MyTripsTripCardTokens.badgeInset,
+                        start: MyTripsTripCardTokens.badgeInset,
+                        child: Container(
+                          padding: EdgeInsetsDirectional.symmetric(
+                            horizontal: MyTripsTripCardTokens.badgePadH,
+                            vertical: MyTripsTripCardTokens.badgePadV,
+                          ),
+                          decoration: BoxDecoration(
+                            color: badgeColor,
+                            borderRadius: BorderRadius.circular(
+                              MyTripsFigmaTokens.searchRadiusPill,
                             ),
-                            decoration: BoxDecoration(
-                              color: badgeColor,
-                              borderRadius: BorderRadius.circular(
-                                MyTripsFigmaTokens.searchRadiusPill,
-                              ),
-                            ),
-                            child: Text(
-                              badgeLabel,
-                              style: MyTripsFigmaTokens.text(
-                                fontSize: MyTripsTripCardTokens.badgeFont,
-                                fontWeight: FontWeight.w500,
-                                height: MyTripsTripCardTokens.lh(11, 13),
-                                letterSpacing: 0,
-                                color: AppColors.white,
-                              ),
+                          ),
+                          child: Text(
+                            badgeLabel,
+                            style: MyTripsFigmaTokens.text(
+                              fontSize: MyTripsTripCardTokens.badgeFont,
+                              fontWeight: FontWeight.w500,
+                              height: MyTripsTripCardTokens.lh(11, 13),
+                              letterSpacing: 0,
+                              color: AppColors.white,
                             ),
                           ),
                         ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
                 ),
               ),
@@ -160,7 +150,8 @@ class MyTripsScreenTripCard extends StatelessWidget {
                         Expanded(
                           child: Text(
                             trip.title,
-                            maxLines: 3,
+                            maxLines: 4,
+                            overflow: TextOverflow.ellipsis,
                             style: MyTripsFigmaTokens.text(
                               fontSize: MyTripsTripCardTokens.titleFont,
                               fontWeight: FontWeight.w700,
@@ -176,16 +167,11 @@ class MyTripsScreenTripCard extends StatelessWidget {
                           ),
                           child: Material(
                             color: AppColors.transparent,
-                              child: InkWell(
-                                 onTap: () {
-                                   debugPrint(
-                                     '[MyTripsCard] Heart tapped, tripId=${trip.tripId}, current isFavorite=${trip.isFavorite}',
-                                   );
-                                   context
-                                       .read<MyTripsShellCubit>()
-                                       .toggleWishlist(trip.tripId);
-                                 },
-                                customBorder: const CircleBorder(),
+                            child: InkWell(
+                              onTap: () => context
+                                  .read<MyTripsShellCubit>()
+                                  .toggleWishlist(trip.tripId),
+                              customBorder: const CircleBorder(),
                               child: Container(
                                 width: MyTripsTripCardTokens.favoriteSize,
                                 height: MyTripsTripCardTokens.favoriteSize,
@@ -194,15 +180,15 @@ class MyTripsScreenTripCard extends StatelessWidget {
                                   color: AppColors.greyTextColorDarkOpacity50,
                                 ),
                                 alignment: Alignment.center,
-                                 child: Icon(
-                                   trip.isFavorite
-                                       ? Icons.favorite
-                                       : Icons.favorite_border,
-                                   size: MyTripsTripCardTokens.favoriteIcon,
-                                   color: trip.isFavorite
-                                       ? Colors.red
-                                       : AppColors.greyText(context),
-                                 ),
+                                child: Icon(
+                                  trip.isFavorite
+                                      ? Iconsax.heart5
+                                      : Iconsax.heart,
+                                  size: MyTripsTripCardTokens.favoriteIcon,
+                                  color: trip.isFavorite
+                                      ? AppColors.myTripsTripCardRed
+                                      : AppColors.greyText(context),
+                                ),
                               ),
                             ),
                           ),
@@ -229,7 +215,9 @@ class MyTripsScreenTripCard extends StatelessWidget {
                                     fontWeight: FontWeight.w700,
                                     height: MyTripsTripCardTokens.lh(14, 18),
                                     letterSpacing: 0,
-                                    color: AppColors.myTripsTripCardInk(context),
+                                    color: AppColors.myTripsTripCardInk(
+                                      context,
+                                    ),
                                   ),
                                 ),
                                 TextSpan(
@@ -255,28 +243,24 @@ class MyTripsScreenTripCard extends StatelessWidget {
                     SizedBox(height: MyTripsTripCardTokens.rowTight),
                     _MetaRow(icon: Iconsax.calendar_1, text: trip.dateRange),
                     SizedBox(height: MyTripsTripCardTokens.beforeActions),
-                    if (!(tab == MyTripsShellTab.past && trip.isRated)) ...[
-                      Row(
-                        children: [
-                          Expanded(
-                            child: _FilledCta(
-                              label: primaryLabel,
-                              onTap: onPrimaryTap,
-                            ),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: _FilledCta(
+                            label: primaryLabel,
+                            onTap: onPrimaryTap,
                           ),
-                          SizedBox(width: MyTripsTripCardTokens.twinGap),
-                           Expanded(
-                             child: _OutlineCta(
-                               label: secondaryLabel,
-                               icon: Iconsax.star1,
-                               isActive: !trip.isRated,
-                               onTap: onSecondaryTap,
-                             ),
-                           ),
-                        ],
-                      ),
-                      SizedBox(height: MyTripsTripCardTokens.belowTwinRow),
-                    ],
+                        ),
+                        SizedBox(width: MyTripsTripCardTokens.twinGap),
+                        Expanded(
+                          child: _OutlineCta(
+                            label: secondaryLabel,
+                            onTap: onSecondaryTap,
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: MyTripsTripCardTokens.belowTwinRow),
                     _FooterCta(
                       label: bottomLabel,
                       onTap: onBottomTap,
@@ -392,26 +376,13 @@ class _FilledCta extends StatelessWidget {
 }
 
 class _OutlineCta extends StatelessWidget {
-  const _OutlineCta({
-    required this.label,
-    this.icon,
-    this.isActive = true,
-    this.onTap,
-  });
+  const _OutlineCta({required this.label, this.onTap});
 
   final String label;
-  final IconData? icon;
-  final bool isActive;
   final VoidCallback? onTap;
 
   @override
   Widget build(BuildContext context) {
-    final bg = isActive
-        ? AppColors.myTripsTripCardPurple
-        : AppColors.greyText(context).withValues(alpha: 0.15);
-    final textColor = isActive ? AppColors.white : AppColors.greyText(context);
-    final iconColor = isActive ? AppColors.white : AppColors.greyText(context);
-
     return Material(
       color: AppColors.transparent,
       child: InkWell(
@@ -424,37 +395,27 @@ class _OutlineCta extends StatelessWidget {
             horizontal: MyTripsTripCardTokens.twinPadH,
           ),
           decoration: BoxDecoration(
-            color: bg,
+            color: AppColors.cardBg(context),
             borderRadius: BorderRadius.circular(
               MyTripsTripCardTokens.twinRadius,
             ),
+            border: Border.all(
+              color: AppColors.myTripsTripCardBorder(context),
+              width: 1.w,
+            ),
           ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              if (icon != null) ...[
-                Icon(
-                  icon,
-                  size: MyTripsTripCardTokens.starSize,
-                  color: iconColor,
-                ),
-                SizedBox(width: MyTripsTripCardTokens.starToText),
-              ],
-              Text(
-                label,
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                textAlign: TextAlign.center,
-                style: MyTripsFigmaTokens.text(
-                  fontSize: MyTripsTripCardTokens.twinFont,
-                  fontWeight: FontWeight.w600,
-                  height: MyTripsTripCardTokens.lh(14, 18),
-                  letterSpacing: 0,
-                  color: textColor,
-                ),
-              ),
-            ],
+          child: Text(
+            label,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            textAlign: TextAlign.center,
+            style: MyTripsFigmaTokens.text(
+              fontSize: MyTripsTripCardTokens.twinFont,
+              fontWeight: FontWeight.w600,
+              height: MyTripsTripCardTokens.lh(14, 18),
+              letterSpacing: 0,
+              color: AppColors.myTripsTripCardInk(context),
+            ),
           ),
         ),
       ),
@@ -463,11 +424,7 @@ class _OutlineCta extends StatelessWidget {
 }
 
 class _FooterCta extends StatelessWidget {
-  const _FooterCta({
-    required this.label,
-    this.onTap,
-    this.isLoading = false,
-  });
+  const _FooterCta({required this.label, this.onTap, this.isLoading = false});
 
   final String label;
   final VoidCallback? onTap;

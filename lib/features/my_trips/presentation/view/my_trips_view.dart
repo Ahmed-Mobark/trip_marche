@@ -440,13 +440,8 @@ class _BookingsList extends StatelessWidget {
                       return MyTripsScreenTripCard(
                         trip: _toRowModel(booking, isFav),
                         tab: tab,
-                        onPrimaryTap:
-                            tab == MyTripsShellTab.past && !booking.trip.isRated
-                            ? () => onRateTripTap(booking)
-                            : () => onBookingTap(booking),
-                        onSecondaryTap: booking.trip.isRated
-                            ? null
-                            : () => onRateTripTap(booking),
+                        onPrimaryTap: () => onBookingTap(booking),
+                        onSecondaryTap: () => onBookingTap(booking),
                         onBottomTap: isPdfLoading
                             ? null
                             : () => onBookingPdfTap(booking),
