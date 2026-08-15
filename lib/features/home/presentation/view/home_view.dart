@@ -462,7 +462,7 @@ class HomeViewState extends State<HomeView> {
         // ── Sponsored Trips ──
         if (sponsoredSection != null) ...[
           _SectionHeader(
-            title: sponsoredSection.title,
+            title: context.tr.homeSponsoredTrips,
             actionText: context.tr.homeSeeAll,
             titleStyle: sectionTitleStyle,
             actionStyle: actionStyle,
@@ -500,7 +500,7 @@ class HomeViewState extends State<HomeView> {
         // ── Domestic Trips ──
         if (domesticSection != null) ...[
           _SectionHeader(
-            title: domesticSection.title,
+            title: context.tr.homeDomesticTripsInEgypt,
             actionText: context.tr.homeSeeAll,
             titleStyle: sectionTitleStyle,
             actionStyle: actionStyle,
@@ -538,7 +538,7 @@ class HomeViewState extends State<HomeView> {
         // ── International Trips ──
         if (internationalSection != null) ...[
           _SectionHeader(
-            title: internationalSection.title,
+            title: context.tr.homeInternationalTripsFromEgypt,
             actionText: context.tr.homeSeeAll,
             titleStyle: sectionTitleStyle,
             actionStyle: actionStyle,

@@ -266,19 +266,19 @@ class AppLocalizationsAr extends AppLocalizations {
   String get homePopularTrips => 'الرحلات الشائعة';
 
   @override
-  String get homeSponsoredTrips => 'Hot Deals';
+  String get homeSponsoredTrips => 'عروض ساخنة';
 
   @override
-  String get homeDomesticTripsInEgypt => 'Explore Egypt';
+  String get homeDomesticTripsInEgypt => 'استكشف مصر';
 
   @override
-  String get homeInternationalTripsFromEgypt => 'Explore the World';
+  String get homeInternationalTripsFromEgypt => 'استكشف العالم';
 
   @override
   String get homeRecommendedForYou => 'موصى بها لك';
 
   @override
-  String get homeSpecialTrips => 'Explore by Category';
+  String get homeSpecialTrips => 'استكشف حسب الفئة';
 
   @override
   String get homeTopRated => 'الأعلى تقييماً';
@@ -723,7 +723,8 @@ class AppLocalizationsAr extends AppLocalizations {
   String get myTripsEmptyTitle => 'لا توجد حجوزات بعد !';
 
   @override
-  String get myTripsEmptyDescription => 'رحلتك القادمة تنتظرك...';
+  String get myTripsEmptyDescription =>
+      'لقد حان الوقت لتنظيف حقائبك والبدء في التخطيط لمغامرتك القادمة';
 
   @override
   String get myTripsExploreTrips => 'استكشف الرحلات';

@@ -272,20 +272,19 @@ class AppLocalizationsDe extends AppLocalizations {
   String get homePopularTrips => 'Beliebte Reisen';
 
   @override
-  String get homeSponsoredTrips => 'Gesponserte Reisen';
+  String get homeSponsoredTrips => 'Heiße Angebote';
 
   @override
-  String get homeDomesticTripsInEgypt => 'Inlandsreisen in Ägypten';
+  String get homeDomesticTripsInEgypt => 'Ägypten entdecken';
 
   @override
-  String get homeInternationalTripsFromEgypt =>
-      'Internationale Reisen ab Ägypten';
+  String get homeInternationalTripsFromEgypt => 'Die Welt entdecken';
 
   @override
   String get homeRecommendedForYou => 'Für dich empfohlen';
 
   @override
-  String get homeSpecialTrips => 'Spezielle Reisen';
+  String get homeSpecialTrips => 'Nach Kategorie entdecken';
 
   @override
   String get homeTopRated => 'Top bewertet';

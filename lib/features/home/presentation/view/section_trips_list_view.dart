@@ -153,6 +153,8 @@ class _SectionTripsListScaffoldState extends State<_SectionTripsListScaffold> {
 
 
   String _titleFromState(SectionTripsItemsState state) {
+    final fallback = widget.fallbackTitle.trim();
+    if (fallback.isNotEmpty) return fallback;
     final fromApi = state.meta?.sectionTitle?.trim() ?? '';
     if (fromApi.isNotEmpty) return fromApi;
     return widget.fallbackTitle;

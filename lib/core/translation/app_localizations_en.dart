@@ -282,7 +282,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get homeRecommendedForYou => 'Recommended For You';
 
   @override
-  String get homeSpecialTrips => 'Explore by Category';
+  String get homeSpecialTrips => 'Explore by category';
 
   @override
   String get homeTopRated => 'Top Rated';
@@ -726,7 +726,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get myTripsEmptyTitle => 'No Bookings Yet !';
 
   @override
-  String get myTripsEmptyDescription => 'Your next adventure awaits...';
+  String get myTripsEmptyDescription =>
+      'Time to dust off your bags and start planning your next adventure';
 
   @override
   String get myTripsExploreTrips => 'Discover Trips';

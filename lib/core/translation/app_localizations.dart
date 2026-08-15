@@ -625,7 +625,7 @@ abstract class AppLocalizations {
   /// No description provided for @homeSpecialTrips.
   ///
   /// In en, this message translates to:
-  /// **'Explore by Category'**
+  /// **'Explore by category'**
   String get homeSpecialTrips;
 
   /// No description provided for @homeTopRated.
@@ -1477,7 +1477,7 @@ abstract class AppLocalizations {
   /// No description provided for @myTripsEmptyDescription.
   ///
   /// In en, this message translates to:
-  /// **'Your next adventure awaits...'**
+  /// **'Time to dust off your bags and start planning your next adventure'**
   String get myTripsEmptyDescription;
 
   /// No description provided for @myTripsExploreTrips.

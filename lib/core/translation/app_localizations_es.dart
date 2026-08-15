@@ -270,20 +270,19 @@ class AppLocalizationsEs extends AppLocalizations {
   String get homePopularTrips => 'Viajes populares';
 
   @override
-  String get homeSponsoredTrips => 'Viajes patrocinados';
+  String get homeSponsoredTrips => 'Ofertas especiales';
 
   @override
-  String get homeDomesticTripsInEgypt => 'Viajes nacionales en Egipto';
+  String get homeDomesticTripsInEgypt => 'Explorar Egipto';
 
   @override
-  String get homeInternationalTripsFromEgypt =>
-      'Viajes internacionales desde Egipto';
+  String get homeInternationalTripsFromEgypt => 'Explorar el mundo';
 
   @override
   String get homeRecommendedForYou => 'Recomendado para ti';
 
   @override
-  String get homeSpecialTrips => 'Viajes especiales';
+  String get homeSpecialTrips => 'Explorar por categoría';
 
   @override
   String get homeTopRated => 'Mejor valorados';
@@ -730,7 +729,8 @@ class AppLocalizationsEs extends AppLocalizations {
   String get myTripsEmptyTitle => 'Aún no hay reservas';
 
   @override
-  String get myTripsEmptyDescription => 'Tu próxima aventura espera...';
+  String get myTripsEmptyDescription =>
+      'Es hora de desempolvar tus maletas y empezar a planificar tu próxima aventura';
 
   @override
   String get myTripsExploreTrips => 'Descubrir viajes';
