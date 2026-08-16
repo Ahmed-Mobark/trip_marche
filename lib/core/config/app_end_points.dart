@@ -43,4 +43,7 @@ class AppEndpoints {
 
   /// POST — validates a coupon against a trip and amount.
   static const String couponsValidate = 'coupons/validate';
+
+  /// POST — creates a new booking for a trip.
+  static String createBooking(int tripId) => 'trips/$tripId/book';
 }

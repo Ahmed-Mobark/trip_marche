@@ -1,7 +1,9 @@
+import 'package:equatable/equatable.dart';
 import 'package:trip_marche/features/booking/domain/entities/booking_activities.dart';
+import 'package:trip_marche/features/booking/domain/entities/booking_room.dart';
 import 'package:trip_marche/features/booking/domain/entities/traveler_contact.dart';
 
-class BookingReviewTrip {
+class BookingReviewTrip extends Equatable {
   const BookingReviewTrip({
     required this.name,
     required this.description,
@@ -29,6 +31,22 @@ class BookingReviewTrip {
   final String groupSize;
   final String location;
   final List<String> includedFeatures;
+
+  @override
+  List<Object?> get props => [
+        name,
+        description,
+        dateRange,
+        duration,
+        participantsSummary,
+        routeLabel,
+        routeHighlight,
+        meetingTime,
+        startingTime,
+        groupSize,
+        location,
+        includedFeatures,
+      ];
 }
 
 class BookingRoomSelection {
@@ -80,22 +98,48 @@ class BookingPriceBreakdown {
   }
 }
 
-class BookingReviewData {
+class BookingReviewData extends Equatable {
   const BookingReviewData({
     required this.tripId,
     required this.trip,
     required this.travelers,
     required this.room,
+    required this.selectedRooms,
     required this.activities,
     required this.priceBreakdown,
     required this.currency,
+    required this.departureId,
+    required this.adultCount,
+    required this.kidCount,
+    required this.babyCount,
   });
 
   final int tripId;
   final BookingReviewTrip trip;
   final List<TravelerContact> travelers;
   final BookingRoomSelection room;
+  final List<BookingRoom> selectedRooms;
   final List<BookingActivities> activities;
   final BookingPriceBreakdown priceBreakdown;
   final String currency;
+  final int departureId;
+  final int adultCount;
+  final int kidCount;
+  final int babyCount;
+
+  @override
+  List<Object?> get props => [
+        tripId,
+        trip,
+        travelers,
+        room,
+        selectedRooms,
+        activities,
+        priceBreakdown,
+        currency,
+        departureId,
+        adultCount,
+        kidCount,
+        babyCount,
+      ];
 }
