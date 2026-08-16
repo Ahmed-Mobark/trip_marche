@@ -50,6 +50,13 @@ class _SelectActivitiesViewState extends State<SelectActivitiesView> {
         .toList(growable: false);
   }
 
+  List<Activity> _availableActivities(BuildContext context) {
+    final tr = context.tr;
+    return [
+      Activity(id: '1', name: tr.bookingActivityCamping, price: 70),
+      Activity(id: '2', name: tr.bookingActivityFishing, price: 30),
+      Activity(id: '3', name: tr.bookingActivityDiving, price: 80),
+    ];
   List<Activity> _availableActivities() {
     return widget.flowContext.trip.activities
         .map(

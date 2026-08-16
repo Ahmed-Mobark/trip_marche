@@ -23,6 +23,7 @@ class CreateBookingState extends Equatable {
   final String? errorMessage;
   final Map<String, String>? validationErrors;
   final CreateBookingResponse? bookingResponse;
+
   final PaymentMethodEntity? selectedPaymentMethod;
 
   bool get isLoading => status == CreateBookingStatus.loading;
@@ -36,6 +37,8 @@ class CreateBookingState extends Equatable {
     String? errorMessage,
     Map<String, String>? validationErrors,
     CreateBookingResponse? bookingResponse,
+    bool clearError = false,
+    bool clearValidation = false,
     PaymentMethodEntity? selectedPaymentMethod,
     bool clearError = false,
     bool clearValidation = false,
@@ -44,6 +47,9 @@ class CreateBookingState extends Equatable {
     return CreateBookingState(
       status: status ?? this.status,
       errorMessage: clearError ? null : (errorMessage ?? this.errorMessage),
+      validationErrors:
+          clearValidation ? null : (validationErrors ?? this.validationErrors),
+      bookingResponse: bookingResponse ?? this.bookingResponse,
       validationErrors: clearValidation
           ? null
           : (validationErrors ?? this.validationErrors),
@@ -56,6 +62,11 @@ class CreateBookingState extends Equatable {
 
   @override
   List<Object?> get props => [
+        status,
+        errorMessage,
+        validationErrors,
+        bookingResponse,
+      ];
     status,
     errorMessage,
     validationErrors,

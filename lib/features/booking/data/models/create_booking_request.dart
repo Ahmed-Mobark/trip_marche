@@ -1,12 +1,19 @@
 import 'package:equatable/equatable.dart';
 
 class CreateBookingRoom {
+  const CreateBookingRoom({
+    required this.roomTypeId,
+    required this.persons,
+  });
   const CreateBookingRoom({required this.roomTypeId, required this.persons});
 
   final int roomTypeId;
   final int persons;
 
   Map<String, dynamic> toJson() => {
+        'room_type_id': roomTypeId,
+        'persons': persons,
+      };
     'room_type_id': roomTypeId,
     'persons': persons,
   };
@@ -22,6 +29,9 @@ class CreateBookingActivity {
   final int activityId;
 
   Map<String, dynamic> toJson() => {
+        'traveler_index': travelerIndex,
+        'activity_id': activityId,
+      };
     'traveler_index': travelerIndex,
     'activity_id': activityId,
   };
@@ -41,6 +51,11 @@ class CreateBookingTraveler {
   final String type;
 
   Map<String, dynamic> toJson() => {
+        'full_name': fullName,
+        'phone_country_code': phoneCountryCode,
+        'phone': phone,
+        'type': type,
+      };
     'full_name': fullName,
     'phone_country_code': phoneCountryCode,
     'phone': phone,
@@ -71,6 +86,18 @@ class CreateBookingRequest {
   final String? couponCode;
   final List<CreateBookingTraveler> travelers;
   final String? notes;
+
+  Map<String, dynamic> toJson() => {
+        'departure_id': departureId,
+        'adults': adults,
+        'kids': kids,
+        'babies': babies,
+        'rooms': rooms.map((r) => r.toJson()).toList(growable: false),
+        'activities': activities.map((a) => a.toJson()).toList(growable: false),
+        'coupon_code': couponCode,
+        'travelers': travelers.map((t) => t.toJson()).toList(growable: false),
+        'notes': notes,
+      };
   final String? paymentMethod;
 
   Map<String, dynamic> toJson() => {
@@ -117,6 +144,8 @@ class CreateBookingData extends Equatable {
 
   final int? bookingId;
   final String? reference;
+
+  factory CreateBookingData.fromJson(Map<String, dynamic> json) {
   final String? status;
   final String? paymentStatus;
   final String? paymentMethod;
@@ -141,6 +170,7 @@ class CreateBookingData extends Equatable {
   }
 
   @override
+  List<Object?> get props => [bookingId, reference];
   List<Object?> get props => [
     bookingId,
     reference,
