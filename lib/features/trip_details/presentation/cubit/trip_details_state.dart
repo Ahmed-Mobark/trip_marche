@@ -15,6 +15,9 @@ class TripDetailsState extends Equatable {
     this.wishlistFeedback,
     this.expandedDayIndices = const <int>{0},
     this.addedActivityIds = const <String>{},
+    this.followBusyVendorIds = const {},
+    this.followMessage,
+    this.followIsError = false,
   });
 
   final TripDetailsLoadStatus loadStatus;
@@ -25,6 +28,9 @@ class TripDetailsState extends Equatable {
   final WishlistFeedback? wishlistFeedback;
   final Set<int> expandedDayIndices;
   final Set<String> addedActivityIds;
+  final Set<int> followBusyVendorIds;
+  final String? followMessage;
+  final bool followIsError;
 
   TripDetailsState copyWith({
     TripDetailsLoadStatus? loadStatus,
@@ -38,6 +44,10 @@ class TripDetailsState extends Equatable {
     Set<int>? expandedDayIndices,
     Set<String>? addedActivityIds,
     bool clearLoadError = false,
+    Set<int>? followBusyVendorIds,
+    String? followMessage,
+    bool? followIsError,
+    bool clearFollowFeedback = false,
   }) {
     return TripDetailsState(
       loadStatus: loadStatus ?? this.loadStatus,
@@ -50,6 +60,9 @@ class TripDetailsState extends Equatable {
           : (wishlistFeedback ?? this.wishlistFeedback),
       expandedDayIndices: expandedDayIndices ?? this.expandedDayIndices,
       addedActivityIds: addedActivityIds ?? this.addedActivityIds,
+      followBusyVendorIds: followBusyVendorIds ?? this.followBusyVendorIds,
+      followMessage: followMessage ?? this.followMessage,
+      followIsError: followIsError ?? this.followIsError,
     );
   }
 
@@ -63,5 +76,8 @@ class TripDetailsState extends Equatable {
         wishlistFeedback,
         expandedDayIndices,
         addedActivityIds,
+        followBusyVendorIds,
+        followMessage,
+        followIsError,
       ];
 }

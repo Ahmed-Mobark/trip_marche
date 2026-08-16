@@ -2,11 +2,18 @@ import 'package:get_it/get_it.dart';
 import 'package:trip_marche/core/network/network_service/api_basehelper.dart';
 import 'package:trip_marche/features/wishlist/domain/usecases/toggle_wishlist_usecase.dart';
 import 'data/datasources/trips_catalog_remote_data_source.dart';
+import 'data/datasources/bookings_remote_data_source.dart';
 import 'data/repositories/trips_catalog_repository_impl.dart';
+import 'data/repositories/bookings_repository_impl.dart';
 import 'domain/repositories/trips_catalog_repository.dart';
+import 'domain/repositories/bookings_repository.dart';
 import 'domain/usecases/fetch_trips_catalog_usecase.dart';
+import 'domain/usecases/fetch_bookings_usecase.dart';
+import 'domain/usecases/fetch_booking_pdf_usecase.dart';
 import 'presentation/cubit/my_trips_list_cubit.dart';
 import 'presentation/cubit/my_trips_shell_cubit.dart';
+import 'presentation/cubit/bookings_cubit.dart';
+import 'presentation/cubit/booking_pdf_cubit.dart';
 
 void initMyTripsInjection(GetIt sl) {
   sl.registerLazySingleton<TripsCatalogRemoteDataSource>(
@@ -24,5 +31,28 @@ void initMyTripsInjection(GetIt sl) {
       sl<ToggleWishlistUseCase>(),
     ),
   );
-  sl.registerFactory<MyTripsShellCubit>(() => MyTripsShellCubit());
+
+  // Bookings (GET /bookings).
+  sl.registerLazySingleton<BookingsRemoteDataSource>(
+    () => BookingsRemoteDataSourceImpl(sl<ApiBaseHelper>()),
+  );
+  sl.registerLazySingleton<BookingsRepository>(
+    () => BookingsRepositoryImpl(sl<BookingsRemoteDataSource>()),
+  );
+  sl.registerLazySingleton(
+    () => FetchBookingsUseCase(sl<BookingsRepository>()),
+  );
+  sl.registerLazySingleton(
+    () => FetchBookingPdfUseCase(sl<BookingsRepository>()),
+  );
+  sl.registerFactory<BookingsCubit>(
+    () => BookingsCubit(sl<FetchBookingsUseCase>()),
+  );
+  sl.registerFactory<BookingPdfCubit>(
+    () => BookingPdfCubit(sl<FetchBookingPdfUseCase>()),
+  );
+
+  sl.registerFactory<MyTripsShellCubit>(
+    () => MyTripsShellCubit(sl<ToggleWishlistUseCase>()),
+  );
 }

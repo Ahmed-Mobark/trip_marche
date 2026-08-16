@@ -4,6 +4,7 @@ import 'package:iconsax/iconsax.dart';
 import 'package:trip_marche/core/extensions/localization.dart';
 import 'package:trip_marche/core/theme/app_colors.dart';
 import 'package:trip_marche/core/theme/app_text_styles.dart';
+import 'package:trip_marche/core/widgets/app_modal_bottom_sheet.dart';
 import 'package:trip_marche/core/widgets/app_cached_network_image.dart';
 import 'package:trip_marche/features/trip_details/domain/entities/trip_details_entity.dart';
 import 'package:trip_marche/features/trip_details/presentation/widgets/trip_details_info_card.dart';
@@ -55,7 +56,7 @@ class TripDetailsReviewsSection extends StatelessWidget {
   }
 
   static void openAllReviews(BuildContext context, List<TripReview> reviews) {
-    showModalBottomSheet<void>(
+    showAppModalBottomSheet<void>(
       context: context,
       isScrollControlled: true,
       isDismissible: true,
@@ -65,11 +66,9 @@ class TripDetailsReviewsSection extends StatelessWidget {
         borderRadius: BorderRadius.vertical(top: Radius.circular(20.r)),
       ),
       builder: (ctx) {
-        return SafeArea(
-          top: false,
-          child: Padding(
-            padding: EdgeInsetsDirectional.fromSTEB(16.w, 10.h, 16.w, 0),
-            child: Column(
+        return Padding(
+          padding: EdgeInsetsDirectional.fromSTEB(16.w, 10.h, 16.w, 0),
+          child: Column(
               children: [
                 Container(
                   width: 40.w,
@@ -117,7 +116,6 @@ class TripDetailsReviewsSection extends StatelessWidget {
                 ),
               ],
             ),
-          ),
         );
       },
     );

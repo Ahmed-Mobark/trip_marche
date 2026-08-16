@@ -1,6 +1,5 @@
 {
   "@@locale": "fr",
-
   "errorFieldRequired": "Ce champ est obligatoire",
   "errorInvalidName": "Format de nom invalide",
   "errorInvalidUrl": "URL invalide",
@@ -30,7 +29,6 @@
   "chooseFromFiles": "Téléverser : choisir depuis les fichiers",
   "updatePleaseUpdateToContinue": "Veuillez mettre à jour l’application pour continuer.",
   "updateNewVersionAvailableShort": "Une nouvelle version est disponible.",
-
   "authLoginTitle": "Connectez-vous à votre compte",
   "authEmailLabel": "E-mail",
   "authEmailHint": "Saisissez votre e-mail",
@@ -48,7 +46,6 @@
   "authPartnerPortalTitle": "Portail partenaire",
   "authWebViewLoadFailed": "Impossible de charger cette page. Vérifiez votre connexion et réessayez.",
   "authWebViewRetry": "Réessayer",
-
   "authSignUpTitle": "Créez votre compte",
   "authSignUpSubtitle": "Inscrivez-vous pour commencer",
   "authFullNameLabel": "Nom complet",
@@ -63,13 +60,11 @@
   "authSocialApple": "Apple",
   "authHaveAccountPrompt": "Vous avez déjà un compte ? ",
   "authLoginAction": "Se connecter",
-
   "authForgotPasswordTitle": "Mot de passe oublié",
   "authForgotPasswordDescription": "Saisissez votre adresse e-mail ci-dessous et nous vous enverrons un lien pour réinitialiser votre mot de passe.",
   "authForgotPasswordSubtitle": "Oublié ? On s’en occupe.",
   "authSendButton": "Envoyer",
   "authSendCodeButton": "Envoyer le code",
-
   "authVerifyTitle": "Vérifiez votre numéro",
   "authVerifyDescription": "Nous avons envoyé un code OTP à votre numéro enregistré. Veuillez saisir le code ci-dessous.",
   "authVerifyButton": "Vérifier",
@@ -79,7 +74,6 @@
   "authVerifyEmailSubtitle": "Nous vous envoyons un code à 6 chiffres pour vérifier votre numéro",
   "authVerificationCodeNotReceived": "Code non reçu ?",
   "authResendNow": "Renvoyer maintenant",
-
   "homeAppTitle": "TripMarche",
   "homeSearchHint": "Rechercher un voyage",
   "homeSearchHintDestination": "Rechercher un voyage à {destination}",
@@ -88,17 +82,16 @@
   "homeTrendingDestinationsSearchHint": "Rechercher des destinations",
   "homeViewAll": "Tout voir",
   "homePopularTrips": "Voyages populaires",
-  "homeSponsoredTrips": "Voyages sponsorisés",
-  "homeDomesticTripsInEgypt": "Voyages domestiques en Égypte",
-  "homeInternationalTripsFromEgypt": "Voyages internationaux depuis l’Égypte",
+  "homeSponsoredTrips": "Bons plans",
+  "homeDomesticTripsInEgypt": "Découvrir l'Égypte",
+  "homeInternationalTripsFromEgypt": "Découvrir le monde",
   "homeRecommendedForYou": "Recommandé pour vous",
-  "homeSpecialTrips": "Voyages spéciaux",
+  "homeSpecialTrips": "Explorer par catégorie",
   "homeTopRated": "Les mieux notés",
   "homeFromCairoAlexandria": "Depuis Le Caire & Alexandrie",
   "homeNewInTripMarche": "Nouveau sur TripMarche",
   "homePerPerson": "Personne",
   "homeSeeAll": "Voir tout",
-
   "wishlistTitle": "Liste de souhaits",
   "wishlistSearchHint": "Rechercher un voyage",
   "wishlistSortBy": "Trier par",
@@ -108,7 +101,6 @@
   "wishlistBestPrice": "Meilleur prix",
   "wishlistEmptyTitle": "Aucun voyage enregistré",
   "wishlistEmptyDescription": "Appuyez sur l’icône cœur d’un voyage pour\nl’enregistrer dans votre liste de souhaits.",
-
   "wishlistFiltersTitle": "Filtres",
   "wishlistFiltersClearAll": "Tout effacer",
   "wishlistFiltersDestination": "Destination",
@@ -154,8 +146,10 @@
   "wishlistFiltersTripRating": "Note du voyage",
   "wishlistFiltersDiscountCode": "Le voyage applique un code promo",
   "wishlistFiltersFreeCancellation": "Annulation gratuite",
+  "wishlistFiltersCategories": "Categories",
+  "wishlistFiltersDestinationCountry": "Destination Country",
+  "wishlistFiltersFiveStarOnly": "5-Star Only",
   "filterSeeResults": "Voir les résultats",
-
   "settingsTitle": "Paramètres",
   "settingsNotificationSetting": "Paramètres de notification",
   "settingsLanguage": "Langue",
@@ -164,7 +158,6 @@
   "settingsArabic": "Arabe",
   "settingsDarkMode": "Mode sombre",
   "settingsAppVersion": "Version de l’app {version}",
-
   "notificationSettingsTitle": "Paramètres de notification",
   "notificationSettingsIntro": "Gérez vos préférences de notification pour rester informé des nouveaux voyages, offres et mises à jour de réservation.",
   "notificationSettingsBookingUpdatesTitle": "Mises à jour de réservation",
@@ -179,7 +172,6 @@
   "notificationSettingsTripUpdates": "Mises à jour de voyage",
   "notificationSettingsPromotions": "Promotions",
   "notificationSettingsPriceAlerts": "Alertes de prix",
-
   "profileTitleAccount": "Compte",
   "profileTitleSupport": "Support",
   "profilePersonalInfo": "Infos personnelles",
@@ -204,13 +196,12 @@
   "commonCancel": "Annuler",
   "commonDelete": "Supprimer",
   "commonOk": "OK",
-
   "followingsTitle": "Mes abonnements",
   "followingsCountTitle": "{count} abonnements",
   "followingsUnfollow": "Se désabonner",
+  "follow": "Suivre",
   "followingsEmptyTitle": "Aucun abonnement",
   "followingsEmptyDescription": "Commencez à suivre des entreprises pour voir\nleurs voyages ici.",
-
   "myTripsTitle": "Mes voyages",
   "myTripsTabUpcoming": "À venir",
   "myTripsTabPast": "Passés",
@@ -227,19 +218,28 @@
   "myTripsStatusCanceled": "Annulé",
   "myTripsBookAgain": "Réserver à nouveau",
   "myTripsFromPrefix": "À partir de",
+  "myTripsTravelers": "{count} voyageurs",
+  "@myTripsTravelers": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "myTripsViewDetails": "Voir les détails",
   "myTripsViewReceipt": "Voir le reçu",
   "myTripsBookingDetails": "Détails de réservation",
+  "myTripsBookingConfirmation": "Confirmation de réservation",
+  "myTripsWriteReview": "Rédiger un avis",
+  "myTripsRateTrip": "Évaluer le voyage",
   "myTripsDownloadPdf": "Télécharger le PDF",
-  "myTripsEmptyTitle": "Aucun voyage",
-  "myTripsEmptyDescription": "Commencez à explorer et réservez\nvotre première aventure !",
-  "myTripsExploreTrips": "Explorer les voyages",
-
+  "myTripsEmptyTitle": "Aucune réservation",
+  "myTripsEmptyDescription": "Il est temps de dépoussiérer vos valises et de commencer à planifier votre prochaine aventure",
+  "myTripsExploreTrips": "Découvrir les voyages",
   "navHome": "Accueil",
   "navTrips": "Voyages",
   "navWishlist": "Souhaits",
   "navAccount": "Compte",
-
   "bookingContactInfoTitle": "Informations de contact",
   "bookingContactFullNameLabel": "Nom complet",
   "bookingContactFullNameHint": "Saisissez votre nom complet",
@@ -253,7 +253,6 @@
   "bookingContactIdPassportLabel": "Numéro d’ID/Passeport",
   "bookingContactIdPassportHint": "Saisissez votre numéro d’ID ou passeport",
   "bookingContinue": "Continuer",
-
   "bookingTravelerTitle": "Traveler {index}",
   "@bookingTravelerTitle": {
     "placeholders": {
@@ -262,7 +261,6 @@
       }
     }
   },
-
   "bookingTripOptionsTitle": "Trip Options",
   "bookingChooseDateTitle": "Choose the date that suits you",
   "bookingSeeAllDates": "See All Dates",
@@ -274,6 +272,11 @@
   "bookingTravelerBaby": "Baby",
   "bookingTravelerBabyAge": "0~2 Years",
   "bookingAccommodationOptions": "Accommodation Options",
+  "bookingCreatedSuccess": "Réservation créée avec succès",
+  "bookingRoomsRequired": "Veuillez sélectionner au moins une chambre",
+  "bookingRoomOccupantsMismatch": "Le nombre total d'occupants des chambres doit être égal au nombre de voyageurs ({count})",
+  "bookingTripUnavailableTitle": "This trip isn't available for booking yet.",
+  "bookingTripUnavailableBody": "This trip doesn't have any booking options available at the moment. Please choose another trip or check back later.",
   "bookingSingleRoom": "Single Room",
   "bookingSingleRoomSubtitle": "Private room for one",
   "bookingDoubleRoom": "Double Room",
@@ -282,7 +285,6 @@
   "bookingTripleRoomSubtitle": "Shared room for three",
   "bookingPerson": "Person",
   "bookingFree": "Free",
-
   "bookingSelectActivitiesTitle": "Select Activities",
   "bookingTravelerParenthetical": "(Traveler {index})",
   "@bookingTravelerParenthetical": {
@@ -296,7 +298,6 @@
   "bookingActivityCamping": "Camping",
   "bookingActivityFishing": "Fishing",
   "bookingActivityDiving": "Diving",
-
   "bookingReviewTitle": "Review",
   "bookingReviewTripName": "Dahab Trip",
   "bookingReviewTripDescription": "Experience the breathtaking beauty of the Swiss Alps on this 7-day adventure. Visit iconic destinations, enjoy scenic train rides, and immerse yourself in Swiss culture. Perfect for nature lovers and photography enthusiasts.",
@@ -400,7 +401,6 @@
   "bookingReviewPaymentTotal": "Total",
   "bookingReviewCurrency": "EGP",
   "bookingPay": "Pay",
-
   "bookingAddNewCardTitle": "Ajouter une nouvelle carte",
   "bookingCardNumberLabel": "Numéro de carte",
   "bookingCardNumberHint": "0000 0000 0000 0000",
@@ -412,8 +412,16 @@
   "bookingCvvHint": "***",
   "bookingSaveCard": "Enregistrer la carte",
   "bookingCardholderNamePlaceholder": "NOM DU TITULAIRE",
-
   "bookingPaymentMethodTitle": "Mode de paiement",
+  "bookingPaymentMethodSelect": "Sélectionner un mode de paiement",
+  "bookingPaymentMethodChoose": "Choisissez comment vous voulez payer",
+  "bookingPaymentMethodChange": "Modifier",
+  "paymentMethodContinue": "Continuer",
+  "paymentMethodEmptyTitle": "Aucun mode de paiement",
+  "paymentMethodEmptyDescription": "Aucun mode de paiement disponible.",
+  "paymentMethodErrorTitle": "Erreur",
+  "paymentMethodErrorDescription": "Un problème est survenu",
+  "paymentMethodRetry": "Réessayer",
   "bookingPaymentOptionCreditCard": "Carte bancaire",
   "bookingPaymentOptionCreditCardSubtitle": "Payer avec Visa, Mastercard",
   "bookingPaymentOptionPaypal": "PayPal",
@@ -424,7 +432,6 @@
   "bookingAddNewCard": "Ajouter une nouvelle carte",
   "bookingPayNow": "Payer maintenant - {amount}",
   "bookingCardExpires": "Expire {expiry}",
-
   "profilePersonalInfoTitle": "Infos personnelles",
   "profileFullNameLabel": "Nom complet",
   "profileEmailLabel": "E-mail",
@@ -439,7 +446,15 @@
   "profileGenderFemale": "Femme",
   "profileDateOfBirth": "Date de naissance",
   "profileSaveChanges": "Enregistrer",
-
+  "profileChangePhotoTitle": "Changer la photo de profil",
+  "profileChangePhotoSubtitle": "Choisissez d'où vous voulez obtenir votre photo.",
+  "profilePhotoCamera": "Caméra",
+  "profilePhotoGallery": "Galerie",
+  "profilePhotoCancel": "Annuler",
+  "companyProfileTitle": "Company Profile",
+  "@companyProfileTitle": {
+    "description": "Company Profile screen title"
+  },
   "companyProfileCompanyName": "Travel Egypt Co.",
   "companyProfileReviewsCountShort": "({count} avis)",
   "companyProfileFollowing": "Abonné",
@@ -456,7 +471,21 @@
   "companyProfileReviewAuthor": "John Doe",
   "companyProfileReviewDate": "il y a 2 jours",
   "companyProfileReviewComment": "Super expérience ! Le voyage était très bien organisé et le guide était très professionnel.",
-
+  "companyProfileCompanyDetails": "Détails de l'entreprise",
+  "companyProfileLocation": "Emplacement",
+  "companyProfileEmail": "E-mail",
+  "companyProfileYearOfEstablishment": "Année de création",
+  "companyProfileCommercialRegistration": "Registre commercial",
+  "companyProfileBusinessLicense": "Licence commerciale",
+  "companyProfileTaxCard": "Carte fiscale",
+  "companyProfileTripCategories": "Catégories de voyage",
+  "companyProfileOurTeam": "Notre équipe",
+  "companyProfileCustomerReviews": "Avis clients",
+  "companyProfileViewAll": "Voir tout",
+  "companyProfileAvailableTrips": "Voyages disponibles",
+  "companyProfileSeeAllTrips": "Voir tous les voyages",
+  "companyProfileShowLess": "Afficher moins",
+  "companyProfilePricePerPerson": "Personne",
   "filterTitle": "Filtre",
   "filterReset": "Réinitialiser",
   "filterDuration": "Durée",
@@ -465,18 +494,29 @@
   "filterDepartureCity": "Ville de départ",
   "filterSelectCity": "Sélectionner une ville",
   "filterApply": "Appliquer",
-
   "destinationTitle": "Destination",
   "destinationSearchHint": "Rechercher des destinations...",
   "destinationRecentSearches": "Recherches récentes",
   "destinationClearAll": "Tout effacer",
   "destinationPopularDestinations": "Destinations populaires",
-
   "searchTripsFound": "{count} voyages trouvés",
   "searchQueryExample": "Sharm El Sheikh",
   "searchResultTitle": "Résultats de recherche",
   "searchResultSearchHint": "Rechercher un voyage",
   "searchResultSortBy": "Trier par",
+  "searchResultSortPriceAsc": "Price: Low to High",
+  "searchResultSortPriceDesc": "Price: High to Low",
+  "searchResultSortRating": "Highest Rating",
+  "searchResultSortDurationAsc": "Duration: Shortest First",
+  "searchResultSortDurationDesc": "Duration: Longest First",
+  "searchResultSortRecent": "Most Recent",
+  "searchResultSortSubtitle": "Choisissez comment vous souhaitez trier les résultats",
+  "searchResultSortPriceAscDesc": "Affichez les voyages les moins chers en premier.",
+  "searchResultSortPriceDescDesc": "Affichez les voyages les plus chers en premier.",
+  "searchResultSortRatingDesc": "Affichez les voyages les mieux notés en premier.",
+  "searchResultSortDurationAscDesc": "Affichez les voyages de durée la plus courte en premier.",
+  "searchResultSortDurationDescDesc": "Affichez les voyages de durée la plus longue en premier.",
+  "searchResultSortRecentDesc": "Affichez les voyages les plus récents en premier.",
   "searchResultFilters": "Filtres",
   "searchResultRating": "4.9",
   "searchResultReviews": "(112)",
@@ -489,7 +529,6 @@
   "searchResultOldPrice": "$1000",
   "searchResultDiscountPrice": "$699",
   "searchResultPerPerson": "/Personne",
-
   "tripDetailsTitle": "Voyage à Dahab",
   "tripDetailsHeroCountryTag": "Indonésie",
   "tripDetailsHeroByCompany": "Par l’agence de voyage",
@@ -503,7 +542,9 @@
   "@tripDetailsHeroByCompanyLine": {
     "description": "Travel vendor line on trip details hero.",
     "placeholders": {
-      "company": {"type": "String"}
+      "company": {
+        "type": "String"
+      }
     }
   },
   "tripDetailsGalleryMoreCount": "+{count}",
@@ -570,7 +611,9 @@
   "@tripDetailsStatCitiesCount": {
     "description": "Stat grid value for how many cities the trip visits.",
     "placeholders": {
-      "count": {"type": "int"}
+      "count": {
+        "type": "int"
+      }
     }
   },
   "tripDetailsPriceLabel": "Prix",
@@ -621,7 +664,6 @@
   "tripDetailsRelatedNameSharm": "Sharm El Sheikh",
   "tripDetailsRelatedNameHurghada": "Voyage Hurghada",
   "tripDetailsRelatedNameLuxorAswan": "Louxor & Assouan",
-
   "tripDetailsHeroRatingLine": "4.5 (120 avis)",
   "tripDetailsHeroLocationShort": "Dahab, Égypte",
   "tripDetailsHeroDaysBadge": "7 jours",
@@ -715,7 +757,6 @@
   "tripDetailsReviewSampleName": "Ahmed Hassan",
   "tripDetailsReviewSampleDate": "Déc 2025",
   "tripDetailsReviewSampleBody": "Voyage incroyable ! Très bonne organisation et guides sympathiques. La journée snorkeling était inoubliable.",
-
   "bookingTripTermsTitle": "Conditions générales",
   "bookingTripTermsHeader": "Conditions générales du voyage",
   "bookingTripTermsLastUpdated": "Dernière mise à jour : {date}",
@@ -733,7 +774,6 @@
   "bookingTripTermsSection6Body": "Les informations personnelles collectées lors de la réservation sont utilisées uniquement pour l’organisation du voyage et la communication. Nous ne partageons pas vos informations avec des tiers sauf si nécessaire pour exécuter la réservation. Pour plus de détails, consultez notre politique de confidentialité.",
   "bookingTripTermsSection7Title": "7. Résolution des litiges",
   "bookingTripTermsSection7Body": "Tout litige découlant de ces conditions sera résolu par négociation amiable. En cas d’échec, les litiges seront soumis aux tribunaux compétents. Ces conditions sont régies par les lois de la République arabe d’Égypte.",
-
   "bookingTripInstructionsTitle": "Consignes de voyage",
   "bookingTripInstructionsHeader": "Avant de partir",
   "bookingTripInstructionsIntro": "Veuillez lire attentivement les consignes suivantes afin de garantir une expérience de voyage agréable. Une bonne préparation vous aidera à profiter au maximum de votre aventure à Dahab.",
@@ -741,7 +781,6 @@
   "bookingTripInstructionsMeetingPointTime": "Point & heure de rendez-vous",
   "bookingTripInstructionsDocumentsToBring": "Documents à apporter",
   "bookingTripInstructionsImportantReminders": "Rappels importants",
-
   "bookingTripSafetyTitle": "Sécurité du voyage",
   "bookingTripSafetyBanner": "Votre sécurité est notre priorité. Veuillez lire attentivement les consignes suivantes.",
   "bookingTripSafetyHeader": "Procédures de sécurité",
@@ -751,7 +790,6 @@
   "bookingTripSafetyHealthTitle": "Santé & médical",
   "bookingTripSafetyEmergencyTitle": "Contacts d’urgence",
   "bookingTripSafetyGeneralTipsTitle": "Conseils généraux de sécurité",
-
   "authResetPasswordTitle": "Réinitialiser le mot de passe",
   "authResetPasswordSubtitle": "Saisissez votre nouveau mot de passe ci-dessous",
   "authNewPasswordLabel": "Nouveau mot de passe",
@@ -759,7 +797,6 @@
   "authConfirmNewPasswordLabel": "Confirmer le nouveau mot de passe",
   "authConfirmNewPasswordHint": "Confirmez le nouveau mot de passe",
   "authResetPasswordButton": "Réinitialiser le mot de passe",
-
   "tripDetailsDurationUnit": "Jours",
   "tripDetailsProgramDayPrefix": "Jour",
   "tripDetailsTypeDomestic": "National",
@@ -772,6 +809,90 @@
   "csLetsGetInTouch": "Contactez-nous",
   "csCall": "Appeler",
   "csSendMessage": "Envoyer un message",
-  "csWhatsApp": "WhatsApp"
+  "csWhatsApp": "WhatsApp",
+  "paymentWebViewTitle": "Finaliser le paiement",
+  "paymentWebViewError": "Impossible de charger la page de paiement.",
+  "paymentWebViewRetry": "Réessayer",
+  "paymentWebViewFailed": "Paiement échoué ou annulé.",
+  "profileChangePasswordTitle": "Changer le mot de passe",
+  "profileCurrentPasswordLabel": "Mot de passe actuel",
+  "profileNewPasswordLabel": "Nouveau mot de passe",
+  "profileUpdatePasswordAction": "Mettre à jour le mot de passe",
+  "errorPasswordMinLength": "Le mot de passe doit comporter au moins 8 caractères",
+  "passwordUpdatedSuccessfully": "Mot de passe mis à jour avec succès",
+  "somethingWentWrong": "Une erreur est survenue",
+  "logout": "Logout",
+  "@logout": {
+    "description": "Logout action label"
+  },
+  "logoutTitle": "Logout",
+  "@logoutTitle": {
+    "description": "Title for logout confirmation bottom sheet"
+  },
+  "logoutDescription": "Are you sure you want to logout from your account?",
+  "@logoutDescription": {
+    "description": "Description text for logout confirmation"
+  },
+  "logoutAction": "Logout",
+  "@logoutAction": {
+    "description": "Primary action button text for logout"
+  },
+  "cancel": "Cancel",
+  "@cancel": {
+    "description": "Cancel action text"
+  },
+  "deleteAccount": "Delete Account",
+  "@deleteAccount": {
+    "description": "Delete account action label"
+  },
+  "deleteAccountTitle": "Delete Account",
+  "@deleteAccountTitle": {
+    "description": "Title for delete account confirmation bottom sheet"
+  },
+  "deleteAccountDescription": "This action is permanent and cannot be undone. All your trips, bookings and account information will be permanently removed.",
+  "@deleteAccountDescription": {
+    "description": "Description text for delete account confirmation"
+  },
+  "deleteAccountWarning": "Are you absolutely sure you want to permanently delete your account?",
+  "@deleteAccountWarning": {
+    "description": "Warning text for final delete account confirmation dialog"
+  },
+  "deleteAccountAction": "Delete Account",
+  "@deleteAccountAction": {
+    "description": "Primary action button text for delete account"
+  },
+  "finalConfirmation": "Final Confirmation",
+  "@finalConfirmation": {
+    "description": "Title for final confirmation dialog before account deletion"
+  },
+  "profileChangePhotoTitle": "Changer la photo de profil",
+  "profileChangePhotoSubtitle": "Choisissez d'où vous voulez obtenir votre photo.",
+  "profilePhotoFromCamera": "Appareil photo",
+  "profilePhotoFromGallery": "Galerie",
+  "profilePhotoCancel": "Annuler",
+  "profilePhotoPermissionRequired": "Permission requise pour accéder à vos photos.",
+  "profilePhotoCameraUnavailable": "L'appareil photo n'est pas disponible sur cet appareil.",
+  "profilePhotoInvalidFile": "Le fichier sélectionné n'est pas une image valide.",
+  "profilePhotoTooLarge": "L'image sélectionnée est trop volumineuse. Veuillez en choisir une plus petite.",
+  "profilePhotoPickFailed": "Échec de la sélection de l'image. Veuillez réessayer.",
+  "profileUpdateSuccess": "Profil mis à jour avec succès",
+  "deleteAccountSuccess": "Your account has been deleted.",
+  "@deleteAccountSuccess": {
+    "description": "Success toast message after account deletion"
+  },
+  "reviewTitle": "Évaluation du voyage",
+  "reviewTripSatisfactionHint": "Veuillez écrire votre niveau de satisfaction global avec le voyage.",
+  "reviewWriteYourReview": "Écrivez votre avis",
+  "reviewRateTravelAgency": "Veuillez noter l'agence de voyage.",
+  "reviewSendButton": "Envoyer",
+  "reviewEnterReviewHint": "Écrivez votre avis ici",
+  "reviewSubmittedSuccess": "Avis soumis avec succès !",
+  "reviewRatingScale": "{rating}/5",
+  "@reviewRatingScale": {
+    "placeholders": {
+      "rating": {
+        "type": "int"
+      }
+    }
+  }
 }
-

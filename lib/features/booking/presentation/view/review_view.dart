@@ -14,6 +14,9 @@ import 'package:trip_marche/features/booking/presentation/cubit/coupon_state.dar
 import 'package:trip_marche/features/booking/presentation/cubit/create_booking_cubit.dart';
 import 'package:trip_marche/features/booking/presentation/cubit/create_booking_state.dart';
 import 'package:trip_marche/features/nav_bar/presentation/view/main_nav_view.dart';
+import 'package:trip_marche/features/payment_method/domain/entities/payment_method_entity.dart';
+import 'package:trip_marche/features/payment_method/presentation/view/payment_methods_screen.dart';
+import 'package:trip_marche/features/booking/presentation/view/payment_webview_screen.dart';
 import '../widgets/booking_bottom_buttons.dart';
 import '../widgets/coupon_field.dart';
 import '../widgets/payment_details_card.dart';
@@ -60,6 +63,7 @@ class _ReviewBodyState extends State<_ReviewBody> {
 
   bool get _isPaying =>
       context.watch<CreateBookingCubit>().state.isLoading;
+  bool get _isPaying => context.watch<CreateBookingCubit>().state.isLoading;
 
   BookingPriceBreakdown _breakdown(CouponState couponState) {
     final discount = couponState.isApplied
@@ -89,13 +93,14 @@ class _ReviewBodyState extends State<_ReviewBody> {
       return;
     }
     context.read<CouponCubit>().applyCoupon(
-          code: code,
-          tripId: widget.data.tripId,
-          amount: widget.data.priceBreakdown.subtotal,
-        );
+      code: code,
+      tripId: widget.data.tripId,
+      amount: widget.data.priceBreakdown.subtotal,
+    );
   }
 
   void _onPay() {
+  Future<void> _onPay() async {
     final couponState = context.read<CouponCubit>().state;
     final couponCode = couponState.isApplied && couponState.appliedCode != null
         ? couponState.appliedCode
@@ -106,6 +111,24 @@ class _ReviewBodyState extends State<_ReviewBody> {
           notes: _notesController.text.trim(),
           couponCode: couponCode,
         );
+    final bookingCubit = context.read<CreateBookingCubit>();
+
+    if (bookingCubit.state.selectedPaymentMethod == null) {
+      final result = await Navigator.push<PaymentMethodEntity>(
+        context,
+        MaterialPageRoute(builder: (_) => const PaymentMethodsScreen()),
+      );
+      if (result == null || !mounted) {
+        return;
+      }
+      bookingCubit.selectPaymentMethod(result);
+    }
+
+    bookingCubit.createBooking(
+      data: widget.data,
+      notes: _notesController.text.trim(),
+      couponCode: couponCode,
+    );
   }
 
   void _showCreateBookingErrors(Map<String, String> errors) {
@@ -118,6 +141,7 @@ class _ReviewBodyState extends State<_ReviewBody> {
       type: ToastType.error,
       message: messages.first,
     );
+    appToast(context: context, type: ToastType.error, message: messages.first);
   }
 
   @override
@@ -128,10 +152,51 @@ class _ReviewBodyState extends State<_ReviewBody> {
       listenWhen: (previous, current) =>
           previous.status != current.status &&
           (current.isValidationFailure || current.isFailure || current.isSuccess),
+          (current.isValidationFailure ||
+              current.isFailure ||
+              current.isSuccess),
       listener: (context, state) {
         if (state.isValidationFailure && state.validationErrors != null) {
           _showCreateBookingErrors(state.validationErrors!);
         } else if (state.isSuccess) {
+          final apiMessage = state.bookingResponse?.message;
+          final requiresPayment =
+              state.bookingResponse?.data?.requiresPayment == true;
+          final checkoutUrl = state.bookingResponse?.data?.payment?.checkoutUrl;
+
+          if (requiresPayment && checkoutUrl != null) {
+            if (!mounted) return;
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (_) => PaymentWebViewScreen(
+                  url: checkoutUrl,
+                  onPaymentComplete: () {
+                    if (!mounted) return;
+                    appToast(
+                      context: context,
+                      type: ToastType.success,
+                      message:
+                          apiMessage != null && apiMessage.trim().isNotEmpty
+                          ? apiMessage
+                          : tr.bookingCreatedSuccess,
+                    );
+                    sl<AppNavigator>().pushAndRemoveUntil(
+                      screen: const MainNavView(initialIndex: 1),
+                    );
+                  },
+                ),
+              ),
+            );
+            return;
+          }
+
+          appToast(
+            context: context,
+            type: ToastType.success,
+            message: apiMessage != null && apiMessage.trim().isNotEmpty
+                ? apiMessage
+                : tr.bookingCreatedSuccess,
+          );
           sl<AppNavigator>().pushAndRemoveUntil(
             screen: const MainNavView(initialIndex: 1),
           );
@@ -160,6 +225,15 @@ class _ReviewBodyState extends State<_ReviewBody> {
           ),
           child: Scaffold(
             backgroundColor: ReviewFigmaTokens.screenBackground,
+          value: AppColors.isDark(context)
+              ? SystemUiOverlayStyle.light.copyWith(
+                  statusBarColor: AppColors.scaffoldBg(context),
+                )
+              : SystemUiOverlayStyle.dark.copyWith(
+                  statusBarColor: AppColors.scaffoldBg(context),
+                ),
+          child: Scaffold(
+            backgroundColor: AppColors.scaffoldBg(context),
             body: SafeArea(
               bottom: false,
               child: Column(
@@ -179,6 +253,13 @@ class _ReviewBodyState extends State<_ReviewBody> {
                         fontSize: ReviewFigmaTokens.titleFontSize,
                         fontWeight: FontWeight.w600,
                       ),
+                      style:
+                          AppTextStyles.heading3(
+                            color: AppColors.ink(context),
+                          ).copyWith(
+                            fontSize: ReviewFigmaTokens.titleFontSize,
+                            fontWeight: FontWeight.w600,
+                          ),
                     ),
                   ),
                   Expanded(
@@ -209,6 +290,16 @@ class _ReviewBodyState extends State<_ReviewBody> {
                               onChanged: context.read<CouponCubit>().onCodeChanged,
                               showSuccess: couponState.isApplied,
                               showError: couponState.status == CouponStatus.error &&
+                              successMessage:
+                                  couponState.successMessage ??
+                                  tr.bookingReviewCouponSuccess,
+                              onApply: _applyCoupon,
+                              onChanged: context
+                                  .read<CouponCubit>()
+                                  .onCodeChanged,
+                              showSuccess: couponState.isApplied,
+                              showError:
+                                  couponState.status == CouponStatus.error &&
                                   couponState.errorMessage != null,
                               errorMessage: couponState.errorMessage,
                               isLoading: couponState.isLoading,
@@ -230,12 +321,20 @@ class _ReviewBodyState extends State<_ReviewBody> {
                                 breakdown.travelersCount,
                               ),
                               activitiesLabel: tr.bookingReviewPaymentActivities,
+                              activitiesLabel:
+                                  tr.bookingReviewPaymentActivities,
                               taxesLabel: tr.bookingReviewPaymentTaxes,
                               totalLabel: tr.bookingReviewPaymentTotal,
                               currencySuffix: widget.data.currency,
                               subtotalLabel: tr.bookingReviewPaymentSubtotal,
                               finalTotalLabel: tr.bookingReviewPaymentFinalTotal,
                               couponRowLabel: _couponRowLabel(context, couponState),
+                              finalTotalLabel:
+                                  tr.bookingReviewPaymentFinalTotal,
+                              couponRowLabel: _couponRowLabel(
+                                context,
+                                couponState,
+                              ),
                               showCouponBreakdown: couponState.isApplied,
                             );
                           },
@@ -267,6 +366,56 @@ class _ReviewBodyState extends State<_ReviewBody> {
                         );
                       },
                     ),
+                          style: AppTextStyles.bodyMedium(
+                            color: AppColors.ink(context),
+                          ).copyWith(fontSize: ReviewFigmaTokens.bodySize),
+                          decoration: InputDecoration(
+                            labelText: 'Notes',
+                            hintText: 'Any special requests',
+                            labelStyle: AppTextStyles.bodySmall(
+                              color: AppColors.captionText(context),
+                            ).copyWith(fontSize: ReviewFigmaTokens.smallSize),
+                            hintStyle: AppTextStyles.body(
+                              color: AppColors.captionText(context),
+                            ).copyWith(fontSize: ReviewFigmaTokens.bodySize),
+                            filled: true,
+                            fillColor: AppColors.cardBg(context),
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(12),
+                              ),
+                              borderSide: BorderSide(
+                                color: AppColors.softBorder(context),
+                              ),
+                            ),
+                            enabledBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(12),
+                              ),
+                              borderSide: BorderSide(
+                                color: AppColors.softBorder(context),
+                              ),
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(12),
+                              ),
+                              borderSide: BorderSide(color: AppColors.primary),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  BlocBuilder<CreateBookingCubit, CreateBookingState>(
+                    builder: (context, state) {
+                      return BookingBottomButtons(
+                        onBack: () => Navigator.pop(context),
+                        onPay: _onPay,
+                        payLabel: tr.bookingPay,
+                        isLoading: _isPaying,
+                      );
+                    },
                   ),
                 ],
               ),

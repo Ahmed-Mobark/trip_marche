@@ -32,9 +32,9 @@ class _ReviewTripCardState extends State<ReviewTripCard> {
       width: double.infinity,
       padding: EdgeInsetsDirectional.all(ReviewFigmaTokens.cardPadding),
       decoration: BoxDecoration(
-        color: AppColors.white,
+        color: AppColors.cardBg(context),
         borderRadius: BorderRadius.circular(ReviewFigmaTokens.cardRadius),
-        border: Border.all(color: ReviewFigmaTokens.cardBorder),
+        border: Border.all(color: AppColors.softBorder(context)),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -48,7 +48,7 @@ class _ReviewTripCardState extends State<ReviewTripCard> {
             Text(
               trip.description,
               style: AppTextStyles.bodyMedium(
-                color: ReviewFigmaTokens.descriptionGrey,
+                color: AppColors.metaGrey(context),
               ).copyWith(
                 fontSize: ReviewFigmaTokens.bodySize,
                 fontWeight: FontWeight.w400,
@@ -133,7 +133,7 @@ class _ReviewTripCardState extends State<ReviewTripCard> {
 
   TextStyle _detailTextStyle(BuildContext context) {
     return AppTextStyles.bodyMedium(
-      color: AppColors.tripDetailsFigmaBlack,
+      color: AppColors.ink(context),
     ).copyWith(
       fontSize: ReviewFigmaTokens.bodySize,
       fontWeight: FontWeight.w400,
@@ -142,7 +142,7 @@ class _ReviewTripCardState extends State<ReviewTripCard> {
 
   TextStyle _detailMutedStyle(BuildContext context) {
     return AppTextStyles.bodyMedium(
-      color: ReviewFigmaTokens.metaGrey,
+      color: AppColors.metaGrey(context),
     ).copyWith(
       fontSize: ReviewFigmaTokens.bodySize,
       fontWeight: FontWeight.w400,
@@ -171,7 +171,7 @@ class _DetailRow extends StatelessWidget {
           Icon(
             icon,
             size: 18.sp,
-            color: iconColor ?? ReviewFigmaTokens.metaGrey,
+            color: iconColor ?? AppColors.metaGrey(context),
           ),
           SizedBox(width: 10.w),
           Expanded(child: child),

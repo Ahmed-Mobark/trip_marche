@@ -88,13 +88,13 @@ class MyTripBookingCard extends StatelessWidget {
   }
 
   bool get _heartFilled =>
-      _apiTrip?.isWishlisted ?? isFavorite;
+      _apiTrip?.isFavorite ?? isFavorite;
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () async {
-        final initialWishlisted = _apiTrip?.isWishlisted ?? isFavorite;
+        final initialWishlisted = _apiTrip?.isFavorite ?? isFavorite;
         final result = await sl<AppNavigator>().push<TripWishlistPopResult>(
           screen: TripDetailsView(
             tripId: _tripId,
@@ -162,16 +162,15 @@ class MyTripBookingCard extends StatelessWidget {
                 children: [
                   Row(
                     children: [
-                      Expanded(
-                        child: Text(
-                          _title,
-                          maxLines: 2,
-                          overflow: TextOverflow.ellipsis,
-                          style: AppTextStyles.subtitle(
-                            color: AppColors.darkText(context),
-                          ).copyWith(fontWeight: FontWeight.w700),
-                        ),
-                      ),
+                       Expanded(
+                         child: Text(
+                           _title,
+                           maxLines: 3,
+                           style: AppTextStyles.subtitle(
+                             color: AppColors.darkText(context),
+                           ).copyWith(fontWeight: FontWeight.w700),
+                         ),
+                       ),
                       TripFavoriteCircleButton(
                         isFavorite: _heartFilled,
                         onTap: () => onFavoriteTap?.call(),

@@ -196,6 +196,42 @@ abstract class AppColors {
   static Color cardBg(BuildContext context) =>
       isDark(context) ? cardColorDark : cardColorLight;
 
+  // --- Booking flow screens: dark-mode aware helpers -------------------------
+  // Each preserves the exact Figma light value and provides a sensible dark
+  // variant so the four booking screens repaint correctly on theme toggle.
+
+  /// Primary ink text (titles/values). Figma #000000 in light, white in dark.
+  static Color ink(BuildContext context) =>
+      isDark(context) ? textColorDark : tripDetailsFigmaBlack;
+
+  /// Secondary label grey (Figma #757575) in light; soft grey in dark.
+  static Color subtitleGrey(BuildContext context) =>
+      isDark(context) ? const Color(0xFFB3B3B3) : const Color(0xFF757575);
+
+  /// Muted meta grey (Figma #6B7280) in light; lifted grey in dark.
+  static Color metaGrey(BuildContext context) =>
+      isDark(context) ? const Color(0xFF9AA0A6) : const Color(0xFF6B7280);
+
+  /// Soft hairline border (Figma #E0E0E0) in light; dark divider in dark.
+  static Color softBorder(BuildContext context) =>
+      isDark(context) ? borderColorDark : const Color(0xFFE0E0E0);
+
+  /// Included-section border (Figma #E5E7EB) in light; dark divider in dark.
+  static Color includedBorder(BuildContext context) =>
+      isDark(context) ? borderColorDark : const Color(0xFFE5E7EB);
+
+  /// Selected purple tint (Figma #F8F0FC) in light; deep violet in dark.
+  static Color selectedPurpleTint(BuildContext context) =>
+      isDark(context) ? const Color(0xFF2A1A33) : const Color(0xFFF8F0FC);
+
+  /// Subtle surface behind "included" panels (Figma #FAFAFA) in light.
+  static Color includedSurface(BuildContext context) =>
+      isDark(context) ? const Color(0xFF242424) : const Color(0xFFFAFAFA);
+
+  /// Disabled/secondary icon grey (Figma #BDBDBD) in light; muted in dark.
+  static Color disabledIcon(BuildContext context) =>
+      isDark(context) ? const Color(0xFF6E6E6E) : const Color(0xFFBDBDBD);
+
   /// Trip details screen canvas (reference off-white #F8F9FA).
   static Color tripDetailsScreenBg(BuildContext context) =>
       isDark(context) ? scaffoldColorDark : const Color(0xFFF8F9FA);
@@ -298,4 +334,66 @@ abstract class AppColors {
   /// Favorite circle fill (off-white).
   static Color myTripsTripCardFavoriteFill(BuildContext context) =>
       isDark(context) ? const Color(0xFF2C2C2C) : const Color(0xFFF3F4F6);
+
+  // --- Company Profile ---
+  static Color screenBackground(BuildContext context) =>
+      isDark(context) ? scaffoldColorDark : const Color(0xFFFEFBFF);
+
+  static Color cardBorder(BuildContext context) =>
+      isDark(context) ? borderColorDark : const Color(0xFFF9F9F9);
+
+  static Color surfaceDivider(BuildContext context) =>
+      isDark(context) ? borderColorDark : const Color(0xFFE5E7EB);
+
+  static Color darkInk(BuildContext context) =>
+      isDark(context) ? textColorDark : const Color(0xFF121113);
+
+  static Color secondaryGrey(BuildContext context) =>
+      isDark(context) ? greyTextColorDark : const Color(0xFF7C808A);
+
+  static Color ratingValue(BuildContext context) =>
+      isDark(context) ? textColorDark : const Color(0xFF272829);
+
+  static Color countryText(BuildContext context) =>
+      isDark(context) ? textColorDark : const Color(0xFF1F2937);
+
+  static Color commentGrey(BuildContext context) =>
+      isDark(context) ? greyTextColorDark : const Color(0xFF4B5563);
+
+  static Color tripTitle(BuildContext context) =>
+      isDark(context) ? textColorDark : const Color(0xFF28282A);
+
+  static Color iconSlate(BuildContext context) =>
+      isDark(context) ? greyTextColorDark : const Color(0xFF373F46);
+
+  static Color metaSlate(BuildContext context) =>
+      isDark(context) ? greyTextColorDark : const Color(0xFF556371);
+
+  static Color favoriteBg(BuildContext context) =>
+      isDark(context) ? cardColorDark : const Color(0xFFC6C1C9);
+
+  static Color strikethroughGrey(BuildContext context) =>
+      isDark(context) ? greyTextColorDark : const Color(0xFF979797);
+
+  static Color faqBorder(BuildContext context) =>
+      isDark(context) ? borderColorDark : const Color(0xFFD5D9DF);
+
+  static Color socialBorder(BuildContext context) =>
+      isDark(context) ? borderColorDark : const Color(0xFFE8ECF4);
+
+  static Color mapButtonBg(BuildContext context) =>
+      isDark(context) ? inputBgDark : const Color(0xFFF0F4F5);
+
+  static Color mapButtonBorder(BuildContext context) =>
+      isDark(context) ? borderColorDark : const Color(0xFFE6E8E9);
+
+  static const Color verifiedBlue = Color(0xFF0078F1);
+  static const Color facebookBlue = Color(0xFF4091FF);
+  static const Color instagramPink = Color(0xFFE4405F);
+  static const Color youtubeRed = Color(0xFFFF0000);
+  static const Color websiteBlue = Color(0xFF0669E4);
+  static const Color whatsAppGreen = Color(0xFF60D669);
+  static const Color mapBlue = Color(0xFF1A73E8);
+  static const Color favoritePink = Color(0xFFF32858);
+  static const Color badgeAmber = Color(0xFFFAB431);
 }

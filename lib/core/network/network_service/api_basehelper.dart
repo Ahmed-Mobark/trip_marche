@@ -109,12 +109,13 @@ class ApiBaseHelper {
     required String url,
     Map<String, dynamic>? queryParameters,
     Map<String, dynamic>? body,
+    Options? options,
     ApiEnvironment environment = ApiEnvironment.primary,
   }) async {
     return _performRequest<T>(
       () => getDio(
         environment,
-      ).get<T>(url, queryParameters: queryParameters, data: body),
+      ).get<T>(url, queryParameters: queryParameters, data: body, options: options),
       environment: environment,
     );
   }

@@ -4,6 +4,8 @@ import 'package:dio/dio.dart';
 import '../injection/injection_container.dart';
 import 'package:path_provider/path_provider.dart';
 
+import '../network/network_service/api_basehelper.dart';
+
 class DownloadFile {
   static Future<String?> downloadPdf({required String url}) async {
     try {
@@ -11,6 +13,19 @@ class DownloadFile {
       final filePath =
           '${tempDir.path}/event-masters-${DateTime.now().millisecondsSinceEpoch}.pdf';
       await sl<Dio>().download(url, filePath);
+      return filePath;
+    } catch (error) {
+      return null;
+    }
+  }
+
+  static Future<String?> downloadPdfAuthenticated({
+    required String url,
+    required String filePath,
+  }) async {
+    try {
+      final dio = sl<ApiBaseHelper>().getDio(ApiEnvironment.primary);
+      await dio.download(url, filePath);
       return filePath;
     } catch (error) {
       return null;

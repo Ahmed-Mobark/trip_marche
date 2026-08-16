@@ -43,6 +43,8 @@ class WishlistTripCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final flagBadge = _derivedFlagBadge(context);
+    final hasDiscount =
+        trip.discountPrice != null && trip.discountPrice! < trip.price;
 
     return GestureDetector(
       onTap: () async {
@@ -61,237 +63,270 @@ class WishlistTripCard extends StatelessWidget {
         );
       },
       child: Container(
-        padding: EdgeInsetsDirectional.all(10.w),
         decoration: BoxDecoration(
           color: AppColors.cardBg(context),
           borderRadius: BorderRadius.circular(16.r),
+          border: Border.all(color: AppColors.border(context)),
         ),
+        clipBehavior: Clip.hardEdge,
         child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            ClipRRect(
-              borderRadius: BorderRadius.circular(14.r),
-              child: Stack(
-                children: [
-                  SizedBox(
-                    width: 135.w,
-                    height: 170.h,
-                    child: AppCachedNetworkImage(
-                      imageUrl: trip.coverImage,
-                      fit: BoxFit.cover,
-                    ),
-                  ),
-                  if (trip.badge != null && trip.badge!.isNotEmpty)
-                    PositionedDirectional(
-                      top: 0,
-                      start: 0,
-                      end: 0,
-                      child: Container(
-                        padding: EdgeInsetsDirectional.only(
-                          start: 12.w,
-                          end: 12.w,
-                          top: 4.h,
-                          bottom: 4.h,
-                        ),
-                        decoration: BoxDecoration(
-                          color: AppColors.starYellow,
-                          borderRadius: BorderRadius.vertical(
-                            top: Radius.circular(16.r),
-                          ),
-                        ),
-                        child: Center(
-                          child: Text(
-                            trip.badge!,
-                            style: AppTextStyles.bodySmall(
-                              color: AppColors.onImage,
-                            ).copyWith(fontWeight: FontWeight.w800),
-                          ),
-                        ),
-                      ),
-                    ),
-                ],
-              ),
-            ),
-            SizedBox(width: 10.w),
+            _buildImage(context),
+            SizedBox(width: 12.w),
             Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    children: [
-                      Expanded(
-                        child: Text(
-                          trip.title,
-                          maxLines: 2,
-                          overflow: TextOverflow.ellipsis,
-                          style:
-                              AppTextStyles.bodySmall(
-                                color: AppColors.darkText(context),
-                              ).copyWith(
-                                fontWeight: FontWeight.w700,
-                                fontSize: 16.sp,
-                              ),
-                        ),
-                      ),
-                      InkWell(
-                        onTap: onFavoriteTap,
-                        borderRadius: BorderRadius.circular(999),
-                        child: Container(
-                          width: 40.w,
-                          height: 40.w,
-                          decoration: BoxDecoration(
-                            color: AppColors.background(context),
-                            shape: BoxShape.circle,
-                          ),
-                          child: Icon(
-                            trip.isWishlisted ? Iconsax.heart5 : Iconsax.heart,
-                            size: 18.sp,
-                            color: trip.isWishlisted
-                                ? AppColors.error
-                                : AppColors.greyText(context),
-                          ),
-                        ),
-                      ),
+              child: Padding(
+                padding: EdgeInsetsDirectional.only(
+                  top: 10.h,
+                  end: 10.w,
+                  bottom: 10.h,
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    _buildTitleRow(context),
+                    SizedBox(height: 6.h),
+                    _buildRatingRow(context),
+                    SizedBox(height: 4.h),
+                    _buildLocationRow(context),
+                    SizedBox(height: 4.h),
+                    _buildDateRow(context),
+                    if (flagBadge != null) ...[
+                      SizedBox(height: 6.h),
+                      _buildFlagBadge(flagBadge),
                     ],
-                  ),
-                  SizedBox(height: 6.h),
-                  Row(
-                    children: [
-                      Icon(
-                        Iconsax.star1,
-                        size: 14.sp,
-                        color: AppColors.starYellow,
-                      ),
-                      SizedBox(width: 6.w),
-                      Text(
-                        trip.rating.toStringAsFixed(1),
-                        style: AppTextStyles.bodySmall(
-                          color: AppColors.darkText(context),
-                        ).copyWith(fontWeight: FontWeight.w700),
-                      ),
-                      Text(
-                        ' (${trip.reviewsCount})',
-                        style: AppTextStyles.bodySmall(
-                          color: AppColors.greyText(context),
-                        ),
-                      ),
-                    ],
-                  ),
-                  SizedBox(height: 8.h),
-                  Row(
-                    children: [
-                      Icon(
-                        Iconsax.location,
-                        size: 14.sp,
-                        color: AppColors.greyText(context),
-                      ),
-                      SizedBox(width: 6.w),
-                      Expanded(
-                        child: Text(
-                          '${context.tr.myTripsFromPrefix} ${trip.fromLocation}',
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          style: AppTextStyles.bodySmall(
-                            color: AppColors.greyText(context),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  SizedBox(height: 6.h),
-                  Row(
-                    children: [
-                      Icon(
-                        Iconsax.calendar_1,
-                        size: 14.sp,
-                        color: AppColors.greyText(context),
-                      ),
-                      SizedBox(width: 6.w),
-                      Expanded(
-                        child: Text(
-                          trip.dateRange,
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          style: AppTextStyles.bodySmall(
-                            color: AppColors.greyText(context),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  if (flagBadge != null) ...[
                     SizedBox(height: 8.h),
-                    Container(
-                      padding: EdgeInsetsDirectional.symmetric(
-                        horizontal: 10.w,
-                        vertical: 4.h,
-                      ),
-                      decoration: BoxDecoration(
-                        color: flagBadge.color,
-                        borderRadius: BorderRadius.circular(7.r),
-                      ),
-                      child: Text(
-                        flagBadge.text,
-                        style: AppTextStyles.bodySmall(
-                          color: AppColors.onImage,
-                        ).copyWith(fontWeight: FontWeight.w700),
-                      ),
-                    ),
+                    _buildPriceRow(context, hasDiscount),
                   ],
-                  SizedBox(height: 10.h),
-                  Wrap(
-                    spacing: 8.w,
-                    runSpacing: 4.h,
-                    crossAxisAlignment: WrapCrossAlignment.end,
-                    children: [
-                      if (trip.discountPrice != null) ...[
-                        Text(
-                          PriceFormatter.format(
-                            trip.discountPrice!,
-                            currency: trip.currency,
-                          ),
-                          style:
-                              AppTextStyles.heading3(
-                                color: AppColors.darkText(context),
-                              ).copyWith(
-                                fontWeight: FontWeight.w800,
-                                fontSize: 17.sp,
-                              ),
-                        ),
-                        Text(
-                          PriceFormatter.format(
-                            trip.price,
-                            currency: trip.currency,
-                          ),
-                          style: AppTextStyles.bodySmall(
-                            color: AppColors.greyText(context),
-                          ).copyWith(decoration: TextDecoration.lineThrough),
-                        ),
-                      ] else
-                        Text(
-                          PriceFormatter.format(
-                            trip.price,
-                            currency: trip.currency,
-                          ),
-                          style:
-                              AppTextStyles.heading3(
-                                color: AppColors.darkText(context),
-                              ).copyWith(
-                                fontWeight: FontWeight.w800,
-                                fontSize: 17.sp,
-                              ),
-                        ),
-                      Text(
-                        '/${context.tr.homePerPerson}',
-                        style: AppTextStyles.bodySmall(
-                          color: AppColors.greyText(context),
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
+                ),
               ),
             ),
           ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildImage(BuildContext context) {
+    return Padding(
+      padding: EdgeInsetsDirectional.only(start: 10.w, top: 10.h),
+      child: Stack(
+        clipBehavior: Clip.none,
+        children: [
+          ClipRRect(
+            borderRadius: BorderRadius.circular(14.r),
+            child: AppCachedNetworkImage(
+              imageUrl: trip.coverImage,
+              fit: BoxFit.cover,
+              width: 135.w,
+              height: 180.h,
+            ),
+          ),
+          if (trip.badge != null && trip.badge!.isNotEmpty)
+            PositionedDirectional(
+              top: 0,
+              start: 0,
+              child: Container(
+                padding: EdgeInsetsDirectional.symmetric(
+                  horizontal: 7.w,
+                  vertical: 3.h,
+                ),
+                decoration: BoxDecoration(
+                  color: AppColors.starYellow,
+                  borderRadius: BorderRadius.horizontal(
+                    left: Radius.circular(14.r),
+                    right: Radius.circular(14.r),
+                  ),
+                ),
+                child: Text(
+                  trip.badge!,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: AppTextStyles.bodySmall(
+                    color: AppColors.onImage,
+                  ).copyWith(fontWeight: FontWeight.w800, fontSize: 10.sp),
+                ),
+              ),
+            ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildTitleRow(BuildContext context) {
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Expanded(
+          child: Text(
+            trip.title,
+            maxLines: 4,
+            overflow: TextOverflow.ellipsis,
+            style: AppTextStyles.bodySmall(color: AppColors.darkText(context))
+                .copyWith(
+                  fontWeight: FontWeight.w700,
+                  fontSize: 16.sp,
+                  height: 1.25,
+                ),
+          ),
+        ),
+        SizedBox(width: 6.w),
+        _WishlistFavoriteButton(
+          isFavorite: trip.isWishlisted || trip.isFavorite,
+          onTap: onFavoriteTap,
+        ),
+      ],
+    );
+  }
+
+  Widget _buildRatingRow(BuildContext context) {
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        Icon(Iconsax.star1, size: 14.sp, color: AppColors.starYellow),
+        SizedBox(width: 4.w),
+        Text(
+          trip.rating.toStringAsFixed(1),
+          style: AppTextStyles.bodySmall(
+            color: AppColors.darkText(context),
+          ).copyWith(fontWeight: FontWeight.w700),
+        ),
+        Text(
+          ' (${trip.reviewsCount})',
+          style: AppTextStyles.bodySmall(color: AppColors.greyText(context)),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildLocationRow(BuildContext context) {
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        Icon(Iconsax.location, size: 14.sp, color: AppColors.greyText(context)),
+        SizedBox(width: 4.w),
+        Expanded(
+          child: Text(
+            '${context.tr.myTripsFromPrefix} ${trip.fromLocation}',
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            style: AppTextStyles.bodySmall(color: AppColors.greyText(context)),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildDateRow(BuildContext context) {
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        Icon(
+          Iconsax.calendar_1,
+          size: 14.sp,
+          color: AppColors.greyText(context),
+        ),
+        SizedBox(width: 4.w),
+        Expanded(
+          child: Text(
+            trip.dateRange,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            style: AppTextStyles.bodySmall(color: AppColors.greyText(context)),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildFlagBadge(({String text, Color color}) flagBadge) {
+    return Container(
+      padding: EdgeInsetsDirectional.symmetric(horizontal: 7.w, vertical: 3.h),
+      decoration: BoxDecoration(
+        color: flagBadge.color,
+        borderRadius: BorderRadius.circular(7.r),
+      ),
+      child: Text(
+        flagBadge.text,
+        style: AppTextStyles.bodySmall(
+          color: AppColors.onImage,
+        ).copyWith(fontWeight: FontWeight.w700, fontSize: 10.sp),
+      ),
+    );
+  }
+
+  Widget _buildPriceRow(BuildContext context, bool hasDiscount) {
+    final currentPrice = hasDiscount ? trip.discountPrice! : trip.price;
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.baseline,
+      textBaseline: TextBaseline.alphabetic,
+      children: [
+        if (hasDiscount) ...[
+          Text(
+            PriceFormatter.format(trip.price, currency: trip.currency),
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            style: AppTextStyles.bodySmall(
+              color: AppColors.greyText(context),
+            ).copyWith(decoration: TextDecoration.lineThrough, fontSize: 12.sp),
+          ),
+          SizedBox(width: 6.w),
+        ],
+        Flexible(
+          child: Text(
+            PriceFormatter.format(currentPrice, currency: trip.currency),
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            style: AppTextStyles.heading3(
+              color: AppColors.darkText(context),
+            ).copyWith(fontWeight: FontWeight.w800, fontSize: 16.sp),
+          ),
+        ),
+        SizedBox(width: 4.w),
+        Text(
+          '/${context.tr.homePerPerson}',
+          style: AppTextStyles.bodySmall(color: AppColors.greyText(context)),
+        ),
+      ],
+    );
+  }
+}
+
+class _WishlistFavoriteButton extends StatelessWidget {
+  const _WishlistFavoriteButton({
+    required this.isFavorite,
+    required this.onTap,
+  });
+
+  final bool isFavorite;
+  final VoidCallback? onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    return Semantics(
+      button: true,
+      label: isFavorite
+          ? context.tr.myTripsCatalogRemoveWishlist
+          : context.tr.myTripsCatalogSaveWishlist,
+      child: Material(
+        color: AppColors.transparent,
+        shape: const CircleBorder(),
+        child: InkWell(
+          customBorder: const CircleBorder(),
+          onTap: onTap,
+          child: Container(
+            width: 34.w,
+            height: 34.w,
+            decoration: BoxDecoration(
+              color: AppColors.white.withValues(alpha: 0.85),
+              shape: BoxShape.circle,
+            ),
+            child: Icon(
+              isFavorite ? Icons.favorite : Icons.favorite_border,
+              size: 18.sp,
+              color: isFavorite ? Colors.red : AppColors.greyText(context),
+            ),
+          ),
         ),
       ),
     );

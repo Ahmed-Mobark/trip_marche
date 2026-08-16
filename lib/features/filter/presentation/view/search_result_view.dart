@@ -8,6 +8,7 @@ import 'package:trip_marche/core/navigation/app_navigator.dart';
 import 'package:trip_marche/core/theme/app_colors.dart';
 import 'package:trip_marche/core/theme/app_text_styles.dart';
 import 'package:trip_marche/core/toast/app_toast.dart';
+import 'package:trip_marche/core/widgets/app_modal_bottom_sheet.dart';
 import 'package:trip_marche/core/widgets/curved_gradient_sheet_layout.dart';
 import 'package:trip_marche/core/widgets/custom_loading.dart';
 import 'package:trip_marche/features/filter/presentation/view/filter_view.dart';
@@ -107,7 +108,174 @@ class _SearchResultViewState extends State<SearchResultView> {
     }
     // Preserve the active search query when applying filter changes so users
     // don't lose their typed destination after tweaking filters (#52).
-    await _listCubit.applyFilters(result.withCountry(currentFilters.country));
+    await _listCubit.applyFilters(result.withSearch(currentFilters.search));
+  }
+
+  Future<void> _openSortSheet() async {
+    final currentSort = _listCubit.activeFilters.sort;
+    final options = [
+      _SortOption(
+        'price_asc',
+        context.tr.searchResultSortPriceAsc,
+        context.tr.searchResultSortPriceAscDesc,
+        Iconsax.money,
+      ),
+      _SortOption(
+        'price_desc',
+        context.tr.searchResultSortPriceDesc,
+        context.tr.searchResultSortPriceDescDesc,
+        Iconsax.wallet_3,
+      ),
+      _SortOption(
+        'rating',
+        context.tr.searchResultSortRating,
+        context.tr.searchResultSortRatingDesc,
+        Iconsax.star1,
+      ),
+      _SortOption(
+        'duration_asc',
+        context.tr.searchResultSortDurationAsc,
+        context.tr.searchResultSortDurationAscDesc,
+        Iconsax.clock,
+      ),
+      _SortOption(
+        'duration_desc',
+        context.tr.searchResultSortDurationDesc,
+        context.tr.searchResultSortDurationDescDesc,
+        Iconsax.arrow_up_1,
+      ),
+      _SortOption(
+        'recent',
+        context.tr.searchResultSortRecent,
+        context.tr.searchResultSortRecentDesc,
+        Iconsax.calendar_1,
+      ),
+    ];
+    final result = await showAppModalBottomSheet<String>(
+      context: context,
+      backgroundColor: Colors.transparent,
+      isScrollControlled: true,
+      applySystemBottomInset: false,
+      builder: (ctx) {
+        return SingleChildScrollView(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Container(
+                width: 40.w,
+                height: 4.h,
+                margin: EdgeInsets.only(bottom: 12.h),
+                decoration: BoxDecoration(
+                  color: AppColors.border(context),
+                  borderRadius: BorderRadius.circular(999.r),
+                ),
+              ),
+              BottomSystemInsetSurface(
+                color: AppColors.cardBg(context),
+                borderRadius: BorderRadius.vertical(
+                  top: Radius.circular(30.r),
+                ),
+                additionalBottomPadding: 12.h,
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Padding(
+                      padding: EdgeInsetsDirectional.fromSTEB(
+                        24.w,
+                        20.h,
+                        24.w,
+                        16.h,
+                      ),
+                      child: Row(
+                          children: [
+                            Icon(
+                              Iconsax.sort,
+                              color: AppColors.primary,
+                              size: 24.sp,
+                            ),
+                            SizedBox(width: 12.w),
+                            Expanded(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    context.tr.searchResultSortBy,
+                                    style: AppTextStyles.heading3(
+                                      color: AppColors.darkText(context),
+                                    ),
+                                  ),
+                                  SizedBox(height: 4.h),
+                                  Text(
+                                    context.tr.searchResultSortSubtitle,
+                                    style: AppTextStyles.bodySmall(
+                                      color: AppColors.secondaryText(context),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            IconButton(
+                              icon: Icon(
+                                Iconsax.close_circle,
+                                color: AppColors.greyText(context),
+                                size: 24.sp,
+                              ),
+                              onPressed: () => Navigator.pop(ctx),
+                              padding: EdgeInsets.zero,
+                              constraints: BoxConstraints(
+                                minWidth: 40.w,
+                                minHeight: 40.w,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      Divider(
+                        height: 1,
+                        thickness: 0.5,
+                        color: AppColors.border(context),
+                        indent: 24.w,
+                        endIndent: 24.w,
+                      ),
+                      SizedBox(height: 16.h),
+                      Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 24.w),
+                        child: Column(
+                          children: [
+                            ...options.asMap().entries.map((entry) {
+                              final index = entry.key;
+                              final option = entry.value;
+                              final isSelected = option.value == currentSort;
+                              return Padding(
+                                padding: EdgeInsets.only(
+                                  bottom: index < options.length - 1
+                                      ? 16.h
+                                      : 0,
+                                ),
+                                child: _SortOptionCard(
+                                  option: option,
+                                  isSelected: isSelected,
+                                  onTap: () =>
+                                      Navigator.pop(ctx, option.value),
+                                ),
+                              );
+                            }),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+        );
+      },
+    );
+    if (!mounted || result == null) {
+      return;
+    }
+    final newFilters = _listCubit.activeFilters.copyWith(sort: result);
+    await _listCubit.applyFilters(newFilters);
   }
 
   @override
@@ -137,11 +305,12 @@ class _SearchResultViewState extends State<SearchResultView> {
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   SearchResultSearchBar(
-                    initialQuery: widget.filters.country ?? '',
+                    initialQuery: widget.filters.search ?? '',
                     scrollController: _scrollController,
                   ),
                   SizedBox(height: 16.h),
                   SearchResultActionRow(
+                    onSortTap: _openSortSheet,
                     onFilterTap: _openFilters,
                   ),
                   SizedBox(height: 14.h),
@@ -261,5 +430,123 @@ class _SearchResultViewState extends State<SearchResultView> {
       return raw;
     }
     return '${context.tr.myTripsFromPrefix} $raw';
+  }
+}
+
+class _SortOption {
+  final String value;
+  final String label;
+  final String description;
+  final IconData icon;
+
+  const _SortOption(this.value, this.label, this.description, this.icon);
+}
+
+class _SortOptionCard extends StatelessWidget {
+  const _SortOptionCard({
+    required this.option,
+    required this.isSelected,
+    required this.onTap,
+  });
+
+  final _SortOption option;
+  final bool isSelected;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    return AnimatedContainer(
+      duration: const Duration(milliseconds: 250),
+      curve: Curves.easeOutCubic,
+      decoration: BoxDecoration(
+        color: isSelected
+            ? AppColors.selectedPurpleTint(context)
+            : AppColors.cardBg(context),
+        borderRadius: BorderRadius.circular(18.r),
+        border: Border.all(
+          color: isSelected ? AppColors.primary : AppColors.border(context),
+          width: isSelected ? 2.w : 1.w,
+        ),
+        boxShadow: [
+          BoxShadow(
+            color: AppColors.shadow.withValues(alpha: 0.06),
+            blurRadius: 8.r,
+            offset: Offset(0, 2.h),
+          ),
+        ],
+      ),
+      child: Material(
+        color: Colors.transparent,
+        child: InkWell(
+          onTap: onTap,
+          borderRadius: BorderRadius.circular(18.r),
+          child: Padding(
+            padding: EdgeInsets.all(16.w),
+            child: Row(
+              children: [
+                Container(
+                  width: 40.w,
+                  height: 40.w,
+                  decoration: BoxDecoration(
+                    color: isSelected
+                        ? AppColors.primary.withValues(alpha: 0.15)
+                        : AppColors.greyText(context)
+                            .withValues(alpha: 0.08),
+                    borderRadius: BorderRadius.circular(12.r),
+                  ),
+                  child: Icon(
+                    option.icon,
+                    color: isSelected
+                        ? AppColors.primary
+                        : AppColors.greyText(context),
+                    size: 20.sp,
+                  ),
+                ),
+                SizedBox(width: 12.w),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        option.label,
+                        style: AppTextStyles.bodyMedium(
+                          color: isSelected
+                              ? AppColors.primary
+                              : AppColors.darkText(context),
+                        ).copyWith(
+                          fontWeight:
+                              isSelected ? FontWeight.w600 : FontWeight.w500,
+                        ),
+                      ),
+                      SizedBox(height: 2.h),
+                      Text(
+                        option.description,
+                        style: AppTextStyles.bodySmall(
+                          color: AppColors.secondaryText(context),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                SizedBox(width: 8.w),
+                SizedBox(
+                  width: 22.w,
+                  height: 22.w,
+                  child: AnimatedOpacity(
+                    opacity: isSelected ? 1.0 : 0.0,
+                    duration: const Duration(milliseconds: 200),
+                    child: Icon(
+                      Iconsax.tick_circle,
+                      color: AppColors.primary,
+                      size: 22.sp,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
   }
 }

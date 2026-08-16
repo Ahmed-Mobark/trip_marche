@@ -28,8 +28,8 @@ class DateOptionCard extends StatelessWidget {
         padding: EdgeInsetsDirectional.symmetric(horizontal: 12.w),
         decoration: BoxDecoration(
           color: isSelected
-              ? TripOptionsFigmaTokens.selectedDateFill
-              : AppColors.white,
+              ? AppColors.selectedPurpleTint(context)
+              : AppColors.cardBg(context),
           borderRadius: BorderRadius.circular(
             TripOptionsFigmaTokens.dateCardRadius,
           ),
@@ -51,7 +51,7 @@ class DateOptionCard extends StatelessWidget {
                   maxLines: 1,
                   softWrap: false,
                   style: AppTextStyles.bodyMedium(
-                    color: AppColors.tripDetailsFigmaBlack,
+                    color: AppColors.ink(context),
                   ).copyWith(
                     fontSize: 14.sp,
                     fontWeight: FontWeight.w500,

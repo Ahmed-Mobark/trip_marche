@@ -38,7 +38,7 @@ class TripOptionsStepper extends StatelessWidget {
             '$value',
             textAlign: TextAlign.center,
             style: AppTextStyles.bodyMedium(
-              color: AppColors.tripDetailsFigmaBlack,
+              color: AppColors.ink(context),
             ).copyWith(
               fontSize: 14.sp,
               fontWeight: FontWeight.w600,
@@ -71,13 +71,13 @@ class _StepperButton extends StatelessWidget {
   Widget build(BuildContext context) {
     final borderColor = enabled
         ? AppColors.primary
-        : TripOptionsFigmaTokens.stepperDisabledBorder;
+        : AppColors.softBorder(context);
     final iconColor = enabled
         ? AppColors.primary
-        : TripOptionsFigmaTokens.stepperDisabledIcon;
+        : AppColors.disabledIcon(context);
     final fill = enabled
-        ? TripOptionsFigmaTokens.stepperEnabledFill
-        : AppColors.white;
+        ? AppColors.selectedPurpleTint(context)
+        : AppColors.cardBg(context);
 
     return GestureDetector(
       onTap: enabled ? onTap : null,

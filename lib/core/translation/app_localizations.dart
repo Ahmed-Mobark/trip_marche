@@ -601,19 +601,19 @@ abstract class AppLocalizations {
   /// No description provided for @homeSponsoredTrips.
   ///
   /// In en, this message translates to:
-  /// **'Sponsored Trips'**
+  /// **'Hot Deals'**
   String get homeSponsoredTrips;
 
   /// No description provided for @homeDomesticTripsInEgypt.
   ///
   /// In en, this message translates to:
-  /// **'Domestic Trips In Egypt'**
+  /// **'Explore Egypt'**
   String get homeDomesticTripsInEgypt;
 
   /// No description provided for @homeInternationalTripsFromEgypt.
   ///
   /// In en, this message translates to:
-  /// **'International Trips From Egypt'**
+  /// **'Explore the World'**
   String get homeInternationalTripsFromEgypt;
 
   /// No description provided for @homeRecommendedForYou.
@@ -625,7 +625,7 @@ abstract class AppLocalizations {
   /// No description provided for @homeSpecialTrips.
   ///
   /// In en, this message translates to:
-  /// **'Special Trips'**
+  /// **'Explore by category'**
   String get homeSpecialTrips;
 
   /// No description provided for @homeTopRated.
@@ -982,6 +982,24 @@ abstract class AppLocalizations {
   /// **'Free cancellation'**
   String get wishlistFiltersFreeCancellation;
 
+  /// No description provided for @wishlistFiltersCategories.
+  ///
+  /// In en, this message translates to:
+  /// **'Categories'**
+  String get wishlistFiltersCategories;
+
+  /// No description provided for @wishlistFiltersDestinationCountry.
+  ///
+  /// In en, this message translates to:
+  /// **'Destination Country'**
+  String get wishlistFiltersDestinationCountry;
+
+  /// No description provided for @wishlistFiltersFiveStarOnly.
+  ///
+  /// In en, this message translates to:
+  /// **'5-Star Only'**
+  String get wishlistFiltersFiveStarOnly;
+
   /// No description provided for @filterSeeResults.
   ///
   /// In en, this message translates to:
@@ -1282,6 +1300,12 @@ abstract class AppLocalizations {
   /// **'Unfollow'**
   String get followingsUnfollow;
 
+  /// No description provided for @follow.
+  ///
+  /// In en, this message translates to:
+  /// **'Follow'**
+  String get follow;
+
   /// No description provided for @followingsEmptyTitle.
   ///
   /// In en, this message translates to:
@@ -1390,6 +1414,12 @@ abstract class AppLocalizations {
   /// **'From'**
   String get myTripsFromPrefix;
 
+  /// No description provided for @myTripsTravelers.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} travelers'**
+  String myTripsTravelers(int count);
+
   /// No description provided for @myTripsViewDetails.
   ///
   /// In en, this message translates to:
@@ -1408,6 +1438,30 @@ abstract class AppLocalizations {
   /// **'Booking Details'**
   String get myTripsBookingDetails;
 
+  /// No description provided for @myTripsBookingConfirmation.
+  ///
+  /// In en, this message translates to:
+  /// **'Booking Confirmation'**
+  String get myTripsBookingConfirmation;
+
+  /// No description provided for @myTripsWriteReview.
+  ///
+  /// In en, this message translates to:
+  /// **'Write Review'**
+  String get myTripsWriteReview;
+
+  /// No description provided for @myTripsRateTrip.
+  ///
+  /// In en, this message translates to:
+  /// **'Rate Trip'**
+  String get myTripsRateTrip;
+
+  /// No description provided for @myTripsRated.
+  ///
+  /// In en, this message translates to:
+  /// **'Rated'**
+  String get myTripsRated;
+
   /// No description provided for @myTripsDownloadPdf.
   ///
   /// In en, this message translates to:
@@ -1417,19 +1471,19 @@ abstract class AppLocalizations {
   /// No description provided for @myTripsEmptyTitle.
   ///
   /// In en, this message translates to:
-  /// **'No trips yet'**
+  /// **'No Bookings Yet !'**
   String get myTripsEmptyTitle;
 
   /// No description provided for @myTripsEmptyDescription.
   ///
   /// In en, this message translates to:
-  /// **'Start exploring and book your\nfirst adventure!'**
+  /// **'Time to dust off your bags and start planning your next adventure'**
   String get myTripsEmptyDescription;
 
   /// No description provided for @myTripsExploreTrips.
   ///
   /// In en, this message translates to:
-  /// **'Explore Trips'**
+  /// **'Discover Trips'**
   String get myTripsExploreTrips;
 
   /// No description provided for @navHome.
@@ -1605,6 +1659,36 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Accommodation Options'**
   String get bookingAccommodationOptions;
+
+  /// No description provided for @bookingCreatedSuccess.
+  ///
+  /// In en, this message translates to:
+  /// **'Booking created successfully'**
+  String get bookingCreatedSuccess;
+
+  /// No description provided for @bookingRoomsRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Please select at least one room'**
+  String get bookingRoomsRequired;
+
+  /// No description provided for @bookingRoomOccupantsMismatch.
+  ///
+  /// In en, this message translates to:
+  /// **'The total room occupants must equal the number of travelers ({count})'**
+  String bookingRoomOccupantsMismatch(Object count);
+
+  /// No description provided for @bookingTripUnavailableTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'This trip isn\'t available for booking yet.'**
+  String get bookingTripUnavailableTitle;
+
+  /// No description provided for @bookingTripUnavailableBody.
+  ///
+  /// In en, this message translates to:
+  /// **'This trip doesn\'t have any booking options available at the moment. Please choose another trip or check back later.'**
+  String get bookingTripUnavailableBody;
 
   /// No description provided for @bookingSingleRoom.
   ///
@@ -1966,6 +2050,60 @@ abstract class AppLocalizations {
   /// **'Payment Method'**
   String get bookingPaymentMethodTitle;
 
+  /// No description provided for @bookingPaymentMethodSelect.
+  ///
+  /// In en, this message translates to:
+  /// **'Select Payment Method'**
+  String get bookingPaymentMethodSelect;
+
+  /// No description provided for @bookingPaymentMethodChoose.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose how you want to pay'**
+  String get bookingPaymentMethodChoose;
+
+  /// No description provided for @bookingPaymentMethodChange.
+  ///
+  /// In en, this message translates to:
+  /// **'Change'**
+  String get bookingPaymentMethodChange;
+
+  /// No description provided for @paymentMethodContinue.
+  ///
+  /// In en, this message translates to:
+  /// **'Continue'**
+  String get paymentMethodContinue;
+
+  /// No description provided for @paymentMethodEmptyTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'No Payment Methods'**
+  String get paymentMethodEmptyTitle;
+
+  /// No description provided for @paymentMethodEmptyDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'No payment methods are currently available.'**
+  String get paymentMethodEmptyDescription;
+
+  /// No description provided for @paymentMethodErrorTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Error'**
+  String get paymentMethodErrorTitle;
+
+  /// No description provided for @paymentMethodErrorDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Something went wrong'**
+  String get paymentMethodErrorDescription;
+
+  /// No description provided for @paymentMethodRetry.
+  ///
+  /// In en, this message translates to:
+  /// **'Retry'**
+  String get paymentMethodRetry;
+
   /// No description provided for @bookingPaymentOptionCreditCard.
   ///
   /// In en, this message translates to:
@@ -2110,6 +2248,42 @@ abstract class AppLocalizations {
   /// **'Save Changes'**
   String get profileSaveChanges;
 
+  /// No description provided for @profileChangePhotoTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Change Profile Photo'**
+  String get profileChangePhotoTitle;
+
+  /// No description provided for @profileChangePhotoSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose where you want to get your photo from.'**
+  String get profileChangePhotoSubtitle;
+
+  /// No description provided for @profilePhotoCamera.
+  ///
+  /// In en, this message translates to:
+  /// **'Camera'**
+  String get profilePhotoCamera;
+
+  /// No description provided for @profilePhotoGallery.
+  ///
+  /// In en, this message translates to:
+  /// **'Gallery'**
+  String get profilePhotoGallery;
+
+  /// No description provided for @profilePhotoCancel.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel'**
+  String get profilePhotoCancel;
+
+  /// Company Profile screen title
+  ///
+  /// In en, this message translates to:
+  /// **'Company Profile'**
+  String get companyProfileTitle;
+
   /// No description provided for @companyProfileCompanyName.
   ///
   /// In en, this message translates to:
@@ -2205,6 +2379,96 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Great experience! The trip was well organized and the guide was very knowledgeable.'**
   String get companyProfileReviewComment;
+
+  /// No description provided for @companyProfileCompanyDetails.
+  ///
+  /// In en, this message translates to:
+  /// **'Company Details'**
+  String get companyProfileCompanyDetails;
+
+  /// No description provided for @companyProfileLocation.
+  ///
+  /// In en, this message translates to:
+  /// **'Location'**
+  String get companyProfileLocation;
+
+  /// No description provided for @companyProfileEmail.
+  ///
+  /// In en, this message translates to:
+  /// **'Email'**
+  String get companyProfileEmail;
+
+  /// No description provided for @companyProfileYearOfEstablishment.
+  ///
+  /// In en, this message translates to:
+  /// **'Year of Establishment'**
+  String get companyProfileYearOfEstablishment;
+
+  /// No description provided for @companyProfileCommercialRegistration.
+  ///
+  /// In en, this message translates to:
+  /// **'Commercial Registration'**
+  String get companyProfileCommercialRegistration;
+
+  /// No description provided for @companyProfileBusinessLicense.
+  ///
+  /// In en, this message translates to:
+  /// **'Business License'**
+  String get companyProfileBusinessLicense;
+
+  /// No description provided for @companyProfileTaxCard.
+  ///
+  /// In en, this message translates to:
+  /// **'Tax Card'**
+  String get companyProfileTaxCard;
+
+  /// No description provided for @companyProfileTripCategories.
+  ///
+  /// In en, this message translates to:
+  /// **'Trip Categories'**
+  String get companyProfileTripCategories;
+
+  /// No description provided for @companyProfileOurTeam.
+  ///
+  /// In en, this message translates to:
+  /// **'Our Team'**
+  String get companyProfileOurTeam;
+
+  /// No description provided for @companyProfileCustomerReviews.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Reviews'**
+  String get companyProfileCustomerReviews;
+
+  /// No description provided for @companyProfileViewAll.
+  ///
+  /// In en, this message translates to:
+  /// **'View All'**
+  String get companyProfileViewAll;
+
+  /// No description provided for @companyProfileAvailableTrips.
+  ///
+  /// In en, this message translates to:
+  /// **'Available Trips'**
+  String get companyProfileAvailableTrips;
+
+  /// No description provided for @companyProfileSeeAllTrips.
+  ///
+  /// In en, this message translates to:
+  /// **'See All Trips'**
+  String get companyProfileSeeAllTrips;
+
+  /// No description provided for @companyProfileShowLess.
+  ///
+  /// In en, this message translates to:
+  /// **'Show Less'**
+  String get companyProfileShowLess;
+
+  /// No description provided for @companyProfilePricePerPerson.
+  ///
+  /// In en, this message translates to:
+  /// **'Person'**
+  String get companyProfilePricePerPerson;
 
   /// No description provided for @filterTitle.
   ///
@@ -2313,6 +2577,84 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Sort By'**
   String get searchResultSortBy;
+
+  /// No description provided for @searchResultSortPriceAsc.
+  ///
+  /// In en, this message translates to:
+  /// **'Price: Low to High'**
+  String get searchResultSortPriceAsc;
+
+  /// No description provided for @searchResultSortPriceDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Price: High to Low'**
+  String get searchResultSortPriceDesc;
+
+  /// No description provided for @searchResultSortRating.
+  ///
+  /// In en, this message translates to:
+  /// **'Highest Rating'**
+  String get searchResultSortRating;
+
+  /// No description provided for @searchResultSortDurationAsc.
+  ///
+  /// In en, this message translates to:
+  /// **'Duration: Shortest First'**
+  String get searchResultSortDurationAsc;
+
+  /// No description provided for @searchResultSortDurationDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Duration: Longest First'**
+  String get searchResultSortDurationDesc;
+
+  /// No description provided for @searchResultSortRecent.
+  ///
+  /// In en, this message translates to:
+  /// **'Most Recent'**
+  String get searchResultSortRecent;
+
+  /// No description provided for @searchResultSortSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose how you\'d like to sort the results'**
+  String get searchResultSortSubtitle;
+
+  /// No description provided for @searchResultSortPriceAscDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Show the cheapest trips first.'**
+  String get searchResultSortPriceAscDesc;
+
+  /// No description provided for @searchResultSortPriceDescDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Show the most expensive trips first.'**
+  String get searchResultSortPriceDescDesc;
+
+  /// No description provided for @searchResultSortRatingDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Show the best-rated trips first.'**
+  String get searchResultSortRatingDesc;
+
+  /// No description provided for @searchResultSortDurationAscDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Show trips with the shortest duration first.'**
+  String get searchResultSortDurationAscDesc;
+
+  /// No description provided for @searchResultSortDurationDescDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Show trips with the longest duration first.'**
+  String get searchResultSortDurationDescDesc;
+
+  /// No description provided for @searchResultSortRecentDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Show the newest trips first.'**
+  String get searchResultSortRecentDesc;
 
   /// No description provided for @searchResultFilters.
   ///
@@ -3957,6 +4299,240 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'WhatsApp'**
   String get csWhatsApp;
+
+  /// No description provided for @paymentWebViewTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Complete Payment'**
+  String get paymentWebViewTitle;
+
+  /// No description provided for @paymentWebViewError.
+  ///
+  /// In en, this message translates to:
+  /// **'Unable to load payment page.'**
+  String get paymentWebViewError;
+
+  /// No description provided for @paymentWebViewRetry.
+  ///
+  /// In en, this message translates to:
+  /// **'Retry'**
+  String get paymentWebViewRetry;
+
+  /// No description provided for @paymentWebViewFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Payment failed or cancelled.'**
+  String get paymentWebViewFailed;
+
+  /// No description provided for @profileChangePasswordTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Change Password'**
+  String get profileChangePasswordTitle;
+
+  /// No description provided for @profileCurrentPasswordLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Current Password'**
+  String get profileCurrentPasswordLabel;
+
+  /// No description provided for @profileNewPasswordLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'New Password'**
+  String get profileNewPasswordLabel;
+
+  /// No description provided for @profileUpdatePasswordAction.
+  ///
+  /// In en, this message translates to:
+  /// **'Update Password'**
+  String get profileUpdatePasswordAction;
+
+  /// No description provided for @errorPasswordMinLength.
+  ///
+  /// In en, this message translates to:
+  /// **'Password must be at least 8 characters'**
+  String get errorPasswordMinLength;
+
+  /// No description provided for @passwordUpdatedSuccessfully.
+  ///
+  /// In en, this message translates to:
+  /// **'Password updated successfully'**
+  String get passwordUpdatedSuccessfully;
+
+  /// No description provided for @somethingWentWrong.
+  ///
+  /// In en, this message translates to:
+  /// **'Something went wrong'**
+  String get somethingWentWrong;
+
+  /// Logout action label
+  ///
+  /// In en, this message translates to:
+  /// **'Logout'**
+  String get logout;
+
+  /// Title for logout confirmation bottom sheet
+  ///
+  /// In en, this message translates to:
+  /// **'Logout'**
+  String get logoutTitle;
+
+  /// Description text for logout confirmation
+  ///
+  /// In en, this message translates to:
+  /// **'Are you sure you want to logout from your account?'**
+  String get logoutDescription;
+
+  /// Primary action button text for logout
+  ///
+  /// In en, this message translates to:
+  /// **'Logout'**
+  String get logoutAction;
+
+  /// Cancel action text
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel'**
+  String get cancel;
+
+  /// Delete account action label
+  ///
+  /// In en, this message translates to:
+  /// **'Delete Account'**
+  String get deleteAccount;
+
+  /// Title for delete account confirmation bottom sheet
+  ///
+  /// In en, this message translates to:
+  /// **'Delete Account'**
+  String get deleteAccountTitle;
+
+  /// Description text for delete account confirmation
+  ///
+  /// In en, this message translates to:
+  /// **'This action is permanent and cannot be undone. All your trips, bookings and account information will be permanently removed.'**
+  String get deleteAccountDescription;
+
+  /// Warning text for final delete account confirmation dialog
+  ///
+  /// In en, this message translates to:
+  /// **'Are you absolutely sure you want to permanently delete your account?'**
+  String get deleteAccountWarning;
+
+  /// Primary action button text for delete account
+  ///
+  /// In en, this message translates to:
+  /// **'Delete Account'**
+  String get deleteAccountAction;
+
+  /// Title for final confirmation dialog before account deletion
+  ///
+  /// In en, this message translates to:
+  /// **'Final Confirmation'**
+  String get finalConfirmation;
+
+  /// No description provided for @profilePhotoFromCamera.
+  ///
+  /// In en, this message translates to:
+  /// **'Camera'**
+  String get profilePhotoFromCamera;
+
+  /// No description provided for @profilePhotoFromGallery.
+  ///
+  /// In en, this message translates to:
+  /// **'Gallery'**
+  String get profilePhotoFromGallery;
+
+  /// No description provided for @profilePhotoPermissionRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Permission required to access your photos.'**
+  String get profilePhotoPermissionRequired;
+
+  /// No description provided for @profilePhotoCameraUnavailable.
+  ///
+  /// In en, this message translates to:
+  /// **'Camera is not available on this device.'**
+  String get profilePhotoCameraUnavailable;
+
+  /// No description provided for @profilePhotoInvalidFile.
+  ///
+  /// In en, this message translates to:
+  /// **'The selected file is not a valid image.'**
+  String get profilePhotoInvalidFile;
+
+  /// No description provided for @profilePhotoTooLarge.
+  ///
+  /// In en, this message translates to:
+  /// **'The selected image is too large. Please choose a smaller one.'**
+  String get profilePhotoTooLarge;
+
+  /// No description provided for @profilePhotoPickFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to pick image. Please try again.'**
+  String get profilePhotoPickFailed;
+
+  /// No description provided for @profileUpdateSuccess.
+  ///
+  /// In en, this message translates to:
+  /// **'Profile updated successfully'**
+  String get profileUpdateSuccess;
+
+  /// Success toast message after account deletion
+  ///
+  /// In en, this message translates to:
+  /// **'Your account has been deleted.'**
+  String get deleteAccountSuccess;
+
+  /// No description provided for @reviewTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Trip Review'**
+  String get reviewTitle;
+
+  /// No description provided for @reviewTripSatisfactionHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Please write your overall satisfaction level with the trip.'**
+  String get reviewTripSatisfactionHint;
+
+  /// No description provided for @reviewWriteYourReview.
+  ///
+  /// In en, this message translates to:
+  /// **'Write Your Review'**
+  String get reviewWriteYourReview;
+
+  /// No description provided for @reviewRateTravelAgency.
+  ///
+  /// In en, this message translates to:
+  /// **'Please Rate the Travel Agency.'**
+  String get reviewRateTravelAgency;
+
+  /// No description provided for @reviewSendButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Send'**
+  String get reviewSendButton;
+
+  /// No description provided for @reviewEnterReviewHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter your review here'**
+  String get reviewEnterReviewHint;
+
+  /// No description provided for @reviewSubmittedSuccess.
+  ///
+  /// In en, this message translates to:
+  /// **'Review submitted successfully!'**
+  String get reviewSubmittedSuccess;
+
+  /// No description provided for @reviewRatingScale.
+  ///
+  /// In en, this message translates to:
+  /// **'{rating}/5'**
+  String reviewRatingScale(int rating);
 }
 
 class _AppLocalizationsDelegate

@@ -1,3 +1,5 @@
+import 'package:trip_marche/core/utils/json_parser.dart';
+
 class HomeSectionsResponse {
   final List<HomeSectionModel> sections;
 
@@ -97,6 +99,8 @@ class TripModel {
   final String? badge;
   final TripFlags flags;
   final bool isWishlisted;
+  final bool isFav;
+  final bool isFavorite;
 
   const TripModel({
     required this.id,
@@ -114,6 +118,8 @@ class TripModel {
     this.badge,
     required this.flags,
     required this.isWishlisted,
+    this.isFav = false,
+    this.isFavorite = false,
   });
 
   String get dateRange => '$startDate - $endDate';
@@ -134,6 +140,8 @@ class TripModel {
     String? badge,
     TripFlags? flags,
     bool? isWishlisted,
+    bool? isFav,
+    bool? isFavorite,
   }) {
     return TripModel(
       id: id ?? this.id,
@@ -151,6 +159,8 @@ class TripModel {
       badge: badge ?? this.badge,
       flags: flags ?? this.flags,
       isWishlisted: isWishlisted ?? this.isWishlisted,
+      isFav: isFav ?? this.isFav,
+      isFavorite: isFavorite ?? this.isFavorite,
     );
   }
 
@@ -172,7 +182,10 @@ class TripModel {
       reviewsCount: json['reviews_count'] as int? ?? 0,
       badge: json['badge'] as String?,
       flags: TripFlags.fromJson(json['flags'] as Map<String, dynamic>? ?? {}),
-      isWishlisted: json['is_wishlisted'] as bool? ?? false,
+      isWishlisted: JsonParser.asBool(json['is_wishlisted']),
+      isFav: JsonParser.asBool(json['is_fav']) ||
+          JsonParser.asBool(json['is_favorite']),
+      isFavorite: JsonParser.asBool(json['is_favorite']),
     );
   }
 }

@@ -21,9 +21,9 @@ class IncludedFeaturesSection extends StatelessWidget {
       width: double.infinity,
       padding: EdgeInsetsDirectional.all(ReviewFigmaTokens.includedPadding),
       decoration: BoxDecoration(
-        color: ReviewFigmaTokens.includedBg,
+        color: AppColors.includedSurface(context),
         borderRadius: BorderRadius.circular(ReviewFigmaTokens.includedRadius),
-        border: Border.all(color: ReviewFigmaTokens.includedBorder),
+        border: Border.all(color: AppColors.includedBorder(context)),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -31,7 +31,7 @@ class IncludedFeaturesSection extends StatelessWidget {
           Text(
             title,
             style: AppTextStyles.subtitle(
-              color: AppColors.tripDetailsFigmaBlack,
+              color: AppColors.ink(context),
             ).copyWith(
               fontSize: ReviewFigmaTokens.bodySize,
               fontWeight: FontWeight.w600,
@@ -81,7 +81,7 @@ class _IncludedFeatureItem extends StatelessWidget {
             maxLines: 2,
             overflow: TextOverflow.ellipsis,
             style: AppTextStyles.bodyMedium(
-              color: AppColors.tripDetailsFigmaBlack,
+              color: AppColors.ink(context),
             ).copyWith(
               fontSize: ReviewFigmaTokens.smallSize,
               fontWeight: FontWeight.w500,

@@ -10,6 +10,18 @@ class CreateBookingCubit extends Cubit<CreateBookingState> {
 
   final CreateBookingUseCase _createBookingUseCase;
 
+import 'package:trip_marche/features/payment_method/domain/entities/payment_method_entity.dart';
+
+class CreateBookingCubit extends Cubit<CreateBookingState> {
+  CreateBookingCubit(this._createBookingUseCase)
+    : super(const CreateBookingState());
+
+  final CreateBookingUseCase _createBookingUseCase;
+
+  void selectPaymentMethod(PaymentMethodEntity method) {
+    emit(state.copyWith(selectedPaymentMethod: method));
+  }
+
   Future<void> createBooking({
     required BookingReviewData data,
     String? notes,
@@ -35,6 +47,11 @@ class CreateBookingCubit extends Cubit<CreateBookingState> {
       validationErrors['rooms'] = 'Please select at least one room';
     }
 
+
+    if (state.selectedPaymentMethod == null) {
+      validationErrors['payment_method'] = 'Please select a payment method';
+    }
+
     final adultCount = data.adultCount;
     final kidCount = data.kidCount;
     final babyCount = data.babyCount;
@@ -48,6 +65,7 @@ class CreateBookingCubit extends Cubit<CreateBookingState> {
       }
 
       if (i < adultCount) {
+      if (i == 0) {
         final phone = traveler.phoneNumber.trim();
         final code = traveler.countryCode.trim();
         if (code.isEmpty || !code.startsWith('+')) {
@@ -97,6 +115,8 @@ class CreateBookingCubit extends Cubit<CreateBookingState> {
             fullName: traveler.fullName.trim(),
             phoneCountryCode: traveler.countryCode.trim(),
             phone: traveler.phoneNumber.trim(),
+            phoneCountryCode: i == 0 ? traveler.countryCode.trim() : null,
+            phone: i == 0 ? traveler.phoneNumber.trim() : null,
             type: 'adult',
           ),
         );
@@ -136,6 +156,7 @@ class CreateBookingCubit extends Cubit<CreateBookingState> {
               travelerIndex: i,
               activityId: activityId,
             ),
+            CreateBookingActivity(travelerIndex: i, activityId: activityId),
           );
         }
       }
@@ -151,6 +172,7 @@ class CreateBookingCubit extends Cubit<CreateBookingState> {
       couponCode: trimmedCoupon,
       travelers: travelers,
       notes: trimmedNotes,
+      paymentMethod: state.selectedPaymentMethod?.key,
     );
 
     debugPrint('CreateBookingRequest body: ${request.toJson()}');

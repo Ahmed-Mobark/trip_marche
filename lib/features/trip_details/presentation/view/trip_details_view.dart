@@ -9,20 +9,22 @@ import 'package:trip_marche/core/theme/app_colors.dart';
 import 'package:trip_marche/core/toast/app_toast.dart';
 import 'package:trip_marche/core/widgets/custom_loading.dart';
 import 'package:trip_marche/features/booking/presentation/view/trip_options_view.dart';
+import 'package:trip_marche/features/profile/domain/usecases/toggle_follow_vendor_usecase.dart';
 import 'package:trip_marche/features/trip_details/domain/entities/trip_details_entity.dart';
 import 'package:trip_marche/features/trip_details/domain/usecases/get_trip_details_usecase.dart';
 import 'package:trip_marche/features/trip_details/presentation/trip_details_ui_formatters.dart';
 import 'package:trip_marche/features/wishlist/domain/repositories/trip_wishlist_repository.dart';
+
 import '../cubit/trip_details_cubit.dart';
 import '../cubit/trip_details_state.dart';
 import '../trip_wishlist_pop_result.dart';
-import '../widgets/trip_details_booking_bar.dart';
-import '../widgets/trip_details_hero_header.dart';
-import '../widgets/trip_details_stat_grid.dart';
-import '../widgets/trip_details_post_stats_sections.dart';
 import '../widgets/trip_details_accommodation_section.dart';
+import '../widgets/trip_details_booking_bar.dart';
 import '../widgets/trip_details_destination_details_section.dart';
+import '../widgets/trip_details_hero_header.dart';
+import '../widgets/trip_details_post_stats_sections.dart';
 import '../widgets/trip_details_program_section.dart';
+import '../widgets/trip_details_stat_grid.dart';
 import '../widgets/trip_details_travel_sections.dart';
 
 class TripDetailsView extends StatelessWidget {
@@ -41,6 +43,7 @@ class TripDetailsView extends StatelessWidget {
       create: (_) => TripDetailsCubit(
         sl<TripWishlistRepository>(),
         sl<GetTripDetailsUseCase>(),
+        sl<ToggleFollowVendorUseCase>(),
         tripId: tripId,
         initialIsWishlisted: initialIsWishlisted,
       )..loadTrip(),
@@ -141,19 +144,27 @@ class _TripDetailsBodyState extends State<_TripDetailsBody> {
       },
       child: BlocListener<TripDetailsCubit, TripDetailsState>(
         listenWhen: (previous, current) =>
-            current.wishlistFeedback != null &&
-            current.wishlistFeedback != previous.wishlistFeedback,
+            (current.wishlistFeedback != null &&
+                current.wishlistFeedback != previous.wishlistFeedback) ||
+            current.followMessage != previous.followMessage,
         listener: (context, state) {
           final feedback = state.wishlistFeedback;
-          if (feedback == null || !feedback.isError) {
-            return;
+          if (feedback != null && feedback.isError) {
+            appToast(
+              context: context,
+              type: ToastType.error,
+              message: feedback.message,
+            );
+            context.read<TripDetailsCubit>().clearWishlistFeedback();
           }
-          appToast(
-            context: context,
-            type: ToastType.error,
-            message: feedback.message,
-          );
-          context.read<TripDetailsCubit>().clearWishlistFeedback();
+          if (state.followMessage != null) {
+            appToast(
+              context: context,
+              type: state.followIsError ? ToastType.error : ToastType.success,
+              message: state.followMessage!,
+            );
+            context.read<TripDetailsCubit>().clearFollowFeedback();
+          }
         },
         child: Scaffold(
           backgroundColor: AppColors.tripDetailsScreenBg(context),

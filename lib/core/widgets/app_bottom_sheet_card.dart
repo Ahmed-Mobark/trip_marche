@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:trip_marche/core/extensions/media_query_extensions.dart';
 
 class AppBottomSheetCard extends StatelessWidget {
   final List<Widget> children;
@@ -14,7 +15,9 @@ class AppBottomSheetCard extends StatelessWidget {
           right: 30.w,
           left: 30.w,
           top: 30.h,
-          bottom: MediaQuery.viewInsetsOf(context).bottom + 30.h,
+          bottom: MediaQuery.viewInsetsOf(context).bottom +
+              context.systemBottomInset +
+              30.h,
         ),
         child: SingleChildScrollView(
           child: Column(mainAxisSize: MainAxisSize.min, children: children),

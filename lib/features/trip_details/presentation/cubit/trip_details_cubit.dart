@@ -2,25 +2,33 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:trip_marche/features/trip_details/domain/usecases/get_trip_details_usecase.dart';
 import 'package:trip_marche/features/wishlist/domain/repositories/trip_wishlist_repository.dart';
+import 'package:trip_marche/features/profile/domain/usecases/toggle_follow_vendor_usecase.dart';
 import 'trip_details_state.dart';
 import 'wishlist_feedback.dart';
 
 class TripDetailsCubit extends Cubit<TripDetailsState> {
   TripDetailsCubit(
     this._wishlistRepository,
-    this._getTripDetails, {
+    this._getTripDetails,
+    this._toggleFollowVendorUseCase, {
     required this.tripId,
     bool initialIsWishlisted = false,
-  }) : super(
-          TripDetailsState(
-            isFavorite: initialIsWishlisted,
-            loadStatus: TripDetailsLoadStatus.initial,
-          ),
-        );
+  }) : _initialIsWishlisted = initialIsWishlisted,
+       super(
+         TripDetailsState(
+           isFavorite: initialIsWishlisted,
+           loadStatus: TripDetailsLoadStatus.initial,
+         ),
+       );
 
   final TripWishlistRepository _wishlistRepository;
   final GetTripDetailsUseCase _getTripDetails;
+  final ToggleFollowVendorUseCase _toggleFollowVendorUseCase;
   final int tripId;
+  final bool _initialIsWishlisted;
+
+  final Map<int, bool> _followStatusCache = {};
+  final Set<int> _followBusy = {};
 
   Future<void> loadTrip() async {
     if (tripId <= 0) {
@@ -53,11 +61,13 @@ class TripDetailsCubit extends Cubit<TripDetailsState> {
         );
       },
       (trip) {
+        _followStatusCache[trip.vendor.id] = trip.vendor.isFollowing ?? false;
         emit(
           state.copyWith(
             loadStatus: TripDetailsLoadStatus.success,
             trip: trip,
-            isFavorite: trip.isWishlisted,
+            isFavorite:
+                trip.isFavorite || trip.isWishlisted || _initialIsWishlisted,
             clearTrip: false,
             clearLoadError: true,
             expandedDayIndices: trip.days.isEmpty ? const <int>{} : const {0},
@@ -65,6 +75,59 @@ class TripDetailsCubit extends Cubit<TripDetailsState> {
         );
       },
     );
+  }
+
+  bool isFollowBusy(int vendorId) => _followBusy.contains(vendorId);
+
+  bool isFollowingForVendor(int vendorId) =>
+      _followStatusCache[vendorId] ?? false;
+
+  Future<void> toggleFollowVendor(int vendorId) async {
+    if (vendorId <= 0 || _followBusy.contains(vendorId)) {
+      return;
+    }
+
+    final previous = _followStatusCache[vendorId] ?? false;
+    final optimistic = !previous;
+    _followBusy.add(vendorId);
+    _followStatusCache[vendorId] = optimistic;
+
+    emit(
+      state.copyWith(
+        followBusyVendorIds: Set<int>.from(_followBusy),
+        clearFollowFeedback: true,
+      ),
+    );
+
+    final result = await _toggleFollowVendorUseCase(vendorId);
+    _followBusy.remove(vendorId);
+
+    result.fold(
+      (failure) {
+        _followStatusCache[vendorId] = previous;
+        emit(
+          state.copyWith(
+            followBusyVendorIds: Set<int>.from(_followBusy),
+            followMessage: failure.message,
+            followIsError: true,
+          ),
+        );
+      },
+      (success) {
+        _followStatusCache[vendorId] = success.isFollowing;
+        emit(
+          state.copyWith(
+            followBusyVendorIds: Set<int>.from(_followBusy),
+            followMessage: success.message,
+            followIsError: false,
+          ),
+        );
+      },
+    );
+  }
+
+  void clearFollowFeedback() {
+    emit(state.copyWith(clearFollowFeedback: true));
   }
 
   /// Local-only toggle when [tripId] is not available (e.g. placeholder screens).

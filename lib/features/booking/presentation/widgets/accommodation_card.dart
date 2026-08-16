@@ -36,7 +36,7 @@ class AccommodationCard extends StatelessWidget {
         TripOptionsFigmaTokens.accommodationCardPad,
       ),
       decoration: BoxDecoration(
-        color: AppColors.white,
+        color: AppColors.cardBg(context),
         borderRadius: BorderRadius.circular(TripOptionsFigmaTokens.cardRadius),
         border: Border.all(
           color: TripOptionsFigmaTokens.cardBorder(context),
@@ -56,7 +56,7 @@ class AccommodationCard extends StatelessWidget {
                     Text(
                       title,
                       style: AppTextStyles.bodyMedium(
-                        color: AppColors.tripDetailsFigmaBlack,
+                        color: AppColors.ink(context),
                       ).copyWith(
                         fontSize: 14.sp,
                         fontWeight: FontWeight.w600,
@@ -66,7 +66,7 @@ class AccommodationCard extends StatelessWidget {
                     Text(
                       subtitle,
                       style: AppTextStyles.caption(
-                        color: TripOptionsFigmaTokens.subtitleGrey,
+                        color: AppColors.subtitleGrey(context),
                       ).copyWith(fontSize: 12.sp),
                     ),
                   ],
@@ -89,9 +89,9 @@ class AccommodationCard extends StatelessWidget {
               Expanded(
                 child: Text(
                   personLabel,
-                  style: AppTextStyles.bodyMedium(
-                    color: AppColors.tripDetailsFigmaBlack,
-                  ).copyWith(
+                style: AppTextStyles.bodyMedium(
+                  color: AppColors.ink(context),
+                ).copyWith(
                     fontSize: 14.sp,
                     fontWeight: FontWeight.w500,
                   ),

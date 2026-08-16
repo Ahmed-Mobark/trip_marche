@@ -11,7 +11,6 @@ import '../../../../core/utils/price_formatter.dart';
 import '../../../../core/widgets/app_cached_network_image.dart';
 import '../../data/models/home_section_response.dart';
 
-/// Figma home trip rail card — 190×368 @ 393×852 design.
 abstract final class _PopularTripGridCardTokens {
   static double get cardWidth => 190.w;
   static double get cardHeight => 368.h;
@@ -118,11 +117,11 @@ class PopularTripGridCard extends StatelessWidget {
                                       shape: BoxShape.circle,
                                     ),
                                     child: Icon(
-                                      trip.isWishlisted
+                                      trip.isFavorite
                                           ? Iconsax.heart5
                                           : Iconsax.heart,
                                       size: 18.sp,
-                                      color: trip.isWishlisted
+                                      color: trip.isFavorite
                                           ? AppColors.error
                                           : AppColors.onImage,
                                     ),

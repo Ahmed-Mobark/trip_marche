@@ -22,20 +22,20 @@ class PriceRow extends StatelessWidget {
   Widget build(BuildContext context) {
     final labelStyle = isTotal
         ? AppTextStyles.subtitle(
-            color: AppColors.tripDetailsFigmaBlack,
+            color: AppColors.ink(context),
           ).copyWith(fontSize: ReviewFigmaTokens.bodySize, fontWeight: FontWeight.w600)
         : AppTextStyles.bodyMedium(
-            color: ReviewFigmaTokens.metaGrey,
+            color: AppColors.metaGrey(context),
           ).copyWith(fontSize: ReviewFigmaTokens.bodySize, fontWeight: FontWeight.w400);
 
     final valueStyle = isTotal
         ? AppTextStyles.subtitle(
-            color: AppColors.tripDetailsFigmaBlack,
+            color: AppColors.ink(context),
           ).copyWith(fontSize: ReviewFigmaTokens.bodySize, fontWeight: FontWeight.w700)
         : AppTextStyles.bodyMedium(
             color: isDiscount
                 ? ReviewFigmaTokens.successGreen
-                : AppColors.tripDetailsFigmaBlack,
+                : AppColors.ink(context),
           ).copyWith(
             fontSize: ReviewFigmaTokens.bodySize,
             fontWeight: FontWeight.w500,

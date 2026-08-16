@@ -2,6 +2,7 @@ import 'package:adaptive_theme/adaptive_theme.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:trip_marche/core/app/app_state.dart';
 import 'package:trip_marche/core/injection/injection_container.dart';
 import 'package:trip_marche/core/navigation/app_navigator.dart';
@@ -11,6 +12,7 @@ import 'package:trip_marche/core/storage/data/storage.dart';
 import 'package:trip_marche/core/theme/app_colors.dart';
 import 'package:trip_marche/core/theme/app_theme.dart';
 import 'package:trip_marche/core/translation/app_localizations.dart';
+import 'package:trip_marche/features/profile/presentation/cubit/profile_cubit.dart';
 
 ThemeMode _materialThemeMode(AdaptiveThemeMode mode) {
   switch (mode) {
@@ -72,11 +74,19 @@ class MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    return ScreenUtilInit(
-      designSize: const Size(393, 852),
-      minTextAdapt: true,
-      splitScreenMode: true,
-      builder: (BuildContext context, Widget? child) => AdaptiveTheme(
+    return MultiBlocProvider(
+      providers: [
+        // App-wide, navigation-independent scope for the logged-in user's
+        // profile. Provided at the root so every screen (including ProfileView,
+        // whether shown as a tab or pushed through navigation) can read
+        // ProfileCubit without losing the provider across routes.
+        BlocProvider.value(value: sl<ProfileCubit>()),
+      ],
+      child: ScreenUtilInit(
+        designSize: const Size(393, 852),
+        minTextAdapt: true,
+        splitScreenMode: true,
+        builder: (BuildContext context, Widget? child) => AdaptiveTheme(
         light: AppTheme.appLightTheme,
         dark: AppTheme.appDarkTheme,
         initial: widget.initialThemeMode,
@@ -120,6 +130,7 @@ class MyAppState extends State<MyApp> {
             );
           },
         ),
+      ),
       ),
     );
   }

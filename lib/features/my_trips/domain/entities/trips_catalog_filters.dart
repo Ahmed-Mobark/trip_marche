@@ -1,7 +1,7 @@
 class TripsCatalogFilters {
   const TripsCatalogFilters({
+    this.search,
     this.type,
-    this.country,
     this.departureCountry,
     this.departureCity,
     this.destinationId,
@@ -36,8 +36,8 @@ class TripsCatalogFilters {
     this.sort,
   });
 
+  final String? search;
   final String? type;
-  final String? country;
   final String? departureCountry;
   final String? departureCity;
   final int? destinationId;
@@ -71,21 +71,21 @@ class TripsCatalogFilters {
   final String? flag;
   final String? sort;
 
-  /// Destination search entry (typed query or picked destination code).
+  /// Destination search entry (typed query or picked destination id).
   factory TripsCatalogFilters.forDestinationSearch(String raw) {
     final trimmed = raw.trim();
     return TripsCatalogFilters(
-      country: trimmed.isEmpty ? null : trimmed,
+      search: trimmed.isEmpty ? null : trimmed,
     );
   }
 
-  /// Same filters with an updated destination country/code. Whitespace clears it.
-  TripsCatalogFilters withCountry(String? raw) {
+  /// Same filters with an updated search query. Whitespace clears it.
+  TripsCatalogFilters withSearch(String? raw) {
     final trimmed = raw?.trim();
-    final newCountry = (trimmed == null || trimmed.isEmpty) ? null : trimmed;
+    final newSearch = (trimmed == null || trimmed.isEmpty) ? null : trimmed;
     return TripsCatalogFilters(
+      search: newSearch,
       type: type,
-      country: newCountry,
       departureCountry: departureCountry,
       departureCity: departureCity,
       destinationId: destinationId,
@@ -149,8 +149,10 @@ class TripsCatalogFilters {
       }
     }
 
+    if (destinationId == null) {
+      putString('search', search);
+    }
     putString('type', type);
-    putString('country', country);
     putString('departure_country', departureCountry);
     putString('departure_city', departureCity);
     putInt('destination_id', destinationId);
@@ -185,5 +187,79 @@ class TripsCatalogFilters {
     putString('sort', sort);
 
     return map;
+  }
+
+  TripsCatalogFilters copyWith({
+    String? search,
+    String? type,
+    String? departureCountry,
+    String? departureCity,
+    int? destinationId,
+    List<int>? destinations,
+    String? destinationCountry,
+    int? categoryId,
+    List<int>? categories,
+    int? airlineId,
+    List<int>? airlines,
+    int? vendorId,
+    int? agencyId,
+    int? minVendorRating,
+    double? minPrice,
+    double? maxPrice,
+    double? minRating,
+    String? duration,
+    int? minDuration,
+    int? maxDuration,
+    String? groupSize,
+    int? citiesCount,
+    int? countriesCount,
+    String? season,
+    int? tripMonth,
+    int? tripYear,
+    String? visaType,
+    int? includeFlight,
+    int? hotelsOnly,
+    int? fiveStarOnly,
+    int? acceptsCoupons,
+    int? freeCancellation,
+    String? flag,
+    String? sort,
+  }) {
+    return TripsCatalogFilters(
+      search: search ?? this.search,
+      type: type ?? this.type,
+      departureCountry: departureCountry ?? this.departureCountry,
+      departureCity: departureCity ?? this.departureCity,
+      destinationId: destinationId ?? this.destinationId,
+      destinations: destinations ?? this.destinations,
+      destinationCountry: destinationCountry ?? this.destinationCountry,
+      categoryId: categoryId ?? this.categoryId,
+      categories: categories ?? this.categories,
+      airlineId: airlineId ?? this.airlineId,
+      airlines: airlines ?? this.airlines,
+      vendorId: vendorId ?? this.vendorId,
+      agencyId: agencyId ?? this.agencyId,
+      minVendorRating: minVendorRating ?? this.minVendorRating,
+      minPrice: minPrice ?? this.minPrice,
+      maxPrice: maxPrice ?? this.maxPrice,
+      minRating: minRating ?? this.minRating,
+      duration: duration ?? this.duration,
+      minDuration: minDuration ?? this.minDuration,
+      maxDuration: maxDuration ?? this.maxDuration,
+      groupSize: groupSize ?? this.groupSize,
+      citiesCount: citiesCount ?? this.citiesCount,
+      countriesCount: countriesCount ?? this.countriesCount,
+      season: season ?? this.season,
+      tripMonth: tripMonth ?? this.tripMonth,
+      tripYear: tripYear ?? this.tripYear,
+      visaType: visaType ?? this.visaType,
+      includeFlight: includeFlight ?? this.includeFlight,
+      hotelsOnly: hotelsOnly ?? this.hotelsOnly,
+      fiveStarOnly: fiveStarOnly ?? this.fiveStarOnly,
+      acceptsCoupons: acceptsCoupons ?? this.acceptsCoupons,
+      freeCancellation: freeCancellation ?? this.freeCancellation,
+      flag: flag ?? this.flag,
+      sort: sort ?? this.sort,
+    );
   }
 }

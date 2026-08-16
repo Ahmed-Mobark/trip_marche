@@ -77,7 +77,7 @@ class WishlistViewState extends State<WishlistView> {
           context.read<WishlistCubit>().clearWishlistError();
         },
         child: Scaffold(
-          backgroundColor: AppColors.primary,
+          backgroundColor: AppColors.scaffoldBg(context),
           body: Stack(
             fit: StackFit.expand,
             children: [
@@ -94,7 +94,7 @@ class WishlistViewState extends State<WishlistView> {
                         start: 16.w,
                         end: 16.w,
                         top: 6.h,
-                        bottom: 20.h,
+                        bottom: 16.h,
                       ),
                       child: Text(
                         context.tr.wishlistTitle,
@@ -110,7 +110,7 @@ class WishlistViewState extends State<WishlistView> {
                     child: Container(
                       width: double.infinity,
                       decoration: BoxDecoration(
-                        color: AppColors.cardBg(context),
+                        color: AppColors.scaffoldBg(context),
                         borderRadius: BorderRadius.vertical(
                           top: Radius.circular(sheetRadius),
                         ),
@@ -160,7 +160,7 @@ class WishlistViewState extends State<WishlistView> {
                                 padding: EdgeInsetsDirectional.only(
                                   start: 16.w,
                                   end: 16.w,
-                                  top: 16.h,
+                                  top: 12.h,
                                 ),
                                 sliver: SliverToBoxAdapter(
                                   child: Column(
@@ -175,8 +175,7 @@ class WishlistViewState extends State<WishlistView> {
                                           setState(() => _searchQuery = '');
                                         },
                                       ),
-                                      SizedBox(height: 14.h),
-                                      SizedBox(height: 4.h),
+                                      SizedBox(height: 12.h),
                                     ],
                                   ),
                                 ),
@@ -203,7 +202,7 @@ class WishlistViewState extends State<WishlistView> {
                                           ? 1
                                           : 0),
                                   separatorBuilder: (_, __) =>
-                                      SizedBox(height: 14.h),
+                                      SizedBox(height: 12.h),
                                   itemBuilder: (context, index) {
                                     final filteredTrips = state.trips
                                         .where(

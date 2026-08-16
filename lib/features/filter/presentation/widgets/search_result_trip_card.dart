@@ -108,10 +108,10 @@ class SearchResultTripCard extends StatelessWidget {
                           ),
                           child: Icon(
                             data.isFavorite
-                                ? Icons.favorite_rounded
-                                : Icons.favorite_border_rounded,
+                                ? Icons.favorite
+                                : Icons.favorite_border,
                             size: 20.sp,
-                            color: AppColors.myTripsCardHeartPink,
+                            color: Colors.red,
                           ),
                         ),
                       ],

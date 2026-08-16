@@ -1,3 +1,6 @@
+import 'package:flutter/foundation.dart';
+
+import 'package:trip_marche/core/utils/json_parser.dart';
 import 'package:trip_marche/features/wishlist/domain/entities/wishlist_entities.dart';
 
 class WishlistTripFlagsModel {
@@ -85,6 +88,7 @@ class WishlistTripItemModel {
     this.badge,
     required this.flags,
     required this.isWishlisted,
+    this.isFavorite = false,
   });
 
   final int id;
@@ -102,8 +106,14 @@ class WishlistTripItemModel {
   final String? badge;
   final WishlistTripFlagsModel flags;
   final bool isWishlisted;
+  final bool isFavorite;
 
   factory WishlistTripItemModel.fromJson(Map<String, dynamic> json) {
+    final isWishlisted = JsonParser.asBool(json['is_wishlisted']);
+    final favoriteRaw = json['is_favorite'] ??
+        (json['trip'] is Map<String, dynamic>
+            ? (json['trip'] as Map<String, dynamic>)['is_favorite']
+            : null);
     return WishlistTripItemModel(
       id: json['id'] as int? ?? 0,
       title: json['title'] as String? ?? '',
@@ -123,27 +133,34 @@ class WishlistTripItemModel {
       flags: WishlistTripFlagsModel.fromJson(
         json['flags'] as Map<String, dynamic>? ?? {},
       ),
-      isWishlisted: json['is_wishlisted'] as bool? ?? false,
+      isWishlisted: isWishlisted,
+      isFavorite: favoriteRaw != null ? JsonParser.parseFavorite(favoriteRaw) : isWishlisted,
     );
   }
 
-  WishlistTripItem toEntity() => WishlistTripItem(
-        id: id,
-        title: title,
-        slug: slug,
-        coverImage: coverImage,
-        fromLocation: fromLocation,
-        startDate: startDate,
-        endDate: endDate,
-        price: price,
-        discountPrice: discountPrice,
-        currency: currency,
-        rating: rating,
-        reviewsCount: reviewsCount,
-        badge: badge,
-        flags: flags.toEntity(),
-        isWishlisted: isWishlisted,
-      );
+  WishlistTripItem toEntity() {
+    debugPrint(
+      '[WishlistModel] toEntity trip=$id isFavorite=$isFavorite isWishlisted=$isWishlisted',
+    );
+    return WishlistTripItem(
+      id: id,
+      title: title,
+      slug: slug,
+      coverImage: coverImage,
+      fromLocation: fromLocation,
+      startDate: startDate,
+      endDate: endDate,
+      price: price,
+      discountPrice: discountPrice,
+      currency: currency,
+      rating: rating,
+      reviewsCount: reviewsCount,
+      badge: badge,
+      flags: flags.toEntity(),
+      isWishlisted: isWishlisted,
+      isFavorite: isFavorite,
+    );
+  }
 }
 
 class WishlistTripsPageModel {

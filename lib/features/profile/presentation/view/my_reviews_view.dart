@@ -1,87 +1,229 @@
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
-import '../../../../core/theme/app_colors.dart';
-import '../../../../core/theme/app_text_styles.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:iconsax/iconsax.dart';
+
 import '../../../../core/extensions/localization.dart';
+import '../../../../core/injection/injection_container.dart';
+import '../../../../core/methods/covert_datetime_to_string.dart';
+import '../../../../core/theme/app_colors.dart';
+import '../../../../core/theme/app_text_styles.dart';
 import '../../../../core/widgets/app_cached_network_image.dart';
+import '../../../../core/widgets/custom_loading.dart';
+import '../cubit/reviews_cubit.dart';
+import '../cubit/reviews_state.dart';
+import '../widgets/my_reviews_empty_state.dart';
+import 'add_vendor_review_view.dart';
+
+class MyReviewsRoute extends MaterialPageRoute<void> {
+  MyReviewsRoute() : super(builder: (context) => const MyReviewsView());
+}
 
 class MyReviewsView extends StatelessWidget {
   const MyReviewsView({super.key});
 
-  static const _heroImageUrl =
-      'https://images.unsplash.com/photo-1528127269322-539801943592?w=900';
-  static const _cardImageUrl =
-      'https://images.unsplash.com/photo-1469474968028-56623f02e42e?w=900';
+  String _formatDate(String dateStr) {
+    if (dateStr.isEmpty) return '';
+    try {
+      final parsed = DateTime.parse(dateStr);
+      return ConvertDateTime.convertDateTimeToDate(date: parsed);
+    } catch (_) {
+      return dateStr;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: AppColors.background(context),
-      appBar: AppBar(
+    return BlocProvider(
+      create: (_) => sl<ReviewsCubit>()..fetchReviews(),
+      child: Scaffold(
         backgroundColor: AppColors.background(context),
-        elevation: 0,
-        leading: IconButton(
-          icon: Icon(
-            Icons.arrow_back_ios_new_rounded,
-            color: AppColors.darkText(context),
+        appBar: AppBar(
+          backgroundColor: AppColors.background(context),
+          elevation: 0,
+          leading: IconButton(
+            icon: Icon(
+              Icons.arrow_back_ios_new_rounded,
+              color: AppColors.darkText(context),
+            ),
+            onPressed: () => Navigator.pop(context),
           ),
-          onPressed: () => Navigator.pop(context),
+          title: Text(
+            context.tr.profileMyReviews,
+            style: AppTextStyles.subtitle(color: AppColors.darkText(context)),
+          ),
+          centerTitle: true,
         ),
-        title: Text(
-          context.tr.profileMyReviews,
-          style: AppTextStyles.subtitle(color: AppColors.darkText(context)),
-        ),
-        centerTitle: true,
-      ),
-      body: SingleChildScrollView(
-        padding: EdgeInsetsDirectional.only(
-          start: 18.w,
-          end: 18.w,
-          top: 12.h,
-          bottom: 24.h,
-        ),
-        child: Column(
-          children: [
-            _HeroTripCard(
-              imageUrl: _heroImageUrl,
-              title: context.tr.tripDetailsTitle,
-              ratingValue: '4.9',
-              ratingCount: '112',
-              fromText: context.tr.tripDetailsHeroFromLocation,
-              dateRangeText: context.tr.tripDetailsHeroDateRange,
-              addReviewText: context.tr.profileAddReview,
-              onAddReview: () {},
-            ),
-            SizedBox(height: 14.h),
-            _ReviewTripCard(
-              imageUrl: _cardImageUrl,
-              title: context.tr.tripDetailsTitle,
-              routeText: context.tr.profileMyReviewsRoute,
-              dateRangeText: context.tr.tripDetailsHeroDateRange,
-              ratingValue: '4.9',
-              ratingCount: '112',
-              reviewLabel: context.tr.profileReviewLabel,
-              productRatingLabel: context.tr.profileProductRatingLabel,
-              reviewBody:
-                  '“This trip was absolutely amazing! Everything was well-organized, the guide was super friendly, and the locations we visited were breathtaking. Highly recommended!”',
-            ),
-            SizedBox(height: 14.h),
-            _ReviewTripCard(
-              imageUrl: _cardImageUrl,
-              title: context.tr.tripDetailsTitle,
-              routeText: context.tr.profileMyReviewsRoute,
-              dateRangeText: context.tr.tripDetailsHeroDateRange,
-              ratingValue: '4.9',
-              ratingCount: '112',
-              reviewLabel: context.tr.profileReviewLabel,
-              productRatingLabel: context.tr.profileProductRatingLabel,
-              reviewBody:
-                  '“This trip was absolutely amazing! Everything was well-organized, the guide was super friendly, and the locations we visited were breathtaking. Highly recommended!”',
-            ),
-          ],
+        body: BlocBuilder<ReviewsCubit, ReviewsState>(
+          builder: (context, state) {
+            final isLoading = state.status == ReviewsStatus.loading;
+            final isError = state.status == ReviewsStatus.failure;
+            final reviews = state.reviews;
+
+            if (isLoading && reviews.isEmpty) {
+              return const Center(
+                child: CustomLoading(size: 36, strokeWidth: 2.5),
+              );
+            }
+
+            if (isError && reviews.isEmpty) {
+              return Center(
+                child: Padding(
+                  padding: EdgeInsets.symmetric(
+                    vertical: 60.h,
+                    horizontal: 20.w,
+                  ),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(
+                        Icons.error_outline,
+                        size: 48.r,
+                        color: AppColors.greyText(context),
+                      ),
+                      SizedBox(height: 12.h),
+                      Text(
+                        state.errorMessage ?? 'Something went wrong',
+                        textAlign: TextAlign.center,
+                        style: AppTextStyles.bodyMedium(
+                          color: AppColors.greyText(context),
+                        ),
+                      ),
+                      SizedBox(height: 16.h),
+                      ElevatedButton(
+                        onPressed: () =>
+                            context.read<ReviewsCubit>().fetchReviews(),
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: AppColors.primary,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12.r),
+                          ),
+                        ),
+                        child: Text(
+                          'Retry',
+                          style: AppTextStyles.bodyMedium(
+                            color: AppColors.onPrimary(context),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              );
+            }
+
+            final heroReview = reviews.isNotEmpty ? reviews.first : null;
+
+            return RefreshIndicator(
+              onRefresh: () => context.read<ReviewsCubit>().fetchReviews(),
+              color: AppColors.primary,
+              child: SingleChildScrollView(
+                physics: const AlwaysScrollableScrollPhysics(),
+                padding: EdgeInsetsDirectional.only(
+                  start: 18.w,
+                  end: 18.w,
+                  top: 12.h,
+                  bottom: 24.h,
+                ),
+                child: Column(
+                  children: [
+                    if (heroReview != null)
+                      _HeroTripCard(
+                        imageUrl: heroReview.type == 'trip'
+                            ? heroReview.trip?.coverImage ?? ''
+                            : heroReview.vendor?.avatar ?? '',
+                        title: heroReview.type == 'trip'
+                            ? heroReview.trip?.title ?? ''
+                            : heroReview.vendor?.name ?? '',
+                        ratingValue: heroReview.rating.toStringAsFixed(1),
+                        ratingCount: heroReview.rating.toStringAsFixed(0),
+                        fromText: heroReview.type == 'trip'
+                            ? 'Trip Review'
+                            : 'Vendor Review',
+                        dateRangeText: _formatDate(heroReview.createdAt),
+                        addReviewText: context.tr.profileAddReview,
+                        onAddReview: () async {
+                          final result = await Navigator.push<bool>(
+                            context,
+                            MaterialPageRoute(
+                              builder: (_) => AddVendorReviewView(
+                                tripId: heroReview.type == 'trip'
+                                    ? heroReview.trip?.id
+                                    : null,
+                                vendorId: heroReview.type == 'trip'
+                                    ? heroReview.trip?.vendorId
+                                    : heroReview.vendor?.id,
+                                review: heroReview,
+                              ),
+                            ),
+                          );
+                          if (result == true && context.mounted) {
+                            context.read<ReviewsCubit>().fetchReviews();
+                          }
+                        },
+                      ),
+                    if (heroReview != null) SizedBox(height: 14.h),
+                    if (reviews.isEmpty)
+                      Padding(
+                        padding: EdgeInsets.only(top: 40.h),
+                        child: const MyReviewsEmptyState(),
+                      )
+                    else
+                      ListView.separated(
+                        shrinkWrap: true,
+                        physics: const NeverScrollableScrollPhysics(),
+                        itemCount: reviews.length,
+                        separatorBuilder: (context, index) =>
+                            SizedBox(height: 14.h),
+                        itemBuilder: (context, index) {
+                          final review = reviews[index];
+                          final imageUrl = review.type == 'trip'
+                              ? review.trip?.coverImage ?? ''
+                              : review.vendor?.avatar ?? '';
+                          final title = review.type == 'trip'
+                              ? review.trip?.title ?? ''
+                              : review.vendor?.name ?? '';
+                          final dateText = _formatDate(review.createdAt);
+
+                          return _ReviewTripCard(
+                            imageUrl: imageUrl,
+                            title: title,
+                            routeText: review.type == 'trip'
+                                ? 'Trip Review'
+                                : 'Vendor Review',
+                            dateRangeText: dateText,
+                            ratingValue: review.rating.toStringAsFixed(1),
+                            ratingCount: null,
+                            reviewLabel: context.tr.profileReviewLabel,
+                            productRatingLabel:
+                                context.tr.profileProductRatingLabel,
+                            reviewBody: review.comment,
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (_) => AddVendorReviewView(
+                                    tripId: review.type == 'trip'
+                                        ? review.trip?.id
+                                        : null,
+                                    vendorId: review.type == 'trip'
+                                        ? review.trip?.vendorId
+                                        : review.vendor?.id,
+                                    review: review,
+                                  ),
+                                ),
+                              );
+                            },
+                          );
+                        },
+                      ),
+                  ],
+                ),
+              ),
+            );
+          },
         ),
       ),
     );
@@ -103,7 +245,7 @@ class _HeroTripCard extends StatelessWidget {
   final String imageUrl;
   final String title;
   final String ratingValue;
-  final String ratingCount;
+  final String? ratingCount;
   final String fromText;
   final String dateRangeText;
   final String addReviewText;
@@ -165,23 +307,30 @@ class _HeroTripCard extends StatelessWidget {
                             color: AppColors.darkText(context),
                           ).copyWith(fontWeight: FontWeight.w700),
                         ),
-                        SizedBox(width: 2.w),
-                        Flexible(
-                          child: Text(
-                            '($ratingCount)',
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                            style: AppTextStyles.bodySmall(
-                              color: AppColors.greyText(context),
+                        if (ratingCount != null && ratingCount!.isNotEmpty) ...[
+                          SizedBox(width: 2.w),
+                          Flexible(
+                            child: Text(
+                              '($ratingCount)',
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                              style: AppTextStyles.bodySmall(
+                                color: AppColors.greyText(context),
+                              ),
                             ),
                           ),
-                        ),
+                        ],
                       ],
                     ),
-                    SizedBox(height: 10.h),
-                    _InfoLine(icon: Iconsax.location, text: fromText),
-                    SizedBox(height: 8.h),
-                    _InfoLine(icon: Iconsax.calendar_1, text: dateRangeText),
+                    if (fromText.isNotEmpty) ...[
+                      SizedBox(height: 10.h),
+                      _InfoLine(icon: Iconsax.location, text: fromText),
+                    ],
+                    if (dateRangeText.isNotEmpty) ...[
+                      if (fromText.isNotEmpty) SizedBox(height: 8.h)
+                      else if (ratingValue.isNotEmpty) SizedBox(height: 10.h),
+                      _InfoLine(icon: Iconsax.calendar_1, text: dateRangeText),
+                    ],
                     SizedBox(height: 14.h),
                     FittedBox(
                       fit: BoxFit.scaleDown,
@@ -230,130 +379,147 @@ class _ReviewTripCard extends StatelessWidget {
   const _ReviewTripCard({
     required this.imageUrl,
     required this.title,
-    required this.routeText,
     required this.dateRangeText,
     required this.ratingValue,
-    required this.ratingCount,
+    this.ratingCount,
     required this.reviewLabel,
     required this.productRatingLabel,
     required this.reviewBody,
+    this.routeText,
+    this.onTap,
   });
 
   final String imageUrl;
   final String title;
-  final String routeText;
+  final String? routeText;
   final String dateRangeText;
   final String ratingValue;
-  final String ratingCount;
+  final String? ratingCount;
   final String reviewLabel;
   final String productRatingLabel;
   final String reviewBody;
+  final VoidCallback? onTap;
 
   @override
   Widget build(BuildContext context) {
-    return LayoutBuilder(
-      builder: (context, constraints) {
-        final thumb = math.min(
-          78.w,
-          math.max(64.w, constraints.maxWidth * 0.24),
-        );
+    return GestureDetector(
+      onTap: onTap,
+      child: LayoutBuilder(
+        builder: (context, constraints) {
+          final thumb = math.min(
+            78.w,
+            math.max(64.w, constraints.maxWidth * 0.24),
+          );
 
-        return Container(
-          padding: EdgeInsetsDirectional.all(14.r),
-          decoration: BoxDecoration(
-            color: AppColors.cardBg(context),
-            borderRadius: BorderRadius.circular(18.r),
-            border: Border.all(color: AppColors.border(context)),
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                children: [
-                  ClipRRect(
-                    borderRadius: BorderRadius.circular(14.r),
-                    child: AppCachedNetworkImage(
-                      imageUrl: imageUrl,
-                      width: thumb,
-                      height: thumb,
-                      fit: BoxFit.cover,
+          return Container(
+            padding: EdgeInsetsDirectional.all(14.r),
+            decoration: BoxDecoration(
+              color: AppColors.cardBg(context),
+              borderRadius: BorderRadius.circular(18.r),
+              border: Border.all(color: AppColors.border(context)),
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  children: [
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(14.r),
+                      child: AppCachedNetworkImage(
+                        imageUrl: imageUrl,
+                        width: thumb,
+                        height: thumb,
+                        fit: BoxFit.cover,
+                      ),
                     ),
-                  ),
-                  SizedBox(width: 12.w),
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          title,
+                    SizedBox(width: 12.w),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            title,
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style:
+                                AppTextStyles.bodyMedium(
+                                  color: AppColors.darkText(context),
+                                ).copyWith(
+                                  fontWeight: FontWeight.w800,
+                                  fontSize: 16.sp,
+                                ),
+                          ),
+                          SizedBox(height: 8.h),
+                          if (routeText != null && routeText!.isNotEmpty)
+                            _InfoLine(icon: Iconsax.location, text: routeText!),
+                          if (routeText != null && routeText!.isNotEmpty)
+                            SizedBox(height: 6.h),
+                          _InfoLine(
+                            icon: Iconsax.calendar_1,
+                            text: dateRangeText,
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(height: 14.h),
+                Text(
+                  reviewLabel,
+                  style: AppTextStyles.bodySmall(
+                    color: AppColors.darkText(context),
+                  ).copyWith(fontWeight: FontWeight.w700),
+                ),
+                SizedBox(height: 10.h),
+                Row(
+                  children: [
+                    Expanded(
+                      child: Text(
+                        productRatingLabel,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: AppTextStyles.caption(
+                          color: AppColors.greyText(context),
+                        ),
+                      ),
+                    ),
+                    Icon(Iconsax.star1, size: 14.sp, color: AppColors.starYellow),
+                    SizedBox(width: 6.w),
+                    Text(
+                      ratingValue,
+                      style: AppTextStyles.bodySmall(
+                        color: AppColors.darkText(context),
+                      ).copyWith(fontWeight: FontWeight.w700),
+                    ),
+                    if (ratingCount != null && ratingCount!.isNotEmpty) ...[
+                      SizedBox(width: 2.w),
+                      Flexible(
+                        child: Text(
+                          '($ratingCount)',
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
-                          style:
-                              AppTextStyles.bodyMedium(
-                                color: AppColors.darkText(context),
-                              ).copyWith(
-                                fontWeight: FontWeight.w800,
-                                fontSize: 16.sp,
-                              ),
+                          style: AppTextStyles.bodySmall(
+                            color: AppColors.greyText(context),
+                          ),
                         ),
-                        SizedBox(height: 8.h),
-                        _InfoLine(icon: Iconsax.location, text: routeText),
-                        SizedBox(height: 6.h),
-                        _InfoLine(
-                          icon: Iconsax.calendar_1,
-                          text: dateRangeText,
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-              SizedBox(height: 14.h),
-              Text(
-                reviewLabel,
-                style: AppTextStyles.bodySmall(
-                  color: AppColors.darkText(context),
-                ).copyWith(fontWeight: FontWeight.w700),
-              ),
-              SizedBox(height: 10.h),
-              Row(
-                children: [
-                  Expanded(
-                    child: Text(
-                      productRatingLabel,
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: AppTextStyles.caption(color: AppColors.greyText(context)),
-                    ),
-                  ),
-                  Icon(Iconsax.star1, size: 14.sp, color: AppColors.starYellow),
-                  SizedBox(width: 6.w),
+                      ),
+                    ],
+                  ],
+                ),
+                if (reviewBody.isNotEmpty) ...[
+                  SizedBox(height: 8.h),
                   Text(
-                    ratingValue,
+                    reviewBody,
                     style: AppTextStyles.bodySmall(
-                      color: AppColors.darkText(context),
-                    ).copyWith(fontWeight: FontWeight.w700),
-                  ),
-                  SizedBox(width: 2.w),
-                  Flexible(
-                    child: Text(
-                      '($ratingCount)',
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: AppTextStyles.bodySmall(color: AppColors.greyText(context)),
+                      color: AppColors.secondaryText(context),
                     ),
                   ),
                 ],
-              ),
-              SizedBox(height: 8.h),
-              Text(
-                reviewBody,
-                style: AppTextStyles.bodySmall(color: AppColors.secondaryText(context)),
-              ),
-            ],
-          ),
-        );
-      },
+              ],
+            ),
+          );
+        },
+      ),
     );
   }
 }

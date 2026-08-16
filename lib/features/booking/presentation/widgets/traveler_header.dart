@@ -34,7 +34,7 @@ class TravelerHeader extends StatelessWidget {
                 TextSpan(
                   text: travelerName,
                   style: AppTextStyles.subtitle(
-                    color: AppColors.tripDetailsFigmaBlack,
+                    color: AppColors.ink(context),
                   ).copyWith(
                     fontSize: SelectActivitiesFigmaTokens.travelerNameSize,
                     fontWeight: FontWeight.w600,
@@ -43,7 +43,7 @@ class TravelerHeader extends StatelessWidget {
                 TextSpan(
                   text: ' $travelerIndexLabel',
                   style: AppTextStyles.bodyMedium(
-                    color: SelectActivitiesFigmaTokens.travelerIndexGrey,
+                    color: AppColors.subtitleGrey(context),
                   ).copyWith(
                     fontSize: SelectActivitiesFigmaTokens.travelerIndexSize,
                     fontWeight: FontWeight.w400,
@@ -88,12 +88,12 @@ class _SameAsTravelerOneChip extends StatelessWidget {
           vertical: SelectActivitiesFigmaTokens.sameAsCheckboxVPadding,
         ),
         decoration: BoxDecoration(
-          color: AppColors.white,
+          color: AppColors.cardBg(context),
           borderRadius: BorderRadius.circular(
             SelectActivitiesFigmaTokens.sameAsCheckboxRadius,
           ),
           border: Border.all(
-            color: SelectActivitiesFigmaTokens.checkboxBorder,
+            color: AppColors.softBorder(context),
           ),
         ),
         child: Row(
@@ -109,7 +109,7 @@ class _SameAsTravelerOneChip extends StatelessWidget {
                     : (next) => onChanged!(next ?? false),
                 activeColor: AppColors.primary,
                 side: BorderSide(
-                  color: SelectActivitiesFigmaTokens.checkboxBorder,
+                  color: AppColors.softBorder(context),
                   width: 1.2,
                 ),
                 materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
@@ -120,7 +120,7 @@ class _SameAsTravelerOneChip extends StatelessWidget {
             Text(
               label,
               style: AppTextStyles.caption(
-                color: AppColors.tripDetailsFigmaBlack,
+                color: AppColors.ink(context),
               ).copyWith(
                 fontSize: SelectActivitiesFigmaTokens.sameAsLabelSize,
                 fontWeight: FontWeight.w500,

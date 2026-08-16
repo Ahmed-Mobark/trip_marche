@@ -4,9 +4,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:trip_marche/core/extensions/localization.dart';
+import 'package:trip_marche/core/extensions/media_query_extensions.dart';
 import 'package:trip_marche/core/theme/app_colors.dart';
 import 'package:trip_marche/core/theme/app_text_styles.dart';
 import 'package:trip_marche/core/widgets/app_button.dart';
+import 'package:trip_marche/core/widgets/app_modal_bottom_sheet.dart';
 import '../cubit/wishlist_filter_cubit.dart';
 import '../cubit/wishlist_filter_state.dart';
 import '../widgets/wishlist_filter_widgets.dart';
@@ -428,32 +430,29 @@ class _WishlistFilterBody extends StatelessWidget {
           );
         },
       ),
-      bottomNavigationBar: SafeArea(
-        top: false,
-        child: Container(
-          padding: EdgeInsetsDirectional.fromSTEB(
-            horizontalPadding,
-            10.h,
-            horizontalPadding,
-            14.h,
-          ),
-          decoration: BoxDecoration(
-            color: AppColors.cardBg(context),
-            boxShadow: [
-              BoxShadow(
-                color: AppColors.shadow.withValues(alpha: 0.08),
-                blurRadius: 12.r,
-                offset: Offset(0, -4.h),
-              ),
-            ],
-          ),
-          child: AppButton(
+      bottomNavigationBar: Container(
+        padding: EdgeInsetsDirectional.fromSTEB(
+          horizontalPadding,
+          10.h,
+          horizontalPadding,
+          14.h + context.systemBottomInset,
+        ),
+        decoration: BoxDecoration(
+          color: AppColors.cardBg(context),
+          boxShadow: [
+            BoxShadow(
+              color: AppColors.shadow.withValues(alpha: 0.08),
+              blurRadius: 12.r,
+              offset: Offset(0, -4.h),
+            ),
+          ],
+        ),
+        child: AppButton(
             heigh: bottomCtaHeight,
             radius: 14.r,
             gradient: AppColors.primaryGradient,
             onTap: () => Navigator.pop(context),
             text: '',
-          ),
         ),
       ),
     );
@@ -465,22 +464,21 @@ class _WishlistFilterBody extends StatelessWidget {
     required List<String> options,
     required String selected,
   }) async {
-    return showModalBottomSheet<String>(
+    return showAppModalBottomSheet<String>(
       context: context,
       backgroundColor: AppColors.cardBg(context),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(top: Radius.circular(18.r)),
       ),
       builder: (context) {
-        return SafeArea(
-          child: Padding(
-            padding: EdgeInsetsDirectional.only(
-              start: 16.w,
-              end: 16.w,
-              top: 12.h,
-              bottom: 12.h,
-            ),
-            child: Column(
+        return Padding(
+          padding: EdgeInsetsDirectional.only(
+            start: 16.w,
+            end: 16.w,
+            top: 12.h,
+            bottom: 12.h,
+          ),
+          child: Column(
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -523,7 +521,6 @@ class _WishlistFilterBody extends StatelessWidget {
                 ),
               ],
             ),
-          ),
         );
       },
     );

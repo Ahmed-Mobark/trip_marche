@@ -32,12 +32,12 @@ class AppBackOutlinedButton extends StatelessWidget {
       child: OutlinedButton(
         onPressed: onPressed,
         style: OutlinedButton.styleFrom(
-          foregroundColor: TripOptionsFigmaTokens.subtitleGrey,
-          backgroundColor: AppColors.white,
+          foregroundColor: AppColors.subtitleGrey(context),
+          backgroundColor: AppColors.cardBg(context),
           side: BorderSide(
             color: circular
-                ? AppColors.tripDetailsFigmaBlack
-                : TripOptionsFigmaTokens.stepperDisabledBorder,
+                ? AppColors.ink(context)
+                : AppColors.softBorder(context),
             width: circular ? 1.w : 1,
           ),
           shape: RoundedRectangleBorder(

@@ -32,6 +32,10 @@ class AppTextFormField extends StatelessWidget {
   final String? label;
   final String? obscuringCharacter;
   final int? minLines;
+  final FocusNode? focusNode;
+  final TextInputAction? textInputAction;
+  final List<String>? autofillHints;
+  final void Function(String)? onFieldSubmitted;
 
   final double? borderRadius;
   final bool showBorder;
@@ -68,6 +72,10 @@ class AppTextFormField extends StatelessWidget {
     this.label,
     this.obscuringCharacter,
     this.minLines,
+    this.focusNode,
+    this.textInputAction,
+    this.autofillHints,
+    this.onFieldSubmitted,
 
     this.borderRadius,
     this.showBorder = true,
@@ -93,6 +101,7 @@ class AppTextFormField extends StatelessWidget {
 
     return TextFormField(
       controller: controller,
+      focusNode: focusNode,
       obscureText: obscureText ?? false,
       minLines: minLines ?? 1,
       maxLines: minLines != null ? null : 1,
@@ -107,12 +116,15 @@ class AppTextFormField extends StatelessWidget {
       },
       obscuringCharacter: obscuringCharacter ?? "●",
       onChanged: onChanged,
+      onFieldSubmitted: onFieldSubmitted,
       inputFormatters: onlyDigit
           ? [FilteringTextInputFormatter.digitsOnly]
           : null,
       autovalidateMode: autovalidateMode ?? AutovalidateMode.onUserInteraction,
       cursorColor: Theme.of(context).primaryColor,
       keyboardType: keyboardType ?? TextInputType.text,
+      textInputAction: textInputAction,
+      autofillHints: autofillHints,
       maxLength: maxLength,
       maxLengthEnforcement: MaxLengthEnforcement.none,
       decoration: InputDecoration(

@@ -5,6 +5,7 @@ import 'package:trip_marche/core/extensions/localization.dart';
 import 'package:trip_marche/core/theme/app_colors.dart';
 import 'package:trip_marche/core/theme/app_text_styles.dart';
 import 'package:trip_marche/core/widgets/app_cached_network_image.dart';
+import 'package:trip_marche/core/widgets/app_modal_bottom_sheet.dart';
 import 'package:trip_marche/features/trip_details/domain/entities/trip_details_entity.dart';
 import 'trip_details_info_card.dart';
 
@@ -118,7 +119,7 @@ class _DestinationPhotoCard extends StatelessWidget {
   final double borderRadius;
 
   void _showDetailSheet(BuildContext context) {
-    showModalBottomSheet<void>(
+    showAppModalBottomSheet<void>(
       context: context,
       isScrollControlled: true,
       backgroundColor: AppColors.cardBg(context),
@@ -126,11 +127,9 @@ class _DestinationPhotoCard extends StatelessWidget {
         borderRadius: BorderRadius.vertical(top: Radius.circular(20.r)),
       ),
       builder: (ctx) {
-        return SafeArea(
-          top: false,
-          child: Padding(
-            padding: EdgeInsetsDirectional.fromSTEB(20.w, 10.h, 20.w, 20.h),
-            child: Column(
+        return Padding(
+          padding: EdgeInsetsDirectional.fromSTEB(20.w, 10.h, 20.w, 20.h),
+          child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisSize: MainAxisSize.min,
               children: [
@@ -180,7 +179,6 @@ class _DestinationPhotoCard extends StatelessWidget {
                 ],
               ],
             ),
-          ),
         );
       },
     );

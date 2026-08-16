@@ -18,7 +18,9 @@ List<TripModel> _patchTripsWishlisted(
   bool isWishlisted,
 ) {
   return trips
-      .map((t) => t.id == tripId ? t.copyWith(isWishlisted: isWishlisted) : t)
+      .map((t) => t.id == tripId
+          ? t.copyWith(isWishlisted: isWishlisted, isFav: isWishlisted, isFavorite: isWishlisted)
+          : t)
       .toList();
 }
 
@@ -165,7 +167,7 @@ class SectionTripsItemsCubit extends Cubit<SectionTripsItemsState> {
     }
     if (trip == null) return;
 
-    final previous = trip.isWishlisted;
+    final previous = trip.isFavorite;
     _wishlistBusy.add(tripId);
     emit(state.copyWith(
       trips: _patchTripsWishlisted(state.trips, tripId, !previous),

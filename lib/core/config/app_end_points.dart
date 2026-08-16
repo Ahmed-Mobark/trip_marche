@@ -46,4 +46,26 @@ class AppEndpoints {
 
   /// POST — creates a new booking for a trip.
   static String createBooking(int tripId) => 'trips/$tripId/book';
+
+
+  /// GET — paginated list of the current user's bookings.
+  static const String bookings = 'bookings';
+
+  /// GET — list of available payment methods.
+  static const String paymentMethods = 'payment-methods';
+
+  /// GET — booking details PDF by booking id.
+  static String bookingsPdf(int bookingId) => 'bookings/$bookingId/pdf';
+
+  static const String profile = 'profile';
+  static const String profilePassword = 'profile/password';
+  static const String profileDelete = 'profile';
+  static const String profileFollowing = 'profile/following';
+  static const String profileReviews = 'profile/reviews';
+
+  static String vendorFollow(int vendorId) => 'vendors/$vendorId/follow';
+
+  static String vendorProfile(int vendorId) => 'vendors/$vendorId';
+
+  static const String reviews = 'reviews';
 }

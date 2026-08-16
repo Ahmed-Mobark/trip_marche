@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:trip_marche/features/wishlist/domain/entities/wishlist_entities.dart';
 import '../../domain/usecases/fetch_wishlist_usecase.dart';
@@ -48,7 +49,7 @@ class WishlistCubit extends Cubit<WishlistState> {
           trips: state.trips
               .map(
                 (t) =>
-                    t.id == tripId ? t.copyWith(isWishlisted: true) : t,
+                    t.id == tripId ? t.copyWith(isFavorite: true, isWishlisted: true) : t,
               )
               .toList(),
         ),
@@ -81,6 +82,11 @@ class WishlistCubit extends Cubit<WishlistState> {
         );
       },
       (page) {
+        for (final t in page.trips) {
+          debugPrint(
+            '[Wishlist] Loaded trip=${t.id} title=${t.title} isFavorite=${t.isFavorite} isWishlisted=${t.isWishlisted}',
+          );
+        }
         emit(
           state.copyWith(
             status: WishlistPageStatus.success,
@@ -172,15 +178,18 @@ class WishlistCubit extends Cubit<WishlistState> {
       return;
     }
 
-    final previous = trip.isWishlisted;
+    final previous = trip.isFavorite;
     _wishlistBusy.add(tripId);
+    debugPrint(
+      '[Wishlist] toggleTripWishlist tripId=$tripId previous=$previous',
+    );
 
     emit(
       state.copyWith(
         trips: state.trips
             .map(
               (t) => t.id == tripId
-                  ? t.copyWith(isWishlisted: !previous)
+                  ? t.copyWith(isFavorite: !previous, isWishlisted: !previous)
                   : t,
             )
             .toList(),
@@ -198,7 +207,7 @@ class WishlistCubit extends Cubit<WishlistState> {
             trips: state.trips
                 .map(
                   (t) => t.id == tripId
-                      ? t.copyWith(isWishlisted: previous)
+                      ? t.copyWith(isFavorite: previous, isWishlisted: previous)
                       : t,
                 )
                 .toList(),
@@ -221,7 +230,7 @@ class WishlistCubit extends Cubit<WishlistState> {
               trips: state.trips
                   .map(
                     (t) => t.id == tripId
-                        ? t.copyWith(isWishlisted: success.isWishlisted)
+                        ? t.copyWith(isFavorite: success.isWishlisted, isWishlisted: success.isWishlisted)
                         : t,
                   )
                   .toList(),

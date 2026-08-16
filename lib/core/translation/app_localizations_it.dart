@@ -269,20 +269,19 @@ class AppLocalizationsIt extends AppLocalizations {
   String get homePopularTrips => 'Viaggi popolari';
 
   @override
-  String get homeSponsoredTrips => 'Viaggi sponsorizzati';
+  String get homeSponsoredTrips => 'Offerte speciali';
 
   @override
-  String get homeDomesticTripsInEgypt => 'Viaggi nazionali in Egitto';
+  String get homeDomesticTripsInEgypt => 'Esplora l\'Egitto';
 
   @override
-  String get homeInternationalTripsFromEgypt =>
-      'Viaggi internazionali dall’Egitto';
+  String get homeInternationalTripsFromEgypt => 'Esplora il mondo';
 
   @override
   String get homeRecommendedForYou => 'Consigliati per te';
 
   @override
-  String get homeSpecialTrips => 'Viaggi speciali';
+  String get homeSpecialTrips => 'Esplora per categoria';
 
   @override
   String get homeTopRated => 'Più votati';
@@ -464,6 +463,15 @@ class AppLocalizationsIt extends AppLocalizations {
   String get wishlistFiltersFreeCancellation => 'Cancellazione gratuita';
 
   @override
+  String get wishlistFiltersCategories => 'Categories';
+
+  @override
+  String get wishlistFiltersDestinationCountry => 'Destination Country';
+
+  @override
+  String get wishlistFiltersFiveStarOnly => '5-Star Only';
+
+  @override
   String get filterSeeResults => 'Vedi risultati';
 
   @override
@@ -627,6 +635,9 @@ class AppLocalizationsIt extends AppLocalizations {
   String get followingsUnfollow => 'Smetti di seguire';
 
   @override
+  String get follow => 'Segui';
+
+  @override
   String get followingsEmptyTitle => 'Nessun seguito';
 
   @override
@@ -684,6 +695,11 @@ class AppLocalizationsIt extends AppLocalizations {
   String get myTripsFromPrefix => 'Da';
 
   @override
+  String myTripsTravelers(int count) {
+    return '$count viaggiatori';
+  }
+
+  @override
   String get myTripsViewDetails => 'Vedi dettagli';
 
   @override
@@ -693,6 +709,18 @@ class AppLocalizationsIt extends AppLocalizations {
   String get myTripsBookingDetails => 'Dettagli prenotazione';
 
   @override
+  String get myTripsBookingConfirmation => 'Booking Confirmation';
+
+  @override
+  String get myTripsWriteReview => 'Aggiungi recensione';
+
+  @override
+  String get myTripsRateTrip => 'Valuta viaggio';
+
+  @override
+  String get myTripsRated => 'Rated';
+
+  @override
   String get myTripsDownloadPdf => 'Scarica PDF';
 
   @override
@@ -700,10 +728,10 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get myTripsEmptyDescription =>
-      'Inizia a esplorare e prenota\nla tua prima avventura!';
+      'È ora di spolverare le valigie e iniziare a pianificare la tua prossima avventura';
 
   @override
-  String get myTripsExploreTrips => 'Esplora viaggi';
+  String get myTripsExploreTrips => 'Scopri viaggi';
 
   @override
   String get navHome => 'Home';
@@ -794,6 +822,25 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get bookingAccommodationOptions => 'Accommodation Options';
+
+  @override
+  String get bookingCreatedSuccess => 'Prenotazione creata con successo';
+
+  @override
+  String get bookingRoomsRequired => 'Seleziona almeno una camera';
+
+  @override
+  String bookingRoomOccupantsMismatch(Object count) {
+    return 'Il numero totale di occupanti delle camere deve essere uguale al numero di viaggiatori ($count)';
+  }
+
+  @override
+  String get bookingTripUnavailableTitle =>
+      'This trip isn\'t available for booking yet.';
+
+  @override
+  String get bookingTripUnavailableBody =>
+      'This trip doesn\'t have any booking options available at the moment. Please choose another trip or check back later.';
 
   @override
   String get bookingSingleRoom => 'Single Room';
@@ -998,6 +1045,34 @@ class AppLocalizationsIt extends AppLocalizations {
   String get bookingPaymentMethodTitle => 'Metodo di pagamento';
 
   @override
+  String get bookingPaymentMethodSelect => 'Seleziona metodo di pagamento';
+
+  @override
+  String get bookingPaymentMethodChoose => 'Scegli come vuoi pagare';
+
+  @override
+  String get bookingPaymentMethodChange => 'Cambia';
+
+  @override
+  String get paymentMethodContinue => 'Continua';
+
+  @override
+  String get paymentMethodEmptyTitle => 'Nessun metodo di pagamento';
+
+  @override
+  String get paymentMethodEmptyDescription =>
+      'Nessun metodo di pagamento disponibile.';
+
+  @override
+  String get paymentMethodErrorTitle => 'Errore';
+
+  @override
+  String get paymentMethodErrorDescription => 'Qualcosa è andato storto';
+
+  @override
+  String get paymentMethodRetry => 'Riprova';
+
+  @override
   String get bookingPaymentOptionCreditCard => 'Carta di credito';
 
   @override
@@ -1076,6 +1151,25 @@ class AppLocalizationsIt extends AppLocalizations {
   String get profileSaveChanges => 'Salva modifiche';
 
   @override
+  String get profileChangePhotoTitle => 'Cambia foto profilo';
+
+  @override
+  String get profileChangePhotoSubtitle =>
+      'Scegli da dove vuoi ottenere la tua foto.';
+
+  @override
+  String get profilePhotoCamera => 'Fotocamera';
+
+  @override
+  String get profilePhotoGallery => 'Galleria';
+
+  @override
+  String get profilePhotoCancel => 'Annulla';
+
+  @override
+  String get companyProfileTitle => 'Company Profile';
+
+  @override
   String get companyProfileCompanyName => 'Travel Egypt Co.';
 
   @override
@@ -1126,6 +1220,52 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get companyProfileReviewComment =>
       'Ottima esperienza! Il viaggio era ben organizzato e la guida molto professionale.';
+
+  @override
+  String get companyProfileCompanyDetails => 'Dettagli azienda';
+
+  @override
+  String get companyProfileLocation => 'Posizione';
+
+  @override
+  String get companyProfileEmail => 'Email';
+
+  @override
+  String get companyProfileYearOfEstablishment => 'Anno di fondazione';
+
+  @override
+  String get companyProfileCommercialRegistration =>
+      'Registrazione commerciale';
+
+  @override
+  String get companyProfileBusinessLicense => 'Licenza commerciale';
+
+  @override
+  String get companyProfileTaxCard => 'Carta fiscale';
+
+  @override
+  String get companyProfileTripCategories => 'Categorie di viaggio';
+
+  @override
+  String get companyProfileOurTeam => 'Il nostro team';
+
+  @override
+  String get companyProfileCustomerReviews => 'Recensioni clienti';
+
+  @override
+  String get companyProfileViewAll => 'Vedi tutto';
+
+  @override
+  String get companyProfileAvailableTrips => 'Viaggi disponibili';
+
+  @override
+  String get companyProfileSeeAllTrips => 'Vedi tutti i viaggi';
+
+  @override
+  String get companyProfileShowLess => 'Mostra meno';
+
+  @override
+  String get companyProfilePricePerPerson => 'Persona';
 
   @override
   String get filterTitle => 'Filtro';
@@ -1182,6 +1322,52 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get searchResultSortBy => 'Ordina per';
+
+  @override
+  String get searchResultSortPriceAsc => 'Price: Low to High';
+
+  @override
+  String get searchResultSortPriceDesc => 'Price: High to Low';
+
+  @override
+  String get searchResultSortRating => 'Highest Rating';
+
+  @override
+  String get searchResultSortDurationAsc => 'Duration: Shortest First';
+
+  @override
+  String get searchResultSortDurationDesc => 'Duration: Longest First';
+
+  @override
+  String get searchResultSortRecent => 'Most Recent';
+
+  @override
+  String get searchResultSortSubtitle =>
+      'Scegli come desideri ordinare i risultati';
+
+  @override
+  String get searchResultSortPriceAscDesc =>
+      'Mostra i viaggi più economici per primi.';
+
+  @override
+  String get searchResultSortPriceDescDesc =>
+      'Mostra i viaggi più costosi per primi.';
+
+  @override
+  String get searchResultSortRatingDesc =>
+      'Mostra i viaggi meglio valutati per primi.';
+
+  @override
+  String get searchResultSortDurationAscDesc =>
+      'Mostra i viaggi con durata più breve per primi.';
+
+  @override
+  String get searchResultSortDurationDescDesc =>
+      'Mostra i viaggi con durata più lunga per primi.';
+
+  @override
+  String get searchResultSortRecentDesc =>
+      'Mostra i viaggi più recenti per primi.';
 
   @override
   String get searchResultFilters => 'Filtri';
@@ -2053,4 +2239,135 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get csWhatsApp => 'WhatsApp';
+
+  @override
+  String get paymentWebViewTitle => 'Completa pagamento';
+
+  @override
+  String get paymentWebViewError =>
+      'Impossibile caricare la pagina di pagamento.';
+
+  @override
+  String get paymentWebViewRetry => 'Riprova';
+
+  @override
+  String get paymentWebViewFailed => 'Pagamento fallito o annullato.';
+
+  @override
+  String get profileChangePasswordTitle => 'Cambia password';
+
+  @override
+  String get profileCurrentPasswordLabel => 'Password attuale';
+
+  @override
+  String get profileNewPasswordLabel => 'Nuova password';
+
+  @override
+  String get profileUpdatePasswordAction => 'Aggiorna password';
+
+  @override
+  String get errorPasswordMinLength =>
+      'La password deve contenere almeno 8 caratteri';
+
+  @override
+  String get passwordUpdatedSuccessfully => 'Password aggiornata con successo';
+
+  @override
+  String get somethingWentWrong => 'Qualcosa è andato storto';
+
+  @override
+  String get logout => 'Logout';
+
+  @override
+  String get logoutTitle => 'Logout';
+
+  @override
+  String get logoutDescription =>
+      'Are you sure you want to logout from your account?';
+
+  @override
+  String get logoutAction => 'Logout';
+
+  @override
+  String get cancel => 'Cancel';
+
+  @override
+  String get deleteAccount => 'Delete Account';
+
+  @override
+  String get deleteAccountTitle => 'Delete Account';
+
+  @override
+  String get deleteAccountDescription =>
+      'This action is permanent and cannot be undone. All your trips, bookings and account information will be permanently removed.';
+
+  @override
+  String get deleteAccountWarning =>
+      'Are you absolutely sure you want to permanently delete your account?';
+
+  @override
+  String get deleteAccountAction => 'Delete Account';
+
+  @override
+  String get finalConfirmation => 'Final Confirmation';
+
+  @override
+  String get profilePhotoFromCamera => 'Fotocamera';
+
+  @override
+  String get profilePhotoFromGallery => 'Galleria';
+
+  @override
+  String get profilePhotoPermissionRequired =>
+      'Permesso richiesto per accedere alle tue foto.';
+
+  @override
+  String get profilePhotoCameraUnavailable =>
+      'La fotocamera non è disponibile su questo dispositivo.';
+
+  @override
+  String get profilePhotoInvalidFile =>
+      'Il file selezionato non è un\'immagine valida.';
+
+  @override
+  String get profilePhotoTooLarge =>
+      'L\'immagine selezionata è troppo grande. Scegline una più piccola.';
+
+  @override
+  String get profilePhotoPickFailed =>
+      'Impossibile selezionare l\'immagine. Riprova.';
+
+  @override
+  String get profileUpdateSuccess => 'Profilo aggiornato con successo';
+
+  @override
+  String get deleteAccountSuccess => 'Il tuo account è stato eliminato.';
+
+  @override
+  String get reviewTitle => 'Recensione del viaggio';
+
+  @override
+  String get reviewTripSatisfactionHint =>
+      'Si prega di scrivere il livello di soddisfazione complessivo per il viaggio.';
+
+  @override
+  String get reviewWriteYourReview => 'Scrivi la tua recensione';
+
+  @override
+  String get reviewRateTravelAgency =>
+      'Si prega di valutare l\'agenzia di viaggio.';
+
+  @override
+  String get reviewSendButton => 'Invia';
+
+  @override
+  String get reviewEnterReviewHint => 'Inserisci la tua recensione qui';
+
+  @override
+  String get reviewSubmittedSuccess => 'Recensione inviata con successo!';
+
+  @override
+  String reviewRatingScale(int rating) {
+    return '$rating/5';
+  }
 }

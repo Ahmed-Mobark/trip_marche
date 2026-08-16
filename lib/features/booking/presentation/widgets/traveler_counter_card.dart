@@ -35,7 +35,7 @@ class TravelerCounterCard extends StatelessWidget {
         vertical: TripOptionsFigmaTokens.travelerCardVPad,
       ),
       decoration: BoxDecoration(
-        color: AppColors.white,
+        color: AppColors.cardBg(context),
         borderRadius: BorderRadius.circular(TripOptionsFigmaTokens.cardRadius),
         border: Border.all(
           color: TripOptionsFigmaTokens.cardBorder(context),
@@ -60,7 +60,7 @@ class TravelerCounterCard extends StatelessWidget {
                 ? Text(
                     title,
                     style: AppTextStyles.bodyMedium(
-                      color: AppColors.tripDetailsFigmaBlack,
+                      color: AppColors.ink(context),
                     ).copyWith(
                       fontSize: 14.sp,
                       fontWeight: FontWeight.w600,
@@ -73,7 +73,7 @@ class TravelerCounterCard extends StatelessWidget {
                       Text(
                         title,
                         style: AppTextStyles.bodyMedium(
-                          color: AppColors.tripDetailsFigmaBlack,
+                          color: AppColors.ink(context),
                         ).copyWith(
                           fontSize: 14.sp,
                           fontWeight: FontWeight.w600,
@@ -83,7 +83,7 @@ class TravelerCounterCard extends StatelessWidget {
                       Text(
                         subtitle!,
                         style: AppTextStyles.caption(
-                          color: TripOptionsFigmaTokens.subtitleGrey,
+                          color: AppColors.subtitleGrey(context),
                         ).copyWith(fontSize: 12.sp),
                       ),
                     ],

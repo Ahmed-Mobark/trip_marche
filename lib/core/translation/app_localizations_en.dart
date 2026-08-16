@@ -270,20 +270,19 @@ class AppLocalizationsEn extends AppLocalizations {
   String get homePopularTrips => 'Popular Trips';
 
   @override
-  String get homeSponsoredTrips => 'Sponsored Trips';
+  String get homeSponsoredTrips => 'Hot Deals';
 
   @override
-  String get homeDomesticTripsInEgypt => 'Domestic Trips In Egypt';
+  String get homeDomesticTripsInEgypt => 'Explore Egypt';
 
   @override
-  String get homeInternationalTripsFromEgypt =>
-      'International Trips From Egypt';
+  String get homeInternationalTripsFromEgypt => 'Explore the World';
 
   @override
   String get homeRecommendedForYou => 'Recommended For You';
 
   @override
-  String get homeSpecialTrips => 'Special Trips';
+  String get homeSpecialTrips => 'Explore by category';
 
   @override
   String get homeTopRated => 'Top Rated';
@@ -464,6 +463,15 @@ class AppLocalizationsEn extends AppLocalizations {
   String get wishlistFiltersFreeCancellation => 'Free cancellation';
 
   @override
+  String get wishlistFiltersCategories => 'Categories';
+
+  @override
+  String get wishlistFiltersDestinationCountry => 'Destination Country';
+
+  @override
+  String get wishlistFiltersFiveStarOnly => '5-Star Only';
+
+  @override
   String get filterSeeResults => 'See Results';
 
   @override
@@ -626,6 +634,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get followingsUnfollow => 'Unfollow';
 
   @override
+  String get follow => 'Follow';
+
+  @override
   String get followingsEmptyTitle => 'No followings yet';
 
   @override
@@ -683,6 +694,11 @@ class AppLocalizationsEn extends AppLocalizations {
   String get myTripsFromPrefix => 'From';
 
   @override
+  String myTripsTravelers(int count) {
+    return '$count travelers';
+  }
+
+  @override
   String get myTripsViewDetails => 'View Details';
 
   @override
@@ -692,17 +708,29 @@ class AppLocalizationsEn extends AppLocalizations {
   String get myTripsBookingDetails => 'Booking Details';
 
   @override
+  String get myTripsBookingConfirmation => 'Booking Confirmation';
+
+  @override
+  String get myTripsWriteReview => 'Write Review';
+
+  @override
+  String get myTripsRateTrip => 'Rate Trip';
+
+  @override
+  String get myTripsRated => 'Rated';
+
+  @override
   String get myTripsDownloadPdf => 'Download pdf';
 
   @override
-  String get myTripsEmptyTitle => 'No trips yet';
+  String get myTripsEmptyTitle => 'No Bookings Yet !';
 
   @override
   String get myTripsEmptyDescription =>
-      'Start exploring and book your\nfirst adventure!';
+      'Time to dust off your bags and start planning your next adventure';
 
   @override
-  String get myTripsExploreTrips => 'Explore Trips';
+  String get myTripsExploreTrips => 'Discover Trips';
 
   @override
   String get navHome => 'Home';
@@ -792,6 +820,25 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get bookingAccommodationOptions => 'Accommodation Options';
+
+  @override
+  String get bookingCreatedSuccess => 'Booking created successfully';
+
+  @override
+  String get bookingRoomsRequired => 'Please select at least one room';
+
+  @override
+  String bookingRoomOccupantsMismatch(Object count) {
+    return 'The total room occupants must equal the number of travelers ($count)';
+  }
+
+  @override
+  String get bookingTripUnavailableTitle =>
+      'This trip isn\'t available for booking yet.';
+
+  @override
+  String get bookingTripUnavailableBody =>
+      'This trip doesn\'t have any booking options available at the moment. Please choose another trip or check back later.';
 
   @override
   String get bookingSingleRoom => 'Single Room';
@@ -996,6 +1043,34 @@ class AppLocalizationsEn extends AppLocalizations {
   String get bookingPaymentMethodTitle => 'Payment Method';
 
   @override
+  String get bookingPaymentMethodSelect => 'Select Payment Method';
+
+  @override
+  String get bookingPaymentMethodChoose => 'Choose how you want to pay';
+
+  @override
+  String get bookingPaymentMethodChange => 'Change';
+
+  @override
+  String get paymentMethodContinue => 'Continue';
+
+  @override
+  String get paymentMethodEmptyTitle => 'No Payment Methods';
+
+  @override
+  String get paymentMethodEmptyDescription =>
+      'No payment methods are currently available.';
+
+  @override
+  String get paymentMethodErrorTitle => 'Error';
+
+  @override
+  String get paymentMethodErrorDescription => 'Something went wrong';
+
+  @override
+  String get paymentMethodRetry => 'Retry';
+
+  @override
   String get bookingPaymentOptionCreditCard => 'Credit Card';
 
   @override
@@ -1074,6 +1149,25 @@ class AppLocalizationsEn extends AppLocalizations {
   String get profileSaveChanges => 'Save Changes';
 
   @override
+  String get profileChangePhotoTitle => 'Change Profile Photo';
+
+  @override
+  String get profileChangePhotoSubtitle =>
+      'Choose where you want to get your photo from.';
+
+  @override
+  String get profilePhotoCamera => 'Camera';
+
+  @override
+  String get profilePhotoGallery => 'Gallery';
+
+  @override
+  String get profilePhotoCancel => 'Cancel';
+
+  @override
+  String get companyProfileTitle => 'Company Profile';
+
+  @override
   String get companyProfileCompanyName => 'Travel Egypt Co.';
 
   @override
@@ -1124,6 +1218,51 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get companyProfileReviewComment =>
       'Great experience! The trip was well organized and the guide was very knowledgeable.';
+
+  @override
+  String get companyProfileCompanyDetails => 'Company Details';
+
+  @override
+  String get companyProfileLocation => 'Location';
+
+  @override
+  String get companyProfileEmail => 'Email';
+
+  @override
+  String get companyProfileYearOfEstablishment => 'Year of Establishment';
+
+  @override
+  String get companyProfileCommercialRegistration => 'Commercial Registration';
+
+  @override
+  String get companyProfileBusinessLicense => 'Business License';
+
+  @override
+  String get companyProfileTaxCard => 'Tax Card';
+
+  @override
+  String get companyProfileTripCategories => 'Trip Categories';
+
+  @override
+  String get companyProfileOurTeam => 'Our Team';
+
+  @override
+  String get companyProfileCustomerReviews => 'Customer Reviews';
+
+  @override
+  String get companyProfileViewAll => 'View All';
+
+  @override
+  String get companyProfileAvailableTrips => 'Available Trips';
+
+  @override
+  String get companyProfileSeeAllTrips => 'See All Trips';
+
+  @override
+  String get companyProfileShowLess => 'Show Less';
+
+  @override
+  String get companyProfilePricePerPerson => 'Person';
 
   @override
   String get filterTitle => 'Filter';
@@ -1180,6 +1319,49 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get searchResultSortBy => 'Sort By';
+
+  @override
+  String get searchResultSortPriceAsc => 'Price: Low to High';
+
+  @override
+  String get searchResultSortPriceDesc => 'Price: High to Low';
+
+  @override
+  String get searchResultSortRating => 'Highest Rating';
+
+  @override
+  String get searchResultSortDurationAsc => 'Duration: Shortest First';
+
+  @override
+  String get searchResultSortDurationDesc => 'Duration: Longest First';
+
+  @override
+  String get searchResultSortRecent => 'Most Recent';
+
+  @override
+  String get searchResultSortSubtitle =>
+      'Choose how you\'d like to sort the results';
+
+  @override
+  String get searchResultSortPriceAscDesc => 'Show the cheapest trips first.';
+
+  @override
+  String get searchResultSortPriceDescDesc =>
+      'Show the most expensive trips first.';
+
+  @override
+  String get searchResultSortRatingDesc => 'Show the best-rated trips first.';
+
+  @override
+  String get searchResultSortDurationAscDesc =>
+      'Show trips with the shortest duration first.';
+
+  @override
+  String get searchResultSortDurationDescDesc =>
+      'Show trips with the longest duration first.';
+
+  @override
+  String get searchResultSortRecentDesc => 'Show the newest trips first.';
 
   @override
   String get searchResultFilters => 'Filters';
@@ -2042,4 +2224,132 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get csWhatsApp => 'WhatsApp';
+
+  @override
+  String get paymentWebViewTitle => 'Complete Payment';
+
+  @override
+  String get paymentWebViewError => 'Unable to load payment page.';
+
+  @override
+  String get paymentWebViewRetry => 'Retry';
+
+  @override
+  String get paymentWebViewFailed => 'Payment failed or cancelled.';
+
+  @override
+  String get profileChangePasswordTitle => 'Change Password';
+
+  @override
+  String get profileCurrentPasswordLabel => 'Current Password';
+
+  @override
+  String get profileNewPasswordLabel => 'New Password';
+
+  @override
+  String get profileUpdatePasswordAction => 'Update Password';
+
+  @override
+  String get errorPasswordMinLength => 'Password must be at least 8 characters';
+
+  @override
+  String get passwordUpdatedSuccessfully => 'Password updated successfully';
+
+  @override
+  String get somethingWentWrong => 'Something went wrong';
+
+  @override
+  String get logout => 'Logout';
+
+  @override
+  String get logoutTitle => 'Logout';
+
+  @override
+  String get logoutDescription =>
+      'Are you sure you want to logout from your account?';
+
+  @override
+  String get logoutAction => 'Logout';
+
+  @override
+  String get cancel => 'Cancel';
+
+  @override
+  String get deleteAccount => 'Delete Account';
+
+  @override
+  String get deleteAccountTitle => 'Delete Account';
+
+  @override
+  String get deleteAccountDescription =>
+      'This action is permanent and cannot be undone. All your trips, bookings and account information will be permanently removed.';
+
+  @override
+  String get deleteAccountWarning =>
+      'Are you absolutely sure you want to permanently delete your account?';
+
+  @override
+  String get deleteAccountAction => 'Delete Account';
+
+  @override
+  String get finalConfirmation => 'Final Confirmation';
+
+  @override
+  String get profilePhotoFromCamera => 'Camera';
+
+  @override
+  String get profilePhotoFromGallery => 'Gallery';
+
+  @override
+  String get profilePhotoPermissionRequired =>
+      'Permission required to access your photos.';
+
+  @override
+  String get profilePhotoCameraUnavailable =>
+      'Camera is not available on this device.';
+
+  @override
+  String get profilePhotoInvalidFile =>
+      'The selected file is not a valid image.';
+
+  @override
+  String get profilePhotoTooLarge =>
+      'The selected image is too large. Please choose a smaller one.';
+
+  @override
+  String get profilePhotoPickFailed =>
+      'Failed to pick image. Please try again.';
+
+  @override
+  String get profileUpdateSuccess => 'Profile updated successfully';
+
+  @override
+  String get deleteAccountSuccess => 'Your account has been deleted.';
+
+  @override
+  String get reviewTitle => 'Trip Review';
+
+  @override
+  String get reviewTripSatisfactionHint =>
+      'Please write your overall satisfaction level with the trip.';
+
+  @override
+  String get reviewWriteYourReview => 'Write Your Review';
+
+  @override
+  String get reviewRateTravelAgency => 'Please Rate the Travel Agency.';
+
+  @override
+  String get reviewSendButton => 'Send';
+
+  @override
+  String get reviewEnterReviewHint => 'Enter your review here';
+
+  @override
+  String get reviewSubmittedSuccess => 'Review submitted successfully!';
+
+  @override
+  String reviewRatingScale(int rating) {
+    return '$rating/5';
+  }
 }
