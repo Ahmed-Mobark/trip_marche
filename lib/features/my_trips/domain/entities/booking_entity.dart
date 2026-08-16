@@ -50,7 +50,14 @@ class BookingDates extends Equatable {
   DateTime? get startDateParsed => DateTime.tryParse(startDate);
   DateTime? get endDateParsed => DateTime.tryParse(endDate);
 
-  String get range => '$startDate - $endDate';
+  String get range {
+    final start = startDate.trim();
+    final end = endDate.trim();
+    if (start.isNotEmpty && end.isNotEmpty) {
+      return '$start → $end';
+    }
+    return start.isNotEmpty ? start : end;
+  }
 
   @override
   List<Object?> get props => [startDate, endDate, durationDays];
@@ -82,6 +89,8 @@ class BookingTrip extends Equatable {
     this.isFavorite = false,
     this.isRated = false,
     this.vendorId,
+    this.rating = 4.9,
+    this.reviewCount = 112,
   });
 
   final int id;
@@ -91,9 +100,11 @@ class BookingTrip extends Equatable {
   final bool isFavorite;
   final bool isRated;
   final int? vendorId;
+  final double rating;
+  final int reviewCount;
 
   @override
-  List<Object?> get props => [id, title, coverImage, fromLocation, isFavorite, isRated, vendorId];
+  List<Object?> get props => [id, title, coverImage, fromLocation, isFavorite, isRated, vendorId, rating, reviewCount];
 }
 
 class Booking extends Equatable {

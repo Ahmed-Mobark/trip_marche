@@ -1,5 +1,4 @@
 import 'package:flutter/foundation.dart';
-
 import 'package:trip_marche/core/utils/json_parser.dart';
 import 'package:trip_marche/features/my_trips/domain/entities/booking_entity.dart';
 
@@ -35,14 +34,14 @@ class BookingPaymentDetailModel {
   }
 
   BookingPaymentDetail toEntity() => BookingPaymentDetail(
-        baseAmount: baseAmount,
-        roomsAmount: roomsAmount,
-        activitiesAmount: activitiesAmount,
-        discountAmount: discountAmount,
-        taxAmount: taxAmount,
-        totalAmount: totalAmount,
-        couponCode: couponCode,
-      );
+    baseAmount: baseAmount,
+    roomsAmount: roomsAmount,
+    activitiesAmount: activitiesAmount,
+    discountAmount: discountAmount,
+    taxAmount: taxAmount,
+    totalAmount: totalAmount,
+    couponCode: couponCode,
+  );
 }
 
 class BookingDatesModel {
@@ -65,10 +64,10 @@ class BookingDatesModel {
   }
 
   BookingDates toEntity() => BookingDates(
-        startDate: startDate,
-        endDate: endDate,
-        durationDays: durationDays,
-      );
+    startDate: startDate,
+    endDate: endDate,
+    durationDays: durationDays,
+  );
 }
 
 class BookingTravelersCountModel {
@@ -94,11 +93,11 @@ class BookingTravelersCountModel {
   }
 
   BookingTravelersCount toEntity() => BookingTravelersCount(
-        adults: adults,
-        kids: kids,
-        babies: babies,
-        total: total,
-      );
+    adults: adults,
+    kids: kids,
+    babies: babies,
+    total: total,
+  );
 }
 
 class BookingTripModel {
@@ -110,6 +109,8 @@ class BookingTripModel {
     this.isFavorite = false,
     this.isRated = false,
     this.vendorId,
+    this.rating = 4.9,
+    this.reviewCount = 112,
   });
 
   final int id;
@@ -119,10 +120,19 @@ class BookingTripModel {
   final bool isFavorite;
   final bool isRated;
   final int? vendorId;
+  final double rating;
+  final int reviewCount;
 
   factory BookingTripModel.fromJson(Map<String, dynamic> json) {
     final cover = json['cover_image'] as String?;
-    final isFav = JsonParser.parseFavorite(json['is_fav'] ?? json['is_favorite']);
+    final isFav = JsonParser.parseFavorite(
+      json['is_fav'] ?? json['is_favorite'],
+    );
+    final ratingVal = (json['rating'] as num?)?.toDouble() ?? 4.9;
+    final reviewsCnt =
+        (json['reviews_count'] as num?)?.toInt() ??
+        (json['review_count'] as num?)?.toInt() ??
+        112;
     debugPrint(
       '[BookingTripModel] id=${json['id']} title=${(json['title'] as String?)?.trim()} isFavorite=$isFav raw=${json['is_fav'] ?? json['is_favorite']}',
     );
@@ -134,18 +144,22 @@ class BookingTripModel {
       isFavorite: isFav,
       isRated: json['is_rated'] as bool? ?? false,
       vendorId: json['vendor_id'] as int?,
+      rating: ratingVal,
+      reviewCount: reviewsCnt,
     );
   }
 
   Map<String, dynamic> toJson() => {
-        'id': id,
-        'title': title,
-        'cover_image': coverImage,
-        'from_location': fromLocation,
-        'is_favorite': isFavorite,
-        'is_rated': isRated,
-        'vendor_id': vendorId,
-      };
+    'id': id,
+    'title': title,
+    'cover_image': coverImage,
+    'from_location': fromLocation,
+    'is_favorite': isFavorite,
+    'is_rated': isRated,
+    'vendor_id': vendorId,
+    'rating': rating,
+    'review_count': reviewCount,
+  };
 
   BookingTripModel copyWith({
     int? id,
@@ -155,6 +169,8 @@ class BookingTripModel {
     bool? isFavorite,
     bool? isRated,
     int? vendorId,
+    double? rating,
+    int? reviewCount,
   }) {
     return BookingTripModel(
       id: id ?? this.id,
@@ -164,18 +180,22 @@ class BookingTripModel {
       isFavorite: isFavorite ?? this.isFavorite,
       isRated: isRated ?? this.isRated,
       vendorId: vendorId ?? this.vendorId,
+      rating: rating ?? this.rating,
+      reviewCount: reviewCount ?? this.reviewCount,
     );
   }
 
   BookingTrip toEntity() => BookingTrip(
-        id: id,
-        title: title,
-        coverImage: coverImage,
-        fromLocation: fromLocation,
-        isFavorite: isFavorite,
-        isRated: isRated,
-        vendorId: vendorId,
-      );
+    id: id,
+    title: title,
+    coverImage: coverImage,
+    fromLocation: fromLocation,
+    isFavorite: isFavorite,
+    isRated: isRated,
+    vendorId: vendorId,
+    rating: rating,
+    reviewCount: reviewCount,
+  );
 }
 
 class BookingModel {
@@ -243,22 +263,22 @@ class BookingModel {
   }
 
   Booking toEntity() => Booking(
-        id: id,
-        reference: reference,
-        status: status,
-        paymentStatus: paymentStatus,
-        paymentMethod: paymentMethod,
-        requiresPayment: requiresPayment,
-        paidAt: paidAt,
-        expiresAt: expiresAt,
-        currency: currency,
-        payment: payment,
-        trip: trip.toEntity(),
-        dates: dates.toEntity(),
-        travelersCount: travelersCount.toEntity(),
-        paymentDetail: paymentDetail.toEntity(),
-        createdAt: createdAt,
-      );
+    id: id,
+    reference: reference,
+    status: status,
+    paymentStatus: paymentStatus,
+    paymentMethod: paymentMethod,
+    requiresPayment: requiresPayment,
+    paidAt: paidAt,
+    expiresAt: expiresAt,
+    currency: currency,
+    payment: payment,
+    trip: trip.toEntity(),
+    dates: dates.toEntity(),
+    travelersCount: travelersCount.toEntity(),
+    paymentDetail: paymentDetail.toEntity(),
+    createdAt: createdAt,
+  );
 }
 
 class BookingPaginationMetaModel {
@@ -284,11 +304,11 @@ class BookingPaginationMetaModel {
   }
 
   BookingPaginationMeta toEntity() => BookingPaginationMeta(
-        currentPage: currentPage,
-        lastPage: lastPage,
-        perPage: perPage,
-        total: total,
-      );
+    currentPage: currentPage,
+    lastPage: lastPage,
+    perPage: perPage,
+    total: total,
+  );
 }
 
 class BookingsPageModel {
@@ -310,7 +330,7 @@ class BookingsPageModel {
   }
 
   BookingsPage toEntity() => BookingsPage(
-        bookings: bookings.map((e) => e.toEntity()).toList(),
-        meta: meta.toEntity(),
-      );
+    bookings: bookings.map((e) => e.toEntity()).toList(),
+    meta: meta.toEntity(),
+  );
 }

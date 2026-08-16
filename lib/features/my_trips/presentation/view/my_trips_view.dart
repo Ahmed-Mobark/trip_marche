@@ -438,10 +438,14 @@ class _BookingsList extends StatelessWidget {
                     builder: (context, pdfState) {
                       final isPdfLoading = pdfState.isLoadingFor(booking.id);
                       return MyTripsScreenTripCard(
-                        trip: _toRowModel(booking, isFav),
+                        trip: _toRowModel(booking, isFav, context),
                         tab: tab,
                         onPrimaryTap: () => onBookingTap(booking),
-                        onSecondaryTap: () => onBookingTap(booking),
+                        onSecondaryTap: tab == MyTripsShellTab.past
+                            ? (booking.trip.isRated
+                                  ? null
+                                  : () => onRateTripTap(booking))
+                            : () => onBookingTap(booking),
                         onBottomTap: isPdfLoading
                             ? null
                             : () => onBookingPdfTap(booking),
@@ -459,17 +463,21 @@ class _BookingsList extends StatelessWidget {
   }
 }
 
-MyTripRowUiModel _toRowModel(Booking booking, bool isFavorite) {
-  debugPrint(
-    '[MyTrips] _toRowModel tripId=${booking.trip.id} isFavorite=$isFavorite',
-  );
+MyTripRowUiModel _toRowModel(Booking booking, bool isFavorite, BuildContext context) {
+  final fromLoc = booking.trip.fromLocation.trim();
+  final locLabel = fromLoc.isEmpty
+      ? ''
+      : (fromLoc.toLowerCase().startsWith('from') || fromLoc.startsWith('من')
+          ? fromLoc
+          : '${context.tr.myTripsFromPrefix} $fromLoc');
+
   return MyTripRowUiModel(
     id: booking.id,
     tripId: booking.trip.id,
     title: booking.trip.title,
-    rating: 0.0,
-    reviewCount: 0,
-    locationLabel: booking.trip.fromLocation,
+    rating: booking.trip.rating,
+    reviewCount: booking.trip.reviewCount,
+    locationLabel: locLabel,
     dateRange: booking.dates.range,
     imageUrl: booking.trip.coverImage,
     isFavorite: isFavorite,
