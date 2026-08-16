@@ -50,12 +50,11 @@ class DateOptionCard extends StatelessWidget {
                   dateRange,
                   maxLines: 1,
                   softWrap: false,
-                  style: AppTextStyles.bodyMedium(
-                    color: AppColors.ink(context),
-                  ).copyWith(
-                    fontSize: 14.sp,
-                    fontWeight: FontWeight.w500,
-                  ),
+                  style: AppTextStyles.bodyMedium(color: AppColors.ink(context))
+                      .copyWith(
+                        fontSize: TripOptionsFigmaTokens.dateOptionFontSize,
+                        fontWeight: FontWeight.w500,
+                      ),
                 ),
               ),
             ),
@@ -68,12 +67,11 @@ class DateOptionCard extends StatelessWidget {
                   price,
                   maxLines: 1,
                   softWrap: false,
-                  style: AppTextStyles.bodyMedium(
-                    color: AppColors.primary,
-                  ).copyWith(
-                    fontSize: 14.sp,
-                    fontWeight: FontWeight.w600,
-                  ),
+                  style: AppTextStyles.bodyMedium(color: AppColors.primary)
+                      .copyWith(
+                        fontSize: TripOptionsFigmaTokens.dateOptionFontSize,
+                        fontWeight: FontWeight.w600,
+                      ),
                 ),
               ),
             ),

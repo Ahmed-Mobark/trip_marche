@@ -55,31 +55,35 @@ class AccommodationCard extends StatelessWidget {
                   children: [
                     Text(
                       title,
-                      style: AppTextStyles.bodyMedium(
-                        color: AppColors.ink(context),
-                      ).copyWith(
-                        fontSize: 14.sp,
-                        fontWeight: FontWeight.w600,
-                      ),
+                      style:
+                          AppTextStyles.bodyMedium(
+                            color: AppColors.ink(context),
+                          ).copyWith(
+                            fontSize: TripOptionsFigmaTokens.cardTitleFontSize,
+                            fontWeight: FontWeight.w600,
+                          ),
                     ),
                     SizedBox(height: 4.h),
                     Text(
                       subtitle,
-                      style: AppTextStyles.caption(
-                        color: AppColors.subtitleGrey(context),
-                      ).copyWith(fontSize: 12.sp),
+                      style:
+                          AppTextStyles.caption(
+                            color: AppColors.subtitleGrey(context),
+                          ).copyWith(
+                            fontSize:
+                                TripOptionsFigmaTokens.cardSubtitleFontSize,
+                          ),
                     ),
                   ],
                 ),
               ),
               Text(
                 priceLabel,
-                style: AppTextStyles.bodyMedium(
-                  color: AppColors.primary,
-                ).copyWith(
-                  fontSize: 14.sp,
-                  fontWeight: FontWeight.w600,
-                ),
+                style: AppTextStyles.bodyMedium(color: AppColors.primary)
+                    .copyWith(
+                      fontSize: TripOptionsFigmaTokens.cardTitleFontSize,
+                      fontWeight: FontWeight.w600,
+                    ),
               ),
             ],
           ),
@@ -89,12 +93,11 @@ class AccommodationCard extends StatelessWidget {
               Expanded(
                 child: Text(
                   personLabel,
-                style: AppTextStyles.bodyMedium(
-                  color: AppColors.ink(context),
-                ).copyWith(
-                    fontSize: 14.sp,
-                    fontWeight: FontWeight.w500,
-                  ),
+                  style: AppTextStyles.bodyMedium(color: AppColors.ink(context))
+                      .copyWith(
+                        fontSize: TripOptionsFigmaTokens.cardTitleFontSize,
+                        fontWeight: FontWeight.w500,
+                      ),
                 ),
               ),
               TripOptionsStepper(

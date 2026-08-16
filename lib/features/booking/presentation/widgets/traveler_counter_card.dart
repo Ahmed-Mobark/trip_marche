@@ -59,12 +59,13 @@ class TravelerCounterCard extends StatelessWidget {
             child: subtitle == null
                 ? Text(
                     title,
-                    style: AppTextStyles.bodyMedium(
-                      color: AppColors.ink(context),
-                    ).copyWith(
-                      fontSize: 14.sp,
-                      fontWeight: FontWeight.w600,
-                    ),
+                    style:
+                        AppTextStyles.bodyMedium(
+                          color: AppColors.ink(context),
+                        ).copyWith(
+                          fontSize: TripOptionsFigmaTokens.cardTitleFontSize,
+                          fontWeight: FontWeight.w600,
+                        ),
                   )
                 : Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -72,19 +73,25 @@ class TravelerCounterCard extends StatelessWidget {
                     children: [
                       Text(
                         title,
-                        style: AppTextStyles.bodyMedium(
-                          color: AppColors.ink(context),
-                        ).copyWith(
-                          fontSize: 14.sp,
-                          fontWeight: FontWeight.w600,
-                        ),
+                        style:
+                            AppTextStyles.bodyMedium(
+                              color: AppColors.ink(context),
+                            ).copyWith(
+                              fontSize:
+                                  TripOptionsFigmaTokens.cardTitleFontSize,
+                              fontWeight: FontWeight.w600,
+                            ),
                       ),
                       SizedBox(height: 2.h),
                       Text(
                         subtitle!,
-                        style: AppTextStyles.caption(
-                          color: AppColors.subtitleGrey(context),
-                        ).copyWith(fontSize: 12.sp),
+                        style:
+                            AppTextStyles.caption(
+                              color: AppColors.subtitleGrey(context),
+                            ).copyWith(
+                              fontSize:
+                                  TripOptionsFigmaTokens.cardSubtitleFontSize,
+                            ),
                       ),
                     ],
                   ),
