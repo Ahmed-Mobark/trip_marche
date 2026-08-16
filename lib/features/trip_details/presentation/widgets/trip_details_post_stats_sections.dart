@@ -173,196 +173,182 @@ class TripDetailsDepartureDetailsCard extends StatelessWidget {
 
   final TripDetails trip;
 
-  Widget? _buildMapsButton(double? lat, double? lng, String location) {
-    final hasCoords = lat != null && lng != null;
-    final hasLabel = location.trim().isNotEmpty;
-    if (!hasCoords && !hasLabel) {
-      return null;
-    }
-    return GoogleMapsLinkButton(label: location, lat: lat, lng: lng);
-  }
-
   @override
   Widget build(BuildContext context) {
+    final meetingLocation = trip.meeting.location.trim();
+    final meetingTime = trip.meeting.time.trim();
+    final returnLocation = trip.returnPoint.location.trim();
+    final returnTime = trip.returnPoint.time.trim();
+
+    final meetingLines = meetingLocation
+        .split('\n')
+        .map((s) => s.trim())
+        .where((s) => s.isNotEmpty)
+        .toList();
+
+    final hasMeeting = meetingLines.isNotEmpty || meetingTime.isNotEmpty;
+    final hasReturn = returnLocation.isNotEmpty || returnTime.isNotEmpty;
+
+    if (!hasMeeting && !hasReturn) {
+      return const SizedBox.shrink();
+    }
+
     return TripDetailsInfoCard(
-      padding: const EdgeInsetsDirectional.only(
-        start: 16,
-        end: 16,
-        top: 16,
-        bottom: 16,
-      ),
-      borderRadius: 14,
-      borderColor: AppColors.tripDetailsHairline(context),
-      withShadow: false,
+      padding: EdgeInsetsDirectional.all(20.w),
+      borderRadius: 20.r,
+      borderColor: AppColors.border(context).withValues(alpha: 0.35),
+      withShadow: true,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.min,
         children: [
           Text(
-            context.tr.tripDetailsDepartureDetailsTitle,
+            'Departure & Return',
             style: TextStyle(
               fontFamily: AppFont.fontFamily,
-              fontSize: 16,
+              fontSize: 18.sp,
               fontWeight: FontWeight.w700,
-              height: 1.0,
+              height: 1.1,
               letterSpacing: 0,
               color: AppColors.darkText(context),
             ),
           ),
-          const SizedBox(height: 12),
-          _LocationRow(
-            icon: Iconsax.location,
-            label: context.tr.tripDetailsMeetingLocationLabel,
-            value: trip.meeting.location,
-            trailing: _buildMapsButton(
-              trip.meeting.lat,
-              trip.meeting.lng,
-              trip.meeting.location,
-            ),
-          ),
-          const SizedBox(height: 12),
-          _LocationRow(
-            icon: Iconsax.routing_2,
-            label: context.tr.tripDetailsReturnLocationLabel,
-            value: trip.returnPoint.location,
-            trailing: _buildMapsButton(
-              trip.returnPoint.lat,
-              trip.returnPoint.lng,
-              trip.returnPoint.location,
-            ),
-          ),
-          const SizedBox(height: 12),
-          Row(
-            children: [
-              Expanded(
-                child: _TimeRow(
-                  icon: Iconsax.profile_2user,
-                  label: context.tr.tripDetailsMeetingTimeLabel,
-                  value: trip.meeting.time,
+          if (hasMeeting) ...[
+            if (meetingLines.length > 1) ...[
+              for (var i = 0; i < meetingLines.length; i++) ...[
+                SizedBox(height: 16.h),
+                _DeparturePointRow(
+                  icon: Iconsax.location,
+                  label: '${context.tr.tripDetailsMeetingLocationLabel} ${i + 1}',
+                  address: meetingLines[i],
+                  time: meetingTime,
+                  lat: trip.meeting.lat,
+                  lng: trip.meeting.lng,
                 ),
-              ),
-              const SizedBox(width: 12),
-              Expanded(
-                child: _TimeRow(
-                  icon: Iconsax.clock,
-                  label: context.tr.tripDetailsReturnTimeLabel,
-                  value: trip.returnPoint.time,
-                ),
+              ],
+            ] else ...[
+              SizedBox(height: 16.h),
+              _DeparturePointRow(
+                icon: Iconsax.location,
+                label: meetingLines.isNotEmpty
+                    ? '${context.tr.tripDetailsMeetingLocationLabel} 1'
+                    : context.tr.tripDetailsMeetingLocationLabel,
+                address: meetingLines.isNotEmpty ? meetingLines.first : '',
+                time: meetingTime,
+                lat: trip.meeting.lat,
+                lng: trip.meeting.lng,
               ),
             ],
-          ),
+          ],
+          if (hasReturn) ...[
+            SizedBox(height: 16.h),
+            _DeparturePointRow(
+              icon: Iconsax.routing_2,
+              label: context.tr.tripDetailsReturnLocationLabel,
+              address: returnLocation,
+              time: returnTime,
+              lat: trip.returnPoint.lat,
+              lng: trip.returnPoint.lng,
+            ),
+          ],
         ],
       ),
     );
   }
 }
 
-class _LocationRow extends StatelessWidget {
-  const _LocationRow({
+class _DeparturePointRow extends StatelessWidget {
+  const _DeparturePointRow({
     required this.icon,
     required this.label,
-    required this.value,
-    this.trailing,
+    required this.address,
+    required this.time,
+    this.lat,
+    this.lng,
   });
 
   final IconData icon;
   final String label;
-  final String value;
-  final Widget? trailing;
+  final String address;
+  final String time;
+  final double? lat;
+  final double? lng;
 
   @override
   Widget build(BuildContext context) {
+    final hasCoords = lat != null && lng != null;
+    final hasLabel = address.trim().isNotEmpty;
+    final hasMapsTarget = hasCoords || hasLabel;
+
     return Row(
-      crossAxisAlignment: CrossAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Icon(icon, color: AppColors.tripDetailsDepartureIconPurple, size: 20),
-        const SizedBox(width: 10),
+        Padding(
+          padding: EdgeInsets.only(top: 2.h),
+          child: Icon(
+            icon,
+            color: AppColors.tripDetailsDepartureIconPurple,
+            size: 22.sp,
+          ),
+        ),
+        SizedBox(width: 12.w),
         Expanded(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisSize: MainAxisSize.min,
             children: [
-              Text(
-                label,
-                style: TextStyle(
-                  fontFamily: AppFont.fontFamily,
-                  fontSize: 12,
-                  fontWeight: FontWeight.w400,
-                  height: 1.15,
-                  letterSpacing: 0,
-                  color: AppColors.greyText(context),
+              if (label.isNotEmpty)
+                Text(
+                  label,
+                  style: TextStyle(
+                    fontFamily: AppFont.fontFamily,
+                    fontSize: 12.sp,
+                    fontWeight: FontWeight.w400,
+                    height: 1.2,
+                    letterSpacing: 0,
+                    color: AppColors.greyText(context),
+                  ),
                 ),
-              ),
-              const SizedBox(height: 2),
-              Text(
-                value,
-                style: TextStyle(
-                  fontFamily: AppFont.fontFamily,
-                  fontSize: 14,
-                  fontWeight: FontWeight.w500,
-                  height: 1.2,
-                  letterSpacing: 0,
-                  color: AppColors.darkText(context),
+              if (address.isNotEmpty) ...[
+                SizedBox(height: 2.h),
+                Text(
+                  address,
+                  style: TextStyle(
+                    fontFamily: AppFont.fontFamily,
+                    fontSize: 14.sp,
+                    fontWeight: FontWeight.w600,
+                    height: 1.25,
+                    letterSpacing: 0,
+                    color: AppColors.darkText(context),
+                  ),
                 ),
-              ),
+              ],
+              if (time.isNotEmpty) ...[
+                SizedBox(height: 4.h),
+                Text(
+                  time,
+                  style: TextStyle(
+                    fontFamily: AppFont.fontFamily,
+                    fontSize: 13.sp,
+                    fontWeight: FontWeight.w600,
+                    height: 1.2,
+                    letterSpacing: 0,
+                    color: AppColors.tripDetailsDepartureIconPurple,
+                  ),
+                ),
+              ],
             ],
           ),
         ),
-        if (trailing != null) ...[const SizedBox(width: 8), trailing!],
-      ],
-    );
-  }
-}
-
-class _TimeRow extends StatelessWidget {
-  const _TimeRow({
-    required this.icon,
-    required this.label,
-    required this.value,
-  });
-
-  final IconData icon;
-  final String label;
-  final String value;
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        Icon(icon, color: AppColors.tripDetailsDepartureIconPurple, size: 20),
-        const SizedBox(width: 10),
-        Expanded(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Text(
-                label,
-                style: TextStyle(
-                  fontFamily: AppFont.fontFamily,
-                  fontSize: 12,
-                  fontWeight: FontWeight.w400,
-                  height: 1.15,
-                  letterSpacing: 0,
-                  color: AppColors.greyText(context),
-                ),
-              ),
-              const SizedBox(height: 2),
-              Text(
-                value,
-                style: TextStyle(
-                  fontFamily: AppFont.fontFamily,
-                  fontSize: 14,
-                  fontWeight: FontWeight.w500,
-                  height: 1.2,
-                  letterSpacing: 0,
-                  color: AppColors.darkText(context),
-                ),
-              ),
-            ],
+        if (hasMapsTarget) ...[
+          SizedBox(width: 10.w),
+          GoogleMapsLinkButton(
+            label: address,
+            lat: lat,
+            lng: lng,
+            size: 38.r,
           ),
-        ),
+        ],
       ],
     );
   }
