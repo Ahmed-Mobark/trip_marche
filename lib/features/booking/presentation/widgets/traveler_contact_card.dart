@@ -21,6 +21,7 @@ class TravelerContactCard extends StatelessWidget {
     required this.onCountryCodeChanged,
     required this.requiredErrorText,
     this.autovalidateMode,
+    this.showPhone = true,
     this.requirePhone = true,
   });
 
@@ -35,17 +36,20 @@ class TravelerContactCard extends StatelessWidget {
   final ValueChanged<String> onCountryCodeChanged;
   final String requiredErrorText;
   final AutovalidateMode? autovalidateMode;
+  final bool showPhone;
   final bool requirePhone;
 
   @override
   Widget build(BuildContext context) {
-    final fieldRadius = BorderRadius.circular(ContactInfoFigmaTokens.fieldRadius);
+    final fieldRadius = BorderRadius.circular(
+      ContactInfoFigmaTokens.fieldRadius,
+    );
     final borderColor = AppColors.softBorder(context);
 
     OutlineInputBorder outline(Color color) => OutlineInputBorder(
-          borderRadius: fieldRadius,
-          borderSide: BorderSide(color: color, width: 1),
-        );
+      borderRadius: fieldRadius,
+      borderSide: BorderSide(color: color, width: 1),
+    );
 
     return Container(
       padding: EdgeInsetsDirectional.all(ContactInfoFigmaTokens.cardPadding),
@@ -59,12 +63,11 @@ class TravelerContactCard extends StatelessWidget {
         children: [
           Text(
             travelerTitle,
-            style: AppTextStyles.subtitle(
-              color: AppColors.ink(context),
-            ).copyWith(
-              fontSize: ContactInfoFigmaTokens.travelerTitleSize,
-              fontWeight: FontWeight.w600,
-            ),
+            style: AppTextStyles.subtitle(color: AppColors.ink(context))
+                .copyWith(
+                  fontSize: ContactInfoFigmaTokens.travelerTitleSize,
+                  fontWeight: FontWeight.w600,
+                ),
           ),
           SizedBox(height: ContactInfoFigmaTokens.fieldGap),
           _FieldLabel(label: fullNameLabel),
@@ -79,12 +82,11 @@ class TravelerContactCard extends StatelessWidget {
               }
               return null;
             },
-            style: AppTextStyles.bodyMedium(
-              color: AppColors.ink(context),
-            ).copyWith(
-              fontSize: ContactInfoFigmaTokens.inputFontSize,
-              fontWeight: FontWeight.w500,
-            ),
+            style: AppTextStyles.bodyMedium(color: AppColors.ink(context))
+                .copyWith(
+                  fontSize: ContactInfoFigmaTokens.inputFontSize,
+                  fontWeight: FontWeight.w500,
+                ),
             decoration: InputDecoration(
               hintText: fullNameHint,
               hintStyle: AppTextStyles.body(
@@ -108,25 +110,27 @@ class TravelerContactCard extends StatelessWidget {
               focusedErrorBorder: outline(AppColors.error),
             ),
           ),
-          SizedBox(height: ContactInfoFigmaTokens.fieldGap),
-          _FieldLabel(label: phoneLabel),
-          SizedBox(height: ContactInfoFigmaTokens.labelGap),
-          AppPhoneNumberField(
-            variant: AppPhoneNumberFieldVariant.booking,
-            controller: phoneController,
-            hint: phoneHint,
-            selectedDialCode: countryCode,
-            onDialCodeChanged: onCountryCodeChanged,
-            autovalidateMode: autovalidateMode,
-            validator: requirePhone
-                ? Validator.phone
-                : (value) {
-                    if (value == null || value.trim().isEmpty) {
-                      return null;
-                    }
-                    return Validator.phone(value);
-                  },
-          ),
+          if (showPhone) ...[
+            SizedBox(height: ContactInfoFigmaTokens.fieldGap),
+            _FieldLabel(label: phoneLabel),
+            SizedBox(height: ContactInfoFigmaTokens.labelGap),
+            AppPhoneNumberField(
+              variant: AppPhoneNumberFieldVariant.booking,
+              controller: phoneController,
+              hint: phoneHint,
+              selectedDialCode: countryCode,
+              onDialCodeChanged: onCountryCodeChanged,
+              autovalidateMode: autovalidateMode,
+              validator: requirePhone
+                  ? Validator.phone
+                  : (value) {
+                      if (value == null || value.trim().isEmpty) {
+                        return null;
+                      }
+                      return Validator.phone(value);
+                    },
+            ),
+          ],
         ],
       ),
     );
@@ -142,12 +146,11 @@ class _FieldLabel extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       label,
-      style: AppTextStyles.bodyMedium(
-        color: AppColors.subtitleGrey(context),
-      ).copyWith(
-        fontSize: ContactInfoFigmaTokens.labelSize,
-        fontWeight: FontWeight.w500,
-      ),
+      style: AppTextStyles.bodyMedium(color: AppColors.subtitleGrey(context))
+          .copyWith(
+            fontSize: ContactInfoFigmaTokens.labelSize,
+            fontWeight: FontWeight.w500,
+          ),
     );
   }
 }

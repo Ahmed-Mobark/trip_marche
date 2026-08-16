@@ -36,12 +36,10 @@ class _ContactInfoViewState extends State<ContactInfoView> {
   @override
   void initState() {
     super.initState();
-    final totalTravelers =
-        widget.travelersCount < 1 ? 1 : widget.travelersCount;
-    _travelers = List.generate(
-      totalTravelers,
-      (_) => TravelerData(),
-    );
+    final totalTravelers = widget.travelersCount < 1
+        ? 1
+        : widget.travelersCount;
+    _travelers = List.generate(totalTravelers, (_) => TravelerData());
   }
 
   @override
@@ -52,8 +50,9 @@ class _ContactInfoViewState extends State<ContactInfoView> {
     super.dispose();
   }
 
-  AutovalidateMode get _autovalidateMode =>
-      _validateOnSubmit ? AutovalidateMode.onUserInteraction : AutovalidateMode.disabled;
+  AutovalidateMode get _autovalidateMode => _validateOnSubmit
+      ? AutovalidateMode.onUserInteraction
+      : AutovalidateMode.disabled;
 
   void _onContinue() {
     setState(() => _validateOnSubmit = true);
@@ -61,17 +60,14 @@ class _ContactInfoViewState extends State<ContactInfoView> {
       return;
     }
 
-    final contacts = List<TravelerContact>.generate(
-      _travelers.length,
-      (index) {
-        final traveler = _travelers[index];
-        return TravelerContact(
-          fullName: traveler.fullNameController.text.trim(),
-          phoneNumber: traveler.phoneController.text.trim(),
-          countryCode: traveler.selectedCountry,
-        );
-      },
-    );
+    final contacts = List<TravelerContact>.generate(_travelers.length, (index) {
+      final traveler = _travelers[index];
+      return TravelerContact(
+        fullName: traveler.fullNameController.text.trim(),
+        phoneNumber: traveler.phoneController.text.trim(),
+        countryCode: traveler.selectedCountry,
+      );
+    });
 
     sl<AppNavigator>().push(
       screen: SelectActivitiesView(
@@ -108,12 +104,11 @@ class _ContactInfoViewState extends State<ContactInfoView> {
                 child: Text(
                   tr.bookingContactInfoTitle,
                   textAlign: TextAlign.center,
-                  style: AppTextStyles.heading3(
-                    color: AppColors.ink(context),
-                  ).copyWith(
-                    fontSize: ContactInfoFigmaTokens.titleFontSize,
-                    fontWeight: FontWeight.w600,
-                  ),
+                  style: AppTextStyles.heading3(color: AppColors.ink(context))
+                      .copyWith(
+                        fontSize: ContactInfoFigmaTokens.titleFontSize,
+                        fontWeight: FontWeight.w600,
+                      ),
                 ),
               ),
               Expanded(
@@ -146,6 +141,7 @@ class _ContactInfoViewState extends State<ContactInfoView> {
                         },
                         requiredErrorText: tr.errorFieldRequired,
                         autovalidateMode: _autovalidateMode,
+                        showPhone: index == 0,
                         requirePhone: index == 0,
                       );
                     },

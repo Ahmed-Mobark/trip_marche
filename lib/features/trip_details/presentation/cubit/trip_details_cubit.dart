@@ -13,13 +13,13 @@ class TripDetailsCubit extends Cubit<TripDetailsState> {
     this._toggleFollowVendorUseCase, {
     required this.tripId,
     bool initialIsWishlisted = false,
-  })  : _initialIsWishlisted = initialIsWishlisted,
-        super(
-          TripDetailsState(
-            isFavorite: initialIsWishlisted,
-            loadStatus: TripDetailsLoadStatus.initial,
-          ),
-        );
+  }) : _initialIsWishlisted = initialIsWishlisted,
+       super(
+         TripDetailsState(
+           isFavorite: initialIsWishlisted,
+           loadStatus: TripDetailsLoadStatus.initial,
+         ),
+       );
 
   final TripWishlistRepository _wishlistRepository;
   final GetTripDetailsUseCase _getTripDetails;
@@ -66,7 +66,8 @@ class TripDetailsCubit extends Cubit<TripDetailsState> {
           state.copyWith(
             loadStatus: TripDetailsLoadStatus.success,
             trip: trip,
-            isFavorite: trip.isFavorite || _initialIsWishlisted,
+            isFavorite:
+                trip.isFavorite || trip.isWishlisted || _initialIsWishlisted,
             clearTrip: false,
             clearLoadError: true,
             expandedDayIndices: trip.days.isEmpty ? const <int>{} : const {0},

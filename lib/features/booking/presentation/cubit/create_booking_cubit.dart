@@ -57,7 +57,7 @@ class CreateBookingCubit extends Cubit<CreateBookingState> {
         continue;
       }
 
-      if (i < adultCount) {
+      if (i == 0) {
         final phone = traveler.phoneNumber.trim();
         final code = traveler.countryCode.trim();
         if (code.isEmpty || !code.startsWith('+')) {
@@ -105,8 +105,8 @@ class CreateBookingCubit extends Cubit<CreateBookingState> {
         travelers.add(
           CreateBookingTraveler(
             fullName: traveler.fullName.trim(),
-            phoneCountryCode: traveler.countryCode.trim(),
-            phone: traveler.phoneNumber.trim(),
+            phoneCountryCode: i == 0 ? traveler.countryCode.trim() : null,
+            phone: i == 0 ? traveler.phoneNumber.trim() : null,
             type: 'adult',
           ),
         );
