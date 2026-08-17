@@ -158,6 +158,9 @@ class _TripOptionsViewState extends State<TripOptionsView> {
     );
   }
 
+  List<BookingRoom> _selectedRooms() {
+    if (_roomTypes.isEmpty) {
+      return const <BookingRoom>[];
   void _showBookingUnavailableToast() {
     if (_bookingUnavailableToastVisible) {
       return;
@@ -172,6 +175,13 @@ class _TripOptionsViewState extends State<TripOptionsView> {
       length: ToastLength.medium,
     );
 
+    final result = <BookingRoom>[];
+    for (final room in _roomTypes) {
+      final count = _roomPersonCounts[room.key];
+      if (count != null && count > 0) {
+        result.add(BookingRoom(roomTypeId: room.id, persons: count));
+      }
+    }
     _bookingUnavailableToastTimer = Timer(
       const Duration(milliseconds: 4200),
       () {

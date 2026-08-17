@@ -61,6 +61,8 @@ class _ReviewBodyState extends State<_ReviewBody> {
     super.dispose();
   }
 
+  bool get _isPaying =>
+      context.watch<CreateBookingCubit>().state.isLoading;
   bool get _isPaying => context.watch<CreateBookingCubit>().state.isLoading;
 
   BookingPriceBreakdown _breakdown(CouponState couponState) {
@@ -97,11 +99,18 @@ class _ReviewBodyState extends State<_ReviewBody> {
     );
   }
 
+  void _onPay() {
   Future<void> _onPay() async {
     final couponState = context.read<CouponCubit>().state;
     final couponCode = couponState.isApplied && couponState.appliedCode != null
         ? couponState.appliedCode
         : null;
+
+    context.read<CreateBookingCubit>().createBooking(
+          data: widget.data,
+          notes: _notesController.text.trim(),
+          couponCode: couponCode,
+        );
     final bookingCubit = context.read<CreateBookingCubit>();
 
     if (bookingCubit.state.selectedPaymentMethod == null) {
@@ -127,6 +136,11 @@ class _ReviewBodyState extends State<_ReviewBody> {
     if (messages.isEmpty) {
       return;
     }
+    appToast(
+      context: context,
+      type: ToastType.error,
+      message: messages.first,
+    );
     appToast(context: context, type: ToastType.error, message: messages.first);
   }
 
@@ -137,6 +151,7 @@ class _ReviewBodyState extends State<_ReviewBody> {
     return BlocListener<CreateBookingCubit, CreateBookingState>(
       listenWhen: (previous, current) =>
           previous.status != current.status &&
+          (current.isValidationFailure || current.isFailure || current.isSuccess),
           (current.isValidationFailure ||
               current.isFailure ||
               current.isSuccess),
@@ -205,6 +220,11 @@ class _ReviewBodyState extends State<_ReviewBody> {
           context.read<CouponCubit>().clearNetworkErrorFlag();
         },
         child: AnnotatedRegion<SystemUiOverlayStyle>(
+          value: SystemUiOverlayStyle.dark.copyWith(
+            statusBarColor: ReviewFigmaTokens.screenBackground,
+          ),
+          child: Scaffold(
+            backgroundColor: ReviewFigmaTokens.screenBackground,
           value: AppColors.isDark(context)
               ? SystemUiOverlayStyle.light.copyWith(
                   statusBarColor: AppColors.scaffoldBg(context),
@@ -227,6 +247,12 @@ class _ReviewBodyState extends State<_ReviewBody> {
                     child: Text(
                       tr.bookingReviewTitle,
                       textAlign: TextAlign.center,
+                      style: AppTextStyles.heading3(
+                        color: AppColors.tripDetailsFigmaBlack,
+                      ).copyWith(
+                        fontSize: ReviewFigmaTokens.titleFontSize,
+                        fontWeight: FontWeight.w600,
+                      ),
                       style:
                           AppTextStyles.heading3(
                             color: AppColors.ink(context),
@@ -258,6 +284,12 @@ class _ReviewBodyState extends State<_ReviewBody> {
                               placeholder: tr.bookingReviewCouponPlaceholder,
                               applyLabel: tr.bookingReviewCouponApply,
                               appliedLabel: tr.bookingReviewCouponApplied,
+                              successMessage: couponState.successMessage ??
+                                  tr.bookingReviewCouponSuccess,
+                              onApply: _applyCoupon,
+                              onChanged: context.read<CouponCubit>().onCodeChanged,
+                              showSuccess: couponState.isApplied,
+                              showError: couponState.status == CouponStatus.error &&
                               successMessage:
                                   couponState.successMessage ??
                                   tr.bookingReviewCouponSuccess,
@@ -288,12 +320,15 @@ class _ReviewBodyState extends State<_ReviewBody> {
                               travelersLabel: tr.bookingReviewPaymentTravelers(
                                 breakdown.travelersCount,
                               ),
+                              activitiesLabel: tr.bookingReviewPaymentActivities,
                               activitiesLabel:
                                   tr.bookingReviewPaymentActivities,
                               taxesLabel: tr.bookingReviewPaymentTaxes,
                               totalLabel: tr.bookingReviewPaymentTotal,
                               currencySuffix: widget.data.currency,
                               subtotalLabel: tr.bookingReviewPaymentSubtotal,
+                              finalTotalLabel: tr.bookingReviewPaymentFinalTotal,
+                              couponRowLabel: _couponRowLabel(context, couponState),
                               finalTotalLabel:
                                   tr.bookingReviewPaymentFinalTotal,
                               couponRowLabel: _couponRowLabel(
@@ -308,6 +343,29 @@ class _ReviewBodyState extends State<_ReviewBody> {
                         TextField(
                           controller: _notesController,
                           maxLines: 3,
+                          decoration: const InputDecoration(
+                            labelText: 'Notes',
+                            hintText: 'Any special requests',
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.all(Radius.circular(12)),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  SafeArea(
+                    top: false,
+                    child: BlocBuilder<CreateBookingCubit, CreateBookingState>(
+                      builder: (context, state) {
+                        return BookingBottomButtons(
+                          onBack: () => Navigator.pop(context),
+                          onPay: _onPay,
+                          payLabel: tr.bookingPay,
+                          isLoading: _isPaying,
+                        );
+                      },
+                    ),
                           style: AppTextStyles.bodyMedium(
                             color: AppColors.ink(context),
                           ).copyWith(fontSize: ReviewFigmaTokens.bodySize),
