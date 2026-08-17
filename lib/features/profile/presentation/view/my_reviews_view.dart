@@ -166,10 +166,7 @@ class MyReviewsView extends StatelessWidget {
                       ),
                     if (heroReview != null) SizedBox(height: 14.h),
                     if (reviews.isEmpty)
-                      Padding(
-                        padding: EdgeInsets.only(top: 40.h),
-                        child: const MyReviewsEmptyState(),
-                      )
+                      const MyReviewsEmptyState()
                     else
                       ListView.separated(
                         shrinkWrap: true,
@@ -327,8 +324,10 @@ class _HeroTripCard extends StatelessWidget {
                       _InfoLine(icon: Iconsax.location, text: fromText),
                     ],
                     if (dateRangeText.isNotEmpty) ...[
-                      if (fromText.isNotEmpty) SizedBox(height: 8.h)
-                      else if (ratingValue.isNotEmpty) SizedBox(height: 10.h),
+                      if (fromText.isNotEmpty)
+                        SizedBox(height: 8.h)
+                      else if (ratingValue.isNotEmpty)
+                        SizedBox(height: 10.h),
                       _InfoLine(icon: Iconsax.calendar_1, text: dateRangeText),
                     ],
                     SizedBox(height: 14.h),
@@ -483,7 +482,11 @@ class _ReviewTripCard extends StatelessWidget {
                         ),
                       ),
                     ),
-                    Icon(Iconsax.star1, size: 14.sp, color: AppColors.starYellow),
+                    Icon(
+                      Iconsax.star1,
+                      size: 14.sp,
+                      color: AppColors.starYellow,
+                    ),
                     SizedBox(width: 6.w),
                     Text(
                       ratingValue,

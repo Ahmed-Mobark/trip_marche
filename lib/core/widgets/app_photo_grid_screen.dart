@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:trip_marche/core/theme/app_colors.dart';
 import 'package:trip_marche/core/widgets/app_cached_network_image.dart';
 import 'package:trip_marche/core/widgets/app_image_gallery_screen.dart';
 
-/// 2-column masonry photo grid. Tapping any photo opens the
+/// 2-column square photo grid. Tapping any photo opens the
 /// full-screen swipe viewer at that index.
 class AppPhotoGridScreen extends StatelessWidget {
   const AppPhotoGridScreen({super.key, required this.imageUrls});
@@ -25,14 +24,6 @@ class AppPhotoGridScreen extends StatelessWidget {
       MaterialPageRoute(builder: (_) => AppPhotoGridScreen(imageUrls: urls)),
     );
   }
-
-  /// Alternating height pattern to create the staggered look.
-  static const _extentPattern = [
-    260.0, 200.0, // row 1
-    200.0, 260.0, // row 2
-    300.0, 200.0, // row 3
-    200.0, 300.0, // row 4
-  ];
 
   @override
   Widget build(BuildContext context) {
@@ -55,14 +46,16 @@ class AppPhotoGridScreen extends StatelessWidget {
           ),
         ),
       ),
-      body: MasonryGridView.count(
+      body: GridView.builder(
         padding: EdgeInsetsDirectional.all(8.w),
-        crossAxisCount: 2,
-        mainAxisSpacing: 8.h,
-        crossAxisSpacing: 8.w,
+        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 2,
+          mainAxisSpacing: 8.h,
+          crossAxisSpacing: 8.w,
+          childAspectRatio: 1,
+        ),
         itemCount: imageUrls.length,
         itemBuilder: (context, index) {
-          final extent = _extentPattern[index % _extentPattern.length].h;
           return GestureDetector(
             onTap: () => AppImageGalleryScreen.open(
               context,
@@ -71,12 +64,9 @@ class AppPhotoGridScreen extends StatelessWidget {
             ),
             child: ClipRRect(
               borderRadius: BorderRadius.circular(12.r),
-              child: SizedBox(
-                height: extent,
-                child: AppCachedNetworkImage(
-                  imageUrl: imageUrls[index],
-                  fit: BoxFit.cover,
-                ),
+              child: AppCachedNetworkImage(
+                imageUrl: imageUrls[index],
+                fit: BoxFit.cover,
               ),
             ),
           );
