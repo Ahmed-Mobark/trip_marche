@@ -7,6 +7,7 @@ import 'package:trip_marche/core/extensions/localization.dart';
 import 'package:trip_marche/core/injection/injection_container.dart';
 import 'package:trip_marche/core/navigation/app_navigator.dart';
 import 'package:trip_marche/core/theme/app_text_styles.dart';
+import 'package:trip_marche/core/toast/app_toast.dart';
 import 'package:trip_marche/features/booking/domain/entities/booking_flow_context.dart';
 import 'package:trip_marche/features/booking/domain/entities/booking_room.dart';
 import 'package:trip_marche/features/trip_details/domain/entities/trip_details_entity.dart';
@@ -59,16 +60,12 @@ class _TripOptionsViewState extends State<TripOptionsView> {
     _roomTypes = List<TripRoomType>.of(widget.trip.roomTypes)
       ..sort((a, b) => a.capacity.compareTo(b.capacity));
     _roomPersonCounts = {
-      for (final room in _roomTypes)
-        room.key: _initialRoomPersonCount(room),
+      for (final room in _roomTypes) room.key: _initialRoomPersonCount(room),
     };
   }
 
   int _initialRoomPersonCount(TripRoomType room) {
-    if (room.capacity >= 3) {
-      return room.capacity;
-    }
-    return 1;
+    return 0;
   }
 
   List<_TripDateOption> _buildDateOptions(BuildContext context) {
@@ -93,17 +90,55 @@ class _TripOptionsViewState extends State<TripOptionsView> {
 
   void _onContinue() {
     final dateOptions = _buildDateOptions(context);
-    if (dateOptions.isEmpty) {
-      return;
-    }
-
-    final selectedDateIndex =
-        _selectedDateIndex.clamp(0, dateOptions.length - 1);
-
     final selectedRooms = _selectedRooms();
-    if (selectedRooms.isEmpty) {
+    final totalTravelers = _travelersCount;
+    final totalRoomOccupants = selectedRooms.fold<int>(
+      0,
+      (sum, room) => sum + room.persons,
+    );
+
+    debugPrint('=== TRIP OPTIONS CONTINUE ===');
+    debugPrint('Adults: $_adults');
+    debugPrint('Kids: $_kids');
+    debugPrint('Babies: $_babies');
+    debugPrint('Total travelers: $totalTravelers');
+    debugPrint('Total room occupants: $totalRoomOccupants');
+    debugPrint(
+      'Validation result: ${selectedRooms.isNotEmpty && totalRoomOccupants == totalTravelers}',
+    );
+    debugPrint('=============================');
+
+    if (dateOptions.isEmpty) {
+      appToast(
+        context: context,
+        type: ToastType.error,
+        message: context.tr.bookingTripUnavailableTitle,
+      );
       return;
     }
+
+    if (selectedRooms.isEmpty) {
+      appToast(
+        context: context,
+        type: ToastType.error,
+        message: context.tr.bookingRoomsRequired,
+      );
+      return;
+    }
+
+    if (totalRoomOccupants != totalTravelers) {
+      appToast(
+        context: context,
+        type: ToastType.error,
+        message: context.tr.bookingRoomOccupantsMismatch(totalTravelers),
+      );
+      return;
+    }
+
+    final selectedDateIndex = _selectedDateIndex.clamp(
+      0,
+      dateOptions.length - 1,
+    );
 
     final selectedDate = dateOptions[selectedDateIndex];
 
@@ -149,16 +184,10 @@ class _TripOptionsViewState extends State<TripOptionsView> {
   }
 
   bool _canDecrementRoom(TripRoomType room, int count) {
-    if (room.key == 'double') {
-      return false;
-    }
-    return count > 1;
+    return count > 0;
   }
 
   bool _canIncrementRoom(TripRoomType room, int count) {
-    if (room.key == 'triple') {
-      return false;
-    }
     return count < room.capacity;
   }
 
@@ -193,12 +222,13 @@ class _TripOptionsViewState extends State<TripOptionsView> {
                 child: Text(
                   tr.bookingTripOptionsTitle,
                   textAlign: TextAlign.center,
-                  style: AppTextStyles.heading3(
-                    color: AppColors.tripDetailsFigmaBlack,
-                  ).copyWith(
-                    fontSize: TripOptionsFigmaTokens.titleFontSize,
-                    fontWeight: FontWeight.w600,
-                  ),
+                  style:
+                      AppTextStyles.heading3(
+                        color: AppColors.tripDetailsFigmaBlack,
+                      ).copyWith(
+                        fontSize: TripOptionsFigmaTokens.titleFontSize,
+                        fontWeight: FontWeight.w600,
+                      ),
                 ),
               ),
               Expanded(
@@ -229,13 +259,14 @@ class _TripOptionsViewState extends State<TripOptionsView> {
                                 _datesExpanded
                                     ? tr.bookingShowLessDates
                                     : tr.bookingSeeAllDates,
-                                style: AppTextStyles.bodyMedium(
-                                  color: AppColors.primary,
-                                ).copyWith(
-                                  fontSize:
-                                      TripOptionsFigmaTokens.seeAllFontSize,
-                                  fontWeight: FontWeight.w500,
-                                ),
+                                style:
+                                    AppTextStyles.bodyMedium(
+                                      color: AppColors.primary,
+                                    ).copyWith(
+                                      fontSize:
+                                          TripOptionsFigmaTokens.seeAllFontSize,
+                                      fontWeight: FontWeight.w500,
+                                    ),
                               ),
                             ),
                           ),
@@ -334,12 +365,11 @@ class _SectionTitle extends StatelessWidget {
       ),
       child: Text(
         label,
-        style: AppTextStyles.subtitle(
-          color: AppColors.tripDetailsFigmaBlack,
-        ).copyWith(
-          fontSize: TripOptionsFigmaTokens.sectionTitleFontSize,
-          fontWeight: FontWeight.w600,
-        ),
+        style: AppTextStyles.subtitle(color: AppColors.tripDetailsFigmaBlack)
+            .copyWith(
+              fontSize: TripOptionsFigmaTokens.sectionTitleFontSize,
+              fontWeight: FontWeight.w600,
+            ),
       ),
     );
   }

@@ -1,18 +1,15 @@
 import 'package:equatable/equatable.dart';
 
 class CreateBookingRoom {
-  const CreateBookingRoom({
-    required this.roomTypeId,
-    required this.persons,
-  });
+  const CreateBookingRoom({required this.roomTypeId, required this.persons});
 
   final int roomTypeId;
   final int persons;
 
   Map<String, dynamic> toJson() => {
-        'room_type_id': roomTypeId,
-        'persons': persons,
-      };
+    'room_type_id': roomTypeId,
+    'persons': persons,
+  };
 }
 
 class CreateBookingActivity {
@@ -25,9 +22,9 @@ class CreateBookingActivity {
   final int activityId;
 
   Map<String, dynamic> toJson() => {
-        'traveler_index': travelerIndex,
-        'activity_id': activityId,
-      };
+    'traveler_index': travelerIndex,
+    'activity_id': activityId,
+  };
 }
 
 class CreateBookingTraveler {
@@ -44,11 +41,11 @@ class CreateBookingTraveler {
   final String type;
 
   Map<String, dynamic> toJson() => {
-        'full_name': fullName,
-        'phone_country_code': phoneCountryCode,
-        'phone': phone,
-        'type': type,
-      };
+    'full_name': fullName,
+    'phone_country_code': phoneCountryCode,
+    'phone': phone,
+    'type': type,
+  };
 }
 
 class CreateBookingRequest {
@@ -62,6 +59,7 @@ class CreateBookingRequest {
     this.couponCode,
     required this.travelers,
     this.notes,
+    this.paymentMethod,
   });
 
   final int departureId;
@@ -73,25 +71,24 @@ class CreateBookingRequest {
   final String? couponCode;
   final List<CreateBookingTraveler> travelers;
   final String? notes;
+  final String? paymentMethod;
 
   Map<String, dynamic> toJson() => {
-        'departure_id': departureId,
-        'adults': adults,
-        'kids': kids,
-        'babies': babies,
-        'rooms': rooms.map((r) => r.toJson()).toList(growable: false),
-        'activities': activities.map((a) => a.toJson()).toList(growable: false),
-        'coupon_code': couponCode,
-        'travelers': travelers.map((t) => t.toJson()).toList(growable: false),
-        'notes': notes,
-      };
+    'departure_id': departureId,
+    'adults': adults,
+    'kids': kids,
+    'babies': babies,
+    'rooms': rooms.map((r) => r.toJson()).toList(growable: false),
+    'activities': activities.map((a) => a.toJson()).toList(growable: false),
+    'coupon_code': couponCode,
+    'travelers': travelers.map((t) => t.toJson()).toList(growable: false),
+    'notes': notes,
+    'payment_method': paymentMethod,
+  };
 }
 
 class CreateBookingData extends Equatable {
-  const CreateBookingData({
-    this.bookingId,
-    this.reference,
-  });
+  const CreateBookingData({this.bookingId, this.reference});
 
   final int? bookingId;
   final String? reference;

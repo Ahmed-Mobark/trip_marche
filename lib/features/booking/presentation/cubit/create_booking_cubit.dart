@@ -6,7 +6,8 @@ import 'package:trip_marche/features/booking/presentation/cubit/create_booking_s
 import 'package:trip_marche/features/booking/domain/usecases/create_booking_use_case.dart';
 
 class CreateBookingCubit extends Cubit<CreateBookingState> {
-  CreateBookingCubit(this._createBookingUseCase) : super(const CreateBookingState());
+  CreateBookingCubit(this._createBookingUseCase)
+    : super(const CreateBookingState());
 
   final CreateBookingUseCase _createBookingUseCase;
 
@@ -14,6 +15,7 @@ class CreateBookingCubit extends Cubit<CreateBookingState> {
     required BookingReviewData data,
     String? notes,
     String? couponCode,
+    String? paymentMethod,
   }) async {
     if (state.isLoading) {
       return;
@@ -67,6 +69,17 @@ class CreateBookingCubit extends Cubit<CreateBookingState> {
           validationErrors['activity_$i'] = 'Invalid activity';
         }
       }
+    }
+
+    final totalRoomOccupants = data.selectedRooms.fold<int>(
+      0,
+      (sum, room) => sum + room.persons,
+    );
+    final totalTravelers = adultCount + kidCount + babyCount;
+
+    if (totalRoomOccupants != totalTravelers) {
+      validationErrors['room_occupants'] =
+          'The total room occupants must equal the number of travelers';
     }
 
     if (validationErrors.isNotEmpty) {
@@ -132,10 +145,7 @@ class CreateBookingCubit extends Cubit<CreateBookingState> {
         final activityId = int.tryParse(activity.id);
         if (activityId != null) {
           activities.add(
-            CreateBookingActivity(
-              travelerIndex: i,
-              activityId: activityId,
-            ),
+            CreateBookingActivity(travelerIndex: i, activityId: activityId),
           );
         }
       }
@@ -151,9 +161,21 @@ class CreateBookingCubit extends Cubit<CreateBookingState> {
       couponCode: trimmedCoupon,
       travelers: travelers,
       notes: trimmedNotes,
+      paymentMethod: paymentMethod,
     );
 
     debugPrint('CreateBookingRequest body: ${request.toJson()}');
+
+    debugPrint('=== BOOKING VALIDATION ===');
+    debugPrint('Adults: $adultCount');
+    debugPrint('Kids: $kidCount');
+    debugPrint('Babies: $babyCount');
+    debugPrint('Total travelers: $totalTravelers');
+    debugPrint('Travelers.length: ${data.travelers.length}');
+    debugPrint('Rooms: $rooms');
+    debugPrint('Total room occupants: $totalRoomOccupants');
+    debugPrint('Payment method: $paymentMethod');
+    debugPrint('==========================');
 
     final result = await _createBookingUseCase(
       tripId: data.tripId,

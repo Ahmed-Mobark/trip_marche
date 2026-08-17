@@ -8,26 +8,58 @@ import 'package:trip_marche/core/config/styles/styles.dart';
 import 'package:trip_marche/core/extensions/localization.dart';
 import 'package:trip_marche/core/extensions/media_query_extensions.dart';
 import 'package:trip_marche/core/injection/injection_container.dart';
+import 'package:trip_marche/core/navigation/app_navigator.dart';
+import 'package:trip_marche/core/toast/app_toast.dart';
 import 'package:trip_marche/core/widgets/app_empty_screen.dart';
 import 'package:trip_marche/core/widgets/shimmer_widget.dart';
+import 'package:trip_marche/features/booking/domain/entities/booking_review_data.dart';
+import 'package:trip_marche/features/booking/presentation/cubit/create_booking_cubit.dart';
+import 'package:trip_marche/features/booking/presentation/cubit/create_booking_state.dart';
+import 'package:trip_marche/features/nav_bar/presentation/view/main_nav_view.dart';
 import 'package:trip_marche/features/payment_method/domain/entities/payment_method_entity.dart';
 import 'package:trip_marche/features/payment_method/presentation/cubit/payment_methods_cubit.dart';
 import 'package:trip_marche/features/payment_method/presentation/cubit/payment_methods_state.dart';
 
 class PaymentMethodsScreen extends StatelessWidget {
-  const PaymentMethodsScreen({super.key});
+  const PaymentMethodsScreen({
+    super.key,
+    required this.reviewData,
+    required this.createBookingCubit,
+    this.notes,
+    this.couponCode,
+  });
+
+  final BookingReviewData reviewData;
+  final CreateBookingCubit createBookingCubit;
+  final String? notes;
+  final String? couponCode;
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider<PaymentMethodsCubit>(
-      create: (_) => sl<PaymentMethodsCubit>()..loadPaymentMethods(),
-      child: const _PaymentMethodsBody(),
+    return BlocProvider.value(
+      value: createBookingCubit,
+      child: BlocProvider<PaymentMethodsCubit>(
+        create: (_) => sl<PaymentMethodsCubit>()..loadPaymentMethods(),
+        child: _PaymentMethodsBody(
+          reviewData: reviewData,
+          notes: notes,
+          couponCode: couponCode,
+        ),
+      ),
     );
   }
 }
 
 class _PaymentMethodsBody extends StatelessWidget {
-  const _PaymentMethodsBody();
+  const _PaymentMethodsBody({
+    required this.reviewData,
+    required this.notes,
+    required this.couponCode,
+  });
+
+  final BookingReviewData reviewData;
+  final String? notes;
+  final String? couponCode;
 
   IconData _mapIconKeyToIconData(String key) {
     switch (key) {
@@ -48,78 +80,111 @@ class _PaymentMethodsBody extends StatelessWidget {
     }
   }
 
+  void _showCreateBookingErrors(
+    BuildContext context,
+    Map<String, String> errors,
+  ) {
+    final messages = errors.values.toSet().toList();
+    if (messages.isEmpty) {
+      return;
+    }
+    appToast(context: context, type: ToastType.error, message: messages.first);
+  }
+
   @override
   Widget build(BuildContext context) {
     final tr = context.tr;
-    return AnnotatedRegion<SystemUiOverlayStyle>(
-      value: AppColors.isDark(context)
-          ? SystemUiOverlayStyle.light.copyWith(
-              statusBarColor: AppColors.scaffoldBg(context),
-            )
-          : SystemUiOverlayStyle.dark.copyWith(
-              statusBarColor: AppColors.scaffoldBg(context),
+    return BlocListener<CreateBookingCubit, CreateBookingState>(
+      listenWhen: (previous, current) =>
+          previous.status != current.status &&
+          (current.isValidationFailure ||
+              current.isFailure ||
+              current.isSuccess),
+      listener: (context, state) {
+        if (state.isValidationFailure && state.validationErrors != null) {
+          _showCreateBookingErrors(context, state.validationErrors!);
+        } else if (state.isSuccess) {
+          sl<AppNavigator>().pushAndRemoveUntil(
+            screen: const MainNavView(initialIndex: 1),
+          );
+        } else if (state.isFailure && state.errorMessage != null) {
+          appToast(
+            context: context,
+            type: ToastType.error,
+            message: state.errorMessage!,
+          );
+        }
+      },
+      child: AnnotatedRegion<SystemUiOverlayStyle>(
+        value: AppColors.isDark(context)
+            ? SystemUiOverlayStyle.light.copyWith(
+                statusBarColor: AppColors.scaffoldBg(context),
+              )
+            : SystemUiOverlayStyle.dark.copyWith(
+                statusBarColor: AppColors.scaffoldBg(context),
+              ),
+        child: Scaffold(
+          backgroundColor: AppColors.scaffoldBg(context),
+          body: SafeArea(
+            bottom: false,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Padding(
+                  padding: EdgeInsetsDirectional.only(
+                    top: 8.h,
+                    bottom: 12.h,
+                    start: 16.w,
+                    end: 16.w,
+                  ),
+                  child: Row(
+                    children: [
+                      IconButton(
+                        onPressed: () => Navigator.pop(context),
+                        icon: Icon(
+                          Icons.arrow_back_ios_new_rounded,
+                          color: AppColors.darkText(context),
+                        ),
+                      ),
+                      Expanded(
+                        child: Text(
+                          tr.bookingPaymentMethodTitle,
+                          textAlign: TextAlign.center,
+                          style:
+                              AppTextStyles.bodyMedium(
+                                color: AppColors.darkText(context),
+                              ).copyWith(
+                                fontSize: 16.sp,
+                                fontWeight: FontWeight.w600,
+                              ),
+                        ),
+                      ),
+                      SizedBox(width: 48.w),
+                    ],
+                  ),
+                ),
+                Expanded(
+                  child: BlocBuilder<PaymentMethodsCubit, PaymentMethodsState>(
+                    builder: (context, state) {
+                      if (state.isLoading) {
+                        return _buildLoadingShimmer(context);
+                      }
+                      if (state.isFailure) {
+                        return _buildErrorState(context, state.errorMessage);
+                      }
+                      if (state.isEmpty) {
+                        return AppEmptyScreen(
+                          title: tr.paymentMethodEmptyTitle,
+                          description: tr.paymentMethodEmptyDescription,
+                        );
+                      }
+                      return _buildMethodsList(context, state);
+                    },
+                  ),
+                ),
+                _buildContinueButton(context),
+              ],
             ),
-      child: Scaffold(
-        backgroundColor: AppColors.scaffoldBg(context),
-        body: SafeArea(
-          bottom: false,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Padding(
-                padding: EdgeInsetsDirectional.only(
-                  top: 8.h,
-                  bottom: 12.h,
-                  start: 16.w,
-                  end: 16.w,
-                ),
-                child: Row(
-                  children: [
-                    IconButton(
-                      onPressed: () => Navigator.pop(context),
-                      icon: Icon(
-                        Icons.arrow_back_ios_new_rounded,
-                        color: AppColors.darkText(context),
-                      ),
-                    ),
-                    Expanded(
-                      child: Text(
-                        tr.bookingPaymentMethodTitle,
-                        textAlign: TextAlign.center,
-                        style:
-                            AppTextStyles.bodyMedium(
-                              color: AppColors.darkText(context),
-                            ).copyWith(
-                              fontSize: 16.sp,
-                              fontWeight: FontWeight.w600,
-                            ),
-                      ),
-                    ),
-                    SizedBox(width: 48.w),
-                  ],
-                ),
-              ),
-              Expanded(
-                child: BlocBuilder<PaymentMethodsCubit, PaymentMethodsState>(
-                  builder: (context, state) {
-                    if (state.isLoading) {
-                      return _buildLoadingShimmer(context);
-                    }
-                    if (state.isFailure) {
-                      return _buildErrorState(context, state.errorMessage);
-                    }
-                    if (state.isEmpty) {
-                      return AppEmptyScreen(
-                        title: tr.paymentMethodEmptyTitle,
-                        description: tr.paymentMethodEmptyDescription,
-                      );
-                    }
-                    return _buildMethodsList(context, state);
-                  },
-                ),
-              ),
-              _buildContinueButton(context),
-            ],
           ),
         ),
       ),
@@ -301,6 +366,7 @@ class _PaymentMethodsBody extends StatelessWidget {
   Widget _buildContinueButton(BuildContext context) {
     final cubit = context.watch<PaymentMethodsCubit>();
     final hasSelection = cubit.state.selectedPaymentMethod != null;
+    final isPaying = context.watch<CreateBookingCubit>().state.isLoading;
 
     return Container(
       padding: EdgeInsetsDirectional.fromSTEB(
@@ -310,45 +376,50 @@ class _PaymentMethodsBody extends StatelessWidget {
         12.h + context.systemBottomInset,
       ),
       decoration: BoxDecoration(
-          color: AppColors.cardBg(context),
-          border: Border(top: BorderSide(color: AppColors.softBorder(context))),
-          boxShadow: [
-            BoxShadow(
-              color: AppColors.shadow.withValues(alpha: 0.06),
-              blurRadius: 8.r,
-              offset: Offset(0, -2.h),
-            ),
-          ],
-        ),
-        child: SizedBox(
-          width: double.infinity,
-          height: 48.h,
-          child: ElevatedButton(
-            onPressed: hasSelection
-                ? () {
-                    final selected = cubit.state.selectedPaymentMethod;
-                    if (selected != null) {
-                      Navigator.pop(context, selected);
-                    }
+        color: AppColors.cardBg(context),
+        border: Border(top: BorderSide(color: AppColors.softBorder(context))),
+        boxShadow: [
+          BoxShadow(
+            color: AppColors.shadow.withValues(alpha: 0.06),
+            blurRadius: 8.r,
+            offset: Offset(0, -2.h),
+          ),
+        ],
+      ),
+      child: SizedBox(
+        width: double.infinity,
+        height: 48.h,
+        child: ElevatedButton(
+          onPressed: hasSelection && !isPaying
+              ? () {
+                  final selected = cubit.state.selectedPaymentMethod;
+                  if (selected != null) {
+                    context.read<CreateBookingCubit>().createBooking(
+                      data: reviewData,
+                      notes: notes,
+                      couponCode: couponCode,
+                      paymentMethod: selected.key,
+                    );
                   }
-                : null,
-            style: ElevatedButton.styleFrom(
-              backgroundColor: AppColors.primary,
-              disabledBackgroundColor: AppColors.disabled(context),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(12.r),
-              ),
+                }
+              : null,
+          style: ElevatedButton.styleFrom(
+            backgroundColor: AppColors.primary,
+            disabledBackgroundColor: AppColors.disabled(context),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(12.r),
             ),
-            child: Text(
-              context.tr.paymentMethodContinue,
-              style: TextStyles.textViewSemiBold14.copyWith(
-                color: AppColors.onImage,
-                fontSize: 14.sp,
-                fontWeight: FontWeight.w600,
-              ),
+          ),
+          child: Text(
+            context.tr.bookingPay,
+            style: TextStyles.textViewSemiBold14.copyWith(
+              color: AppColors.onImage,
+              fontSize: 14.sp,
+              fontWeight: FontWeight.w600,
             ),
           ),
         ),
+      ),
     );
   }
 }
