@@ -57,16 +57,6 @@ class _SelectActivitiesViewState extends State<SelectActivitiesView> {
       Activity(id: '2', name: tr.bookingActivityFishing, price: 30),
       Activity(id: '3', name: tr.bookingActivityDiving, price: 80),
     ];
-  List<Activity> _availableActivities() {
-    return widget.flowContext.trip.activities
-        .map(
-          (activity) => Activity(
-            id: activity.id.toString(),
-            name: activity.label,
-            price: activity.price,
-          ),
-        )
-        .toList(growable: false);
   }
 
   void _syncFromTravelerOne() {
@@ -113,7 +103,7 @@ class _SelectActivitiesViewState extends State<SelectActivitiesView> {
 
   void _onContinue(BuildContext context) {
     final activitiesCatalog = {
-      for (final activity in _availableActivities()) activity.id: activity,
+      for (final activity in _availableActivities(context)) activity.id: activity,
     };
 
     final result = _entries
@@ -142,18 +132,14 @@ class _SelectActivitiesViewState extends State<SelectActivitiesView> {
   @override
   Widget build(BuildContext context) {
     final tr = context.tr;
-    final activities = _availableActivities();
+    final activities = _availableActivities(context);
 
     return AnnotatedRegion<SystemUiOverlayStyle>(
-      value: AppColors.isDark(context)
-          ? SystemUiOverlayStyle.light.copyWith(
-              statusBarColor: AppColors.scaffoldBg(context),
-            )
-          : SystemUiOverlayStyle.dark.copyWith(
-              statusBarColor: AppColors.scaffoldBg(context),
-            ),
+      value: SystemUiOverlayStyle.dark.copyWith(
+        statusBarColor: SelectActivitiesFigmaTokens.screenBackground,
+      ),
       child: Scaffold(
-        backgroundColor: AppColors.scaffoldBg(context),
+        backgroundColor: SelectActivitiesFigmaTokens.screenBackground,
         body: SafeArea(
           bottom: false,
           child: Column(
@@ -168,7 +154,7 @@ class _SelectActivitiesViewState extends State<SelectActivitiesView> {
                   tr.bookingSelectActivitiesTitle,
                   textAlign: TextAlign.center,
                   style: AppTextStyles.heading3(
-                    color: AppColors.ink(context),
+                    color: AppColors.tripDetailsFigmaBlack,
                   ).copyWith(
                     fontSize: SelectActivitiesFigmaTokens.titleFontSize,
                     fontWeight: FontWeight.w600,
@@ -195,28 +181,27 @@ class _SelectActivitiesViewState extends State<SelectActivitiesView> {
                       activities: activities,
                       currency: widget.flowContext.currency,
                       selectedActivityIds: entry.selectedActivityIds,
-                      onActivityToggled: (activityId) {
-                        if (entry.sameAsTravelerOne) {
-                          return;
-                        }
-                        _toggleActivity(index, activityId);
-                      },
+                      onActivityToggled: (activityId) =>
+                          _toggleActivity(index, activityId),
                       showSameAsTravelerOne: index > 0,
                       sameAsTravelerOne: entry.sameAsTravelerOne,
                       sameAsTravelerOneLabel: tr.bookingSameAsTravelerOne,
                       onSameAsTravelerOneChanged: index > 0
                           ? (value) => _onSameAsTravelerOneChanged(index, value)
                           : null,
-                      activitiesEnabled: true,
+                      activitiesEnabled: !entry.sameAsTravelerOne,
                     );
                   },
                 ),
               ),
-              BottomBookingBar(
-                backButtonCircular: true,
-                onBack: () => Navigator.pop(context),
-                onContinue: () => _onContinue(context),
-                continueLabel: tr.bookingContinue,
+              SafeArea(
+                top: false,
+                child: BottomBookingBar(
+                  backButtonCircular: true,
+                  onBack: () => Navigator.pop(context),
+                  onContinue: () => _onContinue(context),
+                  continueLabel: tr.bookingContinue,
+                ),
               ),
             ],
           ),

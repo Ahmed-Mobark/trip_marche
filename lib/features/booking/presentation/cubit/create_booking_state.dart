@@ -1,6 +1,5 @@
 import 'package:equatable/equatable.dart';
 import 'package:trip_marche/features/booking/data/models/create_booking_request.dart';
-import 'package:trip_marche/features/payment_method/domain/entities/payment_method_entity.dart';
 
 enum CreateBookingStatus {
   initial,
@@ -16,15 +15,12 @@ class CreateBookingState extends Equatable {
     this.errorMessage,
     this.validationErrors,
     this.bookingResponse,
-    this.selectedPaymentMethod,
   });
 
   final CreateBookingStatus status;
   final String? errorMessage;
   final Map<String, String>? validationErrors;
   final CreateBookingResponse? bookingResponse;
-
-  final PaymentMethodEntity? selectedPaymentMethod;
 
   bool get isLoading => status == CreateBookingStatus.loading;
   bool get isSuccess => status == CreateBookingStatus.success;
@@ -39,10 +35,6 @@ class CreateBookingState extends Equatable {
     CreateBookingResponse? bookingResponse,
     bool clearError = false,
     bool clearValidation = false,
-    PaymentMethodEntity? selectedPaymentMethod,
-    bool clearError = false,
-    bool clearValidation = false,
-    bool clearSelectedPaymentMethod = false,
   }) {
     return CreateBookingState(
       status: status ?? this.status,
@@ -50,13 +42,6 @@ class CreateBookingState extends Equatable {
       validationErrors:
           clearValidation ? null : (validationErrors ?? this.validationErrors),
       bookingResponse: bookingResponse ?? this.bookingResponse,
-      validationErrors: clearValidation
-          ? null
-          : (validationErrors ?? this.validationErrors),
-      bookingResponse: bookingResponse ?? this.bookingResponse,
-      selectedPaymentMethod: clearSelectedPaymentMethod
-          ? null
-          : (selectedPaymentMethod ?? this.selectedPaymentMethod),
     );
   }
 
@@ -67,10 +52,4 @@ class CreateBookingState extends Equatable {
         validationErrors,
         bookingResponse,
       ];
-    status,
-    errorMessage,
-    validationErrors,
-    bookingResponse,
-    selectedPaymentMethod,
-  ];
 }
