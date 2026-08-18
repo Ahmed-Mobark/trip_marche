@@ -1,4 +1,5 @@
-import 'package:flutter/foundation.dart';
+import 'dart:developer';
+
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:trip_marche/features/booking/data/models/create_booking_request.dart';
 import 'package:trip_marche/features/booking/domain/entities/booking_review_data.dart';
@@ -164,18 +165,18 @@ class CreateBookingCubit extends Cubit<CreateBookingState> {
       paymentMethod: paymentMethod,
     );
 
-    debugPrint('CreateBookingRequest body: ${request.toJson()}');
+    log('CreateBookingRequest body: ${request.toJson()}');
 
-    debugPrint('=== BOOKING VALIDATION ===');
-    debugPrint('Adults: $adultCount');
-    debugPrint('Kids: $kidCount');
-    debugPrint('Babies: $babyCount');
-    debugPrint('Total travelers: $totalTravelers');
-    debugPrint('Travelers.length: ${data.travelers.length}');
-    debugPrint('Rooms: $rooms');
-    debugPrint('Total room occupants: $totalRoomOccupants');
-    debugPrint('Payment method: $paymentMethod');
-    debugPrint('==========================');
+    log('=== BOOKING VALIDATION ===');
+    log('Adults: $adultCount');
+    log('Kids: $kidCount');
+    log('Babies: $babyCount');
+    log('Total travelers: $totalTravelers');
+    log('Travelers.length: ${data.travelers.length}');
+    log('Rooms: $rooms');
+    log('Total room occupants: $totalRoomOccupants');
+    log('Payment method: $paymentMethod');
+    log('==========================');
 
     final result = await _createBookingUseCase(
       tripId: data.tripId,
