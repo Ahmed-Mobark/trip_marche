@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'package:equatable/equatable.dart';
 
 class CreateBookingRoom {
@@ -87,23 +88,77 @@ class CreateBookingRequest {
   };
 }
 
+class PaymentModel extends Equatable {
+  const PaymentModel({this.provider, this.checkoutUrl});
+
+  final String? provider;
+  final String? checkoutUrl;
+
+  factory PaymentModel.fromJson(Map<String, dynamic> json) {
+    return PaymentModel(
+      provider: json['provider']?.toString(),
+      checkoutUrl: json['checkout_url']?.toString(),
+    );
+  }
+
+  @override
+  List<Object?> get props => [provider, checkoutUrl];
+}
+
 class CreateBookingData extends Equatable {
-  const CreateBookingData({this.bookingId, this.reference});
+  const CreateBookingData({
+    this.bookingId,
+    this.reference,
+    this.status,
+    this.paymentStatus,
+    this.paymentMethod,
+    this.requiresPayment,
+    this.payment,
+  });
 
   final int? bookingId;
   final String? reference;
+  final String? status;
+  final String? paymentStatus;
+  final String? paymentMethod;
+  final bool? requiresPayment;
+  final PaymentModel? payment;
 
   factory CreateBookingData.fromJson(Map<String, dynamic> json) {
+    final rawPayment = json['payment'];
+    log('PARSED BOOKING DATA');
+    log('bookingId: ${json['booking_id']}');
+    log('reference: ${json['reference']}');
+    log('status: ${json['status']}');
+    log('paymentStatus: ${json['payment_status']}');
+    log('paymentMethod: ${json['payment_method']}');
+    log('requiresPayment: ${json['requires_payment']}');
+    log('payment: $rawPayment');
     return CreateBookingData(
       bookingId: json['booking_id'] is int
           ? json['booking_id'] as int
           : int.tryParse(json['booking_id']?.toString() ?? ''),
       reference: json['reference']?.toString(),
+      status: json['status']?.toString(),
+      paymentStatus: json['payment_status']?.toString(),
+      paymentMethod: json['payment_method']?.toString(),
+      requiresPayment: json['requires_payment'] == true,
+      payment: rawPayment is Map<String, dynamic>
+          ? PaymentModel.fromJson(rawPayment)
+          : null,
     );
   }
 
   @override
-  List<Object?> get props => [bookingId, reference];
+  List<Object?> get props => [
+        bookingId,
+        reference,
+        status,
+        paymentStatus,
+        paymentMethod,
+        requiresPayment,
+        payment,
+      ];
 }
 
 class CreateBookingResponse extends Equatable {

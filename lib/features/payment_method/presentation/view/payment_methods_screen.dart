@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -15,6 +16,7 @@ import 'package:trip_marche/core/widgets/shimmer_widget.dart';
 import 'package:trip_marche/features/booking/domain/entities/booking_review_data.dart';
 import 'package:trip_marche/features/booking/presentation/cubit/create_booking_cubit.dart';
 import 'package:trip_marche/features/booking/presentation/cubit/create_booking_state.dart';
+import 'package:trip_marche/features/booking/presentation/view/payment_webview_screen.dart';
 import 'package:trip_marche/features/nav_bar/presentation/view/main_nav_view.dart';
 import 'package:trip_marche/features/payment_method/domain/entities/payment_method_entity.dart';
 import 'package:trip_marche/features/payment_method/presentation/cubit/payment_methods_cubit.dart';
@@ -104,6 +106,49 @@ class _PaymentMethodsBody extends StatelessWidget {
         if (state.isValidationFailure && state.validationErrors != null) {
           _showCreateBookingErrors(context, state.validationErrors!);
         } else if (state.isSuccess) {
+          final apiMessage = state.bookingResponse?.message;
+          final requiresPayment =
+              state.bookingResponse?.data?.requiresPayment == true;
+          final checkoutUrl = state.bookingResponse?.data?.payment?.checkoutUrl;
+
+          log('BOOKING SUCCESS');
+          log('bookingId: ${state.bookingResponse?.data?.bookingId}');
+          log('requiresPayment: $requiresPayment');
+          log('paymentProvider: ${state.bookingResponse?.data?.payment?.provider}');
+          log('checkoutUrl: $checkoutUrl');
+          log('NAVIGATION CHECK: requiresPayment=$requiresPayment, checkoutUrl=$checkoutUrl');
+
+          if (requiresPayment && checkoutUrl != null && checkoutUrl.isNotEmpty) {
+            log('OPENING PAYMENT WEBVIEW');
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (_) => PaymentWebViewScreen(
+                  url: checkoutUrl,
+                  onPaymentComplete: () {
+                    appToast(
+                      context: context,
+                      type: ToastType.success,
+                      message: apiMessage != null && apiMessage.trim().isNotEmpty
+                      ? apiMessage
+                      : tr.bookingCreatedSuccess,
+                    );
+                    sl<AppNavigator>().pushAndRemoveUntil(
+                      screen: const MainNavView(initialIndex: 1),
+                    );
+                  },
+                ),
+              ),
+            );
+            return;
+          }
+
+          appToast(
+            context: context,
+            type: ToastType.success,
+            message: apiMessage != null && apiMessage.trim().isNotEmpty
+                ? apiMessage
+                : tr.bookingCreatedSuccess,
+          );
           sl<AppNavigator>().pushAndRemoveUntil(
             screen: const MainNavView(initialIndex: 1),
           );

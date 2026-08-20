@@ -178,13 +178,19 @@ class CreateBookingCubit extends Cubit<CreateBookingState> {
     log('Payment method: $paymentMethod');
     log('==========================');
 
+    log('BOOKING REQUEST STARTED');
+    log('tripId: ${data.tripId}');
+
     final result = await _createBookingUseCase(
       tripId: data.tripId,
       request: request,
     );
 
+    log('BOOKING RESPONSE RECEIVED');
+
     result.fold(
       (failure) {
+        log('BOOKING FAILED: ${failure.message}');
         emit(
           state.copyWith(
             status: CreateBookingStatus.failure,
@@ -194,6 +200,12 @@ class CreateBookingCubit extends Cubit<CreateBookingState> {
         );
       },
       (response) {
+        log('BOOKING SUCCESS');
+        log('bookingId: ${response.data?.bookingId}');
+        log('reference: ${response.data?.reference}');
+        log('requiresPayment: ${response.data?.requiresPayment}');
+        log('paymentProvider: ${response.data?.payment?.provider}');
+        log('checkoutUrl: ${response.data?.payment?.checkoutUrl}');
         emit(
           state.copyWith(
             status: CreateBookingStatus.success,
