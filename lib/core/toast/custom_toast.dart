@@ -41,12 +41,14 @@ class _CustomToastState extends State<CustomToast> {
     ToastType.success => AppColors.success,
     ToastType.warning => AppColors.warning,
     ToastType.error => AppColors.error,
+    ToastType.info => AppColors.infoBlue,
   };
 
   IconData getIconData() => switch (widget.type) {
     ToastType.success => Icons.check_circle_rounded,
     ToastType.warning => Icons.warning_rounded,
     ToastType.error => Icons.error_rounded,
+    ToastType.info => Icons.info_rounded,
   };
 
   @override
@@ -68,60 +70,76 @@ class _CustomToastState extends State<CustomToast> {
                     reverseCurve: widget.curve ?? Curves.elasticOut,
                   ),
                 ),
-            child: Container(
-              width: MediaQuery.sizeOf(context).width,
-              padding: EdgeInsetsDirectional.only(start: 3.w),
-              clipBehavior: Clip.hardEdge,
-              decoration: BoxDecoration(
-                color: getColor(),
-                borderRadius: BorderRadius.circular(15.r),
-              ),
-              child: Container(
-                padding: EdgeInsets.all(10.r),
-                decoration: BoxDecoration(
-                  color: Theme.of(context).primaryColor,
-                  gradient: LinearGradient(
-                    colors: [Theme.of(context).cardColor, getColor()],
+            child: Align(
+              alignment: Alignment.topCenter,
+              child: ConstrainedBox(
+                constraints: const BoxConstraints(maxWidth: 440),
+                child: Container(
+                  padding: EdgeInsets.symmetric(
+                    horizontal: 12.w,
+                    vertical: 9.h,
                   ),
-                  borderRadius: BorderRadius.circular(12.r),
-                ),
-                child: Row(
-                  children: [
-                    Container(
-                      width: 35,
-                      height: 35,
-                      margin: EdgeInsetsDirectional.only(end: 15.w),
-                      decoration: BoxDecoration(
-                        color: getColor().withValues(alpha: 0.2),
-                        shape: BoxShape.circle,
-                      ),
-                      child: Icon(getIconData(), color: getColor(), size: 22),
+                  decoration: BoxDecoration(
+                    color: Theme.of(context).cardColor,
+                    borderRadius: BorderRadius.circular(16.r),
+                    border: Border.all(
+                      color: getColor().withValues(alpha: 0.28),
                     ),
-                    // getIcon(),
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        spacing: 5.h,
-                        children: [
-                          Text(
-                            widget.message,
-                            style:
-                                widget.messageStyle ??
-                                TextStyles.textViewBold14,
-                          ),
-                          if (widget.description != null)
+                    boxShadow: [
+                      BoxShadow(
+                        color: AppColors.shadow.withValues(alpha: 0.1),
+                        blurRadius: 12.r,
+                        offset: Offset(0, 4.h),
+                      ),
+                    ],
+                  ),
+                  child: Row(
+                    children: [
+                      Container(
+                        width: 32.r,
+                        height: 32.r,
+                        decoration: BoxDecoration(
+                          color: getColor().withValues(alpha: 0.12),
+                          shape: BoxShape.circle,
+                        ),
+                        child: Icon(
+                          getIconData(),
+                          color: getColor(),
+                          size: 19.r,
+                        ),
+                      ),
+                      SizedBox(width: 10.w),
+                      Expanded(
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
                             Text(
-                              widget.description!,
+                              widget.message,
                               style:
-                                  widget.descriptionStyle ??
-                                  TextStyles.textViewRegular14.copyWith(
+                                  widget.messageStyle ??
+                                  TextStyles.textViewMedium14.copyWith(
                                     color: AppColors.darkText(context),
+                                    height: 1.2,
                                   ),
                             ),
-                        ],
+                            if (widget.description != null) ...[
+                              SizedBox(height: 3.h),
+                              Text(
+                                widget.description!,
+                                style:
+                                    widget.descriptionStyle ??
+                                    TextStyles.textViewRegular12.copyWith(
+                                      color: AppColors.greyText(context),
+                                      height: 1.25,
+                                    ),
+                              ),
+                            ],
+                          ],
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
             ),

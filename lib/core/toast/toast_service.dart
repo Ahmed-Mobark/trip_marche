@@ -108,7 +108,7 @@ class ToastService {
 
   static Duration _toastDuration(ToastLength length) {
     return switch (length) {
-      ToastLength.short => const Duration(milliseconds: 2000),
+      ToastLength.short => const Duration(milliseconds: 3000),
       ToastLength.medium => const Duration(milliseconds: 4000),
       ToastLength.long => const Duration(milliseconds: 6000),
       ToastLength.ages => const Duration(minutes: 2),
@@ -242,7 +242,7 @@ class ToastService {
       isClosable: isClosable = false,
       expandedHeight: expandedHeight = 100,
       positionCurve: positionCurve = Curves.elasticOut,
-      length: length = ToastLength.short,
+      length: ToastLength.short,
       dismissDirection: dismissDirection = DismissDirection.down,
     );
   }

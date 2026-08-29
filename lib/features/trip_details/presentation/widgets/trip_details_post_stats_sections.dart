@@ -102,7 +102,7 @@ class _IncludedGrid extends StatelessWidget {
   final List<String> items;
 
   /// Figma: tight rows; gutter 8 vertical, 16 horizontal; flat cells (wide aspect).
-  static const double _mainAxisSpacing = 6;
+  static const double _mainAxisSpacing = 0;
   static const double _crossAxisSpacing = 12;
 
   /// Wide cells; tall enough for two lines at 14px (Figma-tight rows via [mainAxisSpacing]).
@@ -219,7 +219,8 @@ class TripDetailsDepartureDetailsCard extends StatelessWidget {
                 SizedBox(height: 16.h),
                 _DeparturePointRow(
                   icon: Iconsax.location,
-                  label: '${context.tr.tripDetailsMeetingLocationLabel} ${i + 1}',
+                  label:
+                      '${context.tr.tripDetailsMeetingLocationLabel} ${i + 1}',
                   address: meetingLines[i],
                   time: meetingTime,
                   lat: trip.meeting.lat,
@@ -342,12 +343,7 @@ class _DeparturePointRow extends StatelessWidget {
         ),
         if (hasMapsTarget) ...[
           SizedBox(width: 10.w),
-          GoogleMapsLinkButton(
-            label: address,
-            lat: lat,
-            lng: lng,
-            size: 38.r,
-          ),
+          GoogleMapsLinkButton(label: address, lat: lat, lng: lng, size: 38.r),
         ],
       ],
     );

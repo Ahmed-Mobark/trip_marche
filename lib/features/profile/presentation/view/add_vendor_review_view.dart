@@ -61,7 +61,8 @@ class _AddVendorReviewViewState extends State<AddVendorReviewView> {
   int _tripRating = 4;
   int _vendorRating = 4;
   final TextEditingController _tripCommentController = TextEditingController();
-  final TextEditingController _vendorCommentController = TextEditingController();
+  final TextEditingController _vendorCommentController =
+      TextEditingController();
 
   @override
   void initState() {
@@ -91,7 +92,8 @@ class _AddVendorReviewViewState extends State<AddVendorReviewView> {
       create: (_) => sl<AddVendorReviewCubit>(),
       child: BlocConsumer<AddVendorReviewCubit, AddVendorReviewState>(
         listener: (context, state) {
-          if (state.status == AddVendorReviewStatus.failure && state.errorMessage != null) {
+          if (state.status == AddVendorReviewStatus.failure &&
+              state.errorMessage != null) {
             appToast(
               context: context,
               type: ToastType.error,
@@ -101,7 +103,8 @@ class _AddVendorReviewViewState extends State<AddVendorReviewView> {
             appToast(
               context: context,
               type: ToastType.success,
-              message: state.successMessage ?? context.tr.reviewSubmittedSuccess,
+              message:
+                  state.successMessage ?? context.tr.reviewSubmittedSuccess,
             );
             Navigator.pop(context, true);
           }
@@ -117,7 +120,10 @@ class _AddVendorReviewViewState extends State<AddVendorReviewView> {
                 children: [
                   // App Bar
                   Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 12.h),
+                    padding: EdgeInsets.symmetric(
+                      horizontal: 16.w,
+                      vertical: 12.h,
+                    ),
                     child: Row(
                       children: [
                         IconButton(
@@ -131,10 +137,11 @@ class _AddVendorReviewViewState extends State<AddVendorReviewView> {
                         SizedBox(width: 4.w),
                         Text(
                           context.tr.reviewTitle,
-                          style: AppTextStyles.subtitle(color: Colors.white).copyWith(
-                            fontSize: 20.sp,
-                            fontWeight: FontWeight.bold,
-                          ),
+                          style: AppTextStyles.subtitle(color: Colors.white)
+                              .copyWith(
+                                fontSize: 20.sp,
+                                fontWeight: FontWeight.bold,
+                              ),
                         ),
                       ],
                     ),
@@ -161,37 +168,45 @@ class _AddVendorReviewViewState extends State<AddVendorReviewView> {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                               // Top Item Card
-                               _ReviewItemHeaderCard(
-                                 title: widget.title ??
-                                     widget.review?.vendor?.name ??
-                                     widget.review?.trip?.title ??
-                                     '',
-                                 imageUrl: widget.imageUrl ??
-                                     widget.review?.vendor?.avatar ??
-                                     widget.review?.trip?.coverImage ??
-                                     '',
-                                 routeText: widget.routeText ??
-                                     widget.review?.trip?.fromLocation ??
-                                     '',
-                                 dateRangeText: widget.dateRangeText ??
-                                     _formatTripDateRange(widget.review?.trip) ??
-                                     widget.review?.createdAt ??
-                                     '',
-                                 ratingValue: widget.ratingValue,
-                                 ratingCount: widget.ratingCount,
-                                 badgeText: widget.badgeText,
-                                 originalPrice: widget.originalPrice,
-                                 discountedPrice: widget.discountedPrice,
-                               ),
+                              // Top Item Card
+                              _ReviewItemHeaderCard(
+                                title:
+                                    widget.title ??
+                                    widget.review?.vendor?.name ??
+                                    widget.review?.trip?.title ??
+                                    '',
+                                imageUrl:
+                                    widget.imageUrl ??
+                                    widget.review?.vendor?.avatar ??
+                                    widget.review?.trip?.coverImage ??
+                                    '',
+                                routeText:
+                                    widget.routeText ??
+                                    widget.review?.trip?.fromLocation ??
+                                    '',
+                                dateRangeText:
+                                    widget.dateRangeText ??
+                                    _formatTripDateRange(widget.review?.trip) ??
+                                    widget.review?.createdAt ??
+                                    '',
+                                ratingValue: widget.ratingValue,
+                                ratingCount: widget.ratingCount,
+                                badgeText: widget.badgeText,
+                                originalPrice: widget.originalPrice,
+                                discountedPrice: widget.discountedPrice,
+                              ),
                               SizedBox(height: 20.h),
 
                               // Section 1: Trip Rating
                               Text(
                                 context.tr.reviewTripSatisfactionHint,
-                                style: AppTextStyles.bodyMedium(
-                                  color: AppColors.darkText(context),
-                                ).copyWith(fontWeight: FontWeight.w500, fontSize: 14.sp),
+                                style:
+                                    AppTextStyles.bodyMedium(
+                                      color: AppColors.darkText(context),
+                                    ).copyWith(
+                                      fontWeight: FontWeight.w500,
+                                      fontSize: 14.sp,
+                                    ),
                               ),
                               SizedBox(height: 10.h),
                               Row(
@@ -211,52 +226,68 @@ class _AddVendorReviewViewState extends State<AddVendorReviewView> {
                                   ),
                                 ],
                               ),
-SizedBox(height: 14.h),
-                               Text(
-                                 context.tr.reviewWriteYourReview,
-                                 style: AppTextStyles.bodyMedium(
-                                   color: AppColors.darkText(context),
-                                 ).copyWith(fontWeight: FontWeight.bold, fontSize: 15.sp),
-                               ),
-                               SizedBox(height: 8.h),
-                               _ReviewTextField(controller: _tripCommentController),
+                              SizedBox(height: 14.h),
+                              Text(
+                                context.tr.reviewWriteYourReview,
+                                style:
+                                    AppTextStyles.bodyMedium(
+                                      color: AppColors.darkText(context),
+                                    ).copyWith(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 15.sp,
+                                    ),
+                              ),
+                              SizedBox(height: 8.h),
+                              _ReviewTextField(
+                                controller: _tripCommentController,
+                              ),
 
-                               SizedBox(height: 24.h),
+                              SizedBox(height: 24.h),
 
-                               // Section 2: Agency (Vendor) Rating
-                               Text(
-                                 context.tr.reviewRateTravelAgency,
-                                 style: AppTextStyles.bodyMedium(
-                                   color: AppColors.darkText(context),
-                                 ).copyWith(fontWeight: FontWeight.w500, fontSize: 14.sp),
-                               ),
-                               SizedBox(height: 10.h),
-                               Row(
-                                 children: [
-                                   _InteractiveStarRating(
-                                     rating: _vendorRating,
-                                     onRatingChanged: (val) {
-                                       setState(() => _vendorRating = val);
-                                     },
-                                   ),
-                                   SizedBox(width: 12.w),
-                                   Text(
-                                     context.tr.reviewRatingScale(_vendorRating),
-                                     style: AppTextStyles.bodySmall(
-                                       color: AppColors.greyText(context),
-                                     ).copyWith(fontWeight: FontWeight.w600),
-                                   ),
-                                 ],
-                               ),
-                               SizedBox(height: 14.h),
-                               Text(
-                                 context.tr.reviewWriteYourReview,
-                                 style: AppTextStyles.bodyMedium(
-                                   color: AppColors.darkText(context),
-                                 ).copyWith(fontWeight: FontWeight.bold, fontSize: 15.sp),
-                               ),
-                               SizedBox(height: 8.h),
-                               _ReviewTextField(controller: _vendorCommentController),
+                              // Section 2: Agency (Vendor) Rating
+                              Text(
+                                context.tr.reviewRateTravelAgency,
+                                style:
+                                    AppTextStyles.bodyMedium(
+                                      color: AppColors.darkText(context),
+                                    ).copyWith(
+                                      fontWeight: FontWeight.w500,
+                                      fontSize: 14.sp,
+                                    ),
+                              ),
+                              SizedBox(height: 10.h),
+                              Row(
+                                children: [
+                                  _InteractiveStarRating(
+                                    rating: _vendorRating,
+                                    onRatingChanged: (val) {
+                                      setState(() => _vendorRating = val);
+                                    },
+                                  ),
+                                  SizedBox(width: 12.w),
+                                  Text(
+                                    context.tr.reviewRatingScale(_vendorRating),
+                                    style: AppTextStyles.bodySmall(
+                                      color: AppColors.greyText(context),
+                                    ).copyWith(fontWeight: FontWeight.w600),
+                                  ),
+                                ],
+                              ),
+                              SizedBox(height: 14.h),
+                              Text(
+                                context.tr.reviewWriteYourReview,
+                                style:
+                                    AppTextStyles.bodyMedium(
+                                      color: AppColors.darkText(context),
+                                    ).copyWith(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 15.sp,
+                                    ),
+                              ),
+                              SizedBox(height: 8.h),
+                              _ReviewTextField(
+                                controller: _vendorCommentController,
+                              ),
 
                               SizedBox(height: 30.h),
                             ],
@@ -280,78 +311,86 @@ SizedBox(height: 14.h),
               decoration: BoxDecoration(
                 color: AppColors.background(context),
                 border: Border(
-                  top: BorderSide(color: AppColors.border(context).withValues(alpha: 0.6)),
+                  top: BorderSide(
+                    color: AppColors.border(context).withValues(alpha: 0.6),
+                  ),
                 ),
               ),
               child: Row(
-                  children: [
-                    // Back Button
-                    InkWell(
-                      onTap: () => Navigator.pop(context),
-                      borderRadius: BorderRadius.circular(999.r),
-                      child: Container(
-                        width: 52.r,
-                        height: 52.r,
-                        decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          border: Border.all(color: AppColors.border(context)),
-                        ),
-                        child: Icon(
-                          Icons.arrow_back_ios_new_rounded,
-                          size: 18.sp,
-                          color: AppColors.darkText(context),
-                        ),
+                children: [
+                  // Back Button
+                  InkWell(
+                    onTap: () => Navigator.pop(context),
+                    borderRadius: BorderRadius.circular(999.r),
+                    child: Container(
+                      width: 52.r,
+                      height: 52.r,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        border: Border.all(color: AppColors.border(context)),
+                      ),
+                      child: Icon(
+                        Icons.arrow_back_ios_new_rounded,
+                        size: 18.sp,
+                        color: AppColors.darkText(context),
                       ),
                     ),
-                    SizedBox(width: 14.w),
+                  ),
+                  SizedBox(width: 14.w),
 
-                    // Send Button
-                    Expanded(
-                      child: SizedBox(
-                        height: 52.h,
-                        child: ElevatedButton(
-                          onPressed: isLoading
-                              ? null
-                              : () {
-                                  context.read<AddVendorReviewCubit>().submitReview(
-                                        tripId: widget.tripId!,
-                                        vendorId: widget.vendorId!,
-                                        tripRating: _tripRating,
-                                        tripComment: _tripCommentController.text.trim(),
-                                        vendorRating: _vendorRating,
-                                        vendorComment: _vendorCommentController.text.trim(),
-                                      );
-                                },
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: AppColors.primary,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(999.r),
-                            ),
-                            elevation: 0,
+                  // Send Button
+                  Expanded(
+                    child: SizedBox(
+                      height: 52.h,
+                      child: ElevatedButton(
+                        onPressed: isLoading
+                            ? null
+                            : () {
+                                context
+                                    .read<AddVendorReviewCubit>()
+                                    .submitReview(
+                                      tripId: widget.tripId!,
+                                      vendorId: widget.vendorId!,
+                                      tripRating: _tripRating,
+                                      tripComment: _tripCommentController.text
+                                          .trim(),
+                                      vendorRating: _vendorRating,
+                                      vendorComment: _vendorCommentController
+                                          .text
+                                          .trim(),
+                                    );
+                              },
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: AppColors.primary,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(999.r),
                           ),
-                          child: isLoading
-                              ? SizedBox(
-                                  width: 22.r,
-                                  height: 22.r,
-                                  child: const CircularProgressIndicator(
-                                    strokeWidth: 2.5,
-                                    color: Colors.white,
-                                  ),
-)
-                               : Text(
-                                   context.tr.reviewSendButton,
-                                   style: AppTextStyles.bodyMedium(
-                                     color: Colors.white,
-                                   ).copyWith(
-                                     fontWeight: FontWeight.bold,
-                                     fontSize: 16.sp,
-                                   ),
-                                 ),
+                          elevation: 0,
                         ),
+                        child: isLoading
+                            ? SizedBox(
+                                width: 22.r,
+                                height: 22.r,
+                                child: const CircularProgressIndicator(
+                                  strokeWidth: 2.5,
+                                  color: Colors.white,
+                                ),
+                              )
+                            : Text(
+                                context.tr.reviewSendButton,
+                                style:
+                                    AppTextStyles.bodyMedium(
+                                      color: Colors.white,
+                                    ).copyWith(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 16.sp,
+                                    ),
+                              ),
                       ),
                     ),
-                  ],
-                ),
+                  ),
+                ],
+              ),
             ),
           );
         },
@@ -421,7 +460,11 @@ class _ReviewItemHeaderCard extends StatelessWidget {
                   SizedBox(height: 4.h),
                   Row(
                     children: [
-                      Icon(Iconsax.star1, size: 14.sp, color: AppColors.starYellow),
+                      Icon(
+                        Iconsax.star1,
+                        size: 14.sp,
+                        color: AppColors.starYellow,
+                      ),
                       SizedBox(width: 4.w),
                       Text(
                         ratingValue!,
@@ -445,11 +488,16 @@ class _ReviewItemHeaderCard extends StatelessWidget {
                 if (badgeText != null) ...[
                   SizedBox(height: 6.h),
                   Container(
-                    padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 3.h),
+                    padding: EdgeInsets.symmetric(
+                      horizontal: 8.w,
+                      vertical: 3.h,
+                    ),
                     decoration: BoxDecoration(
                       color: AppColors.green.withValues(alpha: 0.1),
                       borderRadius: BorderRadius.circular(6.r),
-                      border: Border.all(color: AppColors.green.withValues(alpha: 0.3)),
+                      border: Border.all(
+                        color: AppColors.green.withValues(alpha: 0.3),
+                      ),
                     ),
                     child: Text(
                       badgeText!,
@@ -479,13 +527,19 @@ class _ReviewItemHeaderCard extends StatelessWidget {
                       if (discountedPrice != null)
                         Text(
                           discountedPrice!,
-                          style: AppTextStyles.bodyMedium(
-                            color: AppColors.darkText(context),
-                          ).copyWith(fontWeight: FontWeight.bold, fontSize: 15.sp),
+                          style:
+                              AppTextStyles.bodyMedium(
+                                color: AppColors.darkText(context),
+                              ).copyWith(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 15.sp,
+                              ),
                         ),
                       Text(
                         ' ${context.tr.tripDetailsPerPerson}',
-                        style: AppTextStyles.caption(color: AppColors.greyText(context)),
+                        style: AppTextStyles.caption(
+                          color: AppColors.greyText(context),
+                        ),
                       ),
                     ],
                   ),
@@ -515,7 +569,9 @@ class _HeaderInfoLine extends StatelessWidget {
             text,
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
-            style: AppTextStyles.bodySmall(color: AppColors.greyText(context)).copyWith(fontSize: 12.sp),
+            style: AppTextStyles.bodySmall(
+              color: AppColors.greyText(context),
+            ).copyWith(fontSize: 12.sp),
           ),
         ),
       ],
@@ -546,7 +602,9 @@ class _InteractiveStarRating extends StatelessWidget {
             child: Icon(
               isSelected ? Iconsax.star1 : Iconsax.star,
               size: 26.sp,
-              color: isSelected ? AppColors.starYellow : AppColors.greyText(context).withValues(alpha: 0.3),
+              color: isSelected
+                  ? AppColors.starYellow
+                  : AppColors.greyText(context).withValues(alpha: 0.3),
             ),
           ),
         );
@@ -568,7 +626,9 @@ class _ReviewTextField extends StatelessWidget {
       style: AppTextStyles.bodyMedium(color: AppColors.darkText(context)),
       decoration: InputDecoration(
         hintText: context.tr.reviewEnterReviewHint,
-        hintStyle: AppTextStyles.bodyMedium(color: AppColors.greyText(context).withValues(alpha: 0.6)),
+        hintStyle: AppTextStyles.bodyMedium(
+          color: AppColors.greyText(context).withValues(alpha: 0.6),
+        ),
         filled: true,
         fillColor: AppColors.cardBg(context),
         contentPadding: EdgeInsets.all(14.r),

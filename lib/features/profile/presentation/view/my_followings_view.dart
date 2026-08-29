@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:iconsax/iconsax.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_text_styles.dart';
+import '../../../../core/config/dimensions/company_profile_figma_tokens.dart';
 import '../../../../core/injection/injection_container.dart';
 import '../../../../core/navigation/app_navigator.dart';
 import '../../../../core/extensions/localization.dart';
 import '../../domain/repositories/profile_repository.dart';
 import '../../../company_profile/presentation/view/company_profile_view.dart';
+import '../../../company_profile/presentation/widgets/company_follow_button.dart';
 import '../../domain/usecases/get_followings_usecase.dart';
 import '../../domain/usecases/toggle_follow_vendor_usecase.dart';
 import '../cubit/followings_cubit.dart';
@@ -229,13 +232,12 @@ class _MyFollowingsViewState extends State<MyFollowingsView> {
                 return _FollowingCompanyCard(
                   name: company.name,
                   logoAsset: company.avatar,
+                  rating: company.rating,
                   ratingValue: company.rating.toStringAsFixed(2),
                   ratingCount: company.reviewsCount.toString(),
-                  onTap: () =>
-                       sl<AppNavigator>().push(screen: CompanyProfileView(vendorId: company.id)),
-                  actionText: company.isFollowing
-                      ? context.tr.followingsUnfollow
-                      : context.tr.follow,
+                  onTap: () => sl<AppNavigator>().push(
+                    screen: CompanyProfileView(vendorId: company.id),
+                  ),
                   isActive: company.isFollowing,
                   vendorId: company.id,
                   onAction: () => context
@@ -255,10 +257,10 @@ class _FollowingCompanyCard extends StatelessWidget {
   const _FollowingCompanyCard({
     required this.name,
     required this.logoAsset,
+    required this.rating,
     required this.ratingValue,
     required this.ratingCount,
     required this.onTap,
-    required this.actionText,
     required this.isActive,
     required this.vendorId,
     required this.onAction,
@@ -266,10 +268,10 @@ class _FollowingCompanyCard extends StatelessWidget {
 
   final String name;
   final String logoAsset;
+  final double rating;
   final String ratingValue;
   final String ratingCount;
   final VoidCallback onTap;
-  final String actionText;
   final bool isActive;
   final int vendorId;
   final VoidCallback onAction;
@@ -348,10 +350,18 @@ class _FollowingCompanyCard extends StatelessWidget {
                     SizedBox(height: 6.h),
                     Row(
                       children: [
-                        Icon(
-                          Iconsax.star1,
-                          size: 14.sp,
-                          color: AppColors.starYellow,
+                        RatingBarIndicator(
+                          rating: rating,
+                          itemBuilder: (context, index) => const Icon(
+                            Icons.star_rounded,
+                            color: AppColors.starYellow,
+                          ),
+                          itemCount: 5,
+                          itemSize: CompanyProfileFigmaTokens.starIconSize,
+                          direction: Axis.horizontal,
+                          unratedColor: AppColors.greyText(
+                            context,
+                          ).withValues(alpha: 0.4),
                         ),
                         SizedBox(width: 6.w),
                         Text(
@@ -372,36 +382,10 @@ class _FollowingCompanyCard extends StatelessWidget {
                 ),
               ),
               SizedBox(width: 12.w),
-              OutlinedButton(
-                onPressed: isActionLoading ? null : onAction,
-                style: OutlinedButton.styleFrom(
-                  side: BorderSide(color: AppColors.error, width: 1),
-                  foregroundColor: AppColors.error,
-                  padding: EdgeInsetsDirectional.symmetric(
-                    horizontal: 16.w,
-                    vertical: 10.h,
-                  ),
-                  minimumSize: Size.zero,
-                  tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12.r),
-                  ),
-                ),
-                child: isActionLoading
-                    ? SizedBox(
-                        width: 16.w,
-                        height: 16.h,
-                        child: const CircularProgressIndicator(
-                          strokeWidth: 2,
-                          color: AppColors.error,
-                        ),
-                      )
-                    : Text(
-                        actionText,
-                        style: AppTextStyles.bodySmall(
-                          color: AppColors.error,
-                        ).copyWith(fontWeight: FontWeight.w600),
-                      ),
+              CompanyFollowButton(
+                isFollowing: isActive,
+                isLoading: isActionLoading,
+                onPressed: onAction,
               ),
             ],
           ),

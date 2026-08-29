@@ -25,7 +25,6 @@ class CustomerServiceView extends StatelessWidget {
   }
 
   @override
-
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.background(context),
@@ -131,23 +130,28 @@ class _ContactButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isEnabled = enabled && onTap != null;
+
     return SizedBox(
       height: 45.h,
       child: OutlinedButton.icon(
-        onPressed: enabled ? onTap : null,
-        icon: Icon(icon, color: AppColors.primary, size: 20.sp),
+        onPressed: isEnabled ? onTap : null,
+        icon: Icon(icon, size: 20.sp),
         label: Text(
           label,
-          style: TextStyle(
-            fontSize: 12.sp,
-            fontWeight: FontWeight.w600,
-            color: AppColors.primary,
-          ),
+          style: TextStyle(fontSize: 12.sp, fontWeight: FontWeight.w600),
         ),
-        style: OutlinedButton.styleFrom(
-          side: BorderSide(color: AppColors.primary, width: 1),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(12.r),
+        style: ButtonStyle(
+          foregroundColor: isEnabled
+              ? WidgetStatePropertyAll(AppColors.primary)
+              : null,
+          side: isEnabled
+              ? WidgetStatePropertyAll(
+                  BorderSide(color: AppColors.primary, width: 1),
+                )
+              : null,
+          shape: WidgetStatePropertyAll(
+            RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.r)),
           ),
         ),
       ),

@@ -28,7 +28,7 @@ class ProfileHandoffTokens {
       kHeaderGradientHeightFigma - kFirstCardTopFigma;
 
   /// Avatar + text row top from frame top (node `1:22367`).
-  static const double kAvatarRowTopFigma = 70;
+  static const double kAvatarRowTopFigma = 50;
 
   /// Horizontal inset; cards are `390` wide on `430` frame → `(430-390)/2 = 20`.
   static const double kHorizontalInsetFigma = 20;

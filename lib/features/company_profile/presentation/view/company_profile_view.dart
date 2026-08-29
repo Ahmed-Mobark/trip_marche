@@ -392,7 +392,7 @@ class _CompanyProfileViewState extends State<CompanyProfileView> {
                                     followersCount: vendor.followersCount,
                                     tripsCount: vendor.tripsCount,
                                     isVerified: vendor.isVerified,
-                                    showFollowButton: false,
+                                    showFollowButton: reviews.isNotEmpty,
                                   ),
                                 ),
                                 SizedBox(height: 14.h),
@@ -508,48 +508,6 @@ class _CompanyProfileViewState extends State<CompanyProfileView> {
                                         ),
                                       )
                                       .toList(),
-                                ),
-                              ],
-                              if (reviews.isNotEmpty) ...[
-                                SizedBox(height: 14.h),
-                                Center(
-                                  child: TextButton(
-                                    onPressed: () =>
-                                        _cubit.toggleFollow(widget.vendorId),
-                                    style: TextButton.styleFrom(
-                                      backgroundColor: _cubit.isFollowing(
-                                        widget.vendorId,
-                                      )
-                                          ? AppColors.primary
-                                          : AppColors.transparent,
-                                      side: BorderSide(
-                                        color: _cubit.isFollowing(
-                                          widget.vendorId,
-                                        )
-                                            ? AppColors.primary
-                                            : AppColors.border(context),
-                                      ),
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(999.r),
-                                      ),
-                                      padding: EdgeInsets.symmetric(
-                                        horizontal: 24.w,
-                                        vertical: 10.h,
-                                      ),
-                                    ),
-                                    child: Text(
-                                      _cubit.isFollowing(widget.vendorId)
-                                          ? context.tr.companyProfileFollowing
-                                          : context.tr.companyProfileFollow,
-                                      style: AppTextStyles.button(
-                                        color: _cubit.isFollowing(
-                                          widget.vendorId,
-                                        )
-                                            ? AppColors.white
-                                            : AppColors.primary,
-                                      ).copyWith(fontWeight: FontWeight.w600),
-                                    ),
-                                  ),
                                 ),
                               ],
                               if (trips.isNotEmpty) ...[

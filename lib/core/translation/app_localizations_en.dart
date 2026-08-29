@@ -282,7 +282,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get homeRecommendedForYou => 'Recommended For You';
 
   @override
-  String get homeSpecialTrips => 'Explore by category';
+  String get homeSpecialTrips => 'Explore by Category';
 
   @override
   String get homeTopRated => 'Top Rated';

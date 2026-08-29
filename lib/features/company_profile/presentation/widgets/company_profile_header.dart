@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_text_styles.dart';
-import '../../../../core/extensions/localization.dart';
 import '../../../../core/config/dimensions/company_profile_figma_tokens.dart';
 import '../../../../core/widgets/app_cached_network_image.dart';
+import 'company_follow_button.dart';
 
 class CompanyProfileHeader extends StatelessWidget {
   const CompanyProfileHeader({
@@ -35,7 +35,6 @@ class CompanyProfileHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final textColor = AppColors.darkText(context);
-    final borderColor = AppColors.border(context);
     final greyColor = AppColors.greyText(context);
 
     return Container(
@@ -102,10 +101,16 @@ class CompanyProfileHeader extends StatelessWidget {
                 SizedBox(height: CompanyProfileFigmaTokens.rowGapSmall),
                 Row(
                   children: [
-                    Icon(
-                      Icons.star_rounded,
-                      size: CompanyProfileFigmaTokens.starIconSize,
-                      color: AppColors.starYellow,
+                    RatingBarIndicator(
+                      rating: rating,
+                      itemBuilder: (context, index) => const Icon(
+                        Icons.star_rounded,
+                        color: AppColors.starYellow,
+                      ),
+                      itemCount: 5,
+                      itemSize: CompanyProfileFigmaTokens.starIconSize,
+                      direction: Axis.horizontal,
+                      unratedColor: greyColor.withValues(alpha: 0.4),
                     ),
                     SizedBox(width: CompanyProfileFigmaTokens.rowGapSmall),
                     Text(
@@ -121,40 +126,19 @@ class CompanyProfileHeader extends StatelessWidget {
                     ),
                   ],
                 ),
+                if (showFollowButton) ...[
+                  SizedBox(height: CompanyProfileFigmaTokens.rowGapSmall),
+                  Align(
+                    alignment: AlignmentDirectional.centerStart,
+                    child: CompanyFollowButton(
+                      isFollowing: isFollowing,
+                      onPressed: onFollowToggle,
+                    ),
+                  ),
+                ],
               ],
             ),
           ),
-          if (showFollowButton) ...[
-            SizedBox(width: CompanyProfileFigmaTokens.rowGapMedium),
-            TextButton(
-              onPressed: onFollowToggle,
-              style: TextButton.styleFrom(
-                backgroundColor: isFollowing
-                    ? AppColors.primary
-                    : AppColors.transparent,
-                side: BorderSide(
-                  color: isFollowing ? AppColors.primary : borderColor,
-                ),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(999.r),
-                ),
-                padding: EdgeInsets.symmetric(
-                  horizontal: 16.w,
-                  vertical: 8.h,
-                ),
-                minimumSize: Size.zero,
-                tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-              ),
-              child: Text(
-                isFollowing
-                    ? context.tr.companyProfileFollowing
-                    : context.tr.companyProfileFollow,
-                style: AppTextStyles.button(
-                  color: isFollowing ? AppColors.white : AppColors.primary,
-                ).copyWith(fontWeight: FontWeight.w600),
-              ),
-            ),
-          ],
         ],
       ),
     );

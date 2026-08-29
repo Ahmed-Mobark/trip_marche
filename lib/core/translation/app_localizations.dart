@@ -625,7 +625,7 @@ abstract class AppLocalizations {
   /// No description provided for @homeSpecialTrips.
   ///
   /// In en, this message translates to:
-  /// **'Explore by category'**
+  /// **'Explore by Category'**
   String get homeSpecialTrips;
 
   /// No description provided for @homeTopRated.
