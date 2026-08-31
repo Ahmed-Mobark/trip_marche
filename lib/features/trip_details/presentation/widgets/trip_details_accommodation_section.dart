@@ -28,12 +28,11 @@ class TripDetailsAccommodationSection extends StatelessWidget {
     final accommodations = trip.accommodations;
 
     final displayedAccommodations = accommodations.take(2).toList();
-    final hasMore = accommodations.length > 2;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        if (accommodations.isNotEmpty)
+        ...[
           TripDetailsInfoCard(
             withShadow: true,
             borderRadius: 20,
@@ -62,7 +61,7 @@ class TripDetailsAccommodationSection extends StatelessWidget {
                     accommodation: displayedAccommodations[i],
                   ),
                 ],
-                if (hasMore) ...[
+                ...[
                   const SizedBox(height: 20),
                   Center(
                     child: TextButton(
@@ -98,6 +97,7 @@ class TripDetailsAccommodationSection extends StatelessWidget {
               ],
             ),
           ),
+        ],
       ],
     );
   }
@@ -262,7 +262,6 @@ class TripDetailsActivityRateCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final displayedRates = rates.take(4).toList();
-    final hasMore = rates.length > 4;
 
     return TripDetailsInfoCard(
       withShadow: false,
@@ -285,7 +284,7 @@ class TripDetailsActivityRateCard extends StatelessWidget {
               ),
             ),
           ),
-          if (hasMore) ...[
+          ...[
             SizedBox(height: 8.h),
             Center(
               child: TextButton(

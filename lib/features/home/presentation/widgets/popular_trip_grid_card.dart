@@ -178,7 +178,7 @@ class PopularTripGridCard extends StatelessWidget {
                                   ),
                                 ),
                                 Text(
-                                  '(${trip.reviewsCount})',
+                                  ' (${trip.reviewsCount})',
                                   style: _tight(
                                     AppTextStyles.bodySmall(
                                       color: AppColors.greyText(context),

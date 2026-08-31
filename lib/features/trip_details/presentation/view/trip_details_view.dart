@@ -258,12 +258,10 @@ class _TripDetailsBodyState extends State<_TripDetailsBody> {
                                     TripDetailsDestinationDetailsSection(
                                       trip: trip,
                                     ),
-                                    if (trip.activityRates.isNotEmpty) ...[
-                                      SizedBox(height: 12.h),
-                                      TripDetailsActivityRateCard(
-                                        rates: trip.activityRates,
-                                      ),
-                                    ],
+                                    SizedBox(height: 12.h),
+                                    TripDetailsActivityRateCard(
+                                      rates: trip.activityRates,
+                                    ),
                                     SizedBox(height: 12.h),
                                     TripDetailsTravelSections(trip: trip),
                                   ],

@@ -370,6 +370,7 @@ class _FollowingCompanyCard extends StatelessWidget {
                             color: AppColors.darkText(context),
                           ).copyWith(fontWeight: FontWeight.w700),
                         ),
+                        SizedBox(width: 2.w),
                         Text(
                           '($ratingCount)',
                           style: AppTextStyles.bodySmall(

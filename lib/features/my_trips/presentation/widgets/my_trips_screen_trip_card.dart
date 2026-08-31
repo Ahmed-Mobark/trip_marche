@@ -209,7 +209,7 @@ class MyTripsScreenTripCard extends StatelessWidget {
                                   ),
                                 ),
                                 TextSpan(
-                                  text: '(${trip.reviewCount})',
+                                  text: ' (${trip.reviewCount})',
                                   style: MyTripsFigmaTokens.text(
                                     fontSize: MyTripsTripCardTokens.metaFont,
                                     fontWeight: FontWeight.w400,

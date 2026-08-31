@@ -4,8 +4,8 @@ import 'package:iconsax/iconsax.dart';
 import 'package:trip_marche/core/extensions/localization.dart';
 import 'package:trip_marche/core/theme/app_colors.dart';
 import 'package:trip_marche/core/theme/app_text_styles.dart';
-import 'package:trip_marche/core/utils/price_formatter.dart';
 import 'package:trip_marche/core/widgets/app_cached_network_image.dart';
+import 'package:trip_marche/core/widgets/app_price_text.dart';
 
 import '../../data/models/home_section_response.dart';
 
@@ -249,11 +249,9 @@ class SectionTripHorizontalCard extends StatelessWidget {
                         crossAxisAlignment: WrapCrossAlignment.end,
                         children: [
                           if (hasDiscount) ...[
-                            Text(
-                              PriceFormatter.format(
-                                trip.discountPrice!,
-                                currency: trip.currency,
-                              ),
+                            AppPriceText(
+                              value: trip.discountPrice!,
+                              currency: trip.currency,
                               style:
                                   AppTextStyles.heading3(
                                     color: AppColors.darkText(context),
@@ -262,21 +260,17 @@ class SectionTripHorizontalCard extends StatelessWidget {
                                     fontSize: 17.sp,
                                   ),
                             ),
-                            Text(
-                              PriceFormatter.format(
-                                trip.price,
-                                currency: trip.currency,
-                              ),
+                            AppPriceText(
+                              value: trip.price,
+                              currency: trip.currency,
                               style: AppTextStyles.bodySmall(
                                 color: AppColors.greyText(context),
                               ).copyWith(decoration: TextDecoration.lineThrough),
                             ),
                           ] else
-                            Text(
-                              PriceFormatter.format(
-                                trip.price,
-                                currency: trip.currency,
-                              ),
+                            AppPriceText(
+                              value: trip.price,
+                              currency: trip.currency,
                               style:
                                   AppTextStyles.heading3(
                                     color: AppColors.darkText(context),

@@ -33,18 +33,14 @@ class TripDetailsTravelSections extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final accommodations = trip.accommodations;
-
     return Padding(
       padding: EdgeInsetsDirectional.only(top: 0.h),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           // 1. Where you'll stay (Accommodation)
-          if (accommodations.isNotEmpty) ...[
-            TripDetailsAccommodationSection(trip: trip),
-            SizedBox(height: 12.h),
-          ],
+          TripDetailsAccommodationSection(trip: trip),
+          SizedBox(height: 12.h),
 
           // 2. Flight details
           TripDetailsFlightDetailsSection(trip: trip),
