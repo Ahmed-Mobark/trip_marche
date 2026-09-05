@@ -21,7 +21,7 @@ class ProfileAvatar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final t = ProfileHandoffTokens.of(context);
-    final side = t.w(104);
+    final side = t.w(130);
     final rRect = t.w(8.4);
     final editSize = t.w(28);
     final editIconExtent = t.w(11);
@@ -39,10 +39,7 @@ class ProfileAvatar extends StatelessWidget {
             decoration: BoxDecoration(
               color: AppColors.lightBg(context),
               image: hasImage
-                  ? DecorationImage(
-                      image: backgroundImage!,
-                      fit: BoxFit.cover,
-                    )
+                  ? DecorationImage(image: backgroundImage!, fit: BoxFit.cover)
                   : null,
             ),
             alignment: Alignment.center,

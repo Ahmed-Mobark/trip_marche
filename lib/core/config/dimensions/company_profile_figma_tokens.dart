@@ -21,7 +21,9 @@ abstract final class CompanyProfileFigmaTokens {
   static double get captionFontSize => 11.sp;
 
   static double get headerAvatarWidth => 56.w;
-  static double get headerAvatarHeight => 60.h;
+  // Keep the header image square so it remains vertically balanced with the
+  // company name, rating, and follow action across screen sizes.
+  static double get headerAvatarHeight => headerAvatarWidth;
 
   static double get teamAvatarSize => 60.r;
   static double get reviewAvatarSize => 44.r;

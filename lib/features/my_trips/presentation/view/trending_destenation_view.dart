@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:trip_marche/core/config/app_constants.dart';
 import 'package:trip_marche/core/config/styles/styles.dart';
@@ -172,6 +173,17 @@ class _TrendingDestinationViewState extends State<TrendingDestinationView> {
     return (sum / trips.length).clamp(0.0, 5.0);
   }
 
+  int _heroReviewCountFromTrips(List<WishlistTripItem> trips) {
+    if (trips.isEmpty) {
+      return 0;
+    }
+    var count = 0;
+    for (final t in trips) {
+      count += t.reviewsCount;
+    }
+    return count;
+  }
+
   @override
   void dispose() {
     _searchDebounceTimer?.cancel();
@@ -277,6 +289,7 @@ class _TrendingDestinationViewState extends State<TrendingDestinationView> {
           final media = MediaQuery.of(context);
           final heroH = (media.size.height * 0.56).clamp(200.0, 360.0);
           final rating = _heroRatingFromTrips(listState.trips);
+          final reviewsCount = _heroReviewCountFromTrips(listState.trips);
           final bottomSafe = MediaQuery.paddingOf(context).bottom;
 
           return SingleChildScrollView(
@@ -293,6 +306,7 @@ class _TrendingDestinationViewState extends State<TrendingDestinationView> {
                     destinationName:
                         widget.destinationBrowseTitle?.trim() ?? '',
                     rating: rating,
+                    reviewsCount: reviewsCount,
                     onBack: () => sl<AppNavigator>().pop(),
                     tripsOfLabel: context.tr.myTripsCatalogTripsOf,
                   ),
@@ -585,6 +599,8 @@ class _TrendingDestinationViewState extends State<TrendingDestinationView> {
                         result.isWishlisted,
                       );
                 },
+                useRatingBar: true,
+                usePrimaryPriceColor: true,
               );
             }
             return MyTripBookingCard.api(
@@ -715,6 +731,7 @@ class _BrowseCatalogHero extends StatelessWidget {
     required this.country,
     required this.destinationName,
     required this.rating,
+    required this.reviewsCount,
     required this.onBack,
     required this.tripsOfLabel,
   });
@@ -723,6 +740,7 @@ class _BrowseCatalogHero extends StatelessWidget {
   final String country;
   final String destinationName;
   final double rating;
+  final int reviewsCount;
   final VoidCallback onBack;
   final String tripsOfLabel;
 
@@ -858,17 +876,31 @@ class _BrowseCatalogHero extends StatelessWidget {
                     child: Row(
                       mainAxisSize: MainAxisSize.min,
                       children: [
+                        RatingBarIndicator(
+                          rating: rating,
+                          itemBuilder: (context, index) => const Icon(
+                            Icons.star_rounded,
+                            color: AppColors.starYellow,
+                          ),
+                          itemCount: 5,
+                          itemSize: 16.sp,
+                          direction: Axis.horizontal,
+                          unratedColor:
+                              AppColors.onImage.withValues(alpha: 0.35),
+                        ),
+                        SizedBox(width: 6.w),
                         Text(
                           rating.toStringAsFixed(1),
                           style: AppTextStyles.bodyMedium(
                             color: AppColors.onImage,
                           ).copyWith(fontWeight: FontWeight.w700),
                         ),
-                        SizedBox(width: 6.w),
-                        Icon(
-                          Iconsax.star1,
-                          size: 16.sp,
-                          color: AppColors.starYellow,
+                        SizedBox(width: 2.w),
+                        Text(
+                          '($reviewsCount)',
+                          style: AppTextStyles.bodyMedium(
+                            color: AppColors.onImage,
+                          ).copyWith(fontWeight: FontWeight.w700),
                         ),
                       ],
                     ),

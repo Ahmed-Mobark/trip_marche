@@ -50,8 +50,8 @@ class _ProfileViewState extends State<ProfileView> {
     final bottomInset = MediaQuery.paddingOf(context).bottom;
     final purpleH = t.w(ProfileHandoffTokens.kHeaderGradientHeightFigma);
     final hInset = t.w(ProfileHandoffTokens.kHorizontalInsetFigma);
-    final scrollBottomPad = bottomInset + t.w(16);
-    final firstCardTop = t.w(ProfileHandoffTokens.kFirstCardTopFigma) - 20;
+    final scrollBottomPad = bottomInset + t.w(4);
+    final firstCardTop = t.w(ProfileHandoffTokens.kFirstCardTopFigma);
 
     return BlocProvider<ProfileCubit>.value(
       value: sl<ProfileCubit>(),
@@ -155,7 +155,8 @@ class _ProfileViewState extends State<ProfileView> {
                           ),
                         ),
                         PositionedDirectional(
-                          top: t.w(ProfileHandoffTokens.kAvatarRowTopFigma),
+                          top:
+                              t.w(ProfileHandoffTokens.kAvatarRowTopFigma) - 10,
                           start: hInset,
                           end: hInset,
                           child: Row(

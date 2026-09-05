@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../../core/config/app_icons.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/injection/injection_container.dart';
@@ -57,7 +56,7 @@ class _SplashViewState extends State<SplashView> {
               curve: Curves.easeIn,
               child: Image.asset(
                 AppIcons.lloPng,
-                width: 200.w,
+                // width: 200.w,
                 fit: BoxFit.contain,
               ),
             ),

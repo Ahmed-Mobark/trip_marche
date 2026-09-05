@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:intl/intl.dart';
 import 'package:trip_marche/core/extensions/localization.dart';
@@ -19,12 +20,16 @@ class MyTripCatalogCard extends StatelessWidget {
     required this.locationLabel,
     required this.onFavoriteTap,
     this.onReturnedFromTripDetails,
+    this.useRatingBar = false,
+    this.usePrimaryPriceColor = false,
   });
 
   final WishlistTripItem trip;
   final String locationLabel;
   final VoidCallback onFavoriteTap;
   final void Function(TripWishlistPopResult? result)? onReturnedFromTripDetails;
+  final bool useRatingBar;
+  final bool usePrimaryPriceColor;
 
   static String _priceWithCurrency(num value, String currency) =>
       PriceFormatter.format(value, currency: currency);
@@ -132,12 +137,30 @@ class MyTripCatalogCard extends StatelessWidget {
 
                                 Row(
                                   children: [
-                                    Icon(
-                                      Iconsax.star1,
-                                      size: 16.sp,
-                                      color: AppColors.starYellow,
-                                    ),
-                                    SizedBox(width: 5.w),
+                                    if (useRatingBar)
+                                      RatingBarIndicator(
+                                        rating: trip.rating,
+                                        itemBuilder: (context, index) =>
+                                            const Icon(
+                                          Icons.star_rounded,
+                                          color: AppColors.starYellow,
+                                        ),
+                                        itemCount: 5,
+                                        itemSize: 14.sp,
+                                        direction: Axis.horizontal,
+                                        unratedColor: AppColors
+                                            .catalogMetaMuted(context)
+                                            .withValues(alpha: 0.35),
+                                      )
+                                    else ...[
+                                      Icon(
+                                        Iconsax.star1,
+                                        size: 16.sp,
+                                        color: AppColors.starYellow,
+                                      ),
+                                      SizedBox(width: 5.w),
+                                    ],
+                                    SizedBox(width: useRatingBar ? 5.w : 0),
                                     Text(
                                       trip.rating.toStringAsFixed(1),
                                       style: TextStyle(
@@ -246,7 +269,9 @@ class MyTripCatalogCard extends StatelessWidget {
                                         style: TextStyle(
                                           fontSize: 17.sp,
                                           fontWeight: FontWeight.w700,
-                                          color: AppColors.darkText(context),
+                                          color: usePrimaryPriceColor
+                                              ? AppColors.primary
+                                              : AppColors.darkText(context),
                                           height: 1.15,
                                         ),
                                       ),

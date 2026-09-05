@@ -141,7 +141,9 @@ class _ContactInfoViewState extends State<ContactInfoView> {
                         },
                         requiredErrorText: tr.errorFieldRequired,
                         autovalidateMode: _autovalidateMode,
-                        showPhone: index == 0,
+                        // Every traveler uses the same contact card. Only the
+                        // primary traveler's phone number is required.
+                        showPhone: true,
                         requirePhone: index == 0,
                       );
                     },

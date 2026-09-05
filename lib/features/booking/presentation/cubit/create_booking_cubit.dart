@@ -50,7 +50,7 @@ class CreateBookingCubit extends Cubit<CreateBookingState> {
         continue;
       }
 
-      if (i < adultCount) {
+      if (i == 0) {
         final phone = traveler.phoneNumber.trim();
         final code = traveler.countryCode.trim();
         if (code.isEmpty || !code.startsWith('+')) {
@@ -105,30 +105,25 @@ class CreateBookingCubit extends Cubit<CreateBookingState> {
     final travelers = <CreateBookingTraveler>[];
     for (var i = 0; i < data.travelers.length; i++) {
       final traveler = data.travelers[i];
-      if (i < adultCount) {
-        travelers.add(
-          CreateBookingTraveler(
-            fullName: traveler.fullName.trim(),
-            phoneCountryCode: traveler.countryCode.trim(),
-            phone: traveler.phoneNumber.trim(),
-            type: 'adult',
-          ),
-        );
-      } else if (i < adultCount + kidCount) {
-        travelers.add(
-          CreateBookingTraveler(
-            fullName: traveler.fullName.trim(),
-            type: 'kid',
-          ),
-        );
-      } else {
-        travelers.add(
-          CreateBookingTraveler(
-            fullName: traveler.fullName.trim(),
-            type: 'baby',
-          ),
-        );
-      }
+      final phone = traveler.phoneNumber.trim();
+      final hasPhone = phone.isNotEmpty;
+      final type = i < adultCount
+          ? 'adult'
+          : i < adultCount + kidCount
+          ? 'kid'
+          : 'baby';
+
+      travelers.add(
+        CreateBookingTraveler(
+          fullName: traveler.fullName.trim(),
+          // Optional phones retain the request model's existing nullable
+          // representation when left empty, while entered values are sent for
+          // every traveler type.
+          phoneCountryCode: hasPhone ? traveler.countryCode.trim() : null,
+          phone: hasPhone ? phone : null,
+          type: type,
+        ),
+      );
     }
 
     final rooms = data.selectedRooms

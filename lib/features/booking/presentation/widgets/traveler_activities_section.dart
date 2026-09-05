@@ -45,19 +45,16 @@ class TravelerActivitiesSection extends StatelessWidget {
           sameAsTravelerOneLabel: sameAsTravelerOneLabel,
           onSameAsTravelerOneChanged: onSameAsTravelerOneChanged,
         ),
-        if (!sameAsTravelerOne) ...[
-          SizedBox(height: SelectActivitiesFigmaTokens.headerBottom),
-          for (var i = 0; i < activities.length; i++) ...[
-            if (i > 0)
-              SizedBox(height: SelectActivitiesFigmaTokens.activityGap),
-            ActivityCard(
-              activity: activities[i],
-              currency: currency,
-              isSelected: selectedActivityIds.contains(activities[i].id),
-              enabled: activitiesEnabled,
-              onTap: () => onActivityToggled(activities[i].id),
-            ),
-          ],
+        SizedBox(height: SelectActivitiesFigmaTokens.headerBottom),
+        for (var i = 0; i < activities.length; i++) ...[
+          if (i > 0) SizedBox(height: SelectActivitiesFigmaTokens.activityGap),
+          ActivityCard(
+            activity: activities[i],
+            currency: currency,
+            isSelected: selectedActivityIds.contains(activities[i].id),
+            enabled: activitiesEnabled,
+            onTap: () => onActivityToggled(activities[i].id),
+          ),
         ],
       ],
     );
