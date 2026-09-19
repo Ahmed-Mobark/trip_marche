@@ -150,79 +150,94 @@ class _SettingsViewContent extends StatelessWidget {
   }
 
   void _showLogoutBottomSheet(BuildContext context) {
+    final logoutCubit = context.read<LogoutCubit>();
+
     showAppModalBottomSheet(
       context: context,
       isScrollControlled: true,
       backgroundColor: AppColors.transparent,
       applySystemBottomInset: false,
-      builder: (sheetContext) => BlocConsumer<LogoutCubit, LogoutState>(
-        listener: (context, state) {
-          debugPrint("Current Logout State: ${state.status}");
-          if (state.status == LogoutStatus.failure) {
-            Navigator.pop(sheetContext);
-            context.read<LogoutCubit>().clearError();
-          } else if (state.status == LogoutStatus.success) {
-            Navigator.pop(sheetContext);
-            _handleLogoutSuccess(context);
-          }
-        },
-        builder: (context, state) {
-          final isLoading = state.status == LogoutStatus.loading;
-          return AppConfirmationBottomSheet(
-            icon: Iconsax.logout_1,
-            title: context.tr.logoutTitle,
-            description: context.tr.logoutDescription,
-            primaryActionText: context.tr.logoutAction,
-            secondaryActionText: context.tr.cancel,
-            primaryActionColor: AppColors.red,
-            isLoading: isLoading,
-            onPrimaryAction: isLoading ? null : () => _performLogout(context),
-            onSecondaryAction: isLoading
-                ? null
-                : () => Navigator.pop(sheetContext),
-          );
-        },
+      builder: (sheetContext) => BlocProvider.value(
+        value: logoutCubit,
+        child: BlocConsumer<LogoutCubit, LogoutState>(
+          listener: (_, state) {
+            debugPrint("Current Logout State: ${state.status}");
+            if (state.status == LogoutStatus.failure) {
+              logoutCubit.clearError();
+              Navigator.pop(sheetContext);
+            } else if (state.status == LogoutStatus.success) {
+              _handleLogoutSuccess(
+                settingsContext: context,
+                sheetContext: sheetContext,
+                cubit: logoutCubit,
+              );
+            }
+          },
+          builder: (context, state) {
+            final isLoading = state.status == LogoutStatus.loading;
+            return AppConfirmationBottomSheet(
+              icon: Iconsax.logout_1,
+              title: context.tr.logoutTitle,
+              description: context.tr.logoutDescription,
+              primaryActionText: context.tr.logoutAction,
+              secondaryActionText: context.tr.cancel,
+              primaryActionColor: AppColors.red,
+              isLoading: isLoading,
+              onPrimaryAction: isLoading ? null : () => _performLogout(context),
+              onSecondaryAction: isLoading
+                  ? null
+                  : () => Navigator.pop(sheetContext),
+            );
+          },
+        ),
       ),
     );
   }
 
   void _showDeleteAccountFlow(BuildContext context) {
+    final deleteAccountCubit = context.read<DeleteAccountCubit>();
+
     showAppModalBottomSheet(
       context: context,
       isScrollControlled: true,
       backgroundColor: AppColors.transparent,
       applySystemBottomInset: false,
-      builder: (sheetContext) =>
-          BlocConsumer<DeleteAccountCubit, DeleteAccountState>(
-            listener: (context, state) {
-              debugPrint("Current Delete Account State: ${state.status}");
-              if (state.status == DeleteAccountStatus.failure) {
-                Navigator.pop(sheetContext);
-                context.read<DeleteAccountCubit>().clearError();
-              } else if (state.status == DeleteAccountStatus.success) {
-                Navigator.pop(sheetContext);
-                _handleDeleteAccountSuccess(context);
-              }
-            },
-            builder: (context, state) {
-              final isLoading = state.status == DeleteAccountStatus.loading;
-              return AppConfirmationBottomSheet(
-                icon: Iconsax.trash,
-                title: context.tr.deleteAccountTitle,
-                description: context.tr.deleteAccountDescription,
-                primaryActionText: context.tr.deleteAccountAction,
-                secondaryActionText: context.tr.cancel,
-                primaryActionColor: AppColors.red,
-                isLoading: isLoading,
-                onPrimaryAction: isLoading
-                    ? null
-                    : () => _showFinalConfirmationDialog(context),
-                onSecondaryAction: isLoading
-                    ? null
-                    : () => Navigator.pop(sheetContext),
+      builder: (sheetContext) => BlocProvider.value(
+        value: deleteAccountCubit,
+        child: BlocConsumer<DeleteAccountCubit, DeleteAccountState>(
+          listener: (_, state) {
+            debugPrint("Current Delete Account State: ${state.status}");
+            if (state.status == DeleteAccountStatus.failure) {
+              deleteAccountCubit.clearError();
+              Navigator.pop(sheetContext);
+            } else if (state.status == DeleteAccountStatus.success) {
+              _handleDeleteAccountSuccess(
+                settingsContext: context,
+                sheetContext: sheetContext,
+                cubit: deleteAccountCubit,
               );
-            },
-          ),
+            }
+          },
+          builder: (context, state) {
+            final isLoading = state.status == DeleteAccountStatus.loading;
+            return AppConfirmationBottomSheet(
+              icon: Iconsax.trash,
+              title: context.tr.deleteAccountTitle,
+              description: context.tr.deleteAccountDescription,
+              primaryActionText: context.tr.deleteAccountAction,
+              secondaryActionText: context.tr.cancel,
+              primaryActionColor: AppColors.red,
+              isLoading: isLoading,
+              onPrimaryAction: isLoading
+                  ? null
+                  : () => _showFinalConfirmationDialog(context),
+              onSecondaryAction: isLoading
+                  ? null
+                  : () => Navigator.pop(sheetContext),
+            );
+          },
+        ),
+      ),
     );
   }
 
@@ -252,25 +267,33 @@ class _SettingsViewContent extends StatelessWidget {
     context.read<DeleteAccountCubit>().deleteAccount(context);
   }
 
-  Future<void> _handleLogoutSuccess(BuildContext context) async {
-    await context.read<LogoutCubit>().clearSession();
-    if (context.mounted) {
-      sl<AppNavigator>().pushAndRemoveUntil(screen: const LoginView());
-    }
+  Future<void> _handleLogoutSuccess({
+    required BuildContext settingsContext,
+    required BuildContext sheetContext,
+    required LogoutCubit cubit,
+  }) async {
+    await cubit.clearSession();
+    if (!settingsContext.mounted) return;
+
+    if (sheetContext.mounted) Navigator.pop(sheetContext);
+    sl<AppNavigator>().pushAndRemoveUntil(screen: const LoginView());
   }
 
-  Future<void> _handleDeleteAccountSuccess(BuildContext context) async {
-    await context.read<DeleteAccountCubit>().clearSession();
-    if (context.mounted) {
-      sl<AppNavigator>().pushAndRemoveUntil(screen: const LoginView());
-    }
-    if (context.mounted) {
-      appToast(
-        context: context,
-        type: ToastType.success,
-        message: context.tr.deleteAccountSuccess,
-      );
-    }
+  Future<void> _handleDeleteAccountSuccess({
+    required BuildContext settingsContext,
+    required BuildContext sheetContext,
+    required DeleteAccountCubit cubit,
+  }) async {
+    await cubit.clearSession();
+    if (!settingsContext.mounted) return;
+
+    if (sheetContext.mounted) Navigator.pop(sheetContext);
+    appToast(
+      context: settingsContext,
+      type: ToastType.success,
+      message: settingsContext.tr.deleteAccountSuccess,
+    );
+    sl<AppNavigator>().pushAndRemoveUntil(screen: const LoginView());
   }
 }
 
