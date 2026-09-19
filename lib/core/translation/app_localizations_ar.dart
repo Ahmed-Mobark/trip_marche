@@ -483,6 +483,12 @@ class AppLocalizationsAr extends AppLocalizations {
   String get settingsCurrency => 'العملة';
 
   @override
+  String get currencyAmountLabel => 'المبلغ';
+
+  @override
+  String get currencyEquivalentEgp => 'ما يعادله بالجنيه المصري';
+
+  @override
   String get settingsEnglish => 'الإنجليزية';
 
   @override
@@ -745,6 +751,12 @@ class AppLocalizationsAr extends AppLocalizations {
   String get bookingContactInfoTitle => 'معلومات الاتصال';
 
   @override
+  String get bookingMeetingPointTitle => 'نقطة التجمع';
+
+  @override
+  String get bookingMeetingPointRequired => 'يرجى اختيار نقطة تجمع';
+
+  @override
   String get bookingContactFullNameLabel => 'الاسم الكامل';
 
   @override
@@ -817,6 +829,9 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get bookingAccommodationOptions => 'خيارات الإقامة';
+
+  @override
+  String get bookingOptionalExtras => 'إضافات اختيارية';
 
   @override
   String get bookingCreatedSuccess => 'تم إنشاء الحجز بنجاح';
@@ -1450,14 +1465,14 @@ class AppLocalizationsAr extends AppLocalizations {
   String get tripDetailsDepartureDetailsTitle => 'تفاصيل المغادرة';
 
   @override
-  String get tripDetailsMeetingLocationLabel => 'مكان التجمع';
+  String get tripDetailsMeetingLocationLabel => 'نقطة التجمع';
 
   @override
   String get tripDetailsMeetingLocationValue =>
       '18 طريق التسعين، القاهرة الجديدة، مصر';
 
   @override
-  String get tripDetailsReturnLocationLabel => 'مكان العودة';
+  String get tripDetailsReturnLocationLabel => 'نقطة العودة';
 
   @override
   String get tripDetailsReturnLocationValue => '54 رمسيس، وسط البلد، مصر';

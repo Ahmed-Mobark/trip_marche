@@ -35,6 +35,7 @@ class BookingsRemoteDataSourceImpl implements BookingsRemoteDataSource {
         'search': search,
         'per_page': perPage,
       },
+      includeCurrency: true,
     );
     return BookingsPageModel.fromJson(response);
   }

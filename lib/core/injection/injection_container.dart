@@ -13,6 +13,7 @@ import '../../features/wishlist/wishlist_inj.dart';
 import '../../features/booking/booking_inj.dart';
 import '../../features/payment_method/payment_method_inj.dart';
 import '../../features/profile/profile_inj.dart';
+import '../../features/currency/currency_inj.dart';
 import 'package:get_it/get_it.dart';
 
 GetIt sl = GetIt.instance;
@@ -22,6 +23,7 @@ Future<void> init() async {
   initNavigationInjection(sl);
   sl.registerLazySingleton<LocationService>(() => LocationService());
   initNetworkServiceInjection(sl);
+  initCurrencyInjection(sl);
   initMediaServiceInjection(sl);
   await initAuthInjection(sl);
   initWishlistInjection(sl);

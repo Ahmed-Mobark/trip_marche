@@ -13,6 +13,7 @@ import 'package:trip_marche/core/theme/app_colors.dart';
 import 'package:trip_marche/core/theme/app_theme.dart';
 import 'package:trip_marche/core/translation/app_localizations.dart';
 import 'package:trip_marche/features/profile/presentation/cubit/profile_cubit.dart';
+import 'package:trip_marche/features/currency/presentation/cubit/currency_cubit.dart';
 
 ThemeMode _materialThemeMode(AdaptiveThemeMode mode) {
   switch (mode) {
@@ -81,56 +82,57 @@ class MyAppState extends State<MyApp> {
         // whether shown as a tab or pushed through navigation) can read
         // ProfileCubit without losing the provider across routes.
         BlocProvider.value(value: sl<ProfileCubit>()),
+        BlocProvider.value(value: sl<CurrencyCubit>()),
       ],
       child: ScreenUtilInit(
         designSize: const Size(393, 852),
         minTextAdapt: true,
         splitScreenMode: true,
         builder: (BuildContext context, Widget? child) => AdaptiveTheme(
-        light: AppTheme.appLightTheme,
-        dark: AppTheme.appDarkTheme,
-        initial: widget.initialThemeMode,
-        debugShowFloatingThemeButton: false,
-        builder: (light, dark) => Builder(
-          builder: (context) {
-            final themeMode = _materialThemeMode(
-              AdaptiveTheme.of(context).mode,
-            );
-            return MaterialApp(
-              debugShowCheckedModeBanner: false,
-              scrollBehavior: const _AppScrollBehavior(),
-              theme: AppTheme.appLightTheme,
-              darkTheme: AppTheme.appDarkTheme,
-              themeMode: themeMode,
-              localizationsDelegates: AppLocalizations.localizationsDelegates,
-              supportedLocales: AppLocalizations.supportedLocales,
-              navigatorObservers: [ObserverUtils.routeObserver],
-              locale: _locale,
-              navigatorKey: sl<AppNavigator>().navigatorKey,
-              builder: (context, child) {
-                return AnnotatedRegion<SystemUiOverlayStyle>(
-                  value: const SystemUiOverlayStyle(
-                    statusBarColor: Colors.transparent,
-                    statusBarIconBrightness: Brightness.light,
-                    statusBarBrightness: Brightness.dark,
-                  ),
-                  child: DecoratedBox(
-                    decoration: const BoxDecoration(
-                      gradient: AppColors.primaryGradient,
+          light: AppTheme.appLightTheme,
+          dark: AppTheme.appDarkTheme,
+          initial: widget.initialThemeMode,
+          debugShowFloatingThemeButton: false,
+          builder: (light, dark) => Builder(
+            builder: (context) {
+              final themeMode = _materialThemeMode(
+                AdaptiveTheme.of(context).mode,
+              );
+              return MaterialApp(
+                debugShowCheckedModeBanner: false,
+                scrollBehavior: const _AppScrollBehavior(),
+                theme: AppTheme.appLightTheme,
+                darkTheme: AppTheme.appDarkTheme,
+                themeMode: themeMode,
+                localizationsDelegates: AppLocalizations.localizationsDelegates,
+                supportedLocales: AppLocalizations.supportedLocales,
+                navigatorObservers: [ObserverUtils.routeObserver],
+                locale: _locale,
+                navigatorKey: sl<AppNavigator>().navigatorKey,
+                builder: (context, child) {
+                  return AnnotatedRegion<SystemUiOverlayStyle>(
+                    value: const SystemUiOverlayStyle(
+                      statusBarColor: Colors.transparent,
+                      statusBarIconBrightness: Brightness.light,
+                      statusBarBrightness: Brightness.dark,
                     ),
-                    child: SafeArea(
-                      top: true,
-                      bottom: false,
-                      child: child ?? const SizedBox.shrink(),
+                    child: DecoratedBox(
+                      decoration: const BoxDecoration(
+                        gradient: AppColors.primaryGradient,
+                      ),
+                      child: SafeArea(
+                        top: true,
+                        bottom: false,
+                        child: child ?? const SizedBox.shrink(),
+                      ),
                     ),
-                  ),
-                );
-              },
-              home: AppState.currentScreen(),
-            );
-          },
+                  );
+                },
+                home: AppState.currentScreen(),
+              );
+            },
+          ),
         ),
-      ),
       ),
     );
   }

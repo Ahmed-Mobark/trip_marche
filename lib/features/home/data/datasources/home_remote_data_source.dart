@@ -52,6 +52,7 @@ class HomeRemoteDataSourceImpl implements HomeRemoteDataSource {
   Future<Map<String, dynamic>> getHomeSections() async {
     final response = await _apiHelper.get<Map<String, dynamic>>(
       url: AppEndpoints.homeSections,
+      includeCurrency: true,
     );
     return response;
   }
@@ -87,6 +88,7 @@ class HomeRemoteDataSourceImpl implements HomeRemoteDataSource {
         'per_page': perPage,
         'search': search,
       },
+      includeCurrency: true,
     );
     return response;
   }
@@ -99,11 +101,8 @@ class HomeRemoteDataSourceImpl implements HomeRemoteDataSource {
   }) async {
     final response = await _apiHelper.get<Map<String, dynamic>>(
       url: AppEndpoints.homeTrendingDestinationsItems,
-      queryParameters: {
-        'page': page,
-        'per_page': perPage,
-        'search': search,
-      },
+      queryParameters: {'page': page, 'per_page': perPage, 'search': search},
+      includeCurrency: true,
     );
     return response;
   }
@@ -116,11 +115,8 @@ class HomeRemoteDataSourceImpl implements HomeRemoteDataSource {
   }) async {
     final response = await _apiHelper.get<Map<String, dynamic>>(
       url: AppEndpoints.homePopularTripsItems,
-      queryParameters: {
-        'page': page,
-        'per_page': perPage,
-        'search': search,
-      },
+      queryParameters: {'page': page, 'per_page': perPage, 'search': search},
+      includeCurrency: true,
     );
     return response;
   }
@@ -133,11 +129,8 @@ class HomeRemoteDataSourceImpl implements HomeRemoteDataSource {
   }) async {
     final response = await _apiHelper.get<Map<String, dynamic>>(
       url: AppEndpoints.homeSponsoredTripsItems,
-      queryParameters: {
-        'page': page,
-        'per_page': perPage,
-        'search': search,
-      },
+      queryParameters: {'page': page, 'per_page': perPage, 'search': search},
+      includeCurrency: true,
     );
     return response;
   }
@@ -150,11 +143,8 @@ class HomeRemoteDataSourceImpl implements HomeRemoteDataSource {
   }) async {
     final response = await _apiHelper.get<Map<String, dynamic>>(
       url: AppEndpoints.homeDomesticTripsItems,
-      queryParameters: {
-        'page': page,
-        'per_page': perPage,
-        'search': search,
-      },
+      queryParameters: {'page': page, 'per_page': perPage, 'search': search},
+      includeCurrency: true,
     );
     return response;
   }
@@ -167,11 +157,8 @@ class HomeRemoteDataSourceImpl implements HomeRemoteDataSource {
   }) async {
     final response = await _apiHelper.get<Map<String, dynamic>>(
       url: AppEndpoints.homeInternationalTripsItems,
-      queryParameters: {
-        'page': page,
-        'per_page': perPage,
-        'search': search,
-      },
+      queryParameters: {'page': page, 'per_page': perPage, 'search': search},
+      includeCurrency: true,
     );
     return response;
   }
@@ -184,11 +171,8 @@ class HomeRemoteDataSourceImpl implements HomeRemoteDataSource {
   }) async {
     final response = await _apiHelper.get<Map<String, dynamic>>(
       url: AppEndpoints.homeRecommendedForYouItems,
-      queryParameters: {
-        'page': page,
-        'per_page': perPage,
-        'search': search,
-      },
+      queryParameters: {'page': page, 'per_page': perPage, 'search': search},
+      includeCurrency: true,
     );
     return response;
   }

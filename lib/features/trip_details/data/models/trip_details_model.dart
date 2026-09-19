@@ -80,6 +80,7 @@ class TripDetailsModel {
               time: _JsonParse.asString(meeting['time']),
             )
           : const TripMeetingInfo(location: '', time: ''),
+      meetingPoints: _parseMeetingPoints(json['meeting_points']),
       returnPoint: ret is Map<String, dynamic>
           ? TripMeetingInfo(
               location: _JsonParse.asString(ret['location']),
@@ -92,8 +93,9 @@ class TripDetailsModel {
       discountPrice: _JsonParse.asNullableDouble(json['discount_price']),
       currency: _JsonParse.asCurrencyCode(json['currency']),
       depositAmount: _JsonParse.asNullableDouble(json['deposit_amount']),
-      payOnArrivalAmount:
-          _JsonParse.asNullableDouble(json['pay_on_arrival_amount']),
+      payOnArrivalAmount: _JsonParse.asNullableDouble(
+        json['pay_on_arrival_amount'],
+      ),
       taxPercent: _JsonParse.asNullableDouble(json['tax_percent']),
       kidPrice: _JsonParse.asNullableDouble(json['kid_price']),
       babyPrice: _JsonParse.asNullableDouble(json['baby_price']),
@@ -102,14 +104,15 @@ class TripDetailsModel {
       badge: _JsonParse.asNullableString(json['badge']),
       flags: WishlistTripFlags(
         popular: _JsonParse.asBool(flags is Map ? flags['popular'] : null),
-        sponsored:
-            _JsonParse.asBool(flags is Map ? flags['sponsored'] : null),
-        recommended:
-            _JsonParse.asBool(flags is Map ? flags['recommended'] : null),
+        sponsored: _JsonParse.asBool(flags is Map ? flags['sponsored'] : null),
+        recommended: _JsonParse.asBool(
+          flags is Map ? flags['recommended'] : null,
+        ),
         topRated: _JsonParse.asBool(flags is Map ? flags['top_rated'] : null),
         special: _JsonParse.asBool(flags is Map ? flags['special'] : null),
-        international:
-            _JsonParse.asBool(flags is Map ? flags['international'] : null),
+        international: _JsonParse.asBool(
+          flags is Map ? flags['international'] : null,
+        ),
       ),
       destination: dest is Map<String, dynamic>
           ? TripDestinationSummary(
@@ -131,8 +134,9 @@ class TripDetailsModel {
               company: _JsonParse.asNullableString(vendor['company']),
               rating: _JsonParse.asNullableDouble(vendor['rating']),
               reviewsCount: _JsonParse.asNullableInt(vendor['reviews_count']),
-              followersCount:
-                  _JsonParse.asNullableInt(vendor['followers_count']),
+              followersCount: _JsonParse.asNullableInt(
+                vendor['followers_count'],
+              ),
               isFollowing: _JsonParse.asBool(vendor['is_following']),
             )
           : const TripVendor(id: 0, name: ''),
@@ -164,6 +168,25 @@ class TripDetailsModel {
       isWishlisted: _JsonParse.asBool(json['is_wishlisted']),
       isFavorite: _JsonParse.asBool(json['is_favorite']),
     );
+  }
+
+  static List<TripMeetingPoint> _parseMeetingPoints(dynamic raw) {
+    if (raw is! List) return const [];
+
+    return raw
+        .whereType<Map<String, dynamic>>()
+        .map(
+          (point) => TripMeetingPoint(
+            id: _JsonParse.asInt(point['id']),
+            name: _JsonParse.asString(point['name']).trim(),
+            address: _JsonParse.asNullableString(point['address']),
+            lat: _JsonParse.asNullableDouble(point['lat']),
+            lng: _JsonParse.asNullableDouble(point['lng']),
+            time: _JsonParse.asNullableString(point['time']),
+          ),
+        )
+        .where((point) => point.id > 0 && point.name.isNotEmpty)
+        .toList(growable: false);
   }
 
   static List<TripDetailsCategory> _parseCategories(dynamic raw) {
@@ -262,9 +285,9 @@ class TripDetailsModel {
       final itemsRaw = e['items'];
       final items = itemsRaw is List
           ? itemsRaw
-              .map((x) => x?.toString() ?? '')
-              .where((s) => s.isNotEmpty)
-              .toList()
+                .map((x) => x?.toString() ?? '')
+                .where((s) => s.isNotEmpty)
+                .toList()
           : <String>[];
       return TripDayItinerary(
         dayNumber: _JsonParse.asInt(e['day_number']),
@@ -300,9 +323,11 @@ class TripDetailsModel {
             : const TripAirline(id: 0, name: '', code: ''),
         fromCity: _JsonParse.asString(e['from_city']),
         toCity: _JsonParse.asString(e['to_city']),
-        departAt: DateTime.tryParse(_JsonParse.asString(e['depart_at'])) ??
+        departAt:
+            DateTime.tryParse(_JsonParse.asString(e['depart_at'])) ??
             DateTime.fromMillisecondsSinceEpoch(0, isUtc: true),
-        arriveAt: DateTime.tryParse(_JsonParse.asString(e['arrive_at'])) ??
+        arriveAt:
+            DateTime.tryParse(_JsonParse.asString(e['arrive_at'])) ??
             DateTime.fromMillisecondsSinceEpoch(0, isUtc: true),
       );
     }).toList();
@@ -325,9 +350,11 @@ class TripDetailsModel {
             : const TripTransportCompany(id: 0, name: ''),
         fromCity: _JsonParse.asString(e['from_city']),
         toCity: _JsonParse.asString(e['to_city']),
-        departAt: DateTime.tryParse(_JsonParse.asString(e['depart_at'])) ??
+        departAt:
+            DateTime.tryParse(_JsonParse.asString(e['depart_at'])) ??
             DateTime.fromMillisecondsSinceEpoch(0, isUtc: true),
-        arriveAt: DateTime.tryParse(_JsonParse.asString(e['arrive_at'])) ??
+        arriveAt:
+            DateTime.tryParse(_JsonParse.asString(e['arrive_at'])) ??
             DateTime.fromMillisecondsSinceEpoch(0, isUtc: true),
       );
     }).toList();

@@ -6,6 +6,7 @@ import '../../../../core/navigation/app_navigator.dart';
 import '../../../../core/storage/data/storage.dart';
 import '../../../auth/presentation/view/login_view.dart';
 import '../../../nav_bar/presentation/view/main_nav_view.dart';
+import '../../../currency/presentation/cubit/currency_cubit.dart';
 
 class SplashView extends StatefulWidget {
   const SplashView({super.key});
@@ -31,8 +32,10 @@ class _SplashViewState extends State<SplashView> {
     });
 
     // Navigate after 2.5 seconds
-    Future.delayed(const Duration(milliseconds: 2500), () {
+    Future.delayed(const Duration(milliseconds: 2500), () async {
       if (mounted) {
+        await sl<CurrencyCubit>().ensureCurrencySelected();
+        if (!mounted) return;
         final isLoggedIn = sl<Storage>().isAuthorized();
         if (isLoggedIn) {
           sl<AppNavigator>().pushReplacement(screen: const MainNavView());
@@ -50,15 +53,24 @@ class _SplashViewState extends State<SplashView> {
         decoration: const BoxDecoration(gradient: AppColors.primaryGradient),
         child: SizedBox.expand(
           child: Center(
-            child: AnimatedOpacity(
-              opacity: _opacity,
-              duration: const Duration(milliseconds: 800),
-              curve: Curves.easeIn,
-              child: Image.asset(
-                AppIcons.lloPng,
-                // width: 200.w,
-                fit: BoxFit.contain,
-              ),
+            child: LayoutBuilder(
+              builder: (context, constraints) {
+                final logoWidth = (constraints.maxWidth * 0.5).clamp(
+                  160.0,
+                  240.0,
+                );
+
+                return AnimatedOpacity(
+                  opacity: _opacity,
+                  duration: const Duration(milliseconds: 800),
+                  curve: Curves.easeIn,
+                  child: Image.asset(
+                    AppIcons.lloPng,
+                    width: logoWidth,
+                    fit: BoxFit.contain,
+                  ),
+                );
+              },
             ),
           ),
         ),

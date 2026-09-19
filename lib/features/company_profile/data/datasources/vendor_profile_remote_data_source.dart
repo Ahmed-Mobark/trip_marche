@@ -16,6 +16,7 @@ class VendorProfileRemoteDataSourceImpl
   Future<VendorProfileModel> getVendorProfile(int vendorId) async {
     final response = await _api.get<Map<String, dynamic>>(
       url: AppEndpoints.vendorProfile(vendorId),
+      includeCurrency: true,
     );
     return VendorProfileModel.fromJson(response);
   }

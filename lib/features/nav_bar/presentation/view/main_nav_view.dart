@@ -98,9 +98,7 @@ class _MainNavViewState extends State<MainNavView> {
     final vInset = nav.w(10);
 
     return MultiBlocProvider(
-      providers: [
-        BlocProvider.value(value: sl<ProfileCubit>()),
-      ],
+      providers: [BlocProvider.value(value: sl<ProfileCubit>())],
       child: Builder(
         builder: (innerContext) {
           return Scaffold(
@@ -121,7 +119,10 @@ class _MainNavViewState extends State<MainNavView> {
                   decoration: BoxDecoration(
                     color: AppColors.cardBg(context),
                     border: const Border(
-                      top: BorderSide(color: NavBarHandoffTokens.borderTop, width: 1),
+                      top: BorderSide(
+                        color: NavBarHandoffTokens.borderTop,
+                        width: 1,
+                      ),
                     ),
                     boxShadow: NavBarHandoffTokens.topShadow(),
                   ),
@@ -156,7 +157,8 @@ class _MainNavViewState extends State<MainNavView> {
                               }
                               if (index == 3) {
                                 final cubit = innerContext.read<ProfileCubit>();
-                                if (cubit.state.status != ProfileStatus.success) {
+                                if (cubit.state.status !=
+                                    ProfileStatus.success) {
                                   cubit.fetchProfile();
                                 }
                               }

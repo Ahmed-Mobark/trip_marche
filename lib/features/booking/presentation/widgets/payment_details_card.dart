@@ -13,6 +13,7 @@ class PaymentDetailsCard extends StatelessWidget {
     required this.breakdown,
     required this.travelersLabel,
     required this.activitiesLabel,
+    required this.optionalExtrasLabel,
     required this.taxesLabel,
     required this.totalLabel,
     required this.currencySuffix,
@@ -26,6 +27,7 @@ class PaymentDetailsCard extends StatelessWidget {
   final BookingPriceBreakdown breakdown;
   final String travelersLabel;
   final String activitiesLabel;
+  final String optionalExtrasLabel;
   final String taxesLabel;
   final String totalLabel;
   final String currencySuffix;
@@ -52,9 +54,7 @@ class PaymentDetailsCard extends StatelessWidget {
       children: [
         Text(
           title,
-          style: AppTextStyles.subtitle(
-            color: AppColors.ink(context),
-          ).copyWith(
+          style: AppTextStyles.subtitle(color: AppColors.ink(context)).copyWith(
             fontSize: ReviewFigmaTokens.bodySize,
             fontWeight: FontWeight.w600,
           ),
@@ -72,10 +72,12 @@ class PaymentDetailsCard extends StatelessWidget {
           label: activitiesLabel,
           value: _format(breakdown.activitiesTotal),
         ),
-        PriceRow(
-          label: taxesLabel,
-          value: _format(breakdown.taxes),
-        ),
+        if (breakdown.optionalExtrasTotal > 0)
+          PriceRow(
+            label: optionalExtrasLabel,
+            value: _format(breakdown.optionalExtrasTotal),
+          ),
+        PriceRow(label: taxesLabel, value: _format(breakdown.taxes)),
         if (showCouponBreakdown && breakdown.couponDiscount > 0) ...[
           PriceRow(
             label: subtotalLabel ?? totalLabel,

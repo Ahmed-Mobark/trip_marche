@@ -489,6 +489,12 @@ class AppLocalizationsFr extends AppLocalizations {
   String get settingsCurrency => 'Devise';
 
   @override
+  String get currencyAmountLabel => 'Montant';
+
+  @override
+  String get currencyEquivalentEgp => 'Équivalent en livres égyptiennes';
+
+  @override
   String get settingsEnglish => 'Anglais';
 
   @override
@@ -752,6 +758,13 @@ class AppLocalizationsFr extends AppLocalizations {
   String get bookingContactInfoTitle => 'Informations de contact';
 
   @override
+  String get bookingMeetingPointTitle => 'Point de rendez-vous';
+
+  @override
+  String get bookingMeetingPointRequired =>
+      'Veuillez sélectionner un point de rendez-vous';
+
+  @override
   String get bookingContactFullNameLabel => 'Nom complet';
 
   @override
@@ -825,6 +838,9 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get bookingAccommodationOptions => 'Accommodation Options';
+
+  @override
+  String get bookingOptionalExtras => 'Options supplémentaires';
 
   @override
   String get bookingCreatedSuccess => 'Réservation créée avec succès';
@@ -1468,14 +1484,14 @@ class AppLocalizationsFr extends AppLocalizations {
   String get tripDetailsDepartureDetailsTitle => 'Détails du départ';
 
   @override
-  String get tripDetailsMeetingLocationLabel => 'Lieu de rendez-vous';
+  String get tripDetailsMeetingLocationLabel => 'Point de rendez-vous';
 
   @override
   String get tripDetailsMeetingLocationValue =>
       '18 El Tesen Road, New Cairo, Égypte';
 
   @override
-  String get tripDetailsReturnLocationLabel => 'Lieu de retour';
+  String get tripDetailsReturnLocationLabel => 'Point de retour';
 
   @override
   String get tripDetailsReturnLocationValue =>

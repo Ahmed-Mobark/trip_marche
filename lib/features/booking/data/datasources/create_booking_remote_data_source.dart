@@ -9,7 +9,8 @@ abstract class CreateBookingRemoteDataSource {
   );
 }
 
-class CreateBookingRemoteDataSourceImpl implements CreateBookingRemoteDataSource {
+class CreateBookingRemoteDataSourceImpl
+    implements CreateBookingRemoteDataSource {
   CreateBookingRemoteDataSourceImpl(this._api);
 
   final ApiBaseHelper _api;
@@ -22,6 +23,7 @@ class CreateBookingRemoteDataSourceImpl implements CreateBookingRemoteDataSource
     final response = await _api.post<Map<String, dynamic>>(
       url: AppEndpoints.createBooking(tripId),
       body: request.toJson(),
+      includeCurrency: true,
     );
     return CreateBookingResponse.fromApiResponse(response);
   }

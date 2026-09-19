@@ -32,4 +32,8 @@ abstract class Storage {
   String? getThemeMode();
 
   Future<void> deleteThemeMode();
+
+  // Currency Storage
+  Future<void> storeCurrencyCode({required String currencyCode});
+  String? getCurrencyCode();
 }

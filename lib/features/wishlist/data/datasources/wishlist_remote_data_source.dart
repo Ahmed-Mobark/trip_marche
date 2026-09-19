@@ -24,10 +24,8 @@ class WishlistRemoteDataSourceImpl implements WishlistRemoteDataSource {
   }) async {
     final response = await _api.get<Map<String, dynamic>>(
       url: AppEndpoints.wishlist,
-      queryParameters: {
-        'current_page': currentPage,
-        'per_page': perPage,
-      },
+      queryParameters: {'current_page': currentPage, 'per_page': perPage},
+      includeCurrency: true,
     );
     return WishlistTripsPageModel.fromJson(response);
   }

@@ -1030,6 +1030,18 @@ abstract class AppLocalizations {
   /// **'Currency'**
   String get settingsCurrency;
 
+  /// No description provided for @currencyAmountLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Amount'**
+  String get currencyAmountLabel;
+
+  /// No description provided for @currencyEquivalentEgp.
+  ///
+  /// In en, this message translates to:
+  /// **'Equivalent in Egyptian Pound'**
+  String get currencyEquivalentEgp;
+
   /// No description provided for @settingsEnglish.
   ///
   /// In en, this message translates to:
@@ -1516,6 +1528,18 @@ abstract class AppLocalizations {
   /// **'Contact information'**
   String get bookingContactInfoTitle;
 
+  /// No description provided for @bookingMeetingPointTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Meeting Point'**
+  String get bookingMeetingPointTitle;
+
+  /// No description provided for @bookingMeetingPointRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Please select a meeting point'**
+  String get bookingMeetingPointRequired;
+
   /// No description provided for @bookingContactFullNameLabel.
   ///
   /// In en, this message translates to:
@@ -1659,6 +1683,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Accommodation Options'**
   String get bookingAccommodationOptions;
+
+  /// No description provided for @bookingOptionalExtras.
+  ///
+  /// In en, this message translates to:
+  /// **'Optional Extras'**
+  String get bookingOptionalExtras;
 
   /// No description provided for @bookingCreatedSuccess.
   ///
@@ -2833,7 +2863,7 @@ abstract class AppLocalizations {
   /// No description provided for @tripDetailsMeetingLocationLabel.
   ///
   /// In en, this message translates to:
-  /// **'Meeting Location'**
+  /// **'Meeting Point'**
   String get tripDetailsMeetingLocationLabel;
 
   /// No description provided for @tripDetailsMeetingLocationValue.
@@ -2845,7 +2875,7 @@ abstract class AppLocalizations {
   /// No description provided for @tripDetailsReturnLocationLabel.
   ///
   /// In en, this message translates to:
-  /// **'Return Location'**
+  /// **'Return Point'**
   String get tripDetailsReturnLocationLabel;
 
   /// No description provided for @tripDetailsReturnLocationValue.

@@ -489,6 +489,12 @@ class AppLocalizationsDe extends AppLocalizations {
   String get settingsCurrency => 'Währung';
 
   @override
+  String get currencyAmountLabel => 'Betrag';
+
+  @override
+  String get currencyEquivalentEgp => 'Gegenwert in ägyptischen Pfund';
+
+  @override
   String get settingsEnglish => 'Englisch';
 
   @override
@@ -751,6 +757,12 @@ class AppLocalizationsDe extends AppLocalizations {
   String get bookingContactInfoTitle => 'Kontaktinformationen';
 
   @override
+  String get bookingMeetingPointTitle => 'Treffpunkt';
+
+  @override
+  String get bookingMeetingPointRequired => 'Bitte wählen Sie einen Treffpunkt';
+
+  @override
   String get bookingContactFullNameLabel => 'Vollständiger Name';
 
   @override
@@ -824,6 +836,9 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get bookingAccommodationOptions => 'Accommodation Options';
+
+  @override
+  String get bookingOptionalExtras => 'Optionale Extras';
 
   @override
   String get bookingCreatedSuccess => 'Buchung erfolgreich erstellt';
@@ -1472,7 +1487,7 @@ class AppLocalizationsDe extends AppLocalizations {
       '18 El Tesen Road, New Cairo, Ägypten';
 
   @override
-  String get tripDetailsReturnLocationLabel => 'Rückgabeort';
+  String get tripDetailsReturnLocationLabel => 'Rückkehrpunkt';
 
   @override
   String get tripDetailsReturnLocationValue => '54 Ramses, Downtown, Ägypten';

@@ -11,6 +11,7 @@ import 'package:url_launcher/url_launcher.dart';
 import '../../../../core/config/app_colors.dart';
 import '../../../../core/config/dimensions/company_profile_figma_tokens.dart';
 import '../../../../core/injection/injection_container.dart';
+import '../../../../core/navigation/app_navigator.dart';
 import '../../../../core/toast/app_toast.dart';
 import '../../../../core/widgets/custom_loading.dart';
 import '../models/social_button_model.dart';
@@ -31,6 +32,7 @@ import '../widgets/team_section.dart';
 import '../widgets/customer_reviews_section.dart';
 import '../widgets/available_trips_section.dart';
 import '../widgets/faq_section.dart';
+import '../../../trip_details/presentation/view/trip_details_view.dart';
 
 class CompanyProfileView extends StatefulWidget {
   const CompanyProfileView({super.key, required this.vendorId});
@@ -289,9 +291,7 @@ class _CompanyProfileViewState extends State<CompanyProfileView> {
           builder: (context, state) {
             if (state is VendorProfileLoading) {
               return const Scaffold(
-                body: Center(
-                  child: CustomLoading(top: 40, bottom: 40),
-                ),
+                body: Center(child: CustomLoading(top: 40, bottom: 40)),
               );
             }
 
@@ -462,96 +462,109 @@ class _CompanyProfileViewState extends State<CompanyProfileView> {
                                   ),
                                 ),
                                 SizedBox(height: 14.h),
-                              if ((companyDetails.about ?? '').trim().isNotEmpty ||
-                                  detailsList.isNotEmpty) ...[
-                                SizedBox(height: 14.h),
-                                CompanyDetailsSection(
-                                  about: companyDetails.about ?? '',
-                                  details: detailsList,
+                                if ((companyDetails.about ?? '')
+                                        .trim()
+                                        .isNotEmpty ||
+                                    detailsList.isNotEmpty) ...[
+                                  SizedBox(height: 14.h),
+                                  CompanyDetailsSection(
+                                    about: companyDetails.about ?? '',
+                                    details: detailsList,
+                                  ),
+                                ],
+                                if (categories.isNotEmpty) ...[
+                                  SizedBox(height: 14.h),
+                                  TripCategoriesSection(categories: categories),
+                                ],
+                                if (team.isNotEmpty) ...[
+                                  SizedBox(height: 14.h),
+                                  TeamSection(
+                                    members: team
+                                        .map(
+                                          (t) => TeamMemberModel(
+                                            name: t.name,
+                                            role: t.title,
+                                            avatarUrl: t.avatar ?? '',
+                                          ),
+                                        )
+                                        .toList(),
+                                  ),
+                                ],
+                                if (reviews.isNotEmpty) ...[
+                                  SizedBox(height: 14.h),
+                                  CustomerReviewsSection(
+                                    reviews: reviews
+                                        .map(
+                                          (r) => ReviewModel(
+                                            name: r.reviewer.name,
+                                            avatarUrl: r.reviewer.avatar ?? '',
+                                            country: r.reviewer.country,
+                                            countryFlagUrl:
+                                                r
+                                                    .reviewer
+                                                    .countryCode
+                                                    .isNotEmpty
+                                                ? 'https://flagcdn.com/40x30/${r.reviewer.countryCode.toLowerCase()}.png'
+                                                : '',
+                                            rating: r.rating,
+                                            comment: r.comment,
+                                            galleryImages: r.images,
+                                            createdAt: r.createdAt,
+                                          ),
+                                        )
+                                        .toList(),
+                                  ),
+                                ],
+                                if (trips.isNotEmpty) ...[
+                                  SizedBox(height: 14.h),
+                                  AvailableTripsSection(
+                                    trips: trips
+                                        .map(
+                                          (t) => TripCardModel(
+                                            id: t.id,
+                                            title: t.title,
+                                            imageUrl: t.coverImage,
+                                            rating: t.rating,
+                                            reviewsCount: t.reviewsCount,
+                                            fromCity: t.fromLocation,
+                                            dateFrom: t.startDate,
+                                            dateTo: t.endDate,
+                                            oldPrice:
+                                                t.discountPrice ?? t.price,
+                                            newPrice: t.price,
+                                            currency: t.currency,
+                                            badge: t.primaryBadge,
+                                            isFavorite: t.isWishlisted,
+                                          ),
+                                        )
+                                        .toList(),
+                                    onTripTap: (tripId) {
+                                      if (tripId <= 0) return;
+                                      sl<AppNavigator>().push(
+                                        screen: TripDetailsView(tripId: tripId),
+                                      );
+                                    },
+                                  ),
+                                ],
+                                if (faqs.isNotEmpty) ...[
+                                  SizedBox(height: 14.h),
+                                  FAQSection(
+                                    faqs: faqs
+                                        .map(
+                                          (f) => FAQModel(
+                                            question: f.question,
+                                            answer: f.answer,
+                                          ),
+                                        )
+                                        .toList(),
+                                  ),
+                                ],
+                                SizedBox(
+                                  height:
+                                      CompanyProfileFigmaTokens.sectionBottom +
+                                      MediaQuery.paddingOf(context).bottom +
+                                      24.h,
                                 ),
-                              ],
-                              if (categories.isNotEmpty) ...[
-                                SizedBox(height: 14.h),
-                                TripCategoriesSection(categories: categories),
-                              ],
-                              if (team.isNotEmpty) ...[
-                                SizedBox(height: 14.h),
-                                TeamSection(
-                                  members: team
-                                      .map(
-                                        (t) => TeamMemberModel(
-                                          name: t.name,
-                                          role: t.title,
-                                          avatarUrl: t.avatar ?? '',
-                                        ),
-                                      )
-                                      .toList(),
-                                ),
-                              ],
-                              if (reviews.isNotEmpty) ...[
-                                SizedBox(height: 14.h),
-                                CustomerReviewsSection(
-                                  reviews: reviews
-                                      .map(
-                                        (r) => ReviewModel(
-                                          name: r.reviewer.name,
-                                          avatarUrl: r.reviewer.avatar ?? '',
-                                          country: r.reviewer.country,
-                                          countryFlagUrl:
-                                              r.reviewer.countryCode.isNotEmpty
-                                              ? 'https://flagcdn.com/40x30/${r.reviewer.countryCode.toLowerCase()}.png'
-                                              : '',
-                                          rating: r.rating,
-                                          comment: r.comment,
-                                          galleryImages: r.images,
-                                          createdAt: r.createdAt,
-                                        ),
-                                      )
-                                      .toList(),
-                                ),
-                              ],
-                              if (trips.isNotEmpty) ...[
-                                SizedBox(height: 14.h),
-                                AvailableTripsSection(
-                                  trips: trips
-                                      .map(
-                                        (t) => TripCardModel(
-                                          id: t.id,
-                                          title: t.title,
-                                          imageUrl: t.coverImage,
-                                          rating: t.rating,
-                                          reviewsCount: t.reviewsCount,
-                                          fromCity: t.fromLocation,
-                                          dateFrom: t.startDate,
-                                          dateTo: t.endDate,
-                                          oldPrice: t.discountPrice ?? t.price,
-                                          newPrice: t.price,
-                                          currency: t.currency,
-                                          badge: t.primaryBadge,
-                                          isFavorite: t.isWishlisted,
-                                        ),
-                                      )
-                                      .toList(),
-                                ),
-                              ],
-                              if (faqs.isNotEmpty) ...[
-                                SizedBox(height: 14.h),
-                                FAQSection(
-                                  faqs: faqs
-                                      .map(
-                                        (f) => FAQModel(
-                                          question: f.question,
-                                          answer: f.answer,
-                                        ),
-                                      )
-                                      .toList(),
-                                ),
-                              ],
-                              SizedBox(
-                                height: CompanyProfileFigmaTokens.sectionBottom +
-                                    MediaQuery.paddingOf(context).bottom +
-                                    24.h,
-                              ),
                               ],
                             ),
                           ),

@@ -1,6 +1,7 @@
 import 'package:equatable/equatable.dart';
 import 'package:trip_marche/features/booking/domain/entities/booking_activities.dart';
 import 'package:trip_marche/features/booking/domain/entities/booking_room.dart';
+import 'package:trip_marche/features/booking/domain/entities/booking_optional_extra_selection.dart';
 import 'package:trip_marche/features/booking/domain/entities/traveler_contact.dart';
 
 class BookingReviewTrip extends Equatable {
@@ -34,26 +35,23 @@ class BookingReviewTrip extends Equatable {
 
   @override
   List<Object?> get props => [
-        name,
-        description,
-        dateRange,
-        duration,
-        participantsSummary,
-        routeLabel,
-        routeHighlight,
-        meetingTime,
-        startingTime,
-        groupSize,
-        location,
-        includedFeatures,
-      ];
+    name,
+    description,
+    dateRange,
+    duration,
+    participantsSummary,
+    routeLabel,
+    routeHighlight,
+    meetingTime,
+    startingTime,
+    groupSize,
+    location,
+    includedFeatures,
+  ];
 }
 
 class BookingRoomSelection {
-  const BookingRoomSelection({
-    required this.name,
-    required this.price,
-  });
+  const BookingRoomSelection({required this.name, required this.price});
 
   final String name;
   final double price;
@@ -66,6 +64,7 @@ class BookingPriceBreakdown {
     required this.roomLabel,
     required this.roomTotal,
     required this.activitiesTotal,
+    this.optionalExtrasTotal = 0,
     required this.taxes,
     this.couponDiscount = 0,
   });
@@ -75,10 +74,16 @@ class BookingPriceBreakdown {
   final String roomLabel;
   final double roomTotal;
   final double activitiesTotal;
+  final double optionalExtrasTotal;
   final double taxes;
   final double couponDiscount;
 
-  double get subtotal => travelersTotal + roomTotal + activitiesTotal + taxes;
+  double get subtotal =>
+      travelersTotal +
+      roomTotal +
+      activitiesTotal +
+      optionalExtrasTotal +
+      taxes;
 
   double get total {
     final discounted = subtotal - couponDiscount;
@@ -92,6 +97,7 @@ class BookingPriceBreakdown {
       roomLabel: roomLabel,
       roomTotal: roomTotal,
       activitiesTotal: activitiesTotal,
+      optionalExtrasTotal: optionalExtrasTotal,
       taxes: taxes,
       couponDiscount: couponDiscount ?? this.couponDiscount,
     );
@@ -106,12 +112,14 @@ class BookingReviewData extends Equatable {
     required this.room,
     required this.selectedRooms,
     required this.activities,
+    this.optionalExtras = const [],
     required this.priceBreakdown,
     required this.currency,
     required this.departureId,
     required this.adultCount,
     required this.kidCount,
     required this.babyCount,
+    this.selectedMeetingPointId,
   });
 
   final int tripId;
@@ -120,26 +128,30 @@ class BookingReviewData extends Equatable {
   final BookingRoomSelection room;
   final List<BookingRoom> selectedRooms;
   final List<BookingActivities> activities;
+  final List<BookingOptionalExtraSelection> optionalExtras;
   final BookingPriceBreakdown priceBreakdown;
   final String currency;
   final int departureId;
   final int adultCount;
   final int kidCount;
   final int babyCount;
+  final int? selectedMeetingPointId;
 
   @override
   List<Object?> get props => [
-        tripId,
-        trip,
-        travelers,
-        room,
-        selectedRooms,
-        activities,
-        priceBreakdown,
-        currency,
-        departureId,
-        adultCount,
-        kidCount,
-        babyCount,
-      ];
+    tripId,
+    trip,
+    travelers,
+    room,
+    selectedRooms,
+    activities,
+    optionalExtras,
+    priceBreakdown,
+    currency,
+    departureId,
+    adultCount,
+    kidCount,
+    babyCount,
+    selectedMeetingPointId,
+  ];
 }

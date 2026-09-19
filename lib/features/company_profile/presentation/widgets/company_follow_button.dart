@@ -22,12 +22,15 @@ class CompanyFollowButton extends StatelessWidget {
     return TextButton(
       onPressed: isLoading ? null : onPressed,
       style: TextButton.styleFrom(
-        backgroundColor: isFollowing
+        backgroundColor: isFollowing ? AppColors.white : AppColors.primary,
+        disabledBackgroundColor: isFollowing
+            ? AppColors.white
+            : AppColors.primary,
+        foregroundColor: isFollowing ? AppColors.primary : AppColors.white,
+        disabledForegroundColor: isFollowing
             ? AppColors.primary
-            : AppColors.transparent,
-        side: BorderSide(
-          color: isFollowing ? AppColors.primary : AppColors.border(context),
-        ),
+            : AppColors.white,
+        side: const BorderSide(color: AppColors.primary),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(999.r),
         ),
@@ -41,7 +44,7 @@ class CompanyFollowButton extends StatelessWidget {
               height: 14.r,
               child: CircularProgressIndicator(
                 strokeWidth: 2,
-                color: isFollowing ? AppColors.white : AppColors.primary,
+                color: isFollowing ? AppColors.primary : AppColors.white,
               ),
             )
           : Text(
@@ -49,7 +52,7 @@ class CompanyFollowButton extends StatelessWidget {
                   ? context.tr.companyProfileFollowing
                   : context.tr.companyProfileFollow,
               style: AppTextStyles.button(
-                color: isFollowing ? AppColors.white : AppColors.primary,
+                color: isFollowing ? AppColors.primary : AppColors.white,
               ).copyWith(fontWeight: FontWeight.w600),
             ),
     );

@@ -31,6 +31,7 @@ class TripsCatalogRemoteDataSourceImpl implements TripsCatalogRemoteDataSource {
     final response = await _api.post<Map<String, dynamic>>(
       url: AppEndpoints.trips,
       body: body,
+      includeCurrency: true,
     );
     return WishlistTripsPageModel.fromJson(response);
   }

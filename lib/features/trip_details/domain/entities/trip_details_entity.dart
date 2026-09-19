@@ -28,6 +28,27 @@ class TripMeetingInfo extends Equatable {
   List<Object?> get props => [location, lat, lng, time];
 }
 
+class TripMeetingPoint extends Equatable {
+  const TripMeetingPoint({
+    required this.id,
+    required this.name,
+    this.address,
+    this.lat,
+    this.lng,
+    this.time,
+  });
+
+  final int id;
+  final String name;
+  final String? address;
+  final double? lat;
+  final double? lng;
+  final String? time;
+
+  @override
+  List<Object?> get props => [id, name, address, lat, lng, time];
+}
+
 class TripDestinationSummary extends Equatable {
   const TripDestinationSummary({
     required this.id,
@@ -46,8 +67,7 @@ class TripDestinationSummary extends Equatable {
   final int trendingRank;
 
   @override
-  List<Object?> get props =>
-      [id, name, slug, country, image, trendingRank];
+  List<Object?> get props => [id, name, slug, country, image, trendingRank];
 }
 
 class TripDestinationRef extends Equatable {
@@ -106,15 +126,15 @@ class TripVendor extends Equatable {
 
   @override
   List<Object?> get props => [
-        id,
-        name,
-        avatar,
-        company,
-        rating,
-        reviewsCount,
-        followersCount,
-        isFollowing,
-      ];
+    id,
+    name,
+    avatar,
+    company,
+    rating,
+    reviewsCount,
+    followersCount,
+    isFollowing,
+  ];
 }
 
 class TripInclusion extends Equatable {
@@ -194,16 +214,18 @@ class TripFlightLeg extends Equatable {
   final DateTime arriveAt;
 
   @override
-  List<Object?> get props =>
-      [direction, airline, fromCity, toCity, departAt, arriveAt];
+  List<Object?> get props => [
+    direction,
+    airline,
+    fromCity,
+    toCity,
+    departAt,
+    arriveAt,
+  ];
 }
 
 class TripTransportCompany extends Equatable {
-  const TripTransportCompany({
-    required this.id,
-    required this.name,
-    this.logo,
-  });
+  const TripTransportCompany({required this.id, required this.name, this.logo});
 
   final int id;
   final String name;
@@ -231,8 +253,14 @@ class TripTransportLeg extends Equatable {
   final DateTime arriveAt;
 
   @override
-  List<Object?> get props =>
-      [type, company, fromCity, toCity, departAt, arriveAt];
+  List<Object?> get props => [
+    type,
+    company,
+    fromCity,
+    toCity,
+    departAt,
+    arriveAt,
+  ];
 }
 
 class TripAccommodation extends Equatable {
@@ -366,6 +394,30 @@ class TripReview extends Equatable {
   List<Object?> get props => [id, reviewer, rating, comment, images, createdAt];
 }
 
+/// A vendor-configured, optional booking item.
+///
+/// The live Trip Details contract does not expose these items yet, so
+/// [TripDetails.optionalExtras] defaults to an empty list until the backend
+/// adds its documented response field.
+class TripOptionalExtra extends Equatable {
+  const TripOptionalExtra({
+    required this.id,
+    required this.name,
+    required this.unitPrice,
+    required this.currency,
+    this.isAvailable = true,
+  });
+
+  final int id;
+  final String name;
+  final double unitPrice;
+  final String currency;
+  final bool isAvailable;
+
+  @override
+  List<Object?> get props => [id, name, unitPrice, currency, isAvailable];
+}
+
 class TripDetails extends Equatable {
   const TripDetails({
     required this.id,
@@ -383,6 +435,7 @@ class TripDetails extends Equatable {
     required this.groupSize,
     required this.citiesCount,
     required this.meeting,
+    this.meetingPoints = const [],
     required this.returnPoint,
     required this.price,
     this.discountPrice,
@@ -409,6 +462,7 @@ class TripDetails extends Equatable {
     required this.departures,
     required this.roomTypes,
     required this.activities,
+    this.optionalExtras = const [],
     required this.reviews,
     this.visaDetails,
     this.tripInstructions,
@@ -434,6 +488,7 @@ class TripDetails extends Equatable {
   final TripGroupSize groupSize;
   final int citiesCount;
   final TripMeetingInfo meeting;
+  final List<TripMeetingPoint> meetingPoints;
   final TripMeetingInfo returnPoint;
   final double price;
   final double? discountPrice;
@@ -460,6 +515,7 @@ class TripDetails extends Equatable {
   final List<TripDeparture> departures;
   final List<TripRoomType> roomTypes;
   final List<TripDetailsActivity> activities;
+  final List<TripOptionalExtra> optionalExtras;
   final List<TripReview> reviews;
   final String? visaDetails;
   final String? tripInstructions;
@@ -499,54 +555,56 @@ class TripDetails extends Equatable {
 
   @override
   List<Object?> get props => [
-        id,
-        title,
-        slug,
-        country,
-        description,
-        overview,
-        coverImage,
-        images,
-        fromLocation,
-        startDate,
-        endDate,
-        durationDays,
-        groupSize,
-        citiesCount,
-        meeting,
-        returnPoint,
-        price,
-        discountPrice,
-        currency,
-        depositAmount,
-        payOnArrivalAmount,
-        taxPercent,
-        kidPrice,
-        babyPrice,
-        rating,
-        reviewsCount,
-        badge,
-        flags,
-        destination,
-        destinations,
-        categories,
-        vendor,
-        inclusions,
-        days,
-        flights,
-        transports,
-        accommodations,
-        activityRates,
-        departures,
-        roomTypes,
-        activities,
-        reviews,
-        visaDetails,
-        tripInstructions,
-        safetyProcedures,
-        termsConditions,
-        cancellationPolicy,
-        isWishlisted,
-        isFavorite,
-      ];
+    id,
+    title,
+    slug,
+    country,
+    description,
+    overview,
+    coverImage,
+    images,
+    fromLocation,
+    startDate,
+    endDate,
+    durationDays,
+    groupSize,
+    citiesCount,
+    meeting,
+    meetingPoints,
+    returnPoint,
+    price,
+    discountPrice,
+    currency,
+    depositAmount,
+    payOnArrivalAmount,
+    taxPercent,
+    kidPrice,
+    babyPrice,
+    rating,
+    reviewsCount,
+    badge,
+    flags,
+    destination,
+    destinations,
+    categories,
+    vendor,
+    inclusions,
+    days,
+    flights,
+    transports,
+    accommodations,
+    activityRates,
+    departures,
+    roomTypes,
+    activities,
+    optionalExtras,
+    reviews,
+    visaDetails,
+    tripInstructions,
+    safetyProcedures,
+    termsConditions,
+    cancellationPolicy,
+    isWishlisted,
+    isFavorite,
+  ];
 }

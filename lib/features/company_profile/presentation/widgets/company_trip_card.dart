@@ -42,6 +42,7 @@ class CompanyTripCard extends StatelessWidget {
 
     return GestureDetector(
       onTap: onTap ?? trip.onTap,
+      behavior: HitTestBehavior.opaque,
       child: Container(
         margin: EdgeInsets.symmetric(vertical: 8.h),
         decoration: BoxDecoration(
@@ -110,8 +111,6 @@ class CompanyTripCard extends StatelessWidget {
                       style: AppTextStyles.cardTitle(
                         color: AppColors.tripTitle(context),
                       ),
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
                     ),
                     SizedBox(height: CompanyProfileFigmaTokens.rowGapSmall),
                     Row(
@@ -155,8 +154,7 @@ class CompanyTripCard extends StatelessWidget {
                             style: AppTextStyles.caption(
                               color: AppColors.metaSlate(context),
                             ),
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
+                            maxLines: 2,
                           ),
                         ),
                       ],
@@ -176,8 +174,7 @@ class CompanyTripCard extends StatelessWidget {
                             style: AppTextStyles.caption(
                               color: AppColors.metaSlate(context),
                             ),
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
+                            maxLines: 2,
                           ),
                         ),
                         SizedBox(width: CompanyProfileFigmaTokens.rowGapSmall),
@@ -193,8 +190,7 @@ class CompanyTripCard extends StatelessWidget {
                             style: AppTextStyles.caption(
                               color: AppColors.metaSlate(context),
                             ),
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
+                            maxLines: 2,
                           ),
                         ),
                       ],
@@ -219,45 +215,28 @@ class CompanyTripCard extends StatelessWidget {
                       ),
                     ],
                     SizedBox(height: CompanyProfileFigmaTokens.rowGapMedium),
-                    Row(
+                    Wrap(
+                      crossAxisAlignment: WrapCrossAlignment.center,
+                      spacing: CompanyProfileFigmaTokens.rowGapSmall,
+                      runSpacing: 2.h,
                       children: [
                         if (showOldPrice)
-                          Flexible(
-                            child: Text(
-                              '${trip.currency}${trip.oldPrice}',
-                              style:
-                                  AppTextStyles.bodyMedium(
-                                    color: AppColors.strikethroughGrey(context),
-                                  ).copyWith(
-                                    decoration: TextDecoration.lineThrough,
-                                  ),
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
-                            ),
+                          Text(
+                            '${trip.currency}${trip.oldPrice}',
+                            style: AppTextStyles.bodyMedium(
+                              color: AppColors.strikethroughGrey(context),
+                            ).copyWith(decoration: TextDecoration.lineThrough),
                           ),
-                        if (showOldPrice)
-                          SizedBox(
-                            width: CompanyProfileFigmaTokens.rowGapSmall,
-                          ),
-                        Flexible(
-                          child: Text(
-                            '${trip.currency}${trip.newPrice}',
-                            style: AppTextStyles.cardTitle(
-                              color: AppColors.tripTitle(context),
-                            ).copyWith(fontWeight: FontWeight.w700),
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                          ),
+                        Text(
+                          '${trip.currency}${trip.newPrice}',
+                          style: AppTextStyles.cardTitle(
+                            color: AppColors.tripTitle(context),
+                          ).copyWith(fontWeight: FontWeight.w700),
                         ),
-                        SizedBox(width: CompanyProfileFigmaTokens.rowGapSmall),
-                        Flexible(
-                          child: Text(
-                            '/${context.tr.companyProfilePricePerPerson}',
-                            style: AppTextStyles.caption(
-                              color: AppColors.tripTitle(context),
-                            ),
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
+                        Text(
+                          '/${context.tr.companyProfilePricePerPerson}',
+                          style: AppTextStyles.caption(
+                            color: AppColors.tripTitle(context),
                           ),
                         ),
                       ],
@@ -271,6 +250,7 @@ class CompanyTripCard extends StatelessWidget {
               padding: EdgeInsets.only(top: 8.h),
               child: GestureDetector(
                 onTap: trip.onFavoriteTap ?? onFavoriteTap,
+                behavior: HitTestBehavior.opaque,
                 child: Container(
                   width: CompanyProfileFigmaTokens.favoriteButtonSize,
                   height: CompanyProfileFigmaTokens.favoriteButtonSize,

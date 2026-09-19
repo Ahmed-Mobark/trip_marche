@@ -52,7 +52,7 @@ class TravelerActivitiesSection extends StatelessWidget {
             activity: activities[i],
             currency: currency,
             isSelected: selectedActivityIds.contains(activities[i].id),
-            enabled: activitiesEnabled,
+            isClickable: activitiesEnabled,
             onTap: () => onActivityToggled(activities[i].id),
           ),
         ],

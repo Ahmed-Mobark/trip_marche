@@ -20,6 +20,7 @@ import '../../../../features/profile/presentation/cubit/delete_account_state.dar
 import '../widgets/settings_row.dart';
 import 'notification_settings_view.dart';
 import 'language_view.dart';
+import '../../../currency/presentation/view/currency_view.dart';
 import '../../../../core/extensions/localization.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -102,7 +103,9 @@ class _SettingsViewContent extends StatelessWidget {
                   title: context.tr.settingsCurrency,
                   foregroundColor: titleColor,
                   trailing: Icon(Icons.chevron_right, size: 22, color: muted),
-                  onTap: () {},
+                  onTap: () {
+                    sl<AppNavigator>().push(screen: const CurrencyView());
+                  },
                 ),
                 _DividerLine(color: borderTone),
                 SettingsRow(
@@ -173,9 +176,7 @@ class _SettingsViewContent extends StatelessWidget {
             secondaryActionText: context.tr.cancel,
             primaryActionColor: AppColors.red,
             isLoading: isLoading,
-            onPrimaryAction: isLoading
-                ? null
-                : () => _performLogout(context),
+            onPrimaryAction: isLoading ? null : () => _performLogout(context),
             onSecondaryAction: isLoading
                 ? null
                 : () => Navigator.pop(sheetContext),
@@ -191,36 +192,37 @@ class _SettingsViewContent extends StatelessWidget {
       isScrollControlled: true,
       backgroundColor: AppColors.transparent,
       applySystemBottomInset: false,
-      builder: (sheetContext) => BlocConsumer<DeleteAccountCubit, DeleteAccountState>(
-        listener: (context, state) {
-          debugPrint("Current Delete Account State: ${state.status}");
-          if (state.status == DeleteAccountStatus.failure) {
-            Navigator.pop(sheetContext);
-            context.read<DeleteAccountCubit>().clearError();
-          } else if (state.status == DeleteAccountStatus.success) {
-            Navigator.pop(sheetContext);
-            _handleDeleteAccountSuccess(context);
-          }
-        },
-        builder: (context, state) {
-          final isLoading = state.status == DeleteAccountStatus.loading;
-          return AppConfirmationBottomSheet(
-            icon: Iconsax.trash,
-            title: context.tr.deleteAccountTitle,
-            description: context.tr.deleteAccountDescription,
-            primaryActionText: context.tr.deleteAccountAction,
-            secondaryActionText: context.tr.cancel,
-            primaryActionColor: AppColors.red,
-            isLoading: isLoading,
-            onPrimaryAction: isLoading
-                ? null
-                : () => _showFinalConfirmationDialog(context),
-            onSecondaryAction: isLoading
-                ? null
-                : () => Navigator.pop(sheetContext),
-          );
-        },
-      ),
+      builder: (sheetContext) =>
+          BlocConsumer<DeleteAccountCubit, DeleteAccountState>(
+            listener: (context, state) {
+              debugPrint("Current Delete Account State: ${state.status}");
+              if (state.status == DeleteAccountStatus.failure) {
+                Navigator.pop(sheetContext);
+                context.read<DeleteAccountCubit>().clearError();
+              } else if (state.status == DeleteAccountStatus.success) {
+                Navigator.pop(sheetContext);
+                _handleDeleteAccountSuccess(context);
+              }
+            },
+            builder: (context, state) {
+              final isLoading = state.status == DeleteAccountStatus.loading;
+              return AppConfirmationBottomSheet(
+                icon: Iconsax.trash,
+                title: context.tr.deleteAccountTitle,
+                description: context.tr.deleteAccountDescription,
+                primaryActionText: context.tr.deleteAccountAction,
+                secondaryActionText: context.tr.cancel,
+                primaryActionColor: AppColors.red,
+                isLoading: isLoading,
+                onPrimaryAction: isLoading
+                    ? null
+                    : () => _showFinalConfirmationDialog(context),
+                onSecondaryAction: isLoading
+                    ? null
+                    : () => Navigator.pop(sheetContext),
+              );
+            },
+          ),
     );
   }
 

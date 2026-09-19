@@ -29,6 +29,10 @@ abstract final class BookingReviewDataBuilder {
             (inner, activity) => inner + activity.price,
           ),
     );
+    final optionalExtrasTotal = flowContext.optionalExtras.fold<double>(
+      0,
+      (sum, extra) => sum + extra.totalPrice,
+    );
 
     final travelersCount = flowContext.travelersCount > 0
         ? flowContext.travelersCount
@@ -43,7 +47,8 @@ abstract final class BookingReviewDataBuilder {
           )
         : 0.0;
 
-    final taxableSubtotal = travelersTotal + roomTotal + activitiesTotal;
+    final taxableSubtotal =
+        travelersTotal + roomTotal + activitiesTotal + optionalExtrasTotal;
     final taxes = trip.taxPercent != null
         ? taxableSubtotal * (trip.taxPercent! / 100)
         : 0.0;
@@ -60,8 +65,8 @@ abstract final class BookingReviewDataBuilder {
     final durationLabel = '${trip.durationDays} ${tr.tripDetailsDurationUnit}';
     final roomLabel = flowContext.rooms.isNotEmpty
         ? flowContext.rooms
-                .map((r) => '${r.persons} ${tr.bookingPerson}')
-                .join(', ')
+              .map((r) => '${r.persons} ${tr.bookingPerson}')
+              .join(', ')
         : '';
 
     return BookingReviewData(
@@ -99,18 +104,17 @@ abstract final class BookingReviewDataBuilder {
             .toList(growable: false),
       ),
       travelers: travelers,
-      room: BookingRoomSelection(
-        name: roomLabel,
-        price: roomTotal,
-      ),
+      room: BookingRoomSelection(name: roomLabel, price: roomTotal),
       selectedRooms: List<BookingRoom>.of(flowContext.rooms),
       activities: activities,
+      optionalExtras: List.of(flowContext.optionalExtras),
       priceBreakdown: BookingPriceBreakdown(
         travelersCount: travelersCount,
         travelersTotal: travelersTotal,
         roomLabel: roomLabel,
         roomTotal: roomTotal,
         activitiesTotal: activitiesTotal,
+        optionalExtrasTotal: optionalExtrasTotal,
         taxes: taxes,
       ),
       currency: currency,
@@ -118,6 +122,7 @@ abstract final class BookingReviewDataBuilder {
       adultCount: flowContext.adultCount,
       kidCount: flowContext.kidCount,
       babyCount: flowContext.babyCount,
+      selectedMeetingPointId: flowContext.selectedMeetingPointId,
     );
   }
 }

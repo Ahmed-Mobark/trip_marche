@@ -111,11 +111,19 @@ class ApiBaseHelper {
     Map<String, dynamic>? body,
     Options? options,
     ApiEnvironment environment = ApiEnvironment.primary,
+    bool includeCurrency = false,
   }) async {
+    final effectiveQueryParameters = _withCurrency(
+      queryParameters,
+      includeCurrency: includeCurrency,
+    );
     return _performRequest<T>(
-      () => getDio(
-        environment,
-      ).get<T>(url, queryParameters: queryParameters, data: body, options: options),
+      () => getDio(environment).get<T>(
+        url,
+        queryParameters: effectiveQueryParameters,
+        data: body,
+        options: options,
+      ),
       environment: environment,
     );
   }
@@ -126,13 +134,32 @@ class ApiBaseHelper {
     FormData? formData,
     Options? options,
     ApiEnvironment environment = ApiEnvironment.primary,
+    Map<String, dynamic>? queryParameters,
+    bool includeCurrency = false,
   }) async {
+    final effectiveQueryParameters = _withCurrency(
+      queryParameters,
+      includeCurrency: includeCurrency,
+    );
     return _performRequest<T>(
-      () => getDio(
-        environment,
-      ).post<T>(url, data: formData ?? body, options: options),
+      () => getDio(environment).post<T>(
+        url,
+        queryParameters: effectiveQueryParameters,
+        data: formData ?? body,
+        options: options,
+      ),
       environment: environment,
     );
+  }
+
+  Map<String, dynamic>? _withCurrency(
+    Map<String, dynamic>? queryParameters, {
+    required bool includeCurrency,
+  }) {
+    if (!includeCurrency) return queryParameters;
+    final currencyCode = sl<Storage>().getCurrencyCode();
+    if (currencyCode == null) return queryParameters;
+    return <String, dynamic>{...?queryParameters, 'currency': currencyCode};
   }
 
   Future<T> put<T>({

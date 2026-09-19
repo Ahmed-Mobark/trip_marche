@@ -12,6 +12,7 @@ class StorageImpl implements Storage {
   static const String _language = "language";
   static const String _onboarding = "onboarding";
   static const String _themeMode = "theme_mode";
+  static const String _currencyCode = "currency_code";
 
   StorageImpl({required this.stringBox, required this.boolBox});
 
@@ -93,5 +94,16 @@ class StorageImpl implements Storage {
   @override
   Future<void> deleteThemeMode() async {
     await stringBox.delete(_themeMode);
+  }
+
+  @override
+  Future<void> storeCurrencyCode({required String currencyCode}) async {
+    await stringBox.put(_currencyCode, currencyCode.trim().toUpperCase());
+  }
+
+  @override
+  String? getCurrencyCode() {
+    final value = stringBox.get(_currencyCode)?.trim().toUpperCase();
+    return value == null || value.isEmpty ? null : value;
   }
 }

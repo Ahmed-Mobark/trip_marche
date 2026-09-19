@@ -12,71 +12,74 @@ class ActivityCard extends StatelessWidget {
     required this.currency,
     required this.isSelected,
     required this.onTap,
-    this.enabled = true,
+    this.isClickable = true,
   });
 
   final Activity activity;
   final String currency;
   final bool isSelected;
   final VoidCallback onTap;
-  final bool enabled;
+  final bool isClickable;
 
   @override
   Widget build(BuildContext context) {
-    final showDimmed = !enabled && !isSelected;
+    final isVisuallyDisabled = !isClickable && !isSelected;
+    final backgroundColor = isVisuallyDisabled
+        ? AppColors.includedSurface(context)
+        : isSelected
+        ? AppColors.selectedPurpleTint(context)
+        : AppColors.cardBg(context);
+    final borderColor = isVisuallyDisabled
+        ? AppColors.includedBorder(context)
+        : isSelected
+        ? AppColors.primary
+        : AppColors.softBorder(context);
+    final textColor = isVisuallyDisabled
+        ? AppColors.subtitleGrey(context)
+        : AppColors.ink(context);
+    final priceColor = isVisuallyDisabled
+        ? AppColors.metaGrey(context)
+        : AppColors.primary;
+
     return GestureDetector(
-      onTap: enabled ? onTap : null,
+      onTap: isClickable ? onTap : null,
       behavior: HitTestBehavior.opaque,
-      child: Opacity(
-        opacity: showDimmed ? 0.72 : 1,
-        child: Container(
-          height: SelectActivitiesFigmaTokens.activityCardHeight,
-          padding: EdgeInsetsDirectional.symmetric(
-            horizontal: SelectActivitiesFigmaTokens.activityCardHPadding,
+      child: Container(
+        height: SelectActivitiesFigmaTokens.activityCardHeight,
+        padding: EdgeInsetsDirectional.symmetric(
+          horizontal: SelectActivitiesFigmaTokens.activityCardHPadding,
+        ),
+        decoration: BoxDecoration(
+          color: backgroundColor,
+          borderRadius: BorderRadius.circular(
+            SelectActivitiesFigmaTokens.activityCardRadius,
           ),
-          decoration: BoxDecoration(
-            color: isSelected
-                ? AppColors.selectedPurpleTint(context)
-                : AppColors.cardBg(context),
-            borderRadius: BorderRadius.circular(
-              SelectActivitiesFigmaTokens.activityCardRadius,
-            ),
-            border: Border.all(
-              color: isSelected
-                  ? AppColors.primary
-                  : AppColors.softBorder(context),
-              width: 1,
-            ),
-          ),
-          child: Row(
-            children: [
-              Expanded(
-                child: Text(
-                  activity.name,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style:
-                      AppTextStyles.bodyMedium(
-                        color: AppColors.ink(context),
-                      ).copyWith(
-                        fontSize: SelectActivitiesFigmaTokens.activityNameSize,
-                        fontWeight: FontWeight.w500,
-                      ),
+          border: Border.all(color: borderColor, width: 1),
+        ),
+        child: Row(
+          children: [
+            Expanded(
+              child: Text(
+                activity.name,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: AppTextStyles.bodyMedium(color: textColor).copyWith(
+                  fontSize: SelectActivitiesFigmaTokens.activityNameSize,
+                  fontWeight: FontWeight.w500,
                 ),
               ),
-              Text(
-                TripDetailsUiFormatters.formatAmount(
-                  activity.price,
-                  currency: currency,
-                ),
-                style: AppTextStyles.bodyMedium(color: AppColors.primary)
-                    .copyWith(
-                      fontSize: SelectActivitiesFigmaTokens.activityPriceSize,
-                      fontWeight: FontWeight.w600,
-                    ),
+            ),
+            Text(
+              TripDetailsUiFormatters.formatAmount(
+                activity.price,
+                currency: currency,
               ),
-            ],
-          ),
+              style: AppTextStyles.bodyMedium(color: priceColor).copyWith(
+                fontSize: SelectActivitiesFigmaTokens.activityPriceSize,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+          ],
         ),
       ),
     );

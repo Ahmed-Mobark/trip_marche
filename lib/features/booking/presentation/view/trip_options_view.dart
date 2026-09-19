@@ -10,6 +10,7 @@ import 'package:trip_marche/core/theme/app_text_styles.dart';
 import 'package:trip_marche/core/toast/app_toast.dart';
 import 'package:trip_marche/features/booking/domain/entities/booking_flow_context.dart';
 import 'package:trip_marche/features/booking/domain/entities/booking_room.dart';
+import 'package:trip_marche/features/booking/domain/entities/booking_optional_extra_selection.dart';
 import 'package:trip_marche/features/trip_details/domain/entities/trip_details_entity.dart';
 import 'package:trip_marche/features/trip_details/presentation/trip_details_ui_formatters.dart';
 import 'contact_info_view.dart';
@@ -18,6 +19,7 @@ import 'package:trip_marche/core/widgets/bottom_booking_bar.dart';
 import '../widgets/accommodation_card.dart';
 import '../widgets/date_option_card.dart';
 import '../widgets/traveler_counter_card.dart';
+import '../widgets/optional_extra_card.dart';
 
 class _TripDateOption {
   const _TripDateOption({
@@ -45,6 +47,7 @@ class _TripOptionsViewState extends State<TripOptionsView> {
 
   late final List<TripRoomType> _roomTypes;
   late final Map<String, int> _roomPersonCounts;
+  late final Map<int, int> _extraQuantities;
 
   int _selectedDateIndex = 0;
   bool _datesExpanded = false;
@@ -61,6 +64,12 @@ class _TripOptionsViewState extends State<TripOptionsView> {
       ..sort((a, b) => a.capacity.compareTo(b.capacity));
     _roomPersonCounts = {
       for (final room in _roomTypes) room.key: _initialRoomPersonCount(room),
+    };
+    _extraQuantities = {
+      for (final extra in widget.trip.optionalExtras.where(
+        (extra) => extra.isAvailable,
+      ))
+        extra.id: 0,
     };
   }
 
@@ -155,9 +164,26 @@ class _TripOptionsViewState extends State<TripOptionsView> {
           travelersCount: _travelersCount,
           rooms: selectedRooms,
           currency: widget.trip.currency,
+          optionalExtras: _selectedOptionalExtras(),
         ),
       ),
     );
+  }
+
+  List<BookingOptionalExtraSelection> _selectedOptionalExtras() {
+    return widget.trip.optionalExtras
+        .where((extra) => extra.isAvailable)
+        .map(
+          (extra) => BookingOptionalExtraSelection(
+            extraId: extra.id,
+            name: extra.name,
+            unitPrice: extra.unitPrice,
+            currency: extra.currency,
+            quantity: _extraQuantities[extra.id] ?? 0,
+          ),
+        )
+        .where((extra) => extra.quantity > 0)
+        .toList(growable: false);
   }
 
   List<BookingRoom> _selectedRooms() {
@@ -300,6 +326,39 @@ class _TripOptionsViewState extends State<TripOptionsView> {
                         onDecrement: () => setState(() => _babies--),
                         onIncrement: () => setState(() => _babies++),
                       ),
+                      if (_extraQuantities.isNotEmpty) ...[
+                        SizedBox(height: TripOptionsFigmaTokens.sectionBottom),
+                        _SectionTitle(tr.bookingOptionalExtras),
+                        for (final extra in widget.trip.optionalExtras.where(
+                          (extra) => extra.isAvailable,
+                        )) ...[
+                          if (extra !=
+                              widget.trip.optionalExtras
+                                  .where((item) => item.isAvailable)
+                                  .first)
+                            SizedBox(
+                              height: TripOptionsFigmaTokens.travelerCardGap,
+                            ),
+                          OptionalExtraCard(
+                            name: extra.name,
+                            totalPrice:
+                                extra.unitPrice *
+                                (_extraQuantities[extra.id] ?? 0),
+                            currency: extra.currency,
+                            quantity: _extraQuantities[extra.id] ?? 0,
+                            onDecrement: () => setState(() {
+                              final quantity = _extraQuantities[extra.id] ?? 0;
+                              _extraQuantities[extra.id] = quantity > 0
+                                  ? quantity - 1
+                                  : 0;
+                            }),
+                            onIncrement: () => setState(() {
+                              _extraQuantities[extra.id] =
+                                  (_extraQuantities[extra.id] ?? 0) + 1;
+                            }),
+                          ),
+                        ],
+                      ],
                       if (_roomTypes.isNotEmpty) ...[
                         SizedBox(height: TripOptionsFigmaTokens.sectionBottom),
                         _SectionTitle(tr.bookingAccommodationOptions),

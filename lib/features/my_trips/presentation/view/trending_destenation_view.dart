@@ -601,6 +601,7 @@ class _TrendingDestinationViewState extends State<TrendingDestinationView> {
                 },
                 useRatingBar: true,
                 usePrimaryPriceColor: true,
+                useCompactReviewCount: true,
               );
             }
             return MyTripBookingCard.api(
@@ -885,8 +886,9 @@ class _BrowseCatalogHero extends StatelessWidget {
                           itemCount: 5,
                           itemSize: 16.sp,
                           direction: Axis.horizontal,
-                          unratedColor:
-                              AppColors.onImage.withValues(alpha: 0.35),
+                          unratedColor: AppColors.onImage.withValues(
+                            alpha: 0.35,
+                          ),
                         ),
                         SizedBox(width: 6.w),
                         Text(
@@ -898,9 +900,13 @@ class _BrowseCatalogHero extends StatelessWidget {
                         SizedBox(width: 2.w),
                         Text(
                           '($reviewsCount)',
-                          style: AppTextStyles.bodyMedium(
-                            color: AppColors.onImage,
-                          ).copyWith(fontWeight: FontWeight.w700),
+                          style:
+                              AppTextStyles.bodyMedium(
+                                color: AppColors.onImage.withValues(alpha: 0.8),
+                              ).copyWith(
+                                fontSize: 11.sp,
+                                fontWeight: FontWeight.w400,
+                              ),
                         ),
                       ],
                     ),

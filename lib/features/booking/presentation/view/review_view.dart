@@ -206,6 +206,7 @@ class _ReviewBodyState extends State<_ReviewBody> {
                               breakdown.travelersCount,
                             ),
                             activitiesLabel: tr.bookingReviewPaymentActivities,
+                            optionalExtrasLabel: tr.bookingOptionalExtras,
                             taxesLabel: tr.bookingReviewPaymentTaxes,
                             totalLabel: tr.bookingReviewPaymentTotal,
                             currencySuffix: widget.data.currency,

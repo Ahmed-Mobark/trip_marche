@@ -16,6 +16,7 @@ class TripDetailsRemoteDataSourceImpl implements TripDetailsRemoteDataSource {
     final response = await _api.post<Map<String, dynamic>>(
       url: AppEndpoints.tripById(tripId),
       body: const <String, dynamic>{},
+      includeCurrency: true,
     );
     return TripDetailsModel.fromApiResponse(response);
   }

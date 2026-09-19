@@ -47,12 +47,14 @@ class AppEndpoints {
   /// POST — creates a new booking for a trip.
   static String createBooking(int tripId) => 'trips/$tripId/book';
 
-
   /// GET — paginated list of the current user's bookings.
   static const String bookings = 'bookings';
 
   /// GET — list of available payment methods.
   static const String paymentMethods = 'payment-methods';
+
+  /// GET — list of supported currencies.
+  static const String currencies = 'currencies';
 
   /// GET — booking details PDF by booking id.
   static String bookingsPdf(int bookingId) => 'bookings/$bookingId/pdf';

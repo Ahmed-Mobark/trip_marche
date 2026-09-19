@@ -19,6 +19,7 @@ class CouponRemoteDataSourceImpl implements CouponRemoteDataSource {
     final response = await _api.post<Map<String, dynamic>>(
       url: AppEndpoints.couponsValidate,
       body: request.toJson(),
+      includeCurrency: true,
     );
     return CouponValidationModel.fromApiResponse(response);
   }

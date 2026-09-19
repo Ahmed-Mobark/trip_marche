@@ -9,9 +9,10 @@ class TripDetailsStatGrid extends StatelessWidget {
 
   final List<TripDetailsStatCellData> cells;
 
-  static const double _gap = 6;
+  static const double _gap = 4;
   static const double _cardRadius = 10;
-  static const double _cardPad = 8;
+  static const double _cardHorizontalPad = 5;
+  static const double _cardVerticalPad = 8;
 
   @override
   Widget build(BuildContext context) {
@@ -57,7 +58,10 @@ class TripDetailsStatCell extends StatelessWidget {
   Widget build(BuildContext context) {
     final cardBorder = AppColors.border(context).withValues(alpha: 0.35);
     return TripDetailsInfoCard(
-      padding: const EdgeInsetsDirectional.all(TripDetailsStatGrid._cardPad),
+      padding: const EdgeInsetsDirectional.symmetric(
+        horizontal: TripDetailsStatGrid._cardHorizontalPad,
+        vertical: TripDetailsStatGrid._cardVerticalPad,
+      ),
       borderRadius: TripDetailsStatGrid._cardRadius,
       borderColor: cardBorder,
       withShadow: false,
@@ -71,18 +75,22 @@ class TripDetailsStatCell extends StatelessWidget {
             size: _iconSize,
           ),
           const SizedBox(height: _gapIconToLabel),
-          Text(
-            data.label,
-            style: TextStyle(
-              fontFamily: AppFont.fontFamily,
-              fontSize: _labelSize,
-              fontWeight: FontWeight.w400,
-              height: 1.1,
-              letterSpacing: 0,
-              color: AppColors.tripDetailsSecondaryGrey(context),
+          FittedBox(
+            fit: BoxFit.scaleDown,
+            alignment: AlignmentDirectional.centerStart,
+            child: Text(
+              data.label,
+              maxLines: 1,
+              softWrap: false,
+              style: TextStyle(
+                fontFamily: AppFont.fontFamily,
+                fontSize: _labelSize,
+                fontWeight: FontWeight.w400,
+                height: 1.1,
+                letterSpacing: 0,
+                color: AppColors.tripDetailsSecondaryGrey(context),
+              ),
             ),
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
           ),
           const SizedBox(height: _gapLabelToValue),
           Text(

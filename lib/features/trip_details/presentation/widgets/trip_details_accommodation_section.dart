@@ -219,6 +219,18 @@ class TripDetailsCompanyCard extends StatelessWidget {
           OutlinedButton(
             onPressed: isBusy ? null : onFollow,
             style: OutlinedButton.styleFrom(
+              backgroundColor: isFollowing
+                  ? AppColors.white
+                  : AppColors.primary,
+              disabledBackgroundColor: isFollowing
+                  ? AppColors.white
+                  : AppColors.primary,
+              foregroundColor: isFollowing
+                  ? AppColors.primary
+                  : AppColors.white,
+              disabledForegroundColor: isFollowing
+                  ? AppColors.primary
+                  : AppColors.white,
               side: const BorderSide(color: AppColors.primary),
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(999.r),
@@ -234,9 +246,9 @@ class TripDetailsCompanyCard extends StatelessWidget {
                 ? SizedBox(
                     width: 16.w,
                     height: 16.h,
-                    child: const CircularProgressIndicator(
+                    child: CircularProgressIndicator(
                       strokeWidth: 2,
-                      color: AppColors.primary,
+                      color: isFollowing ? AppColors.primary : AppColors.white,
                     ),
                   )
                 : Text(
@@ -244,7 +256,7 @@ class TripDetailsCompanyCard extends StatelessWidget {
                         ? context.tr.companyProfileFollowing
                         : context.tr.tripDetailsFollow,
                     style: AppTextStyles.bodyMedium(
-                      color: AppColors.primary,
+                      color: isFollowing ? AppColors.primary : AppColors.white,
                     ).copyWith(fontWeight: FontWeight.w600),
                   ),
           ),

@@ -163,6 +163,8 @@
   "settingsNotificationSetting": "Benachrichtigungseinstellungen",
   "settingsLanguage": "Sprache",
   "settingsCurrency": "Währung",
+  "currencyAmountLabel": "Betrag",
+  "currencyEquivalentEgp": "Gegenwert in ägyptischen Pfund",
   "settingsEnglish": "Englisch",
   "settingsArabic": "Arabisch",
   "settingsDarkMode": "Dunkelmodus",
@@ -253,6 +255,8 @@
   "navAccount": "Konto",
 
   "bookingContactInfoTitle": "Kontaktinformationen",
+  "bookingMeetingPointTitle": "Treffpunkt",
+  "bookingMeetingPointRequired": "Bitte wählen Sie einen Treffpunkt",
   "bookingContactFullNameLabel": "Vollständiger Name",
   "bookingContactFullNameHint": "Gib deinen vollständigen Namen ein",
   "bookingContactPhoneLabel": "Telefonnummer",
@@ -286,6 +290,7 @@
   "bookingTravelerBaby": "Baby",
   "bookingTravelerBabyAge": "0~2 Years",
   "bookingAccommodationOptions": "Accommodation Options",
+  "bookingOptionalExtras": "Optionale Extras",
   "bookingCreatedSuccess": "Buchung erfolgreich erstellt",
   "bookingRoomsRequired": "Bitte wählen Sie mindestens ein Zimmer",
   "bookingRoomOccupantsMismatch": "Die Gesamtzahl der Zimmerbelegungen muss der Anzahl der Reisenden entsprechen ({count})",
@@ -580,7 +585,7 @@
   "tripDetailsDepartureDetailsTitle": "Abreisedetails",
   "tripDetailsMeetingLocationLabel": "Treffpunkt",
   "tripDetailsMeetingLocationValue": "18 El Tesen Road, New Cairo, Ägypten",
-  "tripDetailsReturnLocationLabel": "Rückgabeort",
+  "tripDetailsReturnLocationLabel": "Rückkehrpunkt",
   "tripDetailsReturnLocationValue": "54 Ramses, Downtown, Ägypten",
   "tripDetailsMeetingTimeLabel": "Treffzeit",
   "tripDetailsMeetingTimeValue": "17:00",
@@ -919,4 +924,3 @@
     }
   }
 }
-

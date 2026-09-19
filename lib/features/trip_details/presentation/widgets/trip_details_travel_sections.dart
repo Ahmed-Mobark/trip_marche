@@ -103,7 +103,8 @@ class TripDetailsTravelSections extends StatelessWidget {
           ),
           SizedBox(height: 12.h),
           TripDetailsCompanyCard(
-            companyName: trip.vendor.company != null &&
+            companyName:
+                trip.vendor.company != null &&
                     trip.vendor.company!.trim().isNotEmpty
                 ? trip.vendor.company!
                 : trip.vendor.name,
@@ -113,14 +114,18 @@ class TripDetailsTravelSections extends StatelessWidget {
             ),
             avatarUrl: trip.vendor.avatar,
             vendorId: trip.vendor.id,
-            onFollow: () => context
-                .read<TripDetailsCubit>()
-                .toggleFollowVendor(trip.vendor.id),
-            onTap: () {
+            onFollow: () => context.read<TripDetailsCubit>().toggleFollowVendor(
+              trip.vendor.id,
+            ),
+            onTap: () async {
               final vendorId = trip.vendor.id;
               if (vendorId > 0) {
-                sl<AppNavigator>()
-                    .push(screen: CompanyProfileView(vendorId: vendorId));
+                await sl<AppNavigator>().push(
+                  screen: CompanyProfileView(vendorId: vendorId),
+                );
+                if (context.mounted) {
+                  await context.read<TripDetailsCubit>().loadTrip();
+                }
               }
             },
           ),

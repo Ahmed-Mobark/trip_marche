@@ -5,7 +5,9 @@ import 'package:trip_marche/features/filter/data/models/filter_metadata_model.da
 
 abstract class FilterRemoteDataSource {
   Future<List<FilterDestinationModel>> getDestinations();
-  Future<FilterMetadataModel> getFilterMetadata({Map<String, dynamic>? filters});
+  Future<FilterMetadataModel> getFilterMetadata({
+    Map<String, dynamic>? filters,
+  });
 }
 
 class FilterRemoteDataSourceImpl implements FilterRemoteDataSource {
@@ -35,6 +37,7 @@ class FilterRemoteDataSourceImpl implements FilterRemoteDataSource {
     final response = await _api.get<Map<String, dynamic>>(
       url: AppEndpoints.tripsFilters,
       body: filters,
+      includeCurrency: true,
     );
     return FilterMetadataModel.fromResponse(response);
   }
