@@ -149,6 +149,7 @@ class CreateBookingCubit extends Cubit<CreateBookingState> {
 
     final request = CreateBookingRequest(
       departureId: data.departureId,
+      meetingPointId: data.selectedMeetingPointId,
       adults: adultCount,
       kids: kidCount,
       babies: babyCount,

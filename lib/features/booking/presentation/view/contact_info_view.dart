@@ -65,7 +65,8 @@ class _ContactInfoViewState extends State<ContactInfoView> {
     }
 
     final meetingPoints = widget.flowContext.trip.meetingPoints;
-    if (meetingPoints.isNotEmpty && _selectedMeetingPointId == null) {
+    if (meetingPoints.isNotEmpty &&
+        !meetingPoints.any((point) => point.id == _selectedMeetingPointId)) {
       appToast(
         context: context,
         type: ToastType.error,

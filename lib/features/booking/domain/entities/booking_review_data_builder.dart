@@ -15,6 +15,9 @@ abstract final class BookingReviewDataBuilder {
     final tr = context.tr;
     final trip = flowContext.trip;
     final currency = flowContext.currency;
+    final selectedMeetingPoint = trip.meetingPoints
+        .where((point) => point.id == flowContext.selectedMeetingPointId)
+        .firstOrNull;
 
     final travelers = activities
         .map((entry) => entry.traveler)
@@ -87,7 +90,10 @@ abstract final class BookingReviewDataBuilder {
         routeLabel: tr.bookingReviewRoutePrefix(trip.fromLocation),
         routeHighlight: destinationName,
         meetingTime: tr.bookingReviewMeetingTime(
-          TripDetailsUiFormatters.clockTime(context, trip.meeting.time),
+          TripDetailsUiFormatters.clockTime(
+            context,
+            selectedMeetingPoint?.time ?? trip.meeting.time,
+          ),
         ),
         startingTime: tr.bookingReviewStartingTime(
           TripDetailsUiFormatters.clockTime(context, trip.returnPoint.time),
@@ -95,9 +101,11 @@ abstract final class BookingReviewDataBuilder {
         groupSize: tr.bookingReviewGroupSize(
           '${trip.groupSize.min}-${trip.groupSize.max}',
         ),
-        location: trip.meeting.location.isNotEmpty
-            ? trip.meeting.location
-            : trip.fromLocation,
+        location:
+            selectedMeetingPoint?.name ??
+            (trip.meeting.location.isNotEmpty
+                ? trip.meeting.location
+                : trip.fromLocation),
         includedFeatures: trip.inclusions
             .map((inclusion) => inclusion.label)
             .where((label) => label.isNotEmpty)

@@ -52,6 +52,7 @@ class CreateBookingTraveler {
 class CreateBookingRequest {
   const CreateBookingRequest({
     required this.departureId,
+    this.meetingPointId,
     required this.adults,
     required this.kids,
     required this.babies,
@@ -64,6 +65,7 @@ class CreateBookingRequest {
   });
 
   final int departureId;
+  final int? meetingPointId;
   final int adults;
   final int kids;
   final int babies;
@@ -76,6 +78,7 @@ class CreateBookingRequest {
 
   Map<String, dynamic> toJson() => {
     'departure_id': departureId,
+    if (meetingPointId != null) 'meeting_point_id': meetingPointId,
     'adults': adults,
     'kids': kids,
     'babies': babies,
@@ -151,14 +154,14 @@ class CreateBookingData extends Equatable {
 
   @override
   List<Object?> get props => [
-        bookingId,
-        reference,
-        status,
-        paymentStatus,
-        paymentMethod,
-        requiresPayment,
-        payment,
-      ];
+    bookingId,
+    reference,
+    status,
+    paymentStatus,
+    paymentMethod,
+    requiresPayment,
+    payment,
+  ];
 }
 
 class CreateBookingResponse extends Equatable {

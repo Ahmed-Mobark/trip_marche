@@ -20,7 +20,7 @@ import '../../../../features/profile/presentation/cubit/delete_account_state.dar
 import '../widgets/settings_row.dart';
 import 'notification_settings_view.dart';
 import 'language_view.dart';
-import '../../../currency/presentation/view/currency_view.dart';
+// import '../../../currency/presentation/view/currency_view.dart';
 import '../../../../core/extensions/localization.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -98,16 +98,16 @@ class _SettingsViewContent extends StatelessWidget {
                   },
                 ),
                 _DividerLine(color: borderTone),
-                SettingsRow(
-                  icon: Iconsax.dollar_circle,
-                  title: context.tr.settingsCurrency,
-                  foregroundColor: titleColor,
-                  trailing: Icon(Icons.chevron_right, size: 22, color: muted),
-                  onTap: () {
-                    sl<AppNavigator>().push(screen: const CurrencyView());
-                  },
-                ),
-                _DividerLine(color: borderTone),
+                // SettingsRow(
+                //   icon: Iconsax.dollar_circle,
+                //   title: context.tr.settingsCurrency,
+                //   foregroundColor: titleColor,
+                //   trailing: Icon(Icons.chevron_right, size: 22, color: muted),
+                //   onTap: () {
+                //     sl<AppNavigator>().push(screen: const CurrencyView());
+                //   },
+                // ),
+                // _DividerLine(color: borderTone),
                 SettingsRow(
                   icon: Iconsax.moon,
                   title: context.tr.settingsDarkMode,
