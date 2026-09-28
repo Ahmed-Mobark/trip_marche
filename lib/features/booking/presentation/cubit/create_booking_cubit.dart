@@ -1,5 +1,7 @@
+import 'dart:convert';
 import 'dart:developer';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:trip_marche/features/booking/data/models/create_booking_request.dart';
 import 'package:trip_marche/features/booking/domain/entities/booking_review_data.dart';
@@ -62,12 +64,27 @@ class CreateBookingCubit extends Cubit<CreateBookingState> {
       }
     }
 
+    final activities = <CreateBookingActivity>[];
     for (var i = 0; i < data.activities.length; i++) {
-      final activityList = data.activities[i].activities;
-      for (final activity in activityList) {
+      final selection = data.activities[i];
+      // Resolve ownership against the actual request travelers, not the
+      // position of an activity or a potentially filtered selection group.
+      final travelerIndex = data.travelers.indexOf(selection.traveler);
+      if (travelerIndex < 0) {
+        validationErrors['activity_$i'] = 'Invalid activity traveler';
+        continue;
+      }
+      for (final activity in selection.activities) {
         final activityId = int.tryParse(activity.id);
-        if (activityId == null) {
+        if (activityId == null || activityId <= 0) {
           validationErrors['activity_$i'] = 'Invalid activity';
+        } else {
+          activities.add(
+            CreateBookingActivity(
+              travelerIndex: travelerIndex,
+              activityId: activityId,
+            ),
+          );
         }
       }
     }
@@ -135,18 +152,6 @@ class CreateBookingCubit extends Cubit<CreateBookingState> {
         )
         .toList(growable: false);
 
-    final activities = <CreateBookingActivity>[];
-    for (var i = 0; i < data.activities.length; i++) {
-      for (final activity in data.activities[i].activities) {
-        final activityId = int.tryParse(activity.id);
-        if (activityId != null) {
-          activities.add(
-            CreateBookingActivity(travelerIndex: i, activityId: activityId),
-          );
-        }
-      }
-    }
-
     final request = CreateBookingRequest(
       departureId: data.departureId,
       meetingPointId: data.selectedMeetingPointId,
@@ -161,7 +166,9 @@ class CreateBookingCubit extends Cubit<CreateBookingState> {
       paymentMethod: paymentMethod,
     );
 
-    log('CreateBookingRequest body: ${request.toJson()}');
+    if (kDebugMode) {
+      log('Booking activities: ${jsonEncode(request.toJson()['activities'])}');
+    }
 
     log('=== BOOKING VALIDATION ===');
     log('Adults: $adultCount');

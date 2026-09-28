@@ -50,14 +50,15 @@ class _SelectActivitiesViewState extends State<SelectActivitiesView> {
         .toList(growable: false);
   }
 
-  List<Activity> _availableActivities(BuildContext context) {
-    final tr = context.tr;
-    return [
-      Activity(id: '1', name: tr.bookingActivityCamping, price: 70),
-      Activity(id: '2', name: tr.bookingActivityFishing, price: 30),
-      Activity(id: '3', name: tr.bookingActivityDiving, price: 80),
-    ];
-  }
+  List<Activity> _availableActivities() => widget.flowContext.trip.activities
+      .map(
+        (activity) => Activity(
+          id: activity.id.toString(),
+          name: activity.label,
+          price: activity.price,
+        ),
+      )
+      .toList(growable: false);
 
   void _syncFromTravelerOne() {
     if (_entries.isEmpty) {
@@ -103,7 +104,7 @@ class _SelectActivitiesViewState extends State<SelectActivitiesView> {
 
   void _onContinue(BuildContext context) {
     final activitiesCatalog = {
-      for (final activity in _availableActivities(context)) activity.id: activity,
+      for (final activity in _availableActivities()) activity.id: activity,
     };
 
     final result = _entries
@@ -132,7 +133,7 @@ class _SelectActivitiesViewState extends State<SelectActivitiesView> {
   @override
   Widget build(BuildContext context) {
     final tr = context.tr;
-    final activities = _availableActivities(context);
+    final activities = _availableActivities();
 
     return AnnotatedRegion<SystemUiOverlayStyle>(
       value: SystemUiOverlayStyle.dark.copyWith(
