@@ -146,6 +146,110 @@ void main() {
   }
 
   testWidgets(
+    'meeting point shows the selected departure date and a 12-hour time',
+    (tester) async {
+      sl.registerSingleton<Storage>(_TestStorage());
+      addTearDown(() => sl.unregister<Storage>());
+      final trip = TripDetailsModel.fromApiResponse({
+        'data': {
+          'start_date': '2026-10-01',
+          'meeting_points': [
+            {
+              'id': 17,
+              'name': 'Airport',
+              'date': '2026-10-01',
+              'time': '05:00',
+            },
+          ],
+          'departures': [
+            {
+              'id': 5,
+              'start_date': '2026-10-09',
+              'end_date': '2026-10-15',
+              'price': 950,
+              'seats_left': 10,
+            },
+          ],
+        },
+      }).toEntity();
+      final flow = BookingFlowContext(
+        trip: trip,
+        departureId: 5,
+        dateRange: '',
+        adultCount: 1,
+        kidCount: 0,
+        babyCount: 0,
+        travelersCount: 1,
+        rooms: const [],
+        currency: 'EGP',
+      );
+
+      await tester.pumpWidget(
+        ScreenUtilInit(
+          designSize: const Size(393, 852),
+          builder: (_, __) => MaterialApp(
+            locale: const Locale('en'),
+            localizationsDelegates: AppLocalizations.localizationsDelegates,
+            supportedLocales: AppLocalizations.supportedLocales,
+            home: ContactInfoView(travelersCount: 1, flowContext: flow),
+          ),
+        ),
+      );
+      await tester.pumpAndSettle();
+
+      expect(find.text('5:00 AM · Oct 9, 2026'), findsOneWidget);
+      expect(find.textContaining('Oct 1'), findsNothing);
+      expect(tester.takeException(), isNull);
+    },
+  );
+
+  testWidgets('meeting point uses Arabic AM/PM notation in Arabic', (
+    tester,
+  ) async {
+    sl.registerSingleton<Storage>(_TestStorage());
+    addTearDown(() => sl.unregister<Storage>());
+    final trip = TripDetailsModel.fromApiResponse({
+      'data': {
+        'meeting_points': [
+          {'id': 17, 'name': 'Airport', 'date': '2026-10-01', 'time': '17:00'},
+        ],
+      },
+    }).toEntity();
+    final flow = BookingFlowContext(
+      trip: trip,
+      departureId: 5,
+      dateRange: '',
+      adultCount: 1,
+      kidCount: 0,
+      babyCount: 0,
+      travelersCount: 1,
+      rooms: const [],
+      currency: 'EGP',
+    );
+
+    await tester.pumpWidget(
+      ScreenUtilInit(
+        designSize: const Size(393, 852),
+        builder: (_, __) => MaterialApp(
+          locale: const Locale('ar'),
+          localizationsDelegates: AppLocalizations.localizationsDelegates,
+          supportedLocales: AppLocalizations.supportedLocales,
+          home: ContactInfoView(travelersCount: 1, flowContext: flow),
+        ),
+      ),
+    );
+    await tester.pumpAndSettle();
+
+    final schedule = tester
+        .widgetList<Text>(find.byType(Text))
+        .map((widget) => widget.data ?? '')
+        .singleWhere((text) => text.contains('·'));
+    expect(schedule, contains('م'));
+    expect(schedule, isNot(contains('17:00')));
+    expect(tester.takeException(), isNull);
+  });
+
+  testWidgets(
     'selected point survives review and changes the booking payload',
     (tester) async {
       final repository = _RecordingRepository();

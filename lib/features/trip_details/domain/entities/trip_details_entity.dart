@@ -35,6 +35,7 @@ class TripMeetingPoint extends Equatable {
     this.address,
     this.lat,
     this.lng,
+    this.date,
     this.time,
   });
 
@@ -43,10 +44,11 @@ class TripMeetingPoint extends Equatable {
   final String? address;
   final double? lat;
   final double? lng;
+  final String? date;
   final String? time;
 
   @override
-  List<Object?> get props => [id, name, address, lat, lng, time];
+  List<Object?> get props => [id, name, address, lat, lng, date, time];
 }
 
 class TripDestinationSummary extends Equatable {

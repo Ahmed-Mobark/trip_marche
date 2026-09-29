@@ -33,6 +33,16 @@ abstract final class TripDetailsUiFormatters {
     return DateFormat.jm(loc).format(DateTime(2000, 1, 1, hour, minute));
   }
 
+  /// Formats an API date ("yyyy-MM-dd") for compact booking UI.
+  static String calendarDate(BuildContext context, String raw) {
+    final date = DateTime.tryParse(raw.trim());
+    if (date == null) {
+      return raw.trim();
+    }
+    final loc = Localizations.localeOf(context).toString();
+    return DateFormat.yMMMd(loc).format(date);
+  }
+
   static String formatAmount(num value, {String currency = 'EGP'}) {
     return PriceFormatter.format(value, currency: currency);
   }

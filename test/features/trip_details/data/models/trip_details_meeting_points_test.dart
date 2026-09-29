@@ -13,6 +13,7 @@ void main() {
               'address': 'Terminal 3',
               'lat': 30.1219,
               'lng': '31.4056',
+              'date': '2026-10-01',
               'time': '05:00',
             },
             {'id': '2', 'name': 'Ramses Station', 'address': null},
@@ -24,6 +25,7 @@ void main() {
       expect(trip.meetingPoints.first.id, 1);
       expect(trip.meetingPoints.first.lat, 30.1219);
       expect(trip.meetingPoints.first.lng, 31.4056);
+      expect(trip.meetingPoints.first.date, '2026-10-01');
       expect(trip.meetingPoints.last.id, 2);
       expect(trip.meetingPoints.last.address, isNull);
       expect(trip.meetingPoints.last.time, isNull);

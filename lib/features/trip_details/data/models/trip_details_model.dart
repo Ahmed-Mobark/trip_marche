@@ -186,6 +186,7 @@ class TripDetailsModel {
             address: _JsonParse.asNullableString(point['address']),
             lat: _JsonParse.asNullableDouble(point['lat']),
             lng: _JsonParse.asNullableDouble(point['lng']),
+            date: _JsonParse.asNullableString(point['date']),
             time: _JsonParse.asNullableString(point['time']),
           ),
         )

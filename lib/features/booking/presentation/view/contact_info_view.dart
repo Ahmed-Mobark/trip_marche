@@ -13,6 +13,7 @@ import 'package:trip_marche/features/booking/domain/entities/booking_flow_contex
 import 'package:trip_marche/features/booking/domain/entities/traveler_contact.dart';
 import 'package:trip_marche/features/booking/presentation/models/traveler_data.dart';
 import 'package:trip_marche/features/trip_details/domain/entities/trip_details_entity.dart';
+import 'package:trip_marche/features/trip_details/presentation/trip_details_ui_formatters.dart';
 import '../widgets/traveler_contact_card.dart';
 import 'select_activities_view.dart';
 
@@ -61,6 +62,17 @@ class _ContactInfoViewState extends State<ContactInfoView> {
   AutovalidateMode get _autovalidateMode => _validateOnSubmit
       ? AutovalidateMode.onUserInteraction
       : AutovalidateMode.disabled;
+
+  String? get _selectedDepartureDate {
+    for (final departure in widget.flowContext.trip.departures) {
+      if (departure.id == widget.flowContext.departureId) {
+        return departure.startDate;
+      }
+    }
+
+    final startDate = widget.flowContext.trip.startDate.trim();
+    return startDate.isEmpty ? null : startDate;
+  }
 
   void _onContinue() {
     setState(() => _validateOnSubmit = true);
@@ -152,6 +164,7 @@ class _ContactInfoViewState extends State<ContactInfoView> {
                       if (index == _travelers.length) {
                         return _MeetingPointsSection(
                           meetingPoints: widget.flowContext.trip.meetingPoints,
+                          departureDate: _selectedDepartureDate,
                           selectedMeetingPointId: _selectedMeetingPointId,
                           onSelected: (id) {
                             setState(() => _selectedMeetingPointId = id);
@@ -199,11 +212,13 @@ class _ContactInfoViewState extends State<ContactInfoView> {
 class _MeetingPointsSection extends StatelessWidget {
   const _MeetingPointsSection({
     required this.meetingPoints,
+    required this.departureDate,
     required this.selectedMeetingPointId,
     required this.onSelected,
   });
 
   final List<TripMeetingPoint> meetingPoints;
+  final String? departureDate;
   final int? selectedMeetingPointId;
   final ValueChanged<int> onSelected;
 
@@ -224,6 +239,7 @@ class _MeetingPointsSection extends StatelessWidget {
           if (index > 0) SizedBox(height: ContactInfoFigmaTokens.cardGap),
           _MeetingPointCard(
             meetingPoint: meetingPoints[index],
+            departureDate: departureDate,
             selected: meetingPoints[index].id == selectedMeetingPointId,
             onTap: () => onSelected(meetingPoints[index].id),
           ),
@@ -236,11 +252,13 @@ class _MeetingPointsSection extends StatelessWidget {
 class _MeetingPointCard extends StatelessWidget {
   const _MeetingPointCard({
     required this.meetingPoint,
+    required this.departureDate,
     required this.selected,
     required this.onTap,
   });
 
   final TripMeetingPoint meetingPoint;
+  final String? departureDate;
   final bool selected;
   final VoidCallback onTap;
 
@@ -250,6 +268,20 @@ class _MeetingPointCard extends StatelessWidget {
         ? AppColors.primary
         : AppColors.softBorder(context);
     final secondaryColor = AppColors.greyText(context);
+    final rawTime = meetingPoint.time?.trim() ?? '';
+    final rawDate = departureDate?.trim().isNotEmpty == true
+        ? departureDate!.trim()
+        : meetingPoint.date?.trim() ?? '';
+    final formattedTime = rawTime.isEmpty
+        ? ''
+        : TripDetailsUiFormatters.clockTime(context, rawTime);
+    final formattedDate = rawDate.isEmpty
+        ? ''
+        : TripDetailsUiFormatters.calendarDate(context, rawDate);
+    final schedule = [
+      formattedTime,
+      formattedDate,
+    ].where((value) => value.isNotEmpty).join(' · ');
 
     return Material(
       color: AppColors.cardBg(context),
@@ -295,7 +327,7 @@ class _MeetingPointCard extends StatelessWidget {
                         style: AppTextStyles.bodySmall(color: secondaryColor),
                       ),
                     ],
-                    if (meetingPoint.time != null) ...[
+                    if (schedule.isNotEmpty) ...[
                       SizedBox(height: 6.h),
                       Row(
                         children: [
@@ -305,10 +337,12 @@ class _MeetingPointCard extends StatelessWidget {
                             color: AppColors.primary,
                           ),
                           SizedBox(width: 6.w),
-                          Text(
-                            meetingPoint.time!,
-                            style: AppTextStyles.bodySmall(
-                              color: secondaryColor,
+                          Flexible(
+                            child: Text(
+                              schedule,
+                              style: AppTextStyles.bodySmall(
+                                color: secondaryColor,
+                              ),
                             ),
                           ),
                         ],
