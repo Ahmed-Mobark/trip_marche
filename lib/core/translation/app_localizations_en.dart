@@ -487,12 +487,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get settingsCurrency => 'Currency';
 
   @override
-  String get currencyAmountLabel => 'Amount';
-
-  @override
-  String get currencyEquivalentEgp => 'Equivalent in Egyptian Pound';
-
-  @override
   String get settingsEnglish => 'English';
 
   @override

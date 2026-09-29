@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/foundation.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -11,7 +9,6 @@ import '../../../../core/theme/app_text_styles.dart';
 import '../../../../core/widgets/app_empty_screen.dart';
 import '../../../../core/widgets/custom_loading.dart';
 import '../../domain/entities/currency_entity.dart';
-import '../../domain/services/currency_converter.dart';
 import '../cubit/currency_cubit.dart';
 import '../cubit/currency_state.dart';
 
@@ -38,28 +35,8 @@ class _CurrencyViewState extends State<CurrencyView> {
   }
 }
 
-class _CurrencyViewBody extends StatefulWidget {
+class _CurrencyViewBody extends StatelessWidget {
   const _CurrencyViewBody();
-
-  @override
-  State<_CurrencyViewBody> createState() => _CurrencyViewBodyState();
-}
-
-class _CurrencyViewBodyState extends State<_CurrencyViewBody> {
-  final TextEditingController _amountController = TextEditingController();
-  double? _amount;
-
-  @override
-  void dispose() {
-    _amountController.dispose();
-    super.dispose();
-  }
-
-  void _onAmountChanged(String value) {
-    setState(() {
-      _amount = double.tryParse(value);
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -107,14 +84,9 @@ class _CurrencyViewBodyState extends State<_CurrencyViewBody> {
             separatorBuilder: (_, __) => SizedBox(height: 10.h),
             itemBuilder: (context, index) {
               final currency = state.currencies[index];
-              final egpCurrency = _findEgpCurrency(state.currencies);
               return _CurrencyTile(
                 currency: currency,
-                egpCurrency: egpCurrency,
                 selected: currency.code == state.selectedCode,
-                amountController: _amountController,
-                amount: _amount,
-                onAmountChanged: _onAmountChanged,
                 onTap: () =>
                     context.read<CurrencyCubit>().selectCurrency(currency),
               );
@@ -124,35 +96,17 @@ class _CurrencyViewBodyState extends State<_CurrencyViewBody> {
       ),
     );
   }
-
-  CurrencyEntity? _findEgpCurrency(List<CurrencyEntity> currencies) {
-    for (final currency in currencies) {
-      if (currency.code == 'EGP' && currency.isBase) return currency;
-    }
-    for (final currency in currencies) {
-      if (currency.code == 'EGP') return currency;
-    }
-    return null;
-  }
 }
 
 class _CurrencyTile extends StatelessWidget {
   const _CurrencyTile({
     required this.currency,
-    required this.egpCurrency,
     required this.selected,
-    required this.amountController,
-    required this.amount,
-    required this.onAmountChanged,
     required this.onTap,
   });
 
   final CurrencyEntity currency;
-  final CurrencyEntity? egpCurrency;
   final bool selected;
-  final TextEditingController amountController;
-  final double? amount;
-  final ValueChanged<String> onAmountChanged;
   final VoidCallback onTap;
 
   @override
@@ -175,7 +129,7 @@ class _CurrencyTile extends StatelessWidget {
             borderRadius: BorderRadius.circular(12.r),
             border: Border.all(
               color: selected ? AppColors.primary : AppColors.border(context),
-              width: selected ? 1.5 : 1,
+              width: 1.5,
             ),
           ),
           child: Column(
@@ -220,119 +174,11 @@ class _CurrencyTile extends StatelessWidget {
                   ),
                 ],
               ),
-              if (selected) ...[
-                Padding(
-                  padding: EdgeInsets.symmetric(vertical: 14.h),
-                  child: Divider(height: 1, color: AppColors.border(context)),
-                ),
-                _CurrencyConversion(
-                  currency: currency,
-                  egpCurrency: egpCurrency,
-                  controller: amountController,
-                  amount: amount,
-                  onChanged: onAmountChanged,
-                ),
-              ],
             ],
           ),
         ),
       ),
     );
-  }
-}
-
-class _CurrencyConversion extends StatelessWidget {
-  const _CurrencyConversion({
-    required this.currency,
-    required this.egpCurrency,
-    required this.controller,
-    required this.amount,
-    required this.onChanged,
-  });
-
-  final CurrencyEntity currency;
-  final CurrencyEntity? egpCurrency;
-  final TextEditingController controller;
-  final double? amount;
-  final ValueChanged<String> onChanged;
-
-  @override
-  Widget build(BuildContext context) {
-    final converted = amount == null || egpCurrency == null
-        ? null
-        : CurrencyConverter.toEgp(
-            amount: amount!,
-            selectedRate: currency.rate,
-            egpRate: egpCurrency!.rate,
-          );
-    if (kDebugMode && amount != null) {
-      debugPrint('Selected currency: ${currency.code}');
-      debugPrint('Selected currency rate: ${currency.rate}');
-      debugPrint('Base currency: ${egpCurrency?.code ?? 'not found'}');
-      debugPrint('Base currency rate: ${egpCurrency?.rate ?? 'not found'}');
-      debugPrint('Entered amount: $amount');
-      debugPrint('Conversion formula used: amount * selectedRate / egpRate');
-      debugPrint('Calculated EGP amount: ${converted ?? 'unavailable'}');
-    }
-    final suffix = currency.symbol.isEmpty
-        ? currency.code
-        : '${currency.symbol}  ${currency.code}';
-
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: [
-        Text(
-          '${currency.name} (${currency.code})',
-          style: AppTextStyles.bodySmall(
-            color: AppColors.bodyText(context),
-          ).copyWith(fontWeight: FontWeight.w600),
-        ),
-        SizedBox(height: 8.h),
-        TextField(
-          controller: controller,
-          keyboardType: const TextInputType.numberWithOptions(decimal: true),
-          inputFormatters: [
-            FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d{0,4}')),
-          ],
-          onChanged: onChanged,
-          decoration: InputDecoration(
-            labelText: context.tr.currencyAmountLabel,
-            hintText: '0.00',
-            suffixText: suffix,
-            filled: true,
-            fillColor: AppColors.background(context),
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(10.r),
-              borderSide: BorderSide(color: AppColors.border(context)),
-            ),
-            enabledBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(10.r),
-              borderSide: BorderSide(color: AppColors.border(context)),
-            ),
-            focusedBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(10.r),
-              borderSide: const BorderSide(color: AppColors.primary),
-            ),
-          ),
-        ),
-        SizedBox(height: 12.h),
-        Text(
-          context.tr.currencyEquivalentEgp,
-          style: AppTextStyles.bodySmall(color: AppColors.greyText(context)),
-        ),
-        SizedBox(height: 4.h),
-        Text(
-          '${_formatAmount(converted)} EGP',
-          style: AppTextStyles.subtitle(color: AppColors.primary),
-        ),
-      ],
-    );
-  }
-
-  String _formatAmount(double? value) {
-    if (value == null || !value.isFinite) return '—';
-    final fixed = value.toStringAsFixed(2);
-    return fixed.replaceFirst(RegExp(r'\.00$'), '');
   }
 }
 

@@ -2,6 +2,7 @@ import 'package:adaptive_theme/adaptive_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:trip_marche/features/currency/presentation/view/currency_view.dart';
 import '../../../../core/app/app_state.dart';
 import '../../../../core/widgets/app_theme_mode_toggle.dart';
 import '../../../../core/theme/app_colors.dart';
@@ -98,16 +99,16 @@ class _SettingsViewContent extends StatelessWidget {
                   },
                 ),
                 _DividerLine(color: borderTone),
-                // SettingsRow(
-                //   icon: Iconsax.dollar_circle,
-                //   title: context.tr.settingsCurrency,
-                //   foregroundColor: titleColor,
-                //   trailing: Icon(Icons.chevron_right, size: 22, color: muted),
-                //   onTap: () {
-                //     sl<AppNavigator>().push(screen: const CurrencyView());
-                //   },
-                // ),
-                // _DividerLine(color: borderTone),
+                SettingsRow(
+                  icon: Iconsax.dollar_circle,
+                  title: context.tr.settingsCurrency,
+                  foregroundColor: titleColor,
+                  trailing: Icon(Icons.chevron_right, size: 22, color: muted),
+                  onTap: () {
+                    sl<AppNavigator>().push(screen: const CurrencyView());
+                  },
+                ),
+                _DividerLine(color: borderTone),
                 SettingsRow(
                   icon: Iconsax.moon,
                   title: context.tr.settingsDarkMode,

@@ -42,7 +42,7 @@ class CurrencyCubit extends Cubit<CurrencyState> {
           return;
         }
 
-        var selectedCode = state.selectedCode;
+        var selectedCode = _storage.getCurrencyCode();
         final savedIsAvailable = currencies.any(
           (currency) => currency.code == selectedCode,
         );
@@ -56,7 +56,7 @@ class CurrencyCubit extends Cubit<CurrencyState> {
                 currencies,
                 (currency) => currency.code == 'EGP',
               ) ??
-              'EGP';
+              currencies.first.code;
           await _storage.storeCurrencyCode(currencyCode: selectedCode);
         }
 

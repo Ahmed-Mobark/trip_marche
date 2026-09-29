@@ -394,7 +394,10 @@ class _TripOptionsViewState extends State<TripOptionsView> {
     final count = _roomPersonCounts[room.key] ?? 1;
 
     return AccommodationCard(
-      title: room.name,
+      title: room.name.replaceAll(
+        RegExp(r'\btreble\b', caseSensitive: false),
+        'Triple',
+      ),
       subtitle: room.description,
       priceLabel: _roomPriceLabel(context, room),
       personLabel: context.tr.bookingPerson,

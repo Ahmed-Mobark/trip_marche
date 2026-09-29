@@ -1030,18 +1030,6 @@ abstract class AppLocalizations {
   /// **'Currency'**
   String get settingsCurrency;
 
-  /// No description provided for @currencyAmountLabel.
-  ///
-  /// In en, this message translates to:
-  /// **'Amount'**
-  String get currencyAmountLabel;
-
-  /// No description provided for @currencyEquivalentEgp.
-  ///
-  /// In en, this message translates to:
-  /// **'Equivalent in Egyptian Pound'**
-  String get currencyEquivalentEgp;
-
   /// No description provided for @settingsEnglish.
   ///
   /// In en, this message translates to:

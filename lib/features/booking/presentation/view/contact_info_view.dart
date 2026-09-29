@@ -44,6 +44,10 @@ class _ContactInfoViewState extends State<ContactInfoView> {
         : widget.travelersCount;
     _travelers = List.generate(totalTravelers, (_) => TravelerData());
     _selectedMeetingPointId = widget.flowContext.selectedMeetingPointId;
+    final meetingPoints = widget.flowContext.trip.meetingPoints;
+    if (_selectedMeetingPointId == null && meetingPoints.length == 1) {
+      _selectedMeetingPointId = meetingPoints.single.id;
+    }
   }
 
   @override

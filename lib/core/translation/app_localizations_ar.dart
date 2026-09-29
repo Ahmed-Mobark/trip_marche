@@ -483,12 +483,6 @@ class AppLocalizationsAr extends AppLocalizations {
   String get settingsCurrency => 'العملة';
 
   @override
-  String get currencyAmountLabel => 'المبلغ';
-
-  @override
-  String get currencyEquivalentEgp => 'ما يعادله بالجنيه المصري';
-
-  @override
   String get settingsEnglish => 'الإنجليزية';
 
   @override

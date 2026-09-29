@@ -488,12 +488,6 @@ class AppLocalizationsEs extends AppLocalizations {
   String get settingsCurrency => 'Moneda';
 
   @override
-  String get currencyAmountLabel => 'Importe';
-
-  @override
-  String get currencyEquivalentEgp => 'Equivalente en libras egipcias';
-
-  @override
   String get settingsEnglish => 'Inglés';
 
   @override
@@ -872,10 +866,11 @@ class AppLocalizationsEs extends AppLocalizations {
   String get bookingDoubleRoomSubtitle => 'Shared room for two';
 
   @override
-  String get bookingTripleRoom => 'Triple Room';
+  String get bookingTripleRoom => 'Habitación triple';
 
   @override
-  String get bookingTripleRoomSubtitle => 'Shared room for three';
+  String get bookingTripleRoomSubtitle =>
+      'Habitación compartida para tres personas';
 
   @override
   String get bookingPerson => 'Person';
