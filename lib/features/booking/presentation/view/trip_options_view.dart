@@ -171,12 +171,14 @@ class _TripOptionsViewState extends State<TripOptionsView> {
   }
 
   List<BookingOptionalExtraSelection> _selectedOptionalExtras() {
+    final languageCode = Localizations.localeOf(context).languageCode;
+
     return widget.trip.optionalExtras
         .where((extra) => extra.isAvailable)
         .map(
           (extra) => BookingOptionalExtraSelection(
             extraId: extra.id,
-            name: extra.name,
+            name: extra.nameForLanguage(languageCode),
             unitPrice: extra.unitPrice,
             currency: extra.currency,
             quantity: _extraQuantities[extra.id] ?? 0,
@@ -228,6 +230,7 @@ class _TripOptionsViewState extends State<TripOptionsView> {
     final visibleDates = showDatesToggle && !_datesExpanded
         ? dateOptions.sublist(0, _initialVisibleDates)
         : dateOptions;
+    final languageCode = Localizations.localeOf(context).languageCode;
 
     return AnnotatedRegion<SystemUiOverlayStyle>(
       value: SystemUiOverlayStyle.dark.copyWith(
@@ -340,7 +343,7 @@ class _TripOptionsViewState extends State<TripOptionsView> {
                               height: TripOptionsFigmaTokens.travelerCardGap,
                             ),
                           OptionalExtraCard(
-                            name: extra.name,
+                            name: extra.nameForLanguage(languageCode),
                             unitPrice: extra.unitPrice,
                             currency: extra.currency,
                             quantity: _extraQuantities[extra.id] ?? 0,

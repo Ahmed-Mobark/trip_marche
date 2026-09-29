@@ -43,36 +43,49 @@ class OptionalExtraCard extends StatelessWidget {
       ),
       child: Row(
         children: [
-          Icon(
-            Iconsax.add_circle,
-            size: TripOptionsFigmaTokens.iconSize,
-            color: AppColors.primary,
+          SizedBox(
+            width: TripOptionsFigmaTokens.iconBox,
+            height: TripOptionsFigmaTokens.iconBox,
+            child: Icon(
+              Iconsax.add_circle,
+              size: TripOptionsFigmaTokens.iconSize,
+              color: AppColors.primary,
+            ),
           ),
           SizedBox(width: 12.w),
           Expanded(
-            child: Text(
-              name,
-              style: AppTextStyles.bodyMedium(color: AppColors.ink(context))
-                  .copyWith(
-                    fontSize: TripOptionsFigmaTokens.cardTitleFontSize,
-                    fontWeight: FontWeight.w600,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(
+                  name,
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                  style: AppTextStyles.bodyMedium(color: AppColors.ink(context))
+                      .copyWith(
+                        fontSize: TripOptionsFigmaTokens.cardTitleFontSize,
+                        fontWeight: FontWeight.w600,
+                      ),
+                ),
+                SizedBox(height: 2.h),
+                Text(
+                  TripDetailsUiFormatters.formatAmount(
+                    unitPrice,
+                    currency: currency,
                   ),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: AppTextStyles.caption(color: AppColors.primary)
+                      .copyWith(
+                        fontSize: TripOptionsFigmaTokens.cardSubtitleFontSize,
+                        fontWeight: FontWeight.w500,
+                      ),
+                ),
+              ],
             ),
           ),
-          SizedBox(width: 8.w),
-          Flexible(
-            child: Text(
-              TripDetailsUiFormatters.formatAmount(
-                unitPrice,
-                currency: currency,
-              ),
-              maxLines: 1,
-              overflow: TextOverflow.fade,
-              softWrap: false,
-              style: AppTextStyles.caption(color: AppColors.primary),
-            ),
-          ),
-          SizedBox(width: 8.w),
+          SizedBox(width: 12.w),
           TripOptionsStepper(
             value: quantity,
             canDecrement: quantity > 0,

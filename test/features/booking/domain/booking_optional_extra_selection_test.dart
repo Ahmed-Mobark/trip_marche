@@ -45,6 +45,8 @@ void main() {
           {
             'id': 7,
             'name': 'Extra bus seat',
+            'name_en': 'Extra bus seat',
+            'name_ar': 'كرسي إضافي في الأتوبيس',
             'unit_price': '35.50',
             'currency': 'USD',
             'is_available': true,
@@ -56,6 +58,11 @@ void main() {
     expect(trip.optionalExtras, hasLength(1));
     expect(trip.optionalExtras.single.id, 7);
     expect(trip.optionalExtras.single.name, 'Extra bus seat');
+    expect(trip.optionalExtras.single.nameForLanguage('en'), 'Extra bus seat');
+    expect(
+      trip.optionalExtras.single.nameForLanguage('ar'),
+      'كرسي إضافي في الأتوبيس',
+    );
     expect(trip.optionalExtras.single.unitPrice, 35.5);
     expect(trip.optionalExtras.single.currency, 'USD');
     expect(trip.optionalExtras.single.isAvailable, isTrue);
@@ -136,5 +143,42 @@ void main() {
     await tester.pump();
     card = tester.widget<OptionalExtraCard>(find.byType(OptionalExtraCard));
     expect(card.quantity, 1);
+  });
+
+  testWidgets('Arabic optional extra name fits in the traveler-style card', (
+    tester,
+  ) async {
+    final trip = TripDetailsModel.fromApiResponse({
+      'data': {
+        'currency': 'EGP',
+        'optional_extras': [
+          {
+            'id': 7,
+            'name': 'Extra child bus seat',
+            'name_en': 'Extra child bus seat',
+            'name_ar': 'كرسي إضافي في الأتوبيس للطفل',
+            'unit_price': 200,
+            'currency': 'EGP',
+            'is_available': true,
+          },
+        ],
+      },
+    }).toEntity();
+
+    await tester.pumpWidget(
+      ScreenUtilInit(
+        designSize: const Size(393, 852),
+        builder: (_, __) => MaterialApp(
+          locale: const Locale('ar'),
+          localizationsDelegates: AppLocalizations.localizationsDelegates,
+          supportedLocales: AppLocalizations.supportedLocales,
+          home: TripOptionsView(trip: trip),
+        ),
+      ),
+    );
+    await tester.pumpAndSettle();
+
+    expect(find.text('كرسي إضافي في الأتوبيس للطفل'), findsOneWidget);
+    expect(tester.takeException(), isNull);
   });
 }

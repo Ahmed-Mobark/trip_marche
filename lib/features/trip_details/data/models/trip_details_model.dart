@@ -464,6 +464,8 @@ class TripDetailsModel {
           (extra) => TripOptionalExtra(
             id: _JsonParse.asInt(extra['id']),
             name: _JsonParse.asString(extra['name']).trim(),
+            nameEn: _JsonParse.asString(extra['name_en']).trim(),
+            nameAr: _JsonParse.asString(extra['name_ar']).trim(),
             unitPrice: _JsonParse.asDouble(extra['unit_price']),
             currency: _JsonParse.asCurrencyCode(
               extra['currency'],

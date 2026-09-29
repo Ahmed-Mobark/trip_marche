@@ -399,6 +399,8 @@ class TripOptionalExtra extends Equatable {
   const TripOptionalExtra({
     required this.id,
     required this.name,
+    this.nameEn = '',
+    this.nameAr = '',
     required this.unitPrice,
     required this.currency,
     this.isAvailable = true,
@@ -406,12 +408,30 @@ class TripOptionalExtra extends Equatable {
 
   final int id;
   final String name;
+  final String nameEn;
+  final String nameAr;
   final double unitPrice;
   final String currency;
   final bool isAvailable;
 
+  String nameForLanguage(String languageCode) {
+    if (languageCode == 'ar') {
+      return nameAr.isNotEmpty ? nameAr : (nameEn.isNotEmpty ? nameEn : name);
+    }
+
+    return nameEn.isNotEmpty ? nameEn : (nameAr.isNotEmpty ? nameAr : name);
+  }
+
   @override
-  List<Object?> get props => [id, name, unitPrice, currency, isAvailable];
+  List<Object?> get props => [
+    id,
+    name,
+    nameEn,
+    nameAr,
+    unitPrice,
+    currency,
+    isAvailable,
+  ];
 }
 
 class TripDetails extends Equatable {
