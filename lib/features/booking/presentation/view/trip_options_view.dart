@@ -341,9 +341,7 @@ class _TripOptionsViewState extends State<TripOptionsView> {
                             ),
                           OptionalExtraCard(
                             name: extra.name,
-                            totalPrice:
-                                extra.unitPrice *
-                                (_extraQuantities[extra.id] ?? 0),
+                            unitPrice: extra.unitPrice,
                             currency: extra.currency,
                             quantity: _extraQuantities[extra.id] ?? 0,
                             onDecrement: () => setState(() {

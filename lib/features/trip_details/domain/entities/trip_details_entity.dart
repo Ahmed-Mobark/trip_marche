@@ -394,11 +394,7 @@ class TripReview extends Equatable {
   List<Object?> get props => [id, reviewer, rating, comment, images, createdAt];
 }
 
-/// A vendor-configured, optional booking item.
-///
-/// The live Trip Details contract does not expose these items yet, so
-/// [TripDetails.optionalExtras] defaults to an empty list until the backend
-/// adds its documented response field.
+/// A vendor-configured, quantity-based optional booking item.
 class TripOptionalExtra extends Equatable {
   const TripOptionalExtra({
     required this.id,

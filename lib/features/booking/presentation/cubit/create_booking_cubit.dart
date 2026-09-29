@@ -152,6 +152,16 @@ class CreateBookingCubit extends Cubit<CreateBookingState> {
         )
         .toList(growable: false);
 
+    final optionalExtras = data.optionalExtras
+        .where((extra) => extra.quantity > 0)
+        .map(
+          (extra) => CreateBookingOptionalExtra(
+            extraId: extra.extraId,
+            quantity: extra.quantity,
+          ),
+        )
+        .toList(growable: false);
+
     final request = CreateBookingRequest(
       departureId: data.departureId,
       meetingPointId: data.selectedMeetingPointId,
@@ -160,6 +170,7 @@ class CreateBookingCubit extends Cubit<CreateBookingState> {
       babies: babyCount,
       rooms: rooms,
       activities: activities,
+      optionalExtras: optionalExtras,
       couponCode: trimmedCoupon,
       travelers: travelers,
       notes: trimmedNotes,

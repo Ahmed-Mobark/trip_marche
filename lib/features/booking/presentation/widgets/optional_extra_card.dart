@@ -12,7 +12,7 @@ class OptionalExtraCard extends StatelessWidget {
   const OptionalExtraCard({
     super.key,
     required this.name,
-    required this.totalPrice,
+    required this.unitPrice,
     required this.currency,
     required this.quantity,
     required this.onDecrement,
@@ -20,7 +20,7 @@ class OptionalExtraCard extends StatelessWidget {
   });
 
   final String name;
-  final double totalPrice;
+  final double unitPrice;
   final String currency;
   final int quantity;
   final VoidCallback onDecrement;
@@ -63,7 +63,7 @@ class OptionalExtraCard extends StatelessWidget {
           Flexible(
             child: Text(
               TripDetailsUiFormatters.formatAmount(
-                totalPrice,
+                unitPrice,
                 currency: currency,
               ),
               maxLines: 1,

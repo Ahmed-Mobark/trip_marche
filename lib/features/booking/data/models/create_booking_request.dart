@@ -28,6 +28,18 @@ class CreateBookingActivity {
   };
 }
 
+class CreateBookingOptionalExtra {
+  const CreateBookingOptionalExtra({
+    required this.extraId,
+    required this.quantity,
+  });
+
+  final int extraId;
+  final int quantity;
+
+  Map<String, dynamic> toJson() => {'extra_id': extraId, 'quantity': quantity};
+}
+
 class CreateBookingTraveler {
   const CreateBookingTraveler({
     required this.fullName,
@@ -58,6 +70,7 @@ class CreateBookingRequest {
     required this.babies,
     required this.rooms,
     required this.activities,
+    this.optionalExtras = const [],
     this.couponCode,
     required this.travelers,
     this.notes,
@@ -71,6 +84,7 @@ class CreateBookingRequest {
   final int babies;
   final List<CreateBookingRoom> rooms;
   final List<CreateBookingActivity> activities;
+  final List<CreateBookingOptionalExtra> optionalExtras;
   final String? couponCode;
   final List<CreateBookingTraveler> travelers;
   final String? notes;
@@ -84,6 +98,10 @@ class CreateBookingRequest {
     'babies': babies,
     'rooms': rooms.map((r) => r.toJson()).toList(growable: false),
     'activities': activities.map((a) => a.toJson()).toList(growable: false),
+    if (optionalExtras.isNotEmpty)
+      'optional_extras': optionalExtras
+          .map((extra) => extra.toJson())
+          .toList(growable: false),
     'coupon_code': couponCode,
     'travelers': travelers.map((t) => t.toJson()).toList(growable: false),
     'notes': notes,

@@ -149,6 +149,10 @@ class TripDetailsModel {
       departures: _parseDepartures(json['departures']),
       roomTypes: _parseRoomTypes(json['room_types']),
       activities: _parseActivities(json['activities']),
+      optionalExtras: _parseOptionalExtras(
+        json['optional_extras'],
+        _JsonParse.asCurrencyCode(json['currency']),
+      ),
       reviews: _parseReviews(json['reviews']),
       visaDetails: _normalizeMultiline(
         _JsonParse.asNullableString(json['visa_details']),
@@ -444,6 +448,32 @@ class TripDetailsModel {
           ),
         )
         .toList();
+  }
+
+  static List<TripOptionalExtra> _parseOptionalExtras(
+    dynamic raw,
+    String fallbackCurrency,
+  ) {
+    if (raw is! List) {
+      return const [];
+    }
+
+    return raw
+        .whereType<Map<String, dynamic>>()
+        .map(
+          (extra) => TripOptionalExtra(
+            id: _JsonParse.asInt(extra['id']),
+            name: _JsonParse.asString(extra['name']).trim(),
+            unitPrice: _JsonParse.asDouble(extra['unit_price']),
+            currency: _JsonParse.asCurrencyCode(
+              extra['currency'],
+              fallbackCurrency,
+            ),
+            isAvailable: _JsonParse.asBool(extra['is_available'], true),
+          ),
+        )
+        .where((extra) => extra.id > 0 && extra.name.isNotEmpty)
+        .toList(growable: false);
   }
 
   static List<TripReview> _parseReviews(dynamic raw) {
