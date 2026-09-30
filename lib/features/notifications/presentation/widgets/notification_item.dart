@@ -1,5 +1,3 @@
-import 'dart:math' as math;
-
 import 'package:flutter/material.dart';
 import '../../../../core/theme/app_colors.dart';
 
@@ -41,7 +39,7 @@ class NotificationItem extends StatelessWidget {
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              _NotificationLogo(),
+              const _NotificationLogo(),
               const SizedBox(width: 14),
               Expanded(
                 child: Padding(
@@ -142,53 +140,22 @@ class _NotificationLogo extends StatelessWidget {
     return SizedBox(
       width: 58,
       height: 58,
-      child: Stack(
-        clipBehavior: Clip.none,
-        children: [
-          Container(
-            width: 58,
-            height: 58,
-            decoration: const BoxDecoration(
-              color: AppColors.primary,
-              shape: BoxShape.circle,
-            ),
-            child: Image.asset(
-              'assets/images/logo.png',
-              color: Colors.white,
-              width: 26,
-            ),
-          ),
-          Positioned(
-            top: 12,
-            right: -4,
-            child: Transform.rotate(
-              angle: math.pi / 16,
-              child: ClipPath(
-                clipper: _FlagClipper(),
-                child: Container(
-                  width: 30,
-                  height: 14,
-                  color: const Color(0xFFFFD84D),
-                ),
-              ),
-            ),
-          ),
-        ],
+      child: Container(
+        width: 58,
+        height: 58,
+        alignment: Alignment.center,
+        decoration: const BoxDecoration(
+          color: AppColors.primary,
+          shape: BoxShape.circle,
+        ),
+        child: Image.asset(
+          'assets/icons/llo2.png',
+          color: Colors.white,
+          width: 26,
+          height: 26,
+          fit: BoxFit.contain,
+        ),
       ),
     );
   }
-}
-
-class _FlagClipper extends CustomClipper<Path> {
-  @override
-  Path getClip(Size size) {
-    return Path()
-      ..moveTo(0, 0)
-      ..lineTo(size.width, size.height * 0.5)
-      ..lineTo(0, size.height)
-      ..close();
-  }
-
-  @override
-  bool shouldReclip(covariant CustomClipper<Path> oldClipper) => false;
 }
