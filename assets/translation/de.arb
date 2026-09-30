@@ -43,6 +43,7 @@
   "authOrLoginWith": "Oder anmelden mit",
   "authContinueWithGoogle": "Mit Google fortfahren",
   "authContinueWithApple": "Mit Apple fortfahren",
+  "authContinueAsGuest": "Als Gast fortfahren",
   "authTravelAgencyPrompt": "Reiseveranstalter oder Agentur? ",
   "authJoinAsTripPartner": "Als Anbieter beitreten",
   "authPartnerPortalTitle": "Partnerportal",
@@ -452,6 +453,9 @@
   "bookingSavedCards": "Gespeicherte Karten",
   "bookingAddNewCard": "Neue Karte hinzufügen",
   "bookingPayNow": "Jetzt bezahlen – {amount}",
+  "myTripsPayNow": "Jetzt bezahlen",
+  "myTripsPaymentPending": "Zahlung ausstehend",
+  "myTripsPaymentIncomplete": "Die Zahlung wurde nicht abgeschlossen",
   "bookingCardExpires": "Läuft ab {expiry}",
 
   "profilePersonalInfoTitle": "Persönliche Infos",

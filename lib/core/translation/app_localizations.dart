@@ -352,6 +352,12 @@ abstract class AppLocalizations {
   /// **'Continue with Apple'**
   String get authContinueWithApple;
 
+  /// No description provided for @authContinueAsGuest.
+  ///
+  /// In en, this message translates to:
+  /// **'Continue as guest'**
+  String get authContinueAsGuest;
+
   /// No description provided for @authTravelAgencyPrompt.
   ///
   /// In en, this message translates to:
@@ -2175,6 +2181,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Pay Now - {amount}'**
   String bookingPayNow(Object amount);
+
+  /// No description provided for @myTripsPayNow.
+  ///
+  /// In en, this message translates to:
+  /// **'Pay Now'**
+  String get myTripsPayNow;
+
+  /// No description provided for @myTripsPaymentPending.
+  ///
+  /// In en, this message translates to:
+  /// **'Payment pending'**
+  String get myTripsPaymentPending;
+
+  /// No description provided for @myTripsPaymentIncomplete.
+  ///
+  /// In en, this message translates to:
+  /// **'Payment was not completed'**
+  String get myTripsPaymentIncomplete;
 
   /// No description provided for @bookingCardExpires.
   ///

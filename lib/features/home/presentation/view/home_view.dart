@@ -6,12 +6,14 @@ import 'package:trip_marche/core/extensions/localization.dart';
 import 'package:trip_marche/core/injection/injection_container.dart';
 import 'package:trip_marche/core/services/location_service.dart';
 import 'package:trip_marche/core/navigation/app_navigator.dart';
+import 'package:trip_marche/core/notification/notification_api.dart';
 import 'package:trip_marche/core/theme/app_colors.dart';
 import 'package:trip_marche/core/theme/app_text_styles.dart';
 import 'package:trip_marche/core/toast/app_toast.dart';
 import 'package:trip_marche/core/widgets/custom_loading.dart';
 import '../../../trip_details/presentation/trip_wishlist_pop_result.dart';
 import '../../../trip_details/presentation/view/trip_details_view.dart';
+import '../../../notifications/presentation/view/notifications_view.dart';
 import '../../data/models/home_banner_model.dart';
 import '../../data/models/home_category_model.dart';
 import '../../data/models/home_section_response.dart';
@@ -47,11 +49,22 @@ class HomeView extends StatefulWidget {
 class HomeViewState extends State<HomeView> {
   BuildContext? _refreshContext;
   String _locationText = '';
+  int _unreadNotifications = 0;
 
   @override
   void initState() {
     super.initState();
     _fetchLocation();
+    _loadUnreadNotifications();
+  }
+
+  Future<void> _loadUnreadNotifications() async {
+    try {
+      final count = await sl<NotificationApi>().unreadCount();
+      if (mounted) {
+        setState(() => _unreadNotifications = count);
+      }
+    } catch (_) {}
   }
 
   Future<void> _fetchLocation() async {
@@ -66,9 +79,7 @@ class HomeViewState extends State<HomeView> {
     if (_locationText.isNotEmpty) {
       return _locationText;
     }
-    return LocationService.formatCityCountry(
-      raw: context.tr.homeLocationText,
-    );
+    return LocationService.formatCityCountry(raw: context.tr.homeLocationText);
   }
 
   Future<void> refreshFromNavBarTap() async {
@@ -294,7 +305,13 @@ class HomeViewState extends State<HomeView> {
                           ],
                           locationText: _headerLocationText(scrollContext),
                           topPadding: MediaQuery.paddingOf(scrollContext).top,
-                          onNotificationsTap: () {},
+                          hasNotification: _unreadNotifications > 0,
+                          onNotificationsTap: () async {
+                            await sl<AppNavigator>().push(
+                              screen: const NotificationsView(),
+                            );
+                            await _loadUnreadNotifications();
+                          },
                         ),
                       ),
                       SliverToBoxAdapter(
@@ -860,7 +877,7 @@ class _TripHorizontalList extends StatelessWidget {
                         .push<TripWishlistPopResult>(
                           screen: TripDetailsView(
                             tripId: trip.id,
-                             initialIsWishlisted: trip.isFavorite,
+                            initialIsWishlisted: trip.isFavorite,
                           ),
                         );
                     onReturnedFromTripDetails(result);

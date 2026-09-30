@@ -41,14 +41,20 @@ abstract final class BookingReviewDataBuilder {
         ? flowContext.travelersCount
         : travelers.length;
 
-    final unitPrice = trip.discountPrice ?? trip.price;
-    final travelersTotal = travelersCount * unitPrice;
-    final roomTotal = flowContext.rooms.isNotEmpty
-        ? flowContext.rooms.fold<double>(
-            0,
-            (sum, room) => sum + room.persons * unitPrice,
-          )
-        : 0.0;
+    final selectedDeparture = trip.departures
+        .where((departure) => departure.id == flowContext.departureId)
+        .firstOrNull;
+    final unitPrice =
+        selectedDeparture?.price ?? trip.discountPrice ?? trip.price;
+    final travelersTotal =
+        (flowContext.adultCount * unitPrice) +
+        (flowContext.kidCount * (trip.kidPrice ?? 0)) +
+        (flowContext.babyCount * (trip.babyPrice ?? 0));
+    final roomTypesById = {for (final room in trip.roomTypes) room.id: room};
+    final roomTotal = flowContext.rooms.fold<double>(0, (sum, room) {
+      final roomType = roomTypesById[room.roomTypeId];
+      return sum + room.persons * (roomType?.price ?? 0);
+    });
 
     final taxableSubtotal =
         travelersTotal + roomTotal + activitiesTotal + optionalExtrasTotal;

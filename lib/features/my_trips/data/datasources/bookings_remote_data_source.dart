@@ -13,6 +13,8 @@ abstract class BookingsRemoteDataSource {
   });
 
   Future<Uint8List> fetchBookingPdf(int bookingId);
+
+  Future<String> retryPayment(int bookingId);
 }
 
 class BookingsRemoteDataSourceImpl implements BookingsRemoteDataSource {
@@ -47,5 +49,19 @@ class BookingsRemoteDataSourceImpl implements BookingsRemoteDataSource {
       options: Options(responseType: ResponseType.bytes),
     );
     return response;
+  }
+
+  @override
+  Future<String> retryPayment(int bookingId) async {
+    final response = await _api.post<Map<String, dynamic>>(
+      url: AppEndpoints.bookingPay(bookingId),
+      body: const {},
+    );
+    final payload = response['data'] as Map<String, dynamic>? ?? response;
+    final checkoutUrl = payload['checkout_url']?.toString().trim();
+    if (checkoutUrl == null || checkoutUrl.isEmpty) {
+      throw const FormatException('Missing checkout URL');
+    }
+    return checkoutUrl;
   }
 }

@@ -5,7 +5,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../core/config/app_icons.dart';
 import '../../../../core/extensions/localization.dart';
 import '../../../../core/injection/injection_container.dart';
+import '../../../../core/navigation/app_navigator.dart';
+import '../../../../core/storage/data/storage.dart';
 import '../../../../core/theme/app_colors.dart';
+import '../../../auth/presentation/view/login_view.dart';
 import '../../../home/presentation/view/home_view.dart';
 import '../../../my_trips/presentation/view/my_trips_view.dart';
 import '../../../profile/presentation/cubit/profile_cubit.dart';
@@ -35,12 +38,13 @@ class _MainNavViewState extends State<MainNavView> {
   }
 
   final GlobalKey<HomeViewState> _homeKey = GlobalKey<HomeViewState>();
+  final GlobalKey<MyTripsViewState> _myTripsKey = GlobalKey<MyTripsViewState>();
   final GlobalKey<WishlistViewState> _wishlistKey =
       GlobalKey<WishlistViewState>();
 
   late final List<Widget> _pages = [
     HomeView(key: _homeKey),
-    const MyTripsView(),
+    MyTripsView(key: _myTripsKey),
     WishlistView(key: _wishlistKey),
     const ProfileView(),
   ];
@@ -147,9 +151,19 @@ class _MainNavViewState extends State<MainNavView> {
                             currentIndex: _currentIndex,
                             onTap: (index) {
                               HapticFeedback.lightImpact();
+                              if (index != 0 && !sl<Storage>().isAuthorized()) {
+                                sl<AppNavigator>().push(
+                                  screen: const LoginView(),
+                                );
+                                return;
+                              }
                               setState(() => _currentIndex = index);
                               if (index == 0) {
                                 _homeKey.currentState?.refreshFromNavBarTap();
+                              }
+                              if (index == 1) {
+                                _myTripsKey.currentState
+                                    ?.refreshFromNavBarTap();
                               }
                               if (index == 2) {
                                 _wishlistKey.currentState

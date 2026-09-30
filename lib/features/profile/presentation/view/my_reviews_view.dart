@@ -63,9 +63,7 @@ class MyReviewsView extends StatelessWidget {
             final reviews = state.reviews;
 
             if (isLoading && reviews.isEmpty) {
-              return const Center(
-                child: CustomLoading(size: 36, strokeWidth: 2.5),
-              );
+              return const Center(child: CustomLoading(top: 40, bottom: 40));
             }
 
             if (isError && reviews.isEmpty) {

@@ -5,6 +5,7 @@ import 'package:webview_flutter/webview_flutter.dart';
 import 'package:trip_marche/core/config/app_colors.dart';
 import 'package:trip_marche/core/extensions/localization.dart';
 import 'package:trip_marche/core/toast/app_toast.dart';
+import 'package:trip_marche/core/widgets/custom_loading.dart';
 
 class PaymentWebViewScreen extends StatefulWidget {
   const PaymentWebViewScreen({
@@ -339,7 +340,7 @@ class _PaymentWebViewScreenState extends State<PaymentWebViewScreen> {
         body: IndexedStack(
           index: _isLoading && _loadError == null ? 0 : 1,
           children: [
-            const Center(child: CircularProgressIndicator()),
+            const Center(child: CustomLoading(top: 40, bottom: 40)),
             Column(
               children: [
                 if (_loadError != null) _buildErrorBar(context),

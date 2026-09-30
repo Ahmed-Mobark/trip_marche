@@ -10,11 +10,13 @@ class SocialLoginButton extends StatelessWidget {
     required this.icon,
     required this.text,
     required this.onPressed,
+    this.isLoading = false,
   });
 
   final Widget icon;
   final String text;
-  final VoidCallback onPressed;
+  final VoidCallback? onPressed;
+  final bool isLoading;
 
   @override
   Widget build(BuildContext context) {
@@ -22,8 +24,17 @@ class SocialLoginButton extends StatelessWidget {
       width: double.infinity,
       height: 54.h,
       child: OutlinedButton.icon(
-        onPressed: onPressed,
-        icon: icon,
+        onPressed: isLoading ? null : onPressed,
+        icon: isLoading
+            ? SizedBox(
+                width: 20.r,
+                height: 20.r,
+                child: CircularProgressIndicator(
+                  strokeWidth: 2,
+                  color: AppColors.primary,
+                ),
+              )
+            : icon,
         label: Text(
           text,
           style: AppTextStyles.subtitle(color: AppColors.darkText(context)),

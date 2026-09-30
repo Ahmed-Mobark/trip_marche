@@ -89,9 +89,7 @@ class _MyFollowingsViewState extends State<MyFollowingsView> {
                 ),
                 centerTitle: true,
               ),
-              body: const Center(
-                child: CustomLoading(size: 36, strokeWidth: 2.5),
-              ),
+              body: const Center(child: CustomLoading(top: 40, bottom: 40)),
             );
           }
 

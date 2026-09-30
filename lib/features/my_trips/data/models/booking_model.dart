@@ -10,6 +10,7 @@ class BookingPaymentDetailModel {
     required this.discountAmount,
     required this.taxAmount,
     required this.totalAmount,
+    required this.totalAmountBase,
     this.couponCode,
   });
 
@@ -19,6 +20,7 @@ class BookingPaymentDetailModel {
   final double discountAmount;
   final double taxAmount;
   final double totalAmount;
+  final double totalAmountBase;
   final String? couponCode;
 
   factory BookingPaymentDetailModel.fromJson(Map<String, dynamic> json) {
@@ -29,6 +31,10 @@ class BookingPaymentDetailModel {
       discountAmount: (json['discount_amount'] as num?)?.toDouble() ?? 0.0,
       taxAmount: (json['tax_amount'] as num?)?.toDouble() ?? 0.0,
       totalAmount: (json['total_amount'] as num?)?.toDouble() ?? 0.0,
+      totalAmountBase:
+          (json['total_amount_base'] as num?)?.toDouble() ??
+          (json['total_amount'] as num?)?.toDouble() ??
+          0.0,
       couponCode: json['coupon_code'] as String?,
     );
   }
@@ -40,6 +46,7 @@ class BookingPaymentDetailModel {
     discountAmount: discountAmount,
     taxAmount: taxAmount,
     totalAmount: totalAmount,
+    totalAmountBase: totalAmountBase,
     couponCode: couponCode,
   );
 }
@@ -209,6 +216,7 @@ class BookingModel {
     this.paidAt,
     this.expiresAt,
     required this.currency,
+    required this.baseCurrency,
     this.payment,
     required this.trip,
     required this.dates,
@@ -226,6 +234,7 @@ class BookingModel {
   final String? paidAt;
   final String? expiresAt;
   final String currency;
+  final String baseCurrency;
   final Map<String, dynamic>? payment;
   final BookingTripModel trip;
   final BookingDatesModel dates;
@@ -251,6 +260,10 @@ class BookingModel {
       currency: (json['currency'] as String?)?.trim().isNotEmpty == true
           ? (json['currency'] as String).trim()
           : 'EGP',
+      baseCurrency:
+          (json['base_currency'] as String?)?.trim().isNotEmpty == true
+          ? (json['base_currency'] as String).trim()
+          : 'EGP',
       payment: rawPayment is Map<String, dynamic>
           ? Map<String, dynamic>.from(rawPayment)
           : null,
@@ -272,6 +285,7 @@ class BookingModel {
     paidAt: paidAt,
     expiresAt: expiresAt,
     currency: currency,
+    baseCurrency: baseCurrency,
     payment: payment,
     trip: trip.toEntity(),
     dates: dates.toEntity(),

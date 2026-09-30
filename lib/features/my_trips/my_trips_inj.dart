@@ -10,6 +10,7 @@ import 'domain/repositories/bookings_repository.dart';
 import 'domain/usecases/fetch_trips_catalog_usecase.dart';
 import 'domain/usecases/fetch_bookings_usecase.dart';
 import 'domain/usecases/fetch_booking_pdf_usecase.dart';
+import 'domain/usecases/retry_booking_payment_usecase.dart';
 import 'presentation/cubit/my_trips_list_cubit.dart';
 import 'presentation/cubit/my_trips_shell_cubit.dart';
 import 'presentation/cubit/bookings_cubit.dart';
@@ -44,6 +45,9 @@ void initMyTripsInjection(GetIt sl) {
   );
   sl.registerLazySingleton(
     () => FetchBookingPdfUseCase(sl<BookingsRepository>()),
+  );
+  sl.registerLazySingleton(
+    () => RetryBookingPaymentUseCase(sl<BookingsRepository>()),
   );
   sl.registerFactory<BookingsCubit>(
     () => BookingsCubit(sl<FetchBookingsUseCase>()),

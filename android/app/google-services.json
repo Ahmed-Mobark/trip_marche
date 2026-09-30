@@ -1,0 +1,54 @@
+{
+  "project_info": {
+    "project_number": "533422014517",
+    "project_id": "trevlen",
+    "storage_bucket": "trevlen.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:533422014517:android:90be47f9199138f66bf17c",
+        "android_client_info": {
+          "package_name": "com.app.trevlen"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "533422014517-voc8ihd17k6mq4kg6iai5nl2l6lp8kps.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.app.trevlen",
+            "certificate_hash": "ca4c2dbd77a954bf8c42281302b15ad84aa4c38f"
+          }
+        },
+        {
+          "client_id": "533422014517-f4ri9lp1rsenvm215vb8kbkc2bm8ajl2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCIqPfZP--SrEgo1qf_-YKGE8ynxtmUuY4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "533422014517-f4ri9lp1rsenvm215vb8kbkc2bm8ajl2.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "533422014517-q33novndl716q6926ik8qemop12n9kak.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.app.trevlen"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

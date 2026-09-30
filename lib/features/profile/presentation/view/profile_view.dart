@@ -86,9 +86,8 @@ class _ProfileViewState extends State<ProfileView> {
                   Widget bodyContent;
                   if (profileState.status == ProfileStatus.loading &&
                       profile == null) {
-                    bodyContent = SizedBox(
-                      height: 200,
-                      child: const CustomLoading(size: 36, strokeWidth: 2.5),
+                    bodyContent = const Center(
+                      child: CustomLoading(top: 40, bottom: 40),
                     );
                   } else if (profileState.status == ProfileStatus.failure) {
                     bodyContent = Center(
@@ -231,7 +230,7 @@ class _ProfileViewState extends State<ProfileView> {
 
     final pickedFile = await showImageSourceBottomSheet(context);
 
-    if (pickedFile == null || !mounted) return;
+    if (pickedFile == null || !context.mounted) return;
 
     setState(() => _isUploadingAvatar = true);
 
@@ -240,7 +239,7 @@ class _ProfileViewState extends State<ProfileView> {
 
       await cubit.updateProfile(avatarFile: pickedFile);
 
-      if (!mounted) return;
+      if (!context.mounted) return;
 
       final state = cubit.state;
 
@@ -258,7 +257,7 @@ class _ProfileViewState extends State<ProfileView> {
         );
       }
     } catch (_) {
-      if (mounted) {
+      if (context.mounted) {
         appToast(
           context: context,
           type: ToastType.error,
@@ -266,7 +265,7 @@ class _ProfileViewState extends State<ProfileView> {
         );
       }
     } finally {
-      if (mounted) {
+      if (context.mounted) {
         setState(() => _isUploadingAvatar = false);
       }
     }

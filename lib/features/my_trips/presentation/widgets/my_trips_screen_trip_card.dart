@@ -35,20 +35,24 @@ class MyTripsScreenTripCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final tr = context.tr;
 
-    final (Color badgeColor, String badgeLabel) = switch (tab) {
-      MyTripsShellTab.active => (
-        AppColors.myTripsTripCardBadgeGreen,
-        tr.myTripsStatusActive,
-      ),
-      MyTripsShellTab.past => (
-        AppColors.myTripsBadgePast,
-        tr.myTripsStatusPast,
-      ),
-      MyTripsShellTab.canceled => (
-        AppColors.myTripsBadgeCanceled,
-        tr.myTripsStatusCanceled,
-      ),
-    };
+    final needsPayment = tab == MyTripsShellTab.active && trip.requiresPayment;
+
+    final (Color badgeColor, String badgeLabel) = needsPayment
+        ? (AppColors.error, tr.myTripsPaymentPending)
+        : switch (tab) {
+            MyTripsShellTab.active => (
+              AppColors.myTripsTripCardBadgeGreen,
+              tr.myTripsStatusActive,
+            ),
+            MyTripsShellTab.past => (
+              AppColors.myTripsBadgePast,
+              tr.myTripsStatusPast,
+            ),
+            MyTripsShellTab.canceled => (
+              AppColors.myTripsBadgeCanceled,
+              tr.myTripsStatusCanceled,
+            ),
+          };
 
     final primaryLabel = switch (tab) {
       MyTripsShellTab.active => tr.myTripsViewDetails,
@@ -56,14 +60,16 @@ class MyTripsScreenTripCard extends StatelessWidget {
       MyTripsShellTab.canceled => tr.myTripsBookAgain,
     };
 
-    final bottomLabel = switch (tab) {
-      MyTripsShellTab.canceled => tr.myTripsViewDetails,
-      MyTripsShellTab.past => tr.myTripsBookingConfirmation,
-      MyTripsShellTab.active =>
-        trip.useDownloadPdfWhenActive
-            ? tr.myTripsDownloadPdf
-            : tr.myTripsBookingConfirmation,
-    };
+    final bottomLabel = needsPayment
+        ? tr.myTripsPayNow
+        : switch (tab) {
+            MyTripsShellTab.canceled => tr.myTripsViewDetails,
+            MyTripsShellTab.past => tr.myTripsBookingConfirmation,
+            MyTripsShellTab.active =>
+              trip.useDownloadPdfWhenActive
+                  ? tr.myTripsDownloadPdf
+                  : tr.myTripsBookingConfirmation,
+          };
 
     final secondaryLabel = switch (tab) {
       MyTripsShellTab.past =>
@@ -230,6 +236,10 @@ class MyTripsScreenTripCard extends StatelessWidget {
                     _MetaRow(icon: Iconsax.location, text: trip.locationLabel),
                     SizedBox(height: MyTripsTripCardTokens.rowTight),
                     _MetaRow(icon: Iconsax.calendar_1, text: trip.dateRange),
+                    if (needsPayment) ...[
+                      SizedBox(height: MyTripsTripCardTokens.rowTight),
+                      _PaymentPendingNote(text: tr.myTripsPaymentIncomplete),
+                    ],
                     SizedBox(height: MyTripsTripCardTokens.beforeActions),
                     if (tab == MyTripsShellTab.past) ...[
                       Row(
@@ -259,6 +269,12 @@ class MyTripsScreenTripCard extends StatelessWidget {
                       label: bottomLabel,
                       onTap: onBottomTap,
                       isLoading: isPdfLoading,
+                      icon: needsPayment
+                          ? Iconsax.card
+                          : Icons.picture_as_pdf_rounded,
+                      iconColor: needsPayment
+                          ? AppColors.myTripsTripCardPurple
+                          : AppColors.myTripsTripCardRed,
                     ),
                   ],
                 ),
@@ -267,6 +283,35 @@ class MyTripsScreenTripCard extends StatelessWidget {
           ),
         );
       },
+    );
+  }
+}
+
+class _PaymentPendingNote extends StatelessWidget {
+  const _PaymentPendingNote({required this.text});
+
+  final String text;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: double.infinity,
+      padding: EdgeInsetsDirectional.symmetric(horizontal: 8.w, vertical: 5.h),
+      decoration: BoxDecoration(
+        color: AppColors.error.withValues(alpha: 0.08),
+        borderRadius: BorderRadius.circular(10.r),
+      ),
+      child: Text(
+        text,
+        maxLines: 1,
+        overflow: TextOverflow.ellipsis,
+        style: MyTripsFigmaTokens.text(
+          fontSize: 10.sp,
+          fontWeight: FontWeight.w600,
+          height: 1.2,
+          color: AppColors.error,
+        ),
+      ),
     );
   }
 }
@@ -442,11 +487,19 @@ class _OutlineCta extends StatelessWidget {
 }
 
 class _FooterCta extends StatelessWidget {
-  const _FooterCta({required this.label, this.onTap, this.isLoading = false});
+  const _FooterCta({
+    required this.label,
+    this.onTap,
+    this.isLoading = false,
+    this.icon = Icons.picture_as_pdf_rounded,
+    this.iconColor,
+  });
 
   final String label;
   final VoidCallback? onTap;
   final bool isLoading;
+  final IconData icon;
+  final Color? iconColor;
 
   @override
   Widget build(BuildContext context) {
@@ -486,9 +539,9 @@ class _FooterCta extends StatelessWidget {
                 )
               else
                 Icon(
-                  Icons.picture_as_pdf_rounded,
+                  icon,
                   size: MyTripsTripCardTokens.pdfSize,
-                  color: AppColors.myTripsTripCardRed,
+                  color: iconColor ?? AppColors.myTripsTripCardRed,
                 ),
               SizedBox(width: MyTripsTripCardTokens.pdfGap),
               Flexible(

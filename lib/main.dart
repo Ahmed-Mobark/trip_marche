@@ -6,11 +6,13 @@ import 'core/app/app_body.dart';
 import 'core/app/app_state.dart';
 import 'core/bloc/bloc_observer.dart';
 import 'core/injection/injection_container.dart' as injection;
+import 'core/notification/firebase_notification_service.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await ScreenUtil.ensureScreenSize();
   await injection.init();
+  await injection.sl<FirebaseNotificationService>().init();
   Bloc.observer = MyBlocObserver();
   final initialThemeMode = AppState.bootThemeMode();
   runApp(MyApp(initialThemeMode: initialThemeMode));

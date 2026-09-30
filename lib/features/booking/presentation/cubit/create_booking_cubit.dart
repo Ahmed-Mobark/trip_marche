@@ -178,7 +178,8 @@ class CreateBookingCubit extends Cubit<CreateBookingState> {
     );
 
     if (kDebugMode) {
-      log('Booking activities: ${jsonEncode(request.toJson()['activities'])}');
+      const encoder = JsonEncoder.withIndent('  ');
+      log('BOOKING REQUEST BODY:\n${encoder.convert(request.toJson())}');
     }
 
     log('=== BOOKING VALIDATION ===');

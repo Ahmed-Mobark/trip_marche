@@ -140,6 +140,9 @@ class AppLocalizationsEs extends AppLocalizations {
   String get authContinueWithApple => 'Continuar con Apple';
 
   @override
+  String get authContinueAsGuest => 'Continuar como invitado';
+
+  @override
   String get authTravelAgencyPrompt => '¿Proveedor o agencia de viajes? ';
 
   @override
@@ -1114,6 +1117,15 @@ class AppLocalizationsEs extends AppLocalizations {
   String bookingPayNow(Object amount) {
     return 'Pagar ahora - $amount';
   }
+
+  @override
+  String get myTripsPayNow => 'Pagar ahora';
+
+  @override
+  String get myTripsPaymentPending => 'Pago pendiente';
+
+  @override
+  String get myTripsPaymentIncomplete => 'El pago no se completó';
 
   @override
   String bookingCardExpires(Object expiry) {

@@ -5,6 +5,7 @@ import '../datasources/auth_remote_data_source.dart';
 import '../models/login_request.dart';
 import '../models/register_request.dart';
 import '../models/reset_password_request.dart';
+import '../models/social_login_request.dart';
 import '../models/verify_email_request.dart';
 import '../../domain/repositories/auth_repository.dart';
 
@@ -23,6 +24,13 @@ class AuthRepositoryImpl with RepositoryHelper implements AuthRepository {
   @override
   Future<Either<Failure, Map<String, dynamic>>> login(LoginRequest request) {
     return handleEither(() => _remoteDataSource.login(request));
+  }
+
+  @override
+  Future<Either<Failure, Map<String, dynamic>>> socialLogin(
+    SocialLoginRequest request,
+  ) {
+    return handleEither(() => _remoteDataSource.socialLogin(request));
   }
 
   @override

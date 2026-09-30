@@ -11,4 +11,6 @@ abstract class BookingsRepository {
   });
 
   Future<Either<Failure, String>> fetchBookingPdf(int bookingId);
+
+  Future<Either<Failure, String>> retryPayment(int bookingId);
 }

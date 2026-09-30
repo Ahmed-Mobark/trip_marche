@@ -2,16 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../../core/storage/data/storage.dart';
+import '../../../../../core/notification/firebase_notification_service.dart';
 import '../../../../../core/toast/app_toast.dart';
 import '../../../domain/usecases/logout_usecase.dart';
 import 'logout_state.dart';
 
 class LogoutCubit extends Cubit<LogoutState> {
-  LogoutCubit(this._logoutUseCase, this._storage)
+  LogoutCubit(this._logoutUseCase, this._storage, this._notifications)
     : super(const LogoutState());
 
   final LogoutUseCase _logoutUseCase;
   final Storage _storage;
+  final FirebaseNotificationService _notifications;
 
   Future<void> logout(BuildContext context) async {
     if (state.status == LogoutStatus.loading) return;
@@ -45,6 +47,7 @@ class LogoutCubit extends Cubit<LogoutState> {
   }
 
   Future<void> clearSession() async {
+    await _notifications.unregisterCurrentDevice();
     await _storage.deleteToken();
     await _storage.deleteUser();
   }

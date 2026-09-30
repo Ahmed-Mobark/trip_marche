@@ -1,230 +1,168 @@
-// import 'dart:convert';
-// import 'dart:io';
-// import 'package:peel/core/navigation/app_navigator.dart';
-// import 'package:peel/injection_container.dart';
-// import 'package:firebase_core/firebase_core.dart';
-// import 'package:firebase_messaging/firebase_messaging.dart';
-// import 'package:flutter/material.dart';
-// import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-// import 'package:permission_handler/permission_handler.dart';
+import 'dart:convert';
+import 'dart:developer';
 
-// // Define the navigation handling for when a notification is tapped
-// final GlobalKey<NavigatorState>  navigatorKey = sl<AppNavigator>().navigatorKey;
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter/foundation.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
-// // This function will be called when the app is in the background
-// @pragma('vm:entry-point')
-// Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
-//   await Firebase.initializeApp();
-//   debugPrint("Handling a background message: ${message.messageId}");
-// }
+import '../../firebase_options.dart';
+import '../storage/data/storage.dart';
+import 'notification_api.dart';
+import 'notification_navigation_service.dart';
+import 'notification_payload.dart';
 
-// class FirebaseNotificationService {
-//   static FirebaseMessagingInstance? _instance;
+@pragma('vm:entry-point')
+Future<void> firebaseMessagingBackgroundHandler(RemoteMessage message) async {
+  try {
+    await Firebase.initializeApp(
+      options: DefaultFirebaseOptions.currentPlatform,
+    );
+  } catch (_) {}
+}
 
-//   static FirebaseMessagingInstance get instance {
-//     _instance ??= FirebaseMessagingInstance();
-//     return _instance!;
-//   }
-// }
+class FirebaseNotificationService {
+  FirebaseNotificationService(this._api, this._storage, this._navigation);
 
-// class FirebaseMessagingInstance {
-//   final FirebaseMessaging _firebaseMessaging = FirebaseMessaging.instance;
-//   final FlutterLocalNotificationsPlugin _flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
+  final NotificationApi _api;
+  final Storage _storage;
+  final NotificationNavigationService _navigation;
+  final FlutterLocalNotificationsPlugin _localNotifications =
+      FlutterLocalNotificationsPlugin();
 
-//   String? _token;
-//   String? get token => _token;
+  FirebaseMessaging get _messaging => FirebaseMessaging.instance;
 
-//   // Initialize FCM
-//   Future<void> init() async {
-//     // Initialize Firebase
-//     await Firebase.initializeApp();
+  bool _initialized = false;
+  String? _lastToken;
 
-//     // Request notification permission for Android 13+
-//     if (Platform.isAndroid) {
-//       final status = await Permission.notification.request();
-//       debugPrint('Notification permission status: $status');
-//     }
+  Future<void> init() async {
+    if (_initialized) return;
 
-//     // Set up background message handler
-//     FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
+    try {
+      await Firebase.initializeApp(
+        options: DefaultFirebaseOptions.currentPlatform,
+      );
+    } catch (error) {
+      if (kDebugMode) {
+        log('Firebase initialization skipped: $error');
+      }
+      return;
+    }
 
-//     // Request permission for iOS
-//     if (Platform.isIOS) {
-//       await _firebaseMessaging.requestPermission(
-//         alert: true,
-//         announcement: false,
-//         badge: true,
-//         carPlay: false,
-//         criticalAlert: false,
-//         provisional: false,
-//         sound: true,
-//       );
-//       await _firebaseMessaging.setForegroundNotificationPresentationOptions(
-//         alert: true,
-//         badge: true,
-//         sound: true,
-//       );
+    FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler);
 
-//       // Get APNS token for iOS
-//       String? apnsToken = await _firebaseMessaging.getAPNSToken();
-//       debugPrint('APNS Token: $apnsToken');
-//     }
+    const androidChannel = AndroidNotificationChannel(
+      'trevlen_notifications',
+      'Trevlen Notifications',
+      description: 'Trip and booking updates',
+      importance: Importance.high,
+    );
 
-//     // Initialize local notifications
-//     const AndroidInitializationSettings initializationSettingsAndroid = AndroidInitializationSettings('@mipmap/ic_launcher');
+    const initSettings = InitializationSettings(
+      android: AndroidInitializationSettings('@mipmap/ic_launcher'),
+      iOS: DarwinInitializationSettings(),
+    );
 
-//     final DarwinInitializationSettings initializationSettingsIOS = DarwinInitializationSettings();
+    await _localNotifications.initialize(
+      initSettings,
+      onDidReceiveNotificationResponse: (response) {
+        final payload = response.payload;
+        if (payload == null || payload.isEmpty) return;
+        final data = jsonDecode(payload);
+        if (data is Map) {
+          _navigation.open(
+            NotificationPayload.fromMap(Map<String, dynamic>.from(data)),
+          );
+        }
+      },
+    );
 
-//     final InitializationSettings initializationSettings = InitializationSettings(
-//       android: initializationSettingsAndroid,
-//       iOS: initializationSettingsIOS,
-//     );
+    await _localNotifications
+        .resolvePlatformSpecificImplementation<
+          AndroidFlutterLocalNotificationsPlugin
+        >()
+        ?.createNotificationChannel(androidChannel);
 
-//     await _flutterLocalNotificationsPlugin.initialize(
-//       initializationSettings,
-//       onDidReceiveNotificationResponse: onDidReceiveNotificationResponse,
-//     );
+    await _messaging.setForegroundNotificationPresentationOptions(
+      alert: true,
+      badge: true,
+      sound: true,
+    );
 
-//     // Create notification channel for Android
-//     if (Platform.isAndroid) {
-//       await _createNotificationChannel();
-//     }
+    FirebaseMessaging.onMessage.listen(_showForegroundNotification);
+    FirebaseMessaging.onMessageOpenedApp.listen(_openRemoteMessage);
+    _messaging.onTokenRefresh.listen(_registerToken);
 
-//     // Get FCM token
-//     await _getToken();
+    final initialMessage = await _messaging.getInitialMessage();
+    if (initialMessage != null) {
+      _openRemoteMessage(initialMessage);
+    }
 
-//     // Set up message handlers
-//     FirebaseMessaging.onMessage.listen(_handleForegroundMessage);
-//     FirebaseMessaging.onMessageOpenedApp.listen(_handleMessageOpenedApp);
+    _initialized = true;
+    if (_storage.isAuthorized()) {
+      await registerCurrentDevice();
+    }
+  }
 
-//     // Check if app was opened from a notification
-//     await _checkInitialMessage();
-//   }
+  Future<void> requestPermission() async {
+    try {
+      await _messaging.requestPermission(alert: true, badge: true, sound: true);
+    } catch (_) {}
+  }
 
-//   // Create notification channel for Android
-//   Future<void> _createNotificationChannel() async {
-//     const AndroidNotificationChannel channel = AndroidNotificationChannel(
-//       'high_importance_channel',
-//       'High Importance Notifications',
-//       description: 'This channel is used for important notifications.',
-//       importance: Importance.high,
-//     );
+  Future<void> registerCurrentDevice() async {
+    if (!_initialized || !_storage.isAuthorized()) return;
+    await requestPermission();
+    final token = await _messaging.getToken();
+    if (token != null) {
+      await _registerToken(token);
+    }
+  }
 
-//     await _flutterLocalNotificationsPlugin
-//         .resolvePlatformSpecificImplementation<
-//             AndroidFlutterLocalNotificationsPlugin>()
-//         ?.createNotificationChannel(channel);
-//   }
+  Future<void> unregisterCurrentDevice() async {
+    if (!_initialized) return;
+    final token = _lastToken ?? await _messaging.getToken();
+    if (token == null || !_storage.isAuthorized()) return;
+    try {
+      await _api.unregisterDevice(token);
+    } catch (error) {
+      if (kDebugMode) log('FCM token unregister failed: $error');
+    }
+  }
 
-//   // Get the FCM token
-//   Future<void> _getToken() async {
-//     _token = await _firebaseMessaging.getToken();
-//     debugPrint('FCM Token: $_token');
+  Future<void> _registerToken(String token) async {
+    if (!_storage.isAuthorized()) return;
+    try {
+      await _api.registerDevice(token);
+      _lastToken = token;
+    } catch (error) {
+      if (kDebugMode) log('FCM token register failed: $error');
+    }
+  }
 
-//     // Set up token refresh listener
-//     _firebaseMessaging.onTokenRefresh.listen((String token) {
-//       _token = token;
-//       debugPrint('FCM Token refreshed: $_token');
-//       // Here you would typically send the new token to your server
-//     });
-//   }
+  Future<void> _showForegroundNotification(RemoteMessage message) async {
+    final notification = message.notification;
+    if (notification == null) return;
 
-//   static const String _topic = "LOGISTICS_USERS";
-//   // Subscribe to a topic
-//   Future<void> subscribeToTopic() async {
-//     await _firebaseMessaging.subscribeToTopic(_topic);
-//     debugPrint('Subscribed to topic: $_topic');
-//   }
+    await _localNotifications.show(
+      notification.hashCode,
+      notification.title,
+      notification.body,
+      const NotificationDetails(
+        android: AndroidNotificationDetails(
+          'trevlen_notifications',
+          'Trevlen Notifications',
+          channelDescription: 'Trip and booking updates',
+          importance: Importance.high,
+          priority: Priority.high,
+        ),
+        iOS: DarwinNotificationDetails(),
+      ),
+      payload: jsonEncode(message.data),
+    );
+  }
 
-//   // Unsubscribe from a topic
-//   Future<void> unsubscribeFromTopic() async {
-//     await _firebaseMessaging.unsubscribeFromTopic(_topic);
-//     debugPrint('Unsubscribed from topic: $_topic');
-//   }
-
-//   // Handle foreground messages
-//   void _handleForegroundMessage(RemoteMessage message) {
-//     debugPrint('Got a message whilst in the foreground!');
-//     debugPrint('Message data: ${message.data}');
-
-//     RemoteNotification? notification = message.notification;
-//     AndroidNotification? android = message.notification?.android;
-
-//     // Show local notification
-//     if (notification != null) {
-//       _flutterLocalNotificationsPlugin.show(
-//         notification.hashCode,
-//         notification.title,
-//         notification.body,
-//         NotificationDetails(
-//           android: AndroidNotificationDetails(
-//             'high_importance_channel',
-//             'High Importance Notifications',
-//             channelDescription: 'This channel is used for important notifications.',
-//             icon: android?.smallIcon ?? '@mipmap/ic_launcher',
-//           ),
-//           iOS: const DarwinNotificationDetails(),
-//         ),
-//         payload: jsonEncode(message.data),
-//       );
-//     }
-//   }
-
-//   // Handle when app is opened from a notification
-//   Future<void> _handleMessageOpenedApp(RemoteMessage message) async {
-//     debugPrint('Message opened app: ${message.data}');
-//     _navigateToRoute(message.data);
-//   }
-
-//   // Check if app was opened from a notification when it was terminated
-//   Future<void> _checkInitialMessage() async {
-//     RemoteMessage? initialMessage = await _firebaseMessaging.getInitialMessage();
-
-//     if (initialMessage != null) {
-//       debugPrint('App opened from terminated state: ${initialMessage.data}');
-//       _navigateToRoute(initialMessage.data);
-//     }
-//   }
-
-//   // Navigate to the appropriate route based on notification data
-//   void _navigateToRoute(Map<String, dynamic> data) {
-//     // Extract route information from notification data
-//     String? route = data['route'];
-
-//     if (route != null) {
-//       switch (route) {
-//         case 'order_details':
-//           String? orderId = data['order_id'];
-//           if (orderId != null) {
-//             navigatorKey.currentState?.pushNamed('/order-details', arguments: orderId);
-//           }
-//           break;
-//         case 'notifications':
-//           navigatorKey.currentState?.pushNamed('/notifications');
-//           break;
-//         default:
-//           navigatorKey.currentState?.pushNamed('/');
-//       }
-//     }
-//   }
-
-//   // iOS specific method to handle local notifications
-//   void onDidReceiveLocalNotification(
-//       int id, String? title, String? body, String? payload) {
-//     debugPrint('Local notification received: $payload');
-//   }
-
-//   // Handle notification tap
-//   void onDidReceiveNotificationResponse(NotificationResponse details) {
-//     final String? payload = details.payload;
-//     if (payload != null) {
-//       debugPrint('Notification payload: $payload');
-//       try {
-//         final data = jsonDecode(payload) as Map<String, dynamic>;
-//         _navigateToRoute(data);
-//       } catch (e) {
-//         debugPrint('Error parsing notification payload: $e');
-//       }
-//     }
-//   }
-// }
+  void _openRemoteMessage(RemoteMessage message) {
+    _navigation.open(NotificationPayload.fromMap(message.data));
+  }
+}

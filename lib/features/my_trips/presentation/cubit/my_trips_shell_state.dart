@@ -14,6 +14,9 @@ class MyTripRowUiModel extends Equatable {
     this.isWishlisted = true,
     this.isFavorite = false,
     this.useDownloadPdfWhenActive = false,
+    this.requiresPayment = false,
+    this.paymentStatus = '',
+    this.paymentAmountText,
     this.isRated = false,
     this.vendorId,
   });
@@ -30,6 +33,9 @@ class MyTripRowUiModel extends Equatable {
   final bool isFavorite;
 
   final bool useDownloadPdfWhenActive;
+  final bool requiresPayment;
+  final String paymentStatus;
+  final String? paymentAmountText;
   final bool isRated;
   final int? vendorId;
 
@@ -45,6 +51,9 @@ class MyTripRowUiModel extends Equatable {
     bool? isWishlisted,
     bool? isFavorite,
     bool? useDownloadPdfWhenActive,
+    bool? requiresPayment,
+    String? paymentStatus,
+    String? paymentAmountText,
     bool? isRated,
     int? vendorId,
   }) {
@@ -61,6 +70,9 @@ class MyTripRowUiModel extends Equatable {
       isFavorite: isFavorite ?? this.isFavorite,
       useDownloadPdfWhenActive:
           useDownloadPdfWhenActive ?? this.useDownloadPdfWhenActive,
+      requiresPayment: requiresPayment ?? this.requiresPayment,
+      paymentStatus: paymentStatus ?? this.paymentStatus,
+      paymentAmountText: paymentAmountText ?? this.paymentAmountText,
       isRated: isRated ?? this.isRated,
       vendorId: vendorId ?? this.vendorId,
     );
@@ -79,6 +91,9 @@ class MyTripRowUiModel extends Equatable {
     isWishlisted,
     isFavorite,
     useDownloadPdfWhenActive,
+    requiresPayment,
+    paymentStatus,
+    paymentAmountText,
     isRated,
     vendorId,
   ];

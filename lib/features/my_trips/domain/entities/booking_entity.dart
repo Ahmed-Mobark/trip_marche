@@ -13,6 +13,7 @@ class BookingPaymentDetail extends Equatable {
     required this.discountAmount,
     required this.taxAmount,
     required this.totalAmount,
+    required this.totalAmountBase,
     this.couponCode,
   });
 
@@ -22,18 +23,20 @@ class BookingPaymentDetail extends Equatable {
   final double discountAmount;
   final double taxAmount;
   final double totalAmount;
+  final double totalAmountBase;
   final String? couponCode;
 
   @override
   List<Object?> get props => [
-        baseAmount,
-        roomsAmount,
-        activitiesAmount,
-        discountAmount,
-        taxAmount,
-        totalAmount,
-        couponCode,
-      ];
+    baseAmount,
+    roomsAmount,
+    activitiesAmount,
+    discountAmount,
+    taxAmount,
+    totalAmount,
+    totalAmountBase,
+    couponCode,
+  ];
 }
 
 class BookingDates extends Equatable {
@@ -104,7 +107,17 @@ class BookingTrip extends Equatable {
   final int reviewCount;
 
   @override
-  List<Object?> get props => [id, title, coverImage, fromLocation, isFavorite, isRated, vendorId, rating, reviewCount];
+  List<Object?> get props => [
+    id,
+    title,
+    coverImage,
+    fromLocation,
+    isFavorite,
+    isRated,
+    vendorId,
+    rating,
+    reviewCount,
+  ];
 }
 
 class Booking extends Equatable {
@@ -118,6 +131,7 @@ class Booking extends Equatable {
     this.paidAt,
     this.expiresAt,
     required this.currency,
+    required this.baseCurrency,
     this.payment,
     required this.trip,
     required this.dates,
@@ -135,6 +149,7 @@ class Booking extends Equatable {
   final String? paidAt;
   final String? expiresAt;
   final String currency;
+  final String baseCurrency;
   final Map<String, dynamic>? payment;
   final BookingTrip trip;
   final BookingDates dates;
@@ -160,22 +175,23 @@ class Booking extends Equatable {
 
   @override
   List<Object?> get props => [
-        id,
-        reference,
-        status,
-        paymentStatus,
-        paymentMethod,
-        requiresPayment,
-        paidAt,
-        expiresAt,
-        currency,
-        payment,
-        trip,
-        dates,
-        travelersCount,
-        paymentDetail,
-        createdAt,
-      ];
+    id,
+    reference,
+    status,
+    paymentStatus,
+    paymentMethod,
+    requiresPayment,
+    paidAt,
+    expiresAt,
+    currency,
+    baseCurrency,
+    payment,
+    trip,
+    dates,
+    travelersCount,
+    paymentDetail,
+    createdAt,
+  ];
 }
 
 class BookingPaginationMeta extends Equatable {

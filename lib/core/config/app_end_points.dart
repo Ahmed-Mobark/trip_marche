@@ -3,6 +3,7 @@ class AppEndpoints {
 
   static const String authRegister = "auth/register";
   static const String authLogin = "auth/login";
+  static const String authSocialLogin = "auth/social-login";
   static const String authVerifyEmail = "auth/verify-email";
   static const String authSendOtp = "auth/send-otp";
   static const String authVerifyOtp = "auth/verify-otp";
@@ -58,6 +59,15 @@ class AppEndpoints {
 
   /// GET — booking details PDF by booking id.
   static String bookingsPdf(int bookingId) => 'bookings/$bookingId/pdf';
+
+  /// POST — creates a fresh checkout link for an unpaid booking.
+  static String bookingPay(int bookingId) => 'bookings/$bookingId/pay';
+
+  static const String notifications = 'notifications';
+  static const String notificationsUnreadCount = 'notifications/unread-count';
+  static const String notificationsMarkAllRead = 'notifications/mark-all-read';
+  static String notificationRead(int id) => 'notifications/$id/read';
+  static const String notificationDevices = 'notifications/devices';
 
   static const String profile = 'profile';
   static const String profilePassword = 'profile/password';

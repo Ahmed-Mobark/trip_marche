@@ -119,13 +119,8 @@ class WishlistViewState extends State<WishlistView> {
                         builder: (context, state) {
                           if (state.status == WishlistPageStatus.loading &&
                               state.trips.isEmpty) {
-                            return SizedBox(
-                              height: 280.h,
-                              child: CustomLoading(
-                                top: 48.h,
-                                size: 36,
-                                strokeWidth: 2.5,
-                              ),
+                            return const Center(
+                              child: CustomLoading(top: 40, bottom: 40),
                             );
                           }
 

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -152,7 +153,9 @@ class LoginView extends StatelessWidget {
                       BlocBuilder<LoginCubit, LoginState>(
                         buildWhen: (p, n) => p.status != n.status,
                         builder: (context, state) {
-                          final isLoading = state.status == LoginStatus.loading;
+                          final isLoading =
+                              state.status == LoginStatus.loading &&
+                              state.socialProvider == null;
                           return AppButton(
                             heigh: 54.h,
                             radius: 999.r,
@@ -209,27 +212,86 @@ class LoginView extends StatelessWidget {
                       DividerWithText(text: context.tr.authOrLoginWith),
                       SizedBox(height: 14.h),
 
-                      // Continue with Google
-                      SocialLoginButton(
-                        icon: SvgPicture.asset(
-                          AppIcons.icGoogle,
-                          width: 20,
-                          height: 20,
-                        ),
-                        text: context.tr.authContinueWithGoogle,
-                        onPressed: () {},
-                      ),
-                      SizedBox(height: 12.h),
+                      BlocBuilder<LoginCubit, LoginState>(
+                        buildWhen: (p, n) =>
+                            p.status != n.status ||
+                            p.socialProvider != n.socialProvider ||
+                            p.isGuestLoading != n.isGuestLoading,
+                        builder: (context, state) {
+                          final isBusy =
+                              state.status == LoginStatus.loading ||
+                              state.isGuestLoading;
+                          final googleLoading =
+                              state.socialProvider ==
+                                  SocialLoginProvider.google &&
+                              state.status == LoginStatus.loading;
+                          final appleLoading =
+                              state.socialProvider ==
+                                  SocialLoginProvider.apple &&
+                              state.status == LoginStatus.loading;
+                          final showAppleSignIn =
+                              defaultTargetPlatform == TargetPlatform.iOS ||
+                              defaultTargetPlatform == TargetPlatform.macOS;
 
-                      // Continue with Apple
-                      SocialLoginButton(
-                        icon: SvgPicture.asset(
-                          AppIcons.icApple,
-                          width: 20,
-                          height: 20,
-                        ),
-                        text: context.tr.authContinueWithApple,
-                        onPressed: () {},
+                          return Column(
+                            children: [
+                              SocialLoginButton(
+                                icon: SvgPicture.asset(
+                                  AppIcons.icGoogle,
+                                  width: 20,
+                                  height: 20,
+                                ),
+                                text: context.tr.authContinueWithGoogle,
+                                isLoading: googleLoading,
+                                onPressed: isBusy
+                                    ? null
+                                    : context
+                                          .read<LoginCubit>()
+                                          .continueWithGoogle,
+                              ),
+                              if (showAppleSignIn) ...[
+                                SizedBox(height: 12.h),
+                                SocialLoginButton(
+                                  icon: SvgPicture.asset(
+                                    AppIcons.icApple,
+                                    width: 20,
+                                    height: 20,
+                                  ),
+                                  text: context.tr.authContinueWithApple,
+                                  isLoading: appleLoading,
+                                  onPressed: isBusy
+                                      ? null
+                                      : context
+                                            .read<LoginCubit>()
+                                            .continueWithApple,
+                                ),
+                              ],
+                              SizedBox(height: 12.h),
+                              TextButton(
+                                onPressed: isBusy
+                                    ? null
+                                    : context
+                                          .read<LoginCubit>()
+                                          .continueAsGuest,
+                                child: state.isGuestLoading
+                                    ? SizedBox(
+                                        width: 18.r,
+                                        height: 18.r,
+                                        child: CircularProgressIndicator(
+                                          strokeWidth: 2,
+                                          color: AppColors.primary,
+                                        ),
+                                      )
+                                    : Text(
+                                        context.tr.authContinueAsGuest,
+                                        style: AppTextStyles.bodyMedium(
+                                          color: AppColors.primary,
+                                        ).copyWith(fontWeight: FontWeight.w800),
+                                      ),
+                              ),
+                            ],
+                          );
+                        },
                       ),
                       SizedBox(height: 18.h),
 

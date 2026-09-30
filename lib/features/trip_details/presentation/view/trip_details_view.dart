@@ -8,6 +8,9 @@ import 'package:trip_marche/core/navigation/app_navigator.dart';
 import 'package:trip_marche/core/theme/app_colors.dart';
 import 'package:trip_marche/core/toast/app_toast.dart';
 import 'package:trip_marche/core/widgets/custom_loading.dart';
+import 'package:trip_marche/features/booking/presentation/view/payment_webview_screen.dart';
+import 'package:trip_marche/features/my_trips/domain/usecases/retry_booking_payment_usecase.dart';
+import 'package:trip_marche/features/nav_bar/presentation/view/main_nav_view.dart';
 import 'package:trip_marche/features/booking/presentation/view/trip_options_view.dart';
 import 'package:trip_marche/features/profile/domain/usecases/toggle_follow_vendor_usecase.dart';
 import 'package:trip_marche/features/trip_details/domain/entities/trip_details_entity.dart';
@@ -32,10 +35,14 @@ class TripDetailsView extends StatelessWidget {
     super.key,
     required this.tripId,
     this.initialIsWishlisted = false,
+    this.pendingBookingId,
+    this.pendingPaymentAmountText,
   });
 
   final int tripId;
   final bool initialIsWishlisted;
+  final int? pendingBookingId;
+  final String? pendingPaymentAmountText;
 
   @override
   Widget build(BuildContext context) {
@@ -49,14 +56,23 @@ class TripDetailsView extends StatelessWidget {
       )..loadTrip(),
       child: ValueListenableBuilder<AdaptiveThemeMode>(
         valueListenable: AdaptiveTheme.of(context).modeChangeNotifier,
-        builder: (context, _, __) => const _TripDetailsBody(),
+        builder: (context, _, __) => _TripDetailsBody(
+          pendingBookingId: pendingBookingId,
+          pendingPaymentAmountText: pendingPaymentAmountText,
+        ),
       ),
     );
   }
 }
 
 class _TripDetailsBody extends StatefulWidget {
-  const _TripDetailsBody();
+  const _TripDetailsBody({
+    this.pendingBookingId,
+    this.pendingPaymentAmountText,
+  });
+
+  final int? pendingBookingId;
+  final String? pendingPaymentAmountText;
 
   @override
   State<_TripDetailsBody> createState() => _TripDetailsBodyState();
@@ -65,6 +81,9 @@ class _TripDetailsBody extends StatefulWidget {
 class _TripDetailsBodyState extends State<_TripDetailsBody> {
   final ScrollController _scrollController = ScrollController();
   bool _bookingExpanded = false;
+  bool _isRetryPaymentLoading = false;
+
+  bool get _hasPendingPayment => widget.pendingBookingId != null;
 
   @override
   void initState() {
@@ -116,6 +135,48 @@ class _TripDetailsBodyState extends State<_TripDetailsBody> {
           value: typeValue,
         ),
       ],
+    );
+  }
+
+  Future<void> _retryPayment() async {
+    final bookingId = widget.pendingBookingId;
+    if (bookingId == null || _isRetryPaymentLoading) {
+      return;
+    }
+    setState(() => _isRetryPaymentLoading = true);
+    final result = await sl<RetryBookingPaymentUseCase>()(bookingId);
+    if (!mounted) {
+      return;
+    }
+    setState(() => _isRetryPaymentLoading = false);
+
+    result.fold(
+      (failure) {
+        appToast(
+          context: context,
+          type: ToastType.error,
+          message: failure.message,
+        );
+      },
+      (checkoutUrl) {
+        Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (_) => PaymentWebViewScreen(
+              url: checkoutUrl,
+              onPaymentComplete: () {
+                appToast(
+                  context: context,
+                  type: ToastType.success,
+                  message: context.tr.bookingCreatedSuccess,
+                );
+                sl<AppNavigator>().pushAndRemoveUntil(
+                  screen: const MainNavView(initialIndex: 1),
+                );
+              },
+            ),
+          ),
+        );
+      },
     );
   }
 
@@ -280,12 +341,27 @@ class _TripDetailsBodyState extends State<_TripDetailsBody> {
                     child: TripDetailsBookingBar(
                       priceLabel: context.tr.tripDetailsStartingFrom,
                       priceText: displayPrice,
-                      secondaryLabel: payExtra != null
+                      secondaryLabel: _hasPendingPayment
+                          ? context.tr.myTripsPaymentIncomplete
+                          : payExtra != null
                           ? context.tr.tripDetailsPayOnArrival
                           : null,
-                      secondaryBadgeText: payExtra,
-                      bookNowText: context.tr.tripDetailsBookNow,
+                      secondaryBadgeText: _hasPendingPayment
+                          ? widget.pendingPaymentAmountText
+                          : payExtra,
+                      perPersonLine: _hasPendingPayment
+                          ? context.tr.myTripsPaymentPending
+                          : null,
+                      bookNowText: _hasPendingPayment
+                          ? (_isRetryPaymentLoading
+                                ? context.tr.bookingPay
+                                : context.tr.myTripsPayNow)
+                          : context.tr.tripDetailsBookNow,
                       onBookNow: () {
+                        if (_hasPendingPayment) {
+                          _retryPayment();
+                          return;
+                        }
                         sl<AppNavigator>().push(
                           screen: TripOptionsView(trip: trip),
                         );

@@ -3,11 +3,13 @@ import '../../../../core/network/network_service/api_basehelper.dart';
 import '../models/login_request.dart';
 import '../models/register_request.dart';
 import '../models/reset_password_request.dart';
+import '../models/social_login_request.dart';
 import '../models/verify_email_request.dart';
 
 abstract class AuthRemoteDataSource {
   Future<Map<String, dynamic>> register(RegisterRequest request);
   Future<Map<String, dynamic>> login(LoginRequest request);
+  Future<Map<String, dynamic>> socialLogin(SocialLoginRequest request);
   Future<Map<String, dynamic>> verifyEmail(VerifyEmailRequest request);
   Future<Map<String, dynamic>> sendOtp({
     required String email,
@@ -39,6 +41,15 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
   Future<Map<String, dynamic>> login(LoginRequest request) async {
     final response = await _apiHelper.post<Map<String, dynamic>>(
       url: AppEndpoints.authLogin,
+      body: request.toJson(),
+    );
+    return response;
+  }
+
+  @override
+  Future<Map<String, dynamic>> socialLogin(SocialLoginRequest request) async {
+    final response = await _apiHelper.post<Map<String, dynamic>>(
+      url: AppEndpoints.authSocialLogin,
       body: request.toJson(),
     );
     return response;

@@ -13,7 +13,10 @@ import 'package:trip_marche/core/theme/app_text_styles.dart';
 import 'package:trip_marche/core/toast/app_toast.dart';
 import 'package:trip_marche/core/widgets/app_button.dart';
 import 'package:trip_marche/core/widgets/app_trip_search_text_field.dart';
+import 'package:trip_marche/core/widgets/custom_loading.dart';
+import 'package:trip_marche/features/booking/presentation/view/payment_webview_screen.dart';
 import 'package:trip_marche/features/my_trips/domain/entities/booking_entity.dart';
+import 'package:trip_marche/features/my_trips/domain/usecases/retry_booking_payment_usecase.dart';
 import 'package:trip_marche/features/my_trips/presentation/cubit/booking_pdf_cubit.dart';
 import 'package:trip_marche/features/my_trips/presentation/cubit/booking_pdf_state.dart';
 import 'package:trip_marche/features/my_trips/presentation/cubit/bookings_cubit.dart';
@@ -30,8 +33,20 @@ import 'package:trip_marche/features/profile/presentation/view/add_vendor_review
 import 'package:trip_marche/features/trip_details/presentation/trip_wishlist_pop_result.dart';
 import 'package:trip_marche/features/trip_details/presentation/view/trip_details_view.dart';
 
-class MyTripsView extends StatelessWidget {
+class MyTripsView extends StatefulWidget {
   const MyTripsView({super.key});
+
+  @override
+  State<MyTripsView> createState() => MyTripsViewState();
+}
+
+class MyTripsViewState extends State<MyTripsView> {
+  final GlobalKey<MyTripsViewBodyState> _bodyKey =
+      GlobalKey<MyTripsViewBodyState>();
+
+  Future<void> refreshFromNavBarTap() async {
+    await _bodyKey.currentState?.refreshFromNavBarTap();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -41,20 +56,25 @@ class MyTripsView extends StatelessWidget {
         BlocProvider(create: (_) => sl<BookingsCubit>()),
         BlocProvider(create: (_) => sl<BookingPdfCubit>()),
       ],
-      child: const _MyTripsViewBody(),
+      child: _MyTripsViewBody(key: _bodyKey),
     );
   }
 }
 
 class _MyTripsViewBody extends StatefulWidget {
-  const _MyTripsViewBody();
+  const _MyTripsViewBody({super.key});
 
   @override
-  State<_MyTripsViewBody> createState() => _MyTripsViewBodyState();
+  State<_MyTripsViewBody> createState() => MyTripsViewBodyState();
 }
 
-class _MyTripsViewBodyState extends State<_MyTripsViewBody> {
+class MyTripsViewBodyState extends State<_MyTripsViewBody> {
   late final TextEditingController _searchCtrl;
+  int? _payingBookingId;
+
+  Future<void> refreshFromNavBarTap() async {
+    await context.read<BookingsCubit>().refresh();
+  }
 
   @override
   void initState() {
@@ -86,6 +106,10 @@ class _MyTripsViewBodyState extends State<_MyTripsViewBody> {
       screen: TripDetailsView(
         tripId: booking.trip.id,
         initialIsWishlisted: shellCubit.isWishlisted(booking.trip.id),
+        pendingBookingId: booking.requiresPayment ? booking.id : null,
+        pendingPaymentAmountText: booking.requiresPayment
+            ? _paymentAmountText(booking)
+            : null,
       ),
     );
 
@@ -138,6 +162,45 @@ class _MyTripsViewBodyState extends State<_MyTripsViewBody> {
   Future<void> _onBookingPdfTap(Booking booking) async {
     final pdfCubit = context.read<BookingPdfCubit>();
     await pdfCubit.fetchAndOpen(booking.id);
+  }
+
+  String _paymentAmountText(Booking booking) {
+    final amount = booking.paymentDetail.totalAmountBase.toStringAsFixed(0);
+    return '$amount ${booking.baseCurrency}';
+  }
+
+  Future<void> _onPayNowTap(Booking booking) async {
+    if (_payingBookingId != null) {
+      return;
+    }
+    setState(() => _payingBookingId = booking.id);
+    final result = await sl<RetryBookingPaymentUseCase>()(booking.id);
+    if (!mounted) {
+      return;
+    }
+    setState(() => _payingBookingId = null);
+
+    result.fold(
+      (failure) {
+        appToast(
+          context: context,
+          type: ToastType.error,
+          message: failure.message,
+        );
+      },
+      (checkoutUrl) {
+        Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (_) => PaymentWebViewScreen(
+              url: checkoutUrl,
+              onPaymentComplete: () {
+                context.read<BookingsCubit>().refresh();
+              },
+            ),
+          ),
+        );
+      },
+    );
   }
 
   @override
@@ -260,6 +323,8 @@ class _MyTripsViewBodyState extends State<_MyTripsViewBody> {
                                     onBookingTap: _onBookingTap,
                                     onRateTripTap: _onRateTripTap,
                                     onBookingPdfTap: _onBookingPdfTap,
+                                    onPayNowTap: _onPayNowTap,
+                                    payingBookingId: _payingBookingId,
                                     onRetry: () => context
                                         .read<BookingsCubit>()
                                         .loadInitial(),
@@ -294,6 +359,8 @@ class _BookingsList extends StatelessWidget {
     required this.onBookingTap,
     required this.onRateTripTap,
     required this.onBookingPdfTap,
+    required this.onPayNowTap,
+    required this.payingBookingId,
     required this.onRetry,
     required this.onRefresh,
     required this.onLoadMore,
@@ -304,6 +371,8 @@ class _BookingsList extends StatelessWidget {
   final void Function(Booking) onBookingTap;
   final void Function(Booking) onRateTripTap;
   final void Function(Booking) onBookingPdfTap;
+  final void Function(Booking) onPayNowTap;
+  final int? payingBookingId;
   final VoidCallback onRetry;
   final Future<void> Function() onRefresh;
   final VoidCallback onLoadMore;
@@ -313,7 +382,7 @@ class _BookingsList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (state.status == BookingsStatus.loading && state.bookings.isEmpty) {
-      return const Center(child: CircularProgressIndicator());
+      return const Center(child: CustomLoading(top: 40, bottom: 40));
     }
 
     if (state.status == BookingsStatus.failure && state.bookings.isEmpty) {
@@ -421,7 +490,7 @@ class _BookingsList extends StatelessWidget {
                 if (index >= items.length) {
                   return const Padding(
                     padding: EdgeInsets.symmetric(vertical: 16),
-                    child: Center(child: CircularProgressIndicator()),
+                    child: Center(child: CustomLoading(size: 42)),
                   );
                 }
                 final booking = items[index];
@@ -437,6 +506,7 @@ class _BookingsList extends StatelessWidget {
                   child: BlocBuilder<BookingPdfCubit, BookingPdfState>(
                     builder: (context, pdfState) {
                       final isPdfLoading = pdfState.isLoadingFor(booking.id);
+                      final isPayLoading = payingBookingId == booking.id;
                       return MyTripsScreenTripCard(
                         trip: _toRowModel(booking, isFav, context),
                         tab: tab,
@@ -446,10 +516,12 @@ class _BookingsList extends StatelessWidget {
                                   ? null
                                   : () => onRateTripTap(booking))
                             : () => onBookingTap(booking),
-                        onBottomTap: isPdfLoading
+                        onBottomTap: isPdfLoading || isPayLoading
                             ? null
+                            : booking.requiresPayment
+                            ? () => onPayNowTap(booking)
                             : () => onBookingPdfTap(booking),
-                        isPdfLoading: isPdfLoading,
+                        isPdfLoading: isPdfLoading || isPayLoading,
                       );
                     },
                   ),
@@ -463,13 +535,17 @@ class _BookingsList extends StatelessWidget {
   }
 }
 
-MyTripRowUiModel _toRowModel(Booking booking, bool isFavorite, BuildContext context) {
+MyTripRowUiModel _toRowModel(
+  Booking booking,
+  bool isFavorite,
+  BuildContext context,
+) {
   final fromLoc = booking.trip.fromLocation.trim();
   final locLabel = fromLoc.isEmpty
       ? ''
       : (fromLoc.toLowerCase().startsWith('from') || fromLoc.startsWith('من')
-          ? fromLoc
-          : '${context.tr.myTripsFromPrefix} $fromLoc');
+            ? fromLoc
+            : '${context.tr.myTripsFromPrefix} $fromLoc');
 
   return MyTripRowUiModel(
     id: booking.id,
@@ -482,6 +558,10 @@ MyTripRowUiModel _toRowModel(Booking booking, bool isFavorite, BuildContext cont
     imageUrl: booking.trip.coverImage,
     isFavorite: isFavorite,
     useDownloadPdfWhenActive: false,
+    requiresPayment: booking.requiresPayment,
+    paymentStatus: booking.paymentStatus,
+    paymentAmountText:
+        '${booking.paymentDetail.totalAmountBase.toStringAsFixed(0)} ${booking.baseCurrency}',
     isRated: booking.trip.isRated,
     vendorId: booking.trip.vendorId,
   );

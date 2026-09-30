@@ -23,18 +23,15 @@ class BookingsCubit extends Cubit<BookingsState> {
       case MyTripsShellTab.past:
         return 'previous';
       case MyTripsShellTab.canceled:
-        return 'closed';
+        return 'cancelled';
     }
   }
 
-  Future<void> loadInitial({
-    MyTripsShellTab? tab,
-    String search = '',
-  }) async {
+  Future<void> loadInitial({MyTripsShellTab? tab, String search = ''}) async {
     _currentStatus = _statusForTab(tab ?? MyTripsShellTab.active);
     _currentSearch = search.trim();
     _searchDebounce?.cancel();
-    await _fetch(page: 1, reset: true);
+    await _fetch(page: 1, reset: true, clearExisting: state.bookings.isEmpty);
   }
 
   Future<void> changeStatus(MyTripsShellTab tab, {String? search}) async {
@@ -45,23 +42,24 @@ class BookingsCubit extends Cubit<BookingsState> {
         state.bookings.isNotEmpty) {
       return;
     }
+    final switchingStatus = newStatus != _currentStatus;
     _currentStatus = newStatus;
     _currentSearch = trimmedSearch;
     _searchDebounce?.cancel();
-    await _fetch(page: 1, reset: true);
+    await _fetch(page: 1, reset: true, clearExisting: switchingStatus);
   }
 
   Future<void> updateSearch(String search) async {
     _searchDebounce?.cancel();
     _searchDebounce = Timer(const Duration(milliseconds: 400), () {
       _currentSearch = search.trim();
-      _fetch(page: 1, reset: true);
+      _fetch(page: 1, reset: true, clearExisting: false);
     });
   }
 
   Future<void> refresh() async {
     _searchDebounce?.cancel();
-    await _fetch(page: 1, reset: false);
+    await _fetch(page: 1, reset: true, clearExisting: false);
   }
 
   Future<void> loadMore() async {
@@ -82,31 +80,34 @@ class BookingsCubit extends Cubit<BookingsState> {
       perPage: _perPage,
     );
 
-    result.fold(
-      (_) => emit(state.copyWith(status: BookingsStatus.success)),
-      (page) {
-        final seenIds = state.bookings.map((e) => e.id).toSet();
-        final uniqueNew = page.bookings
-            .where((e) => !seenIds.contains(e.id))
-            .toList();
-        emit(
-          state.copyWith(
-            status: BookingsStatus.success,
-            bookings: [...state.bookings, ...uniqueNew],
-            meta: page.meta,
-          ),
-        );
-      },
-    );
+    result.fold((_) => emit(state.copyWith(status: BookingsStatus.success)), (
+      page,
+    ) {
+      final seenIds = state.bookings.map((e) => e.id).toSet();
+      final uniqueNew = page.bookings
+          .where((e) => !seenIds.contains(e.id))
+          .toList();
+      emit(
+        state.copyWith(
+          status: BookingsStatus.success,
+          bookings: [...state.bookings, ...uniqueNew],
+          meta: page.meta,
+        ),
+      );
+    });
   }
 
-  Future<void> _fetch({required int page, bool reset = false}) async {
+  Future<void> _fetch({
+    required int page,
+    bool reset = false,
+    bool clearExisting = true,
+  }) async {
     if (_isFetching) {
       return;
     }
     _isFetching = true;
     try {
-      if (reset) {
+      if (reset && clearExisting) {
         emit(
           state.copyWith(
             status: BookingsStatus.loading,
@@ -131,7 +132,8 @@ class BookingsCubit extends Cubit<BookingsState> {
           ),
         ),
         (page) {
-          final seenIds = reset ? <int>{} : state.bookings.map((e) => e.id).toSet();
+          final currentBookings = state.bookings;
+          final seenIds = currentBookings.map((e) => e.id).toSet();
           final uniqueNew = page.bookings
               .where((e) => !seenIds.contains(e.id))
               .toList();
@@ -139,8 +141,8 @@ class BookingsCubit extends Cubit<BookingsState> {
             state.copyWith(
               status: BookingsStatus.success,
               bookings: reset
-                  ? uniqueNew
-                  : [...state.bookings, ...uniqueNew],
+                  ? page.bookings
+                  : [...currentBookings, ...uniqueNew],
               meta: page.meta,
               clearErrorMessage: true,
             ),
@@ -154,8 +156,6 @@ class BookingsCubit extends Cubit<BookingsState> {
 
   /// Splits the in-memory bookings into the requested tab locally.
   List<Booking> bookingsForCategory(BookingStatusCategory category) {
-    return state.bookings
-        .where((b) => b.statusCategory == category)
-        .toList();
+    return state.bookings.where((b) => b.statusCategory == category).toList();
   }
 }

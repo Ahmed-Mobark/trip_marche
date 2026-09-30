@@ -1,5 +1,8 @@
 import '../navigation/navigation_inj.dart';
 import '../network/network_service_inj.dart';
+import '../notification/firebase_notification_service.dart';
+import '../notification/notification_api.dart';
+import '../notification/notification_navigation_service.dart';
 import '../services/location_service.dart';
 import '../services/media_service_inj.dart';
 import '../storage/storage_inj.dart';
@@ -23,6 +26,13 @@ Future<void> init() async {
   initNavigationInjection(sl);
   sl.registerLazySingleton<LocationService>(() => LocationService());
   initNetworkServiceInjection(sl);
+  sl.registerLazySingleton<NotificationApi>(() => NotificationApi(sl()));
+  sl.registerLazySingleton<NotificationNavigationService>(
+    () => NotificationNavigationService(),
+  );
+  sl.registerLazySingleton<FirebaseNotificationService>(
+    () => FirebaseNotificationService(sl(), sl(), sl()),
+  );
   initCurrencyInjection(sl);
   initMediaServiceInjection(sl);
   await initAuthInjection(sl);
