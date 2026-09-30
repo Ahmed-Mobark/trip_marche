@@ -47,22 +47,38 @@ class NotificationItem extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        title,
-                        style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                          fontSize: 18,
-                          fontWeight: FontWeight.w800,
-                          color: Colors.black,
-                          height: 1.12,
-                        ),
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            title,
+                            style: Theme.of(context).textTheme.bodyMedium!
+                                .copyWith(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w600,
+                                  color: Colors.black,
+                                  height: 1.12,
+                                ),
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                          Text(
+                            timestamp,
+                            style: Theme.of(context).textTheme.bodyMedium!
+                                .copyWith(
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.w400,
+                                  color: const Color(0xFFC7CBD6),
+                                  height: 1,
+                                ),
+                          ),
+                        ],
                       ),
                       const SizedBox(height: 10),
                       Text(
                         description,
                         style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                          fontSize: 16,
+                          fontSize: 14,
                           fontWeight: FontWeight.w400,
                           color: const Color(0xFF566184),
                           height: 1.55,
@@ -73,44 +89,6 @@ class NotificationItem extends StatelessWidget {
                     ],
                   ),
                 ),
-              ),
-              const SizedBox(width: 12),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.only(top: 5),
-                    child: Text(
-                      timestamp,
-                      style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                        fontSize: 15,
-                        fontWeight: FontWeight.w400,
-                        color: const Color(0xFFC7CBD6),
-                        height: 1,
-                      ),
-                    ),
-                  ),
-                  if (unreadCount != null && unreadCount! > 0) ...[
-                    const SizedBox(height: 30),
-                    Container(
-                      width: 26,
-                      height: 26,
-                      alignment: Alignment.center,
-                      decoration: const BoxDecoration(
-                        color: AppColors.primary,
-                        shape: BoxShape.circle,
-                      ),
-                      child: Text(
-                        unreadCount! > 9 ? '9+' : unreadCount.toString(),
-                        style: Theme.of(context).textTheme.bodySmall!.copyWith(
-                          color: Colors.white,
-                          fontSize: 13,
-                          fontWeight: FontWeight.w800,
-                        ),
-                      ),
-                    ),
-                  ],
-                ],
               ),
             ],
           ),
@@ -149,10 +127,9 @@ class _NotificationLogo extends StatelessWidget {
           shape: BoxShape.circle,
         ),
         child: Image.asset(
-          'assets/icons/llo2.png',
-          color: Colors.white,
-          width: 26,
-          height: 26,
+          'assets/icons/logo.png',
+          width: 36,
+          height: 36,
           fit: BoxFit.contain,
         ),
       ),

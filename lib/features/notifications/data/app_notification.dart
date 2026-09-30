@@ -21,6 +21,19 @@ class AppNotification {
   final String createdAtHuman;
   final NotificationPayload payload;
 
+  AppNotification copyWith({bool? isRead}) {
+    return AppNotification(
+      id: id,
+      type: type,
+      title: title,
+      body: body,
+      isRead: isRead ?? this.isRead,
+      createdAt: createdAt,
+      createdAtHuman: createdAtHuman,
+      payload: payload,
+    );
+  }
+
   factory AppNotification.fromJson(Map<String, dynamic> json) {
     final data = Map<String, dynamic>.from(
       json['data'] is Map ? json['data'] : {},

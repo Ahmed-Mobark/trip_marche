@@ -26,7 +26,18 @@ class _NotificationsViewState extends State<NotificationsView> {
 
   Future<List<AppNotification>> _load() async {
     final items = await sl<NotificationApi>().fetchNotifications();
-    return items.map(AppNotification.fromJson).toList();
+    final notifications = items.map(AppNotification.fromJson).toList();
+    if (notifications.any((item) => !item.isRead)) {
+      try {
+        await sl<NotificationApi>().markAllAsRead();
+        return notifications
+            .map((item) => item.copyWith(isRead: true))
+            .toList(growable: false);
+      } catch (_) {
+        return notifications;
+      }
+    }
+    return notifications;
   }
 
   Future<void> _refresh() async {
