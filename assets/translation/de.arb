@@ -1,6 +1,5 @@
 {
   "@@locale": "de",
-
   "errorFieldRequired": "Dieses Feld ist erforderlich",
   "errorInvalidName": "Ungültiges Namensformat",
   "errorInvalidUrl": "Ungültige URL",
@@ -30,7 +29,6 @@
   "chooseFromFiles": "Hochladen: Aus Dateien wählen",
   "updatePleaseUpdateToContinue": "Bitte aktualisiere die App, um fortzufahren.",
   "updateNewVersionAvailableShort": "Eine neue Version ist verfügbar.",
-
   "authLoginTitle": "Melde dich in deinem Konto an",
   "authEmailLabel": "E-Mail",
   "authEmailHint": "Gib deine E-Mail ein",
@@ -49,7 +47,6 @@
   "authPartnerPortalTitle": "Partnerportal",
   "authWebViewLoadFailed": "Diese Seite konnte nicht geladen werden. Bitte Verbindung prüfen und erneut versuchen.",
   "authWebViewRetry": "Erneut versuchen",
-
   "authSignUpTitle": "Erstelle dein Konto",
   "authSignUpSubtitle": "Registriere dich, um zu starten",
   "authFullNameLabel": "Vollständiger Name",
@@ -64,13 +61,11 @@
   "authSocialApple": "Apple",
   "authHaveAccountPrompt": "Du hast bereits ein Konto? ",
   "authLoginAction": "Anmelden",
-
   "authForgotPasswordTitle": "Passwort vergessen",
   "authForgotPasswordDescription": "Gib unten deine E-Mail-Adresse ein und wir senden dir einen Link zum Zurücksetzen deines Passworts.",
   "authForgotPasswordSubtitle": "Vergessen? Wir helfen dir.",
   "authSendButton": "Senden",
   "authSendCodeButton": "Code senden",
-
   "authVerifyTitle": "Verifiziere deine Nummer",
   "authVerifyDescription": "Wir haben dir einen OTP-Code an deine registrierte Nummer gesendet. Bitte gib den Code unten ein.",
   "authVerifyButton": "Verifizieren",
@@ -80,8 +75,7 @@
   "authVerifyEmailSubtitle": "Wir senden dir einen 6-stelligen Code zur Verifizierung deiner Nummer",
   "authVerificationCodeNotReceived": "Verifizierungscode nicht erhalten?",
   "authResendNow": "Jetzt erneut senden",
-
-  "homeAppTitle": "TripMarche",
+  "homeAppTitle": "TrevLen",
   "homeSearchHint": "Nach einer Reise suchen",
   "homeSearchHintDestination": "Nach einer Reise nach {destination} suchen",
   "homeLocationText": "Kairo, Ägypten",
@@ -96,20 +90,18 @@
   "homeSpecialTrips": "Nach Kategorie entdecken",
   "homeTopRated": "Top bewertet",
   "homeFromCairoAlexandria": "Von Kairo & Alexandria",
-  "homeNewInTripMarche": "Neu bei TripMarche",
+  "homeNewInTripMarche": "Neu bei TrevLen",
   "homePerPerson": "Person",
   "homeSeeAll": "Alle ansehen",
-
   "wishlistTitle": "Wunschliste",
   "wishlistSearchHint": "Nach einer Reise suchen",
   "wishlistSortBy": "Sortieren nach",
   "wishlistFilters": "Filter",
-  "wishlistNewInTripMarche": "Neu bei TripMarche",
+  "wishlistNewInTripMarche": "Neu bei TrevLen",
   "wishlistRecommended": "Empfohlen",
   "wishlistBestPrice": "Bester Preis",
   "wishlistEmptyTitle": "Noch keine Reisen gespeichert",
   "wishlistEmptyDescription": "Tippe auf das Herzsymbol bei einer Reise,\num sie zur Wunschliste hinzuzufügen.",
-
   "wishlistFiltersTitle": "Filter",
   "wishlistFiltersClearAll": "Alles löschen",
   "wishlistFiltersDestination": "Reiseziel",
@@ -159,7 +151,6 @@
   "wishlistFiltersDestinationCountry": "Destination Country",
   "wishlistFiltersFiveStarOnly": "5-Star Only",
   "filterSeeResults": "Ergebnisse anzeigen",
-
   "settingsTitle": "Einstellungen",
   "settingsNotificationSetting": "Benachrichtigungseinstellungen",
   "settingsLanguage": "Sprache",
@@ -168,7 +159,6 @@
   "settingsArabic": "Arabisch",
   "settingsDarkMode": "Dunkelmodus",
   "settingsAppVersion": "App-Version {version}",
-
   "notificationSettingsTitle": "Benachrichtigungseinstellungen",
   "notificationSettingsIntro": "Verwalte deine Benachrichtigungseinstellungen, um über neue Reisen, Angebote und Buchungsupdates informiert zu bleiben.",
   "notificationSettingsBookingUpdatesTitle": "Buchungsupdates",
@@ -183,9 +173,13 @@
   "notificationSettingsTripUpdates": "Reise-Updates",
   "notificationSettingsPromotions": "Aktionen",
   "notificationSettingsPriceAlerts": "Preisalarme",
-
   "profileTitleAccount": "Konto",
   "profileTitleSupport": "Support",
+  "helpCenterTitle": "Hilfe-Center",
+  "helpCenterRetry": "Erneut versuchen",
+  "helpCenterEmpty": "Dieser Inhalt ist noch nicht verfügbar.",
+  "helpCenterSendFeedback": "Feedback teilen",
+  "helpCenterContactSupport": "Support kontaktieren",
   "profilePersonalInfo": "Persönliche Infos",
   "profilePaymentMethod": "Zahlungsmethode",
   "profileMyReviews": "Meine Bewertungen",
@@ -208,14 +202,12 @@
   "commonCancel": "Abbrechen",
   "commonDelete": "Löschen",
   "commonOk": "OK",
-
   "followingsTitle": "Meine Abonnements",
   "followingsCountTitle": "{count} abonniert",
   "followingsUnfollow": "Entfolgen",
   "follow": "Folgen",
   "followingsEmptyTitle": "Noch keine Abonnements",
   "followingsEmptyDescription": "Folge Unternehmen, um\nihre Reisen hier zu sehen.",
-
   "myTripsTitle": "Meine Reisen",
   "myTripsTabUpcoming": "Bevorstehend",
   "myTripsTabPast": "Vergangen",
@@ -235,7 +227,9 @@
   "myTripsTravelers": "{count} Reisende",
   "@myTripsTravelers": {
     "placeholders": {
-      "count": {"type": "int"}
+      "count": {
+        "type": "int"
+      }
     }
   },
   "myTripsViewDetails": "Details ansehen",
@@ -247,12 +241,10 @@
   "myTripsEmptyTitle": "Noch keine Buchungen",
   "myTripsEmptyDescription": "Deine nächste Reise wartet auf dich...",
   "myTripsExploreTrips": "Reisen entdecken",
-
   "navHome": "Start",
   "navTrips": "Reisen",
   "navWishlist": "Wunschliste",
   "navAccount": "Konto",
-
   "bookingContactInfoTitle": "Kontaktinformationen",
   "bookingMeetingPointTitle": "Treffpunkt",
   "bookingMeetingPointRequired": "Bitte wählen Sie einen Treffpunkt",
@@ -268,7 +260,6 @@
   "bookingContactIdPassportLabel": "ID-/Passnummer",
   "bookingContactIdPassportHint": "Gib deine ID- oder Passnummer ein",
   "bookingContinue": "Weiter",
-
   "bookingTravelerTitle": "Traveler {index}",
   "@bookingTravelerTitle": {
     "placeholders": {
@@ -277,7 +268,6 @@
       }
     }
   },
-
   "bookingTripOptionsTitle": "Trip Options",
   "bookingChooseDateTitle": "Choose the date that suits you",
   "bookingSeeAllDates": "See All Dates",
@@ -303,7 +293,6 @@
   "bookingTripleRoomSubtitle": "Gemeinschaftszimmer für drei Personen",
   "bookingPerson": "Person",
   "bookingFree": "Free",
-
   "bookingSelectActivitiesTitle": "Select Activities",
   "bookingTravelerParenthetical": "(Traveler {index})",
   "@bookingTravelerParenthetical": {
@@ -317,7 +306,6 @@
   "bookingActivityCamping": "Camping",
   "bookingActivityFishing": "Fishing",
   "bookingActivityDiving": "Diving",
-
   "bookingReviewTitle": "Review",
   "bookingReviewTripName": "Dahab Trip",
   "bookingReviewTripDescription": "Experience the breathtaking beauty of the Swiss Alps on this 7-day adventure. Visit iconic destinations, enjoy scenic train rides, and immerse yourself in Swiss culture. Perfect for nature lovers and photography enthusiasts.",
@@ -419,9 +407,9 @@
   "bookingReviewPaymentTaxes": "Taxes",
   "bookingReviewPaymentCouponCode": "Coupon Code",
   "bookingReviewPaymentTotal": "Total",
+  "bookingFullPaymentEgp": "Der gesamte Betrag wird bei der Buchung in ägyptischen Pfund (EGP) bezahlt.",
   "bookingReviewCurrency": "EGP",
   "bookingPay": "Pay",
-
   "bookingAddNewCardTitle": "Neue Karte hinzufügen",
   "bookingCardNumberLabel": "Kartennummer",
   "bookingCardNumberHint": "0000 0000 0000 0000",
@@ -433,7 +421,6 @@
   "bookingCvvHint": "***",
   "bookingSaveCard": "Karte speichern",
   "bookingCardholderNamePlaceholder": "KARTENINHABER",
-
   "bookingPaymentMethodTitle": "Zahlungsmethode",
   "bookingPaymentMethodSelect": "Zahlungsmethode auswählen",
   "bookingPaymentMethodChoose": "Wählen Sie, wie Sie zahlen möchten",
@@ -457,7 +444,6 @@
   "myTripsPaymentPending": "Zahlung ausstehend",
   "myTripsPaymentIncomplete": "Die Zahlung wurde nicht abgeschlossen",
   "bookingCardExpires": "Läuft ab {expiry}",
-
   "profilePersonalInfoTitle": "Persönliche Infos",
   "profileFullNameLabel": "Vollständiger Name",
   "profileEmailLabel": "E-Mail",
@@ -472,8 +458,8 @@
   "profileGenderFemale": "Weiblich",
   "profileDateOfBirth": "Geburtsdatum",
   "profileSaveChanges": "Änderungen speichern",
-  "profileChangePhotoTitle": "Profilfoto ändern",
-  "profileChangePhotoSubtitle": "Wähle, woher du dein Foto laden möchtest.",
+  "profileChangePhotoTitle": "Profilbild ändern",
+  "profileChangePhotoSubtitle": "Wähle, woher du dein Foto beziehen möchtest.",
   "profilePhotoCamera": "Kamera",
   "profilePhotoGallery": "Galerie",
   "profilePhotoCancel": "Abbrechen",
@@ -512,7 +498,6 @@
   "companyProfileSeeAllTrips": "Alle Reisen anzeigen",
   "companyProfileShowLess": "Weniger anzeigen",
   "companyProfilePricePerPerson": "Person",
-
   "filterTitle": "Filter",
   "filterReset": "Zurücksetzen",
   "filterDuration": "Dauer",
@@ -521,13 +506,11 @@
   "filterDepartureCity": "Abreisestadt",
   "filterSelectCity": "Stadt auswählen",
   "filterApply": "Anwenden",
-
   "destinationTitle": "Reiseziel",
   "destinationSearchHint": "Reiseziele suchen...",
   "destinationRecentSearches": "Letzte Suchanfragen",
   "destinationClearAll": "Alles löschen",
   "destinationPopularDestinations": "Beliebte Reiseziele",
-
   "searchTripsFound": "{count} Reisen gefunden",
   "searchQueryExample": "Sharm El Sheikh",
   "searchResultTitle": "Suchergebnisse",
@@ -552,13 +535,12 @@
   "searchResultFromCity": "Ab Kairo",
   "searchResultDateFrom": "27 Nov",
   "searchResultDateTo": "4 Dez",
-  "searchResultLabelNew": "Neu bei TripMarche",
+  "searchResultLabelNew": "Neu bei TrevLen",
   "searchResultLabelRecommended": "Empfohlen",
   "searchResultLabelBestPrice": "Bester Preis",
   "searchResultOldPrice": "$1000",
   "searchResultDiscountPrice": "$699",
   "searchResultPerPerson": "/Person",
-
   "tripDetailsTitle": "Dahab-Reise",
   "tripDetailsHeroCountryTag": "Indonesien",
   "tripDetailsHeroByCompany": "Von Reiseunternehmen",
@@ -572,7 +554,9 @@
   "@tripDetailsHeroByCompanyLine": {
     "description": "Travel vendor line on trip details hero.",
     "placeholders": {
-      "company": {"type": "String"}
+      "company": {
+        "type": "String"
+      }
     }
   },
   "tripDetailsGalleryMoreCount": "+{count}",
@@ -639,7 +623,9 @@
   "@tripDetailsStatCitiesCount": {
     "description": "Stat grid value for how many cities the trip visits.",
     "placeholders": {
-      "count": {"type": "int"}
+      "count": {
+        "type": "int"
+      }
     }
   },
   "tripDetailsPriceLabel": "Preis",
@@ -690,7 +676,6 @@
   "tripDetailsRelatedNameSharm": "Sharm El Sheikh",
   "tripDetailsRelatedNameHurghada": "Hurghada-Reise",
   "tripDetailsRelatedNameLuxorAswan": "Luxor & Assuan",
-
   "tripDetailsHeroRatingLine": "4,5 (120 Bewertungen)",
   "tripDetailsHeroLocationShort": "Dahab, Ägypten",
   "tripDetailsHeroDaysBadge": "7 Tage",
@@ -774,7 +759,7 @@
   "tripDetailsPolicyFaqs": "Häufig gestellte Fragen",
   "tripDetailsSeeAllReviews": "Alle ansehen",
   "tripDetailsOrganizerTitle": "Veranstalter",
-  "tripDetailsOrganizerSubtitle": "Vertrauenswürdiger Partner bei Trip Marche",
+  "tripDetailsOrganizerSubtitle": "Vertrauenswürdiger Partner bei TrevLen",
   "tripDetailsStartingFrom": "Ab",
   "tripDetailsBookingFromPrice": "EGP 5.000",
   "tripDetailsItineraryLoc1": "Peking",
@@ -784,25 +769,23 @@
   "tripDetailsReviewSampleName": "Ahmed Hassan",
   "tripDetailsReviewSampleDate": "Dez 2025",
   "tripDetailsReviewSampleBody": "Tolle Reise! Super Organisation und freundliche Guides. Der Schnorcheltag war unvergesslich.",
-
   "bookingTripTermsTitle": "AGB",
   "bookingTripTermsHeader": "Reise-AGB",
   "bookingTripTermsLastUpdated": "Zuletzt aktualisiert: {date}",
   "bookingTripTermsSection1Title": "1. Buchung & Zahlung",
-  "bookingTripTermsSection1Body": "Mit der Buchung einer Reise über Trip Marche stimmst du den folgenden Bedingungen zu. Eine Anzahlung von 30% ist zum Zeitpunkt der Buchung erforderlich, um deinen Platz zu sichern. Der Restbetrag muss spätestens 14 Tage vor Reisebeginn bezahlt werden. Bei Nichtzahlung kann deine Buchung storniert werden. Alle Zahlungen werden sicher über unsere Zahlungspartner abgewickelt.",
+  "bookingTripTermsSection1Body": "Mit der Buchung einer Reise über TrevLen stimmst du den folgenden Bedingungen zu. Eine Anzahlung von 30% ist zum Zeitpunkt der Buchung erforderlich, um deinen Platz zu sichern. Der Restbetrag muss spätestens 14 Tage vor Reisebeginn bezahlt werden. Bei Nichtzahlung kann deine Buchung storniert werden. Alle Zahlungen werden sicher über unsere Zahlungspartner abgewickelt.",
   "bookingTripTermsSection2Title": "2. Teilnahmebedingungen",
   "bookingTripTermsSection2Body": "Teilnehmende müssen mindestens 18 Jahre alt sein, um selbstständig zu buchen. Reisende unter 18 Jahren müssen von einem Elternteil oder gesetzlichen Vertreter begleitet werden. Bestimmte Aktivitäten können zusätzliche Alters- oder Gesundheitsanforderungen haben. Es liegt in der Verantwortung des Reisenden, die Teilnahmebedingungen zu erfüllen und die notwendigen Reisedokumente bereitzuhalten.",
   "bookingTripTermsSection3Title": "3. Reiseänderungen",
-  "bookingTripTermsSection3Body": "Trip Marche behält sich das Recht vor, den Reiseplan aufgrund von Wetterbedingungen, Sicherheitsbedenken oder anderen unvorhersehbaren Umständen zu ändern. Wir bemühen uns, gleichwertige Alternativen bereitzustellen. Bei wesentlichen Änderungen werden Reisende so früh wie möglich informiert und können eine teilweise Rückerstattung oder Gutschrift erhalten.",
+  "bookingTripTermsSection3Body": "TrevLen behält sich das Recht vor, den Reiseplan aufgrund von Wetterbedingungen, Sicherheitsbedenken oder anderen unvorhersehbaren Umständen zu ändern. Wir bemühen uns, gleichwertige Alternativen bereitzustellen. Bei wesentlichen Änderungen werden Reisende so früh wie möglich informiert und können eine teilweise Rückerstattung oder Gutschrift erhalten.",
   "bookingTripTermsSection4Title": "4. Pflichten der Reisenden",
-  "bookingTripTermsSection4Body": "Reisende sind dafür verantwortlich, gültige Reisedokumente, eine geeignete Reiseversicherung und alle erforderlichen Impfungen zu besitzen. Reisende müssen den Anweisungen der Guides folgen und lokale Gesetze sowie Gepflogenheiten respektieren. Trip Marche haftet nicht für Konsequenzen, die aus der Nichteinhaltung von Einreisebestimmungen entstehen.",
+  "bookingTripTermsSection4Body": "Reisende sind dafür verantwortlich, gültige Reisedokumente, eine geeignete Reiseversicherung und alle erforderlichen Impfungen zu besitzen. Reisende müssen den Anweisungen der Guides folgen und lokale Gesetze sowie Gepflogenheiten respektieren. TrevLen haftet nicht für Konsequenzen, die aus der Nichteinhaltung von Einreisebestimmungen entstehen.",
   "bookingTripTermsSection5Title": "5. Haftung",
-  "bookingTripTermsSection5Body": "Trip Marche agiert als Organisator und Vermittler. Obwohl wir alle Vorsichtsmaßnahmen treffen, haften wir nicht für Verlust, Verletzung oder Schaden, der während der Reise durch Aktivitäten, Naturereignisse oder Handlungen von Drittanbietern entsteht. Reisende nehmen an Aktivitäten auf eigenes Risiko teil. Wir empfehlen dringend den Abschluss einer umfassenden Reiseversicherung.",
+  "bookingTripTermsSection5Body": "TrevLen agiert als Organisator und Vermittler. Obwohl wir alle Vorsichtsmaßnahmen treffen, haften wir nicht für Verlust, Verletzung oder Schaden, der während der Reise durch Aktivitäten, Naturereignisse oder Handlungen von Drittanbietern entsteht. Reisende nehmen an Aktivitäten auf eigenes Risiko teil. Wir empfehlen dringend den Abschluss einer umfassenden Reiseversicherung.",
   "bookingTripTermsSection6Title": "6. Datenschutz",
   "bookingTripTermsSection6Body": "Persönliche Informationen, die während des Buchungsprozesses erhoben werden, werden ausschließlich zur Reiseorganisation und Kommunikation verwendet. Wir teilen deine Informationen nicht mit Dritten, außer wenn dies zur Erfüllung deiner Buchung erforderlich ist. Weitere Details findest du in unserer Datenschutzrichtlinie.",
   "bookingTripTermsSection7Title": "7. Streitbeilegung",
   "bookingTripTermsSection7Body": "Streitigkeiten, die aus diesen Bedingungen entstehen, werden durch gütliche Verhandlungen gelöst. Kann keine Einigung erzielt werden, werden Streitigkeiten den zuständigen Gerichten vorgelegt. Diese Bedingungen unterliegen den Gesetzen der Arabischen Republik Ägypten.",
-
   "bookingTripInstructionsTitle": "Reisehinweise",
   "bookingTripInstructionsHeader": "Vor der Reise",
   "bookingTripInstructionsIntro": "Bitte lies die folgenden Hinweise sorgfältig durch, um eine reibungslose und angenehme Reise zu gewährleisten. Gute Vorbereitung hilft dir, das Beste aus deinem Dahab-Abenteuer zu machen.",
@@ -810,17 +793,15 @@
   "bookingTripInstructionsMeetingPointTime": "Treffpunkt & Zeit",
   "bookingTripInstructionsDocumentsToBring": "Mitzubringende Dokumente",
   "bookingTripInstructionsImportantReminders": "Wichtige Hinweise",
-
   "bookingTripSafetyTitle": "Reisesicherheit",
   "bookingTripSafetyBanner": "Deine Sicherheit hat oberste Priorität. Bitte lies die folgenden Richtlinien sorgfältig durch.",
   "bookingTripSafetyHeader": "Sicherheitsmaßnahmen",
-  "bookingTripSafetyIntro": "Bei Trip Marche setzen wir uns für die Sicherheit und das Wohlbefinden aller Reisenden ein. Unsere Reisen sind mit umfassenden Sicherheitsmaßnahmen geplant und alle Guides sind in Erster Hilfe und Notfallverfahren geschult.",
+  "bookingTripSafetyIntro": "Bei TrevLen setzen wir uns für die Sicherheit und das Wohlbefinden aller Reisenden ein. Unsere Reisen sind mit umfassenden Sicherheitsmaßnahmen geplant und alle Guides sind in Erster Hilfe und Notfallverfahren geschult.",
   "bookingTripSafetyWaterTitle": "Sicherheit bei Wasseraktivitäten",
   "bookingTripSafetyDesertTitle": "Wüstensicherheit",
   "bookingTripSafetyHealthTitle": "Gesundheit & Medizinisches",
   "bookingTripSafetyEmergencyTitle": "Notfallkontakte",
   "bookingTripSafetyGeneralTipsTitle": "Allgemeine Sicherheitstipps",
-
   "authResetPasswordTitle": "Passwort zurücksetzen",
   "authResetPasswordSubtitle": "Gib unten dein neues Passwort ein",
   "authNewPasswordLabel": "Neues Passwort",
@@ -828,7 +809,6 @@
   "authConfirmNewPasswordLabel": "Neues Passwort bestätigen",
   "authConfirmNewPasswordHint": "Neues Passwort bestätigen",
   "authResetPasswordButton": "Passwort zurücksetzen",
-
   "tripDetailsDurationUnit": "Tage",
   "tripDetailsProgramDayPrefix": "Tag",
   "tripDetailsTypeDomestic": "Inland",
@@ -897,11 +877,8 @@
   "@finalConfirmation": {
     "description": "Title for final confirmation dialog before account deletion"
   },
-  "profileChangePhotoTitle": "Profilbild ändern",
-  "profileChangePhotoSubtitle": "Wähle, woher du dein Foto beziehen möchtest.",
   "profilePhotoFromCamera": "Kamera",
   "profilePhotoFromGallery": "Galerie",
-  "profilePhotoCancel": "Abbrechen",
   "profilePhotoPermissionRequired": "Berechtigung zum Zugriff auf deine Fotos erforderlich.",
   "profilePhotoCameraUnavailable": "Die Kamera ist auf diesem Gerät nicht verfügbar.",
   "profilePhotoInvalidFile": "Die ausgewählte Datei ist kein gültiges Bild.",
@@ -922,7 +899,57 @@
   "reviewRatingScale": "{rating}/5",
   "@reviewRatingScale": {
     "placeholders": {
-      "rating": {"type": "int"}
+      "rating": {
+        "type": "int"
+      }
     }
-  }
+  },
+  "myTripsCancelBooking": "Buchung stornieren",
+  "myTripsConfirmCancellation": "Stornierung bestätigen",
+  "myTripsKeepBooking": "Buchung behalten",
+  "myTripsCancelExplanation": "Deine Buchung für diese Reise wird storniert. Falls laut den Bedingungen des Anbieters eine Erstattung fällig ist, kontaktiere ihn direkt. Die Bestätigung löst keine automatische Erstattung aus.",
+  "myTripsCancellationTerms": "Stornierungsbedingungen",
+  "myTripsCancellationSuccess": "Buchung storniert",
+  "myTripsRefundContactVendor": "Kontaktiere den Anbieter direkt, um eine mögliche Erstattung gemäß den Stornierungsbedingungen zu vereinbaren.",
+  "myTripsContactVendor": "Anbieter kontaktieren",
+  "myTripsCancelledAt": "Storniert am",
+  "companyProfileVendorReply": "Antwort des Unternehmens",
+  "companyProfileManager": "Unternehmensleitung",
+  "bookingCustomPriceHelp": "Wählen Sie die Anzahl der Reisenden pro Option. Jeder Preis gilt für die gesamte Reise pro Person.",
+  "bookingSelectPriceOption": "Wählen Sie mindestens eine Preisoption für Erwachsene.",
+  "bookingQuoteRetry": "Preis neu berechnen",
+  "chatTitle": "Nachrichten",
+  "chatSupport": "Support kontaktieren",
+  "chatContactVendor": "Unternehmen kontaktieren",
+  "chatEmpty": "Noch keine Unterhaltungen.",
+  "chatEmptyMessages": "Beginnen Sie mit Ihrer Frage.",
+  "chatMessage": "Ihre Nachricht",
+  "chatSend": "Senden",
+  "chatOlder": "Ältere Nachrichten",
+  "chatFailed": "Die Anfrage konnte nicht abgeschlossen werden. Ihr Entwurf bleibt erhalten. Bitte erneut versuchen.",
+  "chatRetry": "Erneut versuchen",
+  "myTripsBookingConfirmation": "Buchungsbestätigung",
+  "myTripsRated": "Bewertet",
+  "chatPhoto": "Photo",
+  "chatVoice": "Voice message",
+  "chatRecord": "Record a voice message",
+  "chatStop": "Stop recording",
+  "chatRecording": "Recording…",
+  "chatCancel": "Cancel",
+  "chatRemove": "Remove attachment",
+  "chatMediaError": "Could not open this file. Please try again.",
+  "chatMediaLimit": "Choose an image or recording smaller than 10 MB.",
+  "chatMicrophonePermission": "Allow microphone access to record a voice message.",
+  "chatToday": "Today",
+  "chatYesterday": "Yesterday",
+  "chatInboxHint": "Your conversations with travel partners and TrevLen support.",
+  "chatSupportHint": "We’re here to help with your journey.",
+  "chatCompany": "Travel partner",
+  "chatStart": "Start a conversation",
+  "chatPlay": "Play voice message",
+  "chatPause": "Pause voice message",
+  "chatPhotoLibrary": "Photo library",
+  "chatCamera": "Camera",
+  "chatRecordingLimit": "Up to 2 minutes",
+  "chatNewMessage": "Neue Nachricht"
 }

@@ -10,6 +10,7 @@ import 'package:trip_marche/core/theme/app_text_styles.dart';
 import 'package:trip_marche/core/toast/app_toast.dart';
 import 'package:trip_marche/features/booking/domain/entities/booking_flow_context.dart';
 import 'package:trip_marche/features/booking/domain/entities/booking_room.dart';
+import 'package:trip_marche/features/booking/domain/entities/booking_price_selection.dart';
 import 'package:trip_marche/features/booking/domain/entities/booking_optional_extra_selection.dart';
 import 'package:trip_marche/features/trip_details/domain/entities/trip_details_entity.dart';
 import 'package:trip_marche/features/trip_details/presentation/trip_details_ui_formatters.dart';
@@ -26,11 +27,15 @@ class _TripDateOption {
     required this.id,
     required this.range,
     required this.price,
+    this.seatsLeft = 0,
+    this.isFull = false,
   });
 
   final int id;
   final String range;
   final String price;
+  final int seatsLeft;
+  final bool isFull;
 }
 
 class TripOptionsView extends StatefulWidget {
@@ -49,6 +54,7 @@ class _TripOptionsViewState extends State<TripOptionsView> {
   late final Map<String, int> _roomPersonCounts;
   late final Map<int, int> _extraQuantities;
 
+  final Map<int, int> _priceQuantities = {};
   int _selectedDateIndex = 0;
   bool _datesExpanded = false;
   int _adults = 1;
@@ -60,17 +66,83 @@ class _TripOptionsViewState extends State<TripOptionsView> {
   @override
   void initState() {
     super.initState();
+    final firstAvailable = widget.trip.departures.indexWhere((d) => !d.isFull);
+    if (firstAvailable >= 0) {
+      _selectedDateIndex = firstAvailable;
+    }
     _roomTypes = List<TripRoomType>.of(widget.trip.roomTypes)
       ..sort((a, b) => a.capacity.compareTo(b.capacity));
     _roomPersonCounts = {
       for (final room in _roomTypes) room.key: _initialRoomPersonCount(room),
     };
+    if (widget.trip.hasCustomPricing) _resetPriceSelections();
     _extraQuantities = {
       for (final extra in widget.trip.optionalExtras.where(
         (extra) => extra.isAvailable,
       ))
         extra.id: 0,
     };
+  }
+
+  List<TripPriceOption> get _activePriceOptions =>
+      widget.trip.departures.isEmpty
+      ? const []
+      : widget
+            .trip
+            .departures[_selectedDateIndex.clamp(
+              0,
+              widget.trip.departures.length - 1,
+            )]
+            .priceOptions;
+
+  void _resetPriceSelections() {
+    _priceQuantities.clear();
+    final adult = _activePriceOptions
+        .where((option) => option.travelerType == 'adult')
+        .firstOrNull;
+    if (adult != null) _priceQuantities[adult.id] = 1;
+    _updatePriceCounts();
+  }
+
+  void _updatePriceCounts() {
+    int count(String type) => _activePriceOptions
+        .where((option) => option.travelerType == type)
+        .fold<int>(
+          0,
+          (sum, option) => sum + (_priceQuantities[option.id] ?? 0),
+        );
+    _adults = count('adult');
+    _kids = count('kid');
+    _babies = count('baby');
+  }
+
+  List<BookingPriceSelection> _selectedPriceOptions() => _activePriceOptions
+      .where((option) => (_priceQuantities[option.id] ?? 0) > 0)
+      .map(
+        (option) => BookingPriceSelection(
+          priceOptionId: option.id,
+          travelerType: option.travelerType,
+          label: option.label,
+          unitPrice: option.price,
+          quantity: _priceQuantities[option.id]!,
+        ),
+      )
+      .toList();
+
+  void _selectDate(int index) {
+    final departures = widget.trip.departures;
+    if (index >= 0 && index < departures.length && departures[index].isFull) {
+      appToast(
+        context: context,
+        type: ToastType.error,
+        message: context.tr.bookingDepartureSoldOut,
+      );
+      return;
+    }
+    setState(() {
+      _selectedDateIndex = index;
+      if (widget.trip.hasCustomPricing) _resetPriceSelections();
+    });
   }
 
   int _initialRoomPersonCount(TripRoomType room) {
@@ -91,6 +163,8 @@ class _TripOptionsViewState extends State<TripOptionsView> {
               departure.price,
               currency: widget.trip.currency,
             ),
+            seatsLeft: departure.seatsLeft,
+            isFull: departure.isFull,
           ),
         )
         .where((option) => option.range.isNotEmpty)
@@ -126,7 +200,7 @@ class _TripOptionsViewState extends State<TripOptionsView> {
       return;
     }
 
-    if (selectedRooms.isEmpty) {
+    if (!widget.trip.hasCustomPricing && selectedRooms.isEmpty) {
       appToast(
         context: context,
         type: ToastType.error,
@@ -135,11 +209,21 @@ class _TripOptionsViewState extends State<TripOptionsView> {
       return;
     }
 
-    if (totalRoomOccupants != totalTravelers) {
+    if (!widget.trip.hasCustomPricing && totalRoomOccupants != totalTravelers) {
       appToast(
         context: context,
         type: ToastType.error,
         message: context.tr.bookingRoomOccupantsMismatch(totalTravelers),
+      );
+      return;
+    }
+
+    if (widget.trip.hasCustomPricing &&
+        (_adults < 1 || _selectedPriceOptions().isEmpty)) {
+      appToast(
+        context: context,
+        type: ToastType.error,
+        message: context.tr.bookingSelectPriceOption,
       );
       return;
     }
@@ -150,6 +234,29 @@ class _TripOptionsViewState extends State<TripOptionsView> {
     );
 
     final selectedDate = dateOptions[selectedDateIndex];
+
+    final selectedDeparture = widget.trip.departures.firstWhere(
+      (d) => d.id == selectedDate.id,
+      orElse: () => widget.trip.departures[selectedDateIndex],
+    );
+
+    if (selectedDeparture.isFull) {
+      appToast(
+        context: context,
+        type: ToastType.error,
+        message: context.tr.bookingDepartureSoldOut,
+      );
+      return;
+    }
+
+    if (selectedDeparture.seatsLeft < totalTravelers) {
+      appToast(
+        context: context,
+        type: ToastType.error,
+        message: context.tr.bookingSeatsInsufficient(selectedDeparture.seatsLeft),
+      );
+      return;
+    }
 
     sl<AppNavigator>().push(
       screen: ContactInfoView(
@@ -163,6 +270,9 @@ class _TripOptionsViewState extends State<TripOptionsView> {
           babyCount: _babies,
           travelersCount: _travelersCount,
           rooms: selectedRooms,
+          priceSelections: widget.trip.hasCustomPricing
+              ? _selectedPriceOptions()
+              : const [],
           currency: widget.trip.currency,
           optionalExtras: _selectedOptionalExtras(),
         ),
@@ -189,7 +299,7 @@ class _TripOptionsViewState extends State<TripOptionsView> {
   }
 
   List<BookingRoom> _selectedRooms() {
-    if (_roomTypes.isEmpty) {
+    if (widget.trip.hasCustomPricing || _roomTypes.isEmpty) {
       return const <BookingRoom>[];
     }
 
@@ -273,8 +383,7 @@ class _TripOptionsViewState extends State<TripOptionsView> {
                         _DateOptionsGrid(
                           dates: visibleDates,
                           selectedIndex: selectedDateIndex,
-                          onSelected: (index) =>
-                              setState(() => _selectedDateIndex = index),
+                          onSelected: _selectDate,
                         ),
                         if (showDatesToggle) ...[
                           SizedBox(height: TripOptionsFigmaTokens.seeAllTop),
@@ -302,33 +411,67 @@ class _TripOptionsViewState extends State<TripOptionsView> {
                         ],
                         SizedBox(height: TripOptionsFigmaTokens.sectionBottom),
                       ],
-                      _SectionTitle(tr.bookingHowManyTraveling),
-                      TravelerCounterCard(
-                        icon: Iconsax.profile_2user,
-                        title: tr.bookingTravelerAdult,
-                        count: _adults,
-                        min: 1,
-                        onDecrement: () => setState(() => _adults--),
-                        onIncrement: () => setState(() => _adults++),
-                      ),
-                      SizedBox(height: TripOptionsFigmaTokens.travelerCardGap),
-                      TravelerCounterCard(
-                        icon: Iconsax.emoji_happy,
-                        title: tr.bookingTravelerKid,
-                        subtitle: tr.bookingTravelerKidAge,
-                        count: _kids,
-                        onDecrement: () => setState(() => _kids--),
-                        onIncrement: () => setState(() => _kids++),
-                      ),
-                      SizedBox(height: TripOptionsFigmaTokens.travelerCardGap),
-                      TravelerCounterCard(
-                        icon: Iconsax.milk,
-                        title: tr.bookingTravelerBaby,
-                        subtitle: tr.bookingTravelerBabyAge,
-                        count: _babies,
-                        onDecrement: () => setState(() => _babies--),
-                        onIncrement: () => setState(() => _babies++),
-                      ),
+                      if (widget.trip.hasCustomPricing) ...[
+                        Text(
+                          tr.bookingCustomPriceHelp,
+                          style: AppTextStyles.bodySmall(
+                            color: AppColors.secondaryText(context),
+                          ),
+                        ),
+                        for (final type in ['adult', 'kid', 'baby']) ...[
+                          if (_activePriceOptions.any(
+                            (option) => option.travelerType == type,
+                          )) ...[
+                            SizedBox(height: 12.h),
+                            _SectionTitle(
+                              type == 'adult'
+                                  ? tr.bookingTravelerAdult
+                                  : type == 'kid'
+                                  ? tr.bookingTravelerKid
+                                  : tr.bookingTravelerBaby,
+                            ),
+                            for (final option in _activePriceOptions.where(
+                              (option) => option.travelerType == type,
+                            ))
+                              Padding(
+                                padding: EdgeInsets.only(bottom: 12.h),
+                                child: _buildPriceOption(context, option),
+                              ),
+                          ],
+                        ],
+                      ] else ...[
+                        _SectionTitle(tr.bookingHowManyTraveling),
+                        TravelerCounterCard(
+                          icon: Iconsax.profile_2user,
+                          title: tr.bookingTravelerAdult,
+                          count: _adults,
+                          min: 1,
+                          onDecrement: () => setState(() => _adults--),
+                          onIncrement: () => setState(() => _adults++),
+                        ),
+                        SizedBox(
+                          height: TripOptionsFigmaTokens.travelerCardGap,
+                        ),
+                        TravelerCounterCard(
+                          icon: Iconsax.emoji_happy,
+                          title: tr.bookingTravelerKid,
+                          subtitle: tr.bookingTravelerKidAge,
+                          count: _kids,
+                          onDecrement: () => setState(() => _kids--),
+                          onIncrement: () => setState(() => _kids++),
+                        ),
+                        SizedBox(
+                          height: TripOptionsFigmaTokens.travelerCardGap,
+                        ),
+                        TravelerCounterCard(
+                          icon: Iconsax.milk,
+                          title: tr.bookingTravelerBaby,
+                          subtitle: tr.bookingTravelerBabyAge,
+                          count: _babies,
+                          onDecrement: () => setState(() => _babies--),
+                          onIncrement: () => setState(() => _babies++),
+                        ),
+                      ],
                       if (_extraQuantities.isNotEmpty) ...[
                         SizedBox(height: TripOptionsFigmaTokens.sectionBottom),
                         _SectionTitle(tr.bookingOptionalExtras),
@@ -360,7 +503,8 @@ class _TripOptionsViewState extends State<TripOptionsView> {
                           ),
                         ],
                       ],
-                      if (_roomTypes.isNotEmpty) ...[
+                      if (!widget.trip.hasCustomPricing &&
+                          _roomTypes.isNotEmpty) ...[
                         SizedBox(height: TripOptionsFigmaTokens.sectionBottom),
                         _SectionTitle(tr.bookingAccommodationOptions),
                         for (var i = 0; i < _roomTypes.length; i++) ...[
@@ -388,6 +532,40 @@ class _TripOptionsViewState extends State<TripOptionsView> {
           ),
         ),
       ),
+    );
+  }
+
+  void _changePriceQuantity(TripPriceOption option, int delta) {
+    final count = _priceQuantities[option.id] ?? 0;
+    final total = _activePriceOptions
+        .where((item) => item.travelerType == option.travelerType)
+        .fold<int>(0, (sum, item) => sum + (_priceQuantities[item.id] ?? 0));
+    if ((delta > 0 && total >= 50) || (delta < 0 && count <= 0)) return;
+    setState(() {
+      _priceQuantities[option.id] = count + delta;
+      _updatePriceCounts();
+    });
+  }
+
+  Widget _buildPriceOption(BuildContext context, TripPriceOption option) {
+    final count = _priceQuantities[option.id] ?? 0;
+    final totalOfType = _activePriceOptions
+        .where((item) => item.travelerType == option.travelerType)
+        .fold<int>(0, (sum, item) => sum + (_priceQuantities[item.id] ?? 0));
+    return AccommodationCard(
+      key: ValueKey('trip-price-option-${option.id}'),
+      title: option.label,
+      subtitle: '',
+      priceLabel: TripDetailsUiFormatters.formatAmount(
+        option.price,
+        currency: widget.trip.currency,
+      ),
+      personLabel: context.tr.bookingPerson,
+      personCount: count,
+      canDecrement: count > 0,
+      canIncrement: totalOfType < 50,
+      onDecrement: () => _changePriceQuantity(option, -1),
+      onIncrement: () => _changePriceQuantity(option, 1),
     );
   }
 
@@ -466,6 +644,8 @@ class _DateOptionsGrid extends StatelessWidget {
                   dateRange: dates[i].range,
                   price: dates[i].price,
                   isSelected: selectedIndex == i,
+                  isFull: dates[i].isFull,
+                  soldOutText: context.tr.tripDetailsSoldOut,
                   onTap: () => onSelected(i),
                 ),
               ),

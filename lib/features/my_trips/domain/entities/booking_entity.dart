@@ -120,6 +120,27 @@ class BookingTrip extends Equatable {
   ];
 }
 
+class BookingPriceOptionSnapshot extends Equatable {
+  const BookingPriceOptionSnapshot({
+    required this.label,
+    required this.travelerType,
+    required this.quantity,
+    required this.unitPrice,
+    required this.subtotal,
+  });
+  final String label, travelerType;
+  final int quantity;
+  final double unitPrice, subtotal;
+  @override
+  List<Object?> get props => [
+    label,
+    travelerType,
+    quantity,
+    unitPrice,
+    subtotal,
+  ];
+}
+
 class Booking extends Equatable {
   const Booking({
     required this.id,
@@ -128,6 +149,10 @@ class Booking extends Equatable {
     required this.paymentStatus,
     this.paymentMethod,
     this.requiresPayment = false,
+    this.canCancel = false,
+    this.cancellationPolicy,
+    this.priceOptions = const [],
+    this.cancelledAt,
     this.paidAt,
     this.expiresAt,
     required this.currency,
@@ -146,6 +171,10 @@ class Booking extends Equatable {
   final String paymentStatus;
   final String? paymentMethod;
   final bool requiresPayment;
+  final bool canCancel;
+  final String? cancellationPolicy;
+  final List<BookingPriceOptionSnapshot> priceOptions;
+  final String? cancelledAt;
   final String? paidAt;
   final String? expiresAt;
   final String currency;
@@ -181,6 +210,10 @@ class Booking extends Equatable {
     paymentStatus,
     paymentMethod,
     requiresPayment,
+    canCancel,
+    cancellationPolicy,
+    priceOptions,
+    cancelledAt,
     paidAt,
     expiresAt,
     currency,

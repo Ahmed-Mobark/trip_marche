@@ -95,7 +95,7 @@ class CreateBookingCubit extends Cubit<CreateBookingState> {
     );
     final totalTravelers = adultCount + kidCount + babyCount;
 
-    if (totalRoomOccupants != totalTravelers) {
+    if (data.priceSelections.isEmpty && totalRoomOccupants != totalTravelers) {
       validationErrors['room_occupants'] =
           'The total room occupants must equal the number of travelers';
     }
@@ -171,10 +171,19 @@ class CreateBookingCubit extends Cubit<CreateBookingState> {
       rooms: rooms,
       activities: activities,
       optionalExtras: optionalExtras,
+      priceOptions: data.priceSelections
+          .map(
+            (option) => CreateBookingPriceOption(
+              priceOptionId: option.priceOptionId,
+              quantity: option.quantity,
+            ),
+          )
+          .toList(),
       couponCode: trimmedCoupon,
       travelers: travelers,
       notes: trimmedNotes,
       paymentMethod: paymentMethod,
+      expectedTotalAmount: data.expectedTotalAmount,
     );
 
     if (kDebugMode) {

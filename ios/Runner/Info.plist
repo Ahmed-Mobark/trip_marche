@@ -3,11 +3,11 @@
 <plist version="1.0">
 <dict>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>	Trevlen needs your location to show nearby trips and destinations.</string>
+	<string>	TrevLen needs your location to show nearby trips and destinations.</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>
-	<string>Trevlen</string>
+	<string>TrevLen</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
@@ -47,5 +47,11 @@
 	<true/>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>Record voice messages to send in your TrevLen conversations.</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Select photos to share in your TrevLen conversations.</string>
+	<key>NSCameraUsageDescription</key>
+	<string>Take photos to share in your TrevLen conversations.</string>
 </dict>
 </plist>

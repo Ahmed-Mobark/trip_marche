@@ -48,10 +48,14 @@ class NotificationApi {
     );
   }
 
-  Future<void> registerDevice(String token) {
+  Future<void> registerDevice(String token, {String? locale}) {
     return _api.post<Map<String, dynamic>>(
       url: AppEndpoints.notificationDevices,
-      body: {'token': token, 'platform': Platform.isIOS ? 'ios' : 'android'},
+      body: {
+        'token': token,
+        'platform': Platform.isIOS ? 'ios' : 'android',
+        if (locale != null) 'locale': locale == 'ar' ? 'ar' : 'en',
+      },
     );
   }
 

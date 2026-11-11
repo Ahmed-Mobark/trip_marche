@@ -72,7 +72,8 @@ class CompanyProfileHeader extends StatelessWidget {
               children: [
                 Row(
                   children: [
-                    Expanded(
+                    Flexible(
+                      fit: FlexFit.loose,
                       child: Text(
                         companyName,
                         style: AppTextStyles.navTitle(color: textColor),

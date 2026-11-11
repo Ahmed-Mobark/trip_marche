@@ -1,3 +1,5 @@
+import '../../../../core/extensions/localization.dart';
+import '../../../../core/notification/notification_labels.dart';
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 import '../../../../core/injection/injection_container.dart';
@@ -139,7 +141,11 @@ class _NotificationsViewState extends State<NotificationsView> {
             const SizedBox(height: 16),
             for (final item in section.items)
               NotificationItem(
-                title: item.title,
+                title: localizedNotificationTitle(
+                  type: item.type,
+                  fallback: item.title,
+                  strings: context.tr,
+                ),
                 description: item.body,
                 timestamp: item.createdAtHuman,
                 isRead: item.isRead,

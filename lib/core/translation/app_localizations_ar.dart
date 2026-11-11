@@ -243,7 +243,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get authResendNow => 'أعد الإرسال الآن';
 
   @override
-  String get homeAppTitle => 'TripMarche';
+  String get homeAppTitle => 'TrevLen';
 
   @override
   String get homeSearchHint => 'ابحث عن رحلة';
@@ -290,7 +290,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get homeFromCairoAlexandria => 'من القاهرة والإسكندرية';
 
   @override
-  String get homeNewInTripMarche => 'جديد في TripMarche';
+  String get homeNewInTripMarche => 'جديد في TrevLen';
 
   @override
   String get homePerPerson => 'للفرد';
@@ -311,7 +311,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get wishlistFilters => 'تصفية';
 
   @override
-  String get wishlistNewInTripMarche => 'جديد في TripMarche';
+  String get wishlistNewInTripMarche => 'جديد في TrevLen';
 
   @override
   String get wishlistRecommended => 'موصى به';
@@ -551,6 +551,21 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get profileTitleSupport => 'الدعم';
+
+  @override
+  String get helpCenterTitle => 'مركز المساعدة';
+
+  @override
+  String get helpCenterRetry => 'حاول مرة أخرى';
+
+  @override
+  String get helpCenterEmpty => 'المحتوى غير متاح حاليًا.';
+
+  @override
+  String get helpCenterSendFeedback => 'شاركنا برأيك';
+
+  @override
+  String get helpCenterContactSupport => 'التواصل مع الدعم';
 
   @override
   String get profilePersonalInfo => 'المعلومات الشخصية';
@@ -1010,6 +1025,10 @@ class AppLocalizationsAr extends AppLocalizations {
   String get bookingReviewPaymentTotal => 'الإجمالي';
 
   @override
+  String get bookingFullPaymentEgp =>
+      'المبلغ يُدفع كاملًا عند الحجز بالجنيه المصري (EGP).';
+
+  @override
   String get bookingReviewCurrency => 'جنيه';
 
   @override
@@ -1395,7 +1414,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get searchResultDateTo => '4 ديسمبر';
 
   @override
-  String get searchResultLabelNew => 'جديد في TripMarche';
+  String get searchResultLabelNew => 'جديد في TrevLen';
 
   @override
   String get searchResultLabelRecommended => 'موصى به';
@@ -1721,6 +1740,20 @@ class AppLocalizationsAr extends AppLocalizations {
   String get tripDetailsBookNow => 'احجز الآن';
 
   @override
+  String get tripDetailsSoldOut => 'اكتمل العدد';
+
+  @override
+  String get bookingDepartureSoldOut => 'اكتمل العدد المخصص لهذا الموعد';
+
+  @override
+  String get bookingTripSoldOut => 'اكتمل عدد هذه الرحلة لجميع المواعيد المتاحة';
+
+  @override
+  String bookingSeatsInsufficient(int seats) {
+    return 'المقاعد المتبقية لهذا الموعد ($seats) غير كافية لعدد المسافرين';
+  }
+
+  @override
   String tripDetailsPricePerPersonShort(Object price) {
     return '$price/للفرد';
   }
@@ -2036,7 +2069,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get tripDetailsOrganizerTitle => 'المنظم';
 
   @override
-  String get tripDetailsOrganizerSubtitle => 'شريك موثوق على Trip Marche';
+  String get tripDetailsOrganizerSubtitle => 'شريك موثوق على TrevLen';
 
   @override
   String get tripDetailsStartingFrom => 'يبدأ من';
@@ -2084,7 +2117,7 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get bookingTripTermsSection1Body =>
-      'عند حجز رحلة عبر Trip Marche فإنك توافق على الشروط التالية. يلزم دفع عربون بنسبة 30% عند الحجز لتأكيد مكانك. يجب سداد المبلغ المتبقي قبل موعد انطلاق الرحلة بـ 14 يومًا على الأقل. قد يؤدي عدم السداد في الموعد إلى إلغاء الحجز. تتم معالجة جميع المدفوعات بشكل آمن عبر شركائنا.';
+      'عند حجز رحلة عبر TrevLen فإنك توافق على الشروط التالية. يلزم دفع عربون بنسبة 30% عند الحجز لتأكيد مكانك. يجب سداد المبلغ المتبقي قبل موعد انطلاق الرحلة بـ 14 يومًا على الأقل. قد يؤدي عدم السداد في الموعد إلى إلغاء الحجز. تتم معالجة جميع المدفوعات بشكل آمن عبر شركائنا.';
 
   @override
   String get bookingTripTermsSection2Title => '2. الأهلية';
@@ -2098,21 +2131,21 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get bookingTripTermsSection3Body =>
-      'يحق لـ Trip Marche تعديل برنامج الرحلة بسبب الظروف الجوية أو اعتبارات السلامة أو ظروف غير متوقعة. سنسعى لتقديم بدائل مكافئة. في حال حدوث تغييرات كبيرة سيتم إخطار المسافرين وقد يتم تقديم استرداد جزئي أو رصيد.';
+      'يحق لـ TrevLen تعديل برنامج الرحلة بسبب الظروف الجوية أو اعتبارات السلامة أو ظروف غير متوقعة. سنسعى لتقديم بدائل مكافئة. في حال حدوث تغييرات كبيرة سيتم إخطار المسافرين وقد يتم تقديم استرداد جزئي أو رصيد.';
 
   @override
   String get bookingTripTermsSection4Title => '4. مسؤوليات المسافر';
 
   @override
   String get bookingTripTermsSection4Body =>
-      'يتحمل المسافر مسؤولية توفر وثائق السفر السارية وتأمين السفر وأي تطعيمات مطلوبة. يجب اتباع تعليمات المرشدين واحترام القوانين والعادات المحلية. لا تتحمل Trip Marche مسؤولية أي تبعات ناتجة عن عدم الالتزام بمتطلبات الدخول.';
+      'يتحمل المسافر مسؤولية توفر وثائق السفر السارية وتأمين السفر وأي تطعيمات مطلوبة. يجب اتباع تعليمات المرشدين واحترام القوانين والعادات المحلية. لا تتحمل TrevLen مسؤولية أي تبعات ناتجة عن عدم الالتزام بمتطلبات الدخول.';
 
   @override
   String get bookingTripTermsSection5Title => '5. المسؤولية';
 
   @override
   String get bookingTripTermsSection5Body =>
-      'تعمل Trip Marche كمنظم ووسيط. ورغم اتخاذنا جميع الاحتياطات، فإننا لا نتحمل المسؤولية عن أي خسارة أو إصابة أو أضرار ناتجة عن الأنشطة أثناء الرحلة أو الكوارث الطبيعية أو تصرفات مزودي الخدمات من الأطراف الثالثة. المشاركة في الأنشطة تكون على مسؤولية المسافر. نوصي بشدة بشراء تأمين سفر شامل.';
+      'تعمل TrevLen كمنظم ووسيط. ورغم اتخاذنا جميع الاحتياطات، فإننا لا نتحمل المسؤولية عن أي خسارة أو إصابة أو أضرار ناتجة عن الأنشطة أثناء الرحلة أو الكوارث الطبيعية أو تصرفات مزودي الخدمات من الأطراف الثالثة. المشاركة في الأنشطة تكون على مسؤولية المسافر. نوصي بشدة بشراء تأمين سفر شامل.';
 
   @override
   String get bookingTripTermsSection6Title => '6. الخصوصية';
@@ -2162,7 +2195,7 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get bookingTripSafetyIntro =>
-      'في Trip Marche نلتزم بضمان سلامة وراحة جميع المسافرين. تم تصميم رحلاتنا بإجراءات سلامة شاملة وجميع مرشدينا مدربون على الإسعافات الأولية وإجراءات الطوارئ.';
+      'في TrevLen نلتزم بضمان سلامة وراحة جميع المسافرين. تم تصميم رحلاتنا بإجراءات سلامة شاملة وجميع مرشدينا مدربون على الإسعافات الأولية وإجراءات الطوارئ.';
 
   @override
   String get bookingTripSafetyWaterTitle => 'سلامة الأنشطة المائية';
@@ -2367,4 +2400,147 @@ class AppLocalizationsAr extends AppLocalizations {
   String reviewRatingScale(int rating) {
     return '$rating/5';
   }
+
+  @override
+  String get myTripsCancelBooking => 'إلغاء الحجز';
+
+  @override
+  String get myTripsConfirmCancellation => 'تأكيد إلغاء الحجز';
+
+  @override
+  String get myTripsKeepBooking => 'الاحتفاظ بالحجز';
+
+  @override
+  String get myTripsCancelExplanation =>
+      'سيتم إلغاء حجزك لهذه الرحلة. إذا استحققت استردادًا وفق شروط الشركة، تواصل مع الفيندور لترتيبه. لن يتم رد أي مبلغ تلقائيًا عند التأكيد.';
+
+  @override
+  String get myTripsCancellationTerms => 'شروط الإلغاء';
+
+  @override
+  String get myTripsCancellationSuccess => 'تم إلغاء الحجز';
+
+  @override
+  String get myTripsRefundContactVendor =>
+      'لأي استرداد مستحق وفق شروط الإلغاء، تواصل مع الفيندور مباشرة.';
+
+  @override
+  String get myTripsContactVendor => 'التواصل مع الفيندور';
+
+  @override
+  String get myTripsCancelledAt => 'تاريخ الإلغاء';
+
+  @override
+  String get companyProfileVendorReply => 'رد الشركة';
+
+  @override
+  String get companyProfileManager => 'مدير الشركة';
+
+  @override
+  String get bookingCustomPriceHelp =>
+      'اختر عدد المسافرين لكل اختيار. السعر المكتوب هو سعر الرحلة الكامل للشخص.';
+
+  @override
+  String get bookingSelectPriceOption =>
+      'اختر سعر فرد واحد على الأقل للمتابعة.';
+
+  @override
+  String get bookingQuoteRetry => 'إعادة حساب السعر';
+
+  @override
+  String get chatTitle => 'الرسائل';
+
+  @override
+  String get chatSupport => 'تواصل مع الدعم';
+
+  @override
+  String get chatContactVendor => 'مراسلة الشركة';
+
+  @override
+  String get chatEmpty => 'لا توجد محادثات بعد.';
+
+  @override
+  String get chatEmptyMessages => 'ابدأ المحادثة بكتابة سؤالك.';
+
+  @override
+  String get chatMessage => 'رسالتك';
+
+  @override
+  String get chatSend => 'إرسال';
+
+  @override
+  String get chatOlder => 'رسائل أقدم';
+
+  @override
+  String get chatFailed => 'تعذّر إكمال الطلب. احتفظنا بالنص؛ حاول مجددًا.';
+
+  @override
+  String get chatRetry => 'حاول مجددًا';
+
+  @override
+  String get chatPhoto => 'صورة';
+
+  @override
+  String get chatVoice => 'رسالة صوتية';
+
+  @override
+  String get chatRecord => 'تسجيل رسالة صوتية';
+
+  @override
+  String get chatStop => 'إيقاف التسجيل';
+
+  @override
+  String get chatRecording => 'جارٍ التسجيل…';
+
+  @override
+  String get chatCancel => 'إلغاء';
+
+  @override
+  String get chatRemove => 'إزالة المرفق';
+
+  @override
+  String get chatMediaError => 'تعذر فتح الملف. حاول مرة أخرى.';
+
+  @override
+  String get chatMediaLimit => 'اختر صورة أو تسجيلًا بحجم أقل من 10 ميجابايت.';
+
+  @override
+  String get chatMicrophonePermission =>
+      'اسمح بالوصول للميكروفون لتسجيل رسالة صوتية.';
+
+  @override
+  String get chatToday => 'اليوم';
+
+  @override
+  String get chatYesterday => 'أمس';
+
+  @override
+  String get chatInboxHint => 'محادثاتك مع شركاء السفر وفريق دعم TrevLen.';
+
+  @override
+  String get chatSupportHint => 'نحن هنا لمساعدتك في رحلتك.';
+
+  @override
+  String get chatCompany => 'شريك السفر';
+
+  @override
+  String get chatStart => 'ابدأ محادثة';
+
+  @override
+  String get chatPlay => 'تشغيل الرسالة الصوتية';
+
+  @override
+  String get chatPause => 'إيقاف الرسالة مؤقتًا';
+
+  @override
+  String get chatPhotoLibrary => 'معرض الصور';
+
+  @override
+  String get chatCamera => 'الكاميرا';
+
+  @override
+  String get chatRecordingLimit => 'حتى دقيقتين';
+
+  @override
+  String get chatNewMessage => 'رسالة جديدة';
 }

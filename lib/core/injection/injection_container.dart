@@ -1,3 +1,5 @@
+import '../../features/chat/chat_inj.dart';
+import '../../features/settings/settings_inj.dart';
 import '../navigation/navigation_inj.dart';
 import '../network/network_service_inj.dart';
 import '../notification/firebase_notification_service.dart';
@@ -26,6 +28,7 @@ Future<void> init() async {
   initNavigationInjection(sl);
   sl.registerLazySingleton<LocationService>(() => LocationService());
   initNetworkServiceInjection(sl);
+  initSettingsInjection(sl);
   sl.registerLazySingleton<NotificationApi>(() => NotificationApi(sl()));
   sl.registerLazySingleton<NotificationNavigationService>(
     () => NotificationNavigationService(),
@@ -45,4 +48,5 @@ Future<void> init() async {
   initHomeInjection(sl);
   initProfileInjection(sl);
   initCompanyProfileInjection(sl);
+  initChatInjection(sl);
 }

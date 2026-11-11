@@ -160,7 +160,7 @@ class _SplashViewState extends State<SplashView> with TickerProviderStateMixin {
                           child: Column(
                             children: [
                               Text(
-                                'Trevlen',
+                                'TrevLen',
                                 style: Theme.of(context).textTheme.headlineSmall
                                     ?.copyWith(
                                       color: Colors.white,

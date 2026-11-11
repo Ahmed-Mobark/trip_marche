@@ -18,7 +18,6 @@ import 'package:trip_marche/features/booking/presentation/cubit/create_booking_c
 import 'package:trip_marche/features/booking/presentation/cubit/create_booking_state.dart';
 import 'package:trip_marche/features/booking/presentation/view/payment_webview_screen.dart';
 import 'package:trip_marche/features/nav_bar/presentation/view/main_nav_view.dart';
-import 'package:trip_marche/features/payment_method/domain/entities/payment_method_entity.dart';
 import 'package:trip_marche/features/payment_method/presentation/cubit/payment_methods_cubit.dart';
 import 'package:trip_marche/features/payment_method/presentation/cubit/payment_methods_state.dart';
 
@@ -114,11 +113,17 @@ class _PaymentMethodsBody extends StatelessWidget {
           log('BOOKING SUCCESS');
           log('bookingId: ${state.bookingResponse?.data?.bookingId}');
           log('requiresPayment: $requiresPayment');
-          log('paymentProvider: ${state.bookingResponse?.data?.payment?.provider}');
+          log(
+            'paymentProvider: ${state.bookingResponse?.data?.payment?.provider}',
+          );
           log('checkoutUrl: $checkoutUrl');
-          log('NAVIGATION CHECK: requiresPayment=$requiresPayment, checkoutUrl=$checkoutUrl');
+          log(
+            'NAVIGATION CHECK: requiresPayment=$requiresPayment, checkoutUrl=$checkoutUrl',
+          );
 
-          if (requiresPayment && checkoutUrl != null && checkoutUrl.isNotEmpty) {
+          if (requiresPayment &&
+              checkoutUrl != null &&
+              checkoutUrl.isNotEmpty) {
             log('OPENING PAYMENT WEBVIEW');
             Navigator.of(context).push(
               MaterialPageRoute(
@@ -128,9 +133,10 @@ class _PaymentMethodsBody extends StatelessWidget {
                     appToast(
                       context: context,
                       type: ToastType.success,
-                      message: apiMessage != null && apiMessage.trim().isNotEmpty
-                      ? apiMessage
-                      : tr.bookingCreatedSuccess,
+                      message:
+                          apiMessage != null && apiMessage.trim().isNotEmpty
+                          ? apiMessage
+                          : tr.bookingCreatedSuccess,
                     );
                     sl<AppNavigator>().pushAndRemoveUntil(
                       screen: const MainNavView(initialIndex: 1),
@@ -335,76 +341,80 @@ class _PaymentMethodsBody extends StatelessWidget {
 
   Widget _buildMethodsList(BuildContext context, PaymentMethodsState state) {
     final cubit = context.read<PaymentMethodsCubit>();
-    return ListView.separated(
-      padding: EdgeInsetsDirectional.fromSTEB(16.w, 12.h, 16.w, 16.h),
-      itemCount: state.paymentMethods.length,
-      separatorBuilder: (_, __) => SizedBox(height: 12.h),
-      itemBuilder: (context, index) {
-        final method = state.paymentMethods[index];
-        final iconData = _mapIconKeyToIconData(method.icon);
-        final isSelected = state.selectedPaymentMethod?.key == method.key;
+    return RadioGroup<String>(
+      groupValue: state.selectedPaymentMethod?.key,
+      onChanged: (key) {
+        if (key != null) {
+          cubit.selectPaymentMethod(
+            state.paymentMethods.firstWhere((method) => method.key == key),
+          );
+        }
+      },
+      child: ListView.separated(
+        padding: EdgeInsetsDirectional.fromSTEB(16.w, 12.h, 16.w, 16.h),
+        itemCount: state.paymentMethods.length,
+        separatorBuilder: (_, __) => SizedBox(height: 12.h),
+        itemBuilder: (context, index) {
+          final method = state.paymentMethods[index];
+          final iconData = _mapIconKeyToIconData(method.icon);
+          final isSelected = state.selectedPaymentMethod?.key == method.key;
 
-        return Container(
-          decoration: BoxDecoration(
-            color: isSelected
-                ? AppColors.selectedPurpleTint(context)
-                : AppColors.cardBg(context),
-            borderRadius: BorderRadius.circular(12.r),
-            border: Border.all(
+          return Container(
+            decoration: BoxDecoration(
               color: isSelected
-                  ? AppColors.primary
-                  : AppColors.softBorder(context),
-              width: isSelected ? 1.5 : 1,
-            ),
-          ),
-          child: RadioListTile<PaymentMethodEntity>(
-            value: method,
-            groupValue: isSelected ? method : null,
-            onChanged: (value) {
-              if (value != null) {
-                cubit.selectPaymentMethod(value);
-              }
-            },
-            activeColor: AppColors.primary,
-            shape: RoundedRectangleBorder(
+                  ? AppColors.selectedPurpleTint(context)
+                  : AppColors.cardBg(context),
               borderRadius: BorderRadius.circular(12.r),
-            ),
-            contentPadding: EdgeInsets.symmetric(
-              horizontal: 12.w,
-              vertical: 4.h,
-            ),
-            secondary: Container(
-              width: 44.w,
-              height: 44.h,
-              decoration: BoxDecoration(
-                color: isSelected
-                    ? AppColors.primary.withValues(alpha: 0.1)
-                    : AppColors.border(context).withValues(alpha: 0.5),
-                borderRadius: BorderRadius.circular(10.r),
-              ),
-              child: Icon(
-                iconData,
+              border: Border.all(
                 color: isSelected
                     ? AppColors.primary
-                    : AppColors.greyText(context),
-                size: 22.w,
+                    : AppColors.softBorder(context),
+                width: isSelected ? 1.5 : 1,
               ),
             ),
-            title: Text(
-              method.name,
-              style: AppTextStyles.bodyMedium(
-                color: AppColors.darkText(context),
+            child: RadioListTile<String>(
+              value: method.key,
+              activeColor: AppColors.primary,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(12.r),
+              ),
+              contentPadding: EdgeInsets.symmetric(
+                horizontal: 12.w,
+                vertical: 4.h,
+              ),
+              secondary: Container(
+                width: 44.w,
+                height: 44.h,
+                decoration: BoxDecoration(
+                  color: isSelected
+                      ? AppColors.primary.withValues(alpha: 0.1)
+                      : AppColors.border(context).withValues(alpha: 0.5),
+                  borderRadius: BorderRadius.circular(10.r),
+                ),
+                child: Icon(
+                  iconData,
+                  color: isSelected
+                      ? AppColors.primary
+                      : AppColors.greyText(context),
+                  size: 22.w,
+                ),
+              ),
+              title: Text(
+                method.name,
+                style: AppTextStyles.bodyMedium(
+                  color: AppColors.darkText(context),
+                ),
+              ),
+              subtitle: Text(
+                method.description,
+                style: AppTextStyles.bodySmall(
+                  color: AppColors.greyText(context),
+                ),
               ),
             ),
-            subtitle: Text(
-              method.description,
-              style: AppTextStyles.bodySmall(
-                color: AppColors.greyText(context),
-              ),
-            ),
-          ),
-        );
-      },
+          );
+        },
+      ),
     );
   }
 

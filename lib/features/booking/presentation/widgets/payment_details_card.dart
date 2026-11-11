@@ -77,7 +77,8 @@ class PaymentDetailsCard extends StatelessWidget {
             label: optionalExtrasLabel,
             value: _format(breakdown.optionalExtrasTotal),
           ),
-        PriceRow(label: taxesLabel, value: _format(breakdown.taxes)),
+        if (breakdown.taxes > 0)
+          PriceRow(label: taxesLabel, value: _format(breakdown.taxes)),
         if (showCouponBreakdown && breakdown.couponDiscount > 0) ...[
           PriceRow(
             label: subtotalLabel ?? totalLabel,

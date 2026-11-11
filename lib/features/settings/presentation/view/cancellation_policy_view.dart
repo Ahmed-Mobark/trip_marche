@@ -57,7 +57,7 @@ class CancellationPolicyView extends StatelessWidget {
             _buildSection(
               context,
               'Exceptions',
-              'In case of extraordinary circumstances such as natural disasters, severe weather, or government travel restrictions, Trip Marche may offer full refunds or trip credits at its discretion.',
+              'In case of extraordinary circumstances such as natural disasters, severe weather, or government travel restrictions, TrevLen may offer full refunds or trip credits at its discretion.',
             ),
             _buildSection(
               context,

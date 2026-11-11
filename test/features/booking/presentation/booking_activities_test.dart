@@ -1,3 +1,4 @@
+import 'package:trip_marche/features/booking/domain/entities/booking_quote.dart';
 import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -24,6 +25,12 @@ import 'package:trip_marche/features/booking/presentation/widgets/traveler_activ
 import 'package:trip_marche/features/trip_details/data/models/trip_details_model.dart';
 
 class _Repository implements CreateBookingRepository {
+  @override
+  Future<Either<Failure, BookingQuote>> quoteBooking(
+    BookingReviewData data, {
+    String? couponCode,
+  }) => throw StateError('A booking creation test must not request a quote');
+
   Map<String, dynamic>? body;
   @override
   Future<Either<Failure, CreateBookingResponse>> createBooking(

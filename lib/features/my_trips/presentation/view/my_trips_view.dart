@@ -1,8 +1,10 @@
 import 'dart:developer';
+import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:intl/intl.dart';
 import 'package:trip_marche/core/config/app_images.dart';
 import 'package:trip_marche/core/config/styles/styles.dart';
 import 'package:trip_marche/core/extensions/localization.dart';
@@ -17,6 +19,9 @@ import 'package:trip_marche/core/widgets/custom_loading.dart';
 import 'package:trip_marche/features/booking/presentation/view/payment_webview_screen.dart';
 import 'package:trip_marche/features/my_trips/domain/entities/booking_entity.dart';
 import 'package:trip_marche/features/my_trips/domain/usecases/retry_booking_payment_usecase.dart';
+import 'package:trip_marche/features/my_trips/domain/usecases/cancel_booking_usecase.dart';
+import 'package:trip_marche/features/my_trips/presentation/widgets/booking_cancellation_dialog.dart';
+import 'package:trip_marche/features/company_profile/presentation/view/company_profile_view.dart';
 import 'package:trip_marche/features/my_trips/presentation/cubit/booking_pdf_cubit.dart';
 import 'package:trip_marche/features/my_trips/presentation/cubit/booking_pdf_state.dart';
 import 'package:trip_marche/features/my_trips/presentation/cubit/bookings_cubit.dart';
@@ -71,6 +76,7 @@ class _MyTripsViewBody extends StatefulWidget {
 class MyTripsViewBodyState extends State<_MyTripsViewBody> {
   late final TextEditingController _searchCtrl;
   int? _payingBookingId;
+  int? _cancellingBookingId;
 
   Future<void> refreshFromNavBarTap() async {
     await context.read<BookingsCubit>().refresh();
@@ -170,7 +176,7 @@ class MyTripsViewBodyState extends State<_MyTripsViewBody> {
   }
 
   Future<void> _onPayNowTap(Booking booking) async {
-    if (_payingBookingId != null) {
+    if (_payingBookingId != null || _cancellingBookingId != null) {
       return;
     }
     setState(() => _payingBookingId = booking.id);
@@ -201,6 +207,64 @@ class MyTripsViewBodyState extends State<_MyTripsViewBody> {
         );
       },
     );
+  }
+
+  void _onContactVendor(Booking booking) {
+    final vendorId = booking.trip.vendorId;
+    if (vendorId != null) {
+      sl<AppNavigator>().push(screen: CompanyProfileView(vendorId: vendorId));
+    }
+  }
+
+  Future<void> _onCancelBooking(Booking booking) async {
+    if (_cancellingBookingId != null ||
+        _payingBookingId != null ||
+        !booking.canCancel) {
+      return;
+    }
+    setState(() => _cancellingBookingId = booking.id);
+    try {
+      final confirmed = await showDialog<bool>(
+        context: context,
+        builder: (_) => BookingCancellationDialog(booking: booking),
+      );
+      if (confirmed != true || !mounted) return;
+      final result = await sl<CancelBookingUseCase>()(booking.id);
+      if (!mounted) return;
+      await result.fold<Future<void>>(
+        (failure) async => appToast(
+          context: context,
+          type: ToastType.error,
+          message: failure.message,
+        ),
+        (updated) async {
+          final cubit = context.read<BookingsCubit>();
+          cubit.applyCancellation(updated);
+          unawaited(cubit.refresh());
+          final contact = await showDialog<bool>(
+            context: context,
+            builder: (dialogContext) => AlertDialog(
+              title: Text(context.tr.myTripsCancellationSuccess),
+              content: Text(context.tr.myTripsRefundContactVendor),
+              actions: [
+                TextButton(
+                  onPressed: () => Navigator.pop(dialogContext, false),
+                  child: Text(context.tr.commonOk),
+                ),
+                if (updated.trip.vendorId != null)
+                  FilledButton(
+                    onPressed: () => Navigator.pop(dialogContext, true),
+                    child: Text(context.tr.myTripsContactVendor),
+                  ),
+              ],
+            ),
+          );
+          if (contact == true && mounted) _onContactVendor(updated);
+        },
+      );
+    } finally {
+      if (mounted) setState(() => _cancellingBookingId = null);
+    }
   }
 
   @override
@@ -325,6 +389,9 @@ class MyTripsViewBodyState extends State<_MyTripsViewBody> {
                                     onBookingPdfTap: _onBookingPdfTap,
                                     onPayNowTap: _onPayNowTap,
                                     payingBookingId: _payingBookingId,
+                                    cancellingBookingId: _cancellingBookingId,
+                                    onCancelBooking: _onCancelBooking,
+                                    onContactVendor: _onContactVendor,
                                     onRetry: () => context
                                         .read<BookingsCubit>()
                                         .loadInitial(),
@@ -361,6 +428,9 @@ class _BookingsList extends StatelessWidget {
     required this.onBookingPdfTap,
     required this.onPayNowTap,
     required this.payingBookingId,
+    required this.cancellingBookingId,
+    required this.onCancelBooking,
+    required this.onContactVendor,
     required this.onRetry,
     required this.onRefresh,
     required this.onLoadMore,
@@ -373,6 +443,9 @@ class _BookingsList extends StatelessWidget {
   final void Function(Booking) onBookingPdfTap;
   final void Function(Booking) onPayNowTap;
   final int? payingBookingId;
+  final int? cancellingBookingId;
+  final void Function(Booking) onCancelBooking;
+  final void Function(Booking) onContactVendor;
   final VoidCallback onRetry;
   final Future<void> Function() onRefresh;
   final VoidCallback onLoadMore;
@@ -507,6 +580,12 @@ class _BookingsList extends StatelessWidget {
                     builder: (context, pdfState) {
                       final isPdfLoading = pdfState.isLoadingFor(booking.id);
                       final isPayLoading = payingBookingId == booking.id;
+                      final canInteract =
+                          payingBookingId == null &&
+                          cancellingBookingId == null;
+                      final cancelledAt = DateTime.tryParse(
+                        booking.cancelledAt ?? '',
+                      )?.toLocal();
                       return MyTripsScreenTripCard(
                         trip: _toRowModel(booking, isFav, context),
                         tab: tab,
@@ -516,12 +595,28 @@ class _BookingsList extends StatelessWidget {
                                   ? null
                                   : () => onRateTripTap(booking))
                             : () => onBookingTap(booking),
-                        onBottomTap: isPdfLoading || isPayLoading
+                        onBottomTap: isPdfLoading || !canInteract
                             ? null
+                            : tab == MyTripsShellTab.canceled
+                            ? () => onBookingTap(booking)
                             : booking.requiresPayment
                             ? () => onPayNowTap(booking)
                             : () => onBookingPdfTap(booking),
                         isPdfLoading: isPdfLoading || isPayLoading,
+                        showCancelAction:
+                            tab == MyTripsShellTab.active && booking.canCancel,
+                        isCancelling: cancellingBookingId == booking.id,
+                        onCancelTap: canInteract
+                            ? () => onCancelBooking(booking)
+                            : null,
+                        onContactVendor: booking.trip.vendorId != null
+                            ? () => onContactVendor(booking)
+                            : null,
+                        cancelledAtText: cancelledAt == null
+                            ? null
+                            : DateFormat(
+                                'yyyy-MM-dd HH:mm',
+                              ).format(cancelledAt),
                       );
                     },
                   ),

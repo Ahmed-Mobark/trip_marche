@@ -22,6 +22,11 @@ class MyTripsScreenTripCard extends StatelessWidget {
     this.onSecondaryTap,
     this.onBottomTap,
     this.isPdfLoading = false,
+    this.showCancelAction = false,
+    this.isCancelling = false,
+    this.onCancelTap,
+    this.onContactVendor,
+    this.cancelledAtText,
   });
 
   final MyTripRowUiModel trip;
@@ -30,6 +35,11 @@ class MyTripsScreenTripCard extends StatelessWidget {
   final VoidCallback? onSecondaryTap;
   final VoidCallback? onBottomTap;
   final bool isPdfLoading;
+  final bool showCancelAction;
+  final bool isCancelling;
+  final VoidCallback? onCancelTap;
+  final VoidCallback? onContactVendor;
+  final String? cancelledAtText;
 
   @override
   Widget build(BuildContext context) {
@@ -271,11 +281,52 @@ class MyTripsScreenTripCard extends StatelessWidget {
                       isLoading: isPdfLoading,
                       icon: needsPayment
                           ? Iconsax.card
+                          : tab == MyTripsShellTab.canceled
+                          ? Iconsax.info_circle
                           : Icons.picture_as_pdf_rounded,
                       iconColor: needsPayment
                           ? AppColors.myTripsTripCardPurple
                           : AppColors.myTripsTripCardRed,
                     ),
+                    if (showCancelAction)
+                      TextButton(
+                        onPressed: isCancelling ? null : onCancelTap,
+                        child: isCancelling
+                            ? const SizedBox(
+                                width: 18,
+                                height: 18,
+                                child: CircularProgressIndicator(
+                                  strokeWidth: 2,
+                                ),
+                              )
+                            : Text(
+                                tr.myTripsCancelBooking,
+                                style: TextStyle(color: AppColors.error),
+                              ),
+                      ),
+                    if (tab == MyTripsShellTab.canceled) ...[
+                      const SizedBox(height: 8),
+                      if (cancelledAtText != null)
+                        Text(
+                          '${tr.myTripsCancelledAt}: $cancelledAtText',
+                          style: TextStyle(
+                            fontSize: 11.sp,
+                            color: AppColors.greyText(context),
+                          ),
+                        ),
+                      Text(
+                        tr.myTripsRefundContactVendor,
+                        style: TextStyle(
+                          fontSize: 12.sp,
+                          color: AppColors.greyText(context),
+                        ),
+                      ),
+                      if (onContactVendor != null)
+                        TextButton(
+                          onPressed: onContactVendor,
+                          child: Text(tr.myTripsContactVendor),
+                        ),
+                    ],
                   ],
                 ),
               ),

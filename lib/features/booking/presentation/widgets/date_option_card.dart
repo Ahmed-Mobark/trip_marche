@@ -11,15 +11,31 @@ class DateOptionCard extends StatelessWidget {
     required this.price,
     required this.isSelected,
     required this.onTap,
+    this.isFull = false,
+    this.soldOutText,
   });
 
   final String dateRange;
   final String price;
   final bool isSelected;
   final VoidCallback onTap;
+  final bool isFull;
+  final String? soldOutText;
 
   @override
   Widget build(BuildContext context) {
+    final effectiveBorder = isFull
+        ? TripOptionsFigmaTokens.cardBorder(context)
+        : (isSelected
+            ? TripOptionsFigmaTokens.selectedBorder(context)
+            : TripOptionsFigmaTokens.cardBorder(context));
+
+    final effectiveBg = isFull
+        ? AppColors.cardBg(context).withValues(alpha: 0.5)
+        : (isSelected
+            ? AppColors.selectedPurpleTint(context)
+            : AppColors.cardBg(context));
+
     return GestureDetector(
       onTap: onTap,
       behavior: HitTestBehavior.opaque,
@@ -27,16 +43,12 @@ class DateOptionCard extends StatelessWidget {
         height: TripOptionsFigmaTokens.dateCardHeight,
         padding: EdgeInsetsDirectional.symmetric(horizontal: 12.w),
         decoration: BoxDecoration(
-          color: isSelected
-              ? AppColors.selectedPurpleTint(context)
-              : AppColors.cardBg(context),
+          color: effectiveBg,
           borderRadius: BorderRadius.circular(
             TripOptionsFigmaTokens.dateCardRadius,
           ),
           border: Border.all(
-            color: isSelected
-                ? TripOptionsFigmaTokens.selectedBorder(context)
-                : TripOptionsFigmaTokens.cardBorder(context),
+            color: effectiveBorder,
             width: TripOptionsFigmaTokens.cardBorderWidth,
           ),
         ),
@@ -50,11 +62,14 @@ class DateOptionCard extends StatelessWidget {
                   dateRange,
                   maxLines: 1,
                   softWrap: false,
-                  style: AppTextStyles.bodyMedium(color: AppColors.ink(context))
-                      .copyWith(
-                        fontSize: TripOptionsFigmaTokens.dateOptionFontSize,
-                        fontWeight: FontWeight.w500,
-                      ),
+                  style: AppTextStyles.bodyMedium(
+                    color: isFull
+                        ? AppColors.greyText(context)
+                        : AppColors.ink(context),
+                  ).copyWith(
+                    fontSize: TripOptionsFigmaTokens.dateOptionFontSize,
+                    fontWeight: FontWeight.w500,
+                  ),
                 ),
               ),
             ),
@@ -63,16 +78,38 @@ class DateOptionCard extends StatelessWidget {
               child: FittedBox(
                 fit: BoxFit.scaleDown,
                 alignment: AlignmentDirectional.centerEnd,
-                child: Text(
-                  price,
-                  maxLines: 1,
-                  softWrap: false,
-                  style: AppTextStyles.bodyMedium(color: AppColors.primary)
-                      .copyWith(
-                        fontSize: TripOptionsFigmaTokens.dateOptionFontSize,
-                        fontWeight: FontWeight.w600,
+                child: isFull
+                    ? Container(
+                        padding: EdgeInsetsDirectional.symmetric(
+                          horizontal: 6.w,
+                          vertical: 2.h,
+                        ),
+                        decoration: BoxDecoration(
+                          color: AppColors.red.withValues(alpha: 0.12),
+                          borderRadius: BorderRadius.circular(4.r),
+                        ),
+                        child: Text(
+                          soldOutText ?? 'اكتمل العدد',
+                          maxLines: 1,
+                          softWrap: false,
+                          style: AppTextStyles.caption(
+                            color: AppColors.red,
+                          ).copyWith(
+                            fontSize: 10.sp,
+                            fontWeight: FontWeight.w700,
+                          ),
+                        ),
+                      )
+                    : Text(
+                        price,
+                        maxLines: 1,
+                        softWrap: false,
+                        style: AppTextStyles.bodyMedium(color: AppColors.primary)
+                            .copyWith(
+                              fontSize: TripOptionsFigmaTokens.dateOptionFontSize,
+                              fontWeight: FontWeight.w600,
+                            ),
                       ),
-                ),
               ),
             ),
           ],

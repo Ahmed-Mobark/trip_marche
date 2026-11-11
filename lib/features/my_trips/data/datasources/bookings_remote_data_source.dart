@@ -15,6 +15,8 @@ abstract class BookingsRemoteDataSource {
   Future<Uint8List> fetchBookingPdf(int bookingId);
 
   Future<String> retryPayment(int bookingId);
+
+  Future<BookingModel> cancelBooking(int bookingId);
 }
 
 class BookingsRemoteDataSourceImpl implements BookingsRemoteDataSource {
@@ -63,5 +65,15 @@ class BookingsRemoteDataSourceImpl implements BookingsRemoteDataSource {
       throw const FormatException('Missing checkout URL');
     }
     return checkoutUrl;
+  }
+
+  @override
+  Future<BookingModel> cancelBooking(int bookingId) async {
+    final response = await _api.post<Map<String, dynamic>>(
+      url: AppEndpoints.bookingCancel(bookingId),
+      body: const {},
+      includeCurrency: true,
+    );
+    return BookingModel.fromJson(response['data'] as Map<String, dynamic>);
   }
 }

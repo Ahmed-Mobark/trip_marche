@@ -1,3 +1,4 @@
+import '../../domain/entities/booking_quote.dart';
 import 'package:equatable/equatable.dart';
 import 'package:trip_marche/features/booking/domain/entities/coupon_validation.dart';
 
@@ -11,10 +12,12 @@ class CouponState extends Equatable {
     this.errorMessage,
     this.appliedCode,
     this.showNetworkError = false,
+    this.quote,
   });
 
   final CouponStatus status;
   final CouponValidation? coupon;
+  final BookingQuote? quote;
   final String? successMessage;
   final String? errorMessage;
   final String? appliedCode;
@@ -31,13 +34,17 @@ class CouponState extends Equatable {
     String? appliedCode,
     bool? showNetworkError,
     bool clearCoupon = false,
+    BookingQuote? quote,
+    bool clearQuote = false,
     bool clearMessages = false,
   }) {
     return CouponState(
       status: status ?? this.status,
+      quote: clearQuote ? null : (quote ?? this.quote),
       coupon: clearCoupon ? null : (coupon ?? this.coupon),
-      successMessage:
-          clearMessages ? null : (successMessage ?? this.successMessage),
+      successMessage: clearMessages
+          ? null
+          : (successMessage ?? this.successMessage),
       errorMessage: clearMessages ? null : (errorMessage ?? this.errorMessage),
       appliedCode: clearCoupon ? null : (appliedCode ?? this.appliedCode),
       showNetworkError: showNetworkError ?? this.showNetworkError,
@@ -46,11 +53,12 @@ class CouponState extends Equatable {
 
   @override
   List<Object?> get props => [
-        status,
-        coupon,
-        successMessage,
-        errorMessage,
-        appliedCode,
-        showNetworkError,
-      ];
+    status,
+    quote,
+    coupon,
+    successMessage,
+    errorMessage,
+    appliedCode,
+    showNetworkError,
+  ];
 }

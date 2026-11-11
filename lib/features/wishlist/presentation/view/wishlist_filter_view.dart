@@ -271,7 +271,7 @@ class _WishlistFilterBody extends StatelessWidget {
                     final selected = await _pickOne(
                       context: context,
                       title: context.tr.wishlistFiltersTravelAgency,
-                      options: const ['Trip Marche', 'Sky Travel', 'Go Trips'],
+                      options: const ['TrevLen', 'Sky Travel', 'Go Trips'],
                       selected: state.agency,
                     );
                     if (selected != null) cubit.setAgency(selected);

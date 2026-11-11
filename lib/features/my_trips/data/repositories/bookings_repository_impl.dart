@@ -68,6 +68,13 @@ class BookingsRepositoryImpl
     return handleEither(() => _remote.retryPayment(bookingId));
   }
 
+  @override
+  Future<Either<Failure, Booking>> cancelBooking(int bookingId) {
+    return handleEither(
+      () async => (await _remote.cancelBooking(bookingId)).toEntity(),
+    );
+  }
+
   Future<String?> _downloadToCache(int bookingId, String url) async {
     final dir = await getApplicationDocumentsDirectory();
     final filePath = '${dir.path}/booking_$bookingId.pdf';

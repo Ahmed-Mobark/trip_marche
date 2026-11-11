@@ -1,5 +1,5 @@
 class AppEndpoints {
-  static String baseUrl = "https://api.tripmarche.com/api/";
+  static String baseUrl = "https://api.trevlen.com/api/";
 
   static const String authRegister = "auth/register";
   static const String authLogin = "auth/login";
@@ -9,6 +9,10 @@ class AppEndpoints {
   static const String authVerifyOtp = "auth/verify-otp";
   static const String authResetPassword = "auth/reset-password";
   static const String authLogout = "auth/logout";
+
+  static const String conversations = 'conversations';
+  static String conversationMessages(int id) => 'conversations/$id/messages';
+  static String conversationRead(int id) => 'conversations/$id/read';
 
   // Home
   static const String homeSections = "home/sections";
@@ -46,6 +50,8 @@ class AppEndpoints {
   static const String couponsValidate = 'coupons/validate';
 
   /// POST — creates a new booking for a trip.
+  static String bookingQuote(int tripId) => 'trips/$tripId/quote';
+
   static String createBooking(int tripId) => 'trips/$tripId/book';
 
   /// GET — paginated list of the current user's bookings.
@@ -62,6 +68,8 @@ class AppEndpoints {
 
   /// POST — creates a fresh checkout link for an unpaid booking.
   static String bookingPay(int bookingId) => 'bookings/$bookingId/pay';
+
+  static String bookingCancel(int bookingId) => 'bookings/$bookingId/cancel';
 
   static const String notifications = 'notifications';
   static const String notificationsUnreadCount = 'notifications/unread-count';
@@ -80,4 +88,7 @@ class AppEndpoints {
   static String vendorProfile(int vendorId) => 'vendors/$vendorId';
 
   static const String reviews = 'reviews';
+
+  static const String helpPages = 'pages';
+  static String helpPage(String slug) => 'pages/$slug';
 }

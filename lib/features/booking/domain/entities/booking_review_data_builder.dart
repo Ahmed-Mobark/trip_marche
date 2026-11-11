@@ -46,21 +46,22 @@ abstract final class BookingReviewDataBuilder {
         .firstOrNull;
     final unitPrice =
         selectedDeparture?.price ?? trip.discountPrice ?? trip.price;
-    final travelersTotal =
-        (flowContext.adultCount * unitPrice) +
-        (flowContext.kidCount * (trip.kidPrice ?? 0)) +
-        (flowContext.babyCount * (trip.babyPrice ?? 0));
+    final travelersTotal = flowContext.priceSelections.isNotEmpty
+        ? flowContext.priceSelections.fold<double>(
+            0,
+            (sum, option) => sum + option.totalPrice,
+          )
+        : (flowContext.adultCount * unitPrice) +
+              (flowContext.kidCount * (trip.kidPrice ?? 0)) +
+              (flowContext.babyCount * (trip.babyPrice ?? 0));
     final roomTypesById = {for (final room in trip.roomTypes) room.id: room};
     final roomTotal = flowContext.rooms.fold<double>(0, (sum, room) {
       final roomType = roomTypesById[room.roomTypeId];
       return sum + room.persons * (roomType?.price ?? 0);
     });
 
-    final taxableSubtotal =
-        travelersTotal + roomTotal + activitiesTotal + optionalExtrasTotal;
-    final taxes = trip.taxPercent != null
-        ? taxableSubtotal * (trip.taxPercent! / 100)
-        : 0.0;
+    // Checkout collects the full price without tax, even for legacy trip data.
+    const taxes = 0.0;
 
     final destinationName = trip.destination?.name.isNotEmpty == true
         ? trip.destination!.name
@@ -71,7 +72,13 @@ abstract final class BookingReviewDataBuilder {
       currency: currency,
     );
 
-    final durationLabel = '${trip.durationDays} ${tr.tripDetailsDurationUnit}';
+    final durationDays = trip.hasCustomPricing && selectedDeparture != null
+        ? (DateTime.parse(
+                selectedDeparture.endDate,
+              ).difference(DateTime.parse(selectedDeparture.startDate)).inDays +
+              1)
+        : trip.durationDays;
+    final durationLabel = '$durationDays ${tr.tripDetailsDurationUnit}';
     final roomLabel = flowContext.rooms.isNotEmpty
         ? flowContext.rooms
               .map((r) => '${r.persons} ${tr.bookingPerson}')
@@ -89,10 +96,9 @@ abstract final class BookingReviewDataBuilder {
           flowContext.dateRange.replaceAll(' - ', ' to '),
         ),
         duration: durationLabel,
-        participantsSummary: tr.bookingReviewParticipantsSummary(
-          travelersCount,
-          priceLabel,
-        ),
+        participantsSummary: flowContext.priceSelections.isNotEmpty
+            ? tr.bookingReviewPaymentTravelers(travelersCount)
+            : tr.bookingReviewParticipantsSummary(travelersCount, priceLabel),
         routeLabel: tr.bookingReviewRoutePrefix(trip.fromLocation),
         routeHighlight: destinationName,
         meetingTime: tr.bookingReviewMeetingTime(
@@ -105,7 +111,7 @@ abstract final class BookingReviewDataBuilder {
           TripDetailsUiFormatters.clockTime(context, trip.returnPoint.time),
         ),
         groupSize: tr.bookingReviewGroupSize(
-          '${trip.groupSize.min}-${trip.groupSize.max}',
+          trip.groupSize.max > 0 ? trip.groupSize.max.toString() : '—',
         ),
         location:
             selectedMeetingPoint?.name ??
@@ -120,6 +126,7 @@ abstract final class BookingReviewDataBuilder {
       travelers: travelers,
       room: BookingRoomSelection(name: roomLabel, price: roomTotal),
       selectedRooms: List<BookingRoom>.of(flowContext.rooms),
+      priceSelections: List.of(flowContext.priceSelections),
       activities: activities,
       optionalExtras: List.of(flowContext.optionalExtras),
       priceBreakdown: BookingPriceBreakdown(

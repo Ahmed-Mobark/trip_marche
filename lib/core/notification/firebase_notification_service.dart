@@ -1,3 +1,6 @@
+import 'package:flutter/widgets.dart' show Locale;
+import '../translation/app_localizations.dart';
+import 'notification_labels.dart';
 import 'dart:convert';
 import 'dart:developer';
 
@@ -34,6 +37,7 @@ class FirebaseNotificationService {
 
   bool _initialized = false;
   String? _lastToken;
+  Future<void> _registration = Future<void>.value();
 
   Future<void> init() async {
     if (_initialized) return;
@@ -53,7 +57,7 @@ class FirebaseNotificationService {
 
     const androidChannel = AndroidNotificationChannel(
       'trevlen_notifications',
-      'Trevlen Notifications',
+      'TrevLen Notifications',
       description: 'Trip and booking updates',
       importance: Importance.high,
     );
@@ -130,14 +134,28 @@ class FirebaseNotificationService {
     }
   }
 
-  Future<void> _registerToken(String token) async {
-    if (!_storage.isAuthorized()) return;
+  Future<void> syncLanguage() async {
+    if (!_initialized || !_storage.isAuthorized()) return;
     try {
-      await _api.registerDevice(token);
-      _lastToken = token;
-    } catch (error) {
-      if (kDebugMode) log('FCM token register failed: $error');
+      final token = _lastToken ?? await _messaging.getToken();
+      if (token != null) await _registerToken(token);
+    } catch (_) {
+      // Registration is retried on app startup/token refresh; language UI remains usable.
     }
+  }
+
+  Future<void> _registerToken(String token) {
+    final next = _registration.then((_) async {
+      if (!_storage.isAuthorized()) return;
+      try {
+        await _api.registerDevice(token, locale: _storage.getLang());
+        _lastToken = token;
+      } catch (error) {
+        if (kDebugMode) log('FCM token register failed: $error');
+      }
+    });
+    _registration = next;
+    return next;
   }
 
   Future<void> _showForegroundNotification(RemoteMessage message) async {
@@ -146,12 +164,16 @@ class FirebaseNotificationService {
 
     await _localNotifications.show(
       notification.hashCode,
-      notification.title,
+      localizedNotificationTitle(
+        type: message.data['type']?.toString(),
+        fallback: notification.title ?? '',
+        strings: lookupAppLocalizations(Locale(_storage.getLang())),
+      ),
       notification.body,
       const NotificationDetails(
         android: AndroidNotificationDetails(
           'trevlen_notifications',
-          'Trevlen Notifications',
+          'TrevLen Notifications',
           channelDescription: 'Trip and booking updates',
           importance: Importance.high,
           priority: Priority.high,

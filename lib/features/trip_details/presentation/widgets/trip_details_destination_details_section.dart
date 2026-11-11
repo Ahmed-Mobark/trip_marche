@@ -15,11 +15,51 @@ class TripDetailsDestinationDetailsSection extends StatelessWidget {
   final TripDetails trip;
 
   List<_CarouselDestination> _carouselDestinations() {
+    if (trip.journeyHighlights.isNotEmpty) {
+      return trip.journeyHighlights
+          .map(
+            (highlight) => _CarouselDestination(
+              name: highlight.name,
+              description: highlight.description,
+              imageUrl: highlight.imageUrl,
+            ),
+          )
+          .toList();
+    }
     final out = <_CarouselDestination>[];
     final seen = <int>{};
     final fallbackDescription = trip.overview.isNotEmpty
         ? trip.overview
         : trip.description;
+    if (trip.stops.isNotEmpty) {
+      return trip.stops.map((stop) {
+        String? image = stop.coverImage;
+        for (final destination in trip.destinations) {
+          if (image != null) break;
+          if (destination.name.toLowerCase() == stop.city.toLowerCase()) {
+            image = destination.coverImage;
+            break;
+          }
+        }
+        if (image == null &&
+            trip.destination?.name.toLowerCase() == stop.city.toLowerCase()) {
+          image = trip.destination?.image;
+        }
+        return _CarouselDestination(
+          name: stop.city,
+          description: stop.description,
+          imageUrl: image,
+        );
+      }).toList();
+    }
+    if (trip.primaryDestinationName.isNotEmpty && trip.destination == null) {
+      out.add(
+        _CarouselDestination(
+          name: trip.primaryDestinationName,
+          description: fallbackDescription,
+        ),
+      );
+    }
     for (final d in trip.destinations) {
       if (seen.add(d.id)) {
         out.add(
@@ -130,55 +170,55 @@ class _DestinationPhotoCard extends StatelessWidget {
         return Padding(
           padding: EdgeInsetsDirectional.fromSTEB(20.w, 10.h, 20.w, 20.h),
           child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Center(
-                  child: Container(
-                    width: 55.w,
-                    height: 4.h,
-                    decoration: BoxDecoration(
-                      color: AppColors.border(context),
-                      borderRadius: BorderRadius.circular(999.r),
-                    ),
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Center(
+                child: Container(
+                  width: 55.w,
+                  height: 4.h,
+                  decoration: BoxDecoration(
+                    color: AppColors.border(context),
+                    borderRadius: BorderRadius.circular(999.r),
                   ),
                 ),
-                SizedBox(height: 16.h),
-                if (imageUrl != null)
-                  ClipRRect(
-                    borderRadius: BorderRadius.circular(16.r),
-                    child: AppCachedNetworkImage(
-                      imageUrl: imageUrl,
-                      width: double.infinity,
-                      height: 220.h,
-                      fit: BoxFit.cover,
-                    ),
+              ),
+              SizedBox(height: 16.h),
+              if (imageUrl != null)
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(16.r),
+                  child: AppCachedNetworkImage(
+                    imageUrl: imageUrl,
+                    width: double.infinity,
+                    height: 220.h,
+                    fit: BoxFit.cover,
                   ),
-                SizedBox(height: 16.h),
+                ),
+              SizedBox(height: 16.h),
+              Text(
+                name,
+                textAlign: TextAlign.start,
+                style:
+                    AppTextStyles.heading3(
+                      color: AppColors.darkText(context),
+                    ).copyWith(
+                      fontSize: 18.sp,
+                      fontWeight: FontWeight.w700,
+                      height: 1.2,
+                    ),
+              ),
+              if (description.trim().isNotEmpty) ...[
+                SizedBox(height: 10.h),
                 Text(
-                  name,
+                  description.trim(),
                   textAlign: TextAlign.start,
-                  style:
-                      AppTextStyles.heading3(
-                        color: AppColors.darkText(context),
-                      ).copyWith(
-                        fontSize: 18.sp,
-                        fontWeight: FontWeight.w700,
-                        height: 1.2,
-                      ),
+                  style: AppTextStyles.body(
+                    color: AppColors.secondaryText(context),
+                  ).copyWith(fontSize: 14.sp, height: 1.5),
                 ),
-                if (description.trim().isNotEmpty) ...[
-                  SizedBox(height: 10.h),
-                  Text(
-                    description.trim(),
-                    textAlign: TextAlign.start,
-                    style: AppTextStyles.body(
-                      color: AppColors.secondaryText(context),
-                    ).copyWith(fontSize: 14.sp, height: 1.5),
-                  ),
-                ],
               ],
-            ),
+            ],
+          ),
         );
       },
     );
@@ -248,85 +288,105 @@ class _DestinationPhotoCard extends StatelessWidget {
 }
 
 class TripDetailsDestinationDetailsGridCard extends StatelessWidget {
-  const TripDetailsDestinationDetailsGridCard({super.key});
+  const TripDetailsDestinationDetailsGridCard({super.key, required this.trip});
+  final TripDetails trip;
 
   @override
   Widget build(BuildContext context) {
-    final cardBorder = AppColors.border(context).withValues(alpha: 0.35);
+    final information = trip.destinationInformation.isNotEmpty
+        ? trip.destinationInformation
+        : [
+            if (trip.visaDetails?.trim().isNotEmpty ?? false)
+              TripDestinationInformation(visa: trip.visaDetails!),
+          ];
+    if (information.isEmpty) return const SizedBox.shrink();
+    return Column(
+      children: [
+        for (final info in information) _informationCard(context, info),
+      ],
+    );
+  }
+
+  Widget _informationCard(
+    BuildContext context,
+    TripDestinationInformation info,
+  ) {
     final items = <_DestinationDetailsItemData>[
       _DestinationDetailsItemData(
         icon: Iconsax.ticket,
         title: context.tr.tripDetailsDestinationVisaLabel,
-        subtitle: context.tr.tripDetailsDestinationVisaValue,
+        subtitle: info.visa,
       ),
       _DestinationDetailsItemData(
         icon: Iconsax.health4,
         title: context.tr.tripDetailsDestinationRequiredVaccinesLabel,
-        subtitle: context.tr.tripDetailsDestinationRequiredVaccinesValue,
+        subtitle: info.vaccinations,
       ),
       _DestinationDetailsItemData(
         icon: Iconsax.clock,
         title: context.tr.tripDetailsDestinationTimeLabel,
-        subtitle: context.tr.tripDetailsDestinationTimeValue,
+        subtitle: info.timeZone,
       ),
       _DestinationDetailsItemData(
         icon: Iconsax.global,
         title: context.tr.tripDetailsDestinationLanguageLabel,
-        subtitle: context.tr.tripDetailsDestinationLanguageValue,
+        subtitle: info.language,
       ),
       _DestinationDetailsItemData(
-        icon: Icons.euro_rounded,
+        icon: Icons.payments_outlined,
         title: context.tr.tripDetailsDestinationCurrencyLabel,
-        subtitle: context.tr.tripDetailsDestinationCurrencyValue,
+        subtitle: info.currency,
       ),
       _DestinationDetailsItemData(
         icon: Icons.thermostat_outlined,
         title: context.tr.tripDetailsDestinationTemperatureLabel,
-        subtitle: context.tr.tripDetailsDestinationTemperatureValue,
+        subtitle: info.temperature,
       ),
       _DestinationDetailsItemData(
         icon: Iconsax.bus,
         title: context.tr.tripDetailsDestinationPublicTransportationLabel,
-        subtitle: context.tr.tripDetailsDestinationPublicTransportationValue,
+        subtitle: info.publicTransportation,
       ),
       _DestinationDetailsItemData(
         icon: Icons.local_taxi_rounded,
         title: context.tr.tripDetailsDestinationTaxiAppsLabel,
-        subtitle: context.tr.tripDetailsDestinationTaxiAppsValue,
+        subtitle: info.taxiApps,
       ),
-    ];
-
-    return TripDetailsInfoCard(
-      withShadow: true,
-      borderRadius: 24.r,
-      padding: EdgeInsetsDirectional.all(16.w),
-      borderColor: cardBorder,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Text(
-            context.tr.tripDetailsDestinationDetailsTitle,
-            style: AppTextStyles.heading3(
-              color: AppColors.darkText(context),
-            ).copyWith(height: 1.1, letterSpacing: 0),
-          ),
-          SizedBox(height: 8.h),
-          GridView.builder(
-            shrinkWrap: true,
-            physics: const NeverScrollableScrollPhysics(),
-            padding: EdgeInsets.zero,
-            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 2,
-              crossAxisSpacing: 12.w,
-              mainAxisSpacing: 8.h,
-              mainAxisExtent: 50.h,
+    ].where((item) => item.subtitle.trim().isNotEmpty).toList();
+    if (items.isEmpty && info.notes.trim().isEmpty) {
+      return const SizedBox.shrink();
+    }
+    return Padding(
+      padding: EdgeInsets.only(bottom: 12.h),
+      child: TripDetailsInfoCard(
+        withShadow: true,
+        borderRadius: 24.r,
+        padding: EdgeInsetsDirectional.all(16.w),
+        borderColor: AppColors.border(context).withValues(alpha: 0.35),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              info.destination.isNotEmpty
+                  ? info.destination
+                  : context.tr.tripDetailsDestinationDetailsTitle,
+              style: AppTextStyles.heading3(color: AppColors.darkText(context)),
             ),
-            itemCount: items.length,
-            itemBuilder: (context, index) =>
-                _DestinationDetailsItem(data: items[index]),
-          ),
-        ],
+            for (final item in items)
+              Padding(
+                padding: EdgeInsets.only(top: 12.h),
+                child: _DestinationDetailsItem(data: item),
+              ),
+            if (info.notes.trim().isNotEmpty)
+              Padding(
+                padding: EdgeInsets.only(top: 12.h),
+                child: SelectableText(
+                  info.notes,
+                  style: AppTextStyles.body(color: AppColors.greyText(context)),
+                ),
+              ),
+          ],
+        ),
       ),
     );
   }
@@ -393,8 +453,6 @@ class _DestinationDetailsItem extends StatelessWidget {
               SizedBox(height: 2.h),
               Text(
                 data.subtitle,
-                maxLines: 2,
-                overflow: TextOverflow.ellipsis,
                 style: AppTextStyles.caption(color: AppColors.greyText(context))
                     .copyWith(
                       fontSize: 12.sp,

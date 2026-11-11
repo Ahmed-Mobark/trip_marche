@@ -13,6 +13,18 @@ class CreateBookingRoom {
   };
 }
 
+class CreateBookingPriceOption {
+  const CreateBookingPriceOption({
+    required this.priceOptionId,
+    required this.quantity,
+  });
+  final int priceOptionId, quantity;
+  Map<String, dynamic> toJson() => {
+    'price_option_id': priceOptionId,
+    'quantity': quantity,
+  };
+}
+
 class CreateBookingActivity {
   const CreateBookingActivity({
     required this.travelerIndex,
@@ -71,10 +83,12 @@ class CreateBookingRequest {
     required this.rooms,
     required this.activities,
     this.optionalExtras = const [],
+    this.priceOptions = const [],
     this.couponCode,
     required this.travelers,
     this.notes,
     this.paymentMethod,
+    this.expectedTotalAmount,
   });
 
   final int departureId;
@@ -85,17 +99,25 @@ class CreateBookingRequest {
   final List<CreateBookingRoom> rooms;
   final List<CreateBookingActivity> activities;
   final List<CreateBookingOptionalExtra> optionalExtras;
+  final List<CreateBookingPriceOption> priceOptions;
   final String? couponCode;
   final List<CreateBookingTraveler> travelers;
   final String? notes;
   final String? paymentMethod;
+  final double? expectedTotalAmount;
 
   Map<String, dynamic> toJson() => {
     'departure_id': departureId,
+    if (expectedTotalAmount != null)
+      'expected_total_amount': expectedTotalAmount,
     if (meetingPointId != null) 'meeting_point_id': meetingPointId,
     'adults': adults,
     'kids': kids,
     'babies': babies,
+    if (priceOptions.isNotEmpty)
+      'price_options': priceOptions
+          .map((option) => option.toJson())
+          .toList(growable: false),
     'rooms': rooms.map((r) => r.toJson()).toList(growable: false),
     'activities': activities.map((a) => a.toJson()).toList(growable: false),
     if (optionalExtras.isNotEmpty)

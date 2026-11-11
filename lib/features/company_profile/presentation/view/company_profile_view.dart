@@ -1,12 +1,16 @@
+import '../../../chat/presentation/view/conversations_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:dio/dio.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:trip_marche/core/config/app_icons.dart';
 import 'package:trip_marche/core/config/styles/styles.dart';
 import 'package:trip_marche/core/extensions/localization.dart';
 import 'package:trip_marche/features/my_trips/presentation/my_trips_figma_tokens.dart';
+import 'package:trip_marche/features/my_trips/presentation/view/booking_pdf_viewer_screen.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../../../../core/config/app_colors.dart';
 import '../../../../core/config/dimensions/company_profile_figma_tokens.dart';
@@ -44,6 +48,64 @@ class CompanyProfileView extends StatefulWidget {
 
 class _CompanyProfileViewState extends State<CompanyProfileView> {
   late final VendorProfileCubit _cubit;
+
+  Future<void> _openTourismLicense(String url, String? type) async {
+    final uri = Uri.tryParse(url);
+    if (uri == null || !uri.hasScheme) return;
+
+    if (type == 'pdf') {
+      try {
+        final directory = await getTemporaryDirectory();
+        final path = '${directory.path}/trevlen-vendor-${widget.vendorId}-license.pdf';
+        await Dio().downloadUri(uri, path);
+        if (!mounted) return;
+        await Navigator.of(context).push(
+          MaterialPageRoute<void>(
+            builder: (_) => BookingPdfViewerScreen(
+              filePath: path,
+              title: context.tr.companyProfileBusinessLicense,
+            ),
+          ),
+        );
+      } catch (_) {
+        if (mounted) {
+          appToast(context: context, type: ToastType.error, message: context.tr.tripDetailsTryAgain);
+        }
+      }
+      return;
+    }
+
+    if (!mounted) return;
+    await showDialog<void>(
+      context: context,
+      builder: (dialogContext) => Dialog(
+        child: Stack(
+          children: [
+            SizedBox(
+              width: 320.w,
+              height: 440.h,
+              child: InteractiveViewer(
+                child: Image.network(
+                  url,
+                  fit: BoxFit.contain,
+                  errorBuilder: (_, error, stackTrace) => Center(child: Text(context.tr.tripDetailsTryAgain)),
+                ),
+              ),
+            ),
+            PositionedDirectional(
+              top: 4,
+              end: 4,
+              child: IconButton(
+                tooltip: MaterialLocalizations.of(dialogContext).closeButtonTooltip,
+                onPressed: () => Navigator.of(dialogContext).pop(),
+                icon: const Icon(Icons.close),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
 
   @override
   void initState() {
@@ -206,8 +268,33 @@ class _CompanyProfileViewState extends State<CompanyProfileView> {
         CompanyDetailModel(
           label: context.tr.companyProfileBusinessLicense,
           value: details.businessLicense!,
+          trailing: details.tourismLicenseUrl == null
+              ? null
+              : IconButton(
+                  tooltip: context.tr.companyProfileBusinessLicense,
+                  icon: const Icon(Icons.image_outlined),
+                  onPressed: () => _openTourismLicense(
+                    details.tourismLicenseUrl!,
+                    details.tourismLicenseType,
+                  ),
+                ),
         ),
       );
+    }
+    if ((details.businessLicense ?? '').isEmpty &&
+        (details.tourismLicenseUrl ?? '').isNotEmpty) {
+      rows.add(CompanyDetailModel(
+        label: context.tr.companyProfileBusinessLicense,
+        value: context.tr.companyProfileBusinessLicense,
+        trailing: IconButton(
+          tooltip: context.tr.companyProfileBusinessLicense,
+          icon: const Icon(Icons.image_outlined),
+          onPressed: () => _openTourismLicense(
+            details.tourismLicenseUrl!,
+            details.tourismLicenseType,
+          ),
+        ),
+      ));
     }
     if (details.taxCard != null && details.taxCard!.isNotEmpty) {
       rows.add(
@@ -397,12 +484,18 @@ class _CompanyProfileViewState extends State<CompanyProfileView> {
                                 ),
                                 SizedBox(height: 14.h),
                                 CompanyActionButtons(
+                                  onMessagePressed: () =>
+                                      sl<AppNavigator>().push(
+                                        screen: ConversationsView(
+                                          vendorId: widget.vendorId,
+                                        ),
+                                      ),
                                   onCallPressed: phone.isNotEmpty
                                       ? () async {
                                           final uri = Uri.parse('tel:$phone');
                                           if (await canLaunchUrl(uri)) {
                                             await launchUrl(uri);
-                                          } else if (mounted) {
+                                          } else if (context.mounted) {
                                             ScaffoldMessenger.of(
                                               context,
                                             ).showSnackBar(
@@ -434,14 +527,14 @@ class _CompanyProfileViewState extends State<CompanyProfileView> {
                                             );
                                           }
 
-                                          if (!launched && mounted) {
+                                          if (!launched && context.mounted) {
                                             launched = await launchUrl(
                                               uri,
                                               mode: LaunchMode.platformDefault,
                                             );
                                           }
 
-                                          if (!launched && mounted) {
+                                          if (!launched && context.mounted) {
                                             ScaffoldMessenger.of(
                                               context,
                                             ).showSnackBar(
@@ -484,7 +577,9 @@ class _CompanyProfileViewState extends State<CompanyProfileView> {
                                           (t) => TeamMemberModel(
                                             name: t.name,
                                             role: t.title,
+                                            isManager: t.isManager,
                                             avatarUrl: t.avatar ?? '',
+                                            shortDescription: t.shortDescription,
                                           ),
                                         )
                                         .toList(),
@@ -510,6 +605,7 @@ class _CompanyProfileViewState extends State<CompanyProfileView> {
                                             comment: r.comment,
                                             galleryImages: r.images,
                                             createdAt: r.createdAt,
+                                            vendorReply: r.vendorReply,
                                           ),
                                         )
                                         .toList(),

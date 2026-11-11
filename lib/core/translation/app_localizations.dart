@@ -559,7 +559,7 @@ abstract class AppLocalizations {
   /// No description provided for @homeAppTitle.
   ///
   /// In en, this message translates to:
-  /// **'TripMarche'**
+  /// **'TrevLen'**
   String get homeAppTitle;
 
   /// No description provided for @homeSearchHint.
@@ -649,7 +649,7 @@ abstract class AppLocalizations {
   /// No description provided for @homeNewInTripMarche.
   ///
   /// In en, this message translates to:
-  /// **'New in TripMarche'**
+  /// **'New in TrevLen'**
   String get homeNewInTripMarche;
 
   /// No description provided for @homePerPerson.
@@ -691,7 +691,7 @@ abstract class AppLocalizations {
   /// No description provided for @wishlistNewInTripMarche.
   ///
   /// In en, this message translates to:
-  /// **'New in TripMarche'**
+  /// **'New in TrevLen'**
   String get wishlistNewInTripMarche;
 
   /// No description provided for @wishlistRecommended.
@@ -1155,6 +1155,36 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Support'**
   String get profileTitleSupport;
+
+  /// No description provided for @helpCenterTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Help Center'**
+  String get helpCenterTitle;
+
+  /// No description provided for @helpCenterRetry.
+  ///
+  /// In en, this message translates to:
+  /// **'Try again'**
+  String get helpCenterRetry;
+
+  /// No description provided for @helpCenterEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'This content is not available yet.'**
+  String get helpCenterEmpty;
+
+  /// No description provided for @helpCenterSendFeedback.
+  ///
+  /// In en, this message translates to:
+  /// **'Share your feedback'**
+  String get helpCenterSendFeedback;
+
+  /// No description provided for @helpCenterContactSupport.
+  ///
+  /// In en, this message translates to:
+  /// **'Contact support'**
+  String get helpCenterContactSupport;
 
   /// No description provided for @profilePersonalInfo.
   ///
@@ -1990,6 +2020,12 @@ abstract class AppLocalizations {
   /// **'Total'**
   String get bookingReviewPaymentTotal;
 
+  /// No description provided for @bookingFullPaymentEgp.
+  ///
+  /// In en, this message translates to:
+  /// **'The full amount is paid at booking in Egyptian pounds (EGP).'**
+  String get bookingFullPaymentEgp;
+
   /// No description provided for @bookingReviewCurrency.
   ///
   /// In en, this message translates to:
@@ -2737,7 +2773,7 @@ abstract class AppLocalizations {
   /// No description provided for @searchResultLabelNew.
   ///
   /// In en, this message translates to:
-  /// **'New in TripMarche'**
+  /// **'New in TrevLen'**
   String get searchResultLabelNew;
 
   /// No description provided for @searchResultLabelRecommended.
@@ -3358,6 +3394,30 @@ abstract class AppLocalizations {
   /// **'Book Now'**
   String get tripDetailsBookNow;
 
+  /// No description provided for @tripDetailsSoldOut.
+  ///
+  /// In en, this message translates to:
+  /// **'Sold Out'**
+  String get tripDetailsSoldOut;
+
+  /// No description provided for @bookingDepartureSoldOut.
+  ///
+  /// In en, this message translates to:
+  /// **'This departure date is fully booked'**
+  String get bookingDepartureSoldOut;
+
+  /// No description provided for @bookingTripSoldOut.
+  ///
+  /// In en, this message translates to:
+  /// **'All departures for this trip are fully booked'**
+  String get bookingTripSoldOut;
+
+  /// No description provided for @bookingSeatsInsufficient.
+  ///
+  /// In en, this message translates to:
+  /// **'Only {seats} seat(s) remaining for this departure'**
+  String bookingSeatsInsufficient(int seats);
+
   /// No description provided for @tripDetailsPricePerPersonShort.
   ///
   /// In en, this message translates to:
@@ -3967,7 +4027,7 @@ abstract class AppLocalizations {
   /// No description provided for @tripDetailsOrganizerSubtitle.
   ///
   /// In en, this message translates to:
-  /// **'Trusted partner on Trip Marche'**
+  /// **'Trusted partner on TrevLen'**
   String get tripDetailsOrganizerSubtitle;
 
   /// No description provided for @tripDetailsStartingFrom.
@@ -4051,7 +4111,7 @@ abstract class AppLocalizations {
   /// No description provided for @bookingTripTermsSection1Body.
   ///
   /// In en, this message translates to:
-  /// **'By booking a trip through Trip Marche, you agree to the following terms. A deposit of 30% is required at the time of booking to secure your place. The remaining balance must be paid at least 14 days before the trip departure date. Failure to pay the remaining balance by the due date may result in cancellation of your booking. All payments are processed securely through our payment partners.'**
+  /// **'By booking a trip through TrevLen, you agree to the following terms. A deposit of 30% is required at the time of booking to secure your place. The remaining balance must be paid at least 14 days before the trip departure date. Failure to pay the remaining balance by the due date may result in cancellation of your booking. All payments are processed securely through our payment partners.'**
   String get bookingTripTermsSection1Body;
 
   /// No description provided for @bookingTripTermsSection2Title.
@@ -4075,7 +4135,7 @@ abstract class AppLocalizations {
   /// No description provided for @bookingTripTermsSection3Body.
   ///
   /// In en, this message translates to:
-  /// **'Trip Marche reserves the right to modify the trip itinerary due to weather conditions, safety concerns, or other unforeseen circumstances. We will make every effort to provide equivalent alternatives. In the event of significant changes, travelers will be notified as soon as possible and may be offered a partial refund or credit.'**
+  /// **'TrevLen reserves the right to modify the trip itinerary due to weather conditions, safety concerns, or other unforeseen circumstances. We will make every effort to provide equivalent alternatives. In the event of significant changes, travelers will be notified as soon as possible and may be offered a partial refund or credit.'**
   String get bookingTripTermsSection3Body;
 
   /// No description provided for @bookingTripTermsSection4Title.
@@ -4087,7 +4147,7 @@ abstract class AppLocalizations {
   /// No description provided for @bookingTripTermsSection4Body.
   ///
   /// In en, this message translates to:
-  /// **'Travelers are responsible for ensuring they have valid travel documents, appropriate travel insurance, and any required vaccinations. Travelers must follow the instructions of trip guides and respect local laws and customs. Trip Marche is not liable for any consequences resulting from a traveler\'s failure to comply with entry requirements.'**
+  /// **'Travelers are responsible for ensuring they have valid travel documents, appropriate travel insurance, and any required vaccinations. Travelers must follow the instructions of trip guides and respect local laws and customs. TrevLen is not liable for any consequences resulting from a traveler\'s failure to comply with entry requirements.'**
   String get bookingTripTermsSection4Body;
 
   /// No description provided for @bookingTripTermsSection5Title.
@@ -4099,7 +4159,7 @@ abstract class AppLocalizations {
   /// No description provided for @bookingTripTermsSection5Body.
   ///
   /// In en, this message translates to:
-  /// **'Trip Marche acts as an organizer and intermediary. While we take every precaution to ensure safety, we are not liable for any loss, injury, or damage arising from activities during the trip, acts of nature, or the actions of third-party service providers. Travelers participate in all activities at their own risk. We strongly recommend purchasing comprehensive travel insurance.'**
+  /// **'TrevLen acts as an organizer and intermediary. While we take every precaution to ensure safety, we are not liable for any loss, injury, or damage arising from activities during the trip, acts of nature, or the actions of third-party service providers. Travelers participate in all activities at their own risk. We strongly recommend purchasing comprehensive travel insurance.'**
   String get bookingTripTermsSection5Body;
 
   /// No description provided for @bookingTripTermsSection6Title.
@@ -4189,7 +4249,7 @@ abstract class AppLocalizations {
   /// No description provided for @bookingTripSafetyIntro.
   ///
   /// In en, this message translates to:
-  /// **'At Trip Marche, we are committed to ensuring the safety and well-being of all our travelers. Our trips are designed with comprehensive safety measures and all our guides are trained in first aid and emergency procedures.'**
+  /// **'At TrevLen, we are committed to ensuring the safety and well-being of all our travelers. Our trips are designed with comprehensive safety measures and all our guides are trained in first aid and emergency procedures.'**
   String get bookingTripSafetyIntro;
 
   /// No description provided for @bookingTripSafetyWaterTitle.
@@ -4575,6 +4635,282 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'{rating}/5'**
   String reviewRatingScale(int rating);
+
+  /// No description provided for @myTripsCancelBooking.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel booking'**
+  String get myTripsCancelBooking;
+
+  /// No description provided for @myTripsConfirmCancellation.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm cancellation'**
+  String get myTripsConfirmCancellation;
+
+  /// No description provided for @myTripsKeepBooking.
+  ///
+  /// In en, this message translates to:
+  /// **'Keep booking'**
+  String get myTripsKeepBooking;
+
+  /// No description provided for @myTripsCancelExplanation.
+  ///
+  /// In en, this message translates to:
+  /// **'Your booking for this trip will be cancelled. If a refund is due under the company’s terms, contact the vendor to arrange it. Confirming does not automatically refund any payment.'**
+  String get myTripsCancelExplanation;
+
+  /// No description provided for @myTripsCancellationTerms.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancellation terms'**
+  String get myTripsCancellationTerms;
+
+  /// No description provided for @myTripsCancellationSuccess.
+  ///
+  /// In en, this message translates to:
+  /// **'Booking cancelled'**
+  String get myTripsCancellationSuccess;
+
+  /// No description provided for @myTripsRefundContactVendor.
+  ///
+  /// In en, this message translates to:
+  /// **'Contact the vendor directly to arrange any refund due under the cancellation terms.'**
+  String get myTripsRefundContactVendor;
+
+  /// No description provided for @myTripsContactVendor.
+  ///
+  /// In en, this message translates to:
+  /// **'Contact vendor'**
+  String get myTripsContactVendor;
+
+  /// No description provided for @myTripsCancelledAt.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancelled on'**
+  String get myTripsCancelledAt;
+
+  /// No description provided for @companyProfileVendorReply.
+  ///
+  /// In en, this message translates to:
+  /// **'Company reply'**
+  String get companyProfileVendorReply;
+
+  /// No description provided for @companyProfileManager.
+  ///
+  /// In en, this message translates to:
+  /// **'Company manager'**
+  String get companyProfileManager;
+
+  /// No description provided for @bookingCustomPriceHelp.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose the number of travelers for each option. Each listed price covers the full trip per person.'**
+  String get bookingCustomPriceHelp;
+
+  /// No description provided for @bookingSelectPriceOption.
+  ///
+  /// In en, this message translates to:
+  /// **'Select at least one adult price option to continue.'**
+  String get bookingSelectPriceOption;
+
+  /// No description provided for @bookingQuoteRetry.
+  ///
+  /// In en, this message translates to:
+  /// **'Recalculate price'**
+  String get bookingQuoteRetry;
+
+  /// No description provided for @chatTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Messages'**
+  String get chatTitle;
+
+  /// No description provided for @chatSupport.
+  ///
+  /// In en, this message translates to:
+  /// **'Contact support'**
+  String get chatSupport;
+
+  /// No description provided for @chatContactVendor.
+  ///
+  /// In en, this message translates to:
+  /// **'Message company'**
+  String get chatContactVendor;
+
+  /// No description provided for @chatEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'No conversations yet.'**
+  String get chatEmpty;
+
+  /// No description provided for @chatEmptyMessages.
+  ///
+  /// In en, this message translates to:
+  /// **'Start the conversation with your question.'**
+  String get chatEmptyMessages;
+
+  /// No description provided for @chatMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Your message'**
+  String get chatMessage;
+
+  /// No description provided for @chatSend.
+  ///
+  /// In en, this message translates to:
+  /// **'Send'**
+  String get chatSend;
+
+  /// No description provided for @chatOlder.
+  ///
+  /// In en, this message translates to:
+  /// **'Earlier messages'**
+  String get chatOlder;
+
+  /// No description provided for @chatFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Unable to complete this request. Your draft is kept. Please try again.'**
+  String get chatFailed;
+
+  /// No description provided for @chatRetry.
+  ///
+  /// In en, this message translates to:
+  /// **'Try again'**
+  String get chatRetry;
+
+  /// No description provided for @chatPhoto.
+  ///
+  /// In en, this message translates to:
+  /// **'Photo'**
+  String get chatPhoto;
+
+  /// No description provided for @chatVoice.
+  ///
+  /// In en, this message translates to:
+  /// **'Voice message'**
+  String get chatVoice;
+
+  /// No description provided for @chatRecord.
+  ///
+  /// In en, this message translates to:
+  /// **'Record a voice message'**
+  String get chatRecord;
+
+  /// No description provided for @chatStop.
+  ///
+  /// In en, this message translates to:
+  /// **'Stop recording'**
+  String get chatStop;
+
+  /// No description provided for @chatRecording.
+  ///
+  /// In en, this message translates to:
+  /// **'Recording…'**
+  String get chatRecording;
+
+  /// No description provided for @chatCancel.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel'**
+  String get chatCancel;
+
+  /// No description provided for @chatRemove.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove attachment'**
+  String get chatRemove;
+
+  /// No description provided for @chatMediaError.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not open this file. Please try again.'**
+  String get chatMediaError;
+
+  /// No description provided for @chatMediaLimit.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose an image or recording smaller than 10 MB.'**
+  String get chatMediaLimit;
+
+  /// No description provided for @chatMicrophonePermission.
+  ///
+  /// In en, this message translates to:
+  /// **'Allow microphone access to record a voice message.'**
+  String get chatMicrophonePermission;
+
+  /// No description provided for @chatToday.
+  ///
+  /// In en, this message translates to:
+  /// **'Today'**
+  String get chatToday;
+
+  /// No description provided for @chatYesterday.
+  ///
+  /// In en, this message translates to:
+  /// **'Yesterday'**
+  String get chatYesterday;
+
+  /// No description provided for @chatInboxHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Your conversations with travel partners and TrevLen support.'**
+  String get chatInboxHint;
+
+  /// No description provided for @chatSupportHint.
+  ///
+  /// In en, this message translates to:
+  /// **'We’re here to help with your journey.'**
+  String get chatSupportHint;
+
+  /// No description provided for @chatCompany.
+  ///
+  /// In en, this message translates to:
+  /// **'Travel partner'**
+  String get chatCompany;
+
+  /// No description provided for @chatStart.
+  ///
+  /// In en, this message translates to:
+  /// **'Start a conversation'**
+  String get chatStart;
+
+  /// No description provided for @chatPlay.
+  ///
+  /// In en, this message translates to:
+  /// **'Play voice message'**
+  String get chatPlay;
+
+  /// No description provided for @chatPause.
+  ///
+  /// In en, this message translates to:
+  /// **'Pause voice message'**
+  String get chatPause;
+
+  /// No description provided for @chatPhotoLibrary.
+  ///
+  /// In en, this message translates to:
+  /// **'Photo library'**
+  String get chatPhotoLibrary;
+
+  /// No description provided for @chatCamera.
+  ///
+  /// In en, this message translates to:
+  /// **'Camera'**
+  String get chatCamera;
+
+  /// No description provided for @chatRecordingLimit.
+  ///
+  /// In en, this message translates to:
+  /// **'Up to 2 minutes'**
+  String get chatRecordingLimit;
+
+  /// No description provided for @chatNewMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'New message'**
+  String get chatNewMessage;
 }
 
 class _AppLocalizationsDelegate

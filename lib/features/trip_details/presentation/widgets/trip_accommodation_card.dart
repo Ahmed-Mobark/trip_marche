@@ -57,7 +57,9 @@ class TripAccommodationCard extends StatelessWidget {
         .map((s) => s.trim())
         .where((s) => s.isNotEmpty)
         .toList();
-    final cityName = addressParts.length > 1
+    final cityName = accommodation.city.trim().isNotEmpty
+        ? accommodation.city
+        : addressParts.length > 1
         ? addressParts[1]
         : (addressParts.isNotEmpty ? addressParts[0] : '');
 

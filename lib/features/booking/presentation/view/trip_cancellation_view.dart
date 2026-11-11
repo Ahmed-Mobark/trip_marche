@@ -15,7 +15,10 @@ class TripCancellationView extends StatelessWidget {
         backgroundColor: AppColors.background(context),
         elevation: 0,
         leading: IconButton(
-          icon: Icon(Icons.arrow_back_ios_new_rounded, color: AppColors.darkText(context)),
+          icon: Icon(
+            Icons.arrow_back_ios_new_rounded,
+            color: AppColors.darkText(context),
+          ),
           onPressed: () => Navigator.pop(context),
         ),
         title: Text(
@@ -83,12 +86,12 @@ class TripCancellationView extends StatelessWidget {
             ),
             const SizedBox(height: 12),
             Text(
-              'All cancellation requests must be submitted in writing through the Trip Marche app or by emailing support@tripmarche.com. '
+              'All cancellation requests must be submitted in writing through the TrevLen app or by emailing support@tripmarche.com. '
               'The cancellation date is determined by the date we receive your written request.\n\n'
-              'In case of trip cancellation by Trip Marche due to insufficient participants or unforeseen circumstances, '
+              'In case of trip cancellation by TrevLen due to insufficient participants or unforeseen circumstances, '
               'a full refund will be issued or travelers may choose to reschedule to an alternative date at no extra cost.\n\n'
               'We strongly recommend purchasing travel insurance that covers trip cancellation to protect your investment. '
-              'Trip Marche is not responsible for any additional costs incurred due to cancellation, '
+              'TrevLen is not responsible for any additional costs incurred due to cancellation, '
               'including but not limited to flight tickets, other accommodations, or visa fees.',
               style: AppTextStyles.body(),
             ),

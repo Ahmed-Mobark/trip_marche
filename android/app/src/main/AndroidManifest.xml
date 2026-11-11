@@ -6,8 +6,10 @@
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" android:maxSdkVersion="28" />
 
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+
     <application
-        android:label="Trevlen"
+        android:label="TrevLen"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity

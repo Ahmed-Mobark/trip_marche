@@ -89,6 +89,21 @@ class TripDestinationRef extends Equatable {
   List<Object?> get props => [id, name, coverImage, description];
 }
 
+class TripJourneyHighlight extends Equatable {
+  const TripJourneyHighlight({
+    required this.name,
+    required this.description,
+    this.imageUrl,
+  });
+
+  final String name;
+  final String description;
+  final String? imageUrl;
+
+  @override
+  List<Object?> get props => [name, description, imageUrl];
+}
+
 /// Trip taxonomy tags from API [`categories`].
 class TripDetailsCategory extends Equatable {
   const TripDetailsCategory({
@@ -168,17 +183,19 @@ class TripDayItinerary extends Equatable {
   const TripDayItinerary({
     required this.dayNumber,
     required this.title,
+    this.stayCity = '',
     required this.meals,
     required this.items,
   });
 
   final int dayNumber;
   final String title;
+  final String stayCity;
   final TripDayMeals meals;
   final List<String> items;
 
   @override
-  List<Object?> get props => [dayNumber, title, meals, items];
+  List<Object?> get props => [dayNumber, title, stayCity, meals, items];
 }
 
 class TripAirline extends Equatable {
@@ -206,14 +223,21 @@ class TripFlightLeg extends Equatable {
     required this.toCity,
     required this.departAt,
     required this.arriveAt,
+    this.travelDate,
+    this.departureTime,
+    this.arrivalTime,
+    this.arrivalDayOffset = 0,
   });
 
   final String direction;
   final TripAirline airline;
   final String fromCity;
   final String toCity;
-  final DateTime departAt;
-  final DateTime arriveAt;
+  final DateTime? departAt;
+  final DateTime? arriveAt;
+  final DateTime? travelDate;
+  final String? departureTime, arrivalTime;
+  final int arrivalDayOffset;
 
   @override
   List<Object?> get props => [
@@ -223,6 +247,10 @@ class TripFlightLeg extends Equatable {
     toCity,
     departAt,
     arriveAt,
+    travelDate,
+    departureTime,
+    arrivalTime,
+    arrivalDayOffset,
   ];
 }
 
@@ -245,14 +273,21 @@ class TripTransportLeg extends Equatable {
     required this.toCity,
     required this.departAt,
     required this.arriveAt,
+    this.travelDate,
+    this.departureTime,
+    this.arrivalTime,
+    this.arrivalDayOffset = 0,
   });
 
   final String type;
   final TripTransportCompany company;
   final String fromCity;
   final String toCity;
-  final DateTime departAt;
-  final DateTime arriveAt;
+  final DateTime? departAt;
+  final DateTime? arriveAt;
+  final DateTime? travelDate;
+  final String? departureTime, arrivalTime;
+  final int arrivalDayOffset;
 
   @override
   List<Object?> get props => [
@@ -262,6 +297,10 @@ class TripTransportLeg extends Equatable {
     toCity,
     departAt,
     arriveAt,
+    travelDate,
+    departureTime,
+    arrivalTime,
+    arrivalDayOffset,
   ];
 }
 
@@ -269,6 +308,7 @@ class TripAccommodation extends Equatable {
   const TripAccommodation({
     required this.name,
     required this.address,
+    this.city = '',
     this.lat,
     this.lng,
     required this.images,
@@ -276,12 +316,13 @@ class TripAccommodation extends Equatable {
 
   final String name;
   final String address;
+  final String city;
   final double? lat;
   final double? lng;
   final List<String> images;
 
   @override
-  List<Object?> get props => [name, address, lat, lng, images];
+  List<Object?> get props => [name, address, city, lat, lng, images];
 }
 
 class TripActivityRate extends Equatable {
@@ -299,12 +340,27 @@ class TripActivityRate extends Equatable {
   List<Object?> get props => [key, label, value];
 }
 
+class TripPriceOption extends Equatable {
+  const TripPriceOption({
+    required this.id,
+    required this.travelerType,
+    required this.label,
+    required this.price,
+  });
+  final int id;
+  final String travelerType, label;
+  final double price;
+  @override
+  List<Object?> get props => [id, travelerType, label, price];
+}
+
 class TripDeparture extends Equatable {
   const TripDeparture({
     required this.id,
     required this.startDate,
     required this.endDate,
     required this.price,
+    this.priceOptions = const [],
     required this.seatsLeft,
   });
 
@@ -312,10 +368,20 @@ class TripDeparture extends Equatable {
   final String startDate;
   final String endDate;
   final double price;
+  final List<TripPriceOption> priceOptions;
   final int seatsLeft;
 
+  bool get isFull => seatsLeft <= 0;
+
   @override
-  List<Object?> get props => [id, startDate, endDate, price, seatsLeft];
+  List<Object?> get props => [
+    id,
+    startDate,
+    endDate,
+    price,
+    seatsLeft,
+    priceOptions,
+  ];
 }
 
 class TripRoomType extends Equatable {
@@ -436,10 +502,84 @@ class TripOptionalExtra extends Equatable {
   ];
 }
 
+class TripGeographicStop extends Equatable {
+  const TripGeographicStop({
+    required this.city,
+    this.administrativeArea = '',
+    this.country = '',
+    this.region = '',
+    this.continent = '',
+    this.coverImage,
+  });
+  final String city, administrativeArea, country, region, continent;
+  final String? coverImage;
+  String get description => [
+    city,
+    administrativeArea,
+    country,
+    region,
+    continent,
+  ].where((s) => s.isNotEmpty).join(' / ');
+  @override
+  List<Object?> get props => [
+    city,
+    administrativeArea,
+    country,
+    region,
+    continent,
+    coverImage,
+  ];
+}
+
+class TripDestinationInformation extends Equatable {
+  const TripDestinationInformation({
+    this.destination = '',
+    this.country = '',
+    this.city = '',
+    this.visa = '',
+    this.vaccinations = '',
+    this.timeZone = '',
+    this.currency = '',
+    this.language = '',
+    this.temperature = '',
+    this.publicTransportation = '',
+    this.taxiApps = '',
+    this.notes = '',
+  });
+  final String destination,
+      country,
+      city,
+      visa,
+      vaccinations,
+      timeZone,
+      currency,
+      language,
+      temperature,
+      publicTransportation,
+      taxiApps,
+      notes;
+  @override
+  List<Object?> get props => [
+    destination,
+    country,
+    city,
+    visa,
+    vaccinations,
+    timeZone,
+    currency,
+    language,
+    temperature,
+    publicTransportation,
+    taxiApps,
+    notes,
+  ];
+}
+
 class TripDetails extends Equatable {
   const TripDetails({
     required this.id,
     required this.title,
+    this.pricingMode = 'legacy',
     required this.slug,
     required this.country,
     required this.description,
@@ -469,6 +609,10 @@ class TripDetails extends Equatable {
     required this.flags,
     this.destination,
     required this.destinations,
+    this.primaryDestinationName = '',
+    this.stops = const [],
+    this.destinationInformation = const [],
+    this.journeyHighlights = const [],
     required this.categories,
     required this.vendor,
     required this.inclusions,
@@ -492,6 +636,9 @@ class TripDetails extends Equatable {
   });
 
   final int id;
+  final String pricingMode;
+  bool get hasCustomPricing => pricingMode == 'options';
+  bool get isSoldOut => departures.isNotEmpty && departures.every((d) => d.isFull);
   final String title;
   final String slug;
   final String country;
@@ -522,6 +669,10 @@ class TripDetails extends Equatable {
   final WishlistTripFlags flags;
   final TripDestinationSummary? destination;
   final List<TripDestinationRef> destinations;
+  final String primaryDestinationName;
+  final List<TripGeographicStop> stops;
+  final List<TripDestinationInformation> destinationInformation;
+  final List<TripJourneyHighlight> journeyHighlights;
   final List<TripDetailsCategory> categories;
   final TripVendor vendor;
   final List<TripInclusion> inclusions;
@@ -574,6 +725,7 @@ class TripDetails extends Equatable {
   @override
   List<Object?> get props => [
     id,
+    pricingMode,
     title,
     slug,
     country,
@@ -604,6 +756,10 @@ class TripDetails extends Equatable {
     flags,
     destination,
     destinations,
+    primaryDestinationName,
+    stops,
+    destinationInformation,
+    journeyHighlights,
     categories,
     vendor,
     inclusions,

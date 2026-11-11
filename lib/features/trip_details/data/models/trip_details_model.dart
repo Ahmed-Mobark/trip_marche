@@ -55,6 +55,9 @@ class TripDetailsModel {
     return TripDetails(
       id: _JsonParse.asInt(json['id']),
       title: _JsonParse.asString(json['title']),
+      pricingMode: _JsonParse.asString(json['pricing_mode']).isEmpty
+          ? 'legacy'
+          : _JsonParse.asString(json['pricing_mode']),
       slug: _JsonParse.asString(json['slug']),
       country: _JsonParse.asString(json['country']),
       description: _JsonParse.asString(json['description']),
@@ -125,6 +128,59 @@ class TripDetailsModel {
             )
           : null,
       destinations: _parseDestinations(json['destinations']),
+      primaryDestinationName: _JsonParse.asString(
+        json['primary_destination_name'],
+      ),
+      stops: (json['stops'] is List ? json['stops'] as List : const [])
+          .whereType<Map<String, dynamic>>()
+          .map(
+            (e) => TripGeographicStop(
+              city: _JsonParse.asString(e['city']),
+              administrativeArea: _JsonParse.asString(e['administrative_area']),
+              country: _JsonParse.asString(e['country']),
+              region: _JsonParse.asString(e['region']),
+              continent: _JsonParse.asString(e['continent']),
+              coverImage: _JsonParse.asNullableString(e['cover_image']),
+            ),
+          )
+          .toList(),
+      destinationInformation:
+          (json['destination_information'] is List
+                  ? json['destination_information'] as List
+                  : const [])
+              .whereType<Map<String, dynamic>>()
+              .map(
+                (e) => TripDestinationInformation(
+                  destination: _JsonParse.asString(e['destination']),
+                  country: _JsonParse.asString(e['country']),
+                  city: _JsonParse.asString(e['city']),
+                  visa: _JsonParse.asString(e['visa']),
+                  vaccinations: _JsonParse.asString(e['vaccinations']),
+                  timeZone: _JsonParse.asString(e['time_zone']),
+                  currency: _JsonParse.asString(e['currency']),
+                  language: _JsonParse.asString(e['language']),
+                  temperature: _JsonParse.asString(e['temperature']),
+                  publicTransportation: _JsonParse.asString(
+                    e['public_transportation'],
+                  ),
+                  taxiApps: _JsonParse.asString(e['taxi_apps']),
+                  notes: _JsonParse.asString(e['notes']),
+                ),
+              )
+              .toList(),
+      journeyHighlights:
+          (json['journey_highlights'] is List
+                  ? json['journey_highlights'] as List
+                  : const [])
+              .whereType<Map<String, dynamic>>()
+              .map(
+                (row) => TripJourneyHighlight(
+                  name: _JsonParse.asString(row['name']),
+                  description: _JsonParse.asString(row['description']),
+                  imageUrl: _JsonParse.asNullableString(row['image_url']),
+                ),
+              )
+              .toList(),
       categories: _parseCategories(json['categories']),
       vendor: vendor is Map<String, dynamic>
           ? TripVendor(
@@ -297,6 +353,7 @@ class TripDetailsModel {
       return TripDayItinerary(
         dayNumber: _JsonParse.asInt(e['day_number']),
         title: _JsonParse.asString(e['title']),
+        stayCity: _JsonParse.asString(e['stay_city']),
         meals: meals,
         items: items,
       );
@@ -328,12 +385,12 @@ class TripDetailsModel {
             : const TripAirline(id: 0, name: '', code: ''),
         fromCity: _JsonParse.asString(e['from_city']),
         toCity: _JsonParse.asString(e['to_city']),
-        departAt:
-            DateTime.tryParse(_JsonParse.asString(e['depart_at'])) ??
-            DateTime.fromMillisecondsSinceEpoch(0, isUtc: true),
-        arriveAt:
-            DateTime.tryParse(_JsonParse.asString(e['arrive_at'])) ??
-            DateTime.fromMillisecondsSinceEpoch(0, isUtc: true),
+        travelDate: DateTime.tryParse(_JsonParse.asString(e['travel_date'])),
+        departureTime: _JsonParse.asNullableString(e['departure_time']),
+        arrivalTime: _JsonParse.asNullableString(e['arrival_time']),
+        arrivalDayOffset: _JsonParse.asInt(e['arrival_day_offset']),
+        departAt: DateTime.tryParse(_JsonParse.asString(e['depart_at'])),
+        arriveAt: DateTime.tryParse(_JsonParse.asString(e['arrive_at'])),
       );
     }).toList();
   }
@@ -349,18 +406,21 @@ class TripDetailsModel {
         company: company is Map<String, dynamic>
             ? TripTransportCompany(
                 id: _JsonParse.asInt(company['id']),
-                name: _JsonParse.asString(company['name']),
+                name: _firstString([e['company_name'], company['name']]),
                 logo: _JsonParse.asNullableString(company['logo']),
               )
-            : const TripTransportCompany(id: 0, name: ''),
+            : TripTransportCompany(
+                id: 0,
+                name: _JsonParse.asString(e['company_name']),
+              ),
         fromCity: _JsonParse.asString(e['from_city']),
         toCity: _JsonParse.asString(e['to_city']),
-        departAt:
-            DateTime.tryParse(_JsonParse.asString(e['depart_at'])) ??
-            DateTime.fromMillisecondsSinceEpoch(0, isUtc: true),
-        arriveAt:
-            DateTime.tryParse(_JsonParse.asString(e['arrive_at'])) ??
-            DateTime.fromMillisecondsSinceEpoch(0, isUtc: true),
+        travelDate: DateTime.tryParse(_JsonParse.asString(e['travel_date'])),
+        departureTime: _JsonParse.asNullableString(e['departure_time']),
+        arrivalTime: _JsonParse.asNullableString(e['arrival_time']),
+        arrivalDayOffset: _JsonParse.asInt(e['arrival_day_offset']),
+        departAt: DateTime.tryParse(_JsonParse.asString(e['depart_at'])),
+        arriveAt: DateTime.tryParse(_JsonParse.asString(e['arrive_at'])),
       );
     }).toList();
   }
@@ -373,6 +433,7 @@ class TripDetailsModel {
       return TripAccommodation(
         name: _JsonParse.asString(e['name']),
         address: _JsonParse.asString(e['address']),
+        city: _JsonParse.asString(e['city']),
         lat: _JsonParse.asNullableDouble(e['lat']),
         lng: _JsonParse.asNullableDouble(e['lng']),
         images: _stringList(e['images']),
@@ -408,6 +469,22 @@ class TripDetailsModel {
             startDate: _JsonParse.asString(e['start_date']),
             endDate: _JsonParse.asString(e['end_date']),
             price: _JsonParse.asDouble(e['price']),
+            priceOptions:
+                (e['price_options'] is List
+                        ? e['price_options'] as List
+                        : const [])
+                    .whereType<Map<String, dynamic>>()
+                    .map(
+                      (option) => TripPriceOption(
+                        id: _JsonParse.asInt(option['id']),
+                        travelerType: _JsonParse.asString(
+                          option['traveler_type'],
+                        ),
+                        label: _JsonParse.asString(option['label']),
+                        price: _JsonParse.asDouble(option['price']),
+                      ),
+                    )
+                    .toList(),
             seatsLeft: _JsonParse.asInt(e['seats_left']),
           ),
         )

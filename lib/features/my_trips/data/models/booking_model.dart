@@ -213,6 +213,10 @@ class BookingModel {
     required this.paymentStatus,
     this.paymentMethod,
     this.requiresPayment = false,
+    this.canCancel = false,
+    this.cancellationPolicy,
+    this.priceOptions = const [],
+    this.cancelledAt,
     this.paidAt,
     this.expiresAt,
     required this.currency,
@@ -231,6 +235,10 @@ class BookingModel {
   final String paymentStatus;
   final String? paymentMethod;
   final bool requiresPayment;
+  final bool canCancel;
+  final String? cancellationPolicy;
+  final List<BookingPriceOptionSnapshot> priceOptions;
+  final String? cancelledAt;
   final String? paidAt;
   final String? expiresAt;
   final String currency;
@@ -255,6 +263,30 @@ class BookingModel {
       paymentStatus: (json['payment_status'] as String?)?.trim() ?? '',
       paymentMethod: json['payment_method'] as String?,
       requiresPayment: json['requires_payment'] as bool? ?? false,
+      canCancel: json['can_cancel'] == true,
+      cancellationPolicy: json['cancellation_policy'] as String?,
+      priceOptions:
+          (json['price_options'] is List
+                  ? json['price_options'] as List
+                  : const [])
+              .whereType<Map>()
+              .map(
+                (option) => BookingPriceOptionSnapshot(
+                  label: option['label']?.toString() ?? '',
+                  travelerType: option['traveler_type']?.toString() ?? '',
+                  quantity: (option['quantity'] as num?)?.toInt() ?? 0,
+                  unitPrice:
+                      double.tryParse(option['unit_price']?.toString() ?? '') ??
+                      0,
+                  subtotal:
+                      double.tryParse(option['subtotal']?.toString() ?? '') ??
+                      0,
+                ),
+              )
+              .toList(),
+      cancelledAt: json['cancellation'] is Map
+          ? json['cancellation']['cancelled_at'] as String?
+          : null,
       paidAt: json['paid_at'] as String?,
       expiresAt: json['expires_at'] as String?,
       currency: (json['currency'] as String?)?.trim().isNotEmpty == true
@@ -282,6 +314,10 @@ class BookingModel {
     paymentStatus: paymentStatus,
     paymentMethod: paymentMethod,
     requiresPayment: requiresPayment,
+    canCancel: canCancel,
+    cancellationPolicy: cancellationPolicy,
+    priceOptions: priceOptions,
+    cancelledAt: cancelledAt,
     paidAt: paidAt,
     expiresAt: expiresAt,
     currency: currency,

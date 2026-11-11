@@ -1,3 +1,4 @@
+import '../../features/chat/presentation/view/chat_view.dart';
 import 'package:flutter/widgets.dart';
 
 import '../../features/nav_bar/presentation/view/main_nav_view.dart';
@@ -12,6 +13,15 @@ class NotificationNavigationService {
     final state = navigator.navigatorKey.currentState;
     if (state == null) {
       WidgetsBinding.instance.addPostFrameCallback((_) => open(payload));
+      return;
+    }
+
+    if (payload.action == 'conversation' &&
+        payload.conversationId != null &&
+        payload.conversationId! > 0) {
+      await navigator.push(
+        screen: ChatView(conversationId: payload.conversationId!),
+      );
       return;
     }
 

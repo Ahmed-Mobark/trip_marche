@@ -326,7 +326,7 @@ class _FilterBody extends StatelessWidget {
                       options: const [
                         'Travel Egypt Co.',
                         'Blue Sky Travel',
-                        'Trip Marche Partner',
+                        'TrevLen Partner',
                       ],
                       selectedValue: state.travelAgency,
                       onSelected: cubit.setTravelAgency,
@@ -458,7 +458,13 @@ class _FilterBody extends StatelessWidget {
                 FilterSection(
                   title: context.tr.wishlistFiltersCategories,
                   child: ButtonRow(
-                    options: const ['Beach', 'Cultural', 'Adventure', 'Luxury', 'Family'],
+                    options: const [
+                      'Beach',
+                      'Cultural',
+                      'Adventure',
+                      'Luxury',
+                      'Family',
+                    ],
                     isSelected: (value) {
                       final key = _categoryKeyForLabel(value);
                       return key != null && state.categories.contains(key);
@@ -488,7 +494,14 @@ class _FilterBody extends StatelessWidget {
                     onTap: () => _showSingleSelectBottomSheet(
                       context: context,
                       title: context.tr.wishlistFiltersDestinationCountry,
-                      options: const ['Egypt', 'Saudi Arabia', 'UAE', 'Qatar', 'Turkey', 'Jordan'],
+                      options: const [
+                        'Egypt',
+                        'Saudi Arabia',
+                        'UAE',
+                        'Qatar',
+                        'Turkey',
+                        'Jordan',
+                      ],
                       selectedValue: state.destinationCountry,
                       onSelected: cubit.setDestinationCountry,
                     ),
@@ -540,71 +553,63 @@ class _FilterBody extends StatelessWidget {
               ),
             ),
             child: Row(
-                children: [
-                  SizedBox(
-                    width: 89.w,
+              children: [
+                SizedBox(
+                  width: 89.w,
+                  height: 48.h,
+                  child: OutlinedButton(
+                    onPressed: () => Navigator.pop(context),
+                    style: OutlinedButton.styleFrom(
+                      foregroundColor: AppColors.darkText(context),
+                      side: BorderSide(color: AppColors.secondaryText(context)),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(50.r),
+                      ),
+                    ),
+                    child: Icon(Icons.arrow_back_ios_new_rounded, size: 18.sp),
+                  ),
+                ),
+                SizedBox(width: 8.w),
+                Expanded(
+                  child: SizedBox(
                     height: 48.h,
-                    child: OutlinedButton(
-                      onPressed: () => Navigator.pop(context),
-                      style: OutlinedButton.styleFrom(
-                        foregroundColor: AppColors.darkText(context),
-                        side: BorderSide(
-                          color: AppColors.secondaryText(context),
-                        ),
+                    child: FilledButton(
+                      onPressed: () {
+                        final filters = _toTripsCatalogFilters(state);
+                        if (returnFilters) {
+                          Navigator.pop<TripsCatalogFilters>(context, filters);
+                        } else {
+                          sl<AppNavigator>().push(
+                            screen: SearchResultView(filters: filters),
+                          );
+                        }
+                      },
+                      style: FilledButton.styleFrom(
+                        backgroundColor: AppColors.primary,
+                        foregroundColor: AppColors.onImage,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(50.r),
                         ),
                       ),
-                      child: Icon(
-                        Icons.arrow_back_ios_new_rounded,
-                        size: 18.sp,
-                      ),
-                    ),
-                  ),
-                  SizedBox(width: 8.w),
-                  Expanded(
-                    child: SizedBox(
-                      height: 48.h,
-                      child: FilledButton(
-                        onPressed: () {
-                          final filters = _toTripsCatalogFilters(state);
-                          if (returnFilters) {
-                            Navigator.pop<TripsCatalogFilters>(
-                              context,
-                              filters,
-                            );
-                          } else {
-                            sl<AppNavigator>().push(
-                              screen: SearchResultView(filters: filters),
-                            );
-                          }
-                        },
-                        style: FilledButton.styleFrom(
-                          backgroundColor: AppColors.primary,
-                          foregroundColor: AppColors.onImage,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(50.r),
-                          ),
-                        ),
-                        child: AnimatedSwitcher(
-                          duration: const Duration(milliseconds: 180),
-                          switchInCurve: Curves.easeOut,
-                          switchOutCurve: Curves.easeIn,
-                          transitionBuilder: (child, animation) =>
-                              FadeTransition(opacity: animation, child: child),
-                          child: Text(
-                            ctaLabel,
-                            key: ValueKey(ctaLabel),
-                            style: AppTextStyles.button(
-                              color: AppColors.onImage,
-                            ).copyWith(fontSize: 16.sp),
-                          ),
+                      child: AnimatedSwitcher(
+                        duration: const Duration(milliseconds: 180),
+                        switchInCurve: Curves.easeOut,
+                        switchOutCurve: Curves.easeIn,
+                        transitionBuilder: (child, animation) =>
+                            FadeTransition(opacity: animation, child: child),
+                        child: Text(
+                          ctaLabel,
+                          key: ValueKey(ctaLabel),
+                          style: AppTextStyles.button(
+                            color: AppColors.onImage,
+                          ).copyWith(fontSize: 16.sp),
                         ),
                       ),
                     ),
                   ),
-                ],
-              ),
+                ),
+              ],
+            ),
           ),
         );
       },
@@ -704,115 +709,112 @@ class _FilterBody extends StatelessWidget {
           child: Padding(
             padding: EdgeInsetsDirectional.fromSTEB(16.w, 12.h, 16.w, 12.h),
             child: BlocBuilder<FilterCubit, FilterState>(
-                builder: (context, state) {
-                  return Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Container(
-                        width: 40.w,
-                        height: 4.h,
-                        decoration: BoxDecoration(
-                          color: AppColors.border(context),
-                          borderRadius: BorderRadius.circular(999.r),
-                        ),
+              builder: (context, state) {
+                return Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Container(
+                      width: 40.w,
+                      height: 4.h,
+                      decoration: BoxDecoration(
+                        color: AppColors.border(context),
+                        borderRadius: BorderRadius.circular(999.r),
                       ),
-                      SizedBox(height: 12.h),
-                      Row(
-                        children: [
-                          Expanded(
-                            child: Text(
-                              context.tr.wishlistFiltersDestination,
-                              style: AppTextStyles.heading3(
-                                color: AppColors.darkText(context),
-                              ),
-                            ),
-                          ),
-                          IconButton(
-                            onPressed: () => Navigator.pop(ctx),
-                            icon: Icon(
-                              Icons.close_rounded,
-                              size: 20.sp,
+                    ),
+                    SizedBox(height: 12.h),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: Text(
+                            context.tr.wishlistFiltersDestination,
+                            style: AppTextStyles.heading3(
                               color: AppColors.darkText(context),
                             ),
                           ),
-                        ],
-                      ),
-                      if (state.destinationsStatus ==
-                          FilterDestinationsStatus.loading)
-                        Padding(
-                          padding: EdgeInsetsDirectional.only(
-                            top: 24.h,
-                            bottom: 24.h,
-                          ),
-                          child: const CustomLoading(),
-                        )
-                      else
-                        Flexible(
-                          child: ListView.separated(
-                            shrinkWrap: true,
-                            itemCount: state.availableDestinations.length,
-                            separatorBuilder: (_, __) => Divider(
-                              color: AppColors.border(
-                                context,
-                              ).withValues(alpha: 0.6),
-                            ),
-                            itemBuilder: (context, index) {
-                              final destination =
-                                  state.availableDestinations[index];
-                              final selected = state.selectedDestinationIds
-                                  .contains(destination.id);
-                              return CheckboxListTile(
-                                value: selected,
-                                onChanged: (_) => cubit
-                                    .toggleDestinationSelection(destination.id),
-                                activeColor: AppColors.primary,
-                                dense: true,
-                                contentPadding: EdgeInsetsDirectional.zero,
-                                title: Text(
-                                  destination.name,
-                                  style: AppTextStyles.bodyMedium(
-                                    color: AppColors.darkText(context),
-                                  ),
-                                ),
-                                subtitle: destination.country.isEmpty
-                                    ? null
-                                    : Text(
-                                        destination.country,
-                                        style: AppTextStyles.caption(
-                                          color: AppColors.secondaryText(
-                                            context,
-                                          ),
-                                        ),
-                                      ),
-                                controlAffinity:
-                                    ListTileControlAffinity.trailing,
-                              );
-                            },
-                          ),
                         ),
-                      SizedBox(height: 12.h),
-                      SizedBox(
-                        width: double.infinity,
-                        height: 48.h,
-                        child: FilledButton(
+                        IconButton(
                           onPressed: () => Navigator.pop(ctx),
-                          style: FilledButton.styleFrom(
-                            backgroundColor: AppColors.primary,
-                            foregroundColor: AppColors.onImage,
+                          icon: Icon(
+                            Icons.close_rounded,
+                            size: 20.sp,
+                            color: AppColors.darkText(context),
                           ),
-                          child: Text(
-                            ctx.tr.commonOk,
-                            style: TextStyles.textViewSemiBold16.copyWith(
-                              color: AppColors.onImage,
-                            ),
+                        ),
+                      ],
+                    ),
+                    if (state.destinationsStatus ==
+                        FilterDestinationsStatus.loading)
+                      Padding(
+                        padding: EdgeInsetsDirectional.only(
+                          top: 24.h,
+                          bottom: 24.h,
+                        ),
+                        child: const CustomLoading(),
+                      )
+                    else
+                      Flexible(
+                        child: ListView.separated(
+                          shrinkWrap: true,
+                          itemCount: state.availableDestinations.length,
+                          separatorBuilder: (_, __) => Divider(
+                            color: AppColors.border(
+                              context,
+                            ).withValues(alpha: 0.6),
+                          ),
+                          itemBuilder: (context, index) {
+                            final destination =
+                                state.availableDestinations[index];
+                            final selected = state.selectedDestinationIds
+                                .contains(destination.id);
+                            return CheckboxListTile(
+                              value: selected,
+                              onChanged: (_) => cubit
+                                  .toggleDestinationSelection(destination.id),
+                              activeColor: AppColors.primary,
+                              dense: true,
+                              contentPadding: EdgeInsetsDirectional.zero,
+                              title: Text(
+                                destination.name,
+                                style: AppTextStyles.bodyMedium(
+                                  color: AppColors.darkText(context),
+                                ),
+                              ),
+                              subtitle: destination.country.isEmpty
+                                  ? null
+                                  : Text(
+                                      destination.country,
+                                      style: AppTextStyles.caption(
+                                        color: AppColors.secondaryText(context),
+                                      ),
+                                    ),
+                              controlAffinity: ListTileControlAffinity.trailing,
+                            );
+                          },
+                        ),
+                      ),
+                    SizedBox(height: 12.h),
+                    SizedBox(
+                      width: double.infinity,
+                      height: 48.h,
+                      child: FilledButton(
+                        onPressed: () => Navigator.pop(ctx),
+                        style: FilledButton.styleFrom(
+                          backgroundColor: AppColors.primary,
+                          foregroundColor: AppColors.onImage,
+                        ),
+                        child: Text(
+                          ctx.tr.commonOk,
+                          style: TextStyles.textViewSemiBold16.copyWith(
+                            color: AppColors.onImage,
                           ),
                         ),
                       ),
-                    ],
-                  );
-                },
-              ),
+                    ),
+                  ],
+                );
+              },
             ),
+          ),
         );
       },
     );
@@ -835,38 +837,44 @@ class _FilterBody extends StatelessWidget {
         return Padding(
           padding: EdgeInsetsDirectional.fromSTEB(16.w, 12.h, 16.w, 12.h),
           child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Container(
-                  width: 40.w,
-                  height: 4.h,
-                  decoration: BoxDecoration(
-                    color: AppColors.border(context),
-                    borderRadius: BorderRadius.circular(999.r),
-                  ),
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Container(
+                width: 40.w,
+                height: 4.h,
+                decoration: BoxDecoration(
+                  color: AppColors.border(context),
+                  borderRadius: BorderRadius.circular(999.r),
                 ),
-                SizedBox(height: 12.h),
-                Row(
-                  children: [
-                    Expanded(
-                      child: Text(
-                        title,
-                        style: AppTextStyles.heading3(
-                          color: AppColors.darkText(context),
-                        ),
-                      ),
-                    ),
-                    IconButton(
-                      onPressed: () => Navigator.pop(ctx),
-                      icon: Icon(
-                        Icons.close_rounded,
-                        size: 20.sp,
+              ),
+              SizedBox(height: 12.h),
+              Row(
+                children: [
+                  Expanded(
+                    child: Text(
+                      title,
+                      style: AppTextStyles.heading3(
                         color: AppColors.darkText(context),
                       ),
                     ),
-                  ],
-                ),
-                Flexible(
+                  ),
+                  IconButton(
+                    onPressed: () => Navigator.pop(ctx),
+                    icon: Icon(
+                      Icons.close_rounded,
+                      size: 20.sp,
+                      color: AppColors.darkText(context),
+                    ),
+                  ),
+                ],
+              ),
+              Flexible(
+                child: RadioGroup<String>(
+                  groupValue: selectedValue,
+                  onChanged: (value) {
+                    onSelected(value ?? '');
+                    Navigator.pop(ctx);
+                  },
                   child: ListView.separated(
                     shrinkWrap: true,
                     itemCount: options.length + 1,
@@ -891,7 +899,6 @@ class _FilterBody extends StatelessWidget {
                       final option = options[index - 1];
                       return RadioListTile<String>(
                         value: option,
-                        groupValue: selectedValue,
                         activeColor: AppColors.primary,
                         title: Text(
                           option,
@@ -899,16 +906,13 @@ class _FilterBody extends StatelessWidget {
                             color: AppColors.darkText(context),
                           ),
                         ),
-                        onChanged: (value) {
-                          onSelected(value ?? '');
-                          Navigator.pop(ctx);
-                        },
                       );
                     },
                   ),
                 ),
-              ],
-            ),
+              ),
+            ],
+          ),
         );
       },
     );
@@ -934,87 +938,85 @@ class _FilterBody extends StatelessWidget {
             return Padding(
               padding: EdgeInsetsDirectional.fromSTEB(16.w, 12.h, 16.w, 12.h),
               child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Container(
-                      width: 40.w,
-                      height: 4.h,
-                      decoration: BoxDecoration(
-                        color: AppColors.border(context),
-                        borderRadius: BorderRadius.circular(999.r),
-                      ),
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Container(
+                    width: 40.w,
+                    height: 4.h,
+                    decoration: BoxDecoration(
+                      color: AppColors.border(context),
+                      borderRadius: BorderRadius.circular(999.r),
                     ),
-                    SizedBox(height: 12.h),
-                    Row(
-                      children: [
-                        Expanded(
-                          child: Text(
-                            title,
-                            style: AppTextStyles.heading3(
-                              color: AppColors.darkText(context),
-                            ),
-                          ),
-                        ),
-                        TextButton(
-                          onPressed: () {
-                            for (final value in currentSelected.toList()) {
-                              onToggle(value);
-                            }
-                            setModalState(currentSelected.clear);
-                          },
-                          child: Text(
-                            context.tr.wishlistFiltersClearAll,
-                            style: AppTextStyles.bodyMedium(
-                              color: AppColors.error,
-                            ),
-                          ),
-                        ),
-                        IconButton(
-                          onPressed: () => Navigator.pop(ctx),
-                          icon: Icon(
-                            Icons.close_rounded,
-                            size: 20.sp,
+                  ),
+                  SizedBox(height: 12.h),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: Text(
+                          title,
+                          style: AppTextStyles.heading3(
                             color: AppColors.darkText(context),
                           ),
                         ),
-                      ],
-                    ),
-                    Flexible(
-                      child: ListView.separated(
-                        shrinkWrap: true,
-                        itemCount: options.length,
-                        separatorBuilder: (_, __) => Divider(
-                          color: AppColors.border(
-                            context,
-                          ).withValues(alpha: 0.6),
-                        ),
-                        itemBuilder: (_, index) {
-                          final option = options[index];
-                          return CheckboxListTile(
-                            value: currentSelected.contains(option),
-                            activeColor: AppColors.primary,
-                            title: Text(
-                              option,
-                              style: AppTextStyles.bodyMedium(
-                                color: AppColors.darkText(context),
-                              ),
-                            ),
-                            onChanged: (_) {
-                              onToggle(option);
-                              setModalState(() {
-                                if (currentSelected.contains(option)) {
-                                  currentSelected.remove(option);
-                                } else {
-                                  currentSelected.add(option);
-                                }
-                              });
-                            },
-                          );
-                        },
                       ),
+                      TextButton(
+                        onPressed: () {
+                          for (final value in currentSelected.toList()) {
+                            onToggle(value);
+                          }
+                          setModalState(currentSelected.clear);
+                        },
+                        child: Text(
+                          context.tr.wishlistFiltersClearAll,
+                          style: AppTextStyles.bodyMedium(
+                            color: AppColors.error,
+                          ),
+                        ),
+                      ),
+                      IconButton(
+                        onPressed: () => Navigator.pop(ctx),
+                        icon: Icon(
+                          Icons.close_rounded,
+                          size: 20.sp,
+                          color: AppColors.darkText(context),
+                        ),
+                      ),
+                    ],
+                  ),
+                  Flexible(
+                    child: ListView.separated(
+                      shrinkWrap: true,
+                      itemCount: options.length,
+                      separatorBuilder: (_, __) => Divider(
+                        color: AppColors.border(context).withValues(alpha: 0.6),
+                      ),
+                      itemBuilder: (_, index) {
+                        final option = options[index];
+                        return CheckboxListTile(
+                          value: currentSelected.contains(option),
+                          activeColor: AppColors.primary,
+                          title: Text(
+                            option,
+                            style: AppTextStyles.bodyMedium(
+                              color: AppColors.darkText(context),
+                            ),
+                          ),
+                          onChanged: (_) {
+                            onToggle(option);
+                            setModalState(() {
+                              if (currentSelected.contains(option)) {
+                                currentSelected.remove(option);
+                              } else {
+                                currentSelected.add(option);
+                              }
+                            });
+                          },
+                        );
+                      },
                     ),
-                  ],
-                ),
+                  ),
+                ],
+              ),
             );
           },
         );

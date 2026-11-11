@@ -15,6 +15,7 @@ class TripDetailsBookingBar extends StatelessWidget {
     required this.bookNowText,
     required this.onBookNow,
     this.expanded = false,
+    this.isSoldOut = false,
   });
 
   final String priceLabel;
@@ -25,6 +26,7 @@ class TripDetailsBookingBar extends StatelessWidget {
   final String bookNowText;
   final VoidCallback onBookNow;
   final bool expanded;
+  final bool isSoldOut;
 
   @override
   Widget build(BuildContext context) {
@@ -120,8 +122,12 @@ class TripDetailsBookingBar extends StatelessWidget {
             AppButton(
               heigh: 54.h,
               radius: 999.r,
-              color: AppColors.primary,
-              textColor: AppColors.onImage,
+              color: isSoldOut
+                  ? AppColors.greyText(context).withValues(alpha: 0.3)
+                  : AppColors.primary,
+              textColor: isSoldOut
+                  ? AppColors.darkText(context).withValues(alpha: 0.7)
+                  : AppColors.onImage,
               onTap: onBookNow,
               text: bookNowText,
             )
@@ -152,8 +158,12 @@ class TripDetailsBookingBar extends StatelessWidget {
                   child: AppButton(
                     heigh: 42.h,
                     radius: 999.r,
-                    color: AppColors.primary,
-                    textColor: AppColors.onImage,
+                    color: isSoldOut
+                        ? AppColors.greyText(context).withValues(alpha: 0.3)
+                        : AppColors.primary,
+                    textColor: isSoldOut
+                        ? AppColors.darkText(context).withValues(alpha: 0.7)
+                        : AppColors.onImage,
                     onTap: onBookNow,
                     text: bookNowText,
                   ),

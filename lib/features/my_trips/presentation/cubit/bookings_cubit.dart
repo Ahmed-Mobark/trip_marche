@@ -12,6 +12,7 @@ class BookingsCubit extends Cubit<BookingsState> {
 
   static const int _perPage = 10;
   bool _isFetching = false;
+  bool _refreshPending = false;
   Timer? _searchDebounce;
   String _currentStatus = 'active';
   String _currentSearch = '';
@@ -59,7 +60,20 @@ class BookingsCubit extends Cubit<BookingsState> {
 
   Future<void> refresh() async {
     _searchDebounce?.cancel();
+    if (_isFetching) {
+      _refreshPending = true;
+      return;
+    }
     await _fetch(page: 1, reset: true, clearExisting: false);
+  }
+
+  void applyCancellation(Booking booking) {
+    final rows = _currentStatus == 'cancelled'
+        ? state.bookings
+              .map((row) => row.id == booking.id ? booking : row)
+              .toList()
+        : state.bookings.where((row) => row.id != booking.id).toList();
+    emit(state.copyWith(bookings: rows));
   }
 
   Future<void> loadMore() async {
@@ -151,6 +165,10 @@ class BookingsCubit extends Cubit<BookingsState> {
       );
     } finally {
       _isFetching = false;
+      if (_refreshPending && !isClosed) {
+        _refreshPending = false;
+        unawaited(refresh());
+      }
     }
   }
 

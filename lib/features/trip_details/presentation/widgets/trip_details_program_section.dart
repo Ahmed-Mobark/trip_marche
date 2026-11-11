@@ -77,7 +77,10 @@ class TripDetailsProgramSection extends StatelessWidget {
                       _DayCard(
                         dayLabel:
                             '${context.tr.tripDetailsProgramDayPrefix} ${days[i].dayNumber}',
-                        city: days[i].title,
+                        city: [days[i].title, days[i].stayCity]
+                            .where((value) => value.trim().isNotEmpty)
+                            .toSet()
+                            .join(' · '),
                         mealCodes: _mealCodes(days[i].meals),
                         items: days[i].items,
                         expanded: state.expandedDayIndices.contains(i),
@@ -315,11 +318,7 @@ class _ChecklistRow extends StatelessWidget {
             shape: BoxShape.circle,
             color: AppColors.tripDetailsProgramOrange,
           ),
-          child: const Icon(
-            Icons.check,
-            size: 10,
-            color: AppColors.onImage,
-          ),
+          child: const Icon(Icons.check, size: 10, color: AppColors.onImage),
         ),
         const SizedBox(width: 8),
         Expanded(

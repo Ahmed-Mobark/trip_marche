@@ -21,6 +21,7 @@ class CouponField extends StatelessWidget {
     this.errorMessage,
     this.isLoading = false,
     this.isApplied = false,
+    this.terms = const [],
   });
 
   final TextEditingController controller;
@@ -36,6 +37,7 @@ class CouponField extends StatelessWidget {
   final String? errorMessage;
   final bool isLoading;
   final bool isApplied;
+  final List<String> terms;
 
   static const _transparentInputTheme = InputDecorationTheme(
     filled: false,
@@ -59,9 +61,7 @@ class CouponField extends StatelessWidget {
       children: [
         Text(
           title,
-          style: AppTextStyles.subtitle(
-            color: AppColors.ink(context),
-          ).copyWith(
+          style: AppTextStyles.subtitle(color: AppColors.ink(context)).copyWith(
             fontSize: ReviewFigmaTokens.bodySize,
             fontWeight: FontWeight.w600,
           ),
@@ -72,7 +72,9 @@ class CouponField extends StatelessWidget {
           padding: EdgeInsetsDirectional.fromSTEB(12.w, 6.h, 6.w, 6.h),
           decoration: BoxDecoration(
             color: AppColors.cardBg(context),
-            borderRadius: BorderRadius.circular(ReviewFigmaTokens.couponFieldRadius),
+            borderRadius: BorderRadius.circular(
+              ReviewFigmaTokens.couponFieldRadius,
+            ),
             border: Border.all(color: AppColors.softBorder(context)),
           ),
           child: Row(
@@ -88,9 +90,9 @@ class CouponField extends StatelessWidget {
               SizedBox(width: 8.w),
               Expanded(
                 child: Theme(
-                  data: Theme.of(context).copyWith(
-                    inputDecorationTheme: _transparentInputTheme,
-                  ),
+                  data: Theme.of(
+                    context,
+                  ).copyWith(inputDecorationTheme: _transparentInputTheme),
                   child: TextField(
                     controller: controller,
                     cursorColor: AppColors.primary,
@@ -147,12 +149,11 @@ class CouponField extends StatelessWidget {
                         )
                       : Text(
                           isApplied ? appliedLabel : applyLabel,
-                          style: AppTextStyles.button(
-                            color: AppColors.onImage,
-                          ).copyWith(
-                            fontSize: ReviewFigmaTokens.smallSize,
-                            fontWeight: FontWeight.w600,
-                          ),
+                          style: AppTextStyles.button(color: AppColors.onImage)
+                              .copyWith(
+                                fontSize: ReviewFigmaTokens.smallSize,
+                                fontWeight: FontWeight.w600,
+                              ),
                         ),
                 ),
               ),
@@ -163,21 +164,34 @@ class CouponField extends StatelessWidget {
           SizedBox(height: 8.h),
           Text(
             successMessage,
-            style: AppTextStyles.bodyMedium(
-              color: ReviewFigmaTokens.successGreen,
-            ).copyWith(
-              fontSize: ReviewFigmaTokens.smallSize,
-              fontWeight: FontWeight.w500,
-            ),
+            style:
+                AppTextStyles.bodyMedium(
+                  color: ReviewFigmaTokens.successGreen,
+                ).copyWith(
+                  fontSize: ReviewFigmaTokens.smallSize,
+                  fontWeight: FontWeight.w500,
+                ),
           ),
+        ],
+        if (showSuccess && terms.isNotEmpty) ...[
+          const SizedBox(height: 8),
+          for (final term in terms)
+            Padding(
+              padding: const EdgeInsets.only(bottom: 4),
+              child: Text(
+                '• $term',
+                style: TextStyle(
+                  fontSize: 12.sp,
+                  color: AppColors.greyText(context),
+                ),
+              ),
+            ),
         ],
         if (showError && errorMessage != null && errorMessage!.isNotEmpty) ...[
           SizedBox(height: 8.h),
           Text(
             errorMessage!,
-            style: AppTextStyles.bodyMedium(
-              color: AppColors.error,
-            ).copyWith(
+            style: AppTextStyles.bodyMedium(color: AppColors.error).copyWith(
               fontSize: ReviewFigmaTokens.smallSize,
               fontWeight: FontWeight.w500,
             ),

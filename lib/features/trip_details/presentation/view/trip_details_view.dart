@@ -122,7 +122,7 @@ class _TripDetailsBodyState extends State<_TripDetailsBody> {
         TripDetailsStatCellData(
           icon: Icons.groups_outlined,
           label: context.tr.tripDetailsGroupSizeLabel,
-          value: '${trip.groupSize.min}-${trip.groupSize.max}',
+          value: trip.groupSize.max > 0 ? trip.groupSize.max.toString() : '—',
         ),
         TripDetailsStatCellData(
           icon: Icons.location_city_outlined,
@@ -356,10 +356,21 @@ class _TripDetailsBodyState extends State<_TripDetailsBody> {
                           ? (_isRetryPaymentLoading
                                 ? context.tr.bookingPay
                                 : context.tr.myTripsPayNow)
-                          : context.tr.tripDetailsBookNow,
+                          : (trip.isSoldOut
+                                ? context.tr.tripDetailsSoldOut
+                                : context.tr.tripDetailsBookNow),
+                      isSoldOut: !_hasPendingPayment && trip.isSoldOut,
                       onBookNow: () {
                         if (_hasPendingPayment) {
                           _retryPayment();
+                          return;
+                        }
+                        if (trip.isSoldOut) {
+                          appToast(
+                            context: context,
+                            type: ToastType.error,
+                            message: context.tr.bookingTripSoldOut,
+                          );
                           return;
                         }
                         sl<AppNavigator>().push(

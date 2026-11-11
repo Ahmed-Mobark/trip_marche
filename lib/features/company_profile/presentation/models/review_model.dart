@@ -8,6 +8,7 @@ class ReviewModel {
     required this.comment,
     required this.galleryImages,
     this.createdAt,
+    this.vendorReply,
   });
 
   final String name;
@@ -18,4 +19,5 @@ class ReviewModel {
   final String comment;
   final List<String> galleryImages;
   final String? createdAt;
+  final String? vendorReply;
 }

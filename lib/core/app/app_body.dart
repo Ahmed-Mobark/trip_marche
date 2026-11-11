@@ -1,3 +1,5 @@
+import 'dart:async';
+import '../notification/firebase_notification_service.dart';
 import 'package:adaptive_theme/adaptive_theme.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter/material.dart';
@@ -71,6 +73,9 @@ class MyAppState extends State<MyApp> {
       _locale = Locale(code);
     });
     sl<ApiBaseHelper>().updateLocaleInHeaders(code);
+    if (sl.isRegistered<FirebaseNotificationService>()) {
+      unawaited(sl<FirebaseNotificationService>().syncLanguage());
+    }
   }
 
   @override

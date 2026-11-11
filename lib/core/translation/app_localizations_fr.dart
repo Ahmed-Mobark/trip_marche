@@ -248,7 +248,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get authResendNow => 'Renvoyer maintenant';
 
   @override
-  String get homeAppTitle => 'TripMarche';
+  String get homeAppTitle => 'TrevLen';
 
   @override
   String get homeSearchHint => 'Rechercher un voyage';
@@ -296,7 +296,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get homeFromCairoAlexandria => 'Depuis Le Caire & Alexandrie';
 
   @override
-  String get homeNewInTripMarche => 'Nouveau sur TripMarche';
+  String get homeNewInTripMarche => 'Nouveau sur TrevLen';
 
   @override
   String get homePerPerson => 'Personne';
@@ -317,7 +317,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get wishlistFilters => 'Filtres';
 
   @override
-  String get wishlistNewInTripMarche => 'Nouveau sur TripMarche';
+  String get wishlistNewInTripMarche => 'Nouveau sur TrevLen';
 
   @override
   String get wishlistRecommended => 'Recommandé';
@@ -560,6 +560,21 @@ class AppLocalizationsFr extends AppLocalizations {
   String get profileTitleSupport => 'Support';
 
   @override
+  String get helpCenterTitle => 'Centre d’aide';
+
+  @override
+  String get helpCenterRetry => 'Réessayer';
+
+  @override
+  String get helpCenterEmpty => 'Ce contenu n’est pas encore disponible.';
+
+  @override
+  String get helpCenterSendFeedback => 'Donner votre avis';
+
+  @override
+  String get helpCenterContactSupport => 'Contacter l’assistance';
+
+  @override
   String get profilePersonalInfo => 'Infos personnelles';
 
   @override
@@ -724,7 +739,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get myTripsRateTrip => 'Évaluer le voyage';
 
   @override
-  String get myTripsRated => 'Rated';
+  String get myTripsRated => 'Évalué';
 
   @override
   String get myTripsDownloadPdf => 'Télécharger le PDF';
@@ -1019,6 +1034,10 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get bookingReviewPaymentTotal => 'Total';
+
+  @override
+  String get bookingFullPaymentEgp =>
+      'Le montant total est payé à la réservation en livres égyptiennes (EGP).';
 
   @override
   String get bookingReviewCurrency => 'EGP';
@@ -1415,7 +1434,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get searchResultDateTo => '4 Déc';
 
   @override
-  String get searchResultLabelNew => 'Nouveau sur TripMarche';
+  String get searchResultLabelNew => 'Nouveau sur TrevLen';
 
   @override
   String get searchResultLabelRecommended => 'Recommandé';
@@ -1742,6 +1761,20 @@ class AppLocalizationsFr extends AppLocalizations {
   String get tripDetailsBookNow => 'Réserver';
 
   @override
+  String get tripDetailsSoldOut => 'Complet';
+
+  @override
+  String get bookingDepartureSoldOut => 'Cette date est complète';
+
+  @override
+  String get bookingTripSoldOut => 'Tous les départs pour ce voyage sont complets';
+
+  @override
+  String bookingSeatsInsufficient(int seats) {
+    return 'Seulement $seats place(s) restante(s) pour ce départ';
+  }
+
+  @override
   String tripDetailsPricePerPersonShort(Object price) {
     return '$price/Personne';
   }
@@ -2058,7 +2091,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get tripDetailsOrganizerSubtitle =>
-      'Partenaire de confiance sur Trip Marche';
+      'Partenaire de confiance sur TrevLen';
 
   @override
   String get tripDetailsStartingFrom => 'À partir de';
@@ -2106,7 +2139,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get bookingTripTermsSection1Body =>
-      'En réservant un voyage via Trip Marche, vous acceptez les conditions suivantes. Un acompte de 30% est requis au moment de la réservation pour confirmer votre place. Le solde restant doit être payé au moins 14 jours avant la date de départ. Un retard de paiement peut entraîner l’annulation de la réservation. Tous les paiements sont traités de manière sécurisée via nos partenaires.';
+      'En réservant un voyage via TrevLen, vous acceptez les conditions suivantes. Un acompte de 30% est requis au moment de la réservation pour confirmer votre place. Le solde restant doit être payé au moins 14 jours avant la date de départ. Un retard de paiement peut entraîner l’annulation de la réservation. Tous les paiements sont traités de manière sécurisée via nos partenaires.';
 
   @override
   String get bookingTripTermsSection2Title => '2. Éligibilité';
@@ -2120,21 +2153,21 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get bookingTripTermsSection3Body =>
-      'Trip Marche se réserve le droit de modifier l’itinéraire en raison des conditions météorologiques, de la sécurité ou d’autres circonstances imprévues. Nous ferons tout notre possible pour proposer des alternatives équivalentes. En cas de changements importants, les voyageurs seront informés et pourront bénéficier d’un remboursement partiel ou d’un crédit.';
+      'TrevLen se réserve le droit de modifier l’itinéraire en raison des conditions météorologiques, de la sécurité ou d’autres circonstances imprévues. Nous ferons tout notre possible pour proposer des alternatives équivalentes. En cas de changements importants, les voyageurs seront informés et pourront bénéficier d’un remboursement partiel ou d’un crédit.';
 
   @override
   String get bookingTripTermsSection4Title => '4. Responsabilités du voyageur';
 
   @override
   String get bookingTripTermsSection4Body =>
-      'Les voyageurs sont responsables de posséder des documents de voyage valides, une assurance appropriée et toute vaccination requise. Ils doivent suivre les instructions des guides et respecter les lois et coutumes locales. Trip Marche n’est pas responsable des conséquences liées au non-respect des exigences d’entrée.';
+      'Les voyageurs sont responsables de posséder des documents de voyage valides, une assurance appropriée et toute vaccination requise. Ils doivent suivre les instructions des guides et respecter les lois et coutumes locales. TrevLen n’est pas responsable des conséquences liées au non-respect des exigences d’entrée.';
 
   @override
   String get bookingTripTermsSection5Title => '5. Responsabilité';
 
   @override
   String get bookingTripTermsSection5Body =>
-      'Trip Marche agit en tant qu’organisateur et intermédiaire. Malgré toutes les précautions, nous ne sommes pas responsables des pertes, blessures ou dommages résultant des activités pendant le voyage, d’événements naturels ou des actions de prestataires tiers. La participation se fait aux risques du voyageur. Nous recommandons fortement une assurance voyage complète.';
+      'TrevLen agit en tant qu’organisateur et intermédiaire. Malgré toutes les précautions, nous ne sommes pas responsables des pertes, blessures ou dommages résultant des activités pendant le voyage, d’événements naturels ou des actions de prestataires tiers. La participation se fait aux risques du voyageur. Nous recommandons fortement une assurance voyage complète.';
 
   @override
   String get bookingTripTermsSection6Title => '6. Confidentialité';
@@ -2185,7 +2218,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get bookingTripSafetyIntro =>
-      'Chez Trip Marche, nous nous engageons à assurer la sécurité et le bien-être de tous nos voyageurs. Nos voyages sont conçus avec des mesures de sécurité complètes et tous nos guides sont formés aux premiers secours et aux procédures d’urgence.';
+      'Chez TrevLen, nous nous engageons à assurer la sécurité et le bien-être de tous nos voyageurs. Nos voyages sont conçus avec des mesures de sécurité complètes et tous nos guides sont formés aux premiers secours et aux procédures d’urgence.';
 
   @override
   String get bookingTripSafetyWaterTitle => 'Sécurité des activités aquatiques';
@@ -2397,4 +2430,151 @@ class AppLocalizationsFr extends AppLocalizations {
   String reviewRatingScale(int rating) {
     return '$rating/5';
   }
+
+  @override
+  String get myTripsCancelBooking => 'Annuler la réservation';
+
+  @override
+  String get myTripsConfirmCancellation => 'Confirmer l’annulation';
+
+  @override
+  String get myTripsKeepBooking => 'Conserver la réservation';
+
+  @override
+  String get myTripsCancelExplanation =>
+      'Votre réservation sera annulée. Si un remboursement est prévu par les conditions de l’entreprise, contactez le prestataire pour l’organiser. La confirmation ne déclenche aucun remboursement automatique.';
+
+  @override
+  String get myTripsCancellationTerms => 'Conditions d’annulation';
+
+  @override
+  String get myTripsCancellationSuccess => 'Réservation annulée';
+
+  @override
+  String get myTripsRefundContactVendor =>
+      'Contactez directement le prestataire pour tout remboursement prévu par les conditions d’annulation.';
+
+  @override
+  String get myTripsContactVendor => 'Contacter le prestataire';
+
+  @override
+  String get myTripsCancelledAt => 'Annulée le';
+
+  @override
+  String get companyProfileVendorReply => 'Réponse de l’entreprise';
+
+  @override
+  String get companyProfileManager => 'Responsable de la société';
+
+  @override
+  String get bookingCustomPriceHelp =>
+      'Choisissez le nombre de voyageurs pour chaque option. Le prix indiqué couvre le voyage complet par personne.';
+
+  @override
+  String get bookingSelectPriceOption =>
+      'Choisissez au moins une option adulte pour continuer.';
+
+  @override
+  String get bookingQuoteRetry => 'Recalculer le prix';
+
+  @override
+  String get chatTitle => 'Messages';
+
+  @override
+  String get chatSupport => 'Contacter l’assistance';
+
+  @override
+  String get chatContactVendor => 'Écrire à l’entreprise';
+
+  @override
+  String get chatEmpty => 'Aucune conversation.';
+
+  @override
+  String get chatEmptyMessages =>
+      'Commencez la conversation avec votre question.';
+
+  @override
+  String get chatMessage => 'Votre message';
+
+  @override
+  String get chatSend => 'Envoyer';
+
+  @override
+  String get chatOlder => 'Messages précédents';
+
+  @override
+  String get chatFailed =>
+      'Impossible de terminer cette demande. Votre brouillon est conservé. Réessayez.';
+
+  @override
+  String get chatRetry => 'Réessayer';
+
+  @override
+  String get chatPhoto => 'Photo';
+
+  @override
+  String get chatVoice => 'Voice message';
+
+  @override
+  String get chatRecord => 'Record a voice message';
+
+  @override
+  String get chatStop => 'Stop recording';
+
+  @override
+  String get chatRecording => 'Recording…';
+
+  @override
+  String get chatCancel => 'Cancel';
+
+  @override
+  String get chatRemove => 'Remove attachment';
+
+  @override
+  String get chatMediaError => 'Could not open this file. Please try again.';
+
+  @override
+  String get chatMediaLimit =>
+      'Choose an image or recording smaller than 10 MB.';
+
+  @override
+  String get chatMicrophonePermission =>
+      'Allow microphone access to record a voice message.';
+
+  @override
+  String get chatToday => 'Today';
+
+  @override
+  String get chatYesterday => 'Yesterday';
+
+  @override
+  String get chatInboxHint =>
+      'Your conversations with travel partners and TrevLen support.';
+
+  @override
+  String get chatSupportHint => 'We’re here to help with your journey.';
+
+  @override
+  String get chatCompany => 'Travel partner';
+
+  @override
+  String get chatStart => 'Start a conversation';
+
+  @override
+  String get chatPlay => 'Play voice message';
+
+  @override
+  String get chatPause => 'Pause voice message';
+
+  @override
+  String get chatPhotoLibrary => 'Photo library';
+
+  @override
+  String get chatCamera => 'Camera';
+
+  @override
+  String get chatRecordingLimit => 'Up to 2 minutes';
+
+  @override
+  String get chatNewMessage => 'Nouveau message';
 }

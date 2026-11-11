@@ -1,3 +1,4 @@
+import '../../../trip_details/presentation/trip_details_ui_formatters.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -27,7 +28,9 @@ class ReviewView extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider<CouponCubit>(create: (_) => sl<CouponCubit>()),
+        BlocProvider<CouponCubit>(
+          create: (_) => sl<CouponCubit>()..loadBookingQuote(data),
+        ),
         BlocProvider<CreateBookingCubit>(
           create: (_) => sl<CreateBookingCubit>(),
         ),
@@ -58,6 +61,7 @@ class _ReviewBodyState extends State<_ReviewBody> {
   }
 
   BookingPriceBreakdown _breakdown(CouponState couponState) {
+    if (couponState.quote != null) return couponState.quote!.breakdown;
     final discount = couponState.isApplied
         ? couponState.coupon!.discountAmount
         : 0.0;
@@ -93,6 +97,7 @@ class _ReviewBodyState extends State<_ReviewBody> {
 
   void _onContinue() {
     final couponState = context.read<CouponCubit>().state;
+    if (couponState.quote == null || couponState.isLoading) return;
     final couponCode = couponState.isApplied && couponState.appliedCode != null
         ? couponState.appliedCode
         : null;
@@ -101,7 +106,7 @@ class _ReviewBodyState extends State<_ReviewBody> {
       screen: BlocProvider.value(
         value: context.read<CreateBookingCubit>(),
         child: PaymentMethodsScreen(
-          reviewData: widget.data,
+          reviewData: widget.data.withQuote(couponState.quote!),
           notes: _notesController.text.trim(),
           couponCode: couponCode,
           createBookingCubit: context.read<CreateBookingCubit>(),
@@ -171,6 +176,7 @@ class _ReviewBodyState extends State<_ReviewBody> {
                         builder: (context, couponState) {
                           return CouponField(
                             controller: _couponController,
+                            terms: couponState.coupon?.terms ?? const [],
                             title: tr.bookingReviewCouponQuestion,
                             placeholder: tr.bookingReviewCouponPlaceholder,
                             applyLabel: tr.bookingReviewCouponApply,
@@ -196,27 +202,72 @@ class _ReviewBodyState extends State<_ReviewBody> {
                       BlocBuilder<CouponCubit, CouponState>(
                         buildWhen: (previous, current) =>
                             previous.status != current.status ||
-                            previous.coupon != current.coupon,
+                            previous.coupon != current.coupon ||
+                            previous.quote != current.quote,
                         builder: (context, couponState) {
                           final breakdown = _breakdown(couponState);
-                          return PaymentDetailsCard(
-                            title: tr.bookingReviewPaymentDetailTitle,
-                            breakdown: breakdown,
-                            travelersLabel: tr.bookingReviewPaymentTravelers(
-                              breakdown.travelersCount,
-                            ),
-                            activitiesLabel: tr.bookingReviewPaymentActivities,
-                            optionalExtrasLabel: tr.bookingOptionalExtras,
-                            taxesLabel: tr.bookingReviewPaymentTaxes,
-                            totalLabel: tr.bookingReviewPaymentTotal,
-                            currencySuffix: widget.data.currency,
-                            subtotalLabel: tr.bookingReviewPaymentSubtotal,
-                            finalTotalLabel: tr.bookingReviewPaymentFinalTotal,
-                            couponRowLabel: _couponRowLabel(
-                              context,
-                              couponState,
-                            ),
-                            showCouponBreakdown: couponState.isApplied,
+                          if (couponState.isLoading) {
+                            return const Center(
+                              child: CircularProgressIndicator(),
+                            );
+                          }
+                          if (couponState.quote == null) {
+                            return Column(
+                              children: [
+                                Text(
+                                  couponState.errorMessage ??
+                                      tr.bookingReviewNetworkError,
+                                ),
+                                TextButton(
+                                  onPressed: () => context
+                                      .read<CouponCubit>()
+                                      .loadBookingQuote(widget.data),
+                                  child: Text(tr.bookingQuoteRetry),
+                                ),
+                              ],
+                            );
+                          }
+                          return Column(
+                            crossAxisAlignment: CrossAxisAlignment.stretch,
+                            children: [
+                              if (couponState
+                                  .quote!
+                                  .priceSelections
+                                  .isNotEmpty) ...[
+                                for (final selection
+                                    in couponState.quote!.priceSelections)
+                                  Padding(
+                                    padding: const EdgeInsets.only(bottom: 8),
+                                    child: Text(
+                                      '${selection.label} × ${selection.quantity} · ${TripDetailsUiFormatters.formatAmount(selection.totalPrice, currency: couponState.quote!.currency)}',
+                                    ),
+                                  ),
+                              ],
+                              PaymentDetailsCard(
+                                title: tr.bookingReviewPaymentDetailTitle,
+                                breakdown: breakdown,
+                                travelersLabel: tr
+                                    .bookingReviewPaymentTravelers(
+                                      breakdown.travelersCount,
+                                    ),
+                                activitiesLabel:
+                                    tr.bookingReviewPaymentActivities,
+                                optionalExtrasLabel: tr.bookingOptionalExtras,
+                                taxesLabel: tr.bookingReviewPaymentTaxes,
+                                totalLabel: tr.bookingReviewPaymentTotal,
+                                currencySuffix: couponState.quote!.currency,
+                                subtotalLabel: tr.bookingReviewPaymentSubtotal,
+                                finalTotalLabel:
+                                    tr.bookingReviewPaymentFinalTotal,
+                                couponRowLabel: _couponRowLabel(
+                                  context,
+                                  couponState,
+                                ),
+                                showCouponBreakdown: couponState.isApplied,
+                              ),
+                              const SizedBox(height: 8),
+                              Text(tr.bookingFullPaymentEgp),
+                            ],
                           );
                         },
                       ),
@@ -237,10 +288,15 @@ class _ReviewBodyState extends State<_ReviewBody> {
                 ),
                 SafeArea(
                   top: false,
-                  child: BookingBottomButtons(
-                    onBack: () => Navigator.pop(context),
-                    onPay: _onContinue,
-                    payLabel: tr.bookingPay,
+                  child: BlocBuilder<CouponCubit, CouponState>(
+                    builder: (context, state) => BookingBottomButtons(
+                      onBack: () => Navigator.pop(context),
+                      onPay: state.quote != null && !state.isLoading
+                          ? _onContinue
+                          : null,
+                      isLoading: state.isLoading,
+                      payLabel: tr.bookingPay,
+                    ),
                   ),
                 ),
               ],

@@ -152,7 +152,9 @@ class TripDetailsHeroHeader extends StatelessWidget {
                     child: CircleIconButton(
                       diameter: actionDiameter,
                       iconSize: 22.sp,
-                      icon: state.isFavorite ? Icons.favorite : Icons.favorite_border,
+                      icon: state.isFavorite
+                          ? Icons.favorite
+                          : Icons.favorite_border,
                       iconColor: Colors.red,
                       backgroundColor: _frostFill,
                       borderColor: _frostBorder,
@@ -388,42 +390,6 @@ class _HeroMetaRow extends StatelessWidget {
         SizedBox(width: 8.w),
         Expanded(child: child),
       ],
-    );
-  }
-}
-
-class _RatingPill extends StatelessWidget {
-  const _RatingPill({required this.ratingText});
-
-  final String ratingText;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsetsDirectional.symmetric(horizontal: 12.w, vertical: 6.h),
-      decoration: BoxDecoration(
-        color: AppColors.shadow.withValues(alpha: 0.45),
-        borderRadius: BorderRadius.circular(999.r),
-      ),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Text(
-            ratingText,
-            style: AppTextStyles.bodyMedium(color: AppColors.onImage).copyWith(
-              fontSize: 14.sp,
-              fontWeight: FontWeight.w600,
-              height: 1.1,
-            ),
-          ),
-          SizedBox(width: 5.w),
-          Icon(
-            Icons.star_rounded,
-            color: AppColors.tripDetailsHeroStarGold,
-            size: 17.sp,
-          ),
-        ],
-      ),
     );
   }
 }

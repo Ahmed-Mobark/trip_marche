@@ -130,6 +130,28 @@ class ReviewCard extends StatelessWidget {
               color: AppColors.commentGrey(context),
             ).copyWith(height: 1.4),
           ),
+          if (review.vendorReply?.trim().isNotEmpty == true) ...[
+            const SizedBox(height: 12),
+            Container(
+              width: double.infinity,
+              padding: const EdgeInsets.all(12),
+              decoration: BoxDecoration(
+                color: AppColors.inputBg(context),
+                borderRadius: BorderRadius.circular(10),
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    context.tr.companyProfileVendorReply,
+                    style: const TextStyle(fontWeight: FontWeight.w600),
+                  ),
+                  const SizedBox(height: 6),
+                  Text(review.vendorReply!),
+                ],
+              ),
+            ),
+          ],
           if (review.galleryImages.isNotEmpty) ...[
             SizedBox(height: CompanyProfileFigmaTokens.rowGapLarge),
             SizedBox(
@@ -178,8 +200,8 @@ class _CustomerReviewsSectionState extends State<CustomerReviewsSection> {
     final visibleReviews = _isExpanded ? reviews : reviews.take(3).toList();
     final toggleText = reviews.length > 3
         ? (_isExpanded
-            ? context.tr.companyProfileShowLess
-            : context.tr.companyProfileViewAll)
+              ? context.tr.companyProfileShowLess
+              : context.tr.companyProfileViewAll)
         : null;
 
     return Padding(

@@ -1,3 +1,4 @@
+import 'domain/usecases/quote_booking_usecase.dart';
 import 'package:get_it/get_it.dart';
 import 'package:trip_marche/core/network/network_service/api_basehelper.dart';
 import 'package:trip_marche/features/booking/data/datasources/coupon_remote_data_source.dart';
@@ -18,11 +19,12 @@ void initBookingInjection(GetIt sl) {
   sl.registerLazySingleton<CouponRepository>(
     () => CouponRepositoryImpl(sl<CouponRemoteDataSource>()),
   );
-  sl.registerLazySingleton(
-    () => ValidateCouponUseCase(sl<CouponRepository>()),
-  );
+  sl.registerLazySingleton(() => ValidateCouponUseCase(sl<CouponRepository>()));
   sl.registerFactory(
-    () => CouponCubit(sl<ValidateCouponUseCase>()),
+    () => CouponCubit(
+      sl<ValidateCouponUseCase>(),
+      quoteBooking: sl<QuoteBookingUseCase>(),
+    ),
   );
 
   sl.registerLazySingleton<CreateBookingRemoteDataSource>(
@@ -34,7 +36,8 @@ void initBookingInjection(GetIt sl) {
   sl.registerLazySingleton(
     () => CreateBookingUseCase(sl<CreateBookingRepository>()),
   );
-  sl.registerFactory(
-    () => CreateBookingCubit(sl<CreateBookingUseCase>()),
+  sl.registerLazySingleton(
+    () => QuoteBookingUseCase(sl<CreateBookingRepository>()),
   );
+  sl.registerFactory(() => CreateBookingCubit(sl<CreateBookingUseCase>()));
 }

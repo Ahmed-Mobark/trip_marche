@@ -1,6 +1,6 @@
 {
-    "name": "trip_marche",
-    "short_name": "trip_marche",
+    "name": "TrevLen",
+    "short_name": "TrevLen",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

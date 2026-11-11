@@ -3,14 +3,30 @@ import 'package:intl/intl.dart';
 import 'package:trip_marche/core/utils/price_formatter.dart';
 
 abstract final class TripDetailsUiFormatters {
-  static String timeOfDay(BuildContext context, DateTime utc) {
+  static String timeOfDay(BuildContext context, DateTime? utc) {
+    if (utc == null) return '—';
     final loc = Localizations.localeOf(context).toString();
     return DateFormat.jm(loc).format(utc.toLocal());
   }
 
-  static String monthDay(BuildContext context, DateTime utc) {
+  static String monthDay(BuildContext context, DateTime? utc) {
+    if (utc == null) return '—';
     final loc = Localizations.localeOf(context).toString();
     return DateFormat.yMMMd(loc).format(utc.toLocal());
+  }
+
+  static String arrivalClock(
+    BuildContext context,
+    String? raw,
+    DateTime? fallback,
+    int dayOffset,
+  ) {
+    final time = raw != null
+        ? clockTime(context, raw)
+        : timeOfDay(context, fallback);
+    return time != '—' && time.isNotEmpty && dayOffset > 0
+        ? '$time (+$dayOffset)'
+        : time;
   }
 
   /// Formats an API clock string ("HH:mm" / "HH:mm:ss") into a locale-aware

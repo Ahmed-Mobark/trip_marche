@@ -105,7 +105,7 @@ class _BookingPdfViewerScreenState extends State<BookingPdfViewerScreen> {
       Directory targetDir;
       if (Platform.isAndroid) {
         final externalDir = await getExternalStorageDirectory();
-        targetDir = Directory('${externalDir!.path}/TripMarche');
+        targetDir = Directory('${externalDir!.path}/TrevLen');
       } else {
         final docsDir = await getApplicationDocumentsDirectory();
         targetDir = Directory(docsDir.path);

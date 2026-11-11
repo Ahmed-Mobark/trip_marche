@@ -4,6 +4,7 @@ import 'package:trip_marche/features/booking/domain/entities/coupon_validation.d
 class CouponValidationModel {
   const CouponValidationModel({
     required this.message,
+    this.terms = const [],
     required this.code,
     required this.type,
     required this.value,
@@ -11,6 +12,7 @@ class CouponValidationModel {
   });
 
   final String message;
+  final List<String> terms;
   final String code;
   final String type;
   final double value;
@@ -21,9 +23,7 @@ class CouponValidationModel {
     if (!success) {
       final message = json['message']?.toString().trim();
       throw ValidationException(
-        message != null && message.isNotEmpty
-            ? message
-            : 'Invalid coupon code',
+        message != null && message.isNotEmpty ? message : 'Invalid coupon code',
       );
     }
 
@@ -34,6 +34,7 @@ class CouponValidationModel {
 
     return CouponValidationModel(
       message: json['message']?.toString() ?? '',
+      terms: (data['terms'] as List?)?.whereType<String>().toList() ?? const [],
       code: data['code']?.toString() ?? '',
       type: data['type']?.toString() ?? 'fixed',
       value: _asDouble(data['value']),
@@ -48,6 +49,7 @@ class CouponValidationModel {
       value: value,
       discountAmount: discountAmount,
       message: message,
+      terms: terms,
     );
   }
 

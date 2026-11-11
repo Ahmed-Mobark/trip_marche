@@ -38,13 +38,20 @@ class TripDetailsTransportationSection extends StatelessWidget {
           SizedBox(height: 8.h),
           Text(
             context.tr.tripDetailsNoTransport,
-            style: TextStyles.textViewRegular14.copyWith(color: AppColors.greyText(context)),
+            style: TextStyles.textViewRegular14.copyWith(
+              color: AppColors.greyText(context),
+            ),
           ),
         ],
       );
     }
 
-    final sorted = [...legs]..sort((a, b) => a.departAt.compareTo(b.departAt));
+    final sorted = [...legs]
+      ..sort(
+        (a, b) => (a.departAt ?? a.travelDate ?? DateTime(9999)).compareTo(
+          b.departAt ?? b.travelDate ?? DateTime(9999),
+        ),
+      );
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -58,12 +65,30 @@ class TripDetailsTransportationSection extends StatelessWidget {
           if (i > 0) SizedBox(height: 12.h),
           TripDetailsTravelLegCard(
             leftCity: sorted[i].fromCity,
-            leftTime: TripDetailsUiFormatters.timeOfDay(context, sorted[i].departAt),
+            leftTime: sorted[i].departureTime != null
+                ? TripDetailsUiFormatters.clockTime(
+                    context,
+                    sorted[i].departureTime!,
+                  )
+                : TripDetailsUiFormatters.timeOfDay(
+                    context,
+                    sorted[i].departAt,
+                  ),
             centerIcon: _iconForType(sorted[i].type),
-            centerLabel: TripDetailsUiFormatters.transportTypeLabel(sorted[i].type),
-            centerDate: TripDetailsUiFormatters.monthDay(context, sorted[i].departAt),
+            centerLabel: TripDetailsUiFormatters.transportTypeLabel(
+              sorted[i].type,
+            ),
+            centerDate: TripDetailsUiFormatters.monthDay(
+              context,
+              sorted[i].travelDate ?? sorted[i].departAt,
+            ),
             rightCity: sorted[i].toCity,
-            rightTime: TripDetailsUiFormatters.timeOfDay(context, sorted[i].arriveAt),
+            rightTime: TripDetailsUiFormatters.arrivalClock(
+              context,
+              sorted[i].arrivalTime,
+              sorted[i].arriveAt,
+              sorted[i].arrivalDayOffset,
+            ),
           ),
         ],
       ],

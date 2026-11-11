@@ -5,6 +5,7 @@ class NotificationPayload {
     this.notificationId,
     this.tripId,
     this.bookingId,
+    this.conversationId,
     this.data = const {},
   });
 
@@ -13,6 +14,7 @@ class NotificationPayload {
   final int? notificationId;
   final int? tripId;
   final int? bookingId;
+  final int? conversationId;
   final Map<String, dynamic> data;
 
   factory NotificationPayload.fromMap(Map<String, dynamic> map) {
@@ -22,6 +24,7 @@ class NotificationPayload {
       notificationId: _asInt(map['notification_id'] ?? map['id']),
       tripId: _asInt(map['trip_id']),
       bookingId: _asInt(map['booking_id']),
+      conversationId: _asInt(map['conversation_id']),
       data: Map<String, dynamic>.from(map),
     );
   }

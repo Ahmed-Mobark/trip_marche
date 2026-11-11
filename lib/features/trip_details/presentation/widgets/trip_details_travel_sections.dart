@@ -57,7 +57,7 @@ class TripDetailsTravelSections extends StatelessWidget {
           SizedBox(height: 12.h),
 
           // 6. Destination details (grid)
-          const TripDetailsDestinationDetailsGridCard(),
+          TripDetailsDestinationDetailsGridCard(trip: trip),
           SizedBox(height: 12.h),
 
           // 7. User reviews

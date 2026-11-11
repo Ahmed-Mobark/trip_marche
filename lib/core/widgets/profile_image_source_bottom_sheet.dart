@@ -5,7 +5,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:trip_marche/core/theme/app_colors.dart';
 import 'package:trip_marche/core/theme/app_text_styles.dart';
 import 'package:trip_marche/core/extensions/localization.dart';
-import 'package:trip_marche/core/extensions/media_query_extensions.dart';
 import 'package:trip_marche/core/enums/media_type.dart';
 import 'package:trip_marche/core/services/media_service/media_services.dart';
 import 'package:trip_marche/core/services/media_service/media_service_exceptions.dart';

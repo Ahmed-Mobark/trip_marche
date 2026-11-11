@@ -20,7 +20,9 @@ class TripDetailsFlightDetailsSection extends StatelessWidget {
     if (a.direction != 'outbound' && b.direction == 'outbound') {
       return 1;
     }
-    return a.departAt.compareTo(b.departAt);
+    return (a.departAt ?? a.travelDate ?? DateTime(9999)).compareTo(
+      b.departAt ?? b.travelDate ?? DateTime(9999),
+    );
   }
 
   @override
@@ -37,7 +39,9 @@ class TripDetailsFlightDetailsSection extends StatelessWidget {
           SizedBox(height: 8.h),
           Text(
             context.tr.tripDetailsNoFlights,
-            style: TextStyles.textViewRegular14.copyWith(color: AppColors.greyText(context)),
+            style: TextStyles.textViewRegular14.copyWith(
+              color: AppColors.greyText(context),
+            ),
           ),
         ],
       );
@@ -61,11 +65,27 @@ class TripDetailsFlightDetailsSection extends StatelessWidget {
           SizedBox(height: i == 0 ? 12.h : 12.h),
           TripDetailsTravelLegCard(
             leftCity: flights[i].fromCity,
-            leftTime: TripDetailsUiFormatters.timeOfDay(context, flights[i].departAt),
+            leftTime: flights[i].departureTime != null
+                ? TripDetailsUiFormatters.clockTime(
+                    context,
+                    flights[i].departureTime!,
+                  )
+                : TripDetailsUiFormatters.timeOfDay(
+                    context,
+                    flights[i].departAt,
+                  ),
             centerIcon: Iconsax.airplane,
-            centerDate: TripDetailsUiFormatters.monthDay(context, flights[i].departAt),
+            centerDate: TripDetailsUiFormatters.monthDay(
+              context,
+              flights[i].travelDate ?? flights[i].departAt,
+            ),
             rightCity: flights[i].toCity,
-            rightTime: TripDetailsUiFormatters.timeOfDay(context, flights[i].arriveAt),
+            rightTime: TripDetailsUiFormatters.arrivalClock(
+              context,
+              flights[i].arrivalTime,
+              flights[i].arriveAt,
+              flights[i].arrivalDayOffset,
+            ),
             flipIcon: flights[i].direction == 'return',
           ),
         ],

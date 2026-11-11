@@ -12,6 +12,7 @@ class CompanyActionButtons extends StatelessWidget {
     super.key,
     required this.onCallPressed,
     required this.onWhatsAppPressed,
+    required this.onMessagePressed,
     required this.socialButtons,
     this.onCallEnabled,
     this.onWhatsAppEnabled,
@@ -19,6 +20,7 @@ class CompanyActionButtons extends StatelessWidget {
 
   final VoidCallback? onCallPressed;
   final VoidCallback? onWhatsAppPressed;
+  final VoidCallback onMessagePressed;
   final List<SocialButtonModel> socialButtons;
   final bool? onCallEnabled;
   final bool? onWhatsAppEnabled;
@@ -67,6 +69,20 @@ class CompanyActionButtons extends StatelessWidget {
                 ),
               ),
             ],
+          ),
+          SizedBox(height: CompanyProfileFigmaTokens.rowGapMedium),
+          _ActionButton(
+            icon: Icon(
+              Iconsax.message_text_1,
+              size: CompanyProfileFigmaTokens.largeIconSize,
+              color: AppColors.white,
+            ),
+            label: context.tr.chatContactVendor,
+            onPressed: onMessagePressed,
+            iconColor: AppColors.white,
+            textColor: AppColors.white,
+            borderColor: AppColors.primary,
+            fillColor: AppColors.primary,
           ),
           SizedBox(height: CompanyProfileFigmaTokens.rowGapMedium),
           Row(

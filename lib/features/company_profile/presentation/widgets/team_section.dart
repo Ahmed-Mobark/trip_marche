@@ -15,7 +15,31 @@ class TeamMemberItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
+    return InkWell(
+      onTap: () => showDialog<void>(
+        context: context,
+        builder: (dialogContext) => AlertDialog(
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              ProfileAvatar(
+                imageUrl: member.avatarUrl,
+                size: CompanyProfileFigmaTokens.teamAvatarSize * 2,
+                borderRadius: CompanyProfileFigmaTokens.teamAvatarSize * 2,
+              ),
+              const SizedBox(height: 16),
+              Text(member.name, textAlign: TextAlign.center, style: AppTextStyles.subtitle(color: AppColors.darkText(dialogContext))),
+              const SizedBox(height: 6),
+              Text(member.isManager ? context.tr.companyProfileManager : member.role, textAlign: TextAlign.center),
+              if ((member.shortDescription ?? '').trim().isNotEmpty) ...[
+                const SizedBox(height: 12),
+                Text(member.shortDescription!, textAlign: TextAlign.center),
+              ],
+            ],
+          ),
+        ),
+      ),
+      child: SizedBox(
       width: 100.w,
       child: Column(
         mainAxisSize: MainAxisSize.min,
@@ -42,7 +66,9 @@ class TeamMemberItem extends StatelessWidget {
                 ),
                 SizedBox(height: CompanyProfileFigmaTokens.rowGapSmall),
                 Text(
-                  member.role,
+                  member.isManager
+                      ? context.tr.companyProfileManager
+                      : member.role,
                   style: AppTextStyles.caption(
                     color: AppColors.secondaryGrey(context),
                   ).copyWith(fontWeight: FontWeight.w400),
@@ -54,6 +80,7 @@ class TeamMemberItem extends StatelessWidget {
             ),
           ),
         ],
+      ),
       ),
     );
   }

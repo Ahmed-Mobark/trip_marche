@@ -143,6 +143,8 @@ class CompanyDetailsModel extends Equatable {
     this.commercialRegistration,
     this.businessLicense,
     this.taxCard,
+    this.tourismLicenseUrl,
+    this.tourismLicenseType,
   });
 
   final String? about;
@@ -154,6 +156,8 @@ class CompanyDetailsModel extends Equatable {
   final String? commercialRegistration;
   final String? businessLicense;
   final String? taxCard;
+  final String? tourismLicenseUrl;
+  final String? tourismLicenseType;
 
   factory CompanyDetailsModel.fromJson(Map<String, dynamic>? json) {
     if (json == null) {
@@ -169,6 +173,8 @@ class CompanyDetailsModel extends Equatable {
       commercialRegistration: json['commercial_registration']?.toString(),
       businessLicense: json['business_license']?.toString(),
       taxCard: json['tax_card']?.toString(),
+      tourismLicenseUrl: json['tourism_license_url']?.toString(),
+      tourismLicenseType: json['tourism_license_type']?.toString(),
     );
   }
 
@@ -183,6 +189,8 @@ class CompanyDetailsModel extends Equatable {
     commercialRegistration,
     businessLicense,
     taxCard,
+    tourismLicenseUrl,
+    tourismLicenseType,
   ];
 }
 
@@ -210,22 +218,28 @@ class TeamMemberApiModel extends Equatable {
     required this.name,
     required this.title,
     this.avatar,
+    this.isManager = false,
+    this.shortDescription,
   });
 
   final String name;
   final String title;
   final String? avatar;
+  final bool isManager;
+  final String? shortDescription;
 
   factory TeamMemberApiModel.fromJson(Map<String, dynamic> json) {
     return TeamMemberApiModel(
       name: json['name']?.toString() ?? '',
       title: json['title']?.toString() ?? json['role']?.toString() ?? '',
       avatar: json['avatar']?.toString(),
+      isManager: json['is_manager'] == true || json['is_manager'] == 1,
+      shortDescription: json['short_description']?.toString(),
     );
   }
 
   @override
-  List<Object?> get props => [name, title, avatar];
+  List<Object?> get props => [name, title, avatar, isManager, shortDescription];
 }
 
 class ReviewerModel extends Equatable {
@@ -409,6 +423,7 @@ class ReviewModelApi extends Equatable {
     required this.comment,
     required this.images,
     this.createdAt,
+    this.vendorReply,
   });
 
   final ReviewerModel reviewer;
@@ -416,6 +431,7 @@ class ReviewModelApi extends Equatable {
   final String comment;
   final List<String> images;
   final String? createdAt;
+  final String? vendorReply;
 
   factory ReviewModelApi.fromJson(Map<String, dynamic> json) {
     final imagesJson = json['images'] as List<dynamic>? ?? [];
@@ -427,11 +443,19 @@ class ReviewModelApi extends Equatable {
       comment: json['comment']?.toString() ?? '',
       images: imagesJson.map((e) => e is String ? e : e.toString()).toList(),
       createdAt: json['created_at']?.toString(),
+      vendorReply: json['vendor_reply']?.toString(),
     );
   }
 
   @override
-  List<Object?> get props => [reviewer, rating, comment, images, createdAt];
+  List<Object?> get props => [
+    reviewer,
+    rating,
+    comment,
+    images,
+    createdAt,
+    vendorReply,
+  ];
 }
 
 class FAQModelApi extends Equatable {
@@ -508,8 +532,12 @@ class VendorProfileModel extends Equatable {
 
     return VendorProfileModel(
       vendor: VendorModel.fromJson(dataPayload),
-      contact: ContactModel.fromJson(dataPayload['contact'] as Map<String, dynamic>?),
-      social: SocialModel.fromJson(dataPayload['social'] as Map<String, dynamic>?),
+      contact: ContactModel.fromJson(
+        dataPayload['contact'] as Map<String, dynamic>?,
+      ),
+      social: SocialModel.fromJson(
+        dataPayload['social'] as Map<String, dynamic>?,
+      ),
       companyDetails: CompanyDetailsModel.fromJson(
         dataPayload['company_details'] as Map<String, dynamic>?,
       ),

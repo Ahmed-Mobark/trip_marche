@@ -1,3 +1,4 @@
+import '../../../chat/presentation/view/conversations_view.dart';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -17,10 +18,8 @@ import '../../../../core/storage/data/storage.dart';
 import '../../../../core/widgets/profile_image_source_bottom_sheet.dart';
 import '../../../auth/domain/repositories/auth_repository.dart';
 import '../../../auth/presentation/view/login_view.dart';
-import '../../../settings/presentation/view/customer_service_view.dart';
-import '../../../settings/presentation/view/faqs_view.dart';
+import '../../../settings/presentation/view/help_center_view.dart';
 import '../../../settings/presentation/view/settings_view.dart';
-import '../../../settings/presentation/view/terms_view.dart';
 import '../../domain/repositories/profile_repository.dart';
 import '../../domain/usecases/update_profile_usecase.dart';
 import '../cubit/profile_cubit.dart';
@@ -328,6 +327,14 @@ class _ProfileViewState extends State<ProfileView> {
                   // ),
                   const _HandoffDivider(),
                   ProfileMenuItem(
+                    icon: Icons.chat_bubble_outline,
+                    title: context.tr.chatTitle,
+                    onTap: () => sl<AppNavigator>().push(
+                      screen: const ConversationsView(),
+                    ),
+                  ),
+                  const _HandoffDivider(),
+                  ProfileMenuItem(
                     icon: Iconsax.star,
                     title: context.tr.profileMyReviews,
                     onTap: () =>
@@ -363,24 +370,9 @@ class _ProfileViewState extends State<ProfileView> {
                   SizedBox(height: t.w(16)),
                   ProfileMenuItem(
                     icon: Iconsax.headphone,
-                    title: context.tr.profileCustomerService,
-                    onTap: () => sl<AppNavigator>().push(
-                      screen: const CustomerServiceView(),
-                    ),
-                  ),
-                  const _HandoffDivider(),
-                  ProfileMenuItem(
-                    icon: Iconsax.message_question,
-                    title: context.tr.profileFaqs,
+                    title: context.tr.helpCenterTitle,
                     onTap: () =>
-                        sl<AppNavigator>().push(screen: const FaqsView()),
-                  ),
-                  const _HandoffDivider(),
-                  ProfileMenuItem(
-                    icon: Iconsax.task,
-                    title: context.tr.profileTermsAndConditions,
-                    onTap: () =>
-                        sl<AppNavigator>().push(screen: const TermsView()),
+                        sl<AppNavigator>().push(screen: const HelpCenterView()),
                   ),
                   const _HandoffDivider(),
                   ProfileMenuItem(

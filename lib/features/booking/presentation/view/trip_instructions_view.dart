@@ -16,7 +16,10 @@ class TripInstructionsView extends StatelessWidget {
         backgroundColor: AppColors.background(context),
         elevation: 0,
         leading: IconButton(
-          icon: Icon(Icons.arrow_back_ios_new_rounded, color: AppColors.darkText(context)),
+          icon: Icon(
+            Icons.arrow_back_ios_new_rounded,
+            color: AppColors.darkText(context),
+          ),
           onPressed: () => Navigator.pop(context),
         ),
         title: Text(
@@ -61,7 +64,7 @@ class TripInstructionsView extends StatelessWidget {
                 'Meeting point: Cairo International Airport, Terminal 2, Gate B',
                 'Meeting time: 6:00 AM on Day 1 of the trip',
                 'Please arrive at least 30 minutes before the scheduled departure',
-                'Look for our staff member holding a Trip Marche sign',
+                'Look for our staff member holding a TrevLen sign',
                 'Contact our trip coordinator if you are running late',
               ],
             ),
