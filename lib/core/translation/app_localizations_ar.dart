@@ -243,7 +243,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get authResendNow => 'أعد الإرسال الآن';
 
   @override
-  String get homeAppTitle => 'TrevLen';
+  String get homeAppTitle => 'تريفلن';
 
   @override
   String get homeSearchHint => 'ابحث عن رحلة';
@@ -290,7 +290,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get homeFromCairoAlexandria => 'من القاهرة والإسكندرية';
 
   @override
-  String get homeNewInTripMarche => 'جديد في TrevLen';
+  String get homeNewInTripMarche => 'جديد في تريفلن';
 
   @override
   String get homePerPerson => 'للفرد';
@@ -311,7 +311,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get wishlistFilters => 'تصفية';
 
   @override
-  String get wishlistNewInTripMarche => 'جديد في TrevLen';
+  String get wishlistNewInTripMarche => 'جديد في تريفلن';
 
   @override
   String get wishlistRecommended => 'موصى به';
@@ -1414,7 +1414,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get searchResultDateTo => '4 ديسمبر';
 
   @override
-  String get searchResultLabelNew => 'جديد في TrevLen';
+  String get searchResultLabelNew => 'جديد في تريفلن';
 
   @override
   String get searchResultLabelRecommended => 'موصى به';
@@ -2069,7 +2069,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get tripDetailsOrganizerTitle => 'المنظم';
 
   @override
-  String get tripDetailsOrganizerSubtitle => 'شريك موثوق على TrevLen';
+  String get tripDetailsOrganizerSubtitle => 'شريك موثوق على تريفلن';
 
   @override
   String get tripDetailsStartingFrom => 'يبدأ من';
@@ -2117,7 +2117,7 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get bookingTripTermsSection1Body =>
-      'عند حجز رحلة عبر TrevLen فإنك توافق على الشروط التالية. يلزم دفع عربون بنسبة 30% عند الحجز لتأكيد مكانك. يجب سداد المبلغ المتبقي قبل موعد انطلاق الرحلة بـ 14 يومًا على الأقل. قد يؤدي عدم السداد في الموعد إلى إلغاء الحجز. تتم معالجة جميع المدفوعات بشكل آمن عبر شركائنا.';
+      'عند حجز رحلة عبر تريفلن فإنك توافق على الشروط التالية. يلزم دفع عربون بنسبة 30% عند الحجز لتأكيد مكانك. يجب سداد المبلغ المتبقي قبل موعد انطلاق الرحلة بـ 14 يومًا على الأقل. قد يؤدي عدم السداد في الموعد إلى إلغاء الحجز. تتم معالجة جميع المدفوعات بشكل آمن عبر شركائنا.';
 
   @override
   String get bookingTripTermsSection2Title => '2. الأهلية';
@@ -2131,21 +2131,21 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get bookingTripTermsSection3Body =>
-      'يحق لـ TrevLen تعديل برنامج الرحلة بسبب الظروف الجوية أو اعتبارات السلامة أو ظروف غير متوقعة. سنسعى لتقديم بدائل مكافئة. في حال حدوث تغييرات كبيرة سيتم إخطار المسافرين وقد يتم تقديم استرداد جزئي أو رصيد.';
+      'يحق لـ تريفلن تعديل برنامج الرحلة بسبب الظروف الجوية أو اعتبارات السلامة أو ظروف غير متوقعة. سنسعى لتقديم بدائل مكافئة. في حال حدوث تغييرات كبيرة سيتم إخطار المسافرين وقد يتم تقديم استرداد جزئي أو رصيد.';
 
   @override
   String get bookingTripTermsSection4Title => '4. مسؤوليات المسافر';
 
   @override
   String get bookingTripTermsSection4Body =>
-      'يتحمل المسافر مسؤولية توفر وثائق السفر السارية وتأمين السفر وأي تطعيمات مطلوبة. يجب اتباع تعليمات المرشدين واحترام القوانين والعادات المحلية. لا تتحمل TrevLen مسؤولية أي تبعات ناتجة عن عدم الالتزام بمتطلبات الدخول.';
+      'يتحمل المسافر مسؤولية توفر وثائق السفر السارية وتأمين السفر وأي تطعيمات مطلوبة. يجب اتباع تعليمات المرشدين واحترام القوانين والعادات المحلية. لا تتحمل تريفلن مسؤولية أي تبعات ناتجة عن عدم الالتزام بمتطلبات الدخول.';
 
   @override
   String get bookingTripTermsSection5Title => '5. المسؤولية';
 
   @override
   String get bookingTripTermsSection5Body =>
-      'تعمل TrevLen كمنظم ووسيط. ورغم اتخاذنا جميع الاحتياطات، فإننا لا نتحمل المسؤولية عن أي خسارة أو إصابة أو أضرار ناتجة عن الأنشطة أثناء الرحلة أو الكوارث الطبيعية أو تصرفات مزودي الخدمات من الأطراف الثالثة. المشاركة في الأنشطة تكون على مسؤولية المسافر. نوصي بشدة بشراء تأمين سفر شامل.';
+      'تعمل تريفلن كمنظم ووسيط. ورغم اتخاذنا جميع الاحتياطات، فإننا لا نتحمل المسؤولية عن أي خسارة أو إصابة أو أضرار ناتجة عن الأنشطة أثناء الرحلة أو الكوارث الطبيعية أو تصرفات مزودي الخدمات من الأطراف الثالثة. المشاركة في الأنشطة تكون على مسؤولية المسافر. نوصي بشدة بشراء تأمين سفر شامل.';
 
   @override
   String get bookingTripTermsSection6Title => '6. الخصوصية';
@@ -2195,7 +2195,7 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get bookingTripSafetyIntro =>
-      'في TrevLen نلتزم بضمان سلامة وراحة جميع المسافرين. تم تصميم رحلاتنا بإجراءات سلامة شاملة وجميع مرشدينا مدربون على الإسعافات الأولية وإجراءات الطوارئ.';
+      'في تريفلن نلتزم بضمان سلامة وراحة جميع المسافرين. تم تصميم رحلاتنا بإجراءات سلامة شاملة وجميع مرشدينا مدربون على الإسعافات الأولية وإجراءات الطوارئ.';
 
   @override
   String get bookingTripSafetyWaterTitle => 'سلامة الأنشطة المائية';
@@ -2515,7 +2515,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get chatYesterday => 'أمس';
 
   @override
-  String get chatInboxHint => 'محادثاتك مع شركاء السفر وفريق دعم TrevLen.';
+  String get chatInboxHint => 'محادثاتك مع شركاء السفر وفريق دعم تريفلن.';
 
   @override
   String get chatSupportHint => 'نحن هنا لمساعدتك في رحلتك.';

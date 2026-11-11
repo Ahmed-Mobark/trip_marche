@@ -30,6 +30,8 @@ class CompanyTripCard extends StatelessWidget {
         return AppColors.searchResultBestPriceGreen;
       case 'New in TripMarche':
       case 'New in TrevLen':
+      case 'New in trevlen':
+      case 'جديد في تريفلن':
         return AppColors.primary;
       default:
         return AppColors.primary;
