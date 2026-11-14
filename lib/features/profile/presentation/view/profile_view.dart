@@ -18,7 +18,6 @@ import '../../../../core/storage/data/storage.dart';
 import '../../../../core/widgets/profile_image_source_bottom_sheet.dart';
 import '../../../auth/domain/repositories/auth_repository.dart';
 import '../../../auth/presentation/view/login_view.dart';
-import '../../../settings/presentation/view/help_center_view.dart';
 import '../../../settings/presentation/view/settings_view.dart';
 import '../../domain/repositories/profile_repository.dart';
 import '../../domain/usecases/update_profile_usecase.dart';
@@ -370,9 +369,10 @@ class _ProfileViewState extends State<ProfileView> {
                   SizedBox(height: t.w(16)),
                   ProfileMenuItem(
                     icon: Iconsax.headphone,
-                    title: context.tr.helpCenterTitle,
-                    onTap: () =>
-                        sl<AppNavigator>().push(screen: const HelpCenterView()),
+                    title: context.tr.chatSupport,
+                    onTap: () => sl<AppNavigator>().push(
+                      screen: const ConversationsView(startSupport: true),
+                    ),
                   ),
                   const _HandoffDivider(),
                   ProfileMenuItem(

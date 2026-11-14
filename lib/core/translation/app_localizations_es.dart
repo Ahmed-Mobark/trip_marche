@@ -1758,17 +1758,18 @@ class AppLocalizationsEs extends AppLocalizations {
   String get tripDetailsBookNow => 'Reservar ahora';
 
   @override
-  String get tripDetailsSoldOut => 'Agotado';
+  String get tripDetailsSoldOut => 'Sold Out';
 
   @override
-  String get bookingDepartureSoldOut => 'Esta fecha está agotada';
+  String get bookingDepartureSoldOut => 'This departure date is fully booked';
 
   @override
-  String get bookingTripSoldOut => 'Todas las salidas para este viaje están agotadas';
+  String get bookingTripSoldOut =>
+      'All departures for this trip are fully booked';
 
   @override
   String bookingSeatsInsufficient(int seats) {
-    return 'Solo quedan $seats plazas para esta salida';
+    return 'Only $seats seat(s) remaining for this departure';
   }
 
   @override

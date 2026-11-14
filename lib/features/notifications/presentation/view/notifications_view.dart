@@ -5,6 +5,7 @@ import 'package:iconsax/iconsax.dart';
 import '../../../../core/injection/injection_container.dart';
 import '../../../../core/notification/notification_api.dart';
 import '../../../../core/notification/notification_navigation_service.dart';
+import '../../../../core/notification/notification_unread_controller.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/widgets/custom_loading.dart';
 import '../../data/app_notification.dart';
@@ -29,17 +30,11 @@ class _NotificationsViewState extends State<NotificationsView> {
   Future<List<AppNotification>> _load() async {
     final items = await sl<NotificationApi>().fetchNotifications();
     final notifications = items.map(AppNotification.fromJson).toList();
-    if (notifications.any((item) => !item.isRead)) {
-      try {
-        await sl<NotificationApi>().markAllAsRead();
-        return notifications
-            .map((item) => item.copyWith(isRead: true))
-            .toList(growable: false);
-      } catch (_) {
-        return notifications;
-      }
-    }
-    return notifications;
+    final marked = await sl<NotificationUnreadController>().markAllAsRead();
+    if (!marked) return notifications;
+    return notifications
+        .map((item) => item.copyWith(isRead: true))
+        .toList(growable: false);
   }
 
   Future<void> _refresh() async {

@@ -349,6 +349,7 @@ class _NotificationButton extends StatelessWidget {
                 top: 8.w,
                 end: 8.w,
                 child: Container(
+                  key: const Key('notification-unread-dot'),
                   width: 9.w,
                   height: 9.w,
                   decoration: BoxDecoration(

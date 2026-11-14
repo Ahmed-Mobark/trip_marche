@@ -6,7 +6,10 @@ import 'package:trip_marche/features/booking/data/models/coupon_validation_model
 import 'package:trip_marche/features/booking/presentation/widgets/coupon_field.dart';
 import 'package:trip_marche/features/company_profile/data/models/vendor_profile_model.dart';
 import 'package:trip_marche/features/company_profile/presentation/models/review_model.dart';
+import 'package:trip_marche/features/company_profile/presentation/models/team_member_model.dart';
+import 'package:trip_marche/features/company_profile/presentation/widgets/company_profile_header.dart';
 import 'package:trip_marche/features/company_profile/presentation/widgets/customer_reviews_section.dart';
+import 'package:trip_marche/features/company_profile/presentation/widgets/team_section.dart';
 import 'package:trip_marche/features/trip_details/data/models/trip_details_model.dart';
 import 'package:trip_marche/features/trip_details/presentation/widgets/trip_details_destination_details_section.dart';
 import 'package:trip_marche/features/trip_details/presentation/widgets/trip_details_transportation_section.dart';
@@ -54,6 +57,64 @@ void main() {
       ReviewModelApi.fromJson({'vendor_reply': 'Thank you'}).vendorReply,
       'Thank you',
     );
+    final companyDetails = CompanyDetailsModel.fromJson({
+      'tourism_license_url': 'https://example.test/tourism-license',
+      'tourism_license_type': 'image',
+    });
+    expect(
+      companyDetails.tourismLicenseUrl,
+      'https://example.test/tourism-license',
+    );
+    expect(companyDetails.tourismLicenseType, 'image');
+  });
+
+  testWidgets(
+    'team member dialog shows public role description and manager badge',
+    (tester) async {
+      await show(
+        tester,
+        const TeamMemberItem(
+          member: TeamMemberModel(
+            name: 'Mona Ali',
+            role: 'Tour leader',
+            avatarUrl: '',
+            isManager: true,
+            shortDescription: 'Ten years of travel experience',
+          ),
+        ),
+      );
+
+      await tester.tap(find.text('Mona Ali'));
+      await tester.pumpAndSettle();
+
+      expect(find.text('Tour leader'), findsOneWidget);
+      expect(find.text('Company manager'), findsWidgets);
+      expect(find.text('Ten years of travel experience'), findsOneWidget);
+      expect(find.byIcon(Icons.close), findsOneWidget);
+    },
+  );
+
+  testWidgets('verification badge stays immediately after the company name', (
+    tester,
+  ) async {
+    await show(
+      tester,
+      CompanyProfileHeader(
+        companyName: 'TrevLen Travel',
+        avatarUrl: '',
+        rating: 4.8,
+        reviewsCount: 12,
+        isFollowing: false,
+        onFollowToggle: () {},
+        isVerified: true,
+        showFollowButton: false,
+      ),
+    );
+
+    final nameRect = tester.getRect(find.text('TrevLen Travel'));
+    final badgeRect = tester.getRect(find.byIcon(Icons.check));
+    expect((badgeRect.center.dy - nameRect.center.dy).abs(), lessThan(2));
+    expect(badgeRect.left - nameRect.right, inInclusiveRange(0, 20));
   });
 
   test(

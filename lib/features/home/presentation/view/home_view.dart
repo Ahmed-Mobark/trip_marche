@@ -6,7 +6,7 @@ import 'package:trip_marche/core/extensions/localization.dart';
 import 'package:trip_marche/core/injection/injection_container.dart';
 import 'package:trip_marche/core/services/location_service.dart';
 import 'package:trip_marche/core/navigation/app_navigator.dart';
-import 'package:trip_marche/core/notification/notification_api.dart';
+import 'package:trip_marche/core/notification/notification_unread_controller.dart';
 import 'package:trip_marche/core/theme/app_colors.dart';
 import 'package:trip_marche/core/theme/app_text_styles.dart';
 import 'package:trip_marche/core/toast/app_toast.dart';
@@ -46,25 +46,45 @@ class HomeView extends StatefulWidget {
   State<HomeView> createState() => HomeViewState();
 }
 
-class HomeViewState extends State<HomeView> {
+class HomeViewState extends State<HomeView> with WidgetsBindingObserver {
   BuildContext? _refreshContext;
   String _locationText = '';
-  int _unreadNotifications = 0;
+  late final NotificationUnreadController _notificationUnread;
+  bool _hasUnreadNotifications = false;
 
   @override
   void initState() {
     super.initState();
+    WidgetsBinding.instance.addObserver(this);
+    _notificationUnread = sl<NotificationUnreadController>();
+    _hasUnreadNotifications = _notificationUnread.hasUnread;
+    _notificationUnread.addListener(_onUnreadNotificationsChanged);
     _fetchLocation();
     _loadUnreadNotifications();
   }
 
+  void _onUnreadNotificationsChanged() {
+    if (mounted) {
+      setState(() => _hasUnreadNotifications = _notificationUnread.hasUnread);
+    }
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.resumed) {
+      _loadUnreadNotifications();
+    }
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    _notificationUnread.removeListener(_onUnreadNotificationsChanged);
+    super.dispose();
+  }
+
   Future<void> _loadUnreadNotifications() async {
-    try {
-      final count = await sl<NotificationApi>().unreadCount();
-      if (mounted) {
-        setState(() => _unreadNotifications = count);
-      }
-    } catch (_) {}
+    await _notificationUnread.refresh();
   }
 
   Future<void> _fetchLocation() async {
@@ -305,7 +325,7 @@ class HomeViewState extends State<HomeView> {
                           ],
                           locationText: _headerLocationText(scrollContext),
                           topPadding: MediaQuery.paddingOf(scrollContext).top,
-                          hasNotification: _unreadNotifications > 0,
+                          hasNotification: _hasUnreadNotifications,
                           onNotificationsTap: () async {
                             await sl<AppNavigator>().push(
                               screen: const NotificationsView(),

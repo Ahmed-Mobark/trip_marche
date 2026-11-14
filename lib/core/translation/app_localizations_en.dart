@@ -1753,7 +1753,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get bookingDepartureSoldOut => 'This departure date is fully booked';
 
   @override
-  String get bookingTripSoldOut => 'All departures for this trip are fully booked';
+  String get bookingTripSoldOut =>
+      'All departures for this trip are fully booked';
 
   @override
   String bookingSeatsInsufficient(int seats) {

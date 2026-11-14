@@ -52,6 +52,23 @@ class _InboxRepository extends FakeChatRepository {
   );
 }
 
+class _SupportRepository extends FakeChatRepository {
+  final startedVendorIds = <int?>[];
+
+  @override
+  Future<Either<Failure, ChatThread>> start({int? vendorId}) async {
+    startedVendorIds.add(vendorId);
+    return const Right(
+      ChatThread(
+        id: 7,
+        title: 'TrevLen Support',
+        unreadCount: 0,
+        kind: 'support',
+      ),
+    );
+  }
+}
+
 void main() {
   setUpAll(() async {
     final path = Platform.environment['TREVLEN_CHAT_PREVIEW_FONT'];
@@ -176,6 +193,35 @@ void main() {
       await sl.reset();
     },
   );
+
+  testWidgets('support entry opens the TrevLen support conversation directly', (
+    tester,
+  ) async {
+    await sl.reset();
+    final repo = _SupportRepository();
+    final useCases = ChatUseCases(repo);
+    sl.registerSingleton<Storage>(_Storage());
+    sl.registerFactory(() => ConversationsCubit(useCases));
+    sl.registerFactoryParam<ChatCubit, int, void>(
+      (id, _) => ChatCubit(useCases, id),
+    );
+
+    await tester.pumpWidget(
+      MaterialApp(
+        localizationsDelegates: AppLocalizations.localizationsDelegates,
+        supportedLocales: AppLocalizations.supportedLocales,
+        home: const ConversationsView(startSupport: true),
+      ),
+    );
+    await tester.pumpAndSettle();
+
+    expect(repo.startedVendorIds, <int?>[null]);
+    expect(find.byType(ChatView), findsOneWidget);
+    expect(find.text('TrevLen Support'), findsOneWidget);
+
+    await tester.pumpWidget(const SizedBox());
+    await sl.reset();
+  });
 
   for (final locale in ['en', 'ar']) {
     for (final dark in [false, true]) {

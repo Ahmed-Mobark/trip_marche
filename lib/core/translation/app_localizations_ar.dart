@@ -1746,7 +1746,8 @@ class AppLocalizationsAr extends AppLocalizations {
   String get bookingDepartureSoldOut => 'اكتمل العدد المخصص لهذا الموعد';
 
   @override
-  String get bookingTripSoldOut => 'اكتمل عدد هذه الرحلة لجميع المواعيد المتاحة';
+  String get bookingTripSoldOut =>
+      'اكتمل عدد هذه الرحلة لجميع المواعيد المتاحة';
 
   @override
   String bookingSeatsInsufficient(int seats) {

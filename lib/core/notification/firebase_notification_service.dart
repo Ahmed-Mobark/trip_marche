@@ -14,6 +14,7 @@ import '../storage/data/storage.dart';
 import 'notification_api.dart';
 import 'notification_navigation_service.dart';
 import 'notification_payload.dart';
+import 'notification_unread_controller.dart';
 
 @pragma('vm:entry-point')
 Future<void> firebaseMessagingBackgroundHandler(RemoteMessage message) async {
@@ -25,11 +26,17 @@ Future<void> firebaseMessagingBackgroundHandler(RemoteMessage message) async {
 }
 
 class FirebaseNotificationService {
-  FirebaseNotificationService(this._api, this._storage, this._navigation);
+  FirebaseNotificationService(
+    this._api,
+    this._storage,
+    this._navigation,
+    this._unread,
+  );
 
   final NotificationApi _api;
   final Storage _storage;
   final NotificationNavigationService _navigation;
+  final NotificationUnreadController _unread;
   final FlutterLocalNotificationsPlugin _localNotifications =
       FlutterLocalNotificationsPlugin();
 
@@ -121,9 +128,11 @@ class FirebaseNotificationService {
     if (token != null) {
       await _registerToken(token);
     }
+    await _unread.refresh();
   }
 
   Future<void> unregisterCurrentDevice() async {
+    _unread.clear();
     if (!_initialized) return;
     final token = _lastToken ?? await _messaging.getToken();
     if (token == null || !_storage.isAuthorized()) return;
@@ -159,6 +168,7 @@ class FirebaseNotificationService {
   }
 
   Future<void> _showForegroundNotification(RemoteMessage message) async {
+    _unread.markUnread();
     final notification = message.notification;
     if (notification == null) return;
 
@@ -185,6 +195,7 @@ class FirebaseNotificationService {
   }
 
   void _openRemoteMessage(RemoteMessage message) {
+    _unread.markUnread();
     _navigation.open(NotificationPayload.fromMap(message.data));
   }
 }
