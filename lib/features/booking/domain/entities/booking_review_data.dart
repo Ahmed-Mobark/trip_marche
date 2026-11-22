@@ -1,5 +1,6 @@
 import 'booking_quote.dart';
 import 'booking_price_selection.dart';
+import 'booking_occupancy_selection.dart';
 import 'package:equatable/equatable.dart';
 import 'package:trip_marche/features/booking/domain/entities/booking_activities.dart';
 import 'package:trip_marche/features/booking/domain/entities/booking_room.dart';
@@ -128,7 +129,11 @@ class BookingReviewData extends Equatable {
     required this.kidCount,
     required this.babyCount,
     this.selectedMeetingPointId,
+    this.selectedAccommodationId,
     this.expectedTotalAmount,
+    this.occupancies = const [],
+    this.childrenWithoutBed = 0,
+    this.childrenWithBed = 0,
   });
 
   final int tripId;
@@ -146,7 +151,11 @@ class BookingReviewData extends Equatable {
   final int kidCount;
   final int babyCount;
   final int? selectedMeetingPointId;
+  final int? selectedAccommodationId;
   final double? expectedTotalAmount;
+  final List<BookingOccupancySelection> occupancies;
+  final int childrenWithoutBed;
+  final int childrenWithBed;
 
   BookingReviewData withQuote(BookingQuote quote) => BookingReviewData(
     tripId: tripId,
@@ -164,7 +173,11 @@ class BookingReviewData extends Equatable {
     kidCount: kidCount,
     babyCount: babyCount,
     selectedMeetingPointId: selectedMeetingPointId,
+    selectedAccommodationId: selectedAccommodationId,
     expectedTotalAmount: quote.totalBase,
+    occupancies: occupancies,
+    childrenWithoutBed: childrenWithoutBed,
+    childrenWithBed: childrenWithBed,
   );
 
   @override
@@ -184,6 +197,10 @@ class BookingReviewData extends Equatable {
     kidCount,
     babyCount,
     selectedMeetingPointId,
+    selectedAccommodationId,
+    occupancies,
+    childrenWithoutBed,
+    childrenWithBed,
     expectedTotalAmount,
   ];
 }

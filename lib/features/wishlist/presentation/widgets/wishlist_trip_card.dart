@@ -148,6 +148,24 @@ class WishlistTripCard extends StatelessWidget {
                 ),
               ),
             ),
+          if (trip.flags.seasonal)
+            PositionedDirectional(
+              top: 8.h,
+              end: 8.w,
+              child: Container(
+                width: 30.w,
+                height: 30.w,
+                decoration: BoxDecoration(
+                  color: AppColors.onImage.withValues(alpha: .9),
+                  shape: BoxShape.circle,
+                ),
+                child: Icon(
+                  Icons.star_border_rounded,
+                  size: 21.sp,
+                  color: AppColors.primary,
+                ),
+              ),
+            ),
         ],
       ),
     );

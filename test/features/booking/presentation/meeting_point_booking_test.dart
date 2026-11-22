@@ -95,6 +95,7 @@ void main() {
           travelersCount: 1,
           rooms: const [BookingRoom(roomTypeId: 3, persons: 1)],
           currency: 'EGP',
+          selectedAccommodationId: 91,
         );
         await tester.pumpWidget(
           ScreenUtilInit(
@@ -149,6 +150,7 @@ void main() {
         );
         await cubit.createBooking(data: review);
         expect(repository.bodies.single['meeting_point_id'], expectedId);
+        expect(repository.bodies.single['trip_accommodation_id'], 91);
       },
     );
   }

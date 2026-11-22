@@ -58,6 +58,19 @@ class ActivityCard extends StatelessWidget {
         ),
         child: Row(
           children: [
+            if (activity.image case final image?) ...[
+              ClipRRect(
+                borderRadius: BorderRadius.circular(8),
+                child: Image.network(
+                  image,
+                  width: 44,
+                  height: 44,
+                  fit: BoxFit.cover,
+                  errorBuilder: (_, __, ___) => const SizedBox.shrink(),
+                ),
+              ),
+              const SizedBox(width: 10),
+            ],
             Expanded(
               child: Text(
                 activity.name,

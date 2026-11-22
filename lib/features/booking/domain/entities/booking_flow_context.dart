@@ -1,4 +1,5 @@
 import 'booking_price_selection.dart';
+import 'booking_occupancy_selection.dart';
 import 'package:equatable/equatable.dart';
 import 'package:trip_marche/features/booking/domain/entities/booking_room.dart';
 import 'package:trip_marche/features/booking/domain/entities/booking_optional_extra_selection.dart';
@@ -18,6 +19,10 @@ class BookingFlowContext extends Equatable {
     this.optionalExtras = const [],
     this.priceSelections = const [],
     this.selectedMeetingPointId,
+    this.selectedAccommodationId,
+    this.occupancies = const [],
+    this.childrenWithoutBed = 0,
+    this.childrenWithBed = 0,
   });
 
   final TripDetails trip;
@@ -32,6 +37,10 @@ class BookingFlowContext extends Equatable {
   final List<BookingOptionalExtraSelection> optionalExtras;
   final List<BookingPriceSelection> priceSelections;
   final int? selectedMeetingPointId;
+  final int? selectedAccommodationId;
+  final List<BookingOccupancySelection> occupancies;
+  final int childrenWithoutBed;
+  final int childrenWithBed;
 
   BookingFlowContext copyWith({int? selectedMeetingPointId}) {
     return BookingFlowContext(
@@ -48,6 +57,10 @@ class BookingFlowContext extends Equatable {
       priceSelections: priceSelections,
       selectedMeetingPointId:
           selectedMeetingPointId ?? this.selectedMeetingPointId,
+      selectedAccommodationId: selectedAccommodationId,
+      occupancies: occupancies,
+      childrenWithoutBed: childrenWithoutBed,
+      childrenWithBed: childrenWithBed,
     );
   }
 
@@ -65,5 +78,9 @@ class BookingFlowContext extends Equatable {
     optionalExtras,
     priceSelections,
     selectedMeetingPointId,
+    selectedAccommodationId,
+    occupancies,
+    childrenWithoutBed,
+    childrenWithBed,
   ];
 }

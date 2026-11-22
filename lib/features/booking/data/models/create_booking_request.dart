@@ -1,6 +1,19 @@
 import 'dart:developer';
 import 'package:equatable/equatable.dart';
 
+class CreateBookingOccupancy {
+  const CreateBookingOccupancy({
+    required this.category,
+    required this.travelers,
+  });
+  final String category;
+  final int travelers;
+  Map<String, dynamic> toJson() => {
+    'category': category,
+    'travelers': travelers,
+  };
+}
+
 class CreateBookingRoom {
   const CreateBookingRoom({required this.roomTypeId, required this.persons});
 
@@ -77,6 +90,7 @@ class CreateBookingRequest {
   const CreateBookingRequest({
     required this.departureId,
     this.meetingPointId,
+    this.tripAccommodationId,
     required this.adults,
     required this.kids,
     required this.babies,
@@ -89,10 +103,14 @@ class CreateBookingRequest {
     this.notes,
     this.paymentMethod,
     this.expectedTotalAmount,
+    this.occupancies = const [],
+    this.childrenWithoutBed = 0,
+    this.childrenWithBed = 0,
   });
 
   final int departureId;
   final int? meetingPointId;
+  final int? tripAccommodationId;
   final int adults;
   final int kids;
   final int babies;
@@ -105,15 +123,27 @@ class CreateBookingRequest {
   final String? notes;
   final String? paymentMethod;
   final double? expectedTotalAmount;
+  final List<CreateBookingOccupancy> occupancies;
+  final int childrenWithoutBed;
+  final int childrenWithBed;
 
   Map<String, dynamic> toJson() => {
     'departure_id': departureId,
     if (expectedTotalAmount != null)
       'expected_total_amount': expectedTotalAmount,
     if (meetingPointId != null) 'meeting_point_id': meetingPointId,
+    if (tripAccommodationId != null)
+      'trip_accommodation_id': tripAccommodationId,
     'adults': adults,
     'kids': kids,
     'babies': babies,
+    if (occupancies.isNotEmpty) ...{
+      'occupancies': occupancies
+          .map((item) => item.toJson())
+          .toList(growable: false),
+      'children_without_bed': childrenWithoutBed,
+      'children_with_bed': childrenWithBed,
+    },
     if (priceOptions.isNotEmpty)
       'price_options': priceOptions
           .map((option) => option.toJson())

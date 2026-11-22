@@ -13,6 +13,7 @@ class OptionalExtraCard extends StatelessWidget {
     super.key,
     required this.name,
     required this.unitPrice,
+    this.pricingUnit = '',
     required this.currency,
     required this.quantity,
     required this.onDecrement,
@@ -21,6 +22,7 @@ class OptionalExtraCard extends StatelessWidget {
 
   final String name;
   final double unitPrice;
+  final String pricingUnit;
   final String currency;
   final int quantity;
   final VoidCallback onDecrement;
@@ -70,10 +72,13 @@ class OptionalExtraCard extends StatelessWidget {
                 ),
                 SizedBox(height: 2.h),
                 Text(
-                  TripDetailsUiFormatters.formatAmount(
-                    unitPrice,
-                    currency: currency,
-                  ),
+                  [
+                    TripDetailsUiFormatters.formatAmount(
+                      unitPrice,
+                      currency: currency,
+                    ),
+                    if (pricingUnit.isNotEmpty) pricingUnit,
+                  ].join(' · '),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: AppTextStyles.caption(color: AppColors.primary)

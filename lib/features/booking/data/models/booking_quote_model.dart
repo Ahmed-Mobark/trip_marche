@@ -82,9 +82,20 @@ class BookingQuoteRequest {
     if (data.departureId > 0) 'departure_id': data.departureId,
     if (data.selectedMeetingPointId != null)
       'meeting_point_id': data.selectedMeetingPointId,
+    if (data.selectedAccommodationId != null)
+      'trip_accommodation_id': data.selectedAccommodationId,
     'adults': data.adultCount,
     'kids': data.kidCount,
     'babies': data.babyCount,
+    if (data.occupancies.isNotEmpty) ...{
+      'occupancies': data.occupancies
+          .map(
+            (item) => {'category': item.category, 'travelers': item.travelers},
+          )
+          .toList(growable: false),
+      'children_without_bed': data.childrenWithoutBed,
+      'children_with_bed': data.childrenWithBed,
+    },
     'rooms': data.selectedRooms
         .map(
           (room) => {'room_type_id': room.roomTypeId, 'persons': room.persons},

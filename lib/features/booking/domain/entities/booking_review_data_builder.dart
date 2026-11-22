@@ -3,8 +3,10 @@ import 'package:trip_marche/core/extensions/localization.dart';
 import 'package:trip_marche/features/booking/domain/entities/booking_activities.dart';
 import 'package:trip_marche/features/booking/domain/entities/booking_flow_context.dart';
 import 'package:trip_marche/features/booking/domain/entities/booking_room.dart';
+import 'package:trip_marche/features/booking/domain/entities/booking_occupancy_selection.dart';
 import 'package:trip_marche/features/booking/domain/entities/booking_review_data.dart';
 import 'package:trip_marche/features/trip_details/presentation/trip_details_ui_formatters.dart';
+import 'package:trip_marche/features/trip_details/domain/entities/trip_details_entity.dart';
 
 abstract final class BookingReviewDataBuilder {
   static BookingReviewData fromBookingFlow({
@@ -54,6 +56,32 @@ abstract final class BookingReviewDataBuilder {
         : (flowContext.adultCount * unitPrice) +
               (flowContext.kidCount * (trip.kidPrice ?? 0)) +
               (flowContext.babyCount * (trip.babyPrice ?? 0));
+    final matrixScope = selectedDeparture?.pricingMethod == 'hotel'
+        ? 'hotel'
+        : 'unified';
+    final matrix = selectedDeparture == null
+        ? const <TripDepartureHotelPrice>[]
+        : selectedDeparture.hotelPrices.where(
+            (price) =>
+                price.scope == matrixScope &&
+                (price.scope == 'unified' ||
+                    price.accommodationId ==
+                        flowContext.selectedAccommodationId),
+          );
+    final matrixByCategory = {
+      for (final price in matrix) price.category: price.amount,
+    };
+    final matrixTravelerTotal =
+        flowContext.occupancies.fold<double>(
+          0,
+          (sum, item) =>
+              sum + (matrixByCategory[item.category] ?? 0) * item.travelers,
+        ) +
+        (matrixByCategory['child_without_bed'] ?? 0) *
+            flowContext.childrenWithoutBed +
+        (matrixByCategory['child_with_bed'] ?? 0) *
+            flowContext.childrenWithBed +
+        (matrixByCategory['infant'] ?? 0) * flowContext.babyCount;
     final roomTypesById = {for (final room in trip.roomTypes) room.id: room};
     final roomTotal = flowContext.rooms.fold<double>(0, (sum, room) {
       final roomType = roomTypesById[room.roomTypeId];
@@ -96,7 +124,9 @@ abstract final class BookingReviewDataBuilder {
           flowContext.dateRange.replaceAll(' - ', ' to '),
         ),
         duration: durationLabel,
-        participantsSummary: flowContext.priceSelections.isNotEmpty
+        participantsSummary:
+            flowContext.priceSelections.isNotEmpty ||
+                flowContext.occupancies.isNotEmpty
             ? tr.bookingReviewPaymentTravelers(travelersCount)
             : tr.bookingReviewParticipantsSummary(travelersCount, priceLabel),
         routeLabel: tr.bookingReviewRoutePrefix(trip.fromLocation),
@@ -131,7 +161,9 @@ abstract final class BookingReviewDataBuilder {
       optionalExtras: List.of(flowContext.optionalExtras),
       priceBreakdown: BookingPriceBreakdown(
         travelersCount: travelersCount,
-        travelersTotal: travelersTotal,
+        travelersTotal: flowContext.occupancies.isNotEmpty
+            ? matrixTravelerTotal
+            : travelersTotal,
         roomLabel: roomLabel,
         roomTotal: roomTotal,
         activitiesTotal: activitiesTotal,
@@ -144,6 +176,10 @@ abstract final class BookingReviewDataBuilder {
       kidCount: flowContext.kidCount,
       babyCount: flowContext.babyCount,
       selectedMeetingPointId: flowContext.selectedMeetingPointId,
+      selectedAccommodationId: flowContext.selectedAccommodationId,
+      occupancies: List<BookingOccupancySelection>.of(flowContext.occupancies),
+      childrenWithoutBed: flowContext.childrenWithoutBed,
+      childrenWithBed: flowContext.childrenWithBed,
     );
   }
 }

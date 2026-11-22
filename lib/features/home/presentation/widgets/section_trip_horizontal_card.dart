@@ -110,6 +110,26 @@ class SectionTripHorizontalCard extends StatelessWidget {
                             ),
                           ),
                         ),
+                      if (trip.flags.seasonal)
+                        PositionedDirectional(
+                          top: trip.badge != null && trip.badge!.isNotEmpty
+                              ? 32.h
+                              : 8.h,
+                          end: 8.w,
+                          child: Container(
+                            width: 30.w,
+                            height: 30.w,
+                            decoration: BoxDecoration(
+                              color: AppColors.onImage.withValues(alpha: .9),
+                              shape: BoxShape.circle,
+                            ),
+                            child: Icon(
+                              Icons.star_border_rounded,
+                              size: 21.sp,
+                              color: AppColors.primary,
+                            ),
+                          ),
+                        ),
                     ],
                   ),
                 ),
@@ -148,7 +168,9 @@ class SectionTripHorizontalCard extends StatelessWidget {
                                 shape: BoxShape.circle,
                               ),
                               child: Icon(
-                                trip.isFavorite ? Iconsax.heart5 : Iconsax.heart,
+                                trip.isFavorite
+                                    ? Iconsax.heart5
+                                    : Iconsax.heart,
                                 size: 18.sp,
                                 color: trip.isFavorite
                                     ? AppColors.error
@@ -263,9 +285,12 @@ class SectionTripHorizontalCard extends StatelessWidget {
                             AppPriceText(
                               value: trip.price,
                               currency: trip.currency,
-                              style: AppTextStyles.bodySmall(
-                                color: AppColors.greyText(context),
-                              ).copyWith(decoration: TextDecoration.lineThrough),
+                              style:
+                                  AppTextStyles.bodySmall(
+                                    color: AppColors.greyText(context),
+                                  ).copyWith(
+                                    decoration: TextDecoration.lineThrough,
+                                  ),
                             ),
                           ] else
                             AppPriceText(

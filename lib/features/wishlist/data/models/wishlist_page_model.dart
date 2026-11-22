@@ -10,6 +10,7 @@ class WishlistTripFlagsModel {
     required this.recommended,
     required this.topRated,
     required this.special,
+    required this.seasonal,
     required this.international,
   });
 
@@ -18,6 +19,7 @@ class WishlistTripFlagsModel {
   final bool recommended;
   final bool topRated;
   final bool special;
+  final bool seasonal;
   final bool international;
 
   factory WishlistTripFlagsModel.fromJson(Map<String, dynamic> json) {
@@ -27,18 +29,20 @@ class WishlistTripFlagsModel {
       recommended: json['recommended'] as bool? ?? false,
       topRated: json['top_rated'] as bool? ?? false,
       special: json['special'] as bool? ?? false,
+      seasonal: json['seasonal'] as bool? ?? false,
       international: json['international'] as bool? ?? false,
     );
   }
 
   WishlistTripFlags toEntity() => WishlistTripFlags(
-        popular: popular,
-        sponsored: sponsored,
-        recommended: recommended,
-        topRated: topRated,
-        special: special,
-        international: international,
-      );
+    popular: popular,
+    sponsored: sponsored,
+    recommended: recommended,
+    topRated: topRated,
+    special: special,
+    seasonal: seasonal,
+    international: international,
+  );
 }
 
 class WishlistPaginationMetaModel {
@@ -64,11 +68,11 @@ class WishlistPaginationMetaModel {
   }
 
   WishlistPaginationMeta toEntity() => WishlistPaginationMeta(
-        currentPage: currentPage,
-        lastPage: lastPage,
-        perPage: perPage,
-        total: total,
-      );
+    currentPage: currentPage,
+    lastPage: lastPage,
+    perPage: perPage,
+    total: total,
+  );
 }
 
 class WishlistTripItemModel {
@@ -110,7 +114,8 @@ class WishlistTripItemModel {
 
   factory WishlistTripItemModel.fromJson(Map<String, dynamic> json) {
     final isWishlisted = JsonParser.asBool(json['is_wishlisted']);
-    final favoriteRaw = json['is_favorite'] ??
+    final favoriteRaw =
+        json['is_favorite'] ??
         (json['trip'] is Map<String, dynamic>
             ? (json['trip'] as Map<String, dynamic>)['is_favorite']
             : null);
@@ -134,7 +139,9 @@ class WishlistTripItemModel {
         json['flags'] as Map<String, dynamic>? ?? {},
       ),
       isWishlisted: isWishlisted,
-      isFavorite: favoriteRaw != null ? JsonParser.parseFavorite(favoriteRaw) : isWishlisted,
+      isFavorite: favoriteRaw != null
+          ? JsonParser.parseFavorite(favoriteRaw)
+          : isWishlisted,
     );
   }
 
@@ -182,7 +189,7 @@ class WishlistTripsPageModel {
   }
 
   WishlistTripsPage toEntity() => WishlistTripsPage(
-        trips: trips.map((e) => e.toEntity()).toList(),
-        meta: meta.toEntity(),
-      );
+    trips: trips.map((e) => e.toEntity()).toList(),
+    meta: meta.toEntity(),
+  );
 }

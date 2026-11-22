@@ -39,6 +39,7 @@ final trip = TripDetailsModel.fromApiResponse({
         'start_date': '2026-12-10',
         'end_date': '2026-12-12',
         'price': 1000,
+        'seats_left': 10,
         'price_options': [
           {
             'id': 11,
@@ -71,6 +72,7 @@ final trip = TripDetailsModel.fromApiResponse({
         'start_date': '2026-12-20',
         'end_date': '2026-12-22',
         'price': 1200,
+        'seats_left': 10,
         'price_options': [
           {
             'id': 21,

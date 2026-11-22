@@ -36,7 +36,7 @@ class CreateBookingCubit extends Cubit<CreateBookingState> {
       validationErrors['travelers'] = 'At least one traveler is required';
     }
 
-    if (data.selectedRooms.isEmpty) {
+    if (data.selectedRooms.isEmpty && data.occupancies.isEmpty) {
       validationErrors['rooms'] = 'Please select at least one room';
     }
 
@@ -95,9 +95,18 @@ class CreateBookingCubit extends Cubit<CreateBookingState> {
     );
     final totalTravelers = adultCount + kidCount + babyCount;
 
-    if (data.priceSelections.isEmpty && totalRoomOccupants != totalTravelers) {
+    if (data.priceSelections.isEmpty &&
+        data.occupancies.isEmpty &&
+        totalRoomOccupants != totalTravelers) {
       validationErrors['room_occupants'] =
           'The total room occupants must equal the number of travelers';
+    }
+    if (data.occupancies.isNotEmpty &&
+        (data.occupancies.fold<int>(0, (sum, item) => sum + item.travelers) !=
+                adultCount ||
+            data.childrenWithoutBed + data.childrenWithBed != kidCount)) {
+      validationErrors['occupancies'] =
+          'Price categories must match the traveler counts';
     }
 
     if (validationErrors.isNotEmpty) {
@@ -165,6 +174,7 @@ class CreateBookingCubit extends Cubit<CreateBookingState> {
     final request = CreateBookingRequest(
       departureId: data.departureId,
       meetingPointId: data.selectedMeetingPointId,
+      tripAccommodationId: data.selectedAccommodationId,
       adults: adultCount,
       kids: kidCount,
       babies: babyCount,
@@ -184,6 +194,16 @@ class CreateBookingCubit extends Cubit<CreateBookingState> {
       notes: trimmedNotes,
       paymentMethod: paymentMethod,
       expectedTotalAmount: data.expectedTotalAmount,
+      occupancies: data.occupancies
+          .map(
+            (item) => CreateBookingOccupancy(
+              category: item.category,
+              travelers: item.travelers,
+            ),
+          )
+          .toList(growable: false),
+      childrenWithoutBed: data.childrenWithoutBed,
+      childrenWithBed: data.childrenWithBed,
     );
 
     if (kDebugMode) {

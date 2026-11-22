@@ -306,23 +306,48 @@ class TripTransportLeg extends Equatable {
 
 class TripAccommodation extends Equatable {
   const TripAccommodation({
+    this.id,
+    this.hotelId,
+    this.isRegistered = false,
     required this.name,
     required this.address,
+    this.accommodationType = '',
+    this.googleMapsUrl,
     this.city = '',
+    this.country = '',
     this.lat,
     this.lng,
     required this.images,
   });
 
+  final int? id;
+  final int? hotelId;
+  final bool isRegistered;
   final String name;
   final String address;
+  final String accommodationType;
+  final String? googleMapsUrl;
   final String city;
+  final String country;
   final double? lat;
   final double? lng;
   final List<String> images;
 
   @override
-  List<Object?> get props => [name, address, city, lat, lng, images];
+  List<Object?> get props => [
+    id,
+    hotelId,
+    isRegistered,
+    name,
+    address,
+    accommodationType,
+    googleMapsUrl,
+    city,
+    country,
+    lat,
+    lng,
+    images,
+  ];
 }
 
 class TripActivityRate extends Equatable {
@@ -361,6 +386,9 @@ class TripDeparture extends Equatable {
     required this.endDate,
     required this.price,
     this.priceOptions = const [],
+    this.pricingMethod = 'legacy',
+    this.configuredCurrency = 'EGP',
+    this.hotelPrices = const [],
     required this.seatsLeft,
   });
 
@@ -369,6 +397,9 @@ class TripDeparture extends Equatable {
   final String endDate;
   final double price;
   final List<TripPriceOption> priceOptions;
+  final String pricingMethod;
+  final String configuredCurrency;
+  final List<TripDepartureHotelPrice> hotelPrices;
   final int seatsLeft;
 
   bool get isFull => seatsLeft <= 0;
@@ -381,7 +412,27 @@ class TripDeparture extends Equatable {
     price,
     seatsLeft,
     priceOptions,
+    pricingMethod,
+    configuredCurrency,
+    hotelPrices,
   ];
+}
+
+class TripDepartureHotelPrice extends Equatable {
+  const TripDepartureHotelPrice({
+    required this.accommodationId,
+    required this.scope,
+    required this.category,
+    required this.amount,
+  });
+
+  final int? accommodationId;
+  final String scope;
+  final String category;
+  final double amount;
+
+  @override
+  List<Object?> get props => [accommodationId, scope, category, amount];
 }
 
 class TripRoomType extends Equatable {
@@ -411,6 +462,9 @@ class TripDetailsActivity extends Equatable {
     required this.key,
     required this.label,
     this.icon,
+    this.image,
+    this.departureId,
+    this.pricingUnit = '',
     required this.price,
   });
 
@@ -418,10 +472,22 @@ class TripDetailsActivity extends Equatable {
   final String key;
   final String label;
   final String? icon;
+  final String? image;
+  final int? departureId;
+  final String pricingUnit;
   final double price;
 
   @override
-  List<Object?> get props => [id, key, label, icon, price];
+  List<Object?> get props => [
+    id,
+    key,
+    label,
+    icon,
+    image,
+    price,
+    departureId,
+    pricingUnit,
+  ];
 }
 
 class TripReviewer extends Equatable {
@@ -472,6 +538,9 @@ class TripOptionalExtra extends Equatable {
     required this.unitPrice,
     required this.currency,
     this.isAvailable = true,
+    this.departureId,
+    this.maximumQuantity,
+    this.pricingUnit = '',
   });
 
   final int id;
@@ -481,6 +550,9 @@ class TripOptionalExtra extends Equatable {
   final double unitPrice;
   final String currency;
   final bool isAvailable;
+  final int? departureId;
+  final int? maximumQuantity;
+  final String pricingUnit;
 
   String nameForLanguage(String languageCode) {
     if (languageCode == 'ar') {
@@ -499,6 +571,9 @@ class TripOptionalExtra extends Equatable {
     unitPrice,
     currency,
     isAvailable,
+    departureId,
+    maximumQuantity,
+    pricingUnit,
   ];
 }
 
@@ -606,6 +681,7 @@ class TripDetails extends Equatable {
     required this.rating,
     required this.reviewsCount,
     this.badge,
+    this.season,
     required this.flags,
     this.destination,
     required this.destinations,
@@ -638,7 +714,8 @@ class TripDetails extends Equatable {
   final int id;
   final String pricingMode;
   bool get hasCustomPricing => pricingMode == 'options';
-  bool get isSoldOut => departures.isNotEmpty && departures.every((d) => d.isFull);
+  bool get isSoldOut =>
+      departures.isNotEmpty && departures.every((d) => d.isFull);
   final String title;
   final String slug;
   final String country;
@@ -666,6 +743,7 @@ class TripDetails extends Equatable {
   final double rating;
   final int reviewsCount;
   final String? badge;
+  final String? season;
   final WishlistTripFlags flags;
   final TripDestinationSummary? destination;
   final List<TripDestinationRef> destinations;
@@ -753,6 +831,7 @@ class TripDetails extends Equatable {
     rating,
     reviewsCount,
     badge,
+    season,
     flags,
     destination,
     destinations,

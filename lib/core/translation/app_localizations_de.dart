@@ -444,6 +444,9 @@ class AppLocalizationsDe extends AppLocalizations {
   String get wishlistFiltersSeasonNewYear => 'Neujahr';
 
   @override
+  String get wishlistFiltersSeasonEid => 'Eid';
+
+  @override
   String get wishlistFiltersTripFeatures => 'Reise-Features';
 
   @override
@@ -848,6 +851,12 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get bookingAccommodationOptions => 'Accommodation Options';
+
+  @override
+  String get bookingChooseHotel => 'Choose a hotel';
+
+  @override
+  String get bookingHotelSelectionRequired => 'Select a hotel to continue';
 
   @override
   String get bookingOptionalExtras => 'Optionale Extras';

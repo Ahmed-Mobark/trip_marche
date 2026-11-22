@@ -105,6 +105,7 @@ class TripDetailsModel {
       rating: _JsonParse.asDouble(json['rating']),
       reviewsCount: _JsonParse.asInt(json['reviews_count']),
       badge: _JsonParse.asNullableString(json['badge']),
+      season: _JsonParse.asNullableString(json['season']),
       flags: WishlistTripFlags(
         popular: _JsonParse.asBool(flags is Map ? flags['popular'] : null),
         sponsored: _JsonParse.asBool(flags is Map ? flags['sponsored'] : null),
@@ -113,6 +114,7 @@ class TripDetailsModel {
         ),
         topRated: _JsonParse.asBool(flags is Map ? flags['top_rated'] : null),
         special: _JsonParse.asBool(flags is Map ? flags['special'] : null),
+        seasonal: _JsonParse.asBool(flags is Map ? flags['seasonal'] : null),
         international: _JsonParse.asBool(
           flags is Map ? flags['international'] : null,
         ),
@@ -431,9 +433,15 @@ class TripDetailsModel {
     }
     return raw.whereType<Map<String, dynamic>>().map((e) {
       return TripAccommodation(
+        id: _JsonParse.asNullableInt(e['id']),
+        hotelId: _JsonParse.asNullableInt(e['hotel_id']),
+        isRegistered: e['is_registered'] == true,
         name: _JsonParse.asString(e['name']),
         address: _JsonParse.asString(e['address']),
+        accommodationType: _JsonParse.asString(e['accommodation_type']),
+        googleMapsUrl: _JsonParse.asNullableString(e['google_maps_url']),
         city: _JsonParse.asString(e['city']),
+        country: _JsonParse.asString(e['country']),
         lat: _JsonParse.asNullableDouble(e['lat']),
         lng: _JsonParse.asNullableDouble(e['lng']),
         images: _stringList(e['images']),
@@ -469,6 +477,27 @@ class TripDetailsModel {
             startDate: _JsonParse.asString(e['start_date']),
             endDate: _JsonParse.asString(e['end_date']),
             price: _JsonParse.asDouble(e['price']),
+            pricingMethod: _JsonParse.asString(e['pricing_method'], 'legacy'),
+            configuredCurrency: _JsonParse.asString(
+              e['configured_currency'],
+              'EGP',
+            ),
+            hotelPrices:
+                (e['hotel_prices'] is List
+                        ? e['hotel_prices'] as List
+                        : const [])
+                    .whereType<Map<String, dynamic>>()
+                    .map(
+                      (price) => TripDepartureHotelPrice(
+                        accommodationId: _JsonParse.asNullableInt(
+                          price['trip_accommodation_id'],
+                        ),
+                        scope: _JsonParse.asString(price['pricing_scope']),
+                        category: _JsonParse.asString(price['category']),
+                        amount: _JsonParse.asDouble(price['amount']),
+                      ),
+                    )
+                    .toList(),
             priceOptions:
                 (e['price_options'] is List
                         ? e['price_options'] as List
@@ -519,9 +548,12 @@ class TripDetailsModel {
         .map(
           (e) => TripDetailsActivity(
             id: _JsonParse.asInt(e['id']),
+            departureId: _JsonParse.asNullableInt(e['trip_departure_id']),
+            pricingUnit: _JsonParse.asString(e['pricing_unit']),
             key: _JsonParse.asString(e['key']),
             label: _JsonParse.asString(e['label']),
             icon: _JsonParse.asNullableString(e['icon']),
+            image: _JsonParse.asNullableString(e['image']),
             price: _JsonParse.asDouble(e['price']),
           ),
         )
@@ -541,6 +573,11 @@ class TripDetailsModel {
         .map(
           (extra) => TripOptionalExtra(
             id: _JsonParse.asInt(extra['id']),
+            departureId: _JsonParse.asNullableInt(extra['trip_departure_id']),
+            maximumQuantity: _JsonParse.asNullableInt(
+              extra['maximum_quantity'],
+            ),
+            pricingUnit: _JsonParse.asString(extra['pricing_unit']),
             name: _JsonParse.asString(extra['name']).trim(),
             nameEn: _JsonParse.asString(extra['name_en']).trim(),
             nameAr: _JsonParse.asString(extra['name_ar']).trim(),

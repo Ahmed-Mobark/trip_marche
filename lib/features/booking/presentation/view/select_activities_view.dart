@@ -17,8 +17,8 @@ import 'review_view.dart';
 
 class _TravelerActivitiesEntry {
   _TravelerActivitiesEntry({required this.traveler})
-      : selectedActivityIds = <String>{},
-        sameAsTravelerOne = false;
+    : selectedActivityIds = <String>{},
+      sameAsTravelerOne = false;
 
   final TravelerContact traveler;
   Set<String> selectedActivityIds;
@@ -51,11 +51,17 @@ class _SelectActivitiesViewState extends State<SelectActivitiesView> {
   }
 
   List<Activity> _availableActivities() => widget.flowContext.trip.activities
+      .where(
+        (activity) =>
+            activity.departureId == null ||
+            activity.departureId == widget.flowContext.departureId,
+      )
       .map(
         (activity) => Activity(
           id: activity.id.toString(),
           name: activity.label,
           price: activity.price,
+          image: activity.image,
         ),
       )
       .toList(growable: false);
@@ -96,8 +102,9 @@ class _SelectActivitiesViewState extends State<SelectActivitiesView> {
       final entry = _entries[travelerIndex];
       entry.sameAsTravelerOne = value;
       if (value) {
-        entry.selectedActivityIds =
-            Set<String>.from(_entries.first.selectedActivityIds);
+        entry.selectedActivityIds = Set<String>.from(
+          _entries.first.selectedActivityIds,
+        );
       }
     });
   }
@@ -125,9 +132,7 @@ class _SelectActivitiesViewState extends State<SelectActivitiesView> {
       activities: result,
     );
 
-    sl<AppNavigator>().push(
-      screen: ReviewView(data: reviewData),
-    );
+    sl<AppNavigator>().push(screen: ReviewView(data: reviewData));
   }
 
   @override
@@ -154,12 +159,13 @@ class _SelectActivitiesViewState extends State<SelectActivitiesView> {
                 child: Text(
                   tr.bookingSelectActivitiesTitle,
                   textAlign: TextAlign.center,
-                  style: AppTextStyles.heading3(
-                    color: AppColors.tripDetailsFigmaBlack,
-                  ).copyWith(
-                    fontSize: SelectActivitiesFigmaTokens.titleFontSize,
-                    fontWeight: FontWeight.w600,
-                  ),
+                  style:
+                      AppTextStyles.heading3(
+                        color: AppColors.tripDetailsFigmaBlack,
+                      ).copyWith(
+                        fontSize: SelectActivitiesFigmaTokens.titleFontSize,
+                        fontWeight: FontWeight.w600,
+                      ),
                 ),
               ),
               Expanded(
@@ -177,8 +183,9 @@ class _SelectActivitiesViewState extends State<SelectActivitiesView> {
                     final entry = _entries[index];
                     return TravelerActivitiesSection(
                       travelerName: entry.traveler.fullName,
-                      travelerIndexLabel:
-                          tr.bookingTravelerParenthetical(index + 1),
+                      travelerIndexLabel: tr.bookingTravelerParenthetical(
+                        index + 1,
+                      ),
                       activities: activities,
                       currency: widget.flowContext.currency,
                       selectedActivityIds: entry.selectedActivityIds,

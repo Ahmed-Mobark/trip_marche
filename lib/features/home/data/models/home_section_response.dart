@@ -183,7 +183,8 @@ class TripModel {
       badge: json['badge'] as String?,
       flags: TripFlags.fromJson(json['flags'] as Map<String, dynamic>? ?? {}),
       isWishlisted: JsonParser.asBool(json['is_wishlisted']),
-      isFav: JsonParser.asBool(json['is_fav']) ||
+      isFav:
+          JsonParser.asBool(json['is_fav']) ||
           JsonParser.asBool(json['is_favorite']),
       isFavorite: JsonParser.asBool(json['is_favorite']),
     );
@@ -196,6 +197,7 @@ class TripFlags {
   final bool recommended;
   final bool topRated;
   final bool special;
+  final bool seasonal;
   final bool international;
 
   const TripFlags({
@@ -204,6 +206,7 @@ class TripFlags {
     this.recommended = false,
     this.topRated = false,
     this.special = false,
+    this.seasonal = false,
     this.international = false,
   });
 
@@ -214,6 +217,7 @@ class TripFlags {
       recommended: json['recommended'] as bool? ?? false,
       topRated: json['top_rated'] as bool? ?? false,
       special: json['special'] as bool? ?? false,
+      seasonal: json['seasonal'] as bool? ?? false,
       international: json['international'] as bool? ?? false,
     );
   }

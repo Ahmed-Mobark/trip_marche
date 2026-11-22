@@ -12,6 +12,7 @@ import 'package:trip_marche/features/booking/domain/entities/booking_flow_contex
 import 'package:trip_marche/features/booking/domain/entities/booking_room.dart';
 import 'package:trip_marche/features/booking/domain/entities/booking_price_selection.dart';
 import 'package:trip_marche/features/booking/domain/entities/booking_optional_extra_selection.dart';
+import 'package:trip_marche/features/booking/domain/entities/booking_occupancy_selection.dart';
 import 'package:trip_marche/features/trip_details/domain/entities/trip_details_entity.dart';
 import 'package:trip_marche/features/trip_details/presentation/trip_details_ui_formatters.dart';
 import 'contact_info_view.dart';
@@ -55,13 +56,43 @@ class _TripOptionsViewState extends State<TripOptionsView> {
   late final Map<int, int> _extraQuantities;
 
   final Map<int, int> _priceQuantities = {};
+  final Map<String, int> _occupancyQuantities = {
+    'single': 1,
+    'double': 0,
+    'triple': 0,
+    'quadruple': 0,
+    'quintuple': 0,
+  };
+  int _childrenWithoutBed = 0;
+  int _childrenWithBed = 0;
   int _selectedDateIndex = 0;
+  int? _selectedAccommodationId;
   bool _datesExpanded = false;
   int _adults = 1;
   int _kids = 0;
   int _babies = 0;
 
   int get _travelersCount => _adults + _kids + _babies;
+  TripDeparture? get _activeDeparture => widget.trip.departures.isEmpty
+      ? null
+      : widget.trip.departures[_selectedDateIndex.clamp(
+          0,
+          widget.trip.departures.length - 1,
+        )];
+  bool get _hasDepartureMatrix =>
+      _activeDeparture != null &&
+      (_activeDeparture!.pricingMethod == 'unified' ||
+          _activeDeparture!.pricingMethod == 'hotel');
+  bool get _usingOptionPricing =>
+      widget.trip.hasCustomPricing && !_hasDepartureMatrix;
+  List<TripOptionalExtra> get _activeExtras => widget.trip.optionalExtras
+      .where(
+        (extra) =>
+            extra.isAvailable &&
+            (extra.departureId == null ||
+                extra.departureId == _activeDeparture?.id),
+      )
+      .toList(growable: false);
 
   @override
   void initState() {
@@ -70,12 +101,15 @@ class _TripOptionsViewState extends State<TripOptionsView> {
     if (firstAvailable >= 0) {
       _selectedDateIndex = firstAvailable;
     }
+    if (widget.trip.accommodations.length == 1) {
+      _selectedAccommodationId = widget.trip.accommodations.single.id;
+    }
     _roomTypes = List<TripRoomType>.of(widget.trip.roomTypes)
       ..sort((a, b) => a.capacity.compareTo(b.capacity));
     _roomPersonCounts = {
       for (final room in _roomTypes) room.key: _initialRoomPersonCount(room),
     };
-    if (widget.trip.hasCustomPricing) _resetPriceSelections();
+    if (_usingOptionPricing) _resetPriceSelections();
     _extraQuantities = {
       for (final extra in widget.trip.optionalExtras.where(
         (extra) => extra.isAvailable,
@@ -141,7 +175,11 @@ class _TripOptionsViewState extends State<TripOptionsView> {
     }
     setState(() {
       _selectedDateIndex = index;
-      if (widget.trip.hasCustomPricing) _resetPriceSelections();
+      if (_usingOptionPricing) _resetPriceSelections();
+      _extraQuantities.updateAll((_, __) => 0);
+      _childrenWithoutBed = 0;
+      _childrenWithBed = 0;
+      if (_hasDepartureMatrix) _resetOccupancies();
     });
   }
 
@@ -200,7 +238,9 @@ class _TripOptionsViewState extends State<TripOptionsView> {
       return;
     }
 
-    if (!widget.trip.hasCustomPricing && selectedRooms.isEmpty) {
+    if (!widget.trip.hasCustomPricing &&
+        !_hasDepartureMatrix &&
+        selectedRooms.isEmpty) {
       appToast(
         context: context,
         type: ToastType.error,
@@ -209,7 +249,9 @@ class _TripOptionsViewState extends State<TripOptionsView> {
       return;
     }
 
-    if (!widget.trip.hasCustomPricing && totalRoomOccupants != totalTravelers) {
+    if (!widget.trip.hasCustomPricing &&
+        !_hasDepartureMatrix &&
+        totalRoomOccupants != totalTravelers) {
       appToast(
         context: context,
         type: ToastType.error,
@@ -218,12 +260,26 @@ class _TripOptionsViewState extends State<TripOptionsView> {
       return;
     }
 
-    if (widget.trip.hasCustomPricing &&
+    if (_usingOptionPricing &&
         (_adults < 1 || _selectedPriceOptions().isEmpty)) {
       appToast(
         context: context,
         type: ToastType.error,
         message: context.tr.bookingSelectPriceOption,
+      );
+      return;
+    }
+
+    if (_hasDepartureMatrix &&
+        (_adults < 1 ||
+            _adultOccupancyTotal != _adults ||
+            _childrenWithoutBed + _childrenWithBed != _kids)) {
+      appToast(
+        context: context,
+        type: ToastType.error,
+        message: Localizations.localeOf(context).languageCode == 'ar'
+            ? 'وزّع البالغين والأطفال على فئات الأسعار قبل المتابعة.'
+            : 'Assign adults and children to the displayed price categories before continuing.',
       );
       return;
     }
@@ -253,7 +309,19 @@ class _TripOptionsViewState extends State<TripOptionsView> {
       appToast(
         context: context,
         type: ToastType.error,
-        message: context.tr.bookingSeatsInsufficient(selectedDeparture.seatsLeft),
+        message: context.tr.bookingSeatsInsufficient(
+          selectedDeparture.seatsLeft,
+        ),
+      );
+      return;
+    }
+
+    if (widget.trip.accommodations.length > 1 &&
+        _selectedAccommodationId == null) {
+      appToast(
+        context: context,
+        type: ToastType.error,
+        message: context.tr.bookingHotelSelectionRequired,
       );
       return;
     }
@@ -270,11 +338,15 @@ class _TripOptionsViewState extends State<TripOptionsView> {
           babyCount: _babies,
           travelersCount: _travelersCount,
           rooms: selectedRooms,
-          priceSelections: widget.trip.hasCustomPricing
+          priceSelections: _usingOptionPricing
               ? _selectedPriceOptions()
               : const [],
           currency: widget.trip.currency,
+          selectedAccommodationId: _selectedAccommodationId,
           optionalExtras: _selectedOptionalExtras(),
+          occupancies: _hasDepartureMatrix ? _selectedOccupancies() : const [],
+          childrenWithoutBed: _childrenWithoutBed,
+          childrenWithBed: _childrenWithBed,
         ),
       ),
     );
@@ -284,7 +356,12 @@ class _TripOptionsViewState extends State<TripOptionsView> {
     final languageCode = Localizations.localeOf(context).languageCode;
 
     return widget.trip.optionalExtras
-        .where((extra) => extra.isAvailable)
+        .where(
+          (extra) =>
+              extra.isAvailable &&
+              (extra.departureId == null ||
+                  extra.departureId == _activeDeparture?.id),
+        )
         .map(
           (extra) => BookingOptionalExtraSelection(
             extraId: extra.id,
@@ -297,6 +374,106 @@ class _TripOptionsViewState extends State<TripOptionsView> {
         .where((extra) => extra.quantity > 0)
         .toList(growable: false);
   }
+
+  Widget _buildTripHotelChoice(BuildContext context, TripAccommodation hotel) {
+    final selected = hotel.id != null && hotel.id == _selectedAccommodationId;
+    return InkWell(
+      onTap: hotel.id == null
+          ? null
+          : () => setState(() {
+              _selectedAccommodationId = hotel.id;
+              if (_usingOptionPricing) {
+                _resetPriceSelections();
+              }
+              if (_hasDepartureMatrix) _resetOccupancies();
+            }),
+      borderRadius: BorderRadius.circular(14.r),
+      child: Container(
+        padding: EdgeInsets.all(12.r),
+        decoration: BoxDecoration(
+          color: selected
+              ? AppColors.primary.withValues(alpha: .06)
+              : AppColors.white,
+          borderRadius: BorderRadius.circular(14.r),
+          border: Border.all(
+            color: selected ? AppColors.primary : AppColors.border(context),
+            width: selected ? 1.5 : 1,
+          ),
+        ),
+        child: Row(
+          children: [
+            if (hotel.images.isNotEmpty)
+              ClipRRect(
+                borderRadius: BorderRadius.circular(10.r),
+                child: Image.network(
+                  hotel.images.first,
+                  width: 76.w,
+                  height: 70.h,
+                  fit: BoxFit.cover,
+                  errorBuilder: (_, __, ___) => _hotelImagePlaceholder(context),
+                ),
+              )
+            else
+              _hotelImagePlaceholder(context),
+            SizedBox(width: 12.w),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    hotel.name,
+                    style: AppTextStyles.bodyMedium(
+                      color: AppColors.tripDetailsFigmaBlack,
+                    ).copyWith(fontWeight: FontWeight.w600),
+                  ),
+                  if (hotel.accommodationType.isNotEmpty) ...[
+                    SizedBox(height: 3.h),
+                    Text(
+                      hotel.accommodationType,
+                      style: AppTextStyles.bodySmall(
+                        color: AppColors.secondaryText(context),
+                      ),
+                    ),
+                  ],
+                  if (hotel.city.isNotEmpty || hotel.country.isNotEmpty) ...[
+                    SizedBox(height: 3.h),
+                    Text(
+                      [
+                        hotel.city,
+                        hotel.country,
+                      ].where((value) => value.isNotEmpty).join(' · '),
+                      style: AppTextStyles.bodySmall(
+                        color: AppColors.secondaryText(context),
+                      ),
+                    ),
+                  ],
+                ],
+              ),
+            ),
+            if (widget.trip.accommodations.length > 1)
+              Icon(
+                selected
+                    ? Icons.radio_button_checked
+                    : Icons.radio_button_unchecked,
+                color: selected
+                    ? AppColors.primary
+                    : AppColors.secondaryText(context),
+              ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _hotelImagePlaceholder(BuildContext context) => Container(
+    width: 76.w,
+    height: 70.h,
+    decoration: BoxDecoration(
+      color: AppColors.border(context).withValues(alpha: .35),
+      borderRadius: BorderRadius.circular(10.r),
+    ),
+    child: Icon(Iconsax.building, color: AppColors.secondaryText(context)),
+  );
 
   List<BookingRoom> _selectedRooms() {
     if (widget.trip.hasCustomPricing || _roomTypes.isEmpty) {
@@ -411,7 +588,115 @@ class _TripOptionsViewState extends State<TripOptionsView> {
                         ],
                         SizedBox(height: TripOptionsFigmaTokens.sectionBottom),
                       ],
-                      if (widget.trip.hasCustomPricing) ...[
+                      if (widget.trip.accommodations.isNotEmpty) ...[
+                        if (widget.trip.accommodations.length > 1)
+                          _SectionTitle(tr.bookingChooseHotel),
+                        for (
+                          var i = 0;
+                          i < widget.trip.accommodations.length;
+                          i++
+                        ) ...[
+                          if (i > 0)
+                            SizedBox(
+                              height: TripOptionsFigmaTokens.travelerCardGap,
+                            ),
+                          _buildTripHotelChoice(
+                            context,
+                            widget.trip.accommodations[i],
+                          ),
+                        ],
+                        SizedBox(height: TripOptionsFigmaTokens.sectionBottom),
+                      ],
+                      if (_hasDepartureMatrix) ...[
+                        _SectionTitle(_localized('أسعار الغرف', 'Room prices')),
+                        for (final category in const [
+                          'single',
+                          'double',
+                          'triple',
+                          'quadruple',
+                          'quintuple',
+                        ])
+                          Padding(
+                            padding: EdgeInsets.only(bottom: 10.h),
+                            child: _buildOccupancyCard(context, category),
+                          ),
+                        SizedBox(height: 8.h),
+                        _SectionTitle(
+                          _localized(
+                            'أسعار الأطفال والرضع',
+                            'Children & infant prices',
+                          ),
+                        ),
+                        TravelerCounterCard(
+                          icon: Iconsax.emoji_happy,
+                          title: _localized(
+                            'طفل بدون سرير',
+                            'Child without bed',
+                          ),
+                          subtitle: _localized(
+                            'من سنتين إلى أقل من 12 سنة',
+                            'Age 2 to under 12',
+                          ),
+                          count: _childrenWithoutBed,
+                          onDecrement: () => setState(() {
+                            if (_childrenWithoutBed > 0) {
+                              _childrenWithoutBed--;
+                              _kids--;
+                            }
+                          }),
+                          onIncrement: () => setState(() {
+                            if (_kids < 50) {
+                              _childrenWithoutBed++;
+                              _kids++;
+                            }
+                          }),
+                        ),
+                        _matrixCategoryPriceLabel('child_without_bed'),
+                        SizedBox(
+                          height: TripOptionsFigmaTokens.travelerCardGap,
+                        ),
+                        TravelerCounterCard(
+                          icon: Iconsax.profile_2user,
+                          title: _localized(
+                            'طفل بسرير إضافي',
+                            'Child with extra bed',
+                          ),
+                          subtitle: _localized(
+                            'من سنتين إلى أقل من 12 سنة',
+                            'Age 2 to under 12',
+                          ),
+                          count: _childrenWithBed,
+                          onDecrement: () => setState(() {
+                            if (_childrenWithBed > 0) {
+                              _childrenWithBed--;
+                              _kids--;
+                            }
+                          }),
+                          onIncrement: () => setState(() {
+                            if (_kids < 50) {
+                              _childrenWithBed++;
+                              _kids++;
+                            }
+                          }),
+                        ),
+                        _matrixCategoryPriceLabel('child_with_bed'),
+                        SizedBox(
+                          height: TripOptionsFigmaTokens.travelerCardGap,
+                        ),
+                        TravelerCounterCard(
+                          icon: Iconsax.milk,
+                          title: context.tr.bookingTravelerBaby,
+                          subtitle: context.tr.bookingTravelerBabyAge,
+                          count: _babies,
+                          onDecrement: () => setState(() {
+                            if (_babies > 0) _babies--;
+                          }),
+                          onIncrement: () => setState(() {
+                            if (_babies < 50) _babies++;
+                          }),
+                        ),
+                        _matrixCategoryPriceLabel('infant'),
+                      ] else if (_usingOptionPricing) ...[
                         Text(
                           tr.bookingCustomPriceHelp,
                           style: AppTextStyles.bodySmall(
@@ -472,22 +757,18 @@ class _TripOptionsViewState extends State<TripOptionsView> {
                           onIncrement: () => setState(() => _babies++),
                         ),
                       ],
-                      if (_extraQuantities.isNotEmpty) ...[
+                      if (_activeExtras.isNotEmpty) ...[
                         SizedBox(height: TripOptionsFigmaTokens.sectionBottom),
                         _SectionTitle(tr.bookingOptionalExtras),
-                        for (final extra in widget.trip.optionalExtras.where(
-                          (extra) => extra.isAvailable,
-                        )) ...[
-                          if (extra !=
-                              widget.trip.optionalExtras
-                                  .where((item) => item.isAvailable)
-                                  .first)
+                        for (final extra in _activeExtras) ...[
+                          if (extra != _activeExtras.first)
                             SizedBox(
                               height: TripOptionsFigmaTokens.travelerCardGap,
                             ),
                           OptionalExtraCard(
                             name: extra.nameForLanguage(languageCode),
                             unitPrice: extra.unitPrice,
+                            pricingUnit: _pricingUnitLabel(extra.pricingUnit),
                             currency: extra.currency,
                             quantity: _extraQuantities[extra.id] ?? 0,
                             onDecrement: () => setState(() {
@@ -497,13 +778,18 @@ class _TripOptionsViewState extends State<TripOptionsView> {
                                   : 0;
                             }),
                             onIncrement: () => setState(() {
-                              _extraQuantities[extra.id] =
-                                  (_extraQuantities[extra.id] ?? 0) + 1;
+                              final maximum = extra.maximumQuantity;
+                              if (maximum == null ||
+                                  (_extraQuantities[extra.id] ?? 0) < maximum) {
+                                _extraQuantities[extra.id] =
+                                    (_extraQuantities[extra.id] ?? 0) + 1;
+                              }
                             }),
                           ),
                         ],
                       ],
-                      if (!widget.trip.hasCustomPricing &&
+                      if (!_usingOptionPricing &&
+                          !_hasDepartureMatrix &&
                           _roomTypes.isNotEmpty) ...[
                         SizedBox(height: TripOptionsFigmaTokens.sectionBottom),
                         _SectionTitle(tr.bookingAccommodationOptions),
@@ -545,6 +831,101 @@ class _TripOptionsViewState extends State<TripOptionsView> {
       _priceQuantities[option.id] = count + delta;
       _updatePriceCounts();
     });
+  }
+
+  int get _adultOccupancyTotal =>
+      _occupancyQuantities.values.fold<int>(0, (sum, count) => sum + count);
+
+  void _resetOccupancies() {
+    for (final key in _occupancyQuantities.keys.toList()) {
+      _occupancyQuantities[key] = 0;
+    }
+    if (_adults > 0) _occupancyQuantities['single'] = _adults;
+  }
+
+  List<BookingOccupancySelection> _selectedOccupancies() => _occupancyQuantities
+      .entries
+      .where((entry) => entry.value > 0)
+      .map(
+        (entry) => BookingOccupancySelection(
+          category: entry.key,
+          travelers: entry.value,
+        ),
+      )
+      .toList(growable: false);
+
+  String _localized(String ar, String en) =>
+      Localizations.localeOf(context).languageCode == 'ar' ? ar : en;
+
+  String _pricingUnitLabel(String key) => switch (key) {
+    'per_person' => _localized('للفرد', 'per person'),
+    'per_night' => _localized('لليلة', 'per night'),
+    'per_seat' => _localized('للمقعد', 'per seat'),
+    'per_unit' => _localized('للوحدة', 'per unit'),
+    _ => '',
+  };
+
+  double _matrixPrice(String category) {
+    final departure = _activeDeparture;
+    if (departure == null) return 0;
+    final scope = departure.pricingMethod;
+    return departure.hotelPrices
+            .where(
+              (price) =>
+                  price.scope == scope &&
+                  (scope == 'unified' ||
+                      price.accommodationId == _selectedAccommodationId) &&
+                  price.category == category,
+            )
+            .firstOrNull
+            ?.amount ??
+        0;
+  }
+
+  Widget _matrixCategoryPriceLabel(String category) => Padding(
+    padding: EdgeInsetsDirectional.only(start: 12.w, top: 4.h),
+    child: Text(
+      '${_localized('السعر', 'Price')}: ${TripDetailsUiFormatters.formatAmount(_matrixPrice(category), currency: widget.trip.currency)}',
+      style: AppTextStyles.bodySmall(color: AppColors.secondaryText(context)),
+    ),
+  );
+
+  Widget _buildOccupancyCard(BuildContext context, String category) {
+    final names = {
+      'single': _localized('غرفة مفردة', 'Single room'),
+      'double': _localized('غرفة مزدوجة', 'Double room'),
+      'triple': _localized('غرفة ثلاثية', 'Triple room'),
+      'quadruple': _localized('غرفة رباعية', 'Quadruple room'),
+      'quintuple': _localized('غرفة خماسية', 'Quintuple room'),
+    };
+    final count = _occupancyQuantities[category] ?? 0;
+    final total = _adultOccupancyTotal;
+    final price = _matrixPrice(category);
+    return AccommodationCard(
+      key: ValueKey('departure-price-$category'),
+      title: names[category]!,
+      subtitle: '',
+      priceLabel: TripDetailsUiFormatters.formatAmount(
+        price,
+        currency: widget.trip.currency,
+      ),
+      personLabel: context.tr.bookingPerson,
+      personCount: count,
+      canDecrement: count > 0 && _adults > 1,
+      canIncrement: _adults < 50 && total < 50,
+      onDecrement: () => setState(() {
+        if (count > 0 && _adults > 1) {
+          _occupancyQuantities[category] = count - 1;
+          _adults--;
+        }
+      }),
+      onIncrement: () => setState(() {
+        if (_adults < 50 && total < 50) {
+          _occupancyQuantities[category] = count + 1;
+          _adults++;
+        }
+      }),
+    );
   }
 
   Widget _buildPriceOption(BuildContext context, TripPriceOption option) {

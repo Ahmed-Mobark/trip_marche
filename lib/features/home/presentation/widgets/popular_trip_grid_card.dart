@@ -99,6 +99,26 @@ class PopularTripGridCard extends StatelessWidget {
                               imageUrl: trip.coverImage,
                               fit: BoxFit.cover,
                             ),
+                            if (trip.flags.seasonal)
+                              PositionedDirectional(
+                                top: 12.h,
+                                start: 12.w,
+                                child: Container(
+                                  width: 32.w,
+                                  height: 32.w,
+                                  decoration: BoxDecoration(
+                                    color: AppColors.onImage.withValues(
+                                      alpha: .9,
+                                    ),
+                                    shape: BoxShape.circle,
+                                  ),
+                                  child: Icon(
+                                    Icons.star_border_rounded,
+                                    size: 22.sp,
+                                    color: AppColors.primary,
+                                  ),
+                                ),
+                              ),
                             PositionedDirectional(
                               top: 12.h,
                               end: 12.w,

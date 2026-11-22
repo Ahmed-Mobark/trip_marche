@@ -28,6 +28,7 @@ class WishlistTripFlags extends Equatable {
     this.recommended = false,
     this.topRated = false,
     this.special = false,
+    this.seasonal = false,
     this.international = false,
   });
 
@@ -36,11 +37,19 @@ class WishlistTripFlags extends Equatable {
   final bool recommended;
   final bool topRated;
   final bool special;
+  final bool seasonal;
   final bool international;
 
   @override
-  List<Object?> get props =>
-      [popular, sponsored, recommended, topRated, special, international];
+  List<Object?> get props => [
+    popular,
+    sponsored,
+    recommended,
+    topRated,
+    special,
+    seasonal,
+    international,
+  ];
 }
 
 class WishlistTripItem extends Equatable {
@@ -122,23 +131,23 @@ class WishlistTripItem extends Equatable {
 
   @override
   List<Object?> get props => [
-        id,
-        title,
-        slug,
-        coverImage,
-        fromLocation,
-        startDate,
-        endDate,
-        price,
-        discountPrice,
-        currency,
-        rating,
-        reviewsCount,
-        badge,
-        flags,
-        isWishlisted,
-        isFavorite,
-      ];
+    id,
+    title,
+    slug,
+    coverImage,
+    fromLocation,
+    startDate,
+    endDate,
+    price,
+    discountPrice,
+    currency,
+    rating,
+    reviewsCount,
+    badge,
+    flags,
+    isWishlisted,
+    isFavorite,
+  ];
 }
 
 class WishlistTripsPage extends Equatable {

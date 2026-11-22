@@ -940,6 +940,9 @@ abstract class AppLocalizations {
   /// **'New Year'**
   String get wishlistFiltersSeasonNewYear;
 
+  /// No description provided for @wishlistFiltersSeasonEid.
+  String get wishlistFiltersSeasonEid;
+
   /// No description provided for @wishlistFiltersTripFeatures.
   ///
   /// In en, this message translates to:
@@ -1707,6 +1710,10 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Accommodation Options'**
   String get bookingAccommodationOptions;
+
+  String get bookingChooseHotel;
+
+  String get bookingHotelSelectionRequired;
 
   /// No description provided for @bookingOptionalExtras.
   ///

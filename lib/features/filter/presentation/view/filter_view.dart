@@ -433,6 +433,7 @@ class _FilterBody extends StatelessWidget {
                       context.tr.wishlistFiltersSeasonSpring,
                       context.tr.wishlistFiltersSeasonHajj,
                       context.tr.wishlistFiltersSeasonNewYear,
+                      context.tr.wishlistFiltersSeasonEid,
                     ],
                     isSelected: (value) {
                       final key = _seasonKeyForLabel(context, value);
@@ -641,6 +642,9 @@ class _FilterBody extends StatelessWidget {
     }
     if (label == context.tr.wishlistFiltersSeasonNewYear) {
       return 'newYear';
+    }
+    if (label == context.tr.wishlistFiltersSeasonEid) {
+      return 'eid';
     }
     return null;
   }
