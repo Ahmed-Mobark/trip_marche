@@ -819,6 +819,12 @@ class AppLocalizationsAr extends AppLocalizations {
   String get bookingChooseDateTitle => 'اختر التاريخ المناسب لك';
 
   @override
+  String get bookingChooseHotel => 'اختر الفندق';
+
+  @override
+  String get bookingHotelSelectionRequired => 'اختر فندقًا للمتابعة';
+
+  @override
   String get bookingSeeAllDates => 'عرض كل التواريخ';
 
   @override
@@ -844,12 +850,6 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get bookingAccommodationOptions => 'خيارات الإقامة';
-
-  @override
-  String get bookingChooseHotel => 'اختر الفندق';
-
-  @override
-  String get bookingHotelSelectionRequired => 'اختر فندقًا للمتابعة';
 
   @override
   String get bookingOptionalExtras => 'إضافات اختيارية';

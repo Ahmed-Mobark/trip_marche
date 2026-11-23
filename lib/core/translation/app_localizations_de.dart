@@ -826,6 +826,12 @@ class AppLocalizationsDe extends AppLocalizations {
   String get bookingChooseDateTitle => 'Choose the date that suits you';
 
   @override
+  String get bookingChooseHotel => 'Choose a hotel';
+
+  @override
+  String get bookingHotelSelectionRequired => 'Select a hotel to continue';
+
+  @override
   String get bookingSeeAllDates => 'See All Dates';
 
   @override
@@ -851,12 +857,6 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get bookingAccommodationOptions => 'Accommodation Options';
-
-  @override
-  String get bookingChooseHotel => 'Choose a hotel';
-
-  @override
-  String get bookingHotelSelectionRequired => 'Select a hotel to continue';
 
   @override
   String get bookingOptionalExtras => 'Optionale Extras';

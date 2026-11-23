@@ -941,6 +941,9 @@ abstract class AppLocalizations {
   String get wishlistFiltersSeasonNewYear;
 
   /// No description provided for @wishlistFiltersSeasonEid.
+  ///
+  /// In en, this message translates to:
+  /// **'Eid'**
   String get wishlistFiltersSeasonEid;
 
   /// No description provided for @wishlistFiltersTripFeatures.
@@ -1657,6 +1660,18 @@ abstract class AppLocalizations {
   /// **'Choose the date that suits you'**
   String get bookingChooseDateTitle;
 
+  /// No description provided for @bookingChooseHotel.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose a hotel'**
+  String get bookingChooseHotel;
+
+  /// No description provided for @bookingHotelSelectionRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Select a hotel to continue'**
+  String get bookingHotelSelectionRequired;
+
   /// No description provided for @bookingSeeAllDates.
   ///
   /// In en, this message translates to:
@@ -1710,10 +1725,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Accommodation Options'**
   String get bookingAccommodationOptions;
-
-  String get bookingChooseHotel;
-
-  String get bookingHotelSelectionRequired;
 
   /// No description provided for @bookingOptionalExtras.
   ///
